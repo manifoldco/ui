@@ -13,5 +13,16 @@
     "@stencil/core": "~0.16.2",
     "@stencil/router": "~0.3.1"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@stencil/postcss": "^0.1.0",
+    "@types/jest": "^23.3.13",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "postcss-preset-env": "^6.5.0",
+    "prettier": "^1.16.2",
+    "typescript-eslint-parser": "^22.0.0"
+  }
 }
