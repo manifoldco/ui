@@ -17,8 +17,12 @@ export const config: Config = {
   plugins: [
     postcss({
       plugins: [
-        // TODO What options do we want to customize if any? Docs: https://github.com/csstools/postcss-preset-env
-        postCSSPresetEnv(),
+        postCSSPresetEnv({
+          features: {
+            'custom-media-queries': true,
+            'nesting-rules': true,
+          },
+        }),
       ],
     }),
   ],
