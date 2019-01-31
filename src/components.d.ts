@@ -4,9 +4,14 @@
  * It contains typing information for all components that exist in this project.
  */
 
+
 import '@stencil/core';
 
+
+
+
 export namespace Components {
+
   interface AppHome {}
   interface AppHomeAttributes extends StencilHTMLAttributes {}
 
@@ -16,14 +21,15 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
-    AppHome: Components.AppHome;
-    AppRoot: Components.AppRoot;
+    'AppHome': Components.AppHome;
+    'AppRoot': Components.AppRoot;
   }
 
   interface StencilIntrinsicElements {
     'app-home': Components.AppHomeAttributes;
     'app-root': Components.AppRootAttributes;
   }
+
 
   interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {}
   var HTMLAppHomeElement: {
@@ -38,14 +44,15 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
-    'app-home': HTMLAppHomeElement;
-    'app-root': HTMLAppRootElement;
+    'app-home': HTMLAppHomeElement
+    'app-root': HTMLAppRootElement
   }
 
   interface ElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
   }
+
 
   export namespace JSX {
     export interface Element {}
@@ -54,4 +61,5 @@ declare global {
     }
   }
   export interface HTMLAttributes extends StencilHTMLAttributes {}
+
 }
