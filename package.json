@@ -17,7 +17,6 @@
   "devDependencies": {
     "@stencil/postcss": "^0.1.0",
     "@types/jest": "^23.3.13",
-    "babel-eslint": "^10.0.1",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
