@@ -11,7 +11,21 @@
   },
   "dependencies": {
     "@stencil/core": "~0.16.2",
-    "@stencil/router": "~0.3.1"
+    "@stencil/router": "~0.3.1",
+    "@stencil/postcss": "^0.1.0",
+    "@typescript-eslint/parser": "^1.1.1",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "23.6.0",
+    "jest-cli": "23.6.0",
+    "postcss-preset-env": "^6.5.0",
+    "puppeteer": "1.8.0"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/jest": "^23.3.13",
+    "@types/puppeteer": "1.11.2",
+    "prettier": "^1.16.2"
+  }
 }
