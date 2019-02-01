@@ -5,22 +5,30 @@
   "description": "Manifold Embeddable Marketplace",
   "scripts": {
     "build": "stencil build",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx src",
+    "lint:css": "stylelint 'src/**/*.css'",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
+    "test:coverage": "stencil test --spec --e2e --coverage",
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
     "@stencil/core": "~0.16.2",
-    "@stencil/router": "~0.3.1",
     "@stencil/postcss": "^0.1.0",
+    "@stencil/router": "~0.3.1",
     "@typescript-eslint/parser": "^1.1.1",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^4.0.0",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
     "postcss-preset-env": "^6.5.0",
-    "puppeteer": "1.8.0"
+    "puppeteer": "1.8.0",
+    "stylelint": "^9.10.1",
+    "stylelint-config-standard": "^18.2.0"
   },
   "license": "UNLICENSED",
   "devDependencies": {

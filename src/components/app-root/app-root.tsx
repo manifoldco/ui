@@ -9,7 +9,7 @@ export class AppRoot {
   render() {
     return (
       <div>
-        <header>
+        <header class="header">
           <h1>Embeddable Marketplace</h1>
         </header>
         <main>
