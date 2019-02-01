@@ -1,1 +1,16 @@
-# TODO set up CI
+language: node_js
+node_js:
+  - 11.9.0
+stages:
+  - test
+jobs:
+  include:
+    - stage: test
+      name: 'Run Linters'
+      script: npm run lint
+    - stage: test
+      name: 'Run tests'
+      script: npm run test:coverage
+after_success:
+  - npx codecov
+cache: npm
