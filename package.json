@@ -5,6 +5,11 @@
   "description": "Manifold Embeddable Marketplace",
   "scripts": {
     "build": "stencil build",
+    "format": "npm run format:ts && npm run format:css",
+    "format:css": "stylelint 'src/**/*.css' --fix",
+    "format:css:watch": "npx onchange 'src/**/*.css' -- npm run format:css",
+    "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
+    "format:watch": "npx onchange 'src/**/*.{css,ts,tsx}' -- npm run format",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx src",
     "lint:css": "stylelint 'src/**/*.css'",
