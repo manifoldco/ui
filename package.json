@@ -28,6 +28,7 @@
     "postcss-preset-env": "^6.5.0",
     "puppeteer": "1.8.0",
     "stylelint": "^9.10.1",
+    "stylelint-config-rational-order": "0.0.4",
     "stylelint-config-standard": "^18.2.0"
   },
   "license": "UNLICENSED",
