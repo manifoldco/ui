@@ -5,9 +5,9 @@ module.exports = {
   ],
   plugins: ['stylelint-order'],
   rules: {
-    'declaration-colon-newline-after': null, // this is fine
+    'declaration-colon-newline-after': null, // let Prettier decide
     'property-no-vendor-prefix': null, // some properties need vendor prefixes
-    'value-list-comma-newline-after': null, // this is fine
+    'value-list-comma-newline-after': null, // let Prettier decide
     'selector-type-no-unknown': [
       true,
       {
