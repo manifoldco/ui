@@ -1,2 +1,13 @@
+dist/
+www/
+
+.stencil/
+.idea/
+.vscode/
+.sass-cache/
+.versions/
+coverage/
+node_modules/
+$RECYCLE.BIN/
+
 components.d.ts
-jest.config.js

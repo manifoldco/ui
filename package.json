@@ -11,7 +11,7 @@
     "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
     "format:watch": "npx onchange 'src/**/*.{css,ts,tsx}' -- npm run format",
     "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx src",
+    "lint:js": "eslint --ext .js,.ts,.tsx src",
     "lint:css": "stylelint 'src/**/*.css'",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
