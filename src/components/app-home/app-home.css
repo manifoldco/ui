@@ -1,3 +1,7 @@
+/**
+ * @prop --text-color: Color of the text
+ */
 .app-home {
   padding: 10px;
+  color: var(--text-color);
 }

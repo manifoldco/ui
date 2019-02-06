@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'app-home',
@@ -6,6 +6,9 @@ import { Component } from '@stencil/core';
   shadow: true,
 })
 export class AppHome {
+  /** Some text */
+  @Prop() text: string = 'Hello World';
+
   render() {
     return (
       <div class="app-home">

@@ -12,8 +12,18 @@ import '@stencil/core';
 
 export namespace Components {
 
-  interface AppHome {}
-  interface AppHomeAttributes extends StencilHTMLAttributes {}
+  interface AppHome {
+    /**
+    * Some text
+    */
+    'text': string;
+  }
+  interface AppHomeAttributes extends StencilHTMLAttributes {
+    /**
+    * Some text
+    */
+    'text'?: string;
+  }
 
   interface AppRoot {}
   interface AppRootAttributes extends StencilHTMLAttributes {}
