@@ -13,7 +13,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "lint:css": "stylelint 'src/**/*.css'",
-    "start": "stencil build --dev --watch --serve",
+    "start": "stencil build --dev --docs --watch --serve",
     "test": "stencil test --spec --e2e",
     "test:coverage": "stencil test --spec --e2e --coverage",
     "test.watch": "stencil test --spec --e2e --watchAll"
