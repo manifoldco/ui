@@ -5,13 +5,13 @@ module.exports = {
   ],
   plugins: ['stylelint-order'],
   rules: {
-    'declaration-colon-newline-after': null, // let Prettier decide
+    'declaration-colon-newline-after': null, // let Prettier decide (when to put values on a new line new line)
     'property-no-vendor-prefix': null, // some properties need vendor prefixes
-    'value-list-comma-newline-after': null, // let Prettier decide
+    'value-list-comma-newline-after': null, // let Prettier decide (when to put comma separated values on new lines)
     'selector-type-no-unknown': [
       true,
       {
-        ignore: ['custom-elements'],
+        ignore: ['custom-elements'], // allow custom element selectors
       },
     ],
   },
