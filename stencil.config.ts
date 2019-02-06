@@ -14,7 +14,6 @@ export const config: Config = {
       // serviceWorker: null
     },
     { type: 'docs' },
-    { type: 'docs-json', file: 'docs.json' },
   ],
   plugins: [
     postcss({
