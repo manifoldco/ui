@@ -21,9 +21,86 @@
     <link rel="apple-touch-icon" href="/assets/icon/icon.png" />
     <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+          'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif,
+          'Apple Color Emoji';
+      }
+
+      .docs-wrapper {
+        display: grid;
+        grid-column-gap: 1.5rem;
+        grid-template-columns: 15rem auto;
+      }
+
+      .docs-sidebar {
+        position: relative;
+      }
+
+      .docs-nav {
+        position: sticky;
+        top: 0;
+        box-sizing: border-box;
+        height: 100vh;
+        margin: 0;
+        padding: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .docs-nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .docs-nav a {
+        display: block;
+        color: #000;
+        text-decoration: none;
+      }
+
+      .docs-main {
+        padding: 1.5rem;
+      }
+
+      .docs-component {
+        margin-bottom: 1.5rem;
+        padding-top: 1.5rem;
+      }
+
+      .docs-component + .docs-component {
+        margin-top: 1.5rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.25);
+      }
+    </style>
   </head>
   <body>
-    <manifold-product product-label="jawsdb-mysql"></manifold-product>
-    <manifold-marketplace featured="till" service-link="/services/:service"></manifold-marketplace>
+    <div class="docs-wrapper">
+      <aside class="docs-sidebar">
+        <nav class="docs-nav">
+          <ul role="menu">
+            <li role="menuitem"><a href="#manifold-marketplace">Discover</a></li>
+            <li role="menuitem"><a href="#manifold-product">Product</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="docs-main" role="main">
+        <section class="docs-component" id="manifold-product">
+          <!-- BEGIN README manifold-product -->
+          <!-- END README -->
+          <manifold-product product-label="jawsdb-mysql"></manifold-product>
+        </section>
+        <section class="docs-component" id="manifold-product">
+          <!-- BEGIN README manifold-marketplace -->
+          <!-- END README -->
+          <manifold-marketplace
+            featured="till"
+            service-link="/services/:service"
+          ></manifold-marketplace>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
