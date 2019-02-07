@@ -8,9 +8,41 @@
   Any global CSS variables should also be applied here.
 */
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+:root {
+  --mf-c-black: #222;
+  --mf-c-white: white;
+  --mf-c-gray-t1: #ddddde;
+  --mf-c-gray-s1: #575b5f;
+  --mf-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji';
+  --mf-font-u12: 5.0625em;
+  --mf-font-u11: 4.4225011027em;
+  --mf-font-u10: 3.8634105686em;
+  --mf-font-u9: 3.375em;
+  --mf-font-u8: 2.9483340685em;
+  --mf-font-u7: 2.5756070457em;
+  --mf-font-u6: 2.25em;
+  --mf-font-u5: 1.9655560457em;
+  --mf-font-u4: 1.7170713638em;
+  --mf-font-u3: 1.5em;
+  --mf-font-u2: 1.3103706971em;
+  --mf-font-u1: 1.1447142426em;
+  --mf-font-u0: 1em;
+  --mf-font-d0: 1em;
+  --mf-font-d1: 0.8735804647em;
+  --mf-font-d2: 0.7631428284em;
+  --mf-font-d3: 0.6666666667em;
+  --mf-font-d4: 0.5823869765em;
+  --mf-font-d5: 0.5087618856em;
+  --mf-font-d6: 0.4444444444em;
+  --mf-font-d7: 0.3882579843em;
+  --mf-font-d8: 0.3391745904em;
+  --mf-font-d9: 0.2962962963em;
+  --mf-font-d10: 0.2588386562em;
+  --mf-font-d11: 0.2261163936em;
+  --mf-font-d12: 0.1975308642em;
+  --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
+  --mf-radius-m: 4px;
+  --mf-radius-l: 6px;
 }

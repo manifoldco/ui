@@ -8,59 +8,85 @@
 import '@stencil/core';
 
 
+import {
+  Service,
+} from 'types/Service';
 
 
 export namespace Components {
 
-  interface AppHome {
-    /**
-    * Some text
-    */
-    'text': string;
+  interface ManifoldMarketplace {
+    'theme'?: 'light' | 'dark';
   }
-  interface AppHomeAttributes extends StencilHTMLAttributes {
-    /**
-    * Some text
-    */
-    'text'?: string;
+  interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'theme'?: 'light' | 'dark';
   }
 
-  interface AppRoot {}
-  interface AppRootAttributes extends StencilHTMLAttributes {}
+  interface StencilServiceCard {
+    'description': string;
+    'logo': string;
+    'name': string;
+    'tags': string;
+  }
+  interface StencilServiceCardAttributes extends StencilHTMLAttributes {
+    'description'?: string;
+    'logo'?: string;
+    'name'?: string;
+    'tags'?: string;
+  }
+
+  interface ServiceGrid {
+    'services': Service[];
+    'themeColor': { [index: string]: string };
+  }
+  interface ServiceGridAttributes extends StencilHTMLAttributes {
+    'services'?: Service[];
+    'themeColor'?: { [index: string]: string };
+  }
 }
 
 declare global {
   interface StencilElementInterfaces {
-    'AppHome': Components.AppHome;
-    'AppRoot': Components.AppRoot;
+    'ManifoldMarketplace': Components.ManifoldMarketplace;
+    'StencilServiceCard': Components.StencilServiceCard;
+    'ServiceGrid': Components.ServiceGrid;
   }
 
   interface StencilIntrinsicElements {
-    'app-home': Components.AppHomeAttributes;
-    'app-root': Components.AppRootAttributes;
+    'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
+    'stencil-service-card': Components.StencilServiceCardAttributes;
+    'service-grid': Components.ServiceGridAttributes;
   }
 
 
-  interface HTMLAppHomeElement extends Components.AppHome, HTMLStencilElement {}
-  var HTMLAppHomeElement: {
-    prototype: HTMLAppHomeElement;
-    new (): HTMLAppHomeElement;
+  interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
+  var HTMLManifoldMarketplaceElement: {
+    prototype: HTMLManifoldMarketplaceElement;
+    new (): HTMLManifoldMarketplaceElement;
   };
 
-  interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
-  var HTMLAppRootElement: {
-    prototype: HTMLAppRootElement;
-    new (): HTMLAppRootElement;
+  interface HTMLStencilServiceCardElement extends Components.StencilServiceCard, HTMLStencilElement {}
+  var HTMLStencilServiceCardElement: {
+    prototype: HTMLStencilServiceCardElement;
+    new (): HTMLStencilServiceCardElement;
+  };
+
+  interface HTMLServiceGridElement extends Components.ServiceGrid, HTMLStencilElement {}
+  var HTMLServiceGridElement: {
+    prototype: HTMLServiceGridElement;
+    new (): HTMLServiceGridElement;
   };
 
   interface HTMLElementTagNameMap {
-    'app-home': HTMLAppHomeElement
-    'app-root': HTMLAppRootElement
+    'manifold-marketplace': HTMLManifoldMarketplaceElement
+    'stencil-service-card': HTMLStencilServiceCardElement
+    'service-grid': HTMLServiceGridElement
   }
 
   interface ElementTagNameMap {
-    'app-home': HTMLAppHomeElement;
-    'app-root': HTMLAppRootElement;
+    'manifold-marketplace': HTMLManifoldMarketplaceElement;
+    'stencil-service-card': HTMLStencilServiceCardElement;
+    'service-grid': HTMLServiceGridElement;
   }
 
 

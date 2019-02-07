@@ -31,6 +31,7 @@ module.exports = {
     'function-paren-newline': 'off', // let Prettier decide
     'implicit-arrow-linebreak': 'off', // let Prettier decide
     'import/prefer-default-export': 'off', // named exports are perfectly fine
+    'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
     'object-curly-newline': 'off', // let Prettier decide
   },
