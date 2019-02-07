@@ -1,15 +1,15 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'stencil-service-card',
+  tag: 'service-card',
   styleUrl: 'service-card.css',
   shadow: true,
 })
 export class ServiceCard {
-  @Prop() name: string;
-  @Prop() description: string;
-  @Prop() logo: string;
-  @Prop() tags: string;
+  @Prop() name?: string;
+  @Prop() description?: string;
+  @Prop() logo?: string;
+  @Prop() tags?: string;
 
   private listTags(): string[] {
     return this.tags ? this.tags.split(',').map(tag => tag.trim()) : [];

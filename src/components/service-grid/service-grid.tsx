@@ -14,7 +14,7 @@ export class ManifoldMarketplace {
     return (
       <div class="wrapper" style={this.themeColor}>
         {this.services.map(({ body: { name, tagline, logo_url } }) => (
-          <stencil-service-card name={name} description={tagline} logo={logo_url} />
+          <service-card name={name} description={tagline} logo={logo_url} />
         ))}
       </div>
     );

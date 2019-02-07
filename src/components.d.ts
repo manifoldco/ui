@@ -22,13 +22,13 @@ export namespace Components {
     'theme'?: 'light' | 'dark';
   }
 
-  interface StencilServiceCard {
-    'description': string;
-    'logo': string;
-    'name': string;
-    'tags': string;
+  interface ServiceCard {
+    'description'?: string;
+    'logo'?: string;
+    'name'?: string;
+    'tags'?: string;
   }
-  interface StencilServiceCardAttributes extends StencilHTMLAttributes {
+  interface ServiceCardAttributes extends StencilHTMLAttributes {
     'description'?: string;
     'logo'?: string;
     'name'?: string;
@@ -48,13 +48,13 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'ManifoldMarketplace': Components.ManifoldMarketplace;
-    'StencilServiceCard': Components.StencilServiceCard;
+    'ServiceCard': Components.ServiceCard;
     'ServiceGrid': Components.ServiceGrid;
   }
 
   interface StencilIntrinsicElements {
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
-    'stencil-service-card': Components.StencilServiceCardAttributes;
+    'service-card': Components.ServiceCardAttributes;
     'service-grid': Components.ServiceGridAttributes;
   }
 
@@ -65,10 +65,10 @@ declare global {
     new (): HTMLManifoldMarketplaceElement;
   };
 
-  interface HTMLStencilServiceCardElement extends Components.StencilServiceCard, HTMLStencilElement {}
-  var HTMLStencilServiceCardElement: {
-    prototype: HTMLStencilServiceCardElement;
-    new (): HTMLStencilServiceCardElement;
+  interface HTMLServiceCardElement extends Components.ServiceCard, HTMLStencilElement {}
+  var HTMLServiceCardElement: {
+    prototype: HTMLServiceCardElement;
+    new (): HTMLServiceCardElement;
   };
 
   interface HTMLServiceGridElement extends Components.ServiceGrid, HTMLStencilElement {}
@@ -79,13 +79,13 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'manifold-marketplace': HTMLManifoldMarketplaceElement
-    'stencil-service-card': HTMLStencilServiceCardElement
+    'service-card': HTMLServiceCardElement
     'service-grid': HTMLServiceGridElement
   }
 
   interface ElementTagNameMap {
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
-    'stencil-service-card': HTMLStencilServiceCardElement;
+    'service-card': HTMLServiceCardElement;
     'service-grid': HTMLServiceGridElement;
   }
 
