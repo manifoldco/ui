@@ -1,16 +1,16 @@
-# manifold-marketplace
-
-
+# service-grid
 
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property     | Attribute | Description | Type                           | Default     |
-| ------------ | --------- | ----------- | ------------------------------ | ----------- |
-| `services`   | --        |             | `Service[]`                    | `undefined` |
-| `themeColor` | --        |             | `{ [index: string]: string; }` | `undefined` |
+| Property      | Attribute      | Description | Type                           | Default     |
+| ------------- | -------------- | ----------- | ------------------------------ | ----------- |
+| `featured`    | `featured`     |             | `string`                       | `undefined` |
+| `serviceLink` | `service-link` |             | `string`                       | `undefined` |
+| `services`    | --             |             | `Service[]`                    | `undefined` |
+| `themeColor`  | --             |             | `{ [index: string]: string; }` | `undefined` |
 
 
 ----------------------------------------------

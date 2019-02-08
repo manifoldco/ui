@@ -16,30 +16,40 @@ import {
 export namespace Components {
 
   interface ManifoldMarketplace {
+    'serviceLink'?: string;
     'theme'?: 'light' | 'dark';
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'serviceLink'?: string;
     'theme'?: 'light' | 'dark';
   }
 
   interface ServiceCard {
     'description'?: string;
+    'isFeatured'?: boolean;
+    'label'?: string;
     'logo'?: string;
     'name'?: string;
-    'tags'?: string;
+    'serviceLink'?: string;
   }
   interface ServiceCardAttributes extends StencilHTMLAttributes {
     'description'?: string;
+    'isFeatured'?: boolean;
+    'label'?: string;
     'logo'?: string;
     'name'?: string;
-    'tags'?: string;
+    'serviceLink'?: string;
   }
 
   interface ServiceGrid {
-    'services': Service[];
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services'?: Service[];
     'themeColor': { [index: string]: string };
   }
   interface ServiceGridAttributes extends StencilHTMLAttributes {
+    'featured'?: string;
+    'serviceLink'?: string;
     'services'?: Service[];
     'themeColor'?: { [index: string]: string };
   }

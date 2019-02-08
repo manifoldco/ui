@@ -3,6 +3,7 @@ import { Service } from 'types/Service';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
+  @Prop() serviceLink?: string;
   @Prop() theme?: 'light' | 'dark';
   @State() services: Service[];
 
@@ -28,6 +29,12 @@ export class ManifoldMarketplace {
   }
 
   render() {
-    return <service-grid services={this.services} themeColor={this.getThemeColor()} />;
+    return (
+      <service-grid
+        services={this.services}
+        service-link={this.serviceLink}
+        theme-color={this.getThemeColor()}
+      />
+    );
   }
 }
