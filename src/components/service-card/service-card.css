@@ -1,0 +1,129 @@
+@custom-media --viewport-s (min-width: 450px);
+@custom-media --viewport-m (min-width: 750px);
+@custom-media --viewport-l (min-width: 1080px);
+
+.wrapper {
+  display: grid;
+  flex-direction: column;
+  grid-column-gap: 0.75rem;
+  grid-template-areas:
+    'logo name'
+    'logo tags'
+    'info info';
+  grid-template-columns: 2.5rem auto;
+  min-height: 6rem;
+  padding: 0.75rem;
+  font-size: 1em;
+  font-family: var(--mf-font-family);
+  border: 1px solid #d3d3d4;
+  border-radius: var(--mf-radius-l);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
+  transition: border-color 200ms linear, box-shadow 200ms linear;
+
+  @media (--viewport-s) {
+    grid-template-areas:
+      'logo name tags'
+      'logo info info';
+    grid-template-columns: 2.75rem auto min-content;
+  }
+
+  @media (--viewport-m) {
+    grid-template-columns: 3rem auto min-content;
+    padding: 1rem;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.description {
+  margin-top: 0.375em;
+  margin-bottom: 0;
+  color: var(--mf-gray-s1);
+  font-weight: 400;
+  font-size: var(--mf-font-d1);
+  line-height: 1.4;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  grid-area: info;
+  padding-top: 0.25rem;
+
+  @media (--viewport-m) {
+    padding-top: 0;
+  }
+
+  @media (--viewport-l) {
+    padding-left: 0;
+  }
+}
+
+.logo {
+  grid-area: logo;
+  align-content: start;
+
+  & img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--mf-radius-m);
+  }
+}
+
+.name {
+  grid-area: name;
+  align-self: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 1.2;
+
+  @media (--viewport-l) {
+    padding-left: 0;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: var(--font-u1);
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 1.75em;
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem;
+  margin-left: 0.5em;
+  padding-right: 1.5em;
+  padding-right: 1em;
+  padding-left: 1.5em;
+  padding-left: 1em;
+  color: var(--c-white);
+  font-weight: 400;
+  font-size: var(--mf-font-d3);
+  font-family: var(--mf-font-family);
+  line-height: 1;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+  background-image: var(--mf-g-orange);
+  border-radius: 3rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  grid-area: tags;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: -0.125rem;
+
+  @media (--viewport-s) {
+    justify-content: flex-end;
+    margin-top: -0.125rem;
+    margin-left: 0;
+  }
+}
