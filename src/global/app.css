@@ -9,10 +9,67 @@
 */
 
 :root {
+  /* color */
   --mf-c-black: #222;
-  --mf-c-white: white;
-  --mf-c-gray-t1: #ddddde;
-  --mf-c-gray-s1: #575b5f;
+  --mf-c-offWhite: #f7f7f8;
+  --mf-c-grayLightest: #f5f7f9;
+  --mf-c-grayLighter: #ececed;
+  --mf-c-grayLight: #ddddde;
+  --mf-c-grayMed: #cfcfcf;
+  --mf-c-gray: #8f8f95;
+  --mf-c-grayDark: #575b5f;
+  --mf-c-grayDarker: #323940;
+  --mf-c-white: #fff;
+  --mf-c-border: #c4c7ca;
+  --mf-c-borderDark: #a9adb2;
+  --mf-c-borderLight: #e2e5e9;
+  --mf-c-purple: #7748d1;
+  --mf-c-blueDark: #1a4898;
+  --mf-c-blue: #1e50da;
+  --mf-c-blueLight: #4a90e2;
+  --mf-c-bluePale: #dde9fe;
+  --mf-c-bluePaler: #c3d6f7;
+  --mf-c-orange: #fe714b;
+  --mf-c-orangeDark: #e46407;
+  --mf-c-orangePale: #ffcaa5;
+  --mf-c-magenta: #b45877;
+  --mf-c-red: #d50f49;
+  --mf-c-redPale: #ffc4d2;
+  --mf-c-teal: #0fb5d0;
+  --mf-c-green: #31baa2;
+  --mf-c-greenDark: #008a54;
+  --mf-c-greenPale: #a4eacf;
+  --mf-c-yellow: #ffde52;
+  --mf-c-yellowPale: #fff2b9;
+  --mf-c-transparent: rgba(255, 255, 255, 0);
+
+  /* TODO replace instances with above colors */
+  --mf-c-gray-t1: var(--mf-c-grayLight);
+  --mf-c-gray-s1: var(--mf-c-grayDark);
+
+  /* gradients */
+  --mf-g-blue: linear-gradient(to top right, #329dd1, #4f50a4);
+  --mf-g-blueFaded: linear-gradient(to top right, #c5c6ff, #b1e5ff);
+  --mf-g-cta: linear-gradient(63deg, #f56d41, #b54a84);
+  --mf-g-gray: linear-gradient(45deg, var(--mf-c-grayLight), var(--mf-c-grayLightest));
+  --mf-g-green: linear-gradient(to top right, #329dd1, #4cbc88);
+  --mf-g-greenFaded: linear-gradient(to top right, #d5f1ff, #d2f5e4);
+  --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
+  --mf-g-orangeFaded: linear-gradient(to top right, #f5bca5, #fff1d7);
+  --mf-g-orangeBurnt: linear-gradient(90deg, #ec7740, #a65084);
+  --mf-g-purple: linear-gradient(to top right, #543edd, #a572ff);
+  --mf-g-purpleFaded: linear-gradient(to top right, #cbc3ff, #eadeff);
+  --mf-g-red: linear-gradient(to top right, #a65084, #ec7740);
+  --mf-g-redFaded: linear-gradient(to top right, #f1b2ce, #ffcbb3);
+  --mf-g-skyBlue: linear-gradient(-152deg, #388dc7 5%, #4e56a7 98%);
+  --mf-g-yellow: linear-gradient(to top right, #ffb83a, #ffe268);
+  --mf-g-yellowFaded: linear-gradient(to top right, #ffd995, #fff7d3);
+  --mf-g-custom: linear-gradient(to top right, #eadeff, #f9f5ff);
+  --mf-g-dumper: linear-gradient(to top right, #9b0000, #d2202f);
+  --mf-g-blitline: linear-gradient(to top right, #00648c, #00a4e6);
+  --mf-g-elegant-cm: linear-gradient(to top right, #0e517e, #218ab5);
+
+  /* font */
   --mf-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif,
     'Apple Color Emoji';
@@ -45,4 +102,6 @@
   --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
   --mf-radius-m: 4px;
   --mf-radius-l: 6px;
+
+  font-family: var(--mf-font-family); /* temp */
 }
