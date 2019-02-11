@@ -8,33 +8,33 @@ import { Component, Prop } from '@stencil/core';
 export class ServiceCard {
   @Prop() name?: string;
   @Prop() description?: string;
+  @Prop() label?: string;
   @Prop() logo?: string;
-  @Prop() tags?: string;
-
-  private listTags(): string[] {
-    return this.tags ? this.tags.split(',').map(tag => tag.trim()) : [];
-  }
+  @Prop() isFeatured?: boolean;
+  @Prop() serviceLink?: string;
 
   render() {
     return (
-      <div class="wrapper" itemScope itemType="https://schema.org/Product">
+      <a
+        class="wrapper"
+        itemscope
+        itemtype="https://schema.org/Product"
+        itemprop="url"
+        href={this.serviceLink}
+      >
         <div class="logo">
-          <img src={this.logo} alt={this.name} itemProp="image" />
+          <img src={this.logo} alt={this.name} itemprop="image" />
         </div>
-        <h3 class="name" itemProp="name">
+        <h3 class="name" itemprop="name">
           {this.name}
         </h3>
-        <div class="tags">
-          {this.listTags().map(tag => (
-            <div class="tag">{tag}</div>
-          ))}
-        </div>
+        <div class="tags">{this.isFeatured && <div class="tag">featured</div>}</div>
         <div class="info">
-          <p class="description" itemProp="description">
+          <p class="description" itemprop="description">
             {this.description}
           </p>
         </div>
-      </div>
+      </a>
     );
   }
 }
