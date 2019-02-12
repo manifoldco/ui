@@ -11,7 +11,7 @@ export class ManifoldMarketplace {
     return fetch('https://api.catalog.manifold.co/v1/products/')
       .then(response => response.json())
       .then(data => {
-        this.services = [...data].sort((a, b) => a.body.name.localeCompare(b.body.name));
+        this.services = data;
       });
   }
 
