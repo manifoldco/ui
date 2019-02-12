@@ -1,0 +1,80 @@
+import { Component, Element, Prop } from '@stencil/core';
+
+// import { gradient } from '../theme';
+import { icon } from '../../assets/icons';
+
+@Component({
+  tag: 'mf-icon',
+  styleUrl: 'mf-icon.css',
+  shadow: true,
+})
+export class MfIcon {
+  @Prop() marginRight: boolean = false;
+  @Prop() marginLeft: boolean = false;
+  @Prop() title: string;
+  /** The icon ID */
+  @Prop() icon: string;
+  /** a CSS variable starting with `--mf-g-*` */
+  @Prop() gradient?: string;
+  /** a CSS variable starting with `--mf-c-*` */
+  @Prop() color?: string = 'currentColor';
+  @Element() element: HTMLElement;
+
+  private getMargin() {
+    return {
+      ...(this.marginRight ? { '--marginRight': 'var(--marginAlt)' } : {}),
+      ...(this.marginLeft ? { '--marginLeft': 'var(--marginAlt)' } : {}),
+    };
+  }
+
+  get gradientID() {
+    return `gradient-${this.gradient}`;
+  }
+
+  get stopColors() {
+    const style = getComputedStyle(this.element);
+    const gradientValue = style.getPropertyValue(this.gradient);
+    if (!this.gradient || !gradientValue) return [];
+    const colors = gradientValue.split('#');
+    return colors.slice(1, colors.length).map((chunk, index) => {
+      const pair = chunk
+        .trim()
+        .replace(/(,|\))/g, '')
+        .split(' ');
+      return {
+        color: `#${pair[0]}`,
+        offset: pair[1] ? pair[1] : `${(100 * index) / (colors.length - 2)}%`,
+      };
+    });
+  }
+
+  render() {
+    return (
+      <svg
+        style={this.getMargin()}
+        viewBox="0 0 1024 1024"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsX="http://www.w3.org/1999/xlink"
+      >
+        <title>{this.title || this.icon}</title>
+        {this.gradient ? (
+          [
+            <defs>
+              <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id={this.gradientID}>
+                {this.stopColors.map(({ color, offset }) => (
+                  <stop key={offset} stopColor={color} offset={offset} />
+                ))}
+              </linearGradient>
+            </defs>,
+            <path fill={`url(#${this.gradientID})`} d={icon[this.icon]} />,
+          ]
+        ) : (
+          <path
+            d={icon[this.icon]}
+            fill={this.color.startsWith('--') ? `var(${this.color})` : this.color}
+          />
+        )}
+      </svg>
+    );
+  }
+}

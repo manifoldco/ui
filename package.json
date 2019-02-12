@@ -29,6 +29,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
+    "polished": "^2.3.3",
     "postcss-preset-env": "^6.5.0",
     "stylelint": "^9.10.1",
     "stylelint-config-rational-order": "0.0.4",
