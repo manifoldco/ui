@@ -1,6 +1,8 @@
 import { Component, Prop } from '@stencil/core';
 import { Service } from 'types/Service';
 
+import { themeIcons } from '../../assets/icons';
+
 type CategoryMap = {
   [category: string]: Service[];
 };
@@ -60,7 +62,10 @@ export class ManifoldMarketplace {
     console.log(sortedCategories, categoryMap);
     return sortedCategories.map(tag => (
       <div>
-        <h3 class="category">{this.formatCategoryLabel(tag)}</h3>
+        <h3 class="category">
+          <mf-icon icon={themeIcons[tag]} color="--mf-c-gray-s1" marginRight />
+          {this.formatCategoryLabel(tag)}
+        </h3>
         <div class="wrapper" style={this.themeColor}>
           {categoryMap[tag]
             .sort((a, b) => a.body.name.localeCompare(b.body.name))
