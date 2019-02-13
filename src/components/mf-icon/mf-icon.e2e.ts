@@ -1,4 +1,4 @@
-import { newE2EPage, E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 import { icon } from '../../assets/icons';
 
 const iconKey = 'activity';

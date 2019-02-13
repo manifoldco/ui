@@ -34,7 +34,6 @@ export class MfIcon {
   get stopColors() {
     const style = getComputedStyle(this.element);
     const gradientValue = style.getPropertyValue(this.gradient);
-    console.log({ gradientValue });
     if (!this.gradient || !gradientValue) return [];
     const colors = gradientValue.split('#');
     return colors.slice(1, colors.length).map((chunk, index) => {
@@ -50,7 +49,6 @@ export class MfIcon {
   }
 
   render() {
-    console.log(this.gradient && this.stopColors);
     return (
       <svg
         style={this.getMargin()}
