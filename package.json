@@ -19,7 +19,7 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
-    "@stencil/core": "^0.17.2",
+    "@stencil/core": "^0.16.2",
     "@stencil/postcss": "^0.1.0",
     "@typescript-eslint/parser": "^1.1.1",
     "eslint": "^5.12.1",
@@ -40,6 +40,6 @@
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "prettier": "^1.16.2",
-    "puppeteer": "1.11.0"
+    "puppeteer": "1.8.0"
   }
 }
