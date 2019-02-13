@@ -48,9 +48,11 @@ export class FeaturedService {
       <div class="card" style={this.getBackgroundColor()}>
         <div class="logo">
           {/* TODO add image mask */}
-          <img src={this.logo} alt={this.name} />
+          <img src={this.logo} alt={this.name} itemprop="logo" />
         </div>
-        <h2 class="title">{this.name}</h2>
+        <h2 class="title" itemprop="name">
+          {this.name}
+        </h2>
         <p class="description">
           <slot />
         </p>
