@@ -10,7 +10,7 @@ import '@stencil/core';
 
 import {
   Product,
-} from 'types/Plan';
+} from 'types/Product';
 import {
   Service,
 } from 'types/Service';
