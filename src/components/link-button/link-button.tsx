@@ -1,5 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-// import { darken, transparentize, saturate } from 'polished';
 
 @Component({
   tag: 'link-button',
