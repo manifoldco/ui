@@ -99,9 +99,23 @@
   --mf-font-d10: 0.2588386562em;
   --mf-font-d11: 0.2261163936em;
   --mf-font-d12: 0.1975308642em;
-  --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
-  --mf-radius-m: 4px;
-  --mf-radius-l: 6px;
+
+  /* font weight */
+  --mf-font-semibold: 500;
+  --mf-font-bold: 600;
+
+  /* border */
+  --mf-radius-m: 4px; /* TODO replace instances with default */
+  --mf-radius-l: 6px; /* TODO replace instances with large */
+  --mf-radius-small: 3px;
+  --mf-radius-default: 4px;
+  --mf-radius-large: 6px;
+  --mf-radius-xlarge: 8px;
+  --mf-radius-circle: 50%;
+
+  /* shadow */
+  --mf-shadow-default: 0 2px 6px rgba(31, 31, 38, 0.1);
+  --mf-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
 
   font-family: var(--mf-font-family); /* temp */
 }

@@ -30,12 +30,12 @@ export class ManifoldMarketplace {
 
   render() {
     return [
+      <product-page label="jawsdb-mysql" />,
       <service-grid
         services={this.services}
         service-link={this.serviceLink}
         theme-color={this.getThemeColor()}
       />,
-      <product-page label="jawsdb-mysql" />,
     ];
   }
 }

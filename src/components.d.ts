@@ -31,6 +31,36 @@ export namespace Components {
     'shape'?: 'square' | 'circle';
   }
 
+  interface ImageGallery {
+    'images': string[];
+    'title': string;
+  }
+  interface ImageGalleryAttributes extends StencilHTMLAttributes {
+    'images'?: string[];
+    'title'?: string;
+  }
+
+  interface LinkButton {
+    'class'?: string;
+    'href': string;
+    'icon'?: string;
+    'id': string;
+    'kind'?: 'cta' | 'warning';
+    'loading': boolean;
+    'rel'?: string;
+    'target'?: string;
+  }
+  interface LinkButtonAttributes extends StencilHTMLAttributes {
+    'class'?: string;
+    'href'?: string;
+    'icon'?: string;
+    'id'?: string;
+    'kind'?: 'cta' | 'warning';
+    'loading'?: boolean;
+    'rel'?: string;
+    'target'?: string;
+  }
+
   interface ManifoldMarketplace {
     'serviceLink'?: string;
     'theme'?: 'light' | 'dark';
@@ -123,6 +153,8 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'FeaturedService': Components.FeaturedService;
+    'ImageGallery': Components.ImageGallery;
+    'LinkButton': Components.LinkButton;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'MfIcon': Components.MfIcon;
     'ProductDetails': Components.ProductDetails;
@@ -133,6 +165,8 @@ declare global {
 
   interface StencilIntrinsicElements {
     'featured-service': Components.FeaturedServiceAttributes;
+    'image-gallery': Components.ImageGalleryAttributes;
+    'link-button': Components.LinkButtonAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'mf-icon': Components.MfIconAttributes;
     'product-details': Components.ProductDetailsAttributes;
@@ -146,6 +180,18 @@ declare global {
   var HTMLFeaturedServiceElement: {
     prototype: HTMLFeaturedServiceElement;
     new (): HTMLFeaturedServiceElement;
+  };
+
+  interface HTMLImageGalleryElement extends Components.ImageGallery, HTMLStencilElement {}
+  var HTMLImageGalleryElement: {
+    prototype: HTMLImageGalleryElement;
+    new (): HTMLImageGalleryElement;
+  };
+
+  interface HTMLLinkButtonElement extends Components.LinkButton, HTMLStencilElement {}
+  var HTMLLinkButtonElement: {
+    prototype: HTMLLinkButtonElement;
+    new (): HTMLLinkButtonElement;
   };
 
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
@@ -186,6 +232,8 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'featured-service': HTMLFeaturedServiceElement
+    'image-gallery': HTMLImageGalleryElement
+    'link-button': HTMLLinkButtonElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'mf-icon': HTMLMfIconElement
     'product-details': HTMLProductDetailsElement
@@ -196,6 +244,8 @@ declare global {
 
   interface ElementTagNameMap {
     'featured-service': HTMLFeaturedServiceElement;
+    'image-gallery': HTMLImageGalleryElement;
+    'link-button': HTMLLinkButtonElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'mf-icon': HTMLMfIconElement;
     'product-details': HTMLProductDetailsElement;

@@ -17,7 +17,7 @@ export class MfIcon {
   /** a CSS variable starting with `--mf-g-*` */
   @Prop() gradient?: string;
   /** a CSS variable starting with `--mf-c-*` */
-  @Prop() color?: string;
+  @Prop() color?: string = 'currentColor';
   @Element() element: HTMLElement;
 
   private getMargin() {
