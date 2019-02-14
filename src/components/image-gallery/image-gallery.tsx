@@ -20,7 +20,7 @@ export class ImageGallery {
         <p class="heading">{this.title}</p>
         <div class="image-large">
           <div class="large-inner">
-            <img src={this.selectedImage || this.images[0]} alt="" />
+            <img src={this.selectedImage || this.images[0]} alt="" data-test="display-image" />
           </div>
         </div>
         <div class="menu-scroll">
