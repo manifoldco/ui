@@ -42,7 +42,7 @@ export class ManifoldMarketplace {
 
     if (Array.isArray(this.services)) {
       this.services.forEach(service => {
-        const tags = service.body.tags || [];
+        const tags = service.body.tags || ['uncategorized'];
         tags.forEach(tag => {
           categoryMap[tag] = categoryMap[tag] || [];
           categoryMap[tag].push(service);
@@ -57,9 +57,16 @@ export class ManifoldMarketplace {
 
   render() {
     const categoryMap = this.categories();
+    console.log('Categories: ', Object.keys(categoryMap).join(' '));
+    console.log(
+      'Services: ',
+      Object.values(categoryMap)
+        .reduce((services, category) => services.concat(category), [])
+        .map(s => s.body.name)
+        .join(' ')
+    );
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
 
-    console.log(sortedCategories, categoryMap);
     return sortedCategories.map(tag => (
       <div>
         <h3 class="category">

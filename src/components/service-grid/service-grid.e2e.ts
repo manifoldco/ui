@@ -7,12 +7,16 @@ describe('<service-grid>', () => {
     // Set properties and wait
     const page = await newE2EPage({ html: '<service-grid></service-grid>' });
     await page.$eval('service-grid', (elm: any) => {
-      elm.services = [{ body: {} }, { body: {} }, { body: {} }];
+      elm.services = [
+        { body: { name: 'footastic', tags: ['foo'] } },
+        { body: { name: 'bartastic', tags: ['bar'] } },
+        { body: { name: 'baztastic', tags: ['baz'] } },
+      ];
     });
     await page.waitForChanges();
 
     // See if all service cards are rendered
-    const el = await page.findAll('service-grid >>> service-card');
+    const el = await page.findAll('service-card');
     expect(el.length).toBe(3);
   });
 
