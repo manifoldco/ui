@@ -32,7 +32,12 @@ export class ImageGallery {
                   data-selected={this.selectedImage === image}
                   onClick={() => this.selectImage(image)}
                 >
-                  <img class="image-button" src={image} alt={`Screenshot ${i + 1}`} />
+                  <img
+                    class="image-button"
+                    src={image}
+                    alt={`Screenshot ${i + 1}`}
+                    data-test="thumbnail"
+                  />
                 </button>
               </li>
             ))}
