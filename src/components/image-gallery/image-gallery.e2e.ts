@@ -1,4 +1,4 @@
-import { newE2EPage, E2EPage } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 
@@ -29,7 +29,7 @@ describe('<image-gallery>', () => {
     expect(el.getAttribute('src')).toBe(images[0]);
   });
 
-  it('displays the first image by default', async () => {
+  it('displays the image thumbnails', async () => {
     const page = await newE2EPage({
       html: `<image-gallery></image-gallery>`,
     });
