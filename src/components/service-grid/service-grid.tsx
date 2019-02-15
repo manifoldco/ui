@@ -57,14 +57,6 @@ export class ManifoldMarketplace {
 
   render() {
     const categoryMap = this.categories();
-    console.log('Categories: ', Object.keys(categoryMap).join(' '));
-    console.log(
-      'Services: ',
-      Object.values(categoryMap)
-        .reduce((services, category) => services.concat(category), [])
-        .map(s => s.body.name)
-        .join(' ')
-    );
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
 
     return sortedCategories.map(tag => (
