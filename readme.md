@@ -33,3 +33,14 @@ To run the unit tests and watch for file changes during development, run:
 ```
 npm run test.watch
 ```
+
+## Publishing
+
+To publish to npm, the following commands are supported:
+
+| Command                 | Description                                        |
+| :---------------------- | :------------------------------------------------- |
+| `npm run publish:rc`    | Publish a release candidate to npm (testing, etc.) |
+| `npm run publish:patch` | Publish a patch version                            |
+| `npm run publish:minor` | Publish a minor version                            |
+| `npm run publish:major` | Publish a major version                            |
