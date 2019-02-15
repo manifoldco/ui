@@ -56,7 +56,6 @@
     "stylelint-config-standard": "^18.2.0"
   },
   "devDependencies": {
-    "@pika/plugin-standard-pkg": "^0.3.10",
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "prettier": "^1.16.2",

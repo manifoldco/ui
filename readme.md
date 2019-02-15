@@ -1,46 +1,39 @@
-# Embeddable Marketplace
+# @manifoldco/ui
 
-This is the embeddable marketplace. It uses [Stencil](https://stenciljs.com/) to build a lightweight, framework-agnostic, marketetplace with web components that can be embedded in other websites.
+Manifold’s reusable web components, built with [Stencil][stencil]
 
-## Local Setup
+## Installation
 
-To run this project locally, clone this repo, navigate to the project root, and run:
-
-```bash
-npm install
-```
-
-and run:
+Distribution is via npm. To use, run the following in any terminal:
 
 ```bash
-npm start
+npm install @manifoldco/ui --save
 ```
 
-To build the app for production, run:
+### Usage in Frameworks
 
-```bash
-npm run build
+Currently, Manifold UI supports the following frameworks:
+
+| Name                      | Supported? |
+| :------------------------ | :--------- |
+| Angular                   | ✅         |
+| React                     | ✅         |
+| Vue                       | ✅         |
+| Ember                     | ✅         |
+| Vanilla JS (no framework) | ✅         |
+
+To integrate into your app, please refer to [Stencil’s documentation][stencil-framework].
+
+The only change needed from their docs is replace `test-components` with
+`@manifoldco/ui`, like so:
+
+```js
+// Replace this… 🚫
+import { defineCustomElements } from 'test-components/dist/loader';
+
+// …with this ✅
+import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 ```
 
-To run the unit tests once, run:
-
-```
-npm test
-```
-
-To run the unit tests and watch for file changes during development, run:
-
-```
-npm run test.watch
-```
-
-## Publishing
-
-To publish to npm, the following commands are supported:
-
-| Command                 | Description                                        |
-| :---------------------- | :------------------------------------------------- |
-| `npm run publish:rc`    | Publish a release candidate to npm (testing, etc.) |
-| `npm run publish:patch` | Publish a patch version                            |
-| `npm run publish:minor` | Publish a minor version                            |
-| `npm run publish:major` | Publish a major version                            |
+[stencil]: https://stenciljs.com/
+[stencil-framework]: https://stenciljs.com/docs/overview
