@@ -15,7 +15,7 @@ export class LinkButton {
   @Prop() rel?: string;
   @Prop() target?: string;
 
-  @Prop() kind?: 'cta' | 'warning';
+  @Prop() kind?: 'cta';
 
   render() {
     return (

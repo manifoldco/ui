@@ -45,7 +45,7 @@ export namespace Components {
     'href': string;
     'icon'?: string;
     'id': string;
-    'kind'?: 'cta' | 'warning';
+    'kind'?: 'cta';
     'loading': boolean;
     'rel'?: string;
     'target'?: string;
@@ -55,7 +55,7 @@ export namespace Components {
     'href'?: string;
     'icon'?: string;
     'id'?: string;
-    'kind'?: 'cta' | 'warning';
+    'kind'?: 'cta';
     'loading'?: boolean;
     'rel'?: string;
     'target'?: string;
