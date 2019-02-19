@@ -12,3 +12,11 @@
   line-height: 1;
   background-color: var(--background-color);
 }
+
+.category {
+  color: var(--mf-c-gray-s1);
+  font-weight: 400;
+  font-size: var(--mf-font-u2);
+  font-family: var(--mf-font-family);
+  text-transform: capitalize;
+}

@@ -7,7 +7,11 @@ describe('<service-grid>', () => {
     // Set properties and wait
     const page = await newE2EPage({ html: '<service-grid></service-grid>' });
     await page.$eval('service-grid', (elm: any) => {
-      elm.services = [{ body: {} }, { body: {} }, { body: {} }];
+      elm.services = [
+        { body: { name: 'footastic', tags: ['foo'] } },
+        { body: { name: 'bartastic', tags: ['bar'] } },
+        { body: { name: 'baztastic', tags: ['baz'] } },
+      ];
     });
     await page.waitForChanges();
 
@@ -20,7 +24,7 @@ describe('<service-grid>', () => {
     // Set properties and wait
     const page = await newE2EPage({ html: '<service-grid></service-grid>' });
     await page.$eval('service-grid', (elm: any) => {
-      elm.services = [{ body: { label: 'jawsdb-mysql' } }];
+      elm.services = [{ body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } }];
       elm.serviceLink = '/discover/view/service/:service';
     });
     await page.waitForChanges();
@@ -35,7 +39,10 @@ describe('<service-grid>', () => {
     // Set properties and wait
     const page = await newE2EPage({ html: '<service-grid></service-grid>' });
     await page.$eval('service-grid', (elm: any) => {
-      elm.services = [{ body: { label: 'jawsdb-mysql' } }, { body: { label: 'logdna' } }];
+      elm.services = [
+        { body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } },
+        { body: { name: 'LogDNA', tags: ['logging'], label: 'logdna' } },
+      ];
       elm.featured = 'fake,logdna,fake-2';
     });
     await page.waitForChanges();

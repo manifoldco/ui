@@ -36,6 +36,7 @@
     "start": "stencil build --dev --docs --watch --serve",
     "test": "stencil test --spec --e2e",
     "test:coverage": "stencil test --spec --e2e --coverage",
+    "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {

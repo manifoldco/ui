@@ -526,3 +526,24 @@ export const icon: { [key: string]: string } = {
   zoom_out:
     'M769.361 709.021l156.809 156.809c16.662 16.662 16.662 43.677 0 60.34s-43.677 16.662-60.34 0l-156.809-156.809c-65.693 52.549-149.021 83.972-239.688 83.972-212.077 0-384-171.923-384-384s171.923-384 384-384c212.077 0 384 171.923 384 384 0 90.667-31.423 173.995-83.972 239.688zM684.432 676.539c51.746-53.704 83.568-126.739 83.568-207.206 0-164.949-133.718-298.667-298.667-298.667s-298.667 133.718-298.667 298.667c0 164.949 133.718 298.667 298.667 298.667 80.467 0 153.502-31.822 207.206-83.568 1.123-1.46 2.353-2.865 3.691-4.202s2.742-2.568 4.202-3.691zM341.333 512c-23.564 0-42.667-19.103-42.667-42.667s19.103-42.667 42.667-42.667h256c23.564 0 42.667 19.103 42.667 42.667s-19.103 42.667-42.667 42.667h-256z',
 };
+
+export const themeIcons: { [key: string]: string } = {
+  'ai-ml': 'ai',
+  api: 'plug',
+  authentication: 'shield',
+  cms: 'file',
+  database: 'database',
+  infrastructure: 'infrastructure',
+  logging: 'logging',
+  'memory-store': 'cpu',
+  monitoring: 'activity',
+  messaging: 'message_circle',
+  optimization: 'image',
+  payment: 'credit_card',
+  runtime: 'play_circle',
+  search: 'search',
+  worker: 'worker',
+  uncategorized: 'square',
+  utility: 'tool',
+  ecommerce: 'shopping_cart',
+};
