@@ -1,15 +1,23 @@
 :host {
-  --defaultMargin: 0;
-  --marginAlt: 0.375em;
-  --marginRight: var(--defaultMargin);
-  --marginLeft: var(--defaultMargin);
+  --margin: 0.375em;
+  --icon-width: 1em;
+  --icon-height: 1em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 svg {
-  width: 1em;
-  min-width: 1em;
-  height: 1em;
-  margin-right: var(--marginRight);
-  margin-left: var(--marginLeft);
+  width: var(--icon-width);
+  height: var(--icon-height);
   transition: color 200ms, fill 200ms;
+
+  &[margin-right] {
+    margin-right: var(--margin);
+  }
+
+  &[margin-left] {
+    margin-left: var(--margin);
+  }
 }

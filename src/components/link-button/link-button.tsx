@@ -6,27 +6,13 @@ import { Component, Prop } from '@stencil/core';
   shadow: true,
 })
 export class LinkButton {
-  @Prop() id: string = '';
-  @Prop() loading: boolean = false;
-  @Prop() icon?: string;
-
   @Prop() href: string;
-  @Prop() class?: string;
   @Prop() rel?: string;
   @Prop() target?: string;
 
-  @Prop() kind?: 'cta';
-
   render() {
     return (
-      <a
-        href={this.href}
-        class={this.class}
-        id={this.id}
-        rel={this.rel}
-        target={this.target}
-        data-kind={this.kind}
-      >
+      <a href={this.href} rel={this.rel} target={this.target}>
         <slot />
       </a>
     );

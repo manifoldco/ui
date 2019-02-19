@@ -1,7 +1,5 @@
-import { Component, Prop, State } from '@stencil/core';
-import { Plan } from 'types/Plan';
+import { Component, Prop } from '@stencil/core';
 import { Product } from 'types/Product';
-import { Provider } from 'types/Provider';
 
 @Component({
   tag: 'product-page',
@@ -9,33 +7,26 @@ import { Provider } from 'types/Provider';
   shadow: true,
 })
 export class ProductPage {
-  @Prop() label: string;
-  @State() plans?: Plan[];
-  @State() product?: Product;
-  @State() provider?: Provider;
-
-  componentWillLoad() {
-    return fetch(`https://api.catalog.manifold.co/v1/products?label=${this.label}`)
-      .then(response => response.json())
-      .then(data => {
-        this.product = { ...data[0] };
-      });
-  }
+  @Prop() product?: Product;
 
   renderSidebar = () => {
-    const { name, logo_url, tags, support_email, documentation_url } = this.product.body;
+    const { label, name, logo_url, tags, support_email, documentation_url } = this.product.body;
 
     return (
       <aside class="sidebar">
         <div class="sidebar-inner">
-          <featured-service name={name} logo={logo_url} backgroundColor="#003b6e">
+          <featured-service
+            name={name}
+            logo={logo_url}
+            service-color-id={`--service-color-${label}`}
+          >
             {/* TODO get provider name */}
           </featured-service>
           {tags && (
             <div class="sidebar-section">
               {tags.map(tag => (
-                <div class="category" style={{ '--categoryColor': 'orange' }}>
-                  <mf-icon icon={tag} marginRight />
+                <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
+                  <mf-icon icon={tag} margin-right />
                   {tag}
                 </div>
               ))}
@@ -45,22 +36,32 @@ export class ProductPage {
             <h4>Provider Links</h4>
             <div class="provider-link">
               <a href="#plan_pricing">
-                <mf-icon icon="dollar_sign" color="--mf-c-gray" marginRight />
+                <mf-icon icon="dollar_sign" color="--mf-c-gray" margin-right />
                 Pricing
               </a>
             </div>
             <div class="provider-link">
               <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                <mf-icon icon="life_buoy" color="--mf-c-gray" marginRight />
+                <mf-icon icon="life_buoy" color="--mf-c-gray" margin-right />
                 Support
-                <mf-icon icon="arrow_up_right" color="--mf-c-grayLight" marginLeft />
+                <mf-icon
+                  class="external-link-icon"
+                  icon="arrow_up_right"
+                  color="--mf-c-grayLight"
+                  margin-left
+                />
               </a>
             </div>
             <div class="provider-link">
               <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                <mf-icon icon="book" color="--mf-c-gray" marginRight />
+                <mf-icon icon="book" color="--mf-c-gray" margin-right />
                 Documentation
-                <mf-icon icon="arrow_up_right" color="--mf-c-grayLight" marginLeft />
+                <mf-icon
+                  class="external-link-icon"
+                  icon="arrow_up_right"
+                  color="--mf-c-grayLight"
+                  margin-left
+                />
               </a>
             </div>
           </div>

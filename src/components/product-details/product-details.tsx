@@ -19,7 +19,6 @@ export class ProductDetails {
         <h1 class="title" itemprop="tagline">
           {tagline}
           <link-button
-            kind="cta"
             href={`${RESOURCE_CREATE}${label}&plan=${'selectedPlan'}`}
             rel="noopener noreferrer"
             target="_blank"

@@ -19,16 +19,14 @@ import {
 export namespace Components {
 
   interface FeaturedService {
-    'backgroundColor': string;
     'logo': string;
     'name': string;
-    'shape': 'square' | 'circle';
+    'serviceColorId': string;
   }
   interface FeaturedServiceAttributes extends StencilHTMLAttributes {
-    'backgroundColor'?: string;
     'logo'?: string;
     'name'?: string;
-    'shape'?: 'square' | 'circle';
+    'serviceColorId'?: string;
   }
 
   interface ImageGallery {
@@ -41,22 +39,12 @@ export namespace Components {
   }
 
   interface LinkButton {
-    'class'?: string;
     'href': string;
-    'icon'?: string;
-    'id': string;
-    'kind'?: 'cta';
-    'loading': boolean;
     'rel'?: string;
     'target'?: string;
   }
   interface LinkButtonAttributes extends StencilHTMLAttributes {
-    'class'?: string;
     'href'?: string;
-    'icon'?: string;
-    'id'?: string;
-    'kind'?: 'cta';
-    'loading'?: boolean;
     'rel'?: string;
     'target'?: string;
   }
@@ -67,6 +55,15 @@ export namespace Components {
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
     'serviceLink'?: string;
+    'theme'?: 'light' | 'dark';
+  }
+
+  interface ManifoldProduct {
+    'productLabel'?: string;
+    'theme'?: 'light' | 'dark';
+  }
+  interface ManifoldProductAttributes extends StencilHTMLAttributes {
+    'productLabel'?: string;
     'theme'?: 'light' | 'dark';
   }
 
@@ -113,10 +110,10 @@ export namespace Components {
   }
 
   interface ProductPage {
-    'label': string;
+    'product'?: Product;
   }
   interface ProductPageAttributes extends StencilHTMLAttributes {
-    'label'?: string;
+    'product'?: Product;
   }
 
   interface ServiceCard {
@@ -156,6 +153,7 @@ declare global {
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
+    'ManifoldProduct': Components.ManifoldProduct;
     'MfIcon': Components.MfIcon;
     'ProductDetails': Components.ProductDetails;
     'ProductPage': Components.ProductPage;
@@ -168,6 +166,7 @@ declare global {
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
+    'manifold-product': Components.ManifoldProductAttributes;
     'mf-icon': Components.MfIconAttributes;
     'product-details': Components.ProductDetailsAttributes;
     'product-page': Components.ProductPageAttributes;
@@ -198,6 +197,12 @@ declare global {
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
     new (): HTMLManifoldMarketplaceElement;
+  };
+
+  interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
+  var HTMLManifoldProductElement: {
+    prototype: HTMLManifoldProductElement;
+    new (): HTMLManifoldProductElement;
   };
 
   interface HTMLMfIconElement extends Components.MfIcon, HTMLStencilElement {}
@@ -235,6 +240,7 @@ declare global {
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
+    'manifold-product': HTMLManifoldProductElement
     'mf-icon': HTMLMfIconElement
     'product-details': HTMLProductDetailsElement
     'product-page': HTMLProductPageElement
@@ -247,6 +253,7 @@ declare global {
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
+    'manifold-product': HTMLManifoldProductElement;
     'mf-icon': HTMLMfIconElement;
     'product-details': HTMLProductDetailsElement;
     'product-page': HTMLProductPageElement;

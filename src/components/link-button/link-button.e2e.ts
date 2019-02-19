@@ -10,8 +10,14 @@ describe('<link-button>', () => {
 
   beforeAll(async () => {
     page = await newE2EPage({
-      html: `<link-button href="${url}">${label}</link-button>`,
+      html: `<link-button>${label}</link-button>`,
     });
+
+    await page.$eval('link-button', (elm: any) => {
+      elm.href = 'https://manifold.co';
+    });
+
+    await page.waitForChanges();
   });
 
   it('links to the provided href', async () => {

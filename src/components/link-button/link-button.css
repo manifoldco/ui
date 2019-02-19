@@ -1,22 +1,5 @@
 a {
-  --padding-left-default: 1.5em;
   --padding-left-alt: 1em;
-  --padding-left: var(--padding-left-default);
-
-  /* default state */
-  --color: var(--mf-c-grayDarker);
-  --background: var(--mf-c-white);
-  --border-color: var(--mf-c-border);
-
-  /* hover & focus */
-  --hover-color: var(--mf-c-black);
-  --hover-background: var(--background);
-  --hover-border-color: var(--mf-c-borderDark);
-
-  /* active */
-  --active-color: var(--mf-c-grayDarker);
-  --active-background: var(--background);
-  --active-border-color: var(--border-color);
 
   display: inline-flex;
   justify-content: center;
@@ -26,16 +9,15 @@ a {
   padding-top: 0.75em;
   padding-right: 1.5em;
   padding-bottom: 0.75em;
-  padding-left: var(--padding-left);
-  color: var(--color);
-  font-weight: var(--mf-font-semibold);
+  padding-left: 1.5em;
+  color: var(--mf-c-white);
   font-size: 15px;
   line-height: 1;
   white-space: nowrap;
   text-align: center;
   text-decoration: none;
-  background: var(--background);
-  border: 1px solid var(--border-color);
+  background: var(--mf-g-cta);
+  border: 0;
   border-radius: var(--mf-radius-m);
   box-shadow: var(--mf-shadow-default);
   cursor: pointer;
@@ -43,7 +25,7 @@ a {
 
   &:focus,
   &:hover {
-    filter: saturate(120%);
+    filter: saturate(130%);
   }
 
   &:active {
@@ -55,20 +37,5 @@ a {
   &:focus,
   &:active {
     outline: 0;
-  }
-}
-
-[data-kind~='cta'] {
-  color: var(--mf-c-white);
-  background: var(--mf-g-cta);
-  border: 0;
-
-  &:focus,
-  &:hover {
-    filter: saturate(130%);
-  }
-
-  &:active {
-    filter: brightness(90%);
   }
 }

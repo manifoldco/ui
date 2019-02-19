@@ -20,13 +20,6 @@ export class MfIcon {
   @Prop() color?: string = 'currentColor';
   @Element() element: HTMLElement;
 
-  private getMargin() {
-    return {
-      ...(this.marginRight ? { '--marginRight': 'var(--marginAlt)' } : {}),
-      ...(this.marginLeft ? { '--marginLeft': 'var(--marginAlt)' } : {}),
-    };
-  }
-
   get gradientID() {
     return `gradient-${this.gradient}`;
   }
@@ -51,7 +44,8 @@ export class MfIcon {
   render() {
     return (
       <svg
-        style={this.getMargin()}
+        margin-right={this.marginRight}
+        margin-left={this.marginLeft}
         viewBox="0 0 1024 1024"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsX="http://www.w3.org/1999/xlink"
