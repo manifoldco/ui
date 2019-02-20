@@ -7,12 +7,11 @@
 
 ## Properties
 
-| Property          | Attribute          | Description | Type                   | Default     |
-| ----------------- | ------------------ | ----------- | ---------------------- | ----------- |
-| `backgroundColor` | `background-color` |             | `string`               | `undefined` |
-| `logo`            | `logo`             |             | `string`               | `undefined` |
-| `name`            | `name`             |             | `string`               | `undefined` |
-| `shape`           | `shape`            |             | `"circle" \| "square"` | `'square'`  |
+| Property         | Attribute          | Description | Type     | Default     |
+| ---------------- | ------------------ | ----------- | -------- | ----------- |
+| `logo`           | `logo`             |             | `string` | `undefined` |
+| `name`           | `name`             |             | `string` | `undefined` |
+| `serviceColorId` | `service-color-id` |             | `string` | `undefined` |
 
 
 ----------------------------------------------

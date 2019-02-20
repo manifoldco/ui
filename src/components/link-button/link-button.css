@@ -1,0 +1,41 @@
+a {
+  --padding-left-alt: 1em;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 2.5rem;
+  padding-top: 0.75em;
+  padding-right: 1.5em;
+  padding-bottom: 0.75em;
+  padding-left: 1.5em;
+  color: var(--mf-c-white);
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  text-align: center;
+  text-decoration: none;
+  background: var(--mf-g-cta);
+  border: 0;
+  border-radius: var(--mf-radius-m);
+  box-shadow: var(--mf-shadow-default);
+  cursor: pointer;
+  transition: background-color 200ms, border-color 150ms, color 200ms;
+
+  &:focus,
+  &:hover {
+    filter: saturate(130%);
+  }
+
+  &:active {
+    box-shadow: var(--mf-shadow-transparent);
+    transform: translateY(1px);
+    filter: brightness(90%);
+  }
+
+  &:focus,
+  &:active {
+    outline: 0;
+  }
+}

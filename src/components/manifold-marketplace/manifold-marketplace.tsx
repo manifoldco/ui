@@ -29,13 +29,12 @@ export class ManifoldMarketplace {
   }
 
   render() {
-    return [
+    return (
       <service-grid
         services={this.services}
         service-link={this.serviceLink}
         theme-color={this.getThemeColor()}
-      />,
-      <product-page label="jawsdb-mysql" />,
-    ];
+      />
+    );
   }
 }

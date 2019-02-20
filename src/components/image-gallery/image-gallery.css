@@ -1,0 +1,110 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+  max-width: 100%;
+  padding-top: 1rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  background-color: var(--mf-c-offWhite);
+  border-radius: var(--mf-radius-m);
+  box-shadow: 0 0 0 1px var(--mf-c-grayLight);
+}
+
+.heading {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--mf-c-gray);
+  font-weight: 500;
+  font-size: var(--mf-font-d1);
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.image-large {
+  --image-ratio: 56.25%;
+
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: var(--image-ratio);
+}
+
+.large-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image-button {
+  object-position: center center;
+  object-fit: cover;
+}
+
+.menu-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.menu {
+  --item-count: 0;
+
+  display: flex;
+  width: calc(var(--item-count) * 2 * 4.75rem);
+  min-width: 100%;
+  margin: 0;
+  padding: 1.5rem 2px;
+  list-style: none;
+}
+
+.menu-item {
+  margin: 0;
+  padding: 0;
+}
+
+.image-wrapper {
+  --selectedBorder: 0 0 0 2px var(--mf-c-gray);
+  --focusStart: 0 4px 8px rgba(0, 0, 0, 0);
+  --focusEnd: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  min-width: 4rem;
+  max-width: 10rem;
+  min-height: 3rem;
+  margin: 0 0.375rem;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: var(--mf-radius-default);
+  box-shadow: 0 0 0 1px #8f8f9500, var(--focusStart);
+  transition: box-shadow 200ms, transform 200ms ease-out;
+  appearance: none;
+
+  &[data-selected] {
+    box-shadow: var(--selectedBorder);
+
+    &:focus {
+      outline: none;
+      box-shadow: var(--selectedBorder), var(--focusStart);
+    }
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 1px var(--mf-c-grayLight), var(--focusEnd);
+    transform: translateY(-2px);
+  }
+}

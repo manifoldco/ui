@@ -1,16 +1,24 @@
 import { newE2EPage, E2EPage } from '@stencil/core/testing';
 
+/* eslint-disable no-param-reassign */
+
 const name = 'JawsDB MySQL';
 const logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png';
 const provider = 'JawsDB';
-const bgColor = '#888888';
 
 describe('<featured-service>', () => {
   let page: E2EPage;
   beforeAll(async () => {
     page = await newE2EPage({
-      html: `<featured-service name="${name}" logo="${logo}" background-color="${bgColor}"><span itemprop="brand">${provider}</span></featured-service>`,
+      html: `<featured-service><span itemprop="brand">${provider}</span></featured-service>`,
     });
+
+    await page.$eval('featured-service', (elm: any) => {
+      elm.name = 'JawsDB MySQL';
+      elm.logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png';
+    });
+
+    await page.waitForChanges();
   });
 
   it('displays the product/service name', async () => {

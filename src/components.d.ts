@@ -19,16 +19,34 @@ import {
 export namespace Components {
 
   interface FeaturedService {
-    'backgroundColor': string;
     'logo': string;
     'name': string;
-    'shape': 'square' | 'circle';
+    'serviceColorId': string;
   }
   interface FeaturedServiceAttributes extends StencilHTMLAttributes {
-    'backgroundColor'?: string;
     'logo'?: string;
     'name'?: string;
-    'shape'?: 'square' | 'circle';
+    'serviceColorId'?: string;
+  }
+
+  interface ImageGallery {
+    'images': string[];
+    'title': string;
+  }
+  interface ImageGalleryAttributes extends StencilHTMLAttributes {
+    'images'?: string[];
+    'title'?: string;
+  }
+
+  interface LinkButton {
+    'href': string;
+    'rel'?: string;
+    'target'?: string;
+  }
+  interface LinkButtonAttributes extends StencilHTMLAttributes {
+    'href'?: string;
+    'rel'?: string;
+    'target'?: string;
   }
 
   interface ManifoldMarketplace {
@@ -37,6 +55,15 @@ export namespace Components {
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
     'serviceLink'?: string;
+    'theme'?: 'light' | 'dark';
+  }
+
+  interface ManifoldProduct {
+    'productLabel'?: string;
+    'theme'?: 'light' | 'dark';
+  }
+  interface ManifoldProductAttributes extends StencilHTMLAttributes {
+    'productLabel'?: string;
     'theme'?: 'light' | 'dark';
   }
 
@@ -83,10 +110,10 @@ export namespace Components {
   }
 
   interface ProductPage {
-    'label': string;
+    'product'?: Product;
   }
   interface ProductPageAttributes extends StencilHTMLAttributes {
-    'label'?: string;
+    'product'?: Product;
   }
 
   interface ServiceCard {
@@ -123,7 +150,10 @@ export namespace Components {
 declare global {
   interface StencilElementInterfaces {
     'FeaturedService': Components.FeaturedService;
+    'ImageGallery': Components.ImageGallery;
+    'LinkButton': Components.LinkButton;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
+    'ManifoldProduct': Components.ManifoldProduct;
     'MfIcon': Components.MfIcon;
     'ProductDetails': Components.ProductDetails;
     'ProductPage': Components.ProductPage;
@@ -133,7 +163,10 @@ declare global {
 
   interface StencilIntrinsicElements {
     'featured-service': Components.FeaturedServiceAttributes;
+    'image-gallery': Components.ImageGalleryAttributes;
+    'link-button': Components.LinkButtonAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
+    'manifold-product': Components.ManifoldProductAttributes;
     'mf-icon': Components.MfIconAttributes;
     'product-details': Components.ProductDetailsAttributes;
     'product-page': Components.ProductPageAttributes;
@@ -148,10 +181,28 @@ declare global {
     new (): HTMLFeaturedServiceElement;
   };
 
+  interface HTMLImageGalleryElement extends Components.ImageGallery, HTMLStencilElement {}
+  var HTMLImageGalleryElement: {
+    prototype: HTMLImageGalleryElement;
+    new (): HTMLImageGalleryElement;
+  };
+
+  interface HTMLLinkButtonElement extends Components.LinkButton, HTMLStencilElement {}
+  var HTMLLinkButtonElement: {
+    prototype: HTMLLinkButtonElement;
+    new (): HTMLLinkButtonElement;
+  };
+
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
     new (): HTMLManifoldMarketplaceElement;
+  };
+
+  interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
+  var HTMLManifoldProductElement: {
+    prototype: HTMLManifoldProductElement;
+    new (): HTMLManifoldProductElement;
   };
 
   interface HTMLMfIconElement extends Components.MfIcon, HTMLStencilElement {}
@@ -186,7 +237,10 @@ declare global {
 
   interface HTMLElementTagNameMap {
     'featured-service': HTMLFeaturedServiceElement
+    'image-gallery': HTMLImageGalleryElement
+    'link-button': HTMLLinkButtonElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
+    'manifold-product': HTMLManifoldProductElement
     'mf-icon': HTMLMfIconElement
     'product-details': HTMLProductDetailsElement
     'product-page': HTMLProductPageElement
@@ -196,7 +250,10 @@ declare global {
 
   interface ElementTagNameMap {
     'featured-service': HTMLFeaturedServiceElement;
+    'image-gallery': HTMLImageGalleryElement;
+    'link-button': HTMLLinkButtonElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
+    'manifold-product': HTMLManifoldProductElement;
     'mf-icon': HTMLMfIconElement;
     'product-details': HTMLProductDetailsElement;
     'product-page': HTMLProductPageElement;

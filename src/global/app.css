@@ -69,6 +69,28 @@
   --mf-g-blitline: linear-gradient(to top right, #00648c, #00a4e6);
   --mf-g-elegant-cm: linear-gradient(to top right, #0e517e, #218ab5);
 
+  /* context colors */
+  --mf-c-authentication: var(--mf-c-blueDark);
+  --mf-c-CMS: var(--mf-c-yellow);
+  --mf-c-cms: var(--mf-c-yellow);
+  --mf-c-database: var(--mf-c-orange);
+  --mf-c-logging: var(--mf-c-black);
+  --mf-c-memory-store: var(--mf-blue);
+  --mf-c-messaging: var(--mf-c-red);
+  --mf-c-monitoring: var(--mf-c-purple);
+  --mf-c-optimization: var(--mf-c-teal);
+  --mf-c-search: var(--mf-c-teal);
+  --mf-c-worker: var(--mf-c-green);
+
+  /* text-colors */
+  --mf-c-text: var(--mf-c-grayDarker);
+  --mf-c-textSubdue: var(--mf-c-gray);
+  --mf-c-background: var(--mf-c-white);
+  --mf-c-backgroundSubdue: var(--mf-c-offWhite);
+
+  /* service colors */
+  --service-color-jawsdb-mysql: #003b6e;
+
   /* font */
   --mf-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif,
@@ -99,9 +121,23 @@
   --mf-font-d10: 0.2588386562em;
   --mf-font-d11: 0.2261163936em;
   --mf-font-d12: 0.1975308642em;
-  --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
-  --mf-radius-m: 4px;
-  --mf-radius-l: 6px;
+
+  /* font weight */
+  --mf-font-semibold: 500;
+  --mf-font-bold: 600;
+
+  /* border */
+  --mf-radius-m: 4px; /* TODO replace instances with default */
+  --mf-radius-l: 6px; /* TODO replace instances with large */
+  --mf-radius-small: 3px;
+  --mf-radius-default: 4px;
+  --mf-radius-large: 6px;
+  --mf-radius-xlarge: 8px;
+  --mf-radius-circle: 50%;
+
+  /* shadow */
+  --mf-shadow-default: 0 2px 6px rgba(31, 31, 38, 0.1);
+  --mf-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
 
   font-family: var(--mf-font-family); /* temp */
 }
