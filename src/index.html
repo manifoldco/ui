@@ -77,6 +77,15 @@
         margin-top: 1.5rem;
         border-top: 1px solid rgba(0, 0, 0, 0.25);
       }
+
+      .docs-example {
+        padding: 1.5rem;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .docs-example-inner {
+        background-color: white;
+      }
     </style>
   </head>
   <body>
@@ -133,7 +142,12 @@
             </p>
             <!-- END README -->
           </div>
-          <manifold-product product-label="jawsdb-mysql"></manifold-product>
+          <h2>Example</h2>
+          <div class="docs-example">
+            <div class="docs-example-inner">
+              <manifold-product product-label="jawsdb-mysql"></manifold-product>
+            </div>
+          </div>
         </section>
         <section class="docs-component" id="manifold-product">
           <div class="markdown-body">
@@ -212,10 +226,15 @@
             </p>
             <!-- END README -->
           </div>
-          <manifold-marketplace
-            featured="till"
-            service-link="/services/:service"
-          ></manifold-marketplace>
+          <h2>Example</h2>
+          <div class="docs-example">
+            <div class="docs-example-inner">
+              <manifold-marketplace
+                featured="till"
+                service-link="/services/:service"
+              ></manifold-marketplace>
+            </div>
+          </div>
         </section>
       </main>
     </div>
