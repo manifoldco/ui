@@ -28,6 +28,7 @@ function getComponentName(contents) {
 }
 
 /* Init */
+// Select: opening comment + anything (including newlines) + closing comment
 const MAGIC_FORMULA = /<!-- BEGIN README [^]+?(?=<!-- END README -->)/g;
 const converter = new Showdown.Converter(MARKDOWN_OPTIONS);
 converter.setFlavor('github');
@@ -47,7 +48,6 @@ if (Array.isArray(readmes)) {
     const md = readFileSync(filepath, 'utf8');
     const html = converter.makeHtml(md);
     // We included the opening comment in our selection, so let’s put it back
-    // (and ensure it’s formatted correctly)
     const newContents = `<!-- BEGIN README ${component} -->
 ${HTML_BEFORE}
 ${html}
