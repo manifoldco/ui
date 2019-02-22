@@ -56,3 +56,8 @@
 .category-button.active {
   color: var(--mf-c-grayDarker);
 }
+
+.category-button:focus {
+  color: var(--mf-c-blue);
+  outline: 0;
+}
