@@ -56,7 +56,6 @@
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
     "postcss-preset-env": "^6.5.0",
-    "showdown": "^1.9.0",
     "stylelint": "^9.10.1",
     "stylelint-config-rational-order": "0.0.4",
     "stylelint-config-standard": "^18.2.0"
@@ -65,6 +64,7 @@
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "prettier": "^1.16.4",
-    "puppeteer": "1.11.0"
+    "puppeteer": "1.11.0",
+    "showdown": "^1.9.0"
   }
 }
