@@ -14,14 +14,24 @@
     <meta name="theme-color" content="#16161d" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="x-ua-compatible" content="IE=Edge" />
-
-    <link href="/build/manifold.css" rel="stylesheet" />
-    <link href="https://unpkg.com/github-markdown-css@3.0.1/github-markdown.css" rel="stylesheet" />
-    <script src="/build/manifold.js"></script>
-
     <link rel="apple-touch-icon" href="/assets/icon/icon.png" />
     <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico" />
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- Web Component Stack -->
+    <link href="/build/manifold.css" rel="stylesheet" />
+    <script src="/build/manifold.js"></script>
+
+    <!-- Docs -->
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/atelier-cave-dark.min.css"
+      rel="stylesheet"
+    />
     <style>
       /* Docs styling */
 
@@ -34,12 +44,32 @@
 
       .docs-wrapper {
         display: grid;
-        grid-column-gap: 1.5rem;
         grid-template-columns: 15rem auto;
       }
 
       .docs-sidebar {
         position: relative;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .docs-sidebar h3 {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        color: rgba(0, 0, 0, 0.5);
+        font-weight: 400;
+        font-size: 12px;
+        font-family: 'IBM Plex Mono', monospace;
+        letter-spacing: 0.125em;
+        text-transform: uppercase;
+      }
+
+      .docs-sidebar svg {
+        display: block;
+        width: 100%;
+        max-width: 10rem;
+        height: auto;
+        margin-bottom: 2rem;
+        margin-left: -0.25rem;
       }
 
       .docs-nav {
@@ -49,7 +79,6 @@
         height: 100vh;
         margin: 0;
         padding: 1.5rem;
-        background-color: rgba(0, 0, 0, 0.1);
       }
 
       .docs-nav ul {
@@ -60,12 +89,16 @@
 
       .docs-nav a {
         display: block;
-        color: #000;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        color: rgba(0, 0, 0, 0.8);
+        font-weight: 300;
+        font-size: 14px;
         text-decoration: none;
       }
 
       .docs-main {
-        padding: 1.5rem;
+        font-size: 14px;
       }
 
       .docs-component {
@@ -73,18 +106,60 @@
         padding-top: 1.5rem;
       }
 
-      .docs-component + .docs-component {
-        margin-top: 1.5rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.25);
-      }
-
       .docs-example {
-        padding: 1.5rem;
-        background-color: rgba(0, 0, 0, 0.1);
+        padding-top: 2rem;
+        padding-right: 3rem;
+        padding-bottom: 2rem;
+        padding-left: 3rem;
+        background-color: rgba(0, 0, 0, 0.05);
       }
 
       .docs-example-inner {
+        padding: 1.5rem;
         background-color: white;
+        border-radius: 1.5rem;
+        box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+      }
+
+      /* GitHub CSS Overrides */
+
+      pre,
+      code,
+      .markdown-body pre,
+      .markdown-body code {
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      .markdown-body pre {
+        background-color: #18171b;
+        border-radius: 0.625rem;
+      }
+
+      .docs-component h2,
+      .docs-component h3,
+      .docs-component h4,
+      .docs-component h5,
+      .docs-component h6 {
+        max-width: 50rem;
+        margin-right: auto;
+        margin-left: auto;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      .docs-component h2 {
+        margin-top: 3rem;
+        font-size: 20px;
+        border-bottom: none;
+      }
+
+      .markdown-body {
+        max-width: 50rem;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .markdown-body p {
+        font-size: 14px;
       }
     </style>
   </head>
@@ -92,115 +167,83 @@
     <div class="docs-wrapper">
       <aside class="docs-sidebar">
         <nav class="docs-nav">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 158.3 52.9">
+            <path
+              d="M2.4 19.3c0 .5-.1.9-.1 1.4 0 8.5 5.7 15.6 13.5 17.7-.4-1.7-.5-3.3-.5-4.8 0-2.9.8-5.5 2.1-7.2.2-.3.5-.6.8-.8L2.4 19.3zm.4-2.4l7.6 3.1c.1-.2.1-.4.2-.6 0 .2.7-2.9.9-3.9 1-3.7 2.3-6 4.7-6.9.2-.1.4-.2.7-.2 1.2-.3 2.4-.2 3.7.2.2.1.4.1.6.2.1 0 .3.1.3.1.9.3 9.7 3.7 17 6.6-2.3-7.5-9.3-13-17.6-13-9-.1-16.4 6.1-18.1 14.4zm9.8 4l9.3 3.8c.4.1.7.2 1.1.4 1 .5 1.7 1.4 2.8 3 1 1.6 2 2.3 2.8 2.3.2 0 .4 0 .6-.1.6-.3 1.2-1.1 1.7-2.4.4-.9.7-2.1 1-3.7l.1-.8c.4-2.4 1-4.3 1.9-5.7v-.2l.1-.1c.3-.4.6-.7.9-1-6.7-2.4-13.9-5.2-14.3-5.3l-.3-.1c-.2-.1-.3-.1-.5-.2-.9-.3-1.7-.3-2.4-.2-.1 0-.2.1-.4.1-1.4.6-2.5 2.3-3.3 5.3-.2.9-.9 4-.9 3.8 0 .5-.1.8-.2 1.1zm8.7 6.1c-1.8-.3-3.6 2.5-3.6 6.7 0 1.6.3 3.4.7 5.3.8.1 1.5.1 2.3.1 10.2 0 18.4-8.2 18.4-18.4 0-.9-.1-1.7-.2-2.5-.9-.3-1.6-.3-2.2 0-.4.2-.7.4-.9.7v.1c-.7 1.1-1.2 2.7-1.6 4.9l-.1.9c-.3 1.7-.7 3.1-1.1 4.2-.7 1.7-1.7 2.9-2.8 3.5-.6.3-1.2.5-1.8.4-1.7-.1-3.2-1.3-4.6-3.4-.9-1.3-1.4-2-1.9-2.2-.2-.2-.4-.3-.6-.3zM.1 18.4v-.2C1.4 8 10.1 0 20.7 0c11.5 0 20.7 9.3 20.7 20.7s-9.3 20.7-20.7 20.7S0 32.2 0 20.7c0-.8 0-1.6.1-2.3zm57 10.7V16H60v.8c0 .3 0 .7-.1 1 .9-1.3 2.2-2.1 3.8-2.1 1.8 0 3.1.9 3.8 2.3.9-1.4 2.3-2.3 4.2-2.3 2.6 0 4.4 1.7 4.4 4.9v8.5h-2.9v-8.4c0-1.6-.9-2.7-2.4-2.7s-2.7 1.2-2.7 3.3v7.8h-2.9v-8.4c0-1.5-.9-2.5-2.4-2.5-1.4 0-2.7 1.1-2.8 3.1v7.9l-2.9-.1zm33.8 0c-1.7 0-2.5-.9-2.9-2.3-.8 1.3-2.5 2.6-5 2.6-3 0-4.5-1.9-4.5-3.9 0-2.4 1.9-4.3 5.9-4.3 1.4 0 2.7.3 3.3.4v-.7c0-1.6-1.2-2.8-3-2.8-1.2 0-2.3.6-3 1.5l-2.1-1.5s1.5-2.6 5.2-2.6c3.5 0 5.7 2.2 5.7 5.3v4.8c0 .5.3.8.8.8h.4v2.7h-.8zm-3.2-5.5c-.6-.1-1.8-.3-2.8-.3-2.1 0-3.4.9-3.4 2.2 0 .9.7 1.7 2.2 1.7 2.2-.2 3.7-1.9 4-3.6zm18.7 5.5h-2.9v-7.5c0-2.3-1.3-3.5-3-3.5-1.8 0-3.3 1.4-3.3 3.4v7.6h-2.9V16h2.9v.9c0 .3 0 .7-.1 1.1.9-1.3 2.4-2.3 4.2-2.3 3 0 5.1 2.1 5.1 5.8v7.6zm4.7-18.9c1.1 0 2.1.9 2.1 2s-.9 2.1-2.1 2.1c-1.1 0-2.1-.9-2.1-2.1 0-1 1-2 2.1-2zm-1.5 18.9V16h3v13.1h-3zm10.6-10.6v10.6h-3V18.5h-2V16h2v-3.2c0-3 2-4.9 4.6-4.9 1.3 0 2.3.4 3 1.1l-1.3 2.2c-.4-.4-.9-.6-1.4-.6-1.1 0-1.8.8-1.8 2.4v3h3v2.6h-3.1zm4.3 4c0-3.8 3-6.8 6.8-6.8s6.8 3 6.8 6.8c0 3.9-3 6.9-6.8 6.9-3.9 0-6.8-3-6.8-6.9zm10.6 0c0-2.5-1.5-4.3-3.9-4.3s-3.9 1.8-3.9 4.3 1.6 4.3 3.9 4.3 3.9-1.8 3.9-4.3zm5.2 6.6V8.3h3v20.8h-3zm15.2 0c0-.9 0-1.5.1-1.9-1 1.4-2.5 2.2-4.2 2.2-3.5 0-5.8-3-5.8-6.9 0-3.9 2.4-6.8 5.9-6.8 1.6 0 3.1.6 4.1 1.9 0-.2-.1-.3-.1-.5V8.3h2.9v20.8h-2.9zm-.1-6.6c0-2.6-1.3-4.3-3.4-4.3-2.1 0-3.6 1.7-3.6 4.2s1.5 4.3 3.6 4.3c2.1.1 3.4-1.7 3.4-4.2z"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              fill="#323940"
+            />
+            <path
+              d="M59 42.2v7.5c0 .3.1.5.2.7.1.2.2.3.4.4.2.1.4.2.8.2s.6-.1.8-.2c.2-.1.3-.3.4-.4.1-.2.2-.4.2-.7v-7.5h2.3v6.3c0 .7 0 1.3-.1 1.9-.1.5-.3 1-.5 1.3-.3.4-.6.6-1.1.8s-1.1.3-1.9.3-1.4-.1-1.9-.3-.9-.4-1.1-.8c-.3-.4-.5-.8-.5-1.3-.1-.5-.1-1.2-.1-1.9v-6.3H59zm8.4 10.5V51h2.2v-7.1h-2.2v-1.7h6.8v1.7H72V51h2.2v1.7h-6.8z"
+            />
+            <linearGradient
+              id="manifold-gradient"
+              gradientUnits="userSpaceOnUse"
+              x1="-552.174"
+              y1="382.48"
+              x2="-553.688"
+              y2="382.354"
+              gradientTransform="matrix(17.32 0 0 -10.65 9638.21 4120.408)"
+            >
+              <stop offset="0" stop-color="#fe1360" />
+              <stop offset=".265" stop-color="#814eae" />
+              <stop offset=".609" stop-color="#2d98cc" />
+              <stop offset=".775" stop-color="#fd8745" />
+              <stop offset="1" stop-color="#fdc935" />
+            </linearGradient>
+            <path
+              d="M59 42.2v7.5c0 .3.1.5.2.7.1.2.2.3.4.4.2.1.4.2.8.2s.6-.1.8-.2c.2-.1.3-.3.4-.4.1-.2.2-.4.2-.7v-7.5h2.3v6.3c0 .7 0 1.3-.1 1.9-.1.5-.3 1-.5 1.3-.3.4-.6.6-1.1.8s-1.1.3-1.9.3-1.4-.1-1.9-.3-.9-.4-1.1-.8c-.3-.4-.5-.8-.5-1.3-.1-.5-.1-1.2-.1-1.9v-6.3H59zm8.4 10.5V51h2.2v-7.1h-2.2v-1.7h6.8v1.7H72V51h2.2v1.7h-6.8z"
+              fill="url(#manifold-gradient)"
+            />
+          </svg>
+          <h3>Components</h3>
           <ul role="menu">
+            <li role="menuitem"><a href="#manifold-marketplace">Marketplace</a></li>
             <li role="menuitem"><a href="#manifold-product">Product</a></li>
-            <li role="menuitem"><a href="#manifold-marketplace">Service Cards</a></li>
           </ul>
         </nav>
       </aside>
       <main class="docs-main" role="main">
-        <section class="docs-component" id="manifold-product">
-          <div class="markdown-body">
-            <!-- BEGIN README manifold-product -->
-
-            <!-- DO NOT EDIT! This is autogenerated from a README. -->
-            <!-- Any changes here will be blown away. Edit the README instead. -->
-
-            <h1 id="manifold-product">manifold-product</h1>
-            <!-- Auto Generated Below -->
-            <h2 id="properties">Properties</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th id="property">Property</th>
-                  <th id="attribute">Attribute</th>
-                  <th id="description">Description</th>
-                  <th id="type">Type</th>
-                  <th id="default">Default</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><code>productLabel</code></td>
-                  <td><code>product-label</code></td>
-                  <td></td>
-                  <td><code>string</code></td>
-                  <td><code>undefined</code></td>
-                </tr>
-                <tr>
-                  <td><code>theme</code></td>
-                  <td><code>theme</code></td>
-                  <td></td>
-                  <td><code>"dark" | "light"</code></td>
-                  <td><code>undefined</code></td>
-                </tr>
-              </tbody>
-            </table>
-            <hr />
-            <p>
-              <em>Built with <a href="https://stenciljs.com/">StencilJS</a></em>
-            </p>
-            <!-- END README -->
-          </div>
-          <h2>Example</h2>
-          <div class="docs-example">
-            <div class="docs-example-inner">
-              <manifold-product product-label="jawsdb-mysql"></manifold-product>
-            </div>
-          </div>
-        </section>
-        <section class="docs-component" id="manifold-product">
+        <section class="docs-component" id="manifold-marketplace">
           <div class="markdown-body">
             <!-- BEGIN README manifold-marketplace -->
 
             <!-- DO NOT EDIT! This is autogenerated from a README. -->
             <!-- Any changes here will be blown away. Edit the README instead. -->
 
-            <h1 id="manifold-marketplace">manifold-marketplace</h1>
-            <h2 id="service-cards">Service Cards</h2>
-            <h3 id="anchor-link-formatting">Anchor link formatting</h3>
+            <h1 id="marketplace">Marketplace</h1>
+            <p>A list of all Manifold services.</p>
+            <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
+</code></pre>
+            <h2 id="urlformat">URL format</h2>
+            <pre><code class="html language-html">&lt;manifold-marketplace service-link="/services/:service"&gt;&lt;/manifold-marketplace&gt;
+</code></pre>
             <p>
-              By passing a <code>serviceLink</code> prop to the top-level component, you can specify
-              a<br />
-              URL pattern like so:
+              This turns the service cards into <code>&lt;a&gt;</code> tags with the URL structure
+              of <code>&lt;a href="/services/jawsdb-mysql"&gt;</code>, etc. Even if you plan on
+              using JavaScript on top, setting this is still recommended for accessibility purposes.
             </p>
-            <pre><code class="html language-html">&lt;manifold-marketplace serviceLink="/services/:service"&gt;&lt;/manifold-marketplace&gt;</code></pre>
             <p>
-              The <code>:service</code> placeholder will be replaced with a URL-friendly slug of
-              the<br />
-              service clicked on. That will render links like so:
+              <code>:service</code> is the only dynamic paramater accepted. Everything else in the
+              formula will be displayed as-is.
             </p>
-            <pre><code class="html language-html">&lt;a href="/services/jawsdb-mysql"&gt;&lt;/a&gt;
-&lt;a href="/services/logdna"&gt;&lt;/a&gt;
-&lt;a href="/services/mailgun"&gt;&lt;/a&gt;</code></pre>
             <p>
-              Even if you plan on using JavaScript in addition, setting
-              <code>serviceLink</code> to<br />
-              set <code>href</code> is still recommended for accessibility purposes.
-            </p>
-            <h3 id="javascript-callback">JavaScript callback</h3>
-            <p>Coming soon!</p>
-            <h2 id="marketplace-management">Marketplace Management</h2>
-            <h3 id="featured-services">Featured Services</h3>
-            <p>
-              Passing a string of comma-separated service slugs to the top-level component<br />
-              will display a “featured” tag for those services:
-            </p>
-            <pre><code class="html language-html">&lt;manifold-marketplace featured="jawsdb-mysql,logdna"&gt;&lt;/manifold-marketplace&gt;</code></pre>
-            <p>
-              For each service, the URL slug can be found at<br />
+              For each service, the URL slug can be found at
               <code>https://manifold.co/services/:service</code>.
             </p>
+            <h2 id="javascriptcallback">JavaScript callback</h2>
+            <p>Coming soon!</p>
             <!-- Auto Generated Below -->
             <h2 id="properties">Properties</h2>
             <table>
               <thead>
                 <tr>
-                  <th id="property">Property</th>
-                  <th id="attribute">Attribute</th>
-                  <th id="description">Description</th>
-                  <th id="type">Type</th>
-                  <th id="default">Default</th>
+                  <th>Property</th>
+                  <th>Attribute</th>
+                  <th>Description</th>
+                  <th>Type</th>
+                  <th>Default</th>
                 </tr>
               </thead>
               <tbody>
@@ -236,7 +279,71 @@
             </div>
           </div>
         </section>
+        <section class="docs-component" id="manifold-product">
+          <div class="markdown-body">
+            <!-- BEGIN README manifold-product -->
+
+            <!-- DO NOT EDIT! This is autogenerated from a README. -->
+            <!-- Any changes here will be blown away. Edit the README instead. -->
+
+            <h1 id="product">Product</h1>
+            <p>Display the details for an individual product.</p>
+            <pre><code class="html language-html">&lt;manifold-product product-label="jawsdbmysql"&gt;&lt;/manifold-product&gt;
+</code></pre>
+            <h2 id="productlabel">Product Label</h2>
+            <p>
+              You can find the <code>:service</code> label for each at
+              <code>https://manifold.co/services/:service</code>.
+            </p>
+            <!-- Auto Generated Below -->
+            <h2 id="properties">Properties</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th>Attribute</th>
+                  <th>Description</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>productLabel</code></td>
+                  <td><code>product-label</code></td>
+                  <td></td>
+                  <td><code>string</code></td>
+                  <td><code>undefined</code></td>
+                </tr>
+                <tr>
+                  <td><code>theme</code></td>
+                  <td><code>theme</code></td>
+                  <td></td>
+                  <td><code>"dark" | "light"</code></td>
+                  <td><code>undefined</code></td>
+                </tr>
+              </tbody>
+            </table>
+            <hr />
+            <p>
+              <em>Built with <a href="https://stenciljs.com/">StencilJS</a></em>
+            </p>
+            <!-- END README -->
+          </div>
+          <h2>Example</h2>
+          <div class="docs-example">
+            <div class="docs-example-inner">
+              <manifold-product product-label="jawsdb-mysql"></manifold-product>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/languages/xml.min.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
   </body>
 </html>
