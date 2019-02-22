@@ -20,6 +20,7 @@
   "license": "ISC",
   "scripts": {
     "build": "stencil build",
+    "dev": "stencil build --dev --docs --watch --serve",
     "postbuild": "npm run generate:docs",
     "format": "npm run format:ts && npm run format:css",
     "format:html": "prettier src/index.html --write",
@@ -38,7 +39,7 @@
     "publish:minor": "npm version minor && npm publish",
     "publish:patch": "npm version patch && npm publish",
     "publish:rc": "npm version prepatch && npm publish --tag next",
-    "start": "stencil build --dev --docs --watch --serve",
+    "start": "NODE_ENV=production npx serve -l \"tcp://0.0.0.0:$PORT\" -s www",
     "test": "stencil test --spec --e2e",
     "test:coverage": "stencil test --spec --e2e --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",

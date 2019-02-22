@@ -9,7 +9,7 @@ npm install
 and run:
 
 ```bash
-npm run start
+npm run dev
 ```
 
 _Note: you may also want to run `npm run format:css:watch` in a separate
