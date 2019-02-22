@@ -105,7 +105,7 @@ export class ManifoldMarketplace {
           <div class="category-sidebar-inner">
             {sortedCategories.map(tag => (
               <button
-                class={`category-button${this.activeCategory == tag ? ' active' : ''}`}
+                class={`category-button${this.activeCategory === tag ? ' active' : ''}`}
                 onClick={this.categoryClick}
                 data-category={tag}
               >
