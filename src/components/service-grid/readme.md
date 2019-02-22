@@ -5,12 +5,13 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                           | Default     |
-| ------------- | -------------- | ----------- | ------------------------------ | ----------- |
-| `featured`    | `featured`     |             | `string`                       | `undefined` |
-| `serviceLink` | `service-link` |             | `string`                       | `undefined` |
-| `services`    | --             |             | `Service[]`                    | `undefined` |
-| `themeColor`  | --             |             | `{ [index: string]: string; }` | `undefined` |
+| Property           | Attribute            | Description | Type                           | Default     |
+| ------------------ | -------------------- | ----------- | ------------------------------ | ----------- |
+| `featured`         | `featured`           |             | `string`                       | `undefined` |
+| `serviceLink`      | `service-link`       |             | `string`                       | `undefined` |
+| `services`         | --                   |             | `Service[]`                    | `undefined` |
+| `showCategoryMenu` | `show-category-menu` |             | `boolean`                      | `false`     |
+| `themeColor`       | --                   |             | `{ [index: string]: string; }` | `undefined` |
 
 
 ----------------------------------------------
