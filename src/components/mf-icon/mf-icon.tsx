@@ -17,7 +17,7 @@ export class MfIcon {
   /** a CSS variable starting with `--mf-g-*` */
   @Prop() gradient?: string;
   /** a CSS variable starting with `--mf-c-*` */
-  @Prop() color?: string = 'currentColor';
+  @Prop() color: string = 'currentColor';
   @Element() element: HTMLElement;
 
   get gradientID() {
@@ -26,7 +26,7 @@ export class MfIcon {
 
   get stopColors() {
     const style = getComputedStyle(this.element);
-    const gradientValue = style.getPropertyValue(this.gradient);
+    const gradientValue = style.getPropertyValue(this.gradient || '');
     if (!this.gradient || !gradientValue) return [];
     const colors = gradientValue.split('#');
     return colors.slice(1, colors.length).map((chunk, index) => {

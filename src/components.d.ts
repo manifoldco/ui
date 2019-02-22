@@ -71,7 +71,7 @@ export namespace Components {
     /**
     * a CSS variable starting with `--mf-c-*`
     */
-    'color'?: string;
+    'color': string;
     /**
     * a CSS variable starting with `--mf-g-*`
     */
@@ -110,7 +110,7 @@ export namespace Components {
   }
 
   interface ProductPage {
-    'product'?: Product;
+    'product': Product;
   }
   interface ProductPageAttributes extends StencilHTMLAttributes {
     'product'?: Product;

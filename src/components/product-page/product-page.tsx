@@ -7,7 +7,7 @@ import { Product } from 'types/Product';
   shadow: true,
 })
 export class ProductPage {
-  @Prop() product?: Product;
+  @Prop() product: Product;
 
   renderSidebar = () => {
     const { label, name, logo_url, tags, support_email, documentation_url } = this.product.body;

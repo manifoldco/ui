@@ -118,7 +118,7 @@ export class ManifoldMarketplace {
           {sortedCategories.map(tag => (
             <div>
               <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
-                <mf-icon icon={themeIcons[tag]} color="--mf-c-gray-s1" marginRight />
+                <mf-icon icon={themeIcons[tag]} marginRight />
                 {this.formatCategoryLabel(tag)}
               </h3>
               <div class="wrapper" style={this.themeColor}>
