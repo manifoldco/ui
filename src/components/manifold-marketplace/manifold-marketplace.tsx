@@ -18,13 +18,13 @@ export class ManifoldMarketplace {
   private getThemeColor() {
     if (this.theme === 'dark') {
       return {
-        '--background-color': 'var(--c-black)',
-        '--text-color': 'var(--c-white)',
+        '--background-color': 'var(--mf-c-black)',
+        '--text-color': 'var(--mf-c-white)',
       };
     }
     return {
-      '--background-color': 'var(--c-white)',
-      '--text-color': 'var(--c-black)',
+      '--background-color': 'var(--mf-c-white)',
+      '--text-color': 'var(--mf-c-black)',
     };
   }
 
