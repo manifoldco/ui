@@ -35,13 +35,15 @@ export class ManifoldMarketplace {
   };
 
   private categoryClick = (e: MouseEvent) => {
-    const buttonText = e.toElement.textContent;
+    if (e.srcElement) {
+      const category = e.srcElement.getAttribute('data-category');
 
-    if (this.root.shadowRoot) {
-      const heading = this.root.shadowRoot.querySelector(`#category-${buttonText}`);
+      if (this.root.shadowRoot) {
+        const heading = this.root.shadowRoot.querySelector(`#category-${category}`);
 
-      if (heading) {
-        heading.scrollIntoView({ behavior: 'smooth' });
+        if (heading) {
+          heading.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     }
   };
@@ -105,6 +107,7 @@ export class ManifoldMarketplace {
               <button
                 class={`category-button${this.activeCategory == tag ? ' active' : ''}`}
                 onClick={this.categoryClick}
+                data-category={tag}
               >
                 {this.formatCategoryLabel(tag)}
               </button>
