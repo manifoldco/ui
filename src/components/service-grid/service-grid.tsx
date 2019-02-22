@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, State, Element } from '@stencil/core';
 import { Service } from 'types/Service';
 
 import { themeIcons } from '../../assets/icons';
@@ -9,10 +9,51 @@ type CategoryMap = {
 
 @Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
 export class ManifoldMarketplace {
+  @Element() root: HTMLElement;
   @Prop() featured?: string;
   @Prop() themeColor: { [index: string]: string };
   @Prop() serviceLink?: string;
   @Prop() services?: Service[];
+  @Prop() showCategoryMenu: boolean = false;
+  @State() observer: IntersectionObserver;
+  @State() activeCategory?: string;
+
+  componentWillLoad() {
+    this.observer = new IntersectionObserver(this.observe, {
+      root: null,
+      threshold: 1.0,
+    });
+  }
+
+  private observe = (
+    entries: IntersectionObserverEntry[],
+    _observer: IntersectionObserver
+  ): void => {
+    const visibleEntry = entries.find(e => e.isIntersecting);
+    if (visibleEntry && visibleEntry.target.textContent) {
+      this.activeCategory = visibleEntry.target.textContent;
+    }
+  };
+
+  private categoryClick = (e: MouseEvent) => {
+    if (e.srcElement) {
+      const category = e.srcElement.getAttribute('data-category');
+
+      if (this.root.shadowRoot) {
+        const heading = this.root.shadowRoot.querySelector(`#category-${category}`);
+
+        if (heading) {
+          heading.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+  };
+
+  private observeCategory = (el?: HTMLElement) => {
+    if (el) {
+      this.observer.observe(el);
+    }
+  };
 
   private isFeatured(label: string) {
     if (typeof this.featured !== 'string') return false;
@@ -59,27 +100,48 @@ export class ManifoldMarketplace {
     const categoryMap = this.categories();
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
 
-    return sortedCategories.map(tag => (
-      <div>
-        <h3 class="category">
-          <mf-icon icon={themeIcons[tag]} color="--mf-c-gray-s1" marginRight />
-          {this.formatCategoryLabel(tag)}
-        </h3>
-        <div class="wrapper" style={this.themeColor}>
-          {categoryMap[tag]
-            .sort((a, b) => a.body.name.localeCompare(b.body.name))
-            .map(({ body: { name, label, tagline, logo_url } }) => (
-              <service-card
-                description={tagline}
-                label={label}
-                logo={logo_url}
-                name={name}
-                service-link={this.formatHref(label)}
-                is-featured={this.isFeatured(label)}
-              />
-            ))}
+    return (
+      <div class={this.showCategoryMenu ? 'browse-catalog' : ''}>
+        {this.showCategoryMenu && (
+          <aside class="category-sidebar">
+            <div class="category-sidebar-inner">
+              {sortedCategories.map(tag => (
+                <button
+                  class={`category-button${this.activeCategory === tag ? ' active' : ''}`}
+                  onClick={this.categoryClick}
+                  data-category={tag}
+                >
+                  {this.formatCategoryLabel(tag)}
+                </button>
+              ))}
+            </div>
+          </aside>
+        )}
+        <div class="sorted-categories">
+          {sortedCategories.map(tag => (
+            <div>
+              <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
+                <mf-icon icon={themeIcons[tag]} marginRight />
+                {this.formatCategoryLabel(tag)}
+              </h3>
+              <div class="wrapper" style={this.themeColor}>
+                {categoryMap[tag]
+                  .sort((a, b) => a.body.name.localeCompare(b.body.name))
+                  .map(({ body: { name, label, tagline, logo_url } }) => (
+                    <service-card
+                      description={tagline}
+                      label={label}
+                      logo={logo_url}
+                      name={name}
+                      service-link={this.formatHref(label)}
+                      is-featured={this.isFeatured(label)}
+                    />
+                  ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    ));
+    );
   }
 }

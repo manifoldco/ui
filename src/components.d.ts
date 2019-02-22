@@ -71,7 +71,7 @@ export namespace Components {
     /**
     * a CSS variable starting with `--mf-c-*`
     */
-    'color'?: string;
+    'color': string;
     /**
     * a CSS variable starting with `--mf-g-*`
     */
@@ -110,7 +110,7 @@ export namespace Components {
   }
 
   interface ProductPage {
-    'product'?: Product;
+    'product': Product;
   }
   interface ProductPageAttributes extends StencilHTMLAttributes {
     'product'?: Product;
@@ -137,12 +137,14 @@ export namespace Components {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
+    'showCategoryMenu': boolean;
     'themeColor': { [index: string]: string };
   }
   interface ServiceGridAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
+    'showCategoryMenu'?: boolean;
     'themeColor'?: { [index: string]: string };
   }
 }
