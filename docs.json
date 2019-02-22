@@ -1,0 +1,48 @@
+{
+  "timestamp": "2019-02-06T22:05:29",
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.16.2",
+    "typescriptVersion": "3.2.2"
+  },
+  "components": [
+    {
+      "tag": "app-home",
+      "readme": "# app-home\n\n\n",
+      "docs": "",
+      "usage": {},
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "mutable": false,
+          "attr": "text",
+          "reflectToAttr": false,
+          "docs": "Some text",
+          "default": "'Hello World'",
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [],
+      "events": [],
+      "styles": [
+        {
+          "name": "--text-color",
+          "annotation": "prop",
+          "docs": "Color of the text"
+        }
+      ]
+    },
+    {
+      "tag": "app-root",
+      "readme": "# app-root\n\n\n",
+      "docs": "",
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "styles": []
+    }
+  ]
+}
