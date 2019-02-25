@@ -21,7 +21,7 @@ export class ManifoldMarketplace {
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
       root: null,
-      threshold: 0.8,
+      threshold: 1.0,
     });
   }
 
