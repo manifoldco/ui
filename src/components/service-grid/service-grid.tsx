@@ -30,8 +30,10 @@ export class ManifoldMarketplace {
     _observer: IntersectionObserver
   ): void => {
     const visibleEntry = entries.find(e => e.isIntersecting);
-    if (visibleEntry && visibleEntry.target.textContent) {
-      this.activeCategory = visibleEntry.target.textContent;
+    if (visibleEntry) {
+      const [, ...rest] = visibleEntry.target.id.split('-');
+      const category = rest.join('-');
+      this.activeCategory = category;
     }
   };
 
@@ -107,7 +109,7 @@ export class ManifoldMarketplace {
             <div class="category-sidebar-inner">
               {sortedCategories.map(tag => (
                 <button
-                  class={`category-button${this.activeCategory === tag ? ' active' : ''}`}
+                  class={`category-button${this.activeCategory === tag ? ' is-active' : ''}`}
                   onClick={this.categoryClick}
                   data-category={tag}
                 >

@@ -52,7 +52,7 @@
   cursor: pointer;
 }
 
-.category-button.active {
+.category-button.is-active {
   color: var(--mf-c-grayDarker);
 }
 

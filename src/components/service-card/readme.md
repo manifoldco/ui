@@ -7,14 +7,14 @@ Clickable service cards.
 
 ## Properties
 
-| Property      | Attribute      | Description | Type      | Default     |
-| ------------- | -------------- | ----------- | --------- | ----------- |
-| `description` | `description`  |             | `string`  | `undefined` |
-| `isFeatured`  | `is-featured`  |             | `boolean` | `undefined` |
-| `label`       | `label`        |             | `string`  | `undefined` |
-| `logo`        | `logo`         |             | `string`  | `undefined` |
-| `name`        | `name`         |             | `string`  | `undefined` |
-| `serviceLink` | `service-link` |             | `string`  | `undefined` |
+| Property      | Attribute      | Description | Type                   | Default     |
+| ------------- | -------------- | ----------- | ---------------------- | ----------- |
+| `description` | `description`  |             | `string \| undefined`  | `undefined` |
+| `isFeatured`  | `is-featured`  |             | `boolean \| undefined` | `undefined` |
+| `label`       | `label`        |             | `string \| undefined`  | `undefined` |
+| `logo`        | `logo`         |             | `string \| undefined`  | `undefined` |
+| `name`        | `name`         |             | `string \| undefined`  | `undefined` |
+| `serviceLink` | `service-link` |             | `string \| undefined`  | `undefined` |
 
 
 ----------------------------------------------
