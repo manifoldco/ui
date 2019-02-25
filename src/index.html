@@ -457,6 +457,10 @@ defineCustomElements(window);</code></pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/languages/xml.min.js"></script>
     <script>
       hljs.initHighlightingOnLoad();
+
+      window.addEventListener("serviceCardClicked", e => {
+        alert(`You just clicked ${e.detail.label}`);
+      });
     </script>
   </body>
 </html>
