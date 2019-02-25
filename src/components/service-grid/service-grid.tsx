@@ -21,7 +21,7 @@ export class ManifoldMarketplace {
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
       root: null,
-      threshold: 1.0,
+      threshold: 0.8,
     });
   }
 
@@ -30,8 +30,10 @@ export class ManifoldMarketplace {
     _observer: IntersectionObserver
   ): void => {
     const visibleEntry = entries.find(e => e.isIntersecting);
-    if (visibleEntry && visibleEntry.target.textContent) {
-      this.activeCategory = visibleEntry.target.textContent;
+    if (visibleEntry) {
+      const [, ...rest] = visibleEntry.target.id.split('-');
+      const category = rest.join('-');
+      this.activeCategory = category;
     }
   };
 

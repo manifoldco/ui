@@ -46,10 +46,10 @@ For each service, the URL slug can be found at
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                | Default     |
-| ------------- | -------------- | ----------- | ------------------- | ----------- |
-| `serviceLink` | `service-link` |             | `string`            | `undefined` |
-| `theme`       | `theme`        |             | `"dark" \| "light"` | `undefined` |
+| Property      | Attribute      | Description | Type                             | Default     |
+| ------------- | -------------- | ----------- | -------------------------------- | ----------- |
+| `serviceLink` | `service-link` |             | `string \| undefined`            | `undefined` |
+| `theme`       | `theme`        |             | `"dark" \| "light" \| undefined` | `undefined` |
 
 
 ----------------------------------------------

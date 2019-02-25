@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type                | Default     |
-| -------------- | --------------- | ----------- | ------------------- | ----------- |
-| `productLabel` | `product-label` |             | `string`            | `undefined` |
-| `theme`        | `theme`         |             | `"dark" \| "light"` | `undefined` |
+| Property       | Attribute       | Description | Type                             | Default     |
+| -------------- | --------------- | ----------- | -------------------------------- | ----------- |
+| `productLabel` | `product-label` |             | `string \| undefined`            | `undefined` |
+| `theme`        | `theme`         |             | `"dark" \| "light" \| undefined` | `undefined` |
 
 
 ----------------------------------------------
