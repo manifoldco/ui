@@ -6,6 +6,7 @@ const Showdown = require('showdown');
 
 const MARKDOWN_OPTIONS = {
   emoji: true,
+  simpleLineBreaks: false,
   tables: true,
 };
 const HTML_BEFORE = `
@@ -31,7 +32,6 @@ function getComponentName(contents) {
 // Select: opening comment + anything (including newlines) + closing comment
 const MAGIC_FORMULA = /<!-- BEGIN README [^]+?(?=<!-- END README -->)/g;
 const converter = new Showdown.Converter(MARKDOWN_OPTIONS);
-converter.setFlavor('github');
 
 const indexHTML = resolve(__dirname, '..', 'src', 'index.html');
 const original = readFileSync(indexHTML, 'utf8');

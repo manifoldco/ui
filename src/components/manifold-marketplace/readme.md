@@ -1,45 +1,28 @@
-# manifold-marketplace
+# Marketplace
 
-## Service Cards
-
-### Anchor link formatting
-
-By passing a `serviceLink` prop to the top-level component, you can specify a
-URL pattern like so:
+A list of all Manifold services.
 
 ```html
-<manifold-marketplace serviceLink="/services/:service"></manifold-marketplace>
+<manifold-marketplace></manifold-marketplace>
 ```
 
-The `:service` placeholder will be replaced with a URL-friendly slug of the
-service clicked on. That will render links like so:
+## URL format
 
 ```html
-<a href="/services/jawsdb-mysql"></a>
-<a href="/services/logdna"></a>
-<a href="/services/mailgun"></a>
+<manifold-marketplace service-link="/services/:service"></manifold-marketplace>
 ```
 
-Even if you plan on using JavaScript in addition, setting `serviceLink` to
-set `href` is still recommended for accessibility purposes.
+This turns the service cards into `<a>` tags with the URL structure of `<a href="/services/jawsdb-mysql">`, etc. Even if you plan on using JavaScript on
+top, setting this is still recommended for accessibility purposes.
 
-### JavaScript callback
+`:service` is the only dynamic paramater accepted. Everything else in the
+formula will be displayed as-is.
+
+For each service, the URL slug can be found at `https://manifold.co/services/:service`.
+
+## JavaScript callback
 
 Coming soon!
-
-## Marketplace Management
-
-### Featured Services
-
-Passing a string of comma-separated service slugs to the top-level component
-will display a “featured” tag for those services:
-
-```html
-<manifold-marketplace featured="jawsdb-mysql,logdna"></manifold-marketplace>
-```
-
-For each service, the URL slug can be found at
-`https://manifold.co/services/:service`.
 
 <!-- Auto Generated Below -->
 
