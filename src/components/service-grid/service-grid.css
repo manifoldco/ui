@@ -1,10 +1,7 @@
-@custom-media --viewport-s (min-width: 450px);
-@custom-media --viewport-m (min-width: 750px);
-@custom-media --viewport-l (min-width: 1080px);
-
 .wrapper {
   display: grid;
   grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
   box-sizing: border-box;
   margin: 0;
   padding: 8px;
@@ -13,14 +10,6 @@
   font-family: var(--mf-font-family);
   line-height: 1;
   background-color: var(--background-color);
-
-  @media (--viewport-m) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (--viewport-l) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 }
 
 .category {
