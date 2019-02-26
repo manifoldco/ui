@@ -14,20 +14,24 @@ export class ServiceCard {
   @Prop() isFeatured?: boolean;
   @Prop() serviceLink?: string;
 
-  onClick = (_: Event): void => {
-    this.cardClicked.emit({
-      label: this.label,
-    });
+  onClick = (e: Event): void => {
+    if (!this.serviceLink) {
+      e.preventDefault();
+      this.cardClicked.emit({
+        label: this.label,
+      });
+    }
   };
 
   render() {
     return (
-      <div
+      <a
         class="wrapper"
         role="button"
         itemscope
         itemtype="https://schema.org/Product"
         itemprop="url"
+        href={this.serviceLink}
         onClick={this.onClick}
       >
         <div class="logo">
@@ -42,7 +46,7 @@ export class ServiceCard {
             {this.description}
           </p>
         </div>
-      </div>
+      </a>
     );
   }
 }
