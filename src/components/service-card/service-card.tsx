@@ -6,7 +6,7 @@ import { Component, Prop, Event, EventEmitter } from '@stencil/core';
   shadow: true,
 })
 export class ServiceCard {
-  @Event({ eventName: 'serviceCardClicked' }) cardClicked: EventEmitter;
+  @Event({ eventName: 'mf.serviceCardClicked' }) cardClicked: EventEmitter;
   @Prop() name?: string;
   @Prop() description?: string;
   @Prop() label?: string;

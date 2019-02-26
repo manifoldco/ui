@@ -6,19 +6,52 @@ A list of all Manifold services.
 <manifold-marketplace></manifold-marketplace>
 ```
 
-## URL format
+## Navigation
+
+There are two ways to trigger navigation when clicking on a service card.
+
+### 1. Provide a URL Format
 
 ```html
 <manifold-marketplace service-link="/services/:service"></manifold-marketplace>
 ```
 
-This turns the service cards into `<a>` tags with the URL structure of `<a href="/services/jawsdb-mysql">`, etc. Even if you plan on using JavaScript on
-top, setting this is still recommended for accessibility purposes.
-
-`:service` is the only dynamic paramater accepted. Everything else in the
-formula will be displayed as-is.
+This turns the service cards into `<a>` tags with the URL structure of `<a href="/services/jawsdb-mysql">`, etc. `:service` is the only dynamic paramater accepted. Everything else in the formula will be displayed as-is.
 
 For each service, the URL slug can be found at `https://manifold.co/services/:service`.
+
+### 2. Use JavaScript Events
+
+If you omit the `service-link` property, clicking a service card will emit an event named `mf.serviceCardClicked`, which you can handle with a standard event listener:
+
+```js
+// Attach a listener to the manifold-marketplace element
+var marketplace = document.querySelector('manifold-marketplace');
+marketplace.addEventListener('mf.serviceCardClicked', e => {
+  alert(`You just clicked ${e.detail.label}`);
+});
+
+// Or, attach the listener to the window object
+window.addEventListener('mf.serviceCardClicked', e => {
+  alert(`You just clicked ${e.detail.label}`);
+});
+```
+
+#### Handling Events in React
+
+Attaching listeners to custom components in React [requires the use of refs](https://custom-elements-everywhere.com/). Example:
+
+```js
+marketplaceLoaded(node) {
+  node.addEventListener("mf.serviceCardClicked", e => {
+    alert(`You just clicked ${e.detail.label}`);
+  });
+}
+
+render() {
+  return <manifold-marketplace ref={this.marketplaceLoaded} />;
+}
+```
 
 ## JavaScript callback
 
