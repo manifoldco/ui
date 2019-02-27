@@ -347,17 +347,17 @@ defineCustomElements(window);</code></pre>
             <h3 id="2usejavascriptevents">2. Use JavaScript Events</h3>
             <p>
               If you omit the <code>service-link</code> property, clicking a service card will emit
-              an event named <code>mf.serviceCardClicked</code>, which you can handle with a
+              an event named <code>manifold-serviceCard-click</code>, which you can handle with a
               standard event listener:
             </p>
             <pre><code class="js language-js">// Attach a listener to the manifold-marketplace element
 var marketplace = document.querySelector('manifold-marketplace');
-marketplace.addEventListener('mf.serviceCardClicked', e =&gt; {
+marketplace.addEventListener('manifold-serviceCard-click', e =&gt; {
   alert(`You just clicked ${e.detail.label}`);
 });
 
 // Or, attach the listener to the window object
-window.addEventListener('mf.serviceCardClicked', e =&gt; {
+window.addEventListener('manifold-serviceCard-click', e =&gt; {
   alert(`You just clicked ${e.detail.label}`);
 });
 </code></pre>
@@ -368,7 +368,7 @@ window.addEventListener('mf.serviceCardClicked', e =&gt; {
               Example:
             </p>
             <pre><code class="js language-js">marketplaceLoaded(node) {
-  node.addEventListener("mf.serviceCardClicked", e =&gt; {
+  node.addEventListener("manifold-serviceCard-click", e =&gt; {
     alert(`You just clicked ${e.detail.label}`);
   });
 }
@@ -488,7 +488,7 @@ render() {
       hljs.initHighlightingOnLoad();
 
       var marketplace = document.querySelector('manifold-marketplace');
-      marketplace.addEventListener('mf.serviceCardClicked', e => {
+      marketplace.addEventListener('manifold-serviceCard-click', e => {
         alert(`You just clicked ${e.detail.label}`);
       });
     </script>

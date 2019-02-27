@@ -19,9 +19,9 @@ Clickable service cards.
 
 ## Events
 
-| Event                   | Description | Type                |
-| ----------------------- | ----------- | ------------------- |
-| `mf.serviceCardClicked` |             | `CustomEvent<void>` |
+| Event                        | Description | Type                |
+| ---------------------------- | ----------- | ------------------- |
+| `manifold-serviceCard-click` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

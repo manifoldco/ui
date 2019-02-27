@@ -22,17 +22,17 @@ For each service, the URL slug can be found at `https://manifold.co/services/:se
 
 ### 2. Use JavaScript Events
 
-If you omit the `service-link` property, clicking a service card will emit an event named `mf.serviceCardClicked`, which you can handle with a standard event listener:
+If you omit the `service-link` property, clicking a service card will emit an event named `manifold-serviceCard-click`, which you can handle with a standard event listener:
 
 ```js
 // Attach a listener to the manifold-marketplace element
 var marketplace = document.querySelector('manifold-marketplace');
-marketplace.addEventListener('mf.serviceCardClicked', e => {
+marketplace.addEventListener('manifold-serviceCard-click', e => {
   alert(`You just clicked ${e.detail.label}`);
 });
 
 // Or, attach the listener to the window object
-window.addEventListener('mf.serviceCardClicked', e => {
+window.addEventListener('manifold-serviceCard-click', e => {
   alert(`You just clicked ${e.detail.label}`);
 });
 ```
@@ -43,7 +43,7 @@ Attaching listeners to custom components in React [requires the use of refs](htt
 
 ```js
 marketplaceLoaded(node) {
-  node.addEventListener("mf.serviceCardClicked", e => {
+  node.addEventListener("manifold-serviceCard-click", e => {
     alert(`You just clicked ${e.detail.label}`);
   });
 }

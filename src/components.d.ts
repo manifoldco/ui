@@ -130,7 +130,7 @@ export namespace Components {
     'label'?: string;
     'logo'?: string;
     'name'?: string;
-    'onMf.serviceCardClicked'?: (event: CustomEvent) => void;
+    'onManifold-serviceCard-click'?: (event: CustomEvent) => void;
     'serviceLink'?: string;
   }
 
