@@ -1,43 +1,49 @@
+@custom-media --viewport-m (min-width: 1000px);
+
 :host {
   --padding-small: 1rem;
   --padding-medium: 2rem;
   --padding-xsmall: 0.5rem;
-
-  width: fit-content;
 }
 
 .plan-list {
   display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.75rem;
   margin: 0;
-  padding: 1px 0.25rem; /* border offset */
+  padding: 0;
   overflow: auto;
-  white-space: nowrap;
   list-style: none;
 
   @media (--viewport-m) {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 1rem;
+    grid-auto-flow: row;
+    grid-gap: 0;
+    padding: 1px 0.25rem; /* border offset */
+    overflow: visible;
+    white-space: nowrap;
   }
 }
 
 .plan-button {
-  width: max-content;
-  border-top: 1px solid rgba(var(--mf-c-gray-rgb), 0.25);
+  display: inline-block;
+  margin: 0.5rem 0;
+  border-top: none;
 
   @media (--viewport-m) {
-    display: inline-block;
-    border-top: none;
+    min-width: max-content;
+    margin: 0;
+    border-top: 1px solid rgba(var(--mf-c-gray-rgb), 0.25);
   }
 }
 
 .plan-button label {
   display: grid;
   grid-template-areas: 'overlap';
-  margin: -1px -0.25rem; /* border offset */
+  min-width: 8rem;
+  margin: 0;
 
   @media (--viewport-m) {
-    margin: 0;
+    margin: -1px -0.25rem; /* border offset */
   }
 }
 
@@ -50,16 +56,14 @@
   opacity: 0;
 }
 
-@custom-media --viewport-m (min-width: 650px);
-
 .plan-button-inner {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  min-width: 8rem;
+  min-width: max-content;
   padding-top: 0.75rem;
-  padding-right: 1rem;
+  padding-right: 2rem;
   padding-bottom: 0.75rem;
   padding-left: 1rem;
   overflow: hidden;
@@ -77,6 +81,7 @@
   @media (--viewport-m) {
     min-width: 0;
     margin-left: 0;
+    border-color: transparent;
   }
 
   &::after {
