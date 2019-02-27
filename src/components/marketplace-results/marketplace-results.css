@@ -1,0 +1,13 @@
+.wrapper {
+  display: grid;
+  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  box-sizing: border-box;
+  margin: 0;
+  padding: 8px;
+  color: var(--mf-text-color);
+  font-size: 16px;
+  font-family: var(--mf-font-family);
+  line-height: 1;
+  background-color: var(--background-color);
+}

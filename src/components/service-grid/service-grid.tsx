@@ -63,12 +63,6 @@ export class ManifoldMarketplace {
     return parsedFeatures.includes(label);
   }
 
-  private formatHref(label: string): string {
-    if (typeof label !== 'string') return '';
-    if (!this.serviceLink) return '';
-    return this.serviceLink.replace(':service', label);
-  }
-
   private formatCategoryLabel(tag: string): string {
     switch (tag) {
       case 'cms':
@@ -126,20 +120,12 @@ export class ManifoldMarketplace {
                 <mf-icon icon={themeIcons[tag]} marginRight />
                 {this.formatCategoryLabel(tag)}
               </h3>
-              <div class="wrapper" style={this.themeColor}>
-                {categoryMap[tag]
-                  .sort((a, b) => a.body.name.localeCompare(b.body.name))
-                  .map(({ body: { name, label, tagline, logo_url } }) => (
-                    <service-card
-                      description={tagline}
-                      label={label}
-                      logo={logo_url}
-                      name={name}
-                      service-link={this.formatHref(label)}
-                      is-featured={this.isFeatured(label)}
-                    />
-                  ))}
-              </div>
+              <marketplace-results
+                services={categoryMap[tag]}
+                is-featured={this.isFeatured}
+                service-link={this.serviceLink}
+                themeColor={this.themeColor}
+              />
             </div>
           ))}
         </div>
