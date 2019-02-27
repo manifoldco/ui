@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'service-card',
@@ -6,6 +6,7 @@ import { Component, Prop } from '@stencil/core';
   shadow: true,
 })
 export class ServiceCard {
+  @Event({ eventName: 'manifold-serviceCard-click' }) cardClicked: EventEmitter;
   @Prop() name?: string;
   @Prop() description?: string;
   @Prop() label?: string;
@@ -13,14 +14,25 @@ export class ServiceCard {
   @Prop() isFeatured?: boolean;
   @Prop() serviceLink?: string;
 
+  onClick = (e: Event): void => {
+    if (!this.serviceLink) {
+      e.preventDefault();
+      this.cardClicked.emit({
+        label: this.label,
+      });
+    }
+  };
+
   render() {
     return (
       <a
         class="wrapper"
+        role="button"
         itemscope
         itemtype="https://schema.org/Product"
         itemprop="url"
         href={this.serviceLink}
+        onClick={this.onClick}
       >
         <div class="logo">
           <img src={this.logo} alt={this.name} itemprop="image" />

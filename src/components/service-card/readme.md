@@ -17,6 +17,13 @@ Clickable service cards.
 | `serviceLink` | `service-link` |             | `string \| undefined`  | `undefined` |
 
 
+## Events
+
+| Event                        | Description | Type                |
+| ---------------------------- | ----------- | ------------------- |
+| `manifold-serviceCard-click` |             | `CustomEvent<void>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

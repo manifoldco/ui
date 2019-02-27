@@ -65,7 +65,7 @@ export class ManifoldMarketplace {
 
   private formatHref(label: string): string {
     if (typeof label !== 'string') return '';
-    if (!this.serviceLink) return `#${label}`;
+    if (!this.serviceLink) return '';
     return this.serviceLink.replace(':service', label);
   }
 

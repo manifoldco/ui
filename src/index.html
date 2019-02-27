@@ -329,22 +329,54 @@ defineCustomElements(window);</code></pre>
             <p>A list of all Manifold services.</p>
             <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
 </code></pre>
-            <h2 id="urlformat">URL format</h2>
+            <h2 id="navigation">Navigation</h2>
+            <p>There are two ways to trigger navigation when clicking on a service card.</p>
+            <h3 id="1provideaurlformat">1. Provide a URL Format</h3>
             <pre><code class="html language-html">&lt;manifold-marketplace service-link="/services/:service"&gt;&lt;/manifold-marketplace&gt;
 </code></pre>
             <p>
               This turns the service cards into <code>&lt;a&gt;</code> tags with the URL structure
-              of <code>&lt;a href="/services/jawsdb-mysql"&gt;</code>, etc. Even if you plan on
-              using JavaScript on top, setting this is still recommended for accessibility purposes.
-            </p>
-            <p>
-              <code>:service</code> is the only dynamic paramater accepted. Everything else in the
-              formula will be displayed as-is.
+              of <code>&lt;a href="/services/jawsdb-mysql"&gt;</code>, etc. <code>:service</code> is
+              the only dynamic paramater accepted. Everything else in the formula will be displayed
+              as-is.
             </p>
             <p>
               For each service, the URL slug can be found at
               <code>https://manifold.co/services/:service</code>.
             </p>
+            <h3 id="2usejavascriptevents">2. Use JavaScript Events</h3>
+            <p>
+              If you omit the <code>service-link</code> property, clicking a service card will emit
+              an event named <code>manifold-serviceCard-click</code>, which you can handle with a
+              standard event listener:
+            </p>
+            <pre><code class="js language-js">// Attach a listener to the manifold-marketplace element
+var marketplace = document.querySelector('manifold-marketplace');
+marketplace.addEventListener('manifold-serviceCard-click', e =&gt; {
+  alert(`You just clicked ${e.detail.label}`);
+});
+
+// Or, attach the listener to the window object
+window.addEventListener('manifold-serviceCard-click', e =&gt; {
+  alert(`You just clicked ${e.detail.label}`);
+});
+</code></pre>
+            <h4 id="handlingeventsinreact">Handling Events in React</h4>
+            <p>
+              Attaching listeners to custom components in React
+              <a href="https://custom-elements-everywhere.com/">requires the use of refs</a>.
+              Example:
+            </p>
+            <pre><code class="js language-js">marketplaceLoaded(node) {
+  node.addEventListener("manifold-serviceCard-click", e =&gt; {
+    alert(`You just clicked ${e.detail.label}`);
+  });
+}
+
+render() {
+  return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
+}
+</code></pre>
             <h2 id="javascriptcallback">JavaScript callback</h2>
             <p>Coming soon!</p>
             <!-- Auto Generated Below -->
@@ -385,10 +417,7 @@ defineCustomElements(window);</code></pre>
           <h2>Example</h2>
           <div class="docs-example">
             <div class="docs-example-inner">
-              <manifold-marketplace
-                featured="till"
-                service-link="/services/:service"
-              ></manifold-marketplace>
+              <manifold-marketplace featured="till"></manifold-marketplace>
             </div>
           </div>
         </section>
@@ -457,6 +486,11 @@ defineCustomElements(window);</code></pre>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/languages/xml.min.js"></script>
     <script>
       hljs.initHighlightingOnLoad();
+
+      var marketplace = document.querySelector('manifold-marketplace');
+      marketplace.addEventListener('manifold-serviceCard-click', e => {
+        alert(`You just clicked ${e.detail.label}`);
+      });
     </script>
   </body>
 </html>
