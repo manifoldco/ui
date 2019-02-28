@@ -22,11 +22,7 @@ export class ManifoldPlanSelector {
     await fetch(`https://api.catalog.manifold.co/v1/plans?product_id=${this.productId}`)
       .then(response => response.json())
       .then(data => {
-        this.plans = [
-          // sort and put customizable at the end
-          ...data.filter((plan: Plan) => !plan.body.customizable).sort(byCost),
-          ...data.filter((plan: Plan) => plan.body.customizable).sort(byCost),
-        ];
+        this.plans = data.sort(byCost);
       });
   }
 

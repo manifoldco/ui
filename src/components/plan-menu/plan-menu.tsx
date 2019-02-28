@@ -8,7 +8,8 @@ const $ = (amount: number, options: object = {}) => {
 };
 
 const PlanButton: FunctionalComponent<{
-  checked: boolean;
+  checked?: boolean;
+  customizable?: boolean;
   value: string;
   onChange: (e: Event) => void;
 }> = (props, children) => (
@@ -18,6 +19,9 @@ const PlanButton: FunctionalComponent<{
       <div class="plan-button-inner">
         {children}
         <mf-icon class="check-icon" icon="check" />
+        {props.customizable && (
+          <mf-icon class="custom-icon" icon="sliders" data-hidden={props.checked} />
+        )}
       </div>
     </label>
   </li>
@@ -33,19 +37,41 @@ export class PlanMenu {
   @Prop() selectedPlanId: string;
   @Prop() selectPlan: Function;
 
+  get customPlans() {
+    return Array.isArray(this.plans)
+      ? this.plans.filter(({ body: { customizable } }) => customizable === true)
+      : [];
+  }
+
+  get fixedPlans() {
+    return Array.isArray(this.plans)
+      ? this.plans.filter(({ body: { customizable } }) => customizable !== true)
+      : [];
+  }
+
+  get allPlans() {
+    return [...this.fixedPlans, ...this.customPlans];
+  }
+
   render() {
     return (
       <ul class="plan-list">
-        {this.plans.map(({ id, body }: Plan) => (
+        {this.allPlans.map(({ id, body: { name, cost, customizable, free } }: Plan) => (
           <PlanButton
             checked={id === this.selectedPlanId}
             value={id}
             onChange={() => this.selectPlan(id)}
+            customizable={customizable}
           >
-            {body.name}
-            <div class="cost">
-              {$(body.cost)}&nbsp;<small>/ mo</small>
-            </div>
+            {name}
+            {free ? (
+              <mf-badge>Free</mf-badge>
+            ) : (
+              <div class="cost">
+                {customizable && 'Starting at '}
+                {$(cost)}&nbsp;<small>/ mo</small>
+              </div>
+            )}
           </PlanButton>
         ))}
       </ul>

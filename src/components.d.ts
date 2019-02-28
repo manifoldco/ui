@@ -77,6 +77,9 @@ export namespace Components {
     'theme'?: 'light' | 'dark';
   }
 
+  interface MfBadge {}
+  interface MfBadgeAttributes extends StencilHTMLAttributes {}
+
   interface MfIcon {
     /**
     * a CSS variable starting with `--mf-c-*`
@@ -196,6 +199,7 @@ declare global {
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
     'ManifoldProduct': Components.ManifoldProduct;
+    'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
     'PlanDetails': Components.PlanDetails;
     'PlanMenu': Components.PlanMenu;
@@ -213,6 +217,7 @@ declare global {
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
+    'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
     'plan-details': Components.PlanDetailsAttributes;
     'plan-menu': Components.PlanMenuAttributes;
@@ -258,6 +263,12 @@ declare global {
   var HTMLManifoldProductElement: {
     prototype: HTMLManifoldProductElement;
     new (): HTMLManifoldProductElement;
+  };
+
+  interface HTMLMfBadgeElement extends Components.MfBadge, HTMLStencilElement {}
+  var HTMLMfBadgeElement: {
+    prototype: HTMLMfBadgeElement;
+    new (): HTMLMfBadgeElement;
   };
 
   interface HTMLMfIconElement extends Components.MfIcon, HTMLStencilElement {}
@@ -315,6 +326,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
     'manifold-product': HTMLManifoldProductElement
+    'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
     'plan-details': HTMLPlanDetailsElement
     'plan-menu': HTMLPlanMenuElement
@@ -332,6 +344,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
     'plan-details': HTMLPlanDetailsElement;
     'plan-menu': HTMLPlanMenuElement;
