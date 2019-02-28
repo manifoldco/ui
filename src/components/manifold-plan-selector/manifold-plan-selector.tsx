@@ -9,7 +9,7 @@ const byCost = (a: Plan, b: Plan) => (a.body.cost < b.body.cost ? -1 : 1);
   shadow: true,
 })
 export class ManifoldPlanSelector {
-  @Prop() productId: string = '234w1jyaum5j0aqe3g3bmbqjgf20p';
+  @Prop() productId: string;
   @State() product: Product;
   @State() plans: Plan[];
 
