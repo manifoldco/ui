@@ -13,6 +13,18 @@
   grid-template-columns: 12rem auto;
 }
 
+.search-bar {
+  width: 100%;
+  padding: 0.75rem;
+  padding-right: 0;
+  border: 1px solid #d3d3d4;
+  border-radius: 0.25rem;
+}
+
+.search-bar::placeholder {
+  color: var(--mf-c-gray);
+}
+
 .category-sidebar {
   position: relative;
 }
