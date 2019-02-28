@@ -14,7 +14,6 @@ export class ManifoldMarketplace {
   @Prop() themeColor: { [index: string]: string };
   @Prop() serviceLink?: string;
   @Prop() services?: Service[];
-  @Prop() showCategoryMenu: boolean = false;
   @State() observer: IntersectionObserver;
   @State() activeCategory?: string;
 
@@ -97,22 +96,20 @@ export class ManifoldMarketplace {
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
 
     return (
-      <div class={this.showCategoryMenu ? 'browse-catalog' : ''}>
-        {this.showCategoryMenu && (
-          <aside class="category-sidebar">
-            <div class="category-sidebar-inner">
-              {sortedCategories.map(tag => (
-                <button
-                  class={`category-button${this.activeCategory === tag ? ' is-active' : ''}`}
-                  onClick={this.categoryClick}
-                  data-category={tag}
-                >
-                  {this.formatCategoryLabel(tag)}
-                </button>
-              ))}
-            </div>
-          </aside>
-        )}
+      <div class={'browse-catalog'}>
+        <aside class="category-sidebar">
+          <div class="category-sidebar-inner">
+            {sortedCategories.map(tag => (
+              <button
+                class={`category-button${this.activeCategory === tag ? ' is-active' : ''}`}
+                onClick={this.categoryClick}
+                data-category={tag}
+              >
+                {this.formatCategoryLabel(tag)}
+              </button>
+            ))}
+          </div>
+        </aside>
         <div class="sorted-categories">
           {sortedCategories.map(tag => (
             <div>

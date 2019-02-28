@@ -34,7 +34,6 @@ export class ManifoldMarketplace {
         services={this.services}
         service-link={this.serviceLink}
         theme-color={this.getThemeColor()}
-        show-category-menu={true}
       />
     );
   }

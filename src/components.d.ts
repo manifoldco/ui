@@ -193,14 +193,12 @@ export namespace Components {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'showCategoryMenu': boolean;
     'themeColor': { [index: string]: string };
   }
   interface ServiceGridAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'showCategoryMenu'?: boolean;
     'themeColor'?: { [index: string]: string };
   }
 }
