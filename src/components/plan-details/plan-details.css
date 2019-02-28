@@ -8,7 +8,7 @@
   background-color: var(--mf-c-white);
   border: 1px solid var(--mf-c-grayLight);
   border-radius: var(--mf-radius-default);
-  box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.8);
+  box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.2);
 
   @media (--viewport-m) {
     --padding: 2rem;
