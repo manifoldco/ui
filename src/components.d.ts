@@ -118,6 +118,7 @@ export namespace Components {
 
   interface ServiceCard {
     'description'?: string;
+    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;
@@ -126,6 +127,7 @@ export namespace Components {
   }
   interface ServiceCardAttributes extends StencilHTMLAttributes {
     'description'?: string;
+    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;
@@ -148,6 +150,18 @@ export namespace Components {
     'showCategoryMenu'?: boolean;
     'themeColor'?: { [index: string]: string };
   }
+
+  interface ServiceModal {
+    'content'?: string;
+    'showPopup': boolean;
+    'title': string;
+  }
+  interface ServiceModalAttributes extends StencilHTMLAttributes {
+    'content'?: string;
+    'onOk'?: (event: CustomEvent) => void;
+    'showPopup'?: boolean;
+    'title'?: string;
+  }
 }
 
 declare global {
@@ -162,6 +176,7 @@ declare global {
     'ProductPage': Components.ProductPage;
     'ServiceCard': Components.ServiceCard;
     'ServiceGrid': Components.ServiceGrid;
+    'ServiceModal': Components.ServiceModal;
   }
 
   interface StencilIntrinsicElements {
@@ -175,6 +190,7 @@ declare global {
     'product-page': Components.ProductPageAttributes;
     'service-card': Components.ServiceCardAttributes;
     'service-grid': Components.ServiceGridAttributes;
+    'service-modal': Components.ServiceModalAttributes;
   }
 
 
@@ -238,6 +254,12 @@ declare global {
     new (): HTMLServiceGridElement;
   };
 
+  interface HTMLServiceModalElement extends Components.ServiceModal, HTMLStencilElement {}
+  var HTMLServiceModalElement: {
+    prototype: HTMLServiceModalElement;
+    new (): HTMLServiceModalElement;
+  };
+
   interface HTMLElementTagNameMap {
     'featured-service': HTMLFeaturedServiceElement
     'image-gallery': HTMLImageGalleryElement
@@ -249,6 +271,7 @@ declare global {
     'product-page': HTMLProductPageElement
     'service-card': HTMLServiceCardElement
     'service-grid': HTMLServiceGridElement
+    'service-modal': HTMLServiceModalElement
   }
 
   interface ElementTagNameMap {
@@ -262,6 +285,7 @@ declare global {
     'product-page': HTMLProductPageElement;
     'service-card': HTMLServiceCardElement;
     'service-grid': HTMLServiceGridElement;
+    'service-modal': HTMLServiceModalElement;
   }
 
 

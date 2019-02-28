@@ -139,6 +139,13 @@ export class ManifoldMarketplace {
                       is-featured={this.isFeatured(label)}
                     />
                   ))}
+                <service-card
+                  description={`Add your own ${this.formatCategoryLabel(tag)} service`}
+                  label={'bring-your-own'}
+                  logo={themeIcons[tag]}
+                  name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
+                  is-custom={true}
+                />
               </div>
             </div>
           ))}

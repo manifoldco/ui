@@ -10,6 +10,7 @@ Clickable service cards.
 | Property      | Attribute      | Description | Type                   | Default     |
 | ------------- | -------------- | ----------- | ---------------------- | ----------- |
 | `description` | `description`  |             | `string \| undefined`  | `undefined` |
+| `isCustom`    | `is-custom`    |             | `boolean \| undefined` | `undefined` |
 | `isFeatured`  | `is-featured`  |             | `boolean \| undefined` | `undefined` |
 | `label`       | `label`        |             | `string \| undefined`  | `undefined` |
 | `logo`        | `logo`         |             | `string \| undefined`  | `undefined` |

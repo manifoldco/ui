@@ -477,6 +477,7 @@ render() {
             <div class="docs-example-inner">
               <manifold-product product-label="jawsdb-mysql"></manifold-product>
             </div>
+            <service-modal />
           </div>
         </section>
       </main>
@@ -487,10 +488,14 @@ render() {
     <script>
       hljs.initHighlightingOnLoad();
 
-      var marketplace = document.querySelector('manifold-marketplace');
-      marketplace.addEventListener('manifold-serviceCard-click', e => {
-        alert(`You just clicked ${e.detail.label}`);
-      });
+      function handleServiceCardClick(e) {
+        let modal = document.querySelector('service-modal');
+        modal.title = 'You clicked on:';
+        modal.content = `${e.detail.label}`;
+        modal.showPopup = true;
+      }
+      const marketplace = document.querySelector('manifold-marketplace');
+      marketplace.addEventListener('manifold-serviceCard-click', e => handleServiceCardClick(e));
     </script>
   </body>
 </html>
