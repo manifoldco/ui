@@ -43,6 +43,10 @@
   --mf-c-yellowPale: #fff2b9;
   --mf-c-transparent: rgba(255, 255, 255, 0);
 
+  /* rgb colors */
+  --mf-c-blue-rgb: 30, 80, 218;
+  --mf-c-gray-rgb: 143, 143, 149;
+
   /* TODO replace instances with above colors */
   --mf-c-gray-t1: var(--mf-c-grayLight);
   --mf-c-gray-s1: var(--mf-c-grayDark);

@@ -9,6 +9,9 @@ import '@stencil/core';
 
 
 import {
+  Plan,
+} from 'types/Plan';
+import {
   Product,
 } from 'types/Product';
 import {
@@ -58,6 +61,13 @@ export namespace Components {
     'theme'?: 'light' | 'dark';
   }
 
+  interface ManifoldPlanSelector {
+    'productId': string;
+  }
+  interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
+    'productId'?: string;
+  }
+
   interface ManifoldProduct {
     'productLabel'?: string;
     'theme'?: 'light' | 'dark';
@@ -66,6 +76,9 @@ export namespace Components {
     'productLabel'?: string;
     'theme'?: 'light' | 'dark';
   }
+
+  interface MfBadge {}
+  interface MfBadgeAttributes extends StencilHTMLAttributes {}
 
   interface MfIcon {
     /**
@@ -100,6 +113,35 @@ export namespace Components {
     'marginLeft'?: boolean;
     'marginRight'?: boolean;
     'title'?: string;
+  }
+
+  interface PlanDetails {
+    'plan': Plan;
+    'product': Product;
+  }
+  interface PlanDetailsAttributes extends StencilHTMLAttributes {
+    'plan'?: Plan;
+    'product'?: Product;
+  }
+
+  interface PlanMenu {
+    'plans': Plan[];
+    'selectPlan': Function;
+    'selectedPlanId': string;
+  }
+  interface PlanMenuAttributes extends StencilHTMLAttributes {
+    'plans'?: Plan[];
+    'selectPlan'?: Function;
+    'selectedPlanId'?: string;
+  }
+
+  interface PlanSelector {
+    'plans': Plan[];
+    'product': Product;
+  }
+  interface PlanSelectorAttributes extends StencilHTMLAttributes {
+    'plans'?: Plan[];
+    'product'?: Product;
   }
 
   interface ProductDetails {
@@ -156,8 +198,13 @@ declare global {
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
+    'ManifoldPlanSelector': Components.ManifoldPlanSelector;
     'ManifoldProduct': Components.ManifoldProduct;
+    'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
+    'PlanDetails': Components.PlanDetails;
+    'PlanMenu': Components.PlanMenu;
+    'PlanSelector': Components.PlanSelector;
     'ProductDetails': Components.ProductDetails;
     'ProductPage': Components.ProductPage;
     'ServiceCard': Components.ServiceCard;
@@ -169,8 +216,13 @@ declare global {
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
+    'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
+    'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
+    'plan-details': Components.PlanDetailsAttributes;
+    'plan-menu': Components.PlanMenuAttributes;
+    'plan-selector': Components.PlanSelectorAttributes;
     'product-details': Components.ProductDetailsAttributes;
     'product-page': Components.ProductPageAttributes;
     'service-card': Components.ServiceCardAttributes;
@@ -202,16 +254,46 @@ declare global {
     new (): HTMLManifoldMarketplaceElement;
   };
 
+  interface HTMLManifoldPlanSelectorElement extends Components.ManifoldPlanSelector, HTMLStencilElement {}
+  var HTMLManifoldPlanSelectorElement: {
+    prototype: HTMLManifoldPlanSelectorElement;
+    new (): HTMLManifoldPlanSelectorElement;
+  };
+
   interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
   var HTMLManifoldProductElement: {
     prototype: HTMLManifoldProductElement;
     new (): HTMLManifoldProductElement;
   };
 
+  interface HTMLMfBadgeElement extends Components.MfBadge, HTMLStencilElement {}
+  var HTMLMfBadgeElement: {
+    prototype: HTMLMfBadgeElement;
+    new (): HTMLMfBadgeElement;
+  };
+
   interface HTMLMfIconElement extends Components.MfIcon, HTMLStencilElement {}
   var HTMLMfIconElement: {
     prototype: HTMLMfIconElement;
     new (): HTMLMfIconElement;
+  };
+
+  interface HTMLPlanDetailsElement extends Components.PlanDetails, HTMLStencilElement {}
+  var HTMLPlanDetailsElement: {
+    prototype: HTMLPlanDetailsElement;
+    new (): HTMLPlanDetailsElement;
+  };
+
+  interface HTMLPlanMenuElement extends Components.PlanMenu, HTMLStencilElement {}
+  var HTMLPlanMenuElement: {
+    prototype: HTMLPlanMenuElement;
+    new (): HTMLPlanMenuElement;
+  };
+
+  interface HTMLPlanSelectorElement extends Components.PlanSelector, HTMLStencilElement {}
+  var HTMLPlanSelectorElement: {
+    prototype: HTMLPlanSelectorElement;
+    new (): HTMLPlanSelectorElement;
   };
 
   interface HTMLProductDetailsElement extends Components.ProductDetails, HTMLStencilElement {}
@@ -243,8 +325,13 @@ declare global {
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
+    'manifold-plan-selector': HTMLManifoldPlanSelectorElement
     'manifold-product': HTMLManifoldProductElement
+    'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
+    'plan-details': HTMLPlanDetailsElement
+    'plan-menu': HTMLPlanMenuElement
+    'plan-selector': HTMLPlanSelectorElement
     'product-details': HTMLProductDetailsElement
     'product-page': HTMLProductPageElement
     'service-card': HTMLServiceCardElement
@@ -256,8 +343,13 @@ declare global {
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
+    'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
+    'plan-details': HTMLPlanDetailsElement;
+    'plan-menu': HTMLPlanMenuElement;
+    'plan-selector': HTMLPlanSelectorElement;
     'product-details': HTMLProductDetailsElement;
     'product-page': HTMLProductPageElement;
     'service-card': HTMLServiceCardElement;

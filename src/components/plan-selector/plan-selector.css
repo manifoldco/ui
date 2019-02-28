@@ -1,0 +1,16 @@
+@custom-media --viewport-m (min-width: 1000px);
+
+:host {
+  display: block;
+  grid-gap: 2rem;
+  grid-template-columns: minmax(300px, 1fr) minmax(300px, 2fr);
+
+  @media (--viewport-m) {
+    display: grid;
+  }
+}
+
+plan-details {
+  position: sticky;
+  top: 1rem;
+}

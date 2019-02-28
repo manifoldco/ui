@@ -1,0 +1,15 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  height: 1.75em;
+  padding-right: 1em;
+  padding-left: 1em;
+  color: var(--mf-c-white);
+  font-weight: 400;
+  font-size: var(--mf-font-d2);
+  line-height: 1;
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+  background-image: var(--mf-g-green);
+  border-radius: 3rem;
+}

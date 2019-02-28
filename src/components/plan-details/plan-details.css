@@ -1,0 +1,132 @@
+@custom-media --viewport-s (min-width: 450px);
+@custom-media --viewport-m (min-width: 650px);
+
+:host {
+  --padding: 1rem;
+
+  display: grid;
+  background-color: var(--mf-c-white);
+  border: 1px solid var(--mf-c-grayLight);
+  border-radius: var(--mf-radius-default);
+  box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.2);
+
+  @media (--viewport-m) {
+    --padding: 2rem;
+  }
+}
+
+.plan-details {
+  padding: var(--padding);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-content: center;
+}
+
+.logo {
+  --logo-size: 2.5rem;
+
+  width: var(--logo-size);
+  min-width: var(--logo-size);
+  height: var(--logo-size);
+  margin-right: 1rem;
+  overflow: hidden;
+  border-radius: var(--mf-radius-default);
+
+  @media (--breakpoint-s) {
+    --logo-size: 3rem;
+  }
+
+  @media (--breakpoint-m) {
+    --logo-size: 3.5rem;
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+.plan-name {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: var(--mf-font-u3);
+  line-height: 1;
+
+  @media (--breakpoint-m) {
+    font-size: var(--mf-font-u4);
+  }
+}
+
+.product-name {
+  margin: 0;
+  color: var(--mf-c-gray);
+  font-weight: 600;
+  font-size: var(--mf-font-d2);
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: var(--mf-font-d1);
+}
+
+.feature-name,
+.feature-value {
+  margin: 0;
+  padding: 0.5rem 0;
+  border-top: 1px dotted var(--mf-c-grayLight);
+}
+
+.feature-name {
+  font-weight: 600;
+}
+
+.feature-value {
+  &[data-value='No'],
+  &[data-value='Yes'] {
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &[data-value='No'] {
+    color: var(--mf-c-gray);
+  }
+
+  &[data-value='Yes'] {
+    color: var(--mf-c-blue);
+  }
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  padding: calc(var(--padding) * 0.75) var(--padding);
+  box-shadow: 0 -1px var(--mf-c-grayLight);
+}
+
+.cost {
+  flex-grow: 1;
+  font-size: var(--mf-font-u1);
+
+  @media (--breakpoint-m) {
+    font-size: var(--mf-font-u2);
+  }
+
+  & small {
+    color: var(--mf-c-gray);
+    font-weight: 500;
+    font-size: var(--mf-font-d4);
+    letter-spacing: 0.0625em;
+    text-transform: uppercase;
+  }
+}
