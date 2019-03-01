@@ -8,21 +8,36 @@ type CategoryMap = {
 };
 
 @Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
-export class ManifoldMarketplace {
+export class ServiceGrid {
   @Element() root: HTMLElement;
   @Prop() featured?: string;
   @Prop() themeColor: { [index: string]: string };
   @Prop() serviceLink?: string;
   @Prop() services?: Service[];
-  @Prop() showCategoryMenu: boolean = false;
   @State() observer: IntersectionObserver;
   @State() activeCategory?: string;
+  @State() scrollToCategory: string | null;
+  @State() filter: string | null;
 
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
       root: null,
       threshold: 1.0,
     });
+  }
+
+  componentDidUpdate() {
+    if (this.scrollToCategory) {
+      if (this.root.shadowRoot) {
+        const heading = this.root.shadowRoot.querySelector(`#category-${this.scrollToCategory}`);
+
+        if (heading) {
+          heading.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      this.scrollToCategory = null;
+    }
   }
 
   private observe = (
@@ -38,16 +53,10 @@ export class ManifoldMarketplace {
   };
 
   private categoryClick = (e: MouseEvent) => {
+    this.filter = '';
     if (e.srcElement) {
       const category = e.srcElement.getAttribute('data-category');
-
-      if (this.root.shadowRoot) {
-        const heading = this.root.shadowRoot.querySelector(`#category-${category}`);
-
-        if (heading) {
-          heading.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
+      this.scrollToCategory = category;
     }
   };
 
@@ -56,18 +65,6 @@ export class ManifoldMarketplace {
       this.observer.observe(el);
     }
   };
-
-  private isFeatured(label: string) {
-    if (typeof this.featured !== 'string') return false;
-    const parsedFeatures = this.featured.split(',').map(featureList => featureList.trim());
-    return parsedFeatures.includes(label);
-  }
-
-  private formatHref(label: string): string {
-    if (typeof label !== 'string') return '';
-    if (!this.serviceLink) return '';
-    return this.serviceLink.replace(':service', label);
-  }
 
   private formatCategoryLabel(tag: string): string {
     switch (tag) {
@@ -98,13 +95,41 @@ export class ManifoldMarketplace {
     return categoryMap;
   }
 
+  private updateFilter = (e: KeyboardEvent): void => {
+    if (e.srcElement) {
+      this.filter = (e.srcElement as HTMLInputElement).value;
+    }
+  };
+
+  private filteredServices() {
+    if (!this.filter || !this.services) {
+      return [];
+    }
+
+    const searchTerm = this.filter.toLocaleLowerCase();
+    return this.services.filter(s => {
+      const searchTargets = [s.body.label, s.body.name.toLocaleLowerCase()].concat(
+        s.body.tags || []
+      );
+      return searchTargets.some(t => t.includes(searchTerm));
+    });
+  }
+
   render() {
     const categoryMap = this.categories();
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
 
     return (
-      <div class={this.showCategoryMenu ? 'browse-catalog' : ''}>
-        {this.showCategoryMenu && (
+      <div class="wrapper">
+        <input
+          class="search-bar"
+          type="search"
+          autocapitalize="off"
+          placeholder="Search for a service or category"
+          value={this.filter || ''}
+          onKeyUp={this.updateFilter}
+        />
+        <div class={'browse-catalog'}>
           <aside class="category-sidebar">
             <div class="category-sidebar-inner">
               {sortedCategories.map(tag => (
@@ -118,30 +143,31 @@ export class ManifoldMarketplace {
               ))}
             </div>
           </aside>
-        )}
-        <div class="sorted-categories">
-          {sortedCategories.map(tag => (
-            <div>
-              <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
-                <mf-icon icon={themeIcons[tag]} marginRight />
-                {this.formatCategoryLabel(tag)}
-              </h3>
-              <div class="wrapper" style={this.themeColor}>
-                {categoryMap[tag]
-                  .sort((a, b) => a.body.name.localeCompare(b.body.name))
-                  .map(({ body: { name, label, tagline, logo_url } }) => (
-                    <service-card
-                      description={tagline}
-                      label={label}
-                      logo={logo_url}
-                      name={name}
-                      service-link={this.formatHref(label)}
-                      is-featured={this.isFeatured(label)}
-                    />
-                  ))}
-              </div>
-            </div>
-          ))}
+          <div class="sorted-categories">
+            {this.filter ? (
+              <marketplace-results
+                services={this.filteredServices()}
+                featured={this.featured}
+                service-link={this.serviceLink}
+                themeColor={this.themeColor}
+              />
+            ) : (
+              sortedCategories.map(tag => (
+                <div>
+                  <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
+                    <mf-icon icon={themeIcons[tag]} marginRight />
+                    {this.formatCategoryLabel(tag)}
+                  </h3>
+                  <marketplace-results
+                    services={categoryMap[tag]}
+                    featured={this.featured}
+                    service-link={this.serviceLink}
+                    themeColor={this.themeColor}
+                  />
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     );

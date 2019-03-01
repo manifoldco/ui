@@ -1,4 +1,6 @@
-# service-grid
+# marketplace-results
+
+
 
 <!-- Auto Generated Below -->
 
@@ -9,7 +11,7 @@
 | ------------- | -------------- | ----------- | ------------------------------ | ----------- |
 | `featured`    | `featured`     |             | `string \| undefined`          | `undefined` |
 | `serviceLink` | `service-link` |             | `string \| undefined`          | `undefined` |
-| `services`    | --             |             | `Service[] \| undefined`       | `undefined` |
+| `services`    | --             |             | `Service[]`                    | `undefined` |
 | `themeColor`  | --             |             | `{ [index: string]: string; }` | `undefined` |
 
 

@@ -9,14 +9,14 @@ import '@stencil/core';
 
 
 import {
+  Service,
+} from 'types/Service';
+import {
   Plan,
 } from 'types/Plan';
 import {
   Product,
 } from 'types/Product';
-import {
-  Service,
-} from 'types/Service';
 
 
 export namespace Components {
@@ -75,6 +75,19 @@ export namespace Components {
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
     'productLabel'?: string;
     'theme'?: 'light' | 'dark';
+  }
+
+  interface MarketplaceResults {
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services': Service[];
+    'themeColor': { [index: string]: string };
+  }
+  interface MarketplaceResultsAttributes extends StencilHTMLAttributes {
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services'?: Service[];
+    'themeColor'?: { [index: string]: string };
   }
 
   interface MfBadge {}
@@ -180,14 +193,12 @@ export namespace Components {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'showCategoryMenu': boolean;
     'themeColor': { [index: string]: string };
   }
   interface ServiceGridAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'showCategoryMenu'?: boolean;
     'themeColor'?: { [index: string]: string };
   }
 }
@@ -200,6 +211,7 @@ declare global {
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
     'ManifoldProduct': Components.ManifoldProduct;
+    'MarketplaceResults': Components.MarketplaceResults;
     'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
     'PlanDetails': Components.PlanDetails;
@@ -218,6 +230,7 @@ declare global {
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
+    'marketplace-results': Components.MarketplaceResultsAttributes;
     'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
     'plan-details': Components.PlanDetailsAttributes;
@@ -264,6 +277,12 @@ declare global {
   var HTMLManifoldProductElement: {
     prototype: HTMLManifoldProductElement;
     new (): HTMLManifoldProductElement;
+  };
+
+  interface HTMLMarketplaceResultsElement extends Components.MarketplaceResults, HTMLStencilElement {}
+  var HTMLMarketplaceResultsElement: {
+    prototype: HTMLMarketplaceResultsElement;
+    new (): HTMLMarketplaceResultsElement;
   };
 
   interface HTMLMfBadgeElement extends Components.MfBadge, HTMLStencilElement {}
@@ -327,6 +346,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
     'manifold-product': HTMLManifoldProductElement
+    'marketplace-results': HTMLMarketplaceResultsElement
     'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
     'plan-details': HTMLPlanDetailsElement
@@ -345,6 +365,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'marketplace-results': HTMLMarketplaceResultsElement;
     'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
     'plan-details': HTMLPlanDetailsElement;
