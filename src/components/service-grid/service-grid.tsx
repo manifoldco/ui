@@ -124,6 +124,7 @@ export class ServiceGrid {
         <input
           class="search-bar"
           type="search"
+          autocapitalize="off"
           placeholder="Search for a service or category"
           value={this.filter || ''}
           onKeyUp={this.updateFilter}
