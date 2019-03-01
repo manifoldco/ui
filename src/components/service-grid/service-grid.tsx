@@ -8,7 +8,7 @@ type CategoryMap = {
 };
 
 @Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
-export class ManifoldMarketplace {
+export class ServiceGrid {
   @Element() root: HTMLElement;
   @Prop() featured?: string;
   @Prop() themeColor: { [index: string]: string };
@@ -123,6 +123,7 @@ export class ManifoldMarketplace {
       <div class="wrapper">
         <input
           class="search-bar"
+          type="search"
           placeholder="Search for a service or category"
           value={this.filter || ''}
           onKeyUp={this.updateFilter}

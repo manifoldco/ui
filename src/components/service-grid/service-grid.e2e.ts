@@ -21,8 +21,8 @@ describe('<service-grid>', () => {
 
     // Each category should have one card
     el.forEach(cat => {
-      const card = cat.shadowRoot.querySelector('service-card');
-      expect(card).toBeTruthy();
+      const card = cat.shadowRoot.querySelectorAll('service-card');
+      expect(card.length).toBe(1);
     });
   });
 
@@ -38,7 +38,7 @@ describe('<service-grid>', () => {
     // See if first <a> href matches the pattern
     const el = await page.find('service-grid >>> marketplace-results');
     const card = el.shadowRoot.querySelector('service-card');
-    expect(card).toBeTruthy();
+    expect(card).not.toBeNull();
 
     if (card) {
       const href = card.getAttribute('service-link');
@@ -61,8 +61,8 @@ describe('<service-grid>', () => {
     const el = await page.findAll('service-grid >>> marketplace-results');
     const jawsDB = el[0].shadowRoot.querySelector('service-card');
     const logDNA = el[1].shadowRoot.querySelector('service-card');
-    expect(jawsDB).toBeTruthy();
-    expect(logDNA).toBeTruthy();
+    expect(jawsDB).not.toBeNull();
+    expect(logDNA).not.toBeNull();
 
     if (jawsDB && logDNA) {
       const jawsIsFeatured = jawsDB.getAttribute('is-featured');
