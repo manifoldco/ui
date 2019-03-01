@@ -66,12 +66,6 @@ export class ManifoldMarketplace {
     }
   };
 
-  private isFeatured(label: string) {
-    if (typeof this.featured !== 'string') return false;
-    const parsedFeatures = this.featured.split(',').map(featureList => featureList.trim());
-    return parsedFeatures.includes(label);
-  }
-
   private formatCategoryLabel(tag: string): string {
     switch (tag) {
       case 'cms':
@@ -151,7 +145,7 @@ export class ManifoldMarketplace {
             {this.filter ? (
               <marketplace-results
                 services={this.filteredServices()}
-                is-featured={this.isFeatured}
+                featured={this.featured}
                 service-link={this.serviceLink}
                 themeColor={this.themeColor}
               />
@@ -164,7 +158,7 @@ export class ManifoldMarketplace {
                   </h3>
                   <marketplace-results
                     services={categoryMap[tag]}
-                    is-featured={this.isFeatured}
+                    featured={this.featured}
                     service-link={this.serviceLink}
                     themeColor={this.themeColor}
                   />

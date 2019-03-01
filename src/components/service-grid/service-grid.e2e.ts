@@ -15,9 +15,15 @@ describe('<service-grid>', () => {
     });
     await page.waitForChanges();
 
-    // See if all service cards are rendered
-    const el = await page.findAll('service-grid >>> service-card');
+    // See if all categories are present
+    const el = await page.findAll('service-grid >>> marketplace-results');
     expect(el.length).toBe(3);
+
+    // Each category should have one card
+    el.forEach(cat => {
+      const card = cat.shadowRoot.querySelector('service-card');
+      expect(card).toBeTruthy();
+    });
   });
 
   it('formats links correctly', async () => {
@@ -30,9 +36,14 @@ describe('<service-grid>', () => {
     await page.waitForChanges();
 
     // See if first <a> href matches the pattern
-    const el = await page.find('service-grid >>> service-card');
-    const href = await el.getAttribute('service-link');
-    expect(href).toBe('/discover/view/service/jawsdb-mysql');
+    const el = await page.find('service-grid >>> marketplace-results');
+    const card = el.shadowRoot.querySelector('service-card');
+    expect(card).toBeTruthy();
+
+    if (card) {
+      const href = card.getAttribute('service-link');
+      expect(href).toBe('/discover/view/service/jawsdb-mysql');
+    }
   });
 
   it('correctly highlights featured services', async () => {
@@ -47,11 +58,18 @@ describe('<service-grid>', () => {
     });
     await page.waitForChanges();
 
-    const el = await page.findAll('service-grid >>> service-card');
-    const jawsIsFeatured = el[0].getAttribute('is-featured');
-    const logDNAIsFeatured = el[1].getAttribute('is-featured');
+    const el = await page.findAll('service-grid >>> marketplace-results');
+    const jawsDB = el[0].shadowRoot.querySelector('service-card');
+    const logDNA = el[1].shadowRoot.querySelector('service-card');
+    expect(jawsDB).toBeTruthy();
+    expect(logDNA).toBeTruthy();
 
-    expect(await jawsIsFeatured).toBeFalsy(); // this will be missing or null or something
-    expect(await logDNAIsFeatured).toBe(''); // HTML attributes will read as '' if preset (true)
+    if (jawsDB && logDNA) {
+      const jawsIsFeatured = jawsDB.getAttribute('is-featured');
+      const logDNAIsFeatured = logDNA.getAttribute('is-featured');
+
+      expect(jawsIsFeatured).toBeFalsy(); // this will be missing or null or something
+      expect(logDNAIsFeatured).toBe(''); // HTML attributes will read as '' if preset (true)
+    }
   });
 });
