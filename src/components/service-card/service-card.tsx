@@ -13,6 +13,7 @@ export class ServiceCard {
   @Prop() logo?: string;
   @Prop() isFeatured?: boolean;
   @Prop() serviceLink?: string;
+  @Prop() isCustom?: boolean;
 
   onClick = (e: Event): void => {
     if (!this.serviceLink) {
@@ -26,7 +27,7 @@ export class ServiceCard {
   render() {
     return (
       <a
-        class="wrapper"
+        class={`wrapper ${this.isCustom && 'is-custom'}`}
         role="button"
         itemscope
         itemtype="https://schema.org/Product"
@@ -34,8 +35,15 @@ export class ServiceCard {
         href={this.serviceLink}
         onClick={this.onClick}
       >
+        {this.isCustom && <mf-icon class="gear" icon="settings" />}
         <div class="logo">
-          <img src={this.logo} alt={this.name} itemprop="image" />
+          {this.isCustom ? (
+            <div class="icon-border">
+              <mf-icon class="icon" icon={this.logo} />
+            </div>
+          ) : (
+            <img src={this.logo} alt={this.name} itemprop="image" />
+          )}
         </div>
         <h3 class="name" itemprop="name">
           {this.name}

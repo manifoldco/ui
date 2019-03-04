@@ -173,6 +173,7 @@ export namespace Components {
 
   interface ServiceCard {
     'description'?: string;
+    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;
@@ -181,6 +182,7 @@ export namespace Components {
   }
   interface ServiceCardAttributes extends StencilHTMLAttributes {
     'description'?: string;
+    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;

@@ -35,6 +35,7 @@ export class ManifoldMarketplace {
               is-featured={this.isFeatured(label)}
             />
           ))}
+        <slot name="custom-card" />
       </div>
     );
   }
