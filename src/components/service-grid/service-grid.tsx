@@ -163,6 +163,7 @@ export class ServiceGrid {
                     featured={this.featured}
                     service-link={this.serviceLink}
                     themeColor={this.themeColor}
+                    tag={tag}
                   />
                 </div>
               ))

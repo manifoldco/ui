@@ -35,4 +35,12 @@ describe('<service-card>', () => {
     const el = await page.find('service-card >>> .tag');
     expect(el.innerText).toBe('featured');
   });
+
+  it('has an is-custom class if custom', async () => {
+    const page = await newE2EPage({
+      html: `<service-card is-custom="true"></service-card>`,
+    });
+    const el = await page.find('service-card >>> .is-custom');
+    expect(el).not.toBeNull();
+  });
 });

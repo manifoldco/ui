@@ -81,12 +81,14 @@ export namespace Components {
     'featured'?: string;
     'serviceLink'?: string;
     'services': Service[];
+    'tag'?: string;
     'themeColor': { [index: string]: string };
   }
   interface MarketplaceResultsAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
+    'tag'?: string;
     'themeColor'?: { [index: string]: string };
   }
 
@@ -173,6 +175,7 @@ export namespace Components {
 
   interface ServiceCard {
     'description'?: string;
+    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;
@@ -181,6 +184,7 @@ export namespace Components {
   }
   interface ServiceCardAttributes extends StencilHTMLAttributes {
     'description'?: string;
+    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;
