@@ -163,8 +163,17 @@ export class ServiceGrid {
                     featured={this.featured}
                     service-link={this.serviceLink}
                     themeColor={this.themeColor}
-                    tag={tag}
-                  />
+                  >
+                    <service-card
+                      description={`Add your own ${this.formatCategoryLabel(tag)} service`}
+                      label={'bring-your-own'}
+                      logo={themeIcons[tag]}
+                      name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
+                      is-custom={true}
+                      is-featured={false}
+                      slot='custom-card'
+                    />
+                  </marketplace-results>
                 </div>
               ))
             )}

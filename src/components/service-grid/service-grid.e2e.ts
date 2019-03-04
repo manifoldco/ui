@@ -19,10 +19,10 @@ describe('<service-grid>', () => {
     const el = await page.findAll('service-grid >>> marketplace-results');
     expect(el.length).toBe(3);
 
-    // Each category should have two cards - one service and one 'bring your own' card
+    // Each category should have one card
     el.forEach(cat => {
       const card = cat.shadowRoot.querySelectorAll('service-card');
-      expect(card.length).toBe(2);
+      expect(card.length).toBe(1);
     });
   });
 

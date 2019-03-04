@@ -81,14 +81,12 @@ export namespace Components {
     'featured'?: string;
     'serviceLink'?: string;
     'services': Service[];
-    'tag'?: string;
     'themeColor': { [index: string]: string };
   }
   interface MarketplaceResultsAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'tag'?: string;
     'themeColor'?: { [index: string]: string };
   }
 
