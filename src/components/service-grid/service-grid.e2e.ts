@@ -64,7 +64,6 @@ describe('<service-grid>', () => {
     await input.press('KeyO');
     await input.press('KeyG');
 
-    await page.waitForChanges();
     const results = await page.findAll('service-grid >>> marketplace-results');
     expect(results.length).toEqual(1);
   });
