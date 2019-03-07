@@ -45,15 +45,16 @@
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@stencil/core": "~0.18.0",
+    "@stencil/postcss": "^0.1.0"
+  },
   "devDependencies": {
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "prettier": "^1.16.4",
     "puppeteer": "1.11.0",
     "showdown": "^1.9.0",
-    "@stencil/core": "~0.18.0",
-    "@stencil/postcss": "^0.1.0",
     "@typescript-eslint/parser": "^1.1.1",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
