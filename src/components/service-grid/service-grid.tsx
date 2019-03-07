@@ -115,6 +115,17 @@ export class ServiceGrid {
     });
   }
 
+  private handleSearch = (el?: HTMLElement) => {
+    if (el) {
+      el.addEventListener('search', (e: Event) => {
+        const val = (e.srcElement as HTMLInputElement).value;
+        if (!val) {
+          this.filter = '';
+        }
+      });
+    }
+  };
+
   render() {
     const categoryMap = this.categories();
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
@@ -128,6 +139,7 @@ export class ServiceGrid {
           placeholder="Search for a service or category"
           value={this.filter || ''}
           onKeyUp={this.updateFilter}
+          ref={this.handleSearch}
         />
         <div class={'browse-catalog'}>
           <aside class="category-sidebar">
@@ -171,7 +183,7 @@ export class ServiceGrid {
                       name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
                       is-custom={true}
                       is-featured={false}
-                      slot='custom-card'
+                      slot="custom-card"
                     />
                   </marketplace-results>
                 </div>
