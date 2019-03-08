@@ -573,6 +573,11 @@ render() {
         productPage.productLabel = e.detail.label;
         modal.appendChild(productPage);
         document.body.appendChild(overlay);
+
+        modal.addEventListener('click', e => {
+          e.stopPropagation();
+        });
+
         overlay.addEventListener('click', () => {
           document.body.removeChild(overlay);
         })
