@@ -222,6 +222,28 @@
       .hljs-tag {
         color: var(--mf-c-magenta);
       }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99999999999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal {
+        max-width: 80%;
+        max-height: 80%;
+        padding: 1rem;
+        overflow: auto;
+        background-color: white;
+      }
     </style>
   </head>
   <body>
@@ -537,27 +559,6 @@ render() {
 
       var marketplace = document.querySelector('manifold-marketplace');
 
-      const overlayStyle = `
-        z-index: 99999999999999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-color: rgba(0, 0, 0, 0.5);`;
-
-      const modalStyle = `
-        background-color: white;
-        overflow: auto;
-        padding: 1rem;
-        max-width: 80%;
-        max-height: 80%;
-      `;
-
       marketplace.addEventListener('manifold-serviceCard-click', e => {
         if (e.detail.label === "bring-your-own") {
           alert("You clicked a custom card");
@@ -565,9 +566,9 @@ render() {
         }
 
         const overlay = document.createElement('div');
-        overlay.style.cssText = overlayStyle;
+        overlay.className = 'overlay';
         const modal = document.createElement('div');
-        modal.style.cssText = modalStyle;
+        modal.className = 'modal';
         overlay.appendChild(modal);
         const productPage =  document.createElement('manifold-product');
         productPage.productLabel = e.detail.label;
