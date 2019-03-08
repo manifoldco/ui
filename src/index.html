@@ -222,6 +222,28 @@
       .hljs-tag {
         color: var(--mf-c-magenta);
       }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 99999999999999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal {
+        max-width: 80%;
+        max-height: 80%;
+        padding: 1rem;
+        overflow: auto;
+        background-color: white;
+      }
     </style>
   </head>
   <body>
@@ -536,8 +558,30 @@ render() {
       hljs.initHighlightingOnLoad();
 
       var marketplace = document.querySelector('manifold-marketplace');
+
       marketplace.addEventListener('manifold-serviceCard-click', e => {
-        alert(`You just clicked ${e.detail.label}`);
+        if (e.detail.label === "bring-your-own") {
+          alert("You clicked a custom card");
+          return;
+        }
+
+        const overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        overlay.appendChild(modal);
+        const productPage =  document.createElement('manifold-product');
+        productPage.productLabel = e.detail.label;
+        modal.appendChild(productPage);
+        document.body.appendChild(overlay);
+
+        modal.addEventListener('click', e => {
+          e.stopPropagation();
+        });
+
+        overlay.addEventListener('click', () => {
+          document.body.removeChild(overlay);
+        })
       });
     </script>
   </body>
