@@ -64,6 +64,7 @@ Coming soon!
 
 | Property      | Attribute      | Description | Type                             | Default     |
 | ------------- | -------------- | ----------- | -------------------------------- | ----------- |
+| `preloaded`   | --             |             | `Service[] \| undefined`         | `undefined` |
 | `serviceLink` | `service-link` |             | `string \| undefined`            | `undefined` |
 | `theme`       | `theme`        |             | `"dark" \| "light" \| undefined` | `undefined` |
 

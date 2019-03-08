@@ -5,14 +5,20 @@ import { Service } from 'types/Service';
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
   @Prop() theme?: 'light' | 'dark';
+  @Prop() preloaded?: Service[];
   @State() services: Service[];
 
   componentWillLoad() {
-    return fetch('https://api.catalog.manifold.co/v1/products/')
-      .then(response => response.json())
-      .then(data => {
-        this.services = data;
-      });
+    if (this.preloaded) {
+      this.services = this.preloaded;
+      return Promise.resolve();
+    } else {
+      return fetch('https://api.catalog.manifold.co/v1/products/')
+        .then(response => response.json())
+        .then(data => {
+          this.services = data;
+        });
+    }
   }
 
   private getThemeColor() {

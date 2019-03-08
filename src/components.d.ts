@@ -53,10 +53,12 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
+    'preloaded'?: Service[];
     'serviceLink'?: string;
     'theme'?: 'light' | 'dark';
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'preloaded'?: Service[];
     'serviceLink'?: string;
     'theme'?: 'light' | 'dark';
   }
