@@ -11,7 +11,6 @@ type CategoryMap = {
 export class ServiceGrid {
   @Element() root: HTMLElement;
   @Prop() featured?: string;
-  @Prop() themeColor: { [index: string]: string };
   @Prop() serviceLink?: string;
   @Prop() services?: Service[];
   @State() observer: IntersectionObserver;
@@ -161,7 +160,6 @@ export class ServiceGrid {
                 services={this.filteredServices()}
                 featured={this.featured}
                 service-link={this.serviceLink}
-                themeColor={this.themeColor}
               />
             ) : (
               sortedCategories.map(tag => (
@@ -174,7 +172,6 @@ export class ServiceGrid {
                     services={categoryMap[tag]}
                     featured={this.featured}
                     service-link={this.serviceLink}
-                    themeColor={this.themeColor}
                   >
                     <service-card
                       description={`Add your own ${this.formatCategoryLabel(tag)} service`}

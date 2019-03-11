@@ -400,8 +400,6 @@ render() {
   return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
 }
 </code></pre>
-            <h2 id="javascriptcallback">JavaScript callback</h2>
-            <p>Coming soon!</p>
             <!-- Auto Generated Below -->
             <h2 id="properties">Properties</h2>
             <table>
@@ -420,13 +418,6 @@ render() {
                   <td><code>service-link</code></td>
                   <td></td>
                   <td><code>string | undefined</code></td>
-                  <td><code>undefined</code></td>
-                </tr>
-                <tr>
-                  <td><code>theme</code></td>
-                  <td><code>theme</code></td>
-                  <td></td>
-                  <td><code>"dark" | "light" | undefined</code></td>
                   <td><code>undefined</code></td>
                 </tr>
               </tbody>
@@ -478,13 +469,6 @@ render() {
                   <td><code>product-label</code></td>
                   <td></td>
                   <td><code>string | undefined</code></td>
-                  <td><code>undefined</code></td>
-                </tr>
-                <tr>
-                  <td><code>theme</code></td>
-                  <td><code>theme</code></td>
-                  <td></td>
-                  <td><code>"dark" | "light" | undefined</code></td>
                   <td><code>undefined</code></td>
                 </tr>
               </tbody>
@@ -560,8 +544,8 @@ render() {
       var marketplace = document.querySelector('manifold-marketplace');
 
       marketplace.addEventListener('manifold-serviceCard-click', e => {
-        if (e.detail.label === "bring-your-own") {
-          alert("You clicked a custom card");
+        if (e.detail.label === 'bring-your-own') {
+          alert('You clicked a custom card');
           return;
         }
 
@@ -570,7 +554,7 @@ render() {
         const modal = document.createElement('div');
         modal.className = 'modal';
         overlay.appendChild(modal);
-        const productPage =  document.createElement('manifold-product');
+        const productPage = document.createElement('manifold-product');
         productPage.productLabel = e.detail.label;
         modal.appendChild(productPage);
         document.body.appendChild(overlay);
@@ -581,7 +565,7 @@ render() {
 
         overlay.addEventListener('click', () => {
           document.body.removeChild(overlay);
-        })
+        });
       });
     </script>
   </body>
