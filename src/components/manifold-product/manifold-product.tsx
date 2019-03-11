@@ -4,7 +4,6 @@ import { Product } from 'types/Product';
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Prop() productLabel?: string;
-  @Prop() theme?: 'light' | 'dark';
   @State() product: Product;
 
   componentWillLoad() {

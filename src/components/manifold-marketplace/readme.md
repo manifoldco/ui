@@ -53,19 +53,14 @@ render() {
 }
 ```
 
-## JavaScript callback
-
-Coming soon!
-
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                             | Default     |
-| ------------- | -------------- | ----------- | -------------------------------- | ----------- |
-| `serviceLink` | `service-link` |             | `string \| undefined`            | `undefined` |
-| `theme`       | `theme`        |             | `"dark" \| "light" \| undefined` | `undefined` |
+| Property      | Attribute      | Description | Type                  | Default     |
+| ------------- | -------------- | ----------- | --------------------- | ----------- |
+| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

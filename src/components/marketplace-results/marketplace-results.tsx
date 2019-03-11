@@ -6,7 +6,6 @@ export class ManifoldMarketplace {
   @Prop() featured?: string;
   @Prop() serviceLink?: string;
   @Prop() services: Service[];
-  @Prop() themeColor: { [index: string]: string };
 
   private formatHref(label: string): string {
     if (typeof label !== 'string') return '';
@@ -22,7 +21,7 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <div class="wrapper" style={this.themeColor}>
+      <div class="wrapper">
         {this.services
           .sort((a, b) => a.body.name.localeCompare(b.body.name))
           .map(({ body: { name, label, tagline, logo_url } }) => (
