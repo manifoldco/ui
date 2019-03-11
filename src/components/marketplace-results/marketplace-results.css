@@ -5,7 +5,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 8px;
-  color: var(--mf-text-color);
+  color: var(--text-color);
   font-size: 16px;
   font-family: var(--mf-font-family);
   line-height: 1;
