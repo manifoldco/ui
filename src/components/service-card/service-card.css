@@ -16,6 +16,7 @@
   height: 100%;
   padding: 0.75rem;
   color: inherit;
+  background-color: var(--mf-c-white);
   font-size: 1em;
   font-family: var(--mf-font-family);
   text-decoration: none;
@@ -168,7 +169,7 @@
   line-height: 1;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
-  background-image: var(--mf-g-orange);
+  background-image: var(--mf-g-blue);
   border-radius: 3rem;
 }
 

@@ -53,9 +53,11 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
+    'featured'?: string;
     'serviceLink'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'featured'?: string;
     'serviceLink'?: string;
   }
 
