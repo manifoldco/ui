@@ -31,7 +31,7 @@ export class ServiceGrid {
         const heading = this.root.shadowRoot.querySelector(`#category-${this.scrollToCategory}`);
 
         if (heading) {
-          heading.scrollIntoView({ behavior: 'smooth' });
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
 
