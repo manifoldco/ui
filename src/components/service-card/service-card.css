@@ -16,11 +16,10 @@
   height: 100%;
   padding: 0.75rem;
   color: inherit;
-  background-color: var(--mf-c-white);
   font-size: 1em;
   font-family: var(--mf-font-family);
   text-decoration: none;
-  background-color: var(--background-color);
+  background-color: var(--mf-c-white);
   border: 1px solid #d3d3d4;
   border-radius: var(--mf-radius-l);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
