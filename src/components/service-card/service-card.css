@@ -144,10 +144,6 @@
   @media (--viewport-l) {
     padding-left: 0;
   }
-
-  @media (min-width: 1200px) {
-    font-size: var(--font-u1);
-  }
 }
 
 .is-custom .name {
