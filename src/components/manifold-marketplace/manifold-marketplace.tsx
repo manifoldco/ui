@@ -4,6 +4,7 @@ import { Service } from 'types/Service';
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
+  @Prop() featured?: string;
   @State() services: Service[];
 
   componentWillLoad() {
@@ -15,6 +16,12 @@ export class ManifoldMarketplace {
   }
 
   render() {
-    return <service-grid services={this.services} service-link={this.serviceLink} />;
+    return (
+      <service-grid
+        services={this.services}
+        featured={this.featured}
+        service-link={this.serviceLink}
+      />
+    );
   }
 }

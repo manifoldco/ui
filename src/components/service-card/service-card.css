@@ -19,7 +19,7 @@
   font-size: 1em;
   font-family: var(--mf-font-family);
   text-decoration: none;
-  background-color: var(--background-color);
+  background-color: var(--mf-c-white);
   border: 1px solid #d3d3d4;
   border-radius: var(--mf-radius-l);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
@@ -168,7 +168,7 @@
   line-height: 1;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
-  background-image: var(--mf-g-orange);
+  background-image: var(--mf-g-blue);
   border-radius: 3rem;
 }
 
