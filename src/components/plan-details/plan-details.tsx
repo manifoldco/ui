@@ -1,6 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 import { Plan, ExpandedFeature } from 'types/Plan';
 import { Product } from 'types/Product';
+import { $ } from '../../utils/currency';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 const NUMBER_FEATURE_COIN = 10000000; // Numeric features are a ten-millionth of a cent, because floats stink
@@ -27,7 +28,7 @@ export class PlanDetails {
   @Prop() product: Product;
 
   // TODO clean this up
-  userValue({ measurable, type, value, value_string }: ExpandedFeature): string {
+  featureValue({ measurable, type, value, value_string }: ExpandedFeature): string {
     if (measurable) {
       if (value.numeric_details.cost_ranges.length === 0) {
         return value.name.replace(/^No .*/, NO).replace(/^Yes/, YES);
@@ -73,10 +74,30 @@ export class PlanDetails {
     }
   }
 
+  selectedValue(feature: ExpandedFeature): string {
+    return feature.value;
+  }
+
+  handleFeatureChange(label: string, value: string) {
+    console.log(label, value);
+  }
+
+  customFeatureValue(feature: ExpandedFeature) {
+    return (
+      <custom-plan-feature
+        feature={feature}
+        selectedValue={this.selectedValue(feature)}
+        setFeature={this.handleFeatureChange}
+      />
+    );
+  }
+
   render() {
     if (!this.product || !this.plan) return null;
+
     const { name: productName, logo_url: productLogo, label: productLabel } = this.product.body;
     const { name, expanded_features, cost } = this.plan.body;
+
     return (
       <section itemscope itemtype="https://schema.org/IndividualProduct">
         <div class="plan-details">
@@ -95,9 +116,21 @@ export class PlanDetails {
           </header>
           <dl class="features">
             {expanded_features.map(feature => {
-              const value = this.userValue(feature);
+              const value = feature.customizable
+                ? this.customFeatureValue(feature)
+                : this.featureValue(feature);
+
+              let description;
+              feature.values.forEach(val => {
+                // eslint-disable-next-line
+                if (val.price && val.price.description) description = val.price.description;
+              });
+
               return [
-                <dt class="feature-name">{feature.name}</dt>,
+                <dt class="feature-name">
+                  {feature.name}
+                  {description && <p class="description">{description}</p>}
+                </dt>,
                 <dd class="feature-value" data-value={value}>
                   {value === YES && <mf-icon icon="check" margin-right />}
                   {value}
@@ -108,7 +141,7 @@ export class PlanDetails {
         </div>
         <footer class="footer">
           <div class="cost" itemprop="price">
-            {toUSD(cost)} <small>&nbsp;/ mo</small>
+            {$(cost)} <small>&nbsp;/ mo</small>
           </div>
           <link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}

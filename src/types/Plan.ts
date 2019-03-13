@@ -5,6 +5,8 @@ export interface ExpandedFeature {
   type: 'boolean' | 'number' | 'string';
   value: any;
   value_string: string;
+  values: any[];
+  customizable?: boolean;
 }
 
 export interface Feature {

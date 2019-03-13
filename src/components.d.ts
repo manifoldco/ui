@@ -9,17 +9,35 @@ import '@stencil/core';
 
 
 import {
+  ExpandedFeature,
+  Plan,
+} from 'types/Plan';
+import {
   Service,
 } from 'types/Service';
 import {
-  Plan,
-} from 'types/Plan';
+  Option,
+  Value,
+} from 'types/Select';
 import {
   Product,
 } from 'types/Product';
 
 
 export namespace Components {
+
+  interface CustomPlanFeature {
+    'feature': ExpandedFeature;
+    'planLabel': string;
+    'selectedValue': string;
+    'setFeature': (label: string, value: string) => void;
+  }
+  interface CustomPlanFeatureAttributes extends StencilHTMLAttributes {
+    'feature'?: ExpandedFeature;
+    'planLabel'?: string;
+    'selectedValue'?: string;
+    'setFeature'?: (label: string, value: string) => void;
+  }
 
   interface FeaturedService {
     'logo': string;
@@ -128,6 +146,55 @@ export namespace Components {
     'title'?: string;
   }
 
+  interface MfSelect {
+    'name': string;
+    'onChange': (e: UIEvent) => void;
+    'options': Option[];
+    'required'?: boolean;
+    'selectedValue'?: Value;
+  }
+  interface MfSelectAttributes extends StencilHTMLAttributes {
+    'name'?: string;
+    'onChange'?: (e: UIEvent) => void;
+    'options'?: Option[];
+    'required'?: boolean;
+    'selectedValue'?: Value;
+  }
+
+  interface MfSlider {
+    'error'?: string;
+    'increment': number;
+    'max': number;
+    'min': number;
+    'name': string;
+    'onChange': (e: Event) => void;
+    'selectedValue': number;
+    'suffix': string;
+  }
+  interface MfSliderAttributes extends StencilHTMLAttributes {
+    'error'?: string;
+    'increment'?: number;
+    'max'?: number;
+    'min'?: number;
+    'name'?: string;
+    'onChange'?: (e: Event) => void;
+    'selectedValue'?: number;
+    'suffix'?: string;
+  }
+
+  interface MfToggle {
+    'ariaLabelledby'?: string;
+    'disabled'?: boolean;
+    'label'?: string;
+    'name': string;
+  }
+  interface MfToggleAttributes extends StencilHTMLAttributes {
+    'ariaLabelledby'?: string;
+    'disabled'?: boolean;
+    'label'?: string;
+    'name'?: string;
+  }
+
   interface PlanDetails {
     'plan': Plan;
     'product': Product;
@@ -207,6 +274,7 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
+    'CustomPlanFeature': Components.CustomPlanFeature;
     'FeaturedService': Components.FeaturedService;
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
@@ -216,6 +284,9 @@ declare global {
     'MarketplaceResults': Components.MarketplaceResults;
     'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
+    'MfSelect': Components.MfSelect;
+    'MfSlider': Components.MfSlider;
+    'MfToggle': Components.MfToggle;
     'PlanDetails': Components.PlanDetails;
     'PlanMenu': Components.PlanMenu;
     'PlanSelector': Components.PlanSelector;
@@ -226,6 +297,7 @@ declare global {
   }
 
   interface StencilIntrinsicElements {
+    'custom-plan-feature': Components.CustomPlanFeatureAttributes;
     'featured-service': Components.FeaturedServiceAttributes;
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
@@ -235,6 +307,9 @@ declare global {
     'marketplace-results': Components.MarketplaceResultsAttributes;
     'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
+    'mf-select': Components.MfSelectAttributes;
+    'mf-slider': Components.MfSliderAttributes;
+    'mf-toggle': Components.MfToggleAttributes;
     'plan-details': Components.PlanDetailsAttributes;
     'plan-menu': Components.PlanMenuAttributes;
     'plan-selector': Components.PlanSelectorAttributes;
@@ -244,6 +319,12 @@ declare global {
     'service-grid': Components.ServiceGridAttributes;
   }
 
+
+  interface HTMLCustomPlanFeatureElement extends Components.CustomPlanFeature, HTMLStencilElement {}
+  var HTMLCustomPlanFeatureElement: {
+    prototype: HTMLCustomPlanFeatureElement;
+    new (): HTMLCustomPlanFeatureElement;
+  };
 
   interface HTMLFeaturedServiceElement extends Components.FeaturedService, HTMLStencilElement {}
   var HTMLFeaturedServiceElement: {
@@ -299,6 +380,24 @@ declare global {
     new (): HTMLMfIconElement;
   };
 
+  interface HTMLMfSelectElement extends Components.MfSelect, HTMLStencilElement {}
+  var HTMLMfSelectElement: {
+    prototype: HTMLMfSelectElement;
+    new (): HTMLMfSelectElement;
+  };
+
+  interface HTMLMfSliderElement extends Components.MfSlider, HTMLStencilElement {}
+  var HTMLMfSliderElement: {
+    prototype: HTMLMfSliderElement;
+    new (): HTMLMfSliderElement;
+  };
+
+  interface HTMLMfToggleElement extends Components.MfToggle, HTMLStencilElement {}
+  var HTMLMfToggleElement: {
+    prototype: HTMLMfToggleElement;
+    new (): HTMLMfToggleElement;
+  };
+
   interface HTMLPlanDetailsElement extends Components.PlanDetails, HTMLStencilElement {}
   var HTMLPlanDetailsElement: {
     prototype: HTMLPlanDetailsElement;
@@ -342,6 +441,7 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
+    'custom-plan-feature': HTMLCustomPlanFeatureElement
     'featured-service': HTMLFeaturedServiceElement
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
@@ -351,6 +451,9 @@ declare global {
     'marketplace-results': HTMLMarketplaceResultsElement
     'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
+    'mf-select': HTMLMfSelectElement
+    'mf-slider': HTMLMfSliderElement
+    'mf-toggle': HTMLMfToggleElement
     'plan-details': HTMLPlanDetailsElement
     'plan-menu': HTMLPlanMenuElement
     'plan-selector': HTMLPlanSelectorElement
@@ -361,6 +464,7 @@ declare global {
   }
 
   interface ElementTagNameMap {
+    'custom-plan-feature': HTMLCustomPlanFeatureElement;
     'featured-service': HTMLFeaturedServiceElement;
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
@@ -370,6 +474,9 @@ declare global {
     'marketplace-results': HTMLMarketplaceResultsElement;
     'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
+    'mf-select': HTMLMfSelectElement;
+    'mf-slider': HTMLMfSliderElement;
+    'mf-toggle': HTMLMfToggleElement;
     'plan-details': HTMLPlanDetailsElement;
     'plan-menu': HTMLPlanMenuElement;
     'plan-selector': HTMLPlanSelectorElement;

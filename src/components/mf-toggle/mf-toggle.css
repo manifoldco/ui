@@ -1,0 +1,71 @@
+.wrapper {
+  display: inline-grid;
+  grid-gap: 1em;
+  grid-template-areas: 'toggle label';
+  align-items: center;
+  justify-items: center;
+}
+
+input,
+.toggle {
+  grid-area: toggle;
+}
+
+input {
+  opacity: 0;
+}
+
+.label {
+  grid-area: label;
+}
+
+.toggle {
+  --size: 1.5em;
+  --spacing: 0.2em;
+  --gap: calc(var(--size) / 2);
+
+  display: grid;
+  grid-gap: var(--gap);
+  grid-template-areas: 'off on';
+  width: calc(var(--size) * 2.5);
+  height: var(--size);
+  padding: var(--spacing);
+  background-image: var(--mf-g-gray);
+  border: 1px solid var(--mf-c-grayLight);
+  border-radius: 2.5em;
+  transition: opacity 200ms;
+  pointer-events: none;
+  will-change: opacity;
+
+  &::before {
+    grid-area: off;
+    box-sizing: border-box;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 0.1em 0.05em rgba(var(--mf-c-black-rgb), 0.1);
+    transition: transform 100ms ease-in-out;
+    content: '';
+  }
+}
+
+input:checked + .toggle {
+  background-image: var(--mf-g-blue);
+
+  &::before {
+    transform: translateX(calc(var(--size) + var(--gap)));
+  }
+}
+
+input:focus + .toggle,
+input:active + .toggle {
+  border-color: var(--mf-c-blue);
+  box-shadow: 0 0 1em 0.1em rgba(var(--mf-c-blue-rgb), 0.3);
+}
+
+input:disabled {
+  pointer-events: none;
+
+  & + .toggle {
+    opacity: 0.5;
+  }
+}

@@ -46,6 +46,7 @@
   /* rgb colors */
   --mf-c-blue-rgb: 30, 80, 218;
   --mf-c-gray-rgb: 143, 143, 149;
+  --mf-c-black-rgb: 0, 0, 0;
 
   /* TODO replace instances with above colors */
   --mf-c-gray-t1: var(--mf-c-grayLight);

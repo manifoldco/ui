@@ -1,0 +1,34 @@
+:host {
+  --default-color: var(--mf-c-gray);
+  --focus-color: var(--mf-c-blue);
+}
+
+select {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0.5em 3.5em 0.5em 1em;
+  font: inherit;
+  line-height: 1.5em;
+  background-color: white;
+  background-image: linear-gradient(45deg, transparent 50%, var(--default-color) 50%),
+    linear-gradient(135deg, var(--default-color) 50%, transparent 50%),
+    linear-gradient(to right, var(--default-color), var(--default-color));
+  background-repeat: no-repeat;
+  background-position: calc(100% - 16px) calc(1em + 2px), calc(100% - 11px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  border: thin solid var(--default-color);
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select:focus {
+  background-image: linear-gradient(45deg, transparent 50%, var(--focus-color) 50%),
+    linear-gradient(135deg, var(--focus-color) 50%, transparent 50%),
+    linear-gradient(to right, var(--focus-color), var(--focus-color));
+  border-color: var(--focus-color);
+  outline: 0;
+}
