@@ -21,7 +21,7 @@ export class ServiceGrid {
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
       root: null,
-      threshold: 1.0,
+      threshold: 0.9,
     });
   }
 
@@ -43,7 +43,7 @@ export class ServiceGrid {
     entries: IntersectionObserverEntry[],
     _observer: IntersectionObserver
   ): void => {
-    const visibleEntry = entries.find(e => e.isIntersecting);
+    const visibleEntry = entries.find(e => e.isIntersecting && e.intersectionRatio > 0.99);
     if (visibleEntry) {
       const [, ...rest] = visibleEntry.target.id.split('-');
       const category = rest.join('-');
