@@ -89,6 +89,13 @@
   font-weight: 600;
 }
 
+.description {
+  margin: 0.5em 0;
+  color: var(--mf-c-gray);
+  font-weight: normal;
+  font-size: var(--mf-font-d1);
+}
+
 .feature-value {
   &[data-value='No'],
   &[data-value='Yes'] {

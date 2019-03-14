@@ -14,12 +14,12 @@ export class ManifoldPlanSelector {
   @State() plans: Plan[];
 
   async componentWillLoad() {
-    await fetch(`https://api.catalog.manifold.co/v1/products/${this.productId}`)
+    await fetch(`https://api.catalog.stage.manifold.co/v1/products/${this.productId}`)
       .then(response => response.json())
       .then(data => {
         this.product = data;
       });
-    await fetch(`https://api.catalog.manifold.co/v1/plans?product_id=${this.productId}`)
+    await fetch(`https://api.catalog.stage.manifold.co/v1/plans?product_id=${this.productId}`)
       .then(response => response.json())
       .then(data => {
         this.plans = data.sort(byCost);
