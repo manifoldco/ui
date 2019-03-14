@@ -48,13 +48,30 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
 
-.category-button.is-active {
-  color: var(--mf-c-grayDarker);
-}
+  &:focus {
+    color: var(--mf-c-blue);
+    outline: 0;
+  }
 
-.category-button:focus {
-  color: var(--mf-c-blue);
-  outline: 0;
+  &.is-active {
+    color: var(--mf-c-grayDarker);
+  }
+
+  &.big {
+    font-size: var(--mf-font-d0);
+    color: var(--mf-c-grayDarker);
+
+    &:hover {
+      box-shadow: 2px 0 rgba(var(--mf-c-blue-rgb), 0.2) inset;
+      color: var(--mf-c-gray);
+    }
+
+    &:focus,
+    &.is-active {
+      color: var(--mf-c-blue);
+      box-shadow: 2px 0 var(--mf-c-blue) inset;
+      outline: 0;
+    }
+  }
 }

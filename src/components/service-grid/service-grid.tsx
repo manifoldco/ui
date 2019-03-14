@@ -7,6 +7,11 @@ type CategoryMap = {
   [category: string]: Service[];
 };
 
+enum Tab {
+  Featured = 'featured',
+  Categorized = 'categorized',
+}
+
 @Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
 export class ServiceGrid {
   @Element() root: HTMLElement;
@@ -17,6 +22,7 @@ export class ServiceGrid {
   @State() activeCategory?: string;
   @State() scrollToCategory: string | null;
   @State() filter: string | null;
+  @State() activeTab: Tab = Tab.Featured;
 
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
@@ -53,6 +59,7 @@ export class ServiceGrid {
 
   private categoryClick = (e: MouseEvent) => {
     this.filter = '';
+    this.activeTab = Tab.Categorized;
     if (e.srcElement) {
       const category = e.srcElement.getAttribute('data-category');
       this.scrollToCategory = category;
@@ -125,6 +132,20 @@ export class ServiceGrid {
     }
   };
 
+  tab(tabName: Tab, label: string) {
+    const className = `category-button big${this.activeTab === tabName ? ' is-active' : ''}`;
+    return (
+      <button
+        class={className}
+        onClick={() => {
+          this.activeTab = tabName;
+        }}
+      >
+        {label}
+      </button>
+    );
+  }
+
   render() {
     const categoryMap = this.categories();
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
@@ -143,6 +164,8 @@ export class ServiceGrid {
         <div class={'browse-catalog'}>
           <aside class="category-sidebar">
             <div class="category-sidebar-inner">
+              {this.tab(Tab.Featured, 'Featured')}
+              {this.tab(Tab.Categorized, 'All Services')}
               {sortedCategories.map(tag => (
                 <button
                   class={`category-button${this.activeCategory === tag ? ' is-active' : ''}`}
