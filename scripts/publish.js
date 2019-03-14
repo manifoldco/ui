@@ -3,16 +3,24 @@ const { resolve } = require('path');
 const { execSync } = require('child_process');
 const prettier = require('prettier');
 
+/* eslint-disable no-console */
+
 const SELECT_FLAG = /-.*/; // Selects anything after a hyphen, or nothing
 const DIST_DIR = resolve(__dirname, '..', 'dist');
 
 // 1. Read Git tag
-const gitTag = execSync('git describe --abbrev=0 --tags')
-  .toString()
-  .replace('\n', '');
-const flag = SELECT_FLAG.exec(gitTag);
+let gitTag;
+try {
+  gitTag = execSync('git describe --abbrev=0 --tags --exact-match')
+    .toString()
+    .replace('\n', '');
+} catch (e) {
+  console.warn('⚠️ No tag for current commit. Nothing to publish.');
+  return;
+}
 
 // 2. Determine if “public” or “private” release
+const flag = SELECT_FLAG.exec(gitTag);
 let npmTag = 'latest'; // default (“public”)
 
 // If there is a hyphen in the version, this is a “private“ release
