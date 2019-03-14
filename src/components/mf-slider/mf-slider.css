@@ -55,7 +55,11 @@ input[type='range'] {
     opacity: 1;
   }
 
-  &:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 1px var(--mf-c-blue), 0 0 1em 0 var(--mf-c-blue);
+  &:focus {
+    outline: none;
+
+    &::-webkit-slider-thumb {
+      box-shadow: 0 0 0 1px var(--mf-c-blue), 0 0 1em 0 var(--mf-c-blue);
+    }
   }
 }

@@ -4,7 +4,7 @@ import { Service } from 'types/Service';
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
-  @Prop() theme?: 'light' | 'dark';
+  @Prop() featured?: string;
   @State() services: Service[];
 
   componentWillLoad() {
@@ -15,25 +15,12 @@ export class ManifoldMarketplace {
       });
   }
 
-  private getThemeColor() {
-    if (this.theme === 'dark') {
-      return {
-        '--background-color': 'var(--mf-c-black)',
-        '--text-color': 'var(--mf-c-white)',
-      };
-    }
-    return {
-      '--background-color': 'var(--mf-c-white)',
-      '--text-color': 'var(--mf-c-black)',
-    };
-  }
-
   render() {
     return (
       <service-grid
         services={this.services}
+        featured={this.featured}
         service-link={this.serviceLink}
-        theme-color={this.getThemeColor()}
       />
     );
   }

@@ -21,8 +21,7 @@ select {
   background-size: 5px 5px, 5px 5px, 1px 1.5em;
   border: thin solid var(--default-color);
   border-radius: 4px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  appearance: none;
 }
 
 select:focus {

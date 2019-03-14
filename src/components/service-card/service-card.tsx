@@ -27,7 +27,7 @@ export class ServiceCard {
   render() {
     return (
       <a
-        class={`wrapper ${this.isCustom && 'is-custom'}`}
+        class={`wrapper ${this.isCustom ? 'is-custom' : ''}`}
         role="button"
         itemscope
         itemtype="https://schema.org/Product"

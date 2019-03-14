@@ -11,7 +11,6 @@ type CategoryMap = {
 export class ServiceGrid {
   @Element() root: HTMLElement;
   @Prop() featured?: string;
-  @Prop() themeColor: { [index: string]: string };
   @Prop() serviceLink?: string;
   @Prop() services?: Service[];
   @State() observer: IntersectionObserver;
@@ -22,7 +21,7 @@ export class ServiceGrid {
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
       root: null,
-      threshold: 1.0,
+      threshold: 0.9,
     });
   }
 
@@ -32,7 +31,7 @@ export class ServiceGrid {
         const heading = this.root.shadowRoot.querySelector(`#category-${this.scrollToCategory}`);
 
         if (heading) {
-          heading.scrollIntoView({ behavior: 'smooth' });
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
 
@@ -44,7 +43,7 @@ export class ServiceGrid {
     entries: IntersectionObserverEntry[],
     _observer: IntersectionObserver
   ): void => {
-    const visibleEntry = entries.find(e => e.isIntersecting);
+    const visibleEntry = entries.find(e => e.isIntersecting && e.intersectionRatio > 0.99);
     if (visibleEntry) {
       const [, ...rest] = visibleEntry.target.id.split('-');
       const category = rest.join('-');
@@ -115,6 +114,17 @@ export class ServiceGrid {
     });
   }
 
+  private handleSearch = (el?: HTMLElement) => {
+    if (el) {
+      el.addEventListener('search', (e: Event) => {
+        const val = (e.srcElement as HTMLInputElement).value;
+        if (!val) {
+          this.filter = '';
+        }
+      });
+    }
+  };
+
   render() {
     const categoryMap = this.categories();
     const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
@@ -128,6 +138,7 @@ export class ServiceGrid {
           placeholder="Search for a service or category"
           value={this.filter || ''}
           onKeyUp={this.updateFilter}
+          ref={this.handleSearch}
         />
         <div class={'browse-catalog'}>
           <aside class="category-sidebar">
@@ -149,7 +160,6 @@ export class ServiceGrid {
                 services={this.filteredServices()}
                 featured={this.featured}
                 service-link={this.serviceLink}
-                themeColor={this.themeColor}
               />
             ) : (
               sortedCategories.map(tag => (
@@ -162,7 +172,6 @@ export class ServiceGrid {
                     services={categoryMap[tag]}
                     featured={this.featured}
                     service-link={this.serviceLink}
-                    themeColor={this.themeColor}
                   >
                     <service-card
                       description={`Add your own ${this.formatCategoryLabel(tag)} service`}
@@ -171,7 +180,7 @@ export class ServiceGrid {
                       name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
                       is-custom={true}
                       is-featured={false}
-                      slot='custom-card'
+                      slot="custom-card"
                     />
                   </marketplace-results>
                 </div>

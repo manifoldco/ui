@@ -71,12 +71,12 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
+    'featured'?: string;
     'serviceLink'?: string;
-    'theme'?: 'light' | 'dark';
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'featured'?: string;
     'serviceLink'?: string;
-    'theme'?: 'light' | 'dark';
   }
 
   interface ManifoldPlanSelector {
@@ -88,24 +88,20 @@ export namespace Components {
 
   interface ManifoldProduct {
     'productLabel'?: string;
-    'theme'?: 'light' | 'dark';
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
     'productLabel'?: string;
-    'theme'?: 'light' | 'dark';
   }
 
   interface MarketplaceResults {
     'featured'?: string;
     'serviceLink'?: string;
     'services': Service[];
-    'themeColor': { [index: string]: string };
   }
   interface MarketplaceResultsAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'themeColor'?: { [index: string]: string };
   }
 
   interface MfBadge {}
@@ -262,13 +258,11 @@ export namespace Components {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'themeColor': { [index: string]: string };
   }
   interface ServiceGridAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Service[];
-    'themeColor'?: { [index: string]: string };
   }
 }
 

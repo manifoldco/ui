@@ -46,6 +46,28 @@ describe('<service-grid>', () => {
     }
   });
 
+  it('correctly filters results', async () => {
+    const page = await newE2EPage({ html: '<service-grid></service-grid>' });
+    await page.$eval('service-grid', (elm: any) => {
+      elm.services = [
+        { body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } },
+        { body: { name: 'LogDNA', tags: ['logging'], label: 'logdna' } },
+      ];
+    });
+    await page.waitForChanges();
+
+    const categories = await page.findAll('service-grid >>> marketplace-results');
+    expect(categories.length).toEqual(2);
+
+    const input = await page.find('service-grid >>> .search-bar');
+    await input.press('KeyL');
+    await input.press('KeyO');
+    await input.press('KeyG');
+
+    const results = await page.findAll('service-grid >>> marketplace-results');
+    expect(results.length).toEqual(1);
+  });
+
   it('correctly highlights featured services', async () => {
     // Set properties and wait
     const page = await newE2EPage({ html: '<service-grid></service-grid>' });
