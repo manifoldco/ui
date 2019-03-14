@@ -1,6 +1,7 @@
 import { Component, Prop, State, Element } from '@stencil/core';
 import { Service } from 'types/Service';
 
+import { MarketplaceCollection } from '../marketplace-collection/marketplace-collection';
 import { themeIcons } from '../../assets/icons';
 
 type CategoryMap = {
@@ -132,15 +133,18 @@ export class ServiceGrid {
     }
   };
 
+  switchTab = (tabName: Tab) => () => {
+    this.activeTab = tabName;
+
+    if (tabName === Tab.Featured && this.root.shadowRoot) {
+      this.scrollToCategory = 'collection-new';
+    }
+  };
+
   tab(tabName: Tab, label: string) {
     const className = `category-button big${this.activeTab === tabName ? ' is-active' : ''}`;
     return (
-      <button
-        class={className}
-        onClick={() => {
-          this.activeTab = tabName;
-        }}
-      >
+      <button class={className} onClick={this.switchTab(tabName)}>
         {label}
       </button>
     );
@@ -177,39 +181,43 @@ export class ServiceGrid {
               ))}
             </div>
           </aside>
-          <div class="sorted-categories">
-            {this.filter ? (
-              <marketplace-results
-                services={this.filteredServices()}
-                featured={this.featured}
-                service-link={this.serviceLink}
-              />
-            ) : (
-              sortedCategories.map(tag => (
-                <div>
-                  <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
-                    <mf-icon icon={themeIcons[tag]} marginRight />
-                    {this.formatCategoryLabel(tag)}
-                  </h3>
-                  <marketplace-results
-                    services={categoryMap[tag]}
-                    featured={this.featured}
-                    service-link={this.serviceLink}
-                  >
-                    <service-card
-                      description={`Add your own ${this.formatCategoryLabel(tag)} service`}
-                      label={'bring-your-own'}
-                      logo={themeIcons[tag]}
-                      name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
-                      is-custom={true}
-                      is-featured={false}
-                      slot="custom-card"
-                    />
-                  </marketplace-results>
-                </div>
-              ))
-            )}
-          </div>
+          {this.activeTab === Tab.Categorized ? (
+            <div class="sorted-categories">
+              {this.filter ? (
+                <marketplace-results
+                  services={this.filteredServices()}
+                  featured={this.featured}
+                  service-link={this.serviceLink}
+                />
+              ) : (
+                sortedCategories.map(tag => (
+                  <div>
+                    <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
+                      <mf-icon icon={themeIcons[tag]} marginRight />
+                      {this.formatCategoryLabel(tag)}
+                    </h3>
+                    <marketplace-results
+                      services={categoryMap[tag]}
+                      featured={this.featured}
+                      service-link={this.serviceLink}
+                    >
+                      <service-card
+                        description={`Add your own ${this.formatCategoryLabel(tag)} service`}
+                        label={'bring-your-own'}
+                        logo={themeIcons[tag]}
+                        name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
+                        is-custom={true}
+                        is-featured={false}
+                        slot="custom-card"
+                      />
+                    </marketplace-results>
+                  </div>
+                ))
+              )}
+            </div>
+          ) : (
+            <MarketplaceCollection labels={['till']} title="New" name="new" />
+          )}
         </div>
       </div>
     );

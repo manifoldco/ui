@@ -7,7 +7,7 @@
 
 import '@stencil/core';
 
-
+import '@stencil/state-tunnel';
 import {
   ExpandedFeature,
   Plan,

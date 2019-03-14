@@ -1,6 +1,8 @@
 import { Component, Prop, State } from '@stencil/core';
 import { Service } from 'types/Service';
 
+import Tunnel from '../../data/marketplace';
+
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
@@ -18,11 +20,13 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <service-grid
-        services={this.services}
-        featured={this.featured}
-        service-link={this.serviceLink}
-      />
+      <Tunnel.Provider state={{ services: this.services }}>
+        <service-grid
+          services={this.services}
+          featured={this.featured}
+          service-link={this.serviceLink}
+        />
+      </Tunnel.Provider>
     );
   }
 }

@@ -49,13 +49,13 @@
   border: none;
   cursor: pointer;
 
+  &.is-active {
+    color: var(--mf-c-grayDarker);
+  }
+
   &:focus {
     color: var(--mf-c-blue);
     outline: 0;
-  }
-
-  &.is-active {
-    color: var(--mf-c-grayDarker);
   }
 
   &.big {
