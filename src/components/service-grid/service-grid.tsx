@@ -5,6 +5,7 @@ import { Component, Prop, State, Element } from '@stencil/core';
 import { CategoryButtons } from './category-buttons';
 import { Categories } from './categories';
 import { FilteredServices } from './filtered-services';
+import { Collections } from './collections';
 
 enum Tab {
   Featured = 'featured',
@@ -147,7 +148,7 @@ export class ServiceGrid {
                   )}
                 </div>
               ) : (
-                <slot name="collections" />
+                <Collections />
               )}
             </div>
           </div>

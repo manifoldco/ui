@@ -23,7 +23,12 @@ export class ManifoldMarketplace {
   render() {
     return (
       <Tunnel.Provider
-        state={{ services: this.services, serviceLink: this.serviceLink, featured: this.featured }}
+        state={{
+          services: this.services,
+          serviceLink: this.serviceLink,
+          featured: this.featured,
+          collections: this.collections,
+        }}
       >
         <service-grid>
           <div slot="collections">
