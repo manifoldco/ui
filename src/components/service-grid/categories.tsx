@@ -20,7 +20,7 @@ export const Categories: FunctionalComponent<CategoriesProps> = ({
       const categoryMap = categories(state.services);
       const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
       return (
-        <div class="category-buttons">
+        <div>
           {sortedCategories.map(tag => (
             <div class="category-container">
               <h3 class="category" id={`category-${tag}`} ref={observeCategory}>

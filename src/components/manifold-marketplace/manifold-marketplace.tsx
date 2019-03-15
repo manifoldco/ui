@@ -3,11 +3,19 @@ import { Service } from 'types/Service';
 
 import Tunnel from '../../data/marketplace';
 
-@Component({ tag: 'manifold-marketplace' })
+type Collection = {
+  labels: string[];
+  name: string;
+  icon?: string;
+  tagLine: string;
+};
+
+@Component({ tag: 'manifold-marketplace', styleUrl: 'manifold-marketplace.css' })
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
   @Prop() url: string = 'https://api.catalog.manifold.co/v1/';
+  @Prop() collections: Collection[] = [];
   @State() services: Service[];
 
   componentWillLoad() {
@@ -21,14 +29,19 @@ export class ManifoldMarketplace {
   render() {
     return (
       <Tunnel.Provider state={{ services: this.services }}>
-        <service-grid featured={this.featured} service-link={this.serviceLink}>
-          <marketplace-collection
-            labels="informant,cloudcube,till,prefab"
-            name="New"
-            icon="star"
-            tagLine="Latest services to join the platform"
-            slot="collections"
-          />
+        <service-grid>
+          <div slot="collections">
+            {this.collections.map(c => (
+              <div class="collection-container">
+                <marketplace-collection
+                  labels={c.labels.join(',')}
+                  name={c.name}
+                  icon={c.icon}
+                  tagLine={c.tagLine}
+                />
+              </div>
+            ))}
+          </div>
         </service-grid>
       </Tunnel.Provider>
     );

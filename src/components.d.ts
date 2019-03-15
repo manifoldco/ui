@@ -71,11 +71,13 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
+    'collections': Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'url': string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'collections'?: Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'url'?: string;
