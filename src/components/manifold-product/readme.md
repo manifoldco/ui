@@ -15,9 +15,9 @@ You can find the `:service` label for each at `https://manifold.co/services/:ser
 
 ## Properties
 
-| Property       | Attribute       | Description | Type                  | Default     |
-| -------------- | --------------- | ----------- | --------------------- | ----------- |
-| `productLabel` | `product-label` |             | `string \| undefined` | `undefined` |
+| Property       | Attribute       | Description | Type     | Default     |
+| -------------- | --------------- | ----------- | -------- | ----------- |
+| `productLabel` | `product-label` |             | `string` | `undefined` |
 
 
 ----------------------------------------------

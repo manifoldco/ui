@@ -105,6 +105,7 @@ export class ServiceGrid {
   private updateFilter = (e: KeyboardEvent): void => {
     if (e.srcElement) {
       this.filter = (e.srcElement as HTMLInputElement).value;
+      this.activeTab = Tab.Categorized;
     }
   };
 
@@ -138,6 +139,7 @@ export class ServiceGrid {
 
     if (tabName === Tab.Featured && this.root.shadowRoot) {
       this.scrollToCategory = 'collection-new';
+      this.activeCategory = undefined;
     }
   };
 

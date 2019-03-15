@@ -89,10 +89,21 @@ export namespace Components {
   }
 
   interface ManifoldProduct {
-    'productLabel'?: string;
+    'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
     'productLabel'?: string;
+  }
+
+  interface MarketplaceCollection {
+    'labels': string;
+    'name': string;
+    'title': string;
+  }
+  interface MarketplaceCollectionAttributes extends StencilHTMLAttributes {
+    'labels'?: string;
+    'name'?: string;
+    'title'?: string;
   }
 
   interface MarketplaceResults {
@@ -277,6 +288,7 @@ declare global {
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
     'ManifoldProduct': Components.ManifoldProduct;
+    'MarketplaceCollection': Components.MarketplaceCollection;
     'MarketplaceResults': Components.MarketplaceResults;
     'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
@@ -300,6 +312,7 @@ declare global {
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
+    'marketplace-collection': Components.MarketplaceCollectionAttributes;
     'marketplace-results': Components.MarketplaceResultsAttributes;
     'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
@@ -356,6 +369,12 @@ declare global {
   var HTMLManifoldProductElement: {
     prototype: HTMLManifoldProductElement;
     new (): HTMLManifoldProductElement;
+  };
+
+  interface HTMLMarketplaceCollectionElement extends Components.MarketplaceCollection, HTMLStencilElement {}
+  var HTMLMarketplaceCollectionElement: {
+    prototype: HTMLMarketplaceCollectionElement;
+    new (): HTMLMarketplaceCollectionElement;
   };
 
   interface HTMLMarketplaceResultsElement extends Components.MarketplaceResults, HTMLStencilElement {}
@@ -444,6 +463,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
     'manifold-product': HTMLManifoldProductElement
+    'marketplace-collection': HTMLMarketplaceCollectionElement
     'marketplace-results': HTMLMarketplaceResultsElement
     'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
@@ -467,6 +487,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'marketplace-collection': HTMLMarketplaceCollectionElement;
     'marketplace-results': HTMLMarketplaceResultsElement;
     'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;

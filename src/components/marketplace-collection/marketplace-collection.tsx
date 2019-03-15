@@ -3,13 +3,17 @@ import { Service } from 'types/Service';
 
 import Tunnel, { State } from '../../data/marketplace';
 
-interface HelloProps {
+interface MarketplaceCollectionProps {
   name: string;
   title: string;
   labels: string[];
 }
 
-export const MarketplaceCollection: FunctionalComponent<HelloProps> = ({ name, title, labels }) => (
+export const MarketplaceCollection: FunctionalComponent<MarketplaceCollectionProps> = ({
+  name,
+  title,
+  labels,
+}) => (
   <Tunnel.Consumer>
     {(state: State) => (
       <div>
