@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `labels` | `labels`  |             | `string` | `undefined` |
-| `name`   | `name`    |             | `string` | `undefined` |
-| `title`  | `title`   |             | `string` | `undefined` |
+| Property  | Attribute  | Description | Type                  | Default     |
+| --------- | ---------- | ----------- | --------------------- | ----------- |
+| `icon`    | `icon`     |             | `string \| undefined` | `undefined` |
+| `labels`  | `labels`   |             | `string`              | `undefined` |
+| `name`    | `name`     |             | `string`              | `undefined` |
+| `tagLine` | `tag-line` |             | `string`              | `undefined` |
 
 
 ----------------------------------------------

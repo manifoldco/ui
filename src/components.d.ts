@@ -96,14 +96,16 @@ export namespace Components {
   }
 
   interface MarketplaceCollection {
+    'icon'?: string;
     'labels': string;
     'name': string;
-    'title': string;
+    'tagLine': string;
   }
   interface MarketplaceCollectionAttributes extends StencilHTMLAttributes {
+    'icon'?: string;
     'labels'?: string;
     'name'?: string;
-    'title'?: string;
+    'tagLine'?: string;
   }
 
   interface MarketplaceResults {
@@ -270,12 +272,10 @@ export namespace Components {
   interface ServiceGrid {
     'featured'?: string;
     'serviceLink'?: string;
-    'services'?: Service[];
   }
   interface ServiceGridAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
-    'services'?: Service[];
   }
 }
 

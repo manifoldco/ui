@@ -21,11 +21,15 @@ export class ManifoldMarketplace {
   render() {
     return (
       <Tunnel.Provider state={{ services: this.services }}>
-        <service-grid
-          services={this.services}
-          featured={this.featured}
-          service-link={this.serviceLink}
-        />
+        <service-grid featured={this.featured} service-link={this.serviceLink}>
+          <marketplace-collection
+            labels="informant,cloudcube,till,prefab"
+            name="New"
+            icon="star"
+            tagLine="Latest services to join the platform"
+            slot="collections"
+          />
+        </service-grid>
       </Tunnel.Provider>
     );
   }

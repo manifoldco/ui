@@ -4,21 +4,25 @@ import { Service } from 'types/Service';
 import Tunnel, { State } from '../../data/marketplace';
 
 interface MarketplaceCollectionProps {
+  tagLine: string;
+  icon?: string;
   name: string;
-  title: string;
   labels: string[];
 }
 
 export const MarketplaceCollection: FunctionalComponent<MarketplaceCollectionProps> = ({
+  tagLine,
+  icon,
   name,
-  title,
   labels,
 }) => (
   <Tunnel.Consumer>
     {(state: State) => (
       <div>
-        <h3 class="category" id={`category-collection-${name}`}>
-          {title}
+        <h3 class="category">
+          {icon && <mf-icon icon={icon} marginRight />}
+          {name}
+          <p class="tag-line">{tagLine}</p>
         </h3>
         <marketplace-results
           services={state.services.filter((s: Service) => labels.includes(s.body.label))}

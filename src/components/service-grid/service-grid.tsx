@@ -1,12 +1,10 @@
+// TODO: Factor out stuff that references services to prepare to use state tunnel.
+
 import { Component, Prop, State, Element } from '@stencil/core';
-import { Service } from 'types/Service';
-import { MarketplaceCollection } from '../marketplace-collection/marketplace-collection';
 
-import { themeIcons } from '../../assets/icons';
-
-type CategoryMap = {
-  [category: string]: Service[];
-};
+import { CategoryButtons } from './category-buttons';
+import { Categories } from './categories';
+import { FilteredServices } from './filtered-services';
 
 enum Tab {
   Featured = 'featured',
@@ -18,7 +16,6 @@ export class ServiceGrid {
   @Element() root: HTMLElement;
   @Prop() featured?: string;
   @Prop() serviceLink?: string;
-  @Prop() services?: Service[];
   @State() observer: IntersectionObserver;
   @State() activeCategory?: string;
   @State() scrollToCategory: string | null;
@@ -73,55 +70,12 @@ export class ServiceGrid {
     }
   };
 
-  private formatCategoryLabel(tag: string): string {
-    switch (tag) {
-      case 'cms':
-        return 'CMS';
-      case 'ai-ml':
-        return 'AI/ML';
-      default:
-        return tag.replace('-', ' ');
-    }
-  }
-
-  private categories(): CategoryMap {
-    const categoryMap: CategoryMap = {};
-
-    if (Array.isArray(this.services)) {
-      this.services.forEach(service => {
-        const tags = service.body.tags || ['uncategorized'];
-        tags.forEach(tag => {
-          categoryMap[tag] = categoryMap[tag] || [];
-          categoryMap[tag].push(service);
-        });
-
-        return {};
-      });
-    }
-
-    return categoryMap;
-  }
-
   private updateFilter = (e: KeyboardEvent): void => {
     if (e.srcElement) {
       this.filter = (e.srcElement as HTMLInputElement).value;
       this.activeTab = Tab.Categorized;
     }
   };
-
-  private filteredServices() {
-    if (!this.filter || !this.services) {
-      return [];
-    }
-
-    const searchTerm = this.filter.toLocaleLowerCase();
-    return this.services.filter(s => {
-      const searchTargets = [s.body.label, s.body.name.toLocaleLowerCase()].concat(
-        s.body.tags || []
-      );
-      return searchTargets.some(t => t.includes(searchTerm));
-    });
-  }
 
   private handleSearch = (el?: HTMLElement) => {
     if (el) {
@@ -139,7 +93,7 @@ export class ServiceGrid {
 
     if (tabName === Tab.Featured && this.root.shadowRoot) {
       if (this.root.shadowRoot) {
-        const el = this.root.shadowRoot.querySelector('.results');
+        const el = this.root.shadowRoot.querySelector('#results');
         if (el) {
           el.scrollIntoView();
         }
@@ -160,9 +114,6 @@ export class ServiceGrid {
   }
 
   render() {
-    const categoryMap = this.categories();
-    const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
-
     return (
       <div class="wrapper">
         <input
@@ -179,55 +130,34 @@ export class ServiceGrid {
             <div class="category-sidebar-inner">
               {this.tab(Tab.Featured, 'Featured')}
               {this.tab(Tab.Categorized, 'All Services')}
-              {sortedCategories.map(tag => (
-                <button
-                  class={`category-button${this.activeCategory === tag ? ' is-active' : ''}`}
-                  onClick={this.categoryClick}
-                  data-category={tag}
-                >
-                  {this.formatCategoryLabel(tag)}
-                </button>
-              ))}
+              <CategoryButtons
+                categoryClick={this.categoryClick}
+                activeCategory={this.activeCategory}
+              />
             </div>
           </aside>
-          <div class="results">
-            {this.activeTab === Tab.Categorized ? (
-              <div class="sorted-categories">
-                {this.filter ? (
-                  <marketplace-results
-                    services={this.filteredServices()}
-                    featured={this.featured}
-                    service-link={this.serviceLink}
-                  />
-                ) : (
-                  sortedCategories.map(tag => (
-                    <div>
-                      <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
-                        <mf-icon icon={themeIcons[tag]} marginRight />
-                        {this.formatCategoryLabel(tag)}
-                      </h3>
-                      <marketplace-results
-                        services={categoryMap[tag]}
-                        featured={this.featured}
-                        service-link={this.serviceLink}
-                      >
-                        <service-card
-                          description={`Add your own ${this.formatCategoryLabel(tag)} service`}
-                          label={'bring-your-own'}
-                          logo={themeIcons[tag]}
-                          name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
-                          is-custom={true}
-                          is-featured={false}
-                          slot="custom-card"
-                        />
-                      </marketplace-results>
-                    </div>
-                  ))
-                )}
-              </div>
-            ) : (
-              <MarketplaceCollection labels={['till']} title="New" name="new" />
-            )}
+          <div id="results">
+            <div class="results">
+              {this.activeTab === Tab.Categorized ? (
+                <div class="sorted-categories">
+                  {this.filter ? (
+                    <FilteredServices
+                      serviceLink={this.serviceLink}
+                      featured={this.featured}
+                      filter={this.filter}
+                    />
+                  ) : (
+                    <Categories
+                      observeCategory={this.observeCategory}
+                      serviceLink={this.serviceLink}
+                      featured={this.featured}
+                    />
+                  )}
+                </div>
+              ) : (
+                <slot name="collections" />
+              )}
+            </div>
           </div>
         </div>
       </div>
