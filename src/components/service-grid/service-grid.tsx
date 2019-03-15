@@ -1,7 +1,7 @@
 import { Component, Prop, State, Element } from '@stencil/core';
 import { Service } from 'types/Service';
-
 import { MarketplaceCollection } from '../marketplace-collection/marketplace-collection';
+
 import { themeIcons } from '../../assets/icons';
 
 type CategoryMap = {
@@ -138,8 +138,15 @@ export class ServiceGrid {
     this.activeTab = tabName;
 
     if (tabName === Tab.Featured && this.root.shadowRoot) {
-      this.scrollToCategory = 'collection-new';
+      if (this.root.shadowRoot) {
+        const el = this.root.shadowRoot.querySelector('.results');
+        if (el) {
+          el.scrollIntoView();
+        }
+      }
+
       this.activeCategory = undefined;
+      this.filter = null;
     }
   };
 
@@ -183,43 +190,45 @@ export class ServiceGrid {
               ))}
             </div>
           </aside>
-          {this.activeTab === Tab.Categorized ? (
-            <div class="sorted-categories">
-              {this.filter ? (
-                <marketplace-results
-                  services={this.filteredServices()}
-                  featured={this.featured}
-                  service-link={this.serviceLink}
-                />
-              ) : (
-                sortedCategories.map(tag => (
-                  <div>
-                    <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
-                      <mf-icon icon={themeIcons[tag]} marginRight />
-                      {this.formatCategoryLabel(tag)}
-                    </h3>
-                    <marketplace-results
-                      services={categoryMap[tag]}
-                      featured={this.featured}
-                      service-link={this.serviceLink}
-                    >
-                      <service-card
-                        description={`Add your own ${this.formatCategoryLabel(tag)} service`}
-                        label={'bring-your-own'}
-                        logo={themeIcons[tag]}
-                        name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
-                        is-custom={true}
-                        is-featured={false}
-                        slot="custom-card"
-                      />
-                    </marketplace-results>
-                  </div>
-                ))
-              )}
-            </div>
-          ) : (
-            <MarketplaceCollection labels={['till']} title="New" name="new" />
-          )}
+          <div class="results">
+            {this.activeTab === Tab.Categorized ? (
+              <div class="sorted-categories">
+                {this.filter ? (
+                  <marketplace-results
+                    services={this.filteredServices()}
+                    featured={this.featured}
+                    service-link={this.serviceLink}
+                  />
+                ) : (
+                  sortedCategories.map(tag => (
+                    <div>
+                      <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
+                        <mf-icon icon={themeIcons[tag]} marginRight />
+                        {this.formatCategoryLabel(tag)}
+                      </h3>
+                      <marketplace-results
+                        services={categoryMap[tag]}
+                        featured={this.featured}
+                        service-link={this.serviceLink}
+                      >
+                        <service-card
+                          description={`Add your own ${this.formatCategoryLabel(tag)} service`}
+                          label={'bring-your-own'}
+                          logo={themeIcons[tag]}
+                          name={`Bring your own ${this.formatCategoryLabel(tag)} service`}
+                          is-custom={true}
+                          is-featured={false}
+                          slot="custom-card"
+                        />
+                      </marketplace-results>
+                    </div>
+                  ))
+                )}
+              </div>
+            ) : (
+              <MarketplaceCollection labels={['till']} title="New" name="new" />
+            )}
+          </div>
         </div>
       </div>
     );
