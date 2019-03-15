@@ -1,14 +1,8 @@
 import { Component, Prop, State } from '@stencil/core';
 import { Service } from 'types/Service';
+import { Collection } from 'types/Collection';
 
 import Tunnel from '../../data/marketplace';
-
-type Collection = {
-  labels: string[];
-  name: string;
-  icon?: string;
-  tagLine: string;
-};
 
 @Component({ tag: 'manifold-marketplace', styleUrl: 'manifold-marketplace.css' })
 export class ManifoldMarketplace {

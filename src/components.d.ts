@@ -13,6 +13,9 @@ import {
   Plan,
 } from 'types/Plan';
 import {
+  Collection,
+} from 'types/Collection';
+import {
   Service,
 } from 'types/Service';
 import {

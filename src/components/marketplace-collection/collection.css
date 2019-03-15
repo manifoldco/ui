@@ -1,14 +1,14 @@
 .category {
+  margin: 0;
+  padding-bottom: 1rem;
   color: var(--mf-c-grayDark);
   font-weight: 400;
   font-size: var(--mf-font-u2);
   font-family: var(--mf-font-family);
   text-transform: capitalize;
-  margin: 0;
-  padding-bottom: 1rem;
 }
 
 .tag-line {
-  color: var(--mf-c-gray);
   margin: 0.25rem 0 0 0;
+  color: var(--mf-c-gray);
 }

@@ -9,13 +9,13 @@
 }
 
 .category {
+  margin: 0;
+  padding-bottom: 1rem;
   color: var(--mf-c-gray-s1);
   font-weight: 400;
   font-size: var(--mf-font-u2);
   font-family: var(--mf-font-family);
   text-transform: capitalize;
-  margin: 0;
-  padding-bottom: 1rem;
 }
 
 .browse-catalog {
@@ -76,19 +76,19 @@
   }
 
   &.big {
-    font-size: var(--mf-font-d0);
     color: var(--mf-c-grayDarker);
+    font-size: var(--mf-font-d0);
 
     &:hover {
-      box-shadow: 2px 0 rgba(var(--mf-c-blue-rgb), 0.2) inset;
       color: var(--mf-c-gray);
+      box-shadow: 2px 0 rgba(var(--mf-c-blue-rgb), 0.2) inset;
     }
 
     &:focus,
     &.is-active {
       color: var(--mf-c-blue);
-      box-shadow: 2px 0 var(--mf-c-blue) inset;
       outline: 0;
+      box-shadow: 2px 0 var(--mf-c-blue) inset;
     }
   }
 }

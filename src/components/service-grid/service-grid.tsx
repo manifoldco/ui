@@ -141,17 +141,9 @@ export class ServiceGrid {
               {this.activeTab === Tab.Categorized ? (
                 <div class="sorted-categories">
                   {this.filter ? (
-                    <FilteredServices
-                      serviceLink={this.serviceLink}
-                      featured={this.featured}
-                      filter={this.filter}
-                    />
+                    <FilteredServices filter={this.filter} />
                   ) : (
-                    <Categories
-                      observeCategory={this.observeCategory}
-                      serviceLink={this.serviceLink}
-                      featured={this.featured}
-                    />
+                    <Categories observeCategory={this.observeCategory} />
                   )}
                 </div>
               ) : (
