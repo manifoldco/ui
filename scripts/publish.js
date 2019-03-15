@@ -9,17 +9,17 @@ const SELECT_FLAG = /-.*/; // Selects anything after a hyphen, or nothing
 const DIST_DIR = resolve(__dirname, '..', 'dist');
 
 // 1. Read Git tag
-const gitTag = execSync('git describe --abbrev=0 --tags --exact-match')
+const version = execSync('git describe --abbrev=0 --tags --exact-match')
   .toString()
   .replace('v', '')
   .replace('\n', '');
-console.log(`📦 Publishing ${gitTag}`);
+console.log(`📦 Publishing ${version}`);
 
 // 2. Determine if “public” or “private” release
 let npmTag = 'latest'; // default (“public”)
 
 // If no hyphen, this is a “private“ release
-const flag = SELECT_FLAG.exec(gitTag);
+const flag = SELECT_FLAG.exec(version);
 if (flag && flag[0].length > 1) {
   const flagClean = flag[0].replace('-', '');
   npmTag = flagClean.includes('.') ? flagClean.split('.')[0] : flagClean;
@@ -29,7 +29,7 @@ if (flag && flag[0].length > 1) {
 const packageJSON = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8'));
 const newPackageJSON = {
   ...packageJSON,
-  version: gitTag,
+  version,
   files: ['*'],
   main: './manifold.js',
   esnext: './esm',
