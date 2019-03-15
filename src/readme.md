@@ -62,11 +62,6 @@ whenever `npm run generate:docs` is run.
 Editing anything between `BEGIN README …` and `END README` will be blown away
 by `generate:docs`.
 
-As nice as it’d be to hide the contents, and only show comments, currently
-that’s [not possible with the Stencil dev
-server](https://github.com/ionic-team/stencil/issues/1361) (but maybe it will
-be in future releases!).
-
 ### Watch for README changes
 
 To watch for changes in the background to all README files, run:
@@ -75,13 +70,35 @@ To watch for changes in the background to all README files, run:
 npm run generate:docs:watch
 ```
 
-## Publishing
+## Publishing to npm
 
-To publish to npm, the following commands are supported:
+To publish to npm, tag it in Git with a valid [npm-semver][npm-semver].
 
-| Command                 | Description                                        |
-| :---------------------- | :------------------------------------------------- |
-| `npm run publish:rc`    | Publish a release candidate to npm (testing, etc.) |
-| `npm run publish:patch` | Publish a patch version                            |
-| `npm run publish:minor` | Publish a minor version                            |
-| `npm run publish:major` | Publish a major version                            |
+### Stable release
+
+If you’re releasing a stable release after it’s been fully tested, create a
+semver [Git tag][git-tag], starting with `v`:
+
+```
+v1.0.0
+```
+
+This will be accessible for download at `npm i --save @manifoldco/ui`.
+
+### Unstable release
+
+If you’re testing a release candidate, or something experimental, add a
+hyphen (`-`) followed by a named flag, and end with `.` + digit. Here are
+some examples:
+
+```
+v1.0.0-rc.0      # first release candidate
+v1.0.0-rc.1      # second release candidate
+v1.1.0-alpha.0   # buggy version, published for testing
+```
+
+Unlike stable releases, these won’t be downloaded unless someone specifically
+requests the flag (e.g.: `npm i --save @manifoldco/ui@rc` or `npm i --save @manifoldco/ui@alpha`).
+
+[git-tag]: https://help.github.com/en/articles/working-with-tags
+[npm-semver]: https://docs.npmjs.com/misc/semver
