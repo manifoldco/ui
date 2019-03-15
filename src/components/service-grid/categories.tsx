@@ -6,15 +6,9 @@ import { categories, formatCategoryLabel } from './utils';
 
 interface CategoriesProps {
   observeCategory: (el?: HTMLElement) => void;
-  serviceLink?: string;
-  featured?: string;
 }
 
-export const Categories: FunctionalComponent<CategoriesProps> = ({
-  observeCategory,
-  featured,
-  serviceLink,
-}) => (
+export const Categories: FunctionalComponent<CategoriesProps> = ({ observeCategory }) => (
   <Tunnel.Consumer>
     {(state: State) => {
       const categoryMap = categories(state.services);
@@ -29,8 +23,8 @@ export const Categories: FunctionalComponent<CategoriesProps> = ({
               </h3>
               <marketplace-results
                 services={categoryMap[tag]}
-                featured={featured}
-                service-link={serviceLink}
+                featured={state.featured}
+                service-link={state.serviceLink}
               >
                 <service-card
                   description={`Add your own ${formatCategoryLabel(tag)} service`}
