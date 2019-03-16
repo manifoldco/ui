@@ -73,6 +73,19 @@ export namespace Components {
     'target'?: string;
   }
 
+  interface ManiTunnel {
+    'collections': Collection[];
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services': Service[];
+  }
+  interface ManiTunnelAttributes extends StencilHTMLAttributes {
+    'collections'?: Collection[];
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services'?: Service[];
+  }
+
   interface ManifoldMarketplace {
     'collections': Collection[];
     'featured'?: string;
@@ -274,14 +287,8 @@ export namespace Components {
     'serviceLink'?: string;
   }
 
-  interface ServiceGrid {
-    'featured'?: string;
-    'serviceLink'?: string;
-  }
-  interface ServiceGridAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
-    'serviceLink'?: string;
-  }
+  interface ServiceGrid {}
+  interface ServiceGridAttributes extends StencilHTMLAttributes {}
 }
 
 declare global {
@@ -290,6 +297,7 @@ declare global {
     'FeaturedService': Components.FeaturedService;
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
+    'ManiTunnel': Components.ManiTunnel;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
     'ManifoldProduct': Components.ManifoldProduct;
@@ -314,6 +322,7 @@ declare global {
     'featured-service': Components.FeaturedServiceAttributes;
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
+    'mani-tunnel': Components.ManiTunnelAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
@@ -356,6 +365,12 @@ declare global {
   var HTMLLinkButtonElement: {
     prototype: HTMLLinkButtonElement;
     new (): HTMLLinkButtonElement;
+  };
+
+  interface HTMLManiTunnelElement extends Components.ManiTunnel, HTMLStencilElement {}
+  var HTMLManiTunnelElement: {
+    prototype: HTMLManiTunnelElement;
+    new (): HTMLManiTunnelElement;
   };
 
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
@@ -465,6 +480,7 @@ declare global {
     'featured-service': HTMLFeaturedServiceElement
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
+    'mani-tunnel': HTMLManiTunnelElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
     'manifold-product': HTMLManifoldProductElement
@@ -489,6 +505,7 @@ declare global {
     'featured-service': HTMLFeaturedServiceElement;
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
+    'mani-tunnel': HTMLManiTunnelElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;

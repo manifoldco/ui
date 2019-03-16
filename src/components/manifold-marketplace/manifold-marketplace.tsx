@@ -2,9 +2,7 @@ import { Component, Prop, State } from '@stencil/core';
 import { Service } from 'types/Service';
 import { Collection } from 'types/Collection';
 
-import Tunnel from '../../data/marketplace';
-
-@Component({ tag: 'manifold-marketplace', styleUrl: 'manifold-marketplace.css' })
+@Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
@@ -22,29 +20,14 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <Tunnel.Provider
-        state={{
-          services: this.services,
-          serviceLink: this.serviceLink,
-          featured: this.featured,
-          collections: this.collections,
-        }}
+      <mani-tunnel
+        services={this.services}
+        serviceLink={this.serviceLink}
+        featured={this.featured}
+        collections={this.collections}
       >
-        <service-grid>
-          <div slot="collections">
-            {this.collections.map(c => (
-              <div class="collection-container">
-                <marketplace-collection
-                  labels={c.labels.join(',')}
-                  name={c.name}
-                  icon={c.icon}
-                  tagLine={c.tagLine}
-                />
-              </div>
-            ))}
-          </div>
-        </service-grid>
-      </Tunnel.Provider>
+        <service-grid slot="marketplace-content" />
+      </mani-tunnel>
     );
   }
 }

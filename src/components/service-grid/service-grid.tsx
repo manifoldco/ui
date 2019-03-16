@@ -1,6 +1,4 @@
-// TODO: Factor out stuff that references services to prepare to use state tunnel.
-
-import { Component, Prop, State, Element } from '@stencil/core';
+import { Component, State, Element } from '@stencil/core';
 
 import { CategoryButtons } from './category-buttons';
 import { Categories } from './categories';
@@ -15,8 +13,6 @@ enum Tab {
 @Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
 export class ServiceGrid {
   @Element() root: HTMLElement;
-  @Prop() featured?: string;
-  @Prop() serviceLink?: string;
   @State() observer: IntersectionObserver;
   @State() activeCategory?: string;
   @State() scrollToCategory: string | null;
@@ -108,7 +104,7 @@ export class ServiceGrid {
   tab(tabName: Tab, label: string) {
     const className = `category-button big${this.activeTab === tabName ? ' is-active' : ''}`;
     return (
-      <button class={className} onClick={this.switchTab(tabName)}>
+      <button id={tabName} class={className} onClick={this.switchTab(tabName)}>
         {label}
       </button>
     );
