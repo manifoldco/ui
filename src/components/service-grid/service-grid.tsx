@@ -1,9 +1,8 @@
 import { Component, State, Element } from '@stencil/core';
 
 import { CategoryButtons } from './category-buttons';
-import { Categories } from './categories';
-import { FilteredServices } from './filtered-services';
 import { Collections } from './collections';
+import { FilteredServices } from './filtered-services';
 
 enum Tab {
   Featured = 'featured',
@@ -53,12 +52,12 @@ export class ServiceGrid {
   };
 
   private categoryClick = (e: MouseEvent) => {
-    this.filter = '';
     this.activeTab = Tab.Categorized;
     if (e.srcElement) {
       const category = e.srcElement.getAttribute('data-category');
       this.scrollToCategory = category;
     }
+    this.filter = '';
   };
 
   private observeCategory = (el?: HTMLElement) => {
@@ -140,7 +139,7 @@ export class ServiceGrid {
                   {this.filter ? (
                     <FilteredServices filter={this.filter} />
                   ) : (
-                    <Categories observeCategory={this.observeCategory} />
+                    <sorted-categories observeCategory={this.observeCategory} />
                   )}
                 </div>
               ) : (

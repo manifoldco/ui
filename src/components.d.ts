@@ -287,6 +287,15 @@ export namespace Components {
     'serviceLink'?: string;
   }
 
+  interface SortedCategories {
+    'activeCategory'?: string;
+    'observeCategory': (el?: HTMLElement) => void;
+  }
+  interface SortedCategoriesAttributes extends StencilHTMLAttributes {
+    'activeCategory'?: string;
+    'observeCategory'?: (el?: HTMLElement) => void;
+  }
+
   interface ServiceGrid {}
   interface ServiceGridAttributes extends StencilHTMLAttributes {}
 }
@@ -314,6 +323,7 @@ declare global {
     'ProductDetails': Components.ProductDetails;
     'ProductPage': Components.ProductPage;
     'ServiceCard': Components.ServiceCard;
+    'SortedCategories': Components.SortedCategories;
     'ServiceGrid': Components.ServiceGrid;
   }
 
@@ -339,6 +349,7 @@ declare global {
     'product-details': Components.ProductDetailsAttributes;
     'product-page': Components.ProductPageAttributes;
     'service-card': Components.ServiceCardAttributes;
+    'sorted-categories': Components.SortedCategoriesAttributes;
     'service-grid': Components.ServiceGridAttributes;
   }
 
@@ -469,6 +480,12 @@ declare global {
     new (): HTMLServiceCardElement;
   };
 
+  interface HTMLSortedCategoriesElement extends Components.SortedCategories, HTMLStencilElement {}
+  var HTMLSortedCategoriesElement: {
+    prototype: HTMLSortedCategoriesElement;
+    new (): HTMLSortedCategoriesElement;
+  };
+
   interface HTMLServiceGridElement extends Components.ServiceGrid, HTMLStencilElement {}
   var HTMLServiceGridElement: {
     prototype: HTMLServiceGridElement;
@@ -497,6 +514,7 @@ declare global {
     'product-details': HTMLProductDetailsElement
     'product-page': HTMLProductPageElement
     'service-card': HTMLServiceCardElement
+    'sorted-categories': HTMLSortedCategoriesElement
     'service-grid': HTMLServiceGridElement
   }
 
@@ -522,6 +540,7 @@ declare global {
     'product-details': HTMLProductDetailsElement;
     'product-page': HTMLProductPageElement;
     'service-card': HTMLServiceCardElement;
+    'sorted-categories': HTMLSortedCategoriesElement;
     'service-grid': HTMLServiceGridElement;
   }
 
