@@ -1,4 +1,4 @@
-import { Component, Prop, Element, Watch } from '@stencil/core';
+import { Component, Prop, Element } from '@stencil/core';
 
 import Tunnel, { State } from '../../data/marketplace';
 import { themeIcons } from '../../assets/icons';
@@ -8,17 +8,6 @@ import { categories, formatCategoryLabel } from './utils';
 export class Categories {
   @Element() root: HTMLElement;
   @Prop() observeCategory: (el?: HTMLElement) => void;
-  @Prop() activeCategory?: string;
-
-  componentDidLoad() {
-    if (this.activeCategory && this.root.shadowRoot) {
-      const heading = this.root.shadowRoot.querySelector(`#category-${this.activeCategory}`);
-
-      if (heading) {
-        heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-  }
 
   render() {
     return (

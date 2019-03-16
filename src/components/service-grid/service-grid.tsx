@@ -52,11 +52,12 @@ export class ServiceGrid {
   };
 
   private categoryClick = (e: MouseEvent) => {
-    this.activeTab = Tab.Categorized;
     if (e.srcElement) {
       const category = e.srcElement.getAttribute('data-category');
       this.scrollToCategory = category;
     }
+
+    this.activeTab = Tab.Categorized;
     this.filter = '';
   };
 
@@ -127,8 +128,8 @@ export class ServiceGrid {
               {this.tab(Tab.Featured, 'Featured')}
               {this.tab(Tab.Categorized, 'All Services')}
               <CategoryButtons
-                categoryClick={this.categoryClick}
                 activeCategory={this.activeCategory}
+                categoryClick={this.categoryClick}
               />
             </div>
           </aside>

@@ -288,11 +288,9 @@ export namespace Components {
   }
 
   interface SortedCategories {
-    'activeCategory'?: string;
     'observeCategory': (el?: HTMLElement) => void;
   }
   interface SortedCategoriesAttributes extends StencilHTMLAttributes {
-    'activeCategory'?: string;
     'observeCategory'?: (el?: HTMLElement) => void;
   }
 
