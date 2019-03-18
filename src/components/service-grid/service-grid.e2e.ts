@@ -23,10 +23,11 @@ describe('<service-grid>', () => {
     const categories = await page.findAll('service-grid >>> marketplace-results');
     expect(categories.length).toBe(3);
 
-    // Each category should have one card
-    categories.forEach(cat => {
-      const card = cat.shadowRoot.querySelectorAll('service-card');
-      expect(card.length).toBe(1);
+    // Each category should have one service card and one custom card
+    categories.forEach(async cat => {
+      const card = await cat.findAll('service-card');
+      expect(card.length).toBe(2);
+      expect(card[1].getAttribute('is-custom')).toBe('');
     });
   });
 
@@ -45,7 +46,7 @@ describe('<service-grid>', () => {
 
     // See if first <a> href matches the pattern
     const el = await page.find('service-grid >>> marketplace-results');
-    const card = el.shadowRoot.querySelector('service-card');
+    const card = await el.find('service-card');
     expect(card).not.toBeNull();
 
     if (card) {
@@ -97,8 +98,8 @@ describe('<service-grid>', () => {
     await tab.click();
 
     const el = await page.findAll('service-grid >>> marketplace-results');
-    const jawsDB = el[0].shadowRoot.querySelector('service-card');
-    const logDNA = el[1].shadowRoot.querySelector('service-card');
+    const jawsDB = await el[0].find('service-card');
+    const logDNA = await el[1].find('service-card');
     expect(jawsDB).not.toBeNull();
     expect(logDNA).not.toBeNull();
 
