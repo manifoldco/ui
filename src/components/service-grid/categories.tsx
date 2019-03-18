@@ -1,4 +1,4 @@
-import { Component, Prop, Element } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 import Tunnel, { State } from '../../data/marketplace';
 import { themeIcons } from '../../assets/icons';
@@ -6,7 +6,6 @@ import { categories, formatCategoryLabel } from './utils';
 
 @Component({ tag: 'sorted-categories', shadow: false })
 export class Categories {
-  @Element() root: HTMLElement;
   @Prop() observeCategory: (el?: HTMLElement) => void;
 
   render() {

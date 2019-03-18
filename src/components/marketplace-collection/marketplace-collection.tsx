@@ -4,11 +4,7 @@ import { Service } from 'types/Service';
 
 import Tunnel, { State } from '../../data/marketplace';
 
-@Component({
-  tag: 'marketplace-collection',
-  shadow: true,
-  styleUrl: 'marketplace-collection.css',
-})
+@Component({ tag: 'marketplace-collection' })
 export class Collection {
   @Prop() name: string;
   @Prop() tagLine: string;
