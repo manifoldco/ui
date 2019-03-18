@@ -9,7 +9,7 @@ export class ManifoldMarketplace {
   @State() services: Service[];
 
   componentWillLoad() {
-    return fetch(`${this.url}products/`)
+    return fetch(`${this.url.replace(/\/$/, '')}/products`)
       .then(response => response.json())
       .then(data => {
         this.services = data;
