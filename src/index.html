@@ -182,6 +182,13 @@ render() {
   return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
 }
 </code></pre>
+            <h2 id="customproductsurl">Custom Products URL</h2>
+            <p>
+              Pass in a custom products URL to fetch the list of services to display in the
+              marketplace.
+            </p>
+            <pre><code class="html language-html">&lt;manifold-marketplace url='https://api.catalog.manifold.co/v1/'&gt;&lt;/manifold-marketplace&gt;
+</code></pre>
             <!-- Auto Generated Below -->
             <h2 id="properties">Properties</h2>
             <table>
@@ -208,6 +215,13 @@ render() {
                   <td></td>
                   <td><code>string | undefined</code></td>
                   <td><code>undefined</code></td>
+                </tr>
+                <tr>
+                  <td><code>url</code></td>
+                  <td><code>url</code></td>
+                  <td></td>
+                  <td><code>string</code></td>
+                  <td><code>'https://api.catalog.manifold.co/v1/'</code></td>
                 </tr>
               </tbody>
             </table>

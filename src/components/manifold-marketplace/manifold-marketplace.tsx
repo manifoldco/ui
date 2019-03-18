@@ -5,10 +5,11 @@ import { Service } from 'types/Service';
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
+  @Prop() url: string = 'https://api.catalog.manifold.co/v1/';
   @State() services: Service[];
 
   componentWillLoad() {
-    return fetch('https://api.catalog.manifold.co/v1/products/')
+    return fetch(`${this.url.replace(/\/$/, '')}/products`)
       .then(response => response.json())
       .then(data => {
         this.services = data;

@@ -53,15 +53,24 @@ render() {
 }
 ```
 
+## Custom Products URL
+
+Pass in a custom products URL to fetch the list of services to display in the marketplace.
+
+```html
+<manifold-marketplace url='https://api.catalog.manifold.co/v1/'></manifold-marketplace>
+```
+
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                  | Default     |
-| ------------- | -------------- | ----------- | --------------------- | ----------- |
-| `featured`    | `featured`     |             | `string \| undefined` | `undefined` |
-| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |
+| Property      | Attribute      | Description | Type                  | Default                                 |
+| ------------- | -------------- | ----------- | --------------------- | --------------------------------------- |
+| `featured`    | `featured`     |             | `string \| undefined` | `undefined`                             |
+| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined`                             |
+| `url`         | `url`          |             | `string`              | `'https://api.catalog.manifold.co/v1/'` |
 
 
 ----------------------------------------------
