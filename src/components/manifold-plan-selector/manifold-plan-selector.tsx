@@ -1,6 +1,7 @@
 import { Component, State, Prop } from '@stencil/core';
 
-const byCost = (a: Catalog.Plan, b: Catalog.Plan) => (a.body.cost < b.body.cost ? -1 : 1);
+const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
+  a.body.cost < b.body.cost ? -1 : 1;
 
 @Component({
   tag: 'manifold-plan-selector',
