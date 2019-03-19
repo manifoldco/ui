@@ -1,6 +1,4 @@
 import { Component, State, Prop } from '@stencil/core';
-import { Plan } from 'types/Plan';
-import { Product } from 'types/Product';
 
 @Component({
   tag: 'plan-selector',
@@ -8,8 +6,8 @@ import { Product } from 'types/Product';
   shadow: true,
 })
 export class PlanSelector {
-  @Prop() product: Product;
-  @Prop() plans: Plan[];
+  @Prop() product: Catalog.ExpandedProduct;
+  @Prop() plans: Catalog.ExpandedPlan[];
   @State() selectedPlanId: string;
 
   componentWillLoad() {

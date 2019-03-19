@@ -9,10 +9,6 @@ import '@stencil/core';
 
 import '@stencil/state-tunnel';
 import {
-  ExpandedFeature,
-  Plan,
-} from 'types/Plan';
-import {
   Collection,
 } from 'types/Collection';
 import {
@@ -22,24 +18,19 @@ import {
   Option,
   Value,
 } from 'types/Select';
-import {
-  Product,
-} from 'types/Product';
 
 
 export namespace Components {
 
   interface CustomPlanFeature {
-    'feature': ExpandedFeature;
+    'feature': Catalog.ExpandedFeature;
     'planLabel': string;
     'selectedValue': string;
-    'setFeature': (label: string, value: string) => void;
   }
   interface CustomPlanFeatureAttributes extends StencilHTMLAttributes {
-    'feature'?: ExpandedFeature;
+    'feature'?: Catalog.ExpandedFeature;
     'planLabel'?: string;
     'selectedValue'?: string;
-    'setFeature'?: (label: string, value: string) => void;
   }
 
   interface FeaturedService {
@@ -225,46 +216,46 @@ export namespace Components {
   }
 
   interface PlanDetails {
-    'plan': Plan;
-    'product': Product;
+    'plan': Catalog.ExpandedPlan;
+    'product': Catalog.ExpandedProduct;
   }
   interface PlanDetailsAttributes extends StencilHTMLAttributes {
-    'plan'?: Plan;
-    'product'?: Product;
+    'plan'?: Catalog.ExpandedPlan;
+    'product'?: Catalog.ExpandedProduct;
   }
 
   interface PlanMenu {
-    'plans': Plan[];
+    'plans': Catalog.ExpandedPlan[];
     'selectPlan': Function;
     'selectedPlanId': string;
   }
   interface PlanMenuAttributes extends StencilHTMLAttributes {
-    'plans'?: Plan[];
+    'plans'?: Catalog.ExpandedPlan[];
     'selectPlan'?: Function;
     'selectedPlanId'?: string;
   }
 
   interface PlanSelector {
-    'plans': Plan[];
-    'product': Product;
+    'plans': Catalog.ExpandedPlan[];
+    'product': Catalog.ExpandedProduct;
   }
   interface PlanSelectorAttributes extends StencilHTMLAttributes {
-    'plans'?: Plan[];
-    'product'?: Product;
+    'plans'?: Catalog.ExpandedPlan[];
+    'product'?: Catalog.ExpandedProduct;
   }
 
   interface ProductDetails {
-    'product': Product;
+    'product': Catalog.ExpandedProduct;
   }
   interface ProductDetailsAttributes extends StencilHTMLAttributes {
-    'product'?: Product;
+    'product'?: Catalog.ExpandedProduct;
   }
 
   interface ProductPage {
-    'product': Product;
+    'product': Catalog.ExpandedProduct;
   }
   interface ProductPageAttributes extends StencilHTMLAttributes {
-    'product'?: Product;
+    'product'?: Catalog.ExpandedProduct;
   }
 
   interface ServiceCard {
