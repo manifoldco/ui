@@ -70,6 +70,24 @@ To watch for changes in the background to all README files, run:
 npm run generate:docs:watch
 ```
 
+## Generating TypeScript defs from Swagger specs
+
+The canonical specs for our APIs [live here][specs]. In this repo, those YAML
+files **should be manually** copied to `specs/`, in case of any changes.
+
+To update the TypeScript defs, run:
+
+```bash
+npm run generate:specs
+```
+
+This will generate new definitions to `types/`. This is done using our own
+library, [@manifoldco/swagger-to-ts][swagger-to-ts], to generate Types. If
+that breaks (very likely), bug @dangodev.
+
+Currently we’re only using `spec/catalog/v1.yaml`, but we may need other
+endpoint specs as this grows.
+
 ## Publishing to npm
 
 To publish to npm, tag it in Git with a valid [npm-semver][npm-semver].
@@ -102,3 +120,5 @@ requests the flag (e.g.: `npm i --save @manifoldco/ui@rc` or `npm i --save @mani
 
 [git-tag]: https://help.github.com/en/articles/working-with-tags
 [npm-semver]: https://docs.npmjs.com/misc/semver
+[specs]: https://github.com/manifoldco/marketplace/tree/master/specs
+[swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts

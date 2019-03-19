@@ -1,8 +1,7 @@
 import { Component, State, Prop } from '@stencil/core';
-import { Plan } from 'types/Plan';
-import { Product } from 'types/Product';
 
-const byCost = (a: Plan, b: Plan) => (a.body.cost < b.body.cost ? -1 : 1);
+const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
+  a.body.cost < b.body.cost ? -1 : 1;
 
 @Component({
   tag: 'manifold-plan-selector',
@@ -10,8 +9,8 @@ const byCost = (a: Plan, b: Plan) => (a.body.cost < b.body.cost ? -1 : 1);
 })
 export class ManifoldPlanSelector {
   @Prop() productId: string;
-  @State() product: Product;
-  @State() plans: Plan[];
+  @State() product: Catalog.ExpandedProduct;
+  @State() plans: Catalog.Plan[];
 
   async componentWillLoad() {
     await fetch(`https://api.catalog.stage.manifold.co/v1/products/${this.productId}`)
