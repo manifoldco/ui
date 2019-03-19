@@ -7,11 +7,14 @@
 
 import '@stencil/core';
 
-
+import '@stencil/state-tunnel';
 import {
   ExpandedFeature,
   Plan,
 } from 'types/Plan';
+import {
+  Collection,
+} from 'types/Collection';
 import {
   Service,
 } from 'types/Service';
@@ -70,12 +73,27 @@ export namespace Components {
     'target'?: string;
   }
 
+  interface ManiTunnel {
+    'collections': Collection[];
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services': Service[];
+  }
+  interface ManiTunnelAttributes extends StencilHTMLAttributes {
+    'collections'?: Collection[];
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services'?: Service[];
+  }
+
   interface ManifoldMarketplace {
+    'collections': Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'url': string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'collections'?: Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'url'?: string;
@@ -89,10 +107,23 @@ export namespace Components {
   }
 
   interface ManifoldProduct {
-    'productLabel'?: string;
+    'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
     'productLabel'?: string;
+  }
+
+  interface MarketplaceCollection {
+    'icon'?: string;
+    'labels': string;
+    'name': string;
+    'tagLine': string;
+  }
+  interface MarketplaceCollectionAttributes extends StencilHTMLAttributes {
+    'icon'?: string;
+    'labels'?: string;
+    'name'?: string;
+    'tagLine'?: string;
   }
 
   interface MarketplaceResults {
@@ -256,16 +287,15 @@ export namespace Components {
     'serviceLink'?: string;
   }
 
-  interface ServiceGrid {
-    'featured'?: string;
-    'serviceLink'?: string;
-    'services'?: Service[];
+  interface SortedCategories {
+    'observeCategory': (el?: HTMLElement) => void;
   }
-  interface ServiceGridAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
-    'serviceLink'?: string;
-    'services'?: Service[];
+  interface SortedCategoriesAttributes extends StencilHTMLAttributes {
+    'observeCategory'?: (el?: HTMLElement) => void;
   }
+
+  interface ServiceGrid {}
+  interface ServiceGridAttributes extends StencilHTMLAttributes {}
 }
 
 declare global {
@@ -274,9 +304,11 @@ declare global {
     'FeaturedService': Components.FeaturedService;
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
+    'ManiTunnel': Components.ManiTunnel;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
     'ManifoldProduct': Components.ManifoldProduct;
+    'MarketplaceCollection': Components.MarketplaceCollection;
     'MarketplaceResults': Components.MarketplaceResults;
     'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
@@ -289,6 +321,7 @@ declare global {
     'ProductDetails': Components.ProductDetails;
     'ProductPage': Components.ProductPage;
     'ServiceCard': Components.ServiceCard;
+    'SortedCategories': Components.SortedCategories;
     'ServiceGrid': Components.ServiceGrid;
   }
 
@@ -297,9 +330,11 @@ declare global {
     'featured-service': Components.FeaturedServiceAttributes;
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
+    'mani-tunnel': Components.ManiTunnelAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
+    'marketplace-collection': Components.MarketplaceCollectionAttributes;
     'marketplace-results': Components.MarketplaceResultsAttributes;
     'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
@@ -312,6 +347,7 @@ declare global {
     'product-details': Components.ProductDetailsAttributes;
     'product-page': Components.ProductPageAttributes;
     'service-card': Components.ServiceCardAttributes;
+    'sorted-categories': Components.SortedCategoriesAttributes;
     'service-grid': Components.ServiceGridAttributes;
   }
 
@@ -340,6 +376,12 @@ declare global {
     new (): HTMLLinkButtonElement;
   };
 
+  interface HTMLManiTunnelElement extends Components.ManiTunnel, HTMLStencilElement {}
+  var HTMLManiTunnelElement: {
+    prototype: HTMLManiTunnelElement;
+    new (): HTMLManiTunnelElement;
+  };
+
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
@@ -356,6 +398,12 @@ declare global {
   var HTMLManifoldProductElement: {
     prototype: HTMLManifoldProductElement;
     new (): HTMLManifoldProductElement;
+  };
+
+  interface HTMLMarketplaceCollectionElement extends Components.MarketplaceCollection, HTMLStencilElement {}
+  var HTMLMarketplaceCollectionElement: {
+    prototype: HTMLMarketplaceCollectionElement;
+    new (): HTMLMarketplaceCollectionElement;
   };
 
   interface HTMLMarketplaceResultsElement extends Components.MarketplaceResults, HTMLStencilElement {}
@@ -430,6 +478,12 @@ declare global {
     new (): HTMLServiceCardElement;
   };
 
+  interface HTMLSortedCategoriesElement extends Components.SortedCategories, HTMLStencilElement {}
+  var HTMLSortedCategoriesElement: {
+    prototype: HTMLSortedCategoriesElement;
+    new (): HTMLSortedCategoriesElement;
+  };
+
   interface HTMLServiceGridElement extends Components.ServiceGrid, HTMLStencilElement {}
   var HTMLServiceGridElement: {
     prototype: HTMLServiceGridElement;
@@ -441,9 +495,11 @@ declare global {
     'featured-service': HTMLFeaturedServiceElement
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
+    'mani-tunnel': HTMLManiTunnelElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
     'manifold-product': HTMLManifoldProductElement
+    'marketplace-collection': HTMLMarketplaceCollectionElement
     'marketplace-results': HTMLMarketplaceResultsElement
     'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
@@ -456,6 +512,7 @@ declare global {
     'product-details': HTMLProductDetailsElement
     'product-page': HTMLProductPageElement
     'service-card': HTMLServiceCardElement
+    'sorted-categories': HTMLSortedCategoriesElement
     'service-grid': HTMLServiceGridElement
   }
 
@@ -464,9 +521,11 @@ declare global {
     'featured-service': HTMLFeaturedServiceElement;
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
+    'mani-tunnel': HTMLManiTunnelElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'marketplace-collection': HTMLMarketplaceCollectionElement;
     'marketplace-results': HTMLMarketplaceResultsElement;
     'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
@@ -479,6 +538,7 @@ declare global {
     'product-details': HTMLProductDetailsElement;
     'product-page': HTMLProductPageElement;
     'service-card': HTMLServiceCardElement;
+    'sorted-categories': HTMLSortedCategoriesElement;
     'service-grid': HTMLServiceGridElement;
   }
 

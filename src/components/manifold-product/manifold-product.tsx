@@ -3,11 +3,11 @@ import { Product } from 'types/Product';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
-  @Prop() productLabel?: string;
-  @State() product: Product;
+  @Prop() productLabel: string;
+  @State() product?: Product;
 
   componentWillLoad() {
-    return fetch(`https://api.catalog.stage.manifold.co/v1/products?label=${this.productLabel}`)
+    return fetch(`https://api.catalog.manifold.co/v1/products?label=${this.productLabel}`)
       .then(response => response.json())
       .then(data => {
         this.product = { ...data[0] };

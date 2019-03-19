@@ -68,6 +68,7 @@ Pass in a custom products URL to fetch the list of services to display in the ma
 
 | Property      | Attribute      | Description | Type                  | Default                                 |
 | ------------- | -------------- | ----------- | --------------------- | --------------------------------------- |
+| `collections` | --             |             | `Collection[]`        | `[]`                                    |
 | `featured`    | `featured`     |             | `string \| undefined` | `undefined`                             |
 | `serviceLink` | `service-link` |             | `string \| undefined` | `undefined`                             |
 | `url`         | `url`          |             | `string`              | `'https://api.catalog.manifold.co/v1/'` |

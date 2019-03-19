@@ -234,7 +234,7 @@ render() {
           <h2>Example</h2>
           <div class="docs-example">
             <div class="docs-example-inner">
-              <manifold-marketplace featured="till"></manifold-marketplace>
+              <manifold-marketplace featured="till"> </manifold-marketplace>
             </div>
           </div>
         </section>
@@ -285,7 +285,7 @@ render() {
           <h2>Example</h2>
           <div class="docs-example">
             <div class="docs-example-inner">
-              <manifold-product product-label="picnic-basket-stage"></manifold-product>
+              <manifold-product product-label="till"></manifold-product>
             </div>
           </div>
         </section>
@@ -345,6 +345,27 @@ render() {
       hljs.initHighlightingOnLoad();
 
       var marketplace = document.querySelector('manifold-marketplace');
+      marketplace.collections = [
+        {
+          labels: [
+            'cloudcube',
+            'bonsai-elasticsearch',
+            'oauth-io',
+            'websolr',
+            'mailgun',
+            'memcachier-cache',
+          ],
+          name: 'Your Missing Piece',
+          icon: 'pie_chart',
+          tagLine: "Just the service you've been waiting for",
+        },
+        {
+          labels: ['informant', 'cloudcube', 'till', 'prefab'],
+          name: 'New',
+          icon: 'star',
+          tagLine: 'Latest services to join the platform',
+        },
+      ];
 
       marketplace.addEventListener('manifold-serviceCard-click', e => {
         if (e.detail.label === 'bring-your-own') {

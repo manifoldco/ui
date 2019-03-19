@@ -37,7 +37,8 @@
   },
   "dependencies": {
     "@stencil/core": "~0.18.0",
-    "@stencil/postcss": "^0.1.0"
+    "@stencil/postcss": "^0.1.0",
+    "@stencil/state-tunnel": "0.0.8"
   },
   "devDependencies": {
     "@types/jest": "^23.3.13",

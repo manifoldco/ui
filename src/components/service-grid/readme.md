@@ -5,11 +5,9 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                     | Default     |
-| ------------- | -------------- | ----------- | ------------------------ | ----------- |
-| `featured`    | `featured`     |             | `string \| undefined`    | `undefined` |
-| `serviceLink` | `service-link` |             | `string \| undefined`    | `undefined` |
-| `services`    | --             |             | `Service[] \| undefined` | `undefined` |
+| Property          | Attribute | Description | Type                                      | Default     |
+| ----------------- | --------- | ----------- | ----------------------------------------- | ----------- |
+| `observeCategory` | --        |             | `(el?: HTMLElement \| undefined) => void` | `undefined` |
 
 
 ----------------------------------------------

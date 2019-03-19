@@ -2,11 +2,54 @@ import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 
-describe('<service-grid>', () => {
+describe('<service-grid> collections', () => {
+  it('displays collections', async () => {
+    const page = await newE2EPage({
+      html: '<mani-tunnel><service-grid></service-grid></mani-tunnel>',
+    });
+    await page.$eval('mani-tunnel', (elm: any) => {
+      elm.services = [
+        { body: { name: 'FooTastic', label: 'footastic', tags: ['foo'] } },
+        { body: { name: 'BarTastic', label: 'bartastic', tags: ['bar'] } },
+        { body: { name: 'BazTastic', label: 'baztastic', tags: ['baz'] } },
+      ];
+
+      elm.collections = [
+        {
+          labels: ['footastic', 'bartastic'],
+          name: 'Your Missing Piece',
+          icon: 'pie_chart',
+          tagLine: "Just the service you've been waiting for",
+        },
+        {
+          labels: ['baztastic'],
+          name: 'New',
+          icon: 'star',
+          tagLine: 'Latest services to join the platform',
+        },
+      ];
+    });
+
+    await page.waitForChanges();
+
+    const collections = await page.findAll('service-grid >>> marketplace-results');
+    expect(collections.length).toBe(2);
+
+    const missingPieceServices = await collections[0].findAll('service-card');
+    expect(missingPieceServices.length).toBe(2);
+
+    const newServices = await collections[1].findAll('service-card');
+    expect(newServices.length).toBe(1);
+  });
+});
+
+describe('<service-grid> sorted categories', () => {
   it('displays all services', async () => {
     // Set properties and wait
-    const page = await newE2EPage({ html: '<service-grid></service-grid>' });
-    await page.$eval('service-grid', (elm: any) => {
+    const page = await newE2EPage({
+      html: '<mani-tunnel><service-grid></service-grid></mani-tunnel>',
+    });
+    await page.$eval('mani-tunnel', (elm: any) => {
       elm.services = [
         { body: { name: 'footastic', tags: ['foo'] } },
         { body: { name: 'bartastic', tags: ['bar'] } },
@@ -14,30 +57,37 @@ describe('<service-grid>', () => {
       ];
     });
     await page.waitForChanges();
+    const tab = await page.find('service-grid >>> #categorized');
+    await tab.click();
 
     // See if all categories are present
-    const el = await page.findAll('service-grid >>> marketplace-results');
-    expect(el.length).toBe(3);
+    const categories = await page.findAll('service-grid >>> marketplace-results');
+    expect(categories.length).toBe(3);
 
-    // Each category should have one card
-    el.forEach(cat => {
-      const card = cat.shadowRoot.querySelectorAll('service-card');
-      expect(card.length).toBe(1);
+    // Each category should have one service card and one custom card
+    categories.forEach(async cat => {
+      const card = await cat.findAll('service-card');
+      expect(card.length).toBe(2);
+      expect(card[1].getAttribute('is-custom')).toBe('');
     });
   });
 
   it('formats links correctly', async () => {
     // Set properties and wait
-    const page = await newE2EPage({ html: '<service-grid></service-grid>' });
-    await page.$eval('service-grid', (elm: any) => {
+    const page = await newE2EPage({
+      html: '<mani-tunnel><service-grid></service-grid></mani-tunnel>',
+    });
+    await page.$eval('mani-tunnel', (elm: any) => {
       elm.services = [{ body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } }];
       elm.serviceLink = '/discover/view/service/:service';
     });
     await page.waitForChanges();
+    const tab = await page.find('service-grid >>> #categorized');
+    await tab.click();
 
     // See if first <a> href matches the pattern
     const el = await page.find('service-grid >>> marketplace-results');
-    const card = el.shadowRoot.querySelector('service-card');
+    const card = await el.find('service-card');
     expect(card).not.toBeNull();
 
     if (card) {
@@ -47,14 +97,18 @@ describe('<service-grid>', () => {
   });
 
   it('correctly filters results', async () => {
-    const page = await newE2EPage({ html: '<service-grid></service-grid>' });
-    await page.$eval('service-grid', (elm: any) => {
+    const page = await newE2EPage({
+      html: '<mani-tunnel><service-grid></service-grid></mani-tunnel>',
+    });
+    await page.$eval('mani-tunnel', (elm: any) => {
       elm.services = [
         { body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } },
         { body: { name: 'LogDNA', tags: ['logging'], label: 'logdna' } },
       ];
     });
     await page.waitForChanges();
+    const tab = await page.find('service-grid >>> #categorized');
+    await tab.click();
 
     const categories = await page.findAll('service-grid >>> marketplace-results');
     expect(categories.length).toEqual(2);
@@ -70,8 +124,10 @@ describe('<service-grid>', () => {
 
   it('correctly highlights featured services', async () => {
     // Set properties and wait
-    const page = await newE2EPage({ html: '<service-grid></service-grid>' });
-    await page.$eval('service-grid', (elm: any) => {
+    const page = await newE2EPage({
+      html: '<mani-tunnel><service-grid></service-grid></mani-tunnel>',
+    });
+    await page.$eval('mani-tunnel', (elm: any) => {
       elm.services = [
         { body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } },
         { body: { name: 'LogDNA', tags: ['logging'], label: 'logdna' } },
@@ -79,10 +135,12 @@ describe('<service-grid>', () => {
       elm.featured = 'fake,logdna,fake-2';
     });
     await page.waitForChanges();
+    const tab = await page.find('service-grid >>> #categorized');
+    await tab.click();
 
     const el = await page.findAll('service-grid >>> marketplace-results');
-    const jawsDB = el[0].shadowRoot.querySelector('service-card');
-    const logDNA = el[1].shadowRoot.querySelector('service-card');
+    const jawsDB = await el[0].find('service-card');
+    const logDNA = await el[1].find('service-card');
     expect(jawsDB).not.toBeNull();
     expect(logDNA).not.toBeNull();
 

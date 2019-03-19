@@ -1,11 +1,13 @@
 import { Component, Prop, State } from '@stencil/core';
 import { Service } from 'types/Service';
+import { Collection } from 'types/Collection';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
   @Prop() url: string = 'https://api.catalog.manifold.co/v1/';
+  @Prop() collections: Collection[] = [];
   @State() services: Service[];
 
   componentWillLoad() {
@@ -18,11 +20,14 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <service-grid
+      <mani-tunnel
         services={this.services}
+        serviceLink={this.serviceLink}
         featured={this.featured}
-        service-link={this.serviceLink}
-      />
+        collections={this.collections}
+      >
+        <service-grid slot="marketplace-content" />
+      </mani-tunnel>
     );
   }
 }
