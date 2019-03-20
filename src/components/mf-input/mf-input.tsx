@@ -16,7 +16,6 @@ export class MfInput {
   @Prop() min?: number;
   @Prop() max?: number;
   @Prop() step?: number;
-  @Prop() autocapitalize?: string;
 
   render() {
     return (

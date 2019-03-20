@@ -179,7 +179,6 @@ export namespace Components {
   }
 
   interface MfInput {
-    'autocapitalize'?: string;
     'max'?: number;
     'min'?: number;
     'name': string;
@@ -191,7 +190,6 @@ export namespace Components {
     'value'?: string | number;
   }
   interface MfInputAttributes extends StencilHTMLAttributes {
-    'autocapitalize'?: string;
     'max'?: number;
     'min'?: number;
     'name'?: string;
