@@ -3,6 +3,7 @@ import { Component, State, Element } from '@stencil/core';
 import { CategoryButtons } from './category-buttons';
 import { Collections } from './collections';
 import { FilteredServices } from './filtered-services';
+import { FieldType } from '../../types/Input';
 
 enum Tab {
   Featured = 'featured',
@@ -113,9 +114,9 @@ export class ServiceGrid {
   render() {
     return (
       <div class="wrapper">
-        <input
+        <mf-input
           class="search-bar"
-          type="search"
+          type={FieldType.Search}
           autocapitalize="off"
           placeholder="Search for a service or category"
           value={this.filter || ''}

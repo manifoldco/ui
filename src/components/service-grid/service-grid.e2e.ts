@@ -1,4 +1,4 @@
-import { newE2EPage } from '@stencil/core/testing';
+import { newE2EPage, E2EElement } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 
@@ -113,7 +113,7 @@ describe('<service-grid> sorted categories', () => {
     const categories = await page.findAll('service-grid >>> marketplace-results');
     expect(categories.length).toEqual(2);
 
-    const input = await page.find('service-grid >>> .search-bar');
+    const input = await page.find('service-grid >>> mf-input >>> input');
     await input.press('KeyL');
     await input.press('KeyO');
     await input.press('KeyG');

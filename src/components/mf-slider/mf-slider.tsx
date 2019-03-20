@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+import { FieldType } from '../../types/Input';
 
 @Component({
   tag: 'mf-slider',
@@ -48,8 +49,8 @@ export class MfSlider {
           </div>
         )}
         <div class="number-wrapper">
-          <input
-            type="number"
+          <mf-input
+            type={FieldType.Number}
             max={this.max}
             min={this.min}
             value={value}

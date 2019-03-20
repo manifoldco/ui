@@ -1,0 +1,46 @@
+:host {
+  display: grid;
+}
+
+.field {
+  width: auto;
+  padding: 0.5em 0.75em;
+  font-size: 1em;
+  background: var(--mf-c-white);
+  border: 1px solid var(--mf-c-border);
+  border-radius: var(--mf-radius-default);
+  appearance: none;
+  font-variant-ligatures: none;
+
+  &::placeholder {
+    color: var(--mf-c-gray);
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    display: none;
+  }
+
+  &::-webkit-input-placeholder {
+    color: var(--mf-c-gray);
+  }
+
+  &:hover,
+  &:focus {
+    border-color: var(--mf-c-grayDark);
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(87, 100, 198, 0.15);
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover {
+    box-shadow: 0 0 0 3rem var(--mf-c-white) inset;
+  }
+
+  &:-webkit-autofill:focus {
+    box-shadow: 0 0 0 3rem var(--mf-c-white) inset, 0 0 0 2px rgba(87, 100, 198, 0.15);
+  }
+}
