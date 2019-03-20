@@ -113,7 +113,7 @@ describe('<service-grid> sorted categories', () => {
     const categories = await page.findAll('service-grid >>> marketplace-results');
     expect(categories.length).toEqual(2);
 
-    const input = await page.find('service-grid >>> mf-input >>> input');
+    const input = await page.find('service-grid >>> .search-bar');
     await input.press('KeyL');
     await input.press('KeyO');
     await input.press('KeyG');
