@@ -1,0 +1,1 @@
+export const FEATURE_CHANGE = 'FEATURE_CHANGE';

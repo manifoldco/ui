@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'mf-toggle',
@@ -6,19 +6,28 @@ import { Component, Prop } from '@stencil/core';
   scoped: true,
 })
 export class MfToggle {
+  @Prop() ariaLabelledby?: string;
+  @Prop() disabled?: boolean;
+  @Prop() eventName?: string;
   @Prop() label?: string;
   @Prop() name: string = '';
-  @Prop() disabled?: boolean;
-  @Prop() ariaLabelledby?: string;
+  @Event({ eventName: this.eventName }) onChange: EventEmitter;
+
+  private onChangeHandler(e: Event) {
+    if (!e.target || !this.eventName) return;
+    const el = e.target as HTMLInputElement;
+    this.onChange.emit({ name: el.getAttribute('name'), value: el.checked === true });
+  }
 
   render() {
     return (
       <label class="wrapper">
         <input
-          name={this.name}
           aria-labelledby={this.ariaLabelledby}
-          type="checkbox"
           disabled={this.disabled}
+          name={this.name}
+          onChange={this.onChangeHandler}
+          type="checkbox"
         />
         <div class="toggle" />
         {this.label && <div class="label">{this.label}</div>}

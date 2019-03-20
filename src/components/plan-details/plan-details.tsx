@@ -1,5 +1,6 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, State, Listen } from '@stencil/core';
 import { $ } from '../../utils/currency';
+import { FEATURE_CHANGE } from '../../global/events';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 const NUMBER_FEATURE_COIN = 10000000; // Numeric features are a ten-millionth of a cent, because floats stink
@@ -9,14 +10,28 @@ const YES = 'Yes';
 const featureCost = (number: number) => $(number / NUMBER_FEATURE_COIN);
 const singularize = (word: string) => word.replace(/s$/i, '');
 
+export const tagName = 'plan-details';
+
+interface UserFeature {
+  [key: string]: string | number | boolean;
+}
+
 @Component({
-  tag: 'plan-details',
+  tag: tagName,
   styleUrl: 'plan-details.css',
   shadow: true,
 })
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.ExpandedProduct;
+  @State() features: UserFeature;
+  @Listen(FEATURE_CHANGE) handleFeatureChange(e: CustomEvent) {
+    console.log(e);
+  }
+
+  componentWillLoad() {
+    this.features = this.initialFeatures();
+  }
 
   // TODO clean this up
   featureValue({
@@ -58,7 +73,6 @@ export class PlanDetails {
 
       const highEnd = featureCost(sortedCosts[sortedCosts.length - 1].cost_multiple || 0);
 
-      // eslint-disable-next-line no-irregular-whitespace
       return `${lowEnd} - ${highEnd} / ${singularize(suffix)}${freeText}`;
     }
 
@@ -75,8 +89,28 @@ export class PlanDetails {
     }
   }
 
-  selectedValue(feature: Catalog.ExpandedFeature): string {
-    return feature.value_string || '';
+  private initialFeatures(): UserFeature {
+    if (!this.plan.body.expanded_features) return {};
+
+    return this.plan.body.expanded_features.reduce((obj, feature) => {
+      // 1. If not customizable, don’t worry about it
+      if (!feature.customizable) return obj;
+
+      // 2. Grab feature name
+      const name = feature.label;
+
+      // 3. Grab the initial value, which should be declared in the schema
+      let value = feature.value_string; // string
+      if (feature.value && feature.value.label) value = feature.value.label; // boolean
+      if (feature.value && feature.value.numeric_details)
+        value = feature.value.numeric_details.min || 0; // number
+
+      return { ...obj, [name]: value };
+    }, {});
+  }
+
+  selectedValue(feature: Catalog.ExpandedFeature): string | undefined {
+    return feature.value;
   }
 
   customFeatureValue(feature: Catalog.ExpandedFeature) {
@@ -132,9 +166,10 @@ export class PlanDetails {
             })}
           </dl>
         </div>
+        <code>Features selected: {JSON.stringify(this.features)}</code>
         <footer class="footer">
           <div class="cost" itemprop="price">
-            {$(cost)} <small>&nbsp;/ mo</small>
+            {$(cost)}&nbsp;<small>/ mo</small>
           </div>
           <link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}

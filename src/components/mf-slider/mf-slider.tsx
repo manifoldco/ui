@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { FieldType } from '../../types/Input';
 
 @Component({
@@ -7,14 +7,21 @@ import { FieldType } from '../../types/Input';
   scoped: true,
 })
 export class MfSlider {
-  @Prop() min: number = 0;
-  @Prop() max: number;
+  @Prop() error?: string;
+  @Prop() eventName?: string;
   @Prop() increment: number = 1;
+  @Prop() max: number;
+  @Prop() min: number = 0;
   @Prop() name: string = '';
   @Prop() selectedValue: number;
   @Prop() suffix: string = '';
-  @Prop() onChange: (e: Event) => void;
-  @Prop() error?: string;
+  @Event({ eventName: this.eventName }) onChange: EventEmitter;
+
+  private onChangeHandler(e: Event) {
+    if (!e.target || !this.eventName) return;
+    const el = e.target as HTMLInputElement;
+    this.onChange.emit({ name: el.getAttribute('name'), value: parseInt(el.value, 10) });
+  }
 
   get positionCount() {
     return (this.max - this.min) / this.increment;
@@ -32,8 +39,6 @@ export class MfSlider {
               min={this.min}
               step={this.increment}
               value={value}
-              onInput={e => this.onChange(e)}
-              onChange={e => this.onChange(e)}
               style={{
                 '--slider-position': `${value / (this.max - this.min)}%`,
               }}
@@ -53,10 +58,10 @@ export class MfSlider {
             type={FieldType.Number}
             max={this.max}
             min={this.min}
-            value={value}
-            onChange={e => this.onChange(e)}
+            onChange={this.onChangeHandler}
             required
             step={this.increment}
+            value={value}
           />
           <div class="display-units">{this.suffix}</div>
         </div>
