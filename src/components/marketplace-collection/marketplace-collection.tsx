@@ -15,16 +15,16 @@ export class Collection {
     return (
       <Tunnel.Consumer>
         {(state: State) => (
-          <div>
-            <h3 class="category">
-              {this.icon && <mf-icon icon={this.icon} marginRight />}
-              {this.name}
-              <p class="tag-line">{this.tagLine}</p>
-            </h3>
+          <service-category
+            icon={this.icon}
+            label={this.name}
+            name={this.name.replace(/\s/g, '-').toLowerCase()}
+            tagline={this.tagLine}
+          >
             <marketplace-results
               services={state.services.filter((s: Service) => this.labels.includes(s.body.label))}
             />
-          </div>
+          </service-category>
         )}
       </Tunnel.Consumer>
     );

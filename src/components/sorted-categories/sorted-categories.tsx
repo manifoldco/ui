@@ -2,9 +2,9 @@ import { Component, Prop } from '@stencil/core';
 
 import Tunnel, { State } from '../../data/marketplace';
 import { themeIcons } from '../../assets/icons';
-import { categories, formatCategoryLabel } from './utils';
+import { categories, formatCategoryLabel } from '../../utils/marketplace';
 
-@Component({ tag: 'sorted-categories', shadow: false })
+@Component({ tag: 'sorted-categories' })
 export class Categories {
   @Prop() observeCategory: (el?: HTMLElement) => void;
 
@@ -17,11 +17,12 @@ export class Categories {
           return (
             <div>
               {sortedCategories.map(tag => (
-                <div class="category-container">
-                  <h3 class="category" id={`category-${tag}`} ref={this.observeCategory}>
-                    <mf-icon icon={themeIcons[tag]} marginRight />
-                    {formatCategoryLabel(tag)}
-                  </h3>
+                <service-category
+                  categoryLoaded={this.observeCategory}
+                  icon={themeIcons[tag]}
+                  name={tag}
+                  label={formatCategoryLabel(tag)}
+                >
                   <marketplace-results
                     services={categoryMap[tag]}
                     featured={state.featured}
@@ -37,7 +38,7 @@ export class Categories {
                       slot="custom-card"
                     />
                   </marketplace-results>
-                </div>
+                </service-category>
               ))}
             </div>
           );
