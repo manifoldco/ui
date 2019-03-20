@@ -1,4 +1,4 @@
-import { newE2EPage, E2EElement } from '@stencil/core/testing';
+import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 

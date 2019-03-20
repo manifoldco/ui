@@ -1,6 +1,9 @@
 :host {
-  --default-color: gray; /* var(--mf-c-gray); */
-  --focus-color: blue; /* var(--mf-c-blue); */
+  /* redefining theme variables here so they'll work properly */
+  --mf-c-gray: #8f8f95;
+  --mf-c-blue: #1e50da;
+  --default-color: var(--mf-c-gray);
+  --focus-color: var(--mf-c-blue);
 }
 
 select {
