@@ -1,4 +1,4 @@
-import { Component, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { FieldType } from '../../types/Input';
 
 @Component({
@@ -7,28 +7,33 @@ import { FieldType } from '../../types/Input';
   scoped: true,
 })
 export class MfSlider {
+  @Prop() defaultValue?: number;
   @Prop() error?: string;
-  @Prop() eventName?: string;
   @Prop() increment: number = 1;
   @Prop() max: number;
   @Prop() min: number = 0;
   @Prop() name: string = '';
-  @Prop() selectedValue: number;
   @Prop() suffix: string = '';
-  @Event({ eventName: this.eventName }) onChange: EventEmitter;
-
-  private onChangeHandler(e: Event) {
-    if (!e.target || !this.eventName) return;
-    const el = e.target as HTMLInputElement;
-    this.onChange.emit({ name: el.getAttribute('name'), value: parseInt(el.value, 10) });
+  @Event() onInputChange: EventEmitter;
+  @Watch('defaultValue') watchHandler(newVal: number) {
+    this.onInputChange.emit({ name: this.name, value: newVal });
   }
+
+  onChangeHandler = (e: Event) => {
+    if (!e.target) return;
+    const { value } = e.target as HTMLInputElement;
+    this.onInputChange.emit({
+      name: this.name,
+      value: parseInt(value, 10),
+    });
+  };
 
   get positionCount() {
     return (this.max - this.min) / this.increment;
   }
 
   render() {
-    const value = this.selectedValue || this.min;
+    const value = this.defaultValue || this.min;
     return (
       <div class="container">
         {this.positionCount < 500 ? (
