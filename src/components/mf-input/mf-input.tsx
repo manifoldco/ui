@@ -30,7 +30,6 @@ export class MfInput {
         min={this.min}
         max={this.max}
         step={this.step}
-        autocapitalize={this.autocapitalize}
       />
     );
   }
