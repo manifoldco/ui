@@ -7,10 +7,10 @@ Hello
 
 ## Properties
 
-| Property  | Attribute | Description | Type      | Default     |
-| --------- | --------- | ----------- | --------- | ----------- |
-| `plans`   | --        |             | `Plan[]`  | `undefined` |
-| `product` | --        |             | `Product` | `undefined` |
+| Property  | Attribute | Description | Type              | Default     |
+| --------- | --------- | ----------- | ----------------- | ----------- |
+| `plans`   | --        |             | `ExpandedPlan[]`  | `undefined` |
+| `product` | --        |             | `ExpandedProduct` | `undefined` |
 
 
 ----------------------------------------------

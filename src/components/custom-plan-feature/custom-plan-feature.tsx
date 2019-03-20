@@ -1,5 +1,4 @@
 import { Component, Prop, FunctionalComponent } from '@stencil/core';
-import { ExpandedFeature } from 'types/Plan';
 import { $ } from '../../utils/currency';
 
 const STRING = 'string';
@@ -8,49 +7,34 @@ const BOOLEAN = 'boolean';
 
 interface DropdownProps {
   name: string;
-  onChange: (e: UIEvent) => void;
-  values: {
-    cost: number;
-    label: string;
-    name: string;
-  }[];
+  values?: Catalog.FeatureValueDetails[];
 }
 
 interface ToggleProps {
   name: string;
-  onChange: (e: UIEvent) => void;
-  values: {
-    cost?: number;
-    label: string;
-    name: string;
-    price?: {};
-  }[];
+  values: Catalog.FeatureValueDetails[];
 }
 
 interface SliderProps {
   name: string;
-  onChange: (e: UIEvent) => void;
-  value: {
-    numeric_details: {
-      min: number;
-      max: number;
-      increment: number;
-      suffix: string;
-    };
-  };
+  value?: Catalog.FeatureValueDetails;
 }
 
 const Dropdown: FunctionalComponent<DropdownProps> = ({ name, values }) => {
-  const options = values.map(({ cost, label, name: optionName }) => ({
-    label: `${optionName} (${cost ? $(cost) : 'Included'})`,
-    value: label,
-  }));
+  const options = Array.isArray(values)
+    ? values.map(({ cost, label, name: optionName }) => ({
+        label: `${optionName} (${cost ? $(cost) : 'Included'})`,
+        value: label,
+      }))
+    : [];
 
   return <mf-select name={name} options={options} />;
 };
 
 const Slider: FunctionalComponent<SliderProps> = ({ value, name }) => {
-  const { min, max, increment, suffix } = value.numeric_details;
+  let details: Catalog.FeatureNumericDetails = {};
+  if (value && value.numeric_details) details = value.numeric_details;
+  const { min, max, increment, suffix } = details;
   return <mf-slider name={name} min={min} max={max} suffix={suffix} increment={increment} />;
 };
 
@@ -64,44 +48,24 @@ const Toggle: FunctionalComponent<ToggleProps> = () => {
   scoped: true,
 })
 export class CustomPlanFeature {
-  @Prop() feature: ExpandedFeature;
+  @Prop() feature: Catalog.ExpandedFeature;
   @Prop() selectedValue: string;
-  @Prop() setFeature: (label: string, value: string) => void;
   @Prop() planLabel: string = '';
-
-  handleChange = (value: string) => this.setFeature(this.feature.label, value);
 
   get featureID() {
     return `plan-${this.planLabel}-feature-${this.feature.label}`;
   }
 
   render() {
-    console.log(this.feature);
+    const { values = [], value } = this.feature;
+
     switch (this.feature.type) {
       case STRING:
-        return (
-          <Dropdown
-            name={this.featureID}
-            values={this.feature.values}
-            onChange={(e: any) => this.handleChange(e.target && e.target.value)}
-          />
-        );
+        return <Dropdown name={this.featureID} values={values} />;
       case NUMBER:
-        return (
-          <Slider
-            name={this.featureID}
-            value={this.feature.value}
-            onChange={(e: any) => this.handleChange(e.target && e.target.checked)}
-          />
-        );
+        return <Slider name={this.featureID} value={value} />;
       case BOOLEAN:
-        return (
-          <Toggle
-            name={this.featureID}
-            values={this.feature.values}
-            onChange={(e: any) => this.handleChange(e.target && e.target.value)}
-          />
-        );
+        return <Toggle name={this.featureID} values={values} />;
       default:
         return null;
     }

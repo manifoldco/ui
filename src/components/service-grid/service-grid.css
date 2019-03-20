@@ -24,11 +24,6 @@
   text-transform: capitalize;
 }
 
-.tag-line {
-  margin: 0.25rem 0 0 0;
-  color: var(--mf-c-gray);
-}
-
 .browse-catalog {
   position: relative;
   display: grid;

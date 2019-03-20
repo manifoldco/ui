@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property         | Attribute          | Description | Type       | Default     |
-| ---------------- | ------------------ | ----------- | ---------- | ----------- |
-| `plans`          | --                 |             | `Plan[]`   | `[]`        |
-| `selectPlan`     | --                 |             | `Function` | `undefined` |
-| `selectedPlanId` | `selected-plan-id` |             | `string`   | `undefined` |
+| Property         | Attribute          | Description | Type             | Default     |
+| ---------------- | ------------------ | ----------- | ---------------- | ----------- |
+| `plans`          | --                 |             | `ExpandedPlan[]` | `[]`        |
+| `selectPlan`     | --                 |             | `Function`       | `undefined` |
+| `selectedPlanId` | `selected-plan-id` |             | `string`         | `undefined` |
 
 
 ----------------------------------------------

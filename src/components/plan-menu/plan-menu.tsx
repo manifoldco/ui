@@ -1,5 +1,4 @@
 import { Component, Prop, FunctionalComponent } from '@stencil/core';
-import { Plan } from 'types/Plan';
 
 const $ = (amount: number, options: object = {}) => {
   return Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', ...options }).format(
@@ -33,7 +32,7 @@ const PlanButton: FunctionalComponent<{
   shadow: true,
 })
 export class PlanMenu {
-  @Prop() plans: Plan[] = [];
+  @Prop() plans: Catalog.ExpandedPlan[] = [];
   @Prop() selectedPlanId: string;
   @Prop() selectPlan: Function;
 
@@ -56,24 +55,26 @@ export class PlanMenu {
   render() {
     return (
       <ul class="plan-list">
-        {this.allPlans.map(({ id, body: { name, cost, customizable, free } }: Plan) => (
-          <PlanButton
-            checked={id === this.selectedPlanId}
-            value={id}
-            onChange={() => this.selectPlan(id)}
-            customizable={customizable}
-          >
-            {name}
-            {free ? (
-              <mf-badge>Free</mf-badge>
-            ) : (
-              <div class="cost">
-                {customizable && 'Starting at '}
-                {$(cost)}&nbsp;<small>/ mo</small>
-              </div>
-            )}
-          </PlanButton>
-        ))}
+        {this.allPlans.map(
+          ({ id, body: { name, cost, customizable, free } }: Catalog.ExpandedPlan) => (
+            <PlanButton
+              checked={id === this.selectedPlanId}
+              value={id}
+              onChange={() => this.selectPlan(id)}
+              customizable={customizable}
+            >
+              {name}
+              {free ? (
+                <mf-badge>Free</mf-badge>
+              ) : (
+                <div class="cost">
+                  {customizable && 'Starting at '}
+                  {$(cost)}&nbsp;<small>/ mo</small>
+                </div>
+              )}
+            </PlanButton>
+          )
+        )}
       </ul>
     );
   }
