@@ -1,5 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-import { Product } from 'types/Product';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 
@@ -9,7 +8,7 @@ const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
   shadow: true,
 })
 export class ProductDetails {
-  @Prop() product: Product;
+  @Prop() product: Catalog.ExpandedProduct;
 
   render() {
     const { label, name, tagline, value_props } = this.product.body;

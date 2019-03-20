@@ -1,7 +1,7 @@
 import { FunctionalComponent } from '@stencil/core';
 
 import Tunnel, { State } from '../../data/marketplace';
-import { filteredServices } from './utils';
+import { filteredServices } from '../../utils/marketplace';
 
 interface FilteredServicesProps {
   filter?: string;

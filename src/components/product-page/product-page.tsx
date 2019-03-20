@@ -1,5 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-import { Product } from 'types/Product';
 
 @Component({
   tag: 'product-page',
@@ -7,7 +6,7 @@ import { Product } from 'types/Product';
   shadow: true,
 })
 export class ProductPage {
-  @Prop() product: Product;
+  @Prop() product: Catalog.ExpandedProduct;
 
   renderSidebar = () => {
     const { label, name, logo_url, tags, support_email, documentation_url } = this.product.body;

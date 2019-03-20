@@ -1,14 +1,3 @@
-.category-container,
-.collection-container {
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--mf-c-grayLight);
-
-  &:first-child {
-    padding-top: 0;
-    border: none;
-  }
-}
-
 .category {
   margin: 0;
   padding-bottom: 1rem;
@@ -17,11 +6,6 @@
   font-size: var(--mf-font-u2);
   font-family: var(--mf-font-family);
   text-transform: capitalize;
-}
-
-.tag-line {
-  margin: 0.25rem 0 0 0;
-  color: var(--mf-c-gray);
 }
 
 .browse-catalog {
