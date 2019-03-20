@@ -1,7 +1,7 @@
 import { FunctionalComponent } from '@stencil/core';
 
 import Tunnel, { State } from '../../data/marketplace';
-import { categories, formatCategoryLabel } from './utils';
+import { categories, formatCategoryLabel } from '../../utils/marketplace';
 
 interface CategoryButtonsProps {
   activeCategory?: string;

@@ -278,15 +278,30 @@ export namespace Components {
     'serviceLink'?: string;
   }
 
+  interface ServiceCategory {
+    'categoryLoaded'?: (el?: HTMLElement) => void;
+    'icon'?: string;
+    'label': string;
+    'name': string;
+    'tagline'?: string;
+  }
+  interface ServiceCategoryAttributes extends StencilHTMLAttributes {
+    'categoryLoaded'?: (el?: HTMLElement) => void;
+    'icon'?: string;
+    'label'?: string;
+    'name'?: string;
+    'tagline'?: string;
+  }
+
+  interface ServiceGrid {}
+  interface ServiceGridAttributes extends StencilHTMLAttributes {}
+
   interface SortedCategories {
     'observeCategory': (el?: HTMLElement) => void;
   }
   interface SortedCategoriesAttributes extends StencilHTMLAttributes {
     'observeCategory'?: (el?: HTMLElement) => void;
   }
-
-  interface ServiceGrid {}
-  interface ServiceGridAttributes extends StencilHTMLAttributes {}
 }
 
 declare global {
@@ -312,8 +327,9 @@ declare global {
     'ProductDetails': Components.ProductDetails;
     'ProductPage': Components.ProductPage;
     'ServiceCard': Components.ServiceCard;
-    'SortedCategories': Components.SortedCategories;
+    'ServiceCategory': Components.ServiceCategory;
     'ServiceGrid': Components.ServiceGrid;
+    'SortedCategories': Components.SortedCategories;
   }
 
   interface StencilIntrinsicElements {
@@ -338,8 +354,9 @@ declare global {
     'product-details': Components.ProductDetailsAttributes;
     'product-page': Components.ProductPageAttributes;
     'service-card': Components.ServiceCardAttributes;
-    'sorted-categories': Components.SortedCategoriesAttributes;
+    'service-category': Components.ServiceCategoryAttributes;
     'service-grid': Components.ServiceGridAttributes;
+    'sorted-categories': Components.SortedCategoriesAttributes;
   }
 
 
@@ -469,16 +486,22 @@ declare global {
     new (): HTMLServiceCardElement;
   };
 
-  interface HTMLSortedCategoriesElement extends Components.SortedCategories, HTMLStencilElement {}
-  var HTMLSortedCategoriesElement: {
-    prototype: HTMLSortedCategoriesElement;
-    new (): HTMLSortedCategoriesElement;
+  interface HTMLServiceCategoryElement extends Components.ServiceCategory, HTMLStencilElement {}
+  var HTMLServiceCategoryElement: {
+    prototype: HTMLServiceCategoryElement;
+    new (): HTMLServiceCategoryElement;
   };
 
   interface HTMLServiceGridElement extends Components.ServiceGrid, HTMLStencilElement {}
   var HTMLServiceGridElement: {
     prototype: HTMLServiceGridElement;
     new (): HTMLServiceGridElement;
+  };
+
+  interface HTMLSortedCategoriesElement extends Components.SortedCategories, HTMLStencilElement {}
+  var HTMLSortedCategoriesElement: {
+    prototype: HTMLSortedCategoriesElement;
+    new (): HTMLSortedCategoriesElement;
   };
 
   interface HTMLElementTagNameMap {
@@ -503,8 +526,9 @@ declare global {
     'product-details': HTMLProductDetailsElement
     'product-page': HTMLProductPageElement
     'service-card': HTMLServiceCardElement
-    'sorted-categories': HTMLSortedCategoriesElement
+    'service-category': HTMLServiceCategoryElement
     'service-grid': HTMLServiceGridElement
+    'sorted-categories': HTMLSortedCategoriesElement
   }
 
   interface ElementTagNameMap {
@@ -529,8 +553,9 @@ declare global {
     'product-details': HTMLProductDetailsElement;
     'product-page': HTMLProductPageElement;
     'service-card': HTMLServiceCardElement;
-    'sorted-categories': HTMLSortedCategoriesElement;
+    'service-category': HTMLServiceCategoryElement;
     'service-grid': HTMLServiceGridElement;
+    'sorted-categories': HTMLSortedCategoriesElement;
   }
 
 
