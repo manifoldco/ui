@@ -3,18 +3,19 @@ import { Service } from 'types/Service';
 import { Collection } from 'types/Collection';
 
 import Tunnel from '../../data/connection';
+import { Env, Connection, connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
-  @Prop() url: string = 'https://api.catalog.manifold.co/v1/';
+  @Prop() connection: Connection = connections[Env.Prod];
   @Prop() collections: Collection[] = [];
   @State() services: Service[] = [];
 
   componentWillLoad() {
-    return fetch(`${this.url.replace(/\/$/, '')}/products`)
+    return fetch(`${this.connection.catalog}/products`)
       .then(response => response.json())
       .then(data => {
         this.services = data;
@@ -35,4 +36,4 @@ export class ManifoldMarketplace {
   }
 }
 
-Tunnel.injectProps(ManifoldMarketplace, ['url']);
+Tunnel.injectProps(ManifoldMarketplace, ['connection']);

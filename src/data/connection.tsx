@@ -1,12 +1,14 @@
 import { createProviderConsumer } from '@stencil/state-tunnel';
 
+import { Env, Connection, connections } from '../utils/connections';
+
 export interface State {
-  url: string;
+  connection: Connection;
 }
 
 export default createProviderConsumer<State>(
   {
-    url: 'https://api.catalog.manifold.co/v1/',
+    connection: connections[Env.Prod],
   },
   (subscribe, child) => <context-consumer subscribe={subscribe} renderer={child} />
 );

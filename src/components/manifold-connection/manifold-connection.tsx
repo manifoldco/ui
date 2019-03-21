@@ -1,14 +1,15 @@
 import { Component, Prop } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
+import { Env, connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-connection' })
 export class ManiTunnel {
-  @Prop() url: string = 'https://api.catalog.manifold.co/v1/';
+  @Prop() env: Env = Env.Prod;
 
   render() {
     return (
-      <Tunnel.Provider state={{ url: this.url }}>
+      <Tunnel.Provider state={{ connection: connections[this.env] }}>
         <slot />
       </Tunnel.Provider>
     );

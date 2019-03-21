@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default                                 |
-| -------- | --------- | ----------- | -------- | --------------------------------------- |
-| `url`    | `url`     |             | `string` | `'https://api.catalog.manifold.co/v1/'` |
+| Property | Attribute | Description | Type                    | Default    |
+| -------- | --------- | ----------- | ----------------------- | ---------- |
+| `env`    | `env`     |             | `Env.Prod \| Env.Stage` | `Env.Prod` |
 
 
 ----------------------------------------------
