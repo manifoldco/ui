@@ -11,15 +11,15 @@ export class MfToggle {
   @Prop() disabled?: boolean;
   @Prop() label?: string;
   @Prop() name: string = '';
-  @Event() onInputChange: EventEmitter;
+  @Event() updateValue: EventEmitter;
   @Watch('defaultValue') watchHandler(newVal: boolean) {
-    this.onInputChange.emit({ name: this.name, value: newVal });
+    this.updateValue.emit({ name: this.name, value: newVal });
   }
 
   onChangeHandler = (e: Event) => {
     if (!e.target) return;
     const { checked } = e.target as HTMLInputElement;
-    this.onInputChange.emit({
+    this.updateValue.emit({
       name: this.name,
       value: checked === true,
     });

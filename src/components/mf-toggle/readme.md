@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event           | Description | Type                |
-| --------------- | ----------- | ------------------- |
-| `onInputChange` |             | `CustomEvent<void>` |
+| Event         | Description | Type                |
+| ------------- | ----------- | ------------------- |
+| `updateValue` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

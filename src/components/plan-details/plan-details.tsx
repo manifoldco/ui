@@ -1,4 +1,4 @@
-import { Component, Prop, State, Listen } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 import { $ } from '../../utils/currency';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
@@ -22,17 +22,6 @@ export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeature;
-  @Listen('onInputChange') handleFeatureChange({ detail }: CustomEvent) {
-    const { name, value } = detail;
-    if (Object.keys(this.features).includes(name)) {
-      // Return new object to update rendering
-      this.features = {
-        ...this.features,
-        [name]: value,
-      };
-      console.log(this.features);
-    }
-  }
 
   componentWillLoad() {
     this.features = this.initialFeatures();
@@ -94,6 +83,15 @@ export class PlanDetails {
     }
   }
 
+  setFeature(key: string, value: string | number | boolean) {
+    this.features = {
+      ...this.features,
+      [key]: value,
+    };
+    // TODO: replace this with pricing calculation call
+    console.log(this.features);
+  }
+
   initialFeatures(): UserFeature {
     if (!this.plan.body.expanded_features) return {};
 
@@ -141,6 +139,9 @@ export class PlanDetails {
           <mf-select
             name={feature.label}
             options={options}
+            onUpdateValue={({ detail: { name, value } }: CustomEvent) =>
+              this.setFeature(name, value)
+            }
             defaultValue={this.getStringDefaultValue(feature.value)}
           />
         );
@@ -154,6 +155,9 @@ export class PlanDetails {
             max={max}
             min={min}
             name={feature.label}
+            onUpdateValue={({ detail: { name, value } }: CustomEvent) =>
+              this.setFeature(name, value)
+            }
             suffix={suffix}
             increment={increment}
           />
@@ -165,6 +169,9 @@ export class PlanDetails {
             aria-labelledby={`-name`}
             defaultValue={this.getBooleanDefaultValue(feature.value)}
             name={feature.label}
+            onUpdateValue={({ detail: { name, value } }: CustomEvent) =>
+              this.setFeature(name, value)
+            }
           />
         );
       }

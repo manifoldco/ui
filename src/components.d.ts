@@ -189,7 +189,7 @@ export namespace Components {
   interface MfSelectAttributes extends StencilHTMLAttributes {
     'defaultValue'?: string;
     'name'?: string;
-    'onOnInputChange'?: (event: CustomEvent) => void;
+    'onUpdateValue'?: (event: CustomEvent) => void;
     'options'?: Option[];
     'required'?: boolean;
   }
@@ -210,7 +210,7 @@ export namespace Components {
     'max'?: number;
     'min'?: number;
     'name'?: string;
-    'onOnInputChange'?: (event: CustomEvent) => void;
+    'onUpdateValue'?: (event: CustomEvent) => void;
     'suffix'?: string;
   }
 
@@ -227,7 +227,7 @@ export namespace Components {
     'disabled'?: boolean;
     'label'?: string;
     'name'?: string;
-    'onOnInputChange'?: (event: CustomEvent) => void;
+    'onUpdateValue'?: (event: CustomEvent) => void;
   }
 
   interface PlanDetails {

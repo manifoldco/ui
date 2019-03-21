@@ -11,15 +11,15 @@ export class MfSelect {
   @Prop() name: string;
   @Prop() options: Option[] = [];
   @Prop() required?: boolean;
-  @Event() onInputChange: EventEmitter;
+  @Event() updateValue: EventEmitter;
   @Watch('defaultValue') watchHandler(newVal: string) {
-    this.onInputChange.emit({ name: this.name, value: newVal });
+    this.updateValue.emit({ name: this.name, value: newVal });
   }
 
   onChangeHandler = (e: Event) => {
     if (!e.target) return;
     const { value } = e.target as HTMLSelectElement;
-    this.onInputChange.emit({ name: this.name, value });
+    this.updateValue.emit({ name: this.name, value });
   };
 
   render() {

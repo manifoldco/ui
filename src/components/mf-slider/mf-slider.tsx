@@ -14,15 +14,15 @@ export class MfSlider {
   @Prop() min: number = 0;
   @Prop() name: string = '';
   @Prop() suffix: string = '';
-  @Event() onInputChange: EventEmitter;
+  @Event() updateValue: EventEmitter;
   @Watch('defaultValue') watchHandler(newVal: number) {
-    this.onInputChange.emit({ name: this.name, value: newVal });
+    this.updateValue.emit({ name: this.name, value: newVal });
   }
 
   onChangeHandler = (e: Event) => {
     if (!e.target) return;
     const { value } = e.target as HTMLInputElement;
-    this.onInputChange.emit({
+    this.updateValue.emit({
       name: this.name,
       value: parseInt(value, 10),
     });
