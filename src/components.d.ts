@@ -15,6 +15,9 @@ import {
   Service,
 } from 'types/Service';
 import {
+  FieldType,
+} from './types/Input';
+import {
   Option,
   Value,
 } from 'types/Select';
@@ -164,6 +167,29 @@ export namespace Components {
     'marginLeft'?: boolean;
     'marginRight'?: boolean;
     'title'?: string;
+  }
+
+  interface MfInput {
+    'max'?: number;
+    'min'?: number;
+    'name': string;
+    'onChange': (e: UIEvent) => void;
+    'placeholder': string;
+    'required'?: boolean;
+    'step'?: number;
+    'type': FieldType;
+    'value'?: string | number;
+  }
+  interface MfInputAttributes extends StencilHTMLAttributes {
+    'max'?: number;
+    'min'?: number;
+    'name'?: string;
+    'onChange'?: (e: UIEvent) => void;
+    'placeholder'?: string;
+    'required'?: boolean;
+    'step'?: number;
+    'type'?: FieldType;
+    'value'?: string | number;
   }
 
   interface MfSelect {
@@ -318,6 +344,7 @@ declare global {
     'MarketplaceResults': Components.MarketplaceResults;
     'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
+    'MfInput': Components.MfInput;
     'MfSelect': Components.MfSelect;
     'MfSlider': Components.MfSlider;
     'MfToggle': Components.MfToggle;
@@ -345,6 +372,7 @@ declare global {
     'marketplace-results': Components.MarketplaceResultsAttributes;
     'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
+    'mf-input': Components.MfInputAttributes;
     'mf-select': Components.MfSelectAttributes;
     'mf-slider': Components.MfSliderAttributes;
     'mf-toggle': Components.MfToggleAttributes;
@@ -432,6 +460,12 @@ declare global {
     new (): HTMLMfIconElement;
   };
 
+  interface HTMLMfInputElement extends Components.MfInput, HTMLStencilElement {}
+  var HTMLMfInputElement: {
+    prototype: HTMLMfInputElement;
+    new (): HTMLMfInputElement;
+  };
+
   interface HTMLMfSelectElement extends Components.MfSelect, HTMLStencilElement {}
   var HTMLMfSelectElement: {
     prototype: HTMLMfSelectElement;
@@ -517,6 +551,7 @@ declare global {
     'marketplace-results': HTMLMarketplaceResultsElement
     'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
+    'mf-input': HTMLMfInputElement
     'mf-select': HTMLMfSelectElement
     'mf-slider': HTMLMfSliderElement
     'mf-toggle': HTMLMfToggleElement
@@ -544,6 +579,7 @@ declare global {
     'marketplace-results': HTMLMarketplaceResultsElement;
     'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
+    'mf-input': HTMLMfInputElement;
     'mf-select': HTMLMfSelectElement;
     'mf-slider': HTMLMfSliderElement;
     'mf-toggle': HTMLMfToggleElement;
