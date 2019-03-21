@@ -68,6 +68,24 @@ export namespace Components {
     'services'?: Service[];
   }
 
+  interface ManifoldConnection {
+    'url': string;
+  }
+  interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
+    'url'?: string;
+  }
+
+  interface ManifoldMarketplaceConnection {
+    'collections': Collection[];
+    'featured'?: string;
+    'serviceLink'?: string;
+  }
+  interface ManifoldMarketplaceConnectionAttributes extends StencilHTMLAttributes {
+    'collections'?: Collection[];
+    'featured'?: string;
+    'serviceLink'?: string;
+  }
+
   interface ManifoldMarketplace {
     'collections': Collection[];
     'featured'?: string;
@@ -88,11 +106,20 @@ export namespace Components {
     'productId'?: string;
   }
 
+  interface ManifoldProductConnection {
+    'productLabel': string;
+  }
+  interface ManifoldProductConnectionAttributes extends StencilHTMLAttributes {
+    'productLabel'?: string;
+  }
+
   interface ManifoldProduct {
     'productLabel': string;
+    'url': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
     'productLabel'?: string;
+    'url'?: string;
   }
 
   interface MarketplaceCollection {
@@ -325,8 +352,11 @@ declare global {
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
     'ManiTunnel': Components.ManiTunnel;
+    'ManifoldConnection': Components.ManifoldConnection;
+    'ManifoldMarketplaceConnection': Components.ManifoldMarketplaceConnection;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
+    'ManifoldProductConnection': Components.ManifoldProductConnection;
     'ManifoldProduct': Components.ManifoldProduct;
     'MarketplaceCollection': Components.MarketplaceCollection;
     'MarketplaceResults': Components.MarketplaceResults;
@@ -352,8 +382,11 @@ declare global {
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
     'mani-tunnel': Components.ManiTunnelAttributes;
+    'manifold-connection': Components.ManifoldConnectionAttributes;
+    'manifold-marketplace-connection': Components.ManifoldMarketplaceConnectionAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
+    'manifold-product-connection': Components.ManifoldProductConnectionAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
     'marketplace-collection': Components.MarketplaceCollectionAttributes;
     'marketplace-results': Components.MarketplaceResultsAttributes;
@@ -399,6 +432,18 @@ declare global {
     new (): HTMLManiTunnelElement;
   };
 
+  interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
+  var HTMLManifoldConnectionElement: {
+    prototype: HTMLManifoldConnectionElement;
+    new (): HTMLManifoldConnectionElement;
+  };
+
+  interface HTMLManifoldMarketplaceConnectionElement extends Components.ManifoldMarketplaceConnection, HTMLStencilElement {}
+  var HTMLManifoldMarketplaceConnectionElement: {
+    prototype: HTMLManifoldMarketplaceConnectionElement;
+    new (): HTMLManifoldMarketplaceConnectionElement;
+  };
+
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
@@ -409,6 +454,12 @@ declare global {
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
+  };
+
+  interface HTMLManifoldProductConnectionElement extends Components.ManifoldProductConnection, HTMLStencilElement {}
+  var HTMLManifoldProductConnectionElement: {
+    prototype: HTMLManifoldProductConnectionElement;
+    new (): HTMLManifoldProductConnectionElement;
   };
 
   interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
@@ -524,8 +575,11 @@ declare global {
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
     'mani-tunnel': HTMLManiTunnelElement
+    'manifold-connection': HTMLManifoldConnectionElement
+    'manifold-marketplace-connection': HTMLManifoldMarketplaceConnectionElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
+    'manifold-product-connection': HTMLManifoldProductConnectionElement
     'manifold-product': HTMLManifoldProductElement
     'marketplace-collection': HTMLMarketplaceCollectionElement
     'marketplace-results': HTMLMarketplaceResultsElement
@@ -551,8 +605,11 @@ declare global {
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
     'mani-tunnel': HTMLManiTunnelElement;
+    'manifold-connection': HTMLManifoldConnectionElement;
+    'manifold-marketplace-connection': HTMLManifoldMarketplaceConnectionElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
+    'manifold-product-connection': HTMLManifoldProductConnectionElement;
     'manifold-product': HTMLManifoldProductElement;
     'marketplace-collection': HTMLMarketplaceCollectionElement;
     'marketplace-results': HTMLMarketplaceResultsElement;

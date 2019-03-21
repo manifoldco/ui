@@ -1,14 +1,6 @@
-# Product
+# manifold-product-connection
 
-Display the details for an individual product.
 
-```html
-<manifold-product product-label="jawsdbmysql"></manifold-product>
-```
-
-## Product Label
-
-You can find the `:service` label for each at `https://manifold.co/services/:service`.
 
 <!-- Auto Generated Below -->
 
@@ -18,7 +10,6 @@ You can find the `:service` label for each at `https://manifold.co/services/:ser
 | Property       | Attribute       | Description | Type     | Default     |
 | -------------- | --------------- | ----------- | -------- | ----------- |
 | `productLabel` | `product-label` |             | `string` | `undefined` |
-| `url`          | `url`           |             | `string` | `undefined` |
 
 
 ----------------------------------------------
