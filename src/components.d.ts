@@ -232,11 +232,11 @@ export namespace Components {
 
   interface PlanDetails {
     'plan': Catalog.ExpandedPlan;
-    'product': Catalog.ExpandedProduct;
+    'product': Catalog.Product;
   }
   interface PlanDetailsAttributes extends StencilHTMLAttributes {
     'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
   }
 
   interface PlanMenu {

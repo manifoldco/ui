@@ -7,10 +7,10 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type              | Default     |
-| --------- | --------- | ----------- | ----------------- | ----------- |
-| `plan`    | --        |             | `ExpandedPlan`    | `undefined` |
-| `product` | --        |             | `ExpandedProduct` | `undefined` |
+| Property  | Attribute | Description | Type           | Default     |
+| --------- | --------- | ----------- | -------------- | ----------- |
+| `plan`    | --        |             | `ExpandedPlan` | `undefined` |
+| `product` | --        |             | `Product`      | `undefined` |
 
 
 ----------------------------------------------

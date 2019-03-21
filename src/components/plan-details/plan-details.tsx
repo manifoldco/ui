@@ -20,7 +20,7 @@ interface UserFeature {
 })
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
-  @Prop() product: Catalog.ExpandedProduct;
+  @Prop() product: Catalog.Product;
   @State() features: UserFeature;
   @Listen('onInputChange') handleFeatureChange({ detail }: CustomEvent) {
     const { name, value } = detail;
@@ -94,7 +94,7 @@ export class PlanDetails {
     }
   }
 
-  private initialFeatures(): UserFeature {
+  initialFeatures(): UserFeature {
     if (!this.plan.body.expanded_features) return {};
 
     return this.plan.body.expanded_features.reduce((obj, feature) => {
