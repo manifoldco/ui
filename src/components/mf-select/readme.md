@@ -7,13 +7,19 @@
 
 ## Properties
 
-| Property        | Attribute        | Description | Type                            | Default     |
-| --------------- | ---------------- | ----------- | ------------------------------- | ----------- |
-| `name`          | `name`           |             | `string`                        | `undefined` |
-| `onChange`      | --               |             | `(e: UIEvent) => void`          | `undefined` |
-| `options`       | --               |             | `Option[]`                      | `[]`        |
-| `required`      | `required`       |             | `boolean \| undefined`          | `undefined` |
-| `selectedValue` | `selected-value` |             | `number \| string \| undefined` | `undefined` |
+| Property       | Attribute       | Description | Type                   | Default     |
+| -------------- | --------------- | ----------- | ---------------------- | ----------- |
+| `defaultValue` | `default-value` |             | `string \| undefined`  | `undefined` |
+| `name`         | `name`          |             | `string`               | `undefined` |
+| `options`      | --              |             | `Option[]`             | `[]`        |
+| `required`     | `required`      |             | `boolean \| undefined` | `undefined` |
+
+
+## Events
+
+| Event         | Description | Type                |
+| ------------- | ----------- | ------------------- |
+| `updateValue` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

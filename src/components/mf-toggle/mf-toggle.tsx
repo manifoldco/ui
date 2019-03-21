@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
   tag: 'mf-toggle',
@@ -6,19 +6,35 @@ import { Component, Prop } from '@stencil/core';
   scoped: true,
 })
 export class MfToggle {
+  @Prop() ariaLabelledby?: string;
+  @Prop() defaultValue?: boolean;
+  @Prop() disabled?: boolean;
   @Prop() label?: string;
   @Prop() name: string = '';
-  @Prop() disabled?: boolean;
-  @Prop() ariaLabelledby?: string;
+  @Event() updateValue: EventEmitter;
+  @Watch('defaultValue') watchHandler(newVal: boolean) {
+    this.updateValue.emit({ name: this.name, value: newVal });
+  }
+
+  onChangeHandler = (e: Event) => {
+    if (!e.target) return;
+    const { checked } = e.target as HTMLInputElement;
+    this.updateValue.emit({
+      name: this.name,
+      value: checked === true,
+    });
+  };
 
   render() {
     return (
       <label class="wrapper">
         <input
-          name={this.name}
           aria-labelledby={this.ariaLabelledby}
-          type="checkbox"
           disabled={this.disabled}
+          name={this.name}
+          onChange={this.onChangeHandler}
+          checked={this.defaultValue}
+          type="checkbox"
         />
         <div class="toggle" />
         {this.label && <div class="label">{this.label}</div>}

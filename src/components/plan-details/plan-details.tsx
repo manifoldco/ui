@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, State } from '@stencil/core';
 import { $ } from '../../utils/currency';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
@@ -9,6 +9,10 @@ const YES = 'Yes';
 const featureCost = (number: number) => $(number / NUMBER_FEATURE_COIN);
 const singularize = (word: string) => word.replace(/s$/i, '');
 
+interface UserFeature {
+  [key: string]: string | number | boolean;
+}
+
 @Component({
   tag: 'plan-details',
   styleUrl: 'plan-details.css',
@@ -16,7 +20,12 @@ const singularize = (word: string) => word.replace(/s$/i, '');
 })
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
-  @Prop() product: Catalog.ExpandedProduct;
+  @Prop() product: Catalog.Product;
+  @State() features: UserFeature;
+
+  componentWillLoad() {
+    this.features = this.initialFeatures();
+  }
 
   // TODO clean this up
   featureValue({
@@ -24,7 +33,7 @@ export class PlanDetails {
     type,
     value,
     value_string,
-  }: Catalog.ExpandedFeature): string | undefined {
+  }: Catalog.ExpandedFeature): string | number | undefined {
     if (!value) return undefined;
 
     if (measurable && value.numeric_details && value.numeric_details.cost_ranges) {
@@ -58,7 +67,6 @@ export class PlanDetails {
 
       const highEnd = featureCost(sortedCosts[sortedCosts.length - 1].cost_multiple || 0);
 
-      // eslint-disable-next-line no-irregular-whitespace
       return `${lowEnd} - ${highEnd} / ${singularize(suffix)}${freeText}`;
     }
 
@@ -75,12 +83,96 @@ export class PlanDetails {
     }
   }
 
-  selectedValue(feature: Catalog.ExpandedFeature): string {
-    return feature.value_string || '';
+  handleChangeValue({ detail: { name, value } }: CustomEvent) {
+    this.features = {
+      ...this.features,
+      [name]: value,
+    };
+    // TODO: replace this with pricing calculation call
+    console.log(this.features);
+  }
+
+  initialFeatures(): UserFeature {
+    if (!this.plan.body.expanded_features) return {};
+
+    return this.plan.body.expanded_features.reduce((obj, feature) => {
+      // If not customizable, don’t worry about it
+      if (!feature.customizable || !feature.value) return obj;
+
+      if (feature.type === 'boolean')
+        return { ...obj, [feature.label]: this.getBooleanDefaultValue(feature.value) };
+      if (feature.type === 'number')
+        return { ...obj, [feature.label]: this.getNumberDefaultValue(feature.value) };
+      if (feature.type === 'string')
+        return { ...obj, [feature.label]: this.getStringDefaultValue(feature.value) };
+
+      return obj;
+    }, {});
+  }
+
+  // TODO: extract these into utils/ to be tested
+  getBooleanDefaultValue(value: Catalog.FeatureValueDetails): boolean {
+    return value.label === 'true';
+  }
+  getStringDefaultValue(value: Catalog.FeatureValueDetails): string {
+    return value.label;
+  }
+  getNumberDefaultValue(value: Catalog.FeatureValueDetails): number {
+    if (value.numeric_details && typeof value.numeric_details.min === 'number') {
+      return value.numeric_details.min;
+    }
+    return 0;
   }
 
   customFeatureValue(feature: Catalog.ExpandedFeature) {
-    return <custom-plan-feature feature={feature} selectedValue={this.selectedValue(feature)} />;
+    if (!feature.value) return null;
+
+    switch (feature.type) {
+      case 'string': {
+        const options = Array.isArray(feature.values)
+          ? feature.values.map(({ cost, label, name: optionName }) => ({
+              label: `${optionName} (${cost ? $(cost) : 'Included'})`,
+              value: label,
+            }))
+          : [];
+        return (
+          <mf-select
+            name={feature.label}
+            options={options}
+            onUpdateValue={e => this.handleChangeValue(e)}
+            defaultValue={this.getStringDefaultValue(feature.value)}
+          />
+        );
+      }
+      case 'number': {
+        const details = (feature.value && feature.value.numeric_details) || {};
+        const { min, max, increment, suffix } = details;
+        return (
+          <mf-slider
+            defaultValue={this.getNumberDefaultValue(feature.value)}
+            max={max}
+            min={min}
+            name={feature.label}
+            onUpdateValue={e => this.handleChangeValue(e)}
+            suffix={suffix}
+            increment={increment}
+          />
+        );
+      }
+      case 'boolean': {
+        return (
+          <mf-toggle
+            aria-labelledby={`-name`}
+            defaultValue={this.getBooleanDefaultValue(feature.value)}
+            name={feature.label}
+            onUpdateValue={e => this.handleChangeValue(e)}
+          />
+        );
+      }
+      default: {
+        return null;
+      }
+    }
   }
 
   render() {
@@ -134,7 +226,7 @@ export class PlanDetails {
         </div>
         <footer class="footer">
           <div class="cost" itemprop="price">
-            {$(cost)} <small>&nbsp;/ mo</small>
+            {$(cost)}&nbsp;<small>/ mo</small>
           </div>
           <link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}

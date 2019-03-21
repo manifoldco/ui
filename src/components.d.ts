@@ -19,22 +19,10 @@ import {
 } from './types/Input';
 import {
   Option,
-  Value,
 } from 'types/Select';
 
 
 export namespace Components {
-
-  interface CustomPlanFeature {
-    'feature': Catalog.ExpandedFeature;
-    'planLabel': string;
-    'selectedValue': string;
-  }
-  interface CustomPlanFeatureAttributes extends StencilHTMLAttributes {
-    'feature'?: Catalog.ExpandedFeature;
-    'planLabel'?: string;
-    'selectedValue'?: string;
-  }
 
   interface FeaturedService {
     'logo': string;
@@ -193,61 +181,62 @@ export namespace Components {
   }
 
   interface MfSelect {
+    'defaultValue'?: string;
     'name': string;
-    'onChange': (e: UIEvent) => void;
     'options': Option[];
     'required'?: boolean;
-    'selectedValue'?: Value;
   }
   interface MfSelectAttributes extends StencilHTMLAttributes {
+    'defaultValue'?: string;
     'name'?: string;
-    'onChange'?: (e: UIEvent) => void;
+    'onUpdateValue'?: (event: CustomEvent) => void;
     'options'?: Option[];
     'required'?: boolean;
-    'selectedValue'?: Value;
   }
 
   interface MfSlider {
+    'defaultValue'?: number;
     'error'?: string;
     'increment': number;
     'max': number;
     'min': number;
     'name': string;
-    'onChange': (e: Event) => void;
-    'selectedValue': number;
     'suffix': string;
   }
   interface MfSliderAttributes extends StencilHTMLAttributes {
+    'defaultValue'?: number;
     'error'?: string;
     'increment'?: number;
     'max'?: number;
     'min'?: number;
     'name'?: string;
-    'onChange'?: (e: Event) => void;
-    'selectedValue'?: number;
+    'onUpdateValue'?: (event: CustomEvent) => void;
     'suffix'?: string;
   }
 
   interface MfToggle {
     'ariaLabelledby'?: string;
+    'defaultValue'?: boolean;
     'disabled'?: boolean;
     'label'?: string;
     'name': string;
   }
   interface MfToggleAttributes extends StencilHTMLAttributes {
     'ariaLabelledby'?: string;
+    'defaultValue'?: boolean;
     'disabled'?: boolean;
     'label'?: string;
     'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent) => void;
   }
 
   interface PlanDetails {
     'plan': Catalog.ExpandedPlan;
-    'product': Catalog.ExpandedProduct;
+    'product': Catalog.Product;
   }
   interface PlanDetailsAttributes extends StencilHTMLAttributes {
     'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
   }
 
   interface PlanMenu {
@@ -332,7 +321,6 @@ export namespace Components {
 
 declare global {
   interface StencilElementInterfaces {
-    'CustomPlanFeature': Components.CustomPlanFeature;
     'FeaturedService': Components.FeaturedService;
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
@@ -360,7 +348,6 @@ declare global {
   }
 
   interface StencilIntrinsicElements {
-    'custom-plan-feature': Components.CustomPlanFeatureAttributes;
     'featured-service': Components.FeaturedServiceAttributes;
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
@@ -387,12 +374,6 @@ declare global {
     'sorted-categories': Components.SortedCategoriesAttributes;
   }
 
-
-  interface HTMLCustomPlanFeatureElement extends Components.CustomPlanFeature, HTMLStencilElement {}
-  var HTMLCustomPlanFeatureElement: {
-    prototype: HTMLCustomPlanFeatureElement;
-    new (): HTMLCustomPlanFeatureElement;
-  };
 
   interface HTMLFeaturedServiceElement extends Components.FeaturedService, HTMLStencilElement {}
   var HTMLFeaturedServiceElement: {
@@ -539,7 +520,6 @@ declare global {
   };
 
   interface HTMLElementTagNameMap {
-    'custom-plan-feature': HTMLCustomPlanFeatureElement
     'featured-service': HTMLFeaturedServiceElement
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
@@ -567,7 +547,6 @@ declare global {
   }
 
   interface ElementTagNameMap {
-    'custom-plan-feature': HTMLCustomPlanFeatureElement;
     'featured-service': HTMLFeaturedServiceElement;
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;

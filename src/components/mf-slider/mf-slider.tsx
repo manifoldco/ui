@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { FieldType } from '../../types/Input';
 
 @Component({
@@ -7,21 +7,33 @@ import { FieldType } from '../../types/Input';
   scoped: true,
 })
 export class MfSlider {
-  @Prop() min: number = 0;
-  @Prop() max: number;
-  @Prop() increment: number = 1;
-  @Prop() name: string = '';
-  @Prop() selectedValue: number;
-  @Prop() suffix: string = '';
-  @Prop() onChange: (e: Event) => void;
+  @Prop() defaultValue?: number;
   @Prop() error?: string;
+  @Prop() increment: number = 1;
+  @Prop() max: number;
+  @Prop() min: number = 0;
+  @Prop() name: string = '';
+  @Prop() suffix: string = '';
+  @Event() updateValue: EventEmitter;
+  @Watch('defaultValue') watchHandler(newVal: number) {
+    this.updateValue.emit({ name: this.name, value: newVal });
+  }
+
+  onChangeHandler = (e: Event) => {
+    if (!e.target) return;
+    const { value } = e.target as HTMLInputElement;
+    this.updateValue.emit({
+      name: this.name,
+      value: parseInt(value, 10),
+    });
+  };
 
   get positionCount() {
     return (this.max - this.min) / this.increment;
   }
 
   render() {
-    const value = this.selectedValue || this.min;
+    const value = this.defaultValue || this.min;
     return (
       <div class="container">
         {this.positionCount < 500 ? (
@@ -32,8 +44,6 @@ export class MfSlider {
               min={this.min}
               step={this.increment}
               value={value}
-              onInput={e => this.onChange(e)}
-              onChange={e => this.onChange(e)}
               style={{
                 '--slider-position': `${value / (this.max - this.min)}%`,
               }}
@@ -53,10 +63,10 @@ export class MfSlider {
             type={FieldType.Number}
             max={this.max}
             min={this.min}
-            value={value}
-            onChange={e => this.onChange(e)}
+            onChange={this.onChangeHandler}
             required
             step={this.increment}
+            value={value}
           />
           <div class="display-units">{this.suffix}</div>
         </div>

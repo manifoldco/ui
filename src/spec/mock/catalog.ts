@@ -81,6 +81,159 @@ export const ExpandedPlan: Catalog.ExpandedPlan = {
   version: 1,
 };
 
+export const ExpandedPlanCustom: Catalog.ExpandedPlan = {
+  body: {
+    cost: 3300,
+    features: [
+      { feature: 'storage', value: 'storage' },
+      { feature: 'backups', value: 'backups' },
+      { feature: 'redundancy', value: 'false' },
+      { feature: 'instance_class', value: 'db.t2.micro' },
+      { feature: 'static-single-tenant', value: 'true' },
+    ],
+    label: 'custom',
+    name: 'Custom',
+    product_id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+    provider_id: '2346mdxcuca9ez2n93f72nb2fpjgu',
+    regions: ['235mhkk15ky7ha9qpu4gazrqjt2gr', '235m2c51y0625vvtk6ptf55bhpkty'],
+    resizable_to: ['235exy25wvzpxj52p87bh87gbnj4y'],
+    state: 'available',
+    customizable: true,
+    defaultCost: 3500,
+    expanded_features: [
+      {
+        label: 'static-single-tenant',
+        name: 'Single Tenant',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        customizable: true,
+        downgradable: true,
+        label: 'instance_class',
+        name: 'RAM',
+        type: 'string',
+        upgradable: true,
+        values: [
+          { label: 'db.t2.micro', name: '1 GB', price: {} },
+          { cost: 5400, label: 'db.t2.small', name: '2 GB', price: { cost: 5400 } },
+          { cost: 13400, label: 'db.m3.medium', name: '4 GB', price: { cost: 13400 } },
+          { cost: 31800, label: 'db.m4.large', name: '8 GB', price: { cost: 31800 } },
+          { cost: 54400, label: 'db.r4.large', name: '15 GB', price: { cost: 54400 } },
+          { cost: 89000, label: 'db.r4.xlarge', name: '31 GB', price: { cost: 89000 } },
+          { cost: 121000, label: 'db.r4.2xlarge', name: '61 GB', price: { cost: 121000 } },
+          { cost: 239000, label: 'db.r4.4xlarge', name: '122 GB', price: { cost: 239000 } },
+          { cost: 428000, label: 'db.r4.8xlarge', name: '244 GB', price: { cost: 428000 } },
+          { cost: 910000, label: 'db.r4.16xlarge', name: '488 GB', price: { cost: 910000 } },
+        ],
+        value: { label: 'db.t2.micro', name: '1 GB', price: {} },
+        value_string: '1 GB',
+      },
+      {
+        customizable: true,
+        label: 'storage',
+        name: 'Storage',
+        type: 'number',
+        upgradable: true,
+        values: [
+          {
+            label: 'storage',
+            name: 'Storage',
+            numeric_details: {
+              cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
+              increment: 1,
+              max: 16000,
+              min: 5,
+              suffix: 'GB',
+            },
+          },
+        ],
+        value: {
+          label: 'storage',
+          name: 'Storage',
+          numeric_details: {
+            cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
+            increment: 1,
+            max: 16000,
+            min: 5,
+            suffix: 'GB',
+          },
+        },
+        value_string: 'Storage',
+      },
+      {
+        customizable: true,
+        downgradable: true,
+        label: 'backups',
+        name: 'Backups',
+        type: 'number',
+        upgradable: true,
+        values: [
+          {
+            label: 'backups',
+            name: 'Backups',
+            numeric_details: {
+              cost_ranges: [{ limit: 35 }],
+              increment: 1,
+              max: 35,
+              min: 1,
+              suffix: 'Days',
+            },
+            price: {
+              description: 'Backups cost is directly related to storage size',
+              formula: '(* storage#cost backups#number)',
+            },
+          },
+        ],
+        value: {
+          label: 'backups',
+          name: 'Backups',
+          numeric_details: {
+            cost_ranges: [{ limit: 35 }],
+            increment: 1,
+            max: 35,
+            min: 1,
+            suffix: 'Days',
+          },
+          price: {
+            description: 'Backups cost is directly related to storage size',
+            formula: '(* storage#cost backups#number)',
+          },
+        },
+        value_string: 'Backups',
+      },
+      {
+        customizable: true,
+        downgradable: true,
+        label: 'redundancy',
+        name: 'High Availability',
+        type: 'boolean',
+        upgradable: true,
+        values: [
+          {
+            label: 'true',
+            name: 'Yes',
+            price: {
+              description: 'Creates a clone of the DB to rescue from potential outages',
+              formula: '(* plan#partial_cost redundancy#multiply_factor)',
+              multiply_factor: 0.8,
+            },
+          },
+          { label: 'false', name: 'No' },
+        ],
+        value: { label: 'false', name: 'No' },
+        value_string: 'No',
+      },
+    ],
+    free: false,
+  },
+  id: '235exy25wvzpxj52p87bh87gbnj4y',
+  type: 'plan',
+  version: 1,
+};
+
 export const Product: Catalog.Product = {
   body: {
     billing: { currency: 'usd', type: 'monthly-prorated' },
