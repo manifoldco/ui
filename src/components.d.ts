@@ -16,6 +16,7 @@ import {
 } from 'types/Service';
 import {
   Connection,
+  Env,
 } from './utils/connections';
 import {
   FieldType,
@@ -71,6 +72,13 @@ export namespace Components {
     'services'?: Service[];
   }
 
+  interface ManifoldConnection {
+    'env': Env;
+  }
+  interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
+    'env'?: Env;
+  }
+
   interface ManifoldMarketplace {
     'collections': Collection[];
     'connection': Connection;
@@ -91,6 +99,15 @@ export namespace Components {
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'productId'?: string;
+  }
+
+  interface ManifoldProduct {
+    'connection': Connection;
+    'productLabel': string;
+  }
+  interface ManifoldProductAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'productLabel'?: string;
   }
 
   interface MarketplaceCollection {
@@ -323,8 +340,10 @@ declare global {
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
     'ManiTunnel': Components.ManiTunnel;
+    'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
+    'ManifoldProduct': Components.ManifoldProduct;
     'MarketplaceCollection': Components.MarketplaceCollection;
     'MarketplaceResults': Components.MarketplaceResults;
     'MfBadge': Components.MfBadge;
@@ -349,8 +368,10 @@ declare global {
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
     'mani-tunnel': Components.ManiTunnelAttributes;
+    'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
+    'manifold-product': Components.ManifoldProductAttributes;
     'marketplace-collection': Components.MarketplaceCollectionAttributes;
     'marketplace-results': Components.MarketplaceResultsAttributes;
     'mf-badge': Components.MfBadgeAttributes;
@@ -395,6 +416,12 @@ declare global {
     new (): HTMLManiTunnelElement;
   };
 
+  interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
+  var HTMLManifoldConnectionElement: {
+    prototype: HTMLManifoldConnectionElement;
+    new (): HTMLManifoldConnectionElement;
+  };
+
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
@@ -405,6 +432,12 @@ declare global {
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
+  };
+
+  interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
+  var HTMLManifoldProductElement: {
+    prototype: HTMLManifoldProductElement;
+    new (): HTMLManifoldProductElement;
   };
 
   interface HTMLMarketplaceCollectionElement extends Components.MarketplaceCollection, HTMLStencilElement {}
@@ -514,8 +547,10 @@ declare global {
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
     'mani-tunnel': HTMLManiTunnelElement
+    'manifold-connection': HTMLManifoldConnectionElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
+    'manifold-product': HTMLManifoldProductElement
     'marketplace-collection': HTMLMarketplaceCollectionElement
     'marketplace-results': HTMLMarketplaceResultsElement
     'mf-badge': HTMLMfBadgeElement
@@ -540,8 +575,10 @@ declare global {
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
     'mani-tunnel': HTMLManiTunnelElement;
+    'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
+    'manifold-product': HTMLManifoldProductElement;
     'marketplace-collection': HTMLMarketplaceCollectionElement;
     'marketplace-results': HTMLMarketplaceResultsElement;
     'mf-badge': HTMLMfBadgeElement;
