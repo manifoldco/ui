@@ -245,7 +245,7 @@
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-marketplace-connection featured="till"></manifold-marketplace-connection>
+                <manifold-marketplace featured="till"></manifold-marketplace>
               </div>
             </div>
           </section>
@@ -296,7 +296,7 @@
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-product-connection product-label="till"></manifold-product-connection>
+                <manifold-product product-label="till"></manifold-product>
               </div>
             </div>
           </section>
@@ -355,7 +355,7 @@
       <script>
         hljs.initHighlightingOnLoad();
 
-        var marketplace = document.querySelector('manifold-marketplace-connection');
+        var marketplace = document.querySelector('manifold-marketplace');
         marketplace.collections = [
           {
             labels: [
@@ -389,7 +389,7 @@
           const modal = document.createElement('div');
           modal.className = 'modal';
           overlay.appendChild(modal);
-          const productPage = document.createElement('manifold-product-connection');
+          const productPage = document.createElement('manifold-product');
           productPage.productLabel = e.detail.label;
           modal.appendChild(productPage);
           document.body.appendChild(overlay);

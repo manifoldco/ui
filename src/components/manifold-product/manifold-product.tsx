@@ -1,7 +1,10 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Element } from '@stencil/core';
+
+import Tunnel from '../../data/connection';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
+  @Element() el: HTMLElement;
   @Prop() url: string;
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
@@ -15,6 +18,8 @@ export class ManifoldProduct {
   }
 
   render() {
-    return <product-page product={this.product} />;
+    return this.product && <product-page product={this.product} />;
   }
 }
+
+Tunnel.injectProps(ManifoldProduct, ['url']);
