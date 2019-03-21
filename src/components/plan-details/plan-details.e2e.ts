@@ -58,13 +58,14 @@ describe(`<plan-details>`, () => {
   it('renders mf-select if string feature present', async () => {
     const page = await newE2EPage({ html: `<plan-details />` });
 
+    const props = { plan: stringPlan, product: Product };
     await page.$eval(
       'plan-details',
       (elm: any, { plan, product }: any) => {
         elm.plan = plan;
         elm.product = product;
       },
-      { plan: stringPlan, product: Product }
+      props
     );
 
     await page.waitForChanges();
@@ -76,13 +77,14 @@ describe(`<plan-details>`, () => {
   it('renders mf-slider if number feature present', async () => {
     const page = await newE2EPage({ html: `<plan-details />` });
 
+    const props = { plan: numberPlan, product: Product };
     await page.$eval(
       'plan-details',
       (elm: any, { plan, product }: any) => {
         elm.plan = plan;
         elm.product = product;
       },
-      { plan: numberPlan, product: Product }
+      props
     );
 
     await page.waitForChanges();
@@ -94,13 +96,14 @@ describe(`<plan-details>`, () => {
   it('renders mf-toggle if boolean feature present', async () => {
     const page = await newE2EPage({ html: `<plan-details />` });
 
+    const props = { plan: booleanPlan, product: Product };
     await page.$eval(
       'plan-details',
       (elm: any, { plan, product }: any) => {
         elm.plan = plan;
         elm.product = product;
       },
-      { plan: booleanPlan, product: Product }
+      props
     );
 
     await page.waitForChanges();
