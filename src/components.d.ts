@@ -16,6 +16,9 @@ import {
   Env,
 } from './utils/connections';
 import {
+  UserFeatures,
+} from 'types/UserFeatures';
+import {
   FieldType,
 } from './types/Input';
 import {
@@ -96,6 +99,19 @@ export namespace Components {
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'productId'?: string;
+  }
+
+  interface ManifoldProductCost {
+    'connection': Connection;
+    'features': UserFeatures;
+    'planID': string;
+    'url': string;
+  }
+  interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'features'?: UserFeatures;
+    'planID'?: string;
+    'url'?: string;
   }
 
   interface ManifoldProduct {
@@ -340,6 +356,7 @@ declare global {
     'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
+    'ManifoldProductCost': Components.ManifoldProductCost;
     'ManifoldProduct': Components.ManifoldProduct;
     'MarketplaceCollection': Components.MarketplaceCollection;
     'MarketplaceResults': Components.MarketplaceResults;
@@ -368,6 +385,7 @@ declare global {
     'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
+    'manifold-product-cost': Components.ManifoldProductCostAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
     'marketplace-collection': Components.MarketplaceCollectionAttributes;
     'marketplace-results': Components.MarketplaceResultsAttributes;
@@ -429,6 +447,12 @@ declare global {
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
+  };
+
+  interface HTMLManifoldProductCostElement extends Components.ManifoldProductCost, HTMLStencilElement {}
+  var HTMLManifoldProductCostElement: {
+    prototype: HTMLManifoldProductCostElement;
+    new (): HTMLManifoldProductCostElement;
   };
 
   interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
@@ -547,6 +571,7 @@ declare global {
     'manifold-connection': HTMLManifoldConnectionElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
+    'manifold-product-cost': HTMLManifoldProductCostElement
     'manifold-product': HTMLManifoldProductElement
     'marketplace-collection': HTMLMarketplaceCollectionElement
     'marketplace-results': HTMLMarketplaceResultsElement
@@ -575,6 +600,7 @@ declare global {
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
+    'manifold-product-cost': HTMLManifoldProductCostElement;
     'manifold-product': HTMLManifoldProductElement;
     'marketplace-collection': HTMLMarketplaceCollectionElement;
     'marketplace-results': HTMLMarketplaceResultsElement;

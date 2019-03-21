@@ -1,4 +1,5 @@
 import { Component, Prop, State } from '@stencil/core';
+import { UserFeatures } from 'types/UserFeatures';
 import { $ } from '../../utils/currency';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
@@ -9,10 +10,6 @@ const YES = 'Yes';
 const featureCost = (number: number) => $(number / NUMBER_FEATURE_COIN);
 const singularize = (word: string) => word.replace(/s$/i, '');
 
-interface UserFeature {
-  [key: string]: string | number | boolean;
-}
-
 @Component({
   tag: 'plan-details',
   styleUrl: 'plan-details.css',
@@ -21,7 +18,7 @@ interface UserFeature {
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
-  @State() features: UserFeature;
+  @State() features: UserFeatures;
 
   componentWillLoad() {
     this.features = this.initialFeatures();
@@ -88,11 +85,9 @@ export class PlanDetails {
       ...this.features,
       [name]: value,
     };
-    // TODO: replace this with pricing calculation call
-    console.log(this.features);
   }
 
-  initialFeatures(): UserFeature {
+  initialFeatures(): UserFeatures {
     if (!this.plan.body.expanded_features) return {};
 
     return this.plan.body.expanded_features.reduce((obj, feature) => {
@@ -179,7 +174,7 @@ export class PlanDetails {
     if (!this.product || !this.plan) return null;
 
     const { name: productName, logo_url: productLogo, label: productLabel } = this.product.body;
-    const { name, expanded_features = [], cost } = this.plan.body;
+    const { name, expanded_features = [] } = this.plan.body;
 
     return (
       <section itemscope itemtype="https://schema.org/IndividualProduct">
@@ -225,9 +220,7 @@ export class PlanDetails {
           </dl>
         </div>
         <footer class="footer">
-          <div class="cost" itemprop="price">
-            {$(cost)}&nbsp;<small>/ mo</small>
-          </div>
+          <manifold-product-cost features={this.features} planID={this.plan.id} />
           <link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"
