@@ -29,7 +29,7 @@
     <link href="/build/manifold.css" rel="stylesheet" />
   </head>
   <body>
-    <manifold-connection>
+    <manifold-connection env="stage">
       <div class="docs-wrapper">
         <aside class="docs-sidebar">
           <nav class="docs-nav">
@@ -296,7 +296,7 @@
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-product product-label="till"></manifold-product>
+                <manifold-product product-label="ant-hill-stage"></manifold-product>
               </div>
             </div>
           </section>
@@ -358,20 +358,13 @@
         var marketplace = document.querySelector('manifold-marketplace');
         marketplace.collections = [
           {
-            labels: [
-              'cloudcube',
-              'bonsai-elasticsearch',
-              'oauth-io',
-              'websolr',
-              'mailgun',
-              'memcachier-cache',
-            ],
+            labels: ['picnic-basket-stage', 'sharkdb-stage', 'degraffdb-generators-stage'],
             name: 'Your Missing Piece',
             icon: 'pie_chart',
             tagLine: "Just the service you've been waiting for",
           },
           {
-            labels: ['informant', 'cloudcube', 'till', 'prefab'],
+            labels: ['ant-hill-stage', 'provider-dashboard'],
             name: 'New',
             icon: 'star',
             tagLine: 'Latest services to join the platform',

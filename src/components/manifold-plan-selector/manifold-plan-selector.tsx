@@ -1,4 +1,7 @@
-import { Component, State, Prop } from '@stencil/core';
+import { Component, State, Prop, Element } from '@stencil/core';
+
+import Tunnel from '../../data/connection';
+import { Env, Connection, connections } from '../../utils/connections';
 
 const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
   a.body.cost < b.body.cost ? -1 : 1;
@@ -8,17 +11,19 @@ const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
   shadow: true,
 })
 export class ManifoldPlanSelector {
+  @Element() el: HTMLElement;
+  @Prop() connection: Connection = connections[Env.Prod];
   @Prop() productId: string;
   @State() product: Catalog.ExpandedProduct;
   @State() plans: Catalog.Plan[];
 
   async componentWillLoad() {
-    await fetch(`https://api.catalog.stage.manifold.co/v1/products/${this.productId}`)
+    await fetch(`${this.connection.catalog}/products/${this.productId}`)
       .then(response => response.json())
       .then(data => {
         this.product = data;
       });
-    await fetch(`https://api.catalog.stage.manifold.co/v1/plans?product_id=${this.productId}`)
+    await fetch(`${this.connection.catalog}/plans?product_id=${this.productId}`)
       .then(response => response.json())
       .then(data => {
         this.plans = data.sort(byCost);
@@ -30,3 +35,5 @@ export class ManifoldPlanSelector {
     return <plan-selector product={this.product} plans={this.plans} />;
   }
 }
+
+Tunnel.injectProps(ManifoldPlanSelector, ['connection']);

@@ -85,9 +85,11 @@ export namespace Components {
   }
 
   interface ManifoldPlanSelector {
+    'connection': Connection;
     'productId': string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
     'productId'?: string;
   }
 
