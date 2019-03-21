@@ -11,6 +11,14 @@
   },
   "author": "manifoldco",
   "license": "ISC",
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "esnext": "dist/esm",
+  "module": "dist/esm",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build",
     "dev": "stencil build --dev --docs --watch --serve",

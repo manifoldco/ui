@@ -27,11 +27,12 @@ if (flag && flag[0].length > 1) {
 
 // 3. Generate package.json for npm
 const packageJSON = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8'));
+// These have to be overridden to work on npm, and Stencil complains about these values
 const newPackageJSON = {
   ...packageJSON,
   version,
   files: ['*'],
-  main: './manifold.js',
+  main: './index.js',
   esnext: './esm',
   module: './esm',
   types: './types/components.d.ts',
