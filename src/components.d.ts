@@ -12,9 +12,6 @@ import {
   Collection,
 } from 'types/Collection';
 import {
-  Service,
-} from 'types/Service';
-import {
   Connection,
   Env,
 } from './utils/connections';
@@ -63,13 +60,13 @@ export namespace Components {
     'collections': Collection[];
     'featured'?: string;
     'serviceLink'?: string;
-    'services': Service[];
+    'services': Catalog.Product[];
   }
   interface ManiTunnelAttributes extends StencilHTMLAttributes {
     'collections'?: Collection[];
     'featured'?: string;
     'serviceLink'?: string;
-    'services'?: Service[];
+    'services'?: Catalog.Product[];
   }
 
   interface ManifoldConnection {
@@ -126,12 +123,12 @@ export namespace Components {
   interface MarketplaceResults {
     'featured'?: string;
     'serviceLink'?: string;
-    'services': Service[];
+    'services': Catalog.Product[];
   }
   interface MarketplaceResultsAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
-    'services'?: Service[];
+    'services'?: Catalog.Product[];
   }
 
   interface MfBadge {}

@@ -1,5 +1,4 @@
 import { Component, Prop, State, Element } from '@stencil/core';
-import { Service } from 'types/Service';
 import { Collection } from 'types/Collection';
 
 import Tunnel from '../../data/connection';
@@ -12,7 +11,7 @@ export class ManifoldMarketplace {
   @Prop() featured?: string;
   @Prop() connection: Connection;
   @Prop() collections: Collection[] = [];
-  @State() services: Service[] = [];
+  @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {
     return fetch(`${this.connection.catalog}/products`)

@@ -1,10 +1,9 @@
 import { createProviderConsumer } from '@stencil/state-tunnel';
-import { Service } from 'types/Service';
 import { Collection } from 'types/Collection';
 
 export interface State {
   collections: Collection[];
-  services: Service[];
+  services: Catalog.Product[];
   serviceLink?: string;
   featured?: string;
 }
