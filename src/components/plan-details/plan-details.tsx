@@ -83,10 +83,10 @@ export class PlanDetails {
     }
   }
 
-  setFeature(key: string, value: string | number | boolean) {
+  handleChangeValue({ detail: { name, value } }: CustomEvent) {
     this.features = {
       ...this.features,
-      [key]: value,
+      [name]: value,
     };
     // TODO: replace this with pricing calculation call
     console.log(this.features);
@@ -112,7 +112,7 @@ export class PlanDetails {
 
   // TODO: extract these into utils/ to be tested
   getBooleanDefaultValue(value: Catalog.FeatureValueDetails): boolean {
-    return value.label === 'true' || false;
+    return value.label === 'true';
   }
   getStringDefaultValue(value: Catalog.FeatureValueDetails): string {
     return value.label;
@@ -139,9 +139,7 @@ export class PlanDetails {
           <mf-select
             name={feature.label}
             options={options}
-            onUpdateValue={({ detail: { name, value } }: CustomEvent) =>
-              this.setFeature(name, value)
-            }
+            onUpdateValue={e => this.handleChangeValue(e)}
             defaultValue={this.getStringDefaultValue(feature.value)}
           />
         );
@@ -155,9 +153,7 @@ export class PlanDetails {
             max={max}
             min={min}
             name={feature.label}
-            onUpdateValue={({ detail: { name, value } }: CustomEvent) =>
-              this.setFeature(name, value)
-            }
+            onUpdateValue={e => this.handleChangeValue(e)}
             suffix={suffix}
             increment={increment}
           />
@@ -169,9 +165,7 @@ export class PlanDetails {
             aria-labelledby={`-name`}
             defaultValue={this.getBooleanDefaultValue(feature.value)}
             name={feature.label}
-            onUpdateValue={({ detail: { name, value } }: CustomEvent) =>
-              this.setFeature(name, value)
-            }
+            onUpdateValue={e => this.handleChangeValue(e)}
           />
         );
       }
