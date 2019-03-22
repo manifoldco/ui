@@ -374,21 +374,6 @@ render() {
         hljs.initHighlightingOnLoad();
 
         var marketplace = document.querySelector('manifold-marketplace');
-        marketplace.collections = [
-          {
-            labels: ['picnic-basket-stage', 'sharkdb-stage', 'degraffdb-generators-stage'],
-            name: 'Your Missing Piece',
-            icon: 'pie_chart',
-            tagLine: "Just the service you've been waiting for",
-          },
-          {
-            labels: ['ant-hill-stage', 'provider-dashboard'],
-            name: 'New',
-            icon: 'star',
-            tagLine: 'Latest services to join the platform',
-          },
-        ];
-
         marketplace.addEventListener('manifold-serviceCard-click', e => {
           if (e.detail.label === 'bring-your-own') {
             alert('You clicked a custom card');

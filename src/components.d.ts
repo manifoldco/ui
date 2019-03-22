@@ -9,12 +9,12 @@ import '@stencil/core';
 
 import '@stencil/state-tunnel';
 import {
-  Collection,
-} from 'types/Collection';
-import {
   Connection,
   Env,
 } from './utils/connections';
+import {
+  Collection,
+} from 'types/Collection';
 import {
   FieldType,
 } from './types/Input';
@@ -57,13 +57,11 @@ export namespace Components {
   }
 
   interface ManiTunnel {
-    'collections': Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'services': Catalog.Product[];
   }
   interface ManiTunnelAttributes extends StencilHTMLAttributes {
-    'collections'?: Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Catalog.Product[];

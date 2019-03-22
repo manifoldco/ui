@@ -2,47 +2,6 @@ import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 
-describe('<service-grid> collections', () => {
-  it('displays collections', async () => {
-    const page = await newE2EPage({
-      html: '<mani-tunnel><service-grid></service-grid></mani-tunnel>',
-    });
-    await page.$eval('mani-tunnel', (elm: any) => {
-      elm.services = [
-        { body: { name: 'FooTastic', label: 'footastic', tags: ['foo'] } },
-        { body: { name: 'BarTastic', label: 'bartastic', tags: ['bar'] } },
-        { body: { name: 'BazTastic', label: 'baztastic', tags: ['baz'] } },
-      ];
-
-      elm.collections = [
-        {
-          labels: ['footastic', 'bartastic'],
-          name: 'Your Missing Piece',
-          icon: 'pie_chart',
-          tagLine: "Just the service you've been waiting for",
-        },
-        {
-          labels: ['baztastic'],
-          name: 'New',
-          icon: 'star',
-          tagLine: 'Latest services to join the platform',
-        },
-      ];
-    });
-
-    await page.waitForChanges();
-
-    const collections = await page.findAll('service-grid >>> marketplace-results');
-    expect(collections.length).toBe(2);
-
-    const missingPieceServices = await collections[0].findAll('service-card');
-    expect(missingPieceServices.length).toBe(2);
-
-    const newServices = await collections[1].findAll('service-card');
-    expect(newServices.length).toBe(1);
-  });
-});
-
 describe('<service-grid> sorted categories', () => {
   it('displays all services', async () => {
     // Set properties and wait
@@ -57,8 +16,6 @@ describe('<service-grid> sorted categories', () => {
       ];
     });
     await page.waitForChanges();
-    const tab = await page.find('service-grid >>> #categorized');
-    await tab.click();
 
     // See if all categories are present
     const categories = await page.findAll('service-grid >>> marketplace-results');
@@ -82,8 +39,6 @@ describe('<service-grid> sorted categories', () => {
       elm.serviceLink = '/discover/view/service/:service';
     });
     await page.waitForChanges();
-    const tab = await page.find('service-grid >>> #categorized');
-    await tab.click();
 
     // See if first <a> href matches the pattern
     const el = await page.find('service-grid >>> marketplace-results');
@@ -107,8 +62,6 @@ describe('<service-grid> sorted categories', () => {
       ];
     });
     await page.waitForChanges();
-    const tab = await page.find('service-grid >>> #categorized');
-    await tab.click();
 
     const categories = await page.findAll('service-grid >>> marketplace-results');
     expect(categories.length).toEqual(2);
@@ -135,8 +88,6 @@ describe('<service-grid> sorted categories', () => {
       elm.featured = 'fake,logdna,fake-2';
     });
     await page.waitForChanges();
-    const tab = await page.find('service-grid >>> #categorized');
-    await tab.click();
 
     const el = await page.findAll('service-grid >>> marketplace-results');
     const jawsDB = await el[0].find('service-card');
