@@ -19,14 +19,12 @@ export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures;
-  @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan, oldPlan: Catalog.ExpandedPlan) {
-    if (newPlan.id !== oldPlan.id) {
-      this.features = this.initialFeatures(newPlan);
-    }
+  @Watch('plan') onUpdate() {
+    this.features = this.initialFeatures();
   }
 
   componentWillLoad() {
-    this.features = this.initialFeatures(this.plan);
+    this.features = this.initialFeatures();
   }
 
   // TODO clean this up
@@ -92,11 +90,11 @@ export class PlanDetails {
     };
   }
 
-  initialFeatures(plan: Catalog.ExpandedPlan): UserFeatures {
-    if (!plan.body.expanded_features) return {};
+  initialFeatures(): UserFeatures {
+    if (!this.plan.body.expanded_features) return {};
 
     // We want to set _all_ features, not just customizable ones, to calculate cost
-    return plan.body.expanded_features.reduce((obj, feature) => {
+    return this.plan.body.expanded_features.reduce((obj, feature) => {
       if (!feature.value) return obj;
 
       if (feature.type === 'boolean')

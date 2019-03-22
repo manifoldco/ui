@@ -3,6 +3,7 @@ import { UserFeatures } from 'types/UserFeatures';
 import { $ } from '../../utils/currency';
 import Tunnel from '../../data/connection';
 import { Connection } from '../../utils/connections';
+import { planCost } from '../../utils/plan';
 
 @Component({ tag: 'manifold-product-cost', styleUrl: 'manifold-product-cost.css', shadow: true })
 export class ManifoldProductCost {
@@ -21,35 +22,29 @@ export class ManifoldProductCost {
 
   componentWillLoad() {
     if (!this.planID) return;
-
-    // eslint-disable-next-line consistent-return
-    return this.calculateCost();
+    return this.calculateCost(); // eslint-disable-line consistent-return
   }
 
-  async calculateCost() {
+  calculateCost() {
     if (this.controller) this.controller.abort(); // If a request is in flight, cancel it
     this.controller = new AbortController();
-    return fetch(`${this.connection.gateway}/id/plan/${this.planID}/cost`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ features: this.features }),
-      signal: this.controller.signal,
-    })
-      .then(response => response.json())
-      .then(({ cost }) => {
-        this.cost = cost;
-        this.controller = undefined; // Request is completed, so we don’t need the signal
-      });
+
+    return planCost(this.connection, {
+      planID: this.planID,
+      features: this.features,
+      init: { signal: this.controller.signal },
+    }).then(({ cost }: Gateway.Price) => {
+      this.cost = cost;
+      this.controller = undefined; // Request finished, so signal no longer needed
+    });
   }
 
   render() {
     if (!this.cost) return null;
 
-    const cost = $(this.cost);
-
     return (
       <div class="cost" itemprop="price">
-        <span itemprop="price">{cost}</span>
+        <span itemprop="price">{$(this.cost)}</span>
         <small>&nbsp;/&nbsp;month</small>
       </div>
     );
