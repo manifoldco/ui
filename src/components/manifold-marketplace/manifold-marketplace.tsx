@@ -1,5 +1,4 @@
 import { Component, Prop, State, Element } from '@stencil/core';
-import { Collection } from 'types/Collection';
 
 import Tunnel from '../../data/connection';
 import { Connection } from '../../utils/connections';
@@ -10,7 +9,6 @@ export class ManifoldMarketplace {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
   @Prop() connection: Connection;
-  @Prop() collections: Collection[] = [];
   @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {
@@ -23,12 +21,7 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <mani-tunnel
-        services={this.services}
-        serviceLink={this.serviceLink}
-        featured={this.featured}
-        collections={this.collections}
-      >
+      <mani-tunnel services={this.services} serviceLink={this.serviceLink} featured={this.featured}>
         <service-grid slot="marketplace-content" />
       </mani-tunnel>
     );

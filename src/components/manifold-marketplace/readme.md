@@ -70,7 +70,6 @@ By default, `manifold-marketplace` connects to production. To have it point to o
 
 | Property      | Attribute      | Description | Type                  | Default     |
 | ------------- | -------------- | ----------- | --------------------- | ----------- |
-| `collections` | --             |             | `Collection[]`        | `[]`        |
 | `connection`  | --             |             | `Connection`          | `undefined` |
 | `featured`    | `featured`     |             | `string \| undefined` | `undefined` |
 | `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |

@@ -13,9 +13,6 @@ import {
   Env,
 } from './utils/connections';
 import {
-  Collection,
-} from 'types/Collection';
-import {
   FieldType,
 } from './types/Input';
 import {
@@ -75,13 +72,11 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
-    'collections': Collection[];
     'connection': Connection;
     'featured'?: string;
     'serviceLink'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
-    'collections'?: Collection[];
     'connection'?: Connection;
     'featured'?: string;
     'serviceLink'?: string;
