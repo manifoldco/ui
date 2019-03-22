@@ -3,14 +3,14 @@ import { Service } from 'types/Service';
 import { Collection } from 'types/Collection';
 
 import Tunnel from '../../data/connection';
-import { Env, Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
-  @Prop() connection: Connection = connections[Env.Prod];
+  @Prop() connection: Connection;
   @Prop() collections: Collection[] = [];
   @State() services: Service[] = [];
 

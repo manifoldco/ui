@@ -11,10 +11,10 @@ Display the plans for a product.
 
 ## Properties
 
-| Property     | Attribute    | Description | Type         | Default                 |
-| ------------ | ------------ | ----------- | ------------ | ----------------------- |
-| `connection` | --           |             | `Connection` | `connections[Env.Prod]` |
-| `productId`  | `product-id` |             | `string`     | `undefined`             |
+| Property     | Attribute    | Description | Type         | Default     |
+| ------------ | ------------ | ----------- | ------------ | ----------- |
+| `connection` | --           |             | `Connection` | `undefined` |
+| `productId`  | `product-id` |             | `string`     | `undefined` |
 
 
 ----------------------------------------------
