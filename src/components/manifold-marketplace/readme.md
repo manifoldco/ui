@@ -53,12 +53,14 @@ render() {
 }
 ```
 
-## Custom Products URL
+## Point to a Different Environment
 
-Pass in a custom products URL to fetch the list of services to display in the marketplace.
+By default, `manifold-marketplace` connects to production. To have it point to our staging environment instead, you can wrap it in a `manifold-connection` and set the `env` attribute to `"stage"`:
 
 ```html
-<manifold-marketplace url='https://api.catalog.manifold.co/v1/'></manifold-marketplace>
+<manifold-connection env="stage">
+  <manifold-marketplace></manifold-marketplace>
+</manifold-connection>
 ```
 
 <!-- Auto Generated Below -->
@@ -66,12 +68,12 @@ Pass in a custom products URL to fetch the list of services to display in the ma
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                  | Default                                 |
-| ------------- | -------------- | ----------- | --------------------- | --------------------------------------- |
-| `collections` | --             |             | `Collection[]`        | `[]`                                    |
-| `featured`    | `featured`     |             | `string \| undefined` | `undefined`                             |
-| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined`                             |
-| `url`         | `url`          |             | `string`              | `'https://api.catalog.manifold.co/v1/'` |
+| Property      | Attribute      | Description | Type                  | Default     |
+| ------------- | -------------- | ----------- | --------------------- | ----------- |
+| `collections` | --             |             | `Collection[]`        | `[]`        |
+| `connection`  | --             |             | `Connection`          | `undefined` |
+| `featured`    | `featured`     |             | `string \| undefined` | `undefined` |
+| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |
 
 
 ----------------------------------------------

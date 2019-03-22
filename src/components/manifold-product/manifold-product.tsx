@@ -1,12 +1,17 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Element } from '@stencil/core';
+
+import Tunnel from '../../data/connection';
+import { Connection } from '../../utils/connections';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
+  @Element() el: HTMLElement;
+  @Prop() connection: Connection;
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
 
   componentWillLoad() {
-    return fetch(`https://api.catalog.manifold.co/v1/products?label=${this.productLabel}`)
+    return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`)
       .then(response => response.json())
       .then(data => {
         this.product = { ...data[0] };
@@ -14,6 +19,8 @@ export class ManifoldProduct {
   }
 
   render() {
-    return <product-page product={this.product} />;
+    return this.product && <product-page product={this.product} />;
   }
 }
+
+Tunnel.injectProps(ManifoldProduct, ['connection']);
