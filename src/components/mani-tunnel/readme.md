@@ -12,7 +12,7 @@
 | `collections` | --             |             | `Collection[]`        | `[]`        |
 | `featured`    | `featured`     |             | `string \| undefined` | `undefined` |
 | `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |
-| `services`    | --             |             | `Service[]`           | `undefined` |
+| `services`    | --             |             | `Product[]`           | `undefined` |
 
 
 ----------------------------------------------

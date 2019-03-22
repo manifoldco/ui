@@ -1,6 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-
-import { Service } from 'types/Service';
 import { Collection } from 'types/Collection';
 
 import Tunnel from '../../data/marketplace';
@@ -10,7 +8,7 @@ export class ManiTunnel {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
   @Prop() collections: Collection[] = [];
-  @Prop() services: Service[];
+  @Prop() services: Catalog.Product[];
 
   render() {
     return (
