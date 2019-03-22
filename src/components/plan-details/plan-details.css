@@ -115,7 +115,7 @@
 .footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: calc(var(--padding) * 0.75) var(--padding);
   box-shadow: 0 -1px var(--mf-c-grayLight);

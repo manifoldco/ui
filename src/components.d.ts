@@ -105,13 +105,11 @@ export namespace Components {
     'connection': Connection;
     'features': UserFeatures;
     'planID': string;
-    'url': string;
   }
   interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'features'?: UserFeatures;
     'planID'?: string;
-    'url'?: string;
   }
 
   interface ManifoldProduct {

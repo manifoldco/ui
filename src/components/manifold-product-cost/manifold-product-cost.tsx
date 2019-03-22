@@ -10,27 +10,35 @@ export class ManifoldProductCost {
   @Prop() connection: Connection;
   @Prop() features: UserFeatures;
   @Prop() planID: string;
-  @Prop() url: string = 'https://api.stage.manifold.co/v1/';
+  @State() controller?: AbortController;
   @State() cost: number;
-  @Watch('features') watchHandler(newValue: UserFeatures) {
-    this.calculateCost(newValue);
+  @Watch('planID') planChanged() {
+    this.calculateCost();
+  }
+  @Watch('features') featureChanged() {
+    this.calculateCost();
   }
 
   componentWillLoad() {
     if (!this.planID) return;
 
     // eslint-disable-next-line consistent-return
-    return this.calculateCost(this.features);
+    return this.calculateCost();
   }
 
-  async calculateCost(features: UserFeatures) {
-    fetch(`${this.connection.catalog}/id/plan/${this.planID}/cost`, {
+  async calculateCost() {
+    if (this.controller) this.controller.abort(); // If a request is in flight, cancel it
+    this.controller = new AbortController();
+    return fetch(`${this.connection.gateway}/id/plan/${this.planID}/cost`, {
       method: 'POST',
-      body: JSON.stringify({ features }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ features: this.features }),
+      signal: this.controller.signal,
     })
       .then(response => response.json())
       .then(({ cost }) => {
         this.cost = cost;
+        this.controller = undefined; // Request is completed, so we don’t need the signal
       });
   }
 
@@ -41,7 +49,6 @@ export class ManifoldProductCost {
 
     return (
       <div class="cost" itemprop="price">
-        <span itemprop="priceCurrency">$</span>
         <span itemprop="price">{cost}</span>
         <small>&nbsp;/&nbsp;month</small>
       </div>

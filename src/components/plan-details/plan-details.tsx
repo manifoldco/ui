@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Watch } from '@stencil/core';
 import { UserFeatures } from 'types/UserFeatures';
 import { $ } from '../../utils/currency';
 
@@ -19,9 +19,14 @@ export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures;
+  @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan, oldPlan: Catalog.ExpandedPlan) {
+    if (newPlan.id !== oldPlan.id) {
+      this.features = this.initialFeatures(newPlan);
+    }
+  }
 
   componentWillLoad() {
-    this.features = this.initialFeatures();
+    this.features = this.initialFeatures(this.plan);
   }
 
   // TODO clean this up
@@ -87,12 +92,12 @@ export class PlanDetails {
     };
   }
 
-  initialFeatures(): UserFeatures {
-    if (!this.plan.body.expanded_features) return {};
+  initialFeatures(plan: Catalog.ExpandedPlan): UserFeatures {
+    if (!plan.body.expanded_features) return {};
 
-    return this.plan.body.expanded_features.reduce((obj, feature) => {
-      // If not customizable, don’t worry about it
-      if (!feature.customizable || !feature.value) return obj;
+    // We want to set _all_ features, not just customizable ones, to calculate cost
+    return plan.body.expanded_features.reduce((obj, feature) => {
+      if (!feature.value) return obj;
 
       if (feature.type === 'boolean')
         return { ...obj, [feature.label]: this.getBooleanDefaultValue(feature.value) };
