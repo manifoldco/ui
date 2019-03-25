@@ -162,7 +162,7 @@ export namespace Components {
     'min'?: number;
     'name': string;
     'onChange': (e: UIEvent) => void;
-    'placeholder': string;
+    'placeholder'?: string;
     'required'?: boolean;
     'step'?: number;
     'type': FieldType;
@@ -195,16 +195,15 @@ export namespace Components {
   }
 
   interface MfSlider {
-    'defaultValue'?: number;
     'error'?: string;
     'increment': number;
     'max': number;
     'min': number;
     'name': string;
     'suffix': string;
+    'value': number;
   }
   interface MfSliderAttributes extends StencilHTMLAttributes {
-    'defaultValue'?: number;
     'error'?: string;
     'increment'?: number;
     'max'?: number;
@@ -212,6 +211,7 @@ export namespace Components {
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent) => void;
     'suffix'?: string;
+    'value'?: number;
   }
 
   interface MfToggle {

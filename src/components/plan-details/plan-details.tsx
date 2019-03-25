@@ -149,13 +149,13 @@ export class PlanDetails {
         const { min, max, increment, suffix } = details;
         return (
           <mf-slider
-            defaultValue={this.getNumberDefaultValue(feature.value)}
             max={max}
             min={min}
             name={feature.label}
             onUpdateValue={e => this.handleChangeValue(e)}
             suffix={suffix}
             increment={increment}
+            value={this.getNumberDefaultValue(feature.value)}
           />
         );
       }
