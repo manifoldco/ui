@@ -21,8 +21,11 @@ export class ManifoldProductCost {
   }
 
   componentWillLoad() {
-    if (!this.planID) return;
-    return this.calculateCost(); // eslint-disable-line consistent-return
+    if (!this.planID) {
+      return this.calculateCost();
+    }
+
+    return Promise.resolve();
   }
 
   calculateCost() {
