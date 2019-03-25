@@ -1,3 +1,4 @@
+/* eslint-disable */
 namespace Catalog {
   export interface ValueProp {
     // Heading of a value proposition.
