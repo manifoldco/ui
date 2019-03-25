@@ -9,9 +9,6 @@ import '@stencil/core';
 
 import '@stencil/state-tunnel';
 import {
-  Collection,
-} from 'types/Collection';
-import {
   Connection,
   Env,
 } from './utils/connections';
@@ -57,13 +54,11 @@ export namespace Components {
   }
 
   interface ManiTunnel {
-    'collections': Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'services': Catalog.Product[];
   }
   interface ManiTunnelAttributes extends StencilHTMLAttributes {
-    'collections'?: Collection[];
     'featured'?: string;
     'serviceLink'?: string;
     'services'?: Catalog.Product[];
@@ -77,13 +72,11 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
-    'collections': Collection[];
     'connection': Connection;
     'featured'?: string;
     'serviceLink'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
-    'collections'?: Collection[];
     'connection'?: Connection;
     'featured'?: string;
     'serviceLink'?: string;
