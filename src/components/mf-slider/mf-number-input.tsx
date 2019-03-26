@@ -19,38 +19,68 @@ export class MfSlider {
     this.updateValue.emit({ name: this.name, value: newValue });
   }
 
+  get lowerBoundReached() {
+    return this.value <= this.min;
+  }
+  get upperBoundReached() {
+    return this.value >= this.max;
+  }
+  get outOfBound() {
+    return this.value < this.min || this.value > this.max;
+  }
+
   onChangeHandler = (e: Event) => {
     if (!e.target) return;
     const { value } = e.target as HTMLInputElement;
-    this.value = parseInt(value, 10);
+    const newValue = parseInt(value, 10);
+    // eslint-disable-next-line no-restricted-globals
+    if (!isNaN(newValue)) this.value = newValue;
+    else this.value = this.value;
   };
 
-  incrementValue = () => {
-    const value = this.value + this.increment;
-    this.value = value;
-  };
-  decrementValue = () => {
-    const value = this.value - this.increment;
+  setValue = (value: number) => {
+    // bring value down to upper bound
+    if (value > this.max) {
+      this.value = this.max;
+      return;
+    }
+
+    // bring value up to lower bound
+    if (value < this.min) {
+      this.value = this.min;
+      return;
+    }
+
     this.value = value;
   };
 
   render() {
     return (
-      <div class="container">
+      <div class="container" data-error={this.outOfBound}>
         <input
           class="field"
           type="number"
+          inputmode="numeric"
           max={this.max}
           min={this.min}
-          onChange={this.onChangeHandler}
+          pattern="[0-9]*"
+          onInput={this.onChangeHandler}
           required
           step={this.increment}
           value={this.value}
         />
-        <button class="increment" onClick={this.incrementValue} disabled={this.value >= this.max}>
+        <button
+          class="increment"
+          onClick={() => this.setValue(this.value + this.increment)}
+          disabled={this.upperBoundReached}
+        >
           <mf-icon icon="plus" />
         </button>
-        <button class="decrement" onClick={this.decrementValue} disabled={this.value <= this.min}>
+        <button
+          class="decrement"
+          onClick={() => this.setValue(this.value - this.increment)}
+          disabled={this.lowerBoundReached}
+        >
           <mf-icon icon="minus" />
         </button>
         <div class="display-units">

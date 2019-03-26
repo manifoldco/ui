@@ -70,3 +70,11 @@
   font-size: var(--mf-font-d1);
   text-align: center;
 }
+
+.field:invalid {
+  border-color: var(--mf-c-red);
+
+  & ~ .display-units {
+    color: var(--mf-c-red);
+  }
+}
