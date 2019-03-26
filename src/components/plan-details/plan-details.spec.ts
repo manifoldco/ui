@@ -7,12 +7,9 @@ describe(`<plan-details>`, () => {
     planDetails.plan = ExpandedPlan;
     planDetails.product = Product;
     expect(planDetails.initialFeatures()).toEqual({
-      'static-connections': 'connections-generated-2',
-      'static-high-availability': false,
-      'static-ram': 'ram-generated-0',
-      'static-rollback': 'rollback-generated-4',
-      'static-single-tenant': false,
-      'static-storage': 'storage-generated-1',
+      region: 'us-east-1',
+      redundancy: false,
+      storage: 5,
     });
   });
 
@@ -21,10 +18,8 @@ describe(`<plan-details>`, () => {
     planDetails.plan = ExpandedPlanCustom;
     planDetails.product = Product;
     expect(planDetails.initialFeatures()).toEqual({
-      backups: 1,
       instance_class: 'db.t2.micro',
       redundancy: false,
-      'static-single-tenant': true,
       storage: 5,
     });
   });

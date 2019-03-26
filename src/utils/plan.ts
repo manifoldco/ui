@@ -2,7 +2,7 @@ import { UserFeatures } from 'types/UserFeatures';
 import { Option } from 'types/Select';
 import { Connection } from './connections';
 import { $ } from './currency';
-import { singularize } from './string';
+import { singularize, pluralize } from './string';
 
 interface PlanCostOptions {
   planID: string;
@@ -14,26 +14,51 @@ export const NO = 'No';
 export const YES = 'Yes';
 export const NUMBER_FEATURE_COIN = 10000000; // Numeric features are a ten-millionth of a cent, because floats stink
 
+/**
+ * Convert number feature costs to float cents (NOT DOLLARS)
+ */
 export function featureCost(number: number) {
   return number / NUMBER_FEATURE_COIN;
 }
 
+/**
+ * User-friendly display for price description (may be found on any feature type)
+ */
+export function featureDescription(value: Catalog.FeatureValueDetails): string | undefined {
+  return value.price && value.price.description;
+}
+
+/**
+ * Default data value for a boolean feature
+ */
 export function booleanFeatureDefaultValue(value: Catalog.FeatureValueDetails): boolean {
   return value.label === 'true';
 }
 
+/**
+ * User-friendly display for a boolean feature value
+ */
 export function booleanFeatureDisplayValue(value: Catalog.FeatureValueDetails): string {
   return value.label === 'true' ? YES : NO;
 }
 
+/**
+ * Default data value for a string feature
+ */
 export function stringFeatureDefaultValue(value: Catalog.FeatureValueDetails): string {
   return value.label;
 }
 
+/**
+ * User-friendly display for a string feature value
+ */
 export function stringFeatureDisplayValue(value: Catalog.FeatureValueDetails): string {
   return value.name;
 }
 
+/**
+ * Format dropdown options for string features
+ */
 export function stringFeatureOptions(values: Catalog.FeatureValueDetails[]): Option[] {
   return values.map(({ cost, label, name: optionName }) => ({
     label: `${optionName} (${cost ? $(cost) : 'Included'})`,
@@ -41,6 +66,9 @@ export function stringFeatureOptions(values: Catalog.FeatureValueDetails[]): Opt
   }));
 }
 
+/**
+ * Default data value for a number feature
+ */
 export function numberFeatureDefaultValue(value: Catalog.FeatureValueDetails): number {
   if (value.numeric_details && typeof value.numeric_details.min === 'number') {
     return value.numeric_details.min;
@@ -48,50 +76,63 @@ export function numberFeatureDefaultValue(value: Catalog.FeatureValueDetails): n
   return 0;
 }
 
+/**
+ * User-friendly display for a measurable number feature value
+ */
 export function numberFeatureMeasurableDisplayValue({
   name,
   numeric_details,
 }: Catalog.FeatureValueDetails): string | undefined {
-  if (!numeric_details || !Array.isArray(numeric_details.cost_ranges)) return undefined;
+  if (!numeric_details) return undefined;
 
   // Feature unavailable
-  if (numeric_details.cost_ranges.length === 0)
+  if (!Array.isArray(numeric_details.cost_ranges) || numeric_details.cost_ranges.length === 0)
     return name.replace(/^No .*/, NO).replace(/^Yes/, YES);
 
-  const suffix = (numeric_details.suffix && numeric_details.suffix.toLowerCase()) || '';
-  const sortedCosts = numeric_details.cost_ranges
-    .filter((feature: any) => feature.cost_multiple > 0)
-    .sort(
-      (a: { cost_multiple: number }, b: { cost_multiple: number }) =>
-        a.cost_multiple - b.cost_multiple
-    );
+  const suffix = numeric_details.suffix || '';
 
-  // Free
-  if (!sortedCosts[0].cost_multiple) return 'free';
+  // Sort in ascending limit order, but place -1 at the end
+  const sortedTiers = numeric_details.cost_ranges.sort((a, b) => {
+    if (a.limit === -1) return 1;
+    if (b.limit === -1) return -1;
+    return a.limit! - b.limit!;
+  });
 
   // Flat cost
-  const lowEnd = featureCost(sortedCosts[0].cost_multiple);
-  const freeTier = numeric_details.cost_ranges.find(
-    (feature: any) => !feature.cost_multiple || feature.cost_multiple === 0
-  );
-  const freeText = freeTier ? ` (free until ${freeTier.limit} ${suffix})` : '';
-  if (sortedCosts.length === 1) return `${lowEnd} / ${singularize(suffix)}${freeText}`;
+  if (numeric_details.cost_ranges.length === 1) {
+    const [first] = numeric_details.cost_ranges;
+    if (first.cost_multiple) {
+      return `${$(featureCost(first.cost_multiple))} / ${singularize(suffix)}`;
+    }
+    return 'Free';
+  }
 
   // Multiple tiers
-  const highEnd = featureCost(sortedCosts[sortedCosts.length - 1].cost_multiple || 0);
-  return `${lowEnd} - ${highEnd} / ${singularize(suffix)}${freeText}`;
+  return sortedTiers
+    .map(({ cost_multiple, limit }, index) => {
+      const lowEnd = index === 0 ? numeric_details.min : sortedTiers[index - 1].limit;
+      let highEnd = (limit && limit > 0 && limit) || '+';
+      if (typeof highEnd === 'number') highEnd = `–${highEnd}`;
+      const cost = cost_multiple ? $(featureCost(cost_multiple)) : 'free';
+      const spacedSuffix = suffix ? ` ${pluralize(suffix)}` : '';
+      return `${lowEnd || 0}${highEnd}${spacedSuffix}: ${cost}`;
+    })
+    .join(' / ');
 }
 
+/**
+ * User-friendly display for a non-measurable number feature value
+ */
 export function numberFeatureDisplayValue(value: Catalog.FeatureValueDetails): string {
+  const suffix = singularize((value.numeric_details && value.numeric_details.suffix) || '');
   return Number.isNaN(Number(value.name))
     ? value.name
-    : new Intl.NumberFormat('en-US').format(parseFloat(value.name));
+    : `${new Intl.NumberFormat('en-US').format(parseFloat(value.name))} ${suffix}`;
 }
 
-export function numberFeatureDescription(value: Catalog.FeatureValueDetails): string | undefined {
-  return value.price && value.price.description;
-}
-
+/**
+ * Collect all default data values for a feature set
+ */
 export function initialFeatures(features: Catalog.ExpandedFeature[]): UserFeatures {
   // We want to set _all_ features, not just customizable ones, to calculate cost
   return features.reduce((obj, feature) => {
@@ -108,6 +149,9 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): UserFeatur
   }, {});
 }
 
+/**
+ * Fetch cost from our API
+ */
 export function planCost(
   connection: Connection,
   { planID, features, init }: PlanCostOptions

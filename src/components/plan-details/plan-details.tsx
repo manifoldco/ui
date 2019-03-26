@@ -3,14 +3,14 @@ import { UserFeatures } from 'types/UserFeatures';
 import {
   booleanFeatureDefaultValue,
   booleanFeatureDisplayValue,
+  featureDescription,
+  initialFeatures,
+  numberFeatureDefaultValue,
+  numberFeatureDisplayValue,
+  numberFeatureMeasurableDisplayValue,
   stringFeatureDefaultValue,
   stringFeatureDisplayValue,
   stringFeatureOptions,
-  numberFeatureDescription,
-  numberFeatureMeasurableDisplayValue,
-  numberFeatureDefaultValue,
-  numberFeatureDisplayValue,
-  initialFeatures,
   YES,
 } from '../../utils/plan';
 
@@ -45,6 +45,76 @@ export class PlanDetails {
     return initialFeatures(this.plan.body.expanded_features);
   }
 
+  renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {
+    if (!feature.value) return null;
+
+    const description = featureDescription(feature.value);
+    const render: JSX.Element[] = [
+      <dt class="feature-name">
+        {feature.name}
+        {description && <p class="description">{description}</p>}
+      </dt>,
+    ];
+
+    if (feature.type === 'string') {
+      render.push(
+        <dd class="feature-value">
+          {feature.customizable ? (
+            <mf-select
+              name={feature.label}
+              options={stringFeatureOptions(feature.values || [])}
+              onUpdateValue={e => this.handleChangeValue(e)}
+              defaultValue={stringFeatureDefaultValue(feature.value)}
+            />
+          ) : (
+            stringFeatureDisplayValue(feature.value)
+          )}
+        </dd>
+      );
+    } else if (feature.type === 'boolean') {
+      const displayValue = booleanFeatureDisplayValue(feature.value);
+
+      render.push(
+        <dd class="feature-value" data-value={displayValue}>
+          {feature.customizable ? (
+            <mf-toggle
+              aria-labelledby={`-name`}
+              defaultValue={booleanFeatureDefaultValue(feature.value)}
+              name={feature.label}
+              onUpdateValue={e => this.handleChangeValue(e)}
+            />
+          ) : (
+            [displayValue === YES && <mf-icon icon="check" margin-right />, displayValue]
+          )}
+        </dd>
+      );
+    } else if (feature.type === 'number' && typeof feature.value.numeric_details === 'object') {
+      const value =
+        typeof this.features[feature.label] === 'number'
+          ? (this.features[feature.label] as number)
+          : numberFeatureDefaultValue(feature.value);
+      render.push(
+        <dd class="feature-value">
+          {feature.measurable && numberFeatureMeasurableDisplayValue(feature.value)}
+          {feature.customizable && (
+            <mf-number-input
+              increment={feature.value.numeric_details.increment}
+              max={feature.value.numeric_details.max}
+              min={feature.value.numeric_details.min}
+              name={feature.label}
+              onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
+              suffix={feature.value.numeric_details.suffix}
+              value={value}
+            />
+          )}
+          {!feature.measurable && !feature.customizable && numberFeatureDisplayValue(feature.value)}
+        </dd>
+      );
+    }
+
+    return render;
+  }
+
   render() {
     if (!this.product || !this.plan) return null;
 
@@ -67,87 +137,7 @@ export class PlanDetails {
               </h2>
             </div>
           </header>
-          <dl class="features">
-            {expanded_features.map(feature => {
-              if (!feature.value) return null;
-
-              switch (feature.type) {
-                case 'string':
-                  return [
-                    <dt class="feature-name">{feature.name}</dt>,
-                    <dd class="feature-value">
-                      {feature.customizable ? (
-                        <mf-select
-                          name={feature.label}
-                          options={stringFeatureOptions(feature.values || [])}
-                          onUpdateValue={e => this.handleChangeValue(e)}
-                          defaultValue={stringFeatureDefaultValue(feature.value)}
-                        />
-                      ) : (
-                        stringFeatureDisplayValue(feature.value)
-                      )}
-                    </dd>,
-                  ];
-                case 'boolean': {
-                  const staticValue = booleanFeatureDisplayValue(feature.value);
-
-                  return [
-                    <dt class="feature-name">{feature.name}</dt>,
-                    <dd class="feature-value">
-                      {feature.customizable ? (
-                        <mf-toggle
-                          aria-labelledby={`-name`}
-                          defaultValue={booleanFeatureDefaultValue(feature.value)}
-                          name={feature.label}
-                          onUpdateValue={e => this.handleChangeValue(e)}
-                        />
-                      ) : (
-                        [staticValue === YES && <mf-icon icon="check" margin-right />, staticValue]
-                      )}
-                    </dd>,
-                  ];
-                }
-                case 'number': {
-                  if (!feature.value.numeric_details) return null;
-
-                  const description = numberFeatureDescription(feature.value);
-
-                  let displayValue;
-                  if (feature.measurable) {
-                    displayValue = numberFeatureMeasurableDisplayValue(feature.value);
-                  } else if (feature.customizable) {
-                    const value =
-                      typeof this.features[feature.label] === 'number'
-                        ? (this.features[feature.label] as number)
-                        : numberFeatureDefaultValue(feature.value);
-                    displayValue = (
-                      <mf-number-input
-                        max={feature.value.numeric_details.max}
-                        min={feature.value.numeric_details.min}
-                        name={feature.label}
-                        onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-                        suffix={feature.value.numeric_details.suffix}
-                        increment={feature.value.numeric_details.increment}
-                        value={value}
-                      />
-                    );
-                  } else {
-                    displayValue = numberFeatureDisplayValue(feature.value);
-                  }
-
-                  return [
-                    <dt class="feature-name">
-                      {feature.name}
-                      {description && <p class="description">{description}</p>}
-                    </dt>,
-                    <dd class="feature-value">{displayValue}</dd>,
-                  ];
-                }
-                default:
-                  return null;
-              }
-            })}
-          </dl>
+          <dl class="features">{expanded_features.map(feature => this.renderFeature(feature))}</dl>
         </div>
         <footer class="footer">
           <manifold-product-cost features={this.features} planID={this.plan.id} />
