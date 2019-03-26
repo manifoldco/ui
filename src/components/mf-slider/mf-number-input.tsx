@@ -1,8 +1,8 @@
 import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
-  tag: 'mf-slider',
-  styleUrl: 'mf-slider.css',
+  tag: 'mf-number-input',
+  styleUrl: 'mf-number-input.css',
   shadow: true,
 })
 export class MfSlider {

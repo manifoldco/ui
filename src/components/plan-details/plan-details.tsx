@@ -148,14 +148,16 @@ export class PlanDetails {
         const details = (feature.value && feature.value.numeric_details) || {};
         const { min, max, increment, suffix } = details;
         return (
-          <mf-slider
+          <mf-number-input
             max={max}
             min={min}
             name={feature.label}
             onUpdateValue={e => this.handleChangeValue(e)}
             suffix={suffix}
             increment={increment}
-            value={this.getNumberDefaultValue(feature.value)}
+            value={
+              (this.features[feature.label] as number) || this.getNumberDefaultValue(feature.value)
+            }
           />
         );
       }

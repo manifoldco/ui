@@ -194,7 +194,7 @@ export namespace Components {
     'required'?: boolean;
   }
 
-  interface MfSlider {
+  interface MfNumberInput {
     'error'?: string;
     'increment': number;
     'max': number;
@@ -203,7 +203,7 @@ export namespace Components {
     'suffix': string;
     'value': number;
   }
-  interface MfSliderAttributes extends StencilHTMLAttributes {
+  interface MfNumberInputAttributes extends StencilHTMLAttributes {
     'error'?: string;
     'increment'?: number;
     'max'?: number;
@@ -334,7 +334,7 @@ declare global {
     'MfIcon': Components.MfIcon;
     'MfInput': Components.MfInput;
     'MfSelect': Components.MfSelect;
-    'MfSlider': Components.MfSlider;
+    'MfNumberInput': Components.MfNumberInput;
     'MfToggle': Components.MfToggle;
     'PlanDetails': Components.PlanDetails;
     'PlanMenu': Components.PlanMenu;
@@ -361,7 +361,7 @@ declare global {
     'mf-icon': Components.MfIconAttributes;
     'mf-input': Components.MfInputAttributes;
     'mf-select': Components.MfSelectAttributes;
-    'mf-slider': Components.MfSliderAttributes;
+    'mf-number-input': Components.MfNumberInputAttributes;
     'mf-toggle': Components.MfToggleAttributes;
     'plan-details': Components.PlanDetailsAttributes;
     'plan-menu': Components.PlanMenuAttributes;
@@ -453,10 +453,10 @@ declare global {
     new (): HTMLMfSelectElement;
   };
 
-  interface HTMLMfSliderElement extends Components.MfSlider, HTMLStencilElement {}
-  var HTMLMfSliderElement: {
-    prototype: HTMLMfSliderElement;
-    new (): HTMLMfSliderElement;
+  interface HTMLMfNumberInputElement extends Components.MfNumberInput, HTMLStencilElement {}
+  var HTMLMfNumberInputElement: {
+    prototype: HTMLMfNumberInputElement;
+    new (): HTMLMfNumberInputElement;
   };
 
   interface HTMLMfToggleElement extends Components.MfToggle, HTMLStencilElement {}
@@ -533,7 +533,7 @@ declare global {
     'mf-icon': HTMLMfIconElement
     'mf-input': HTMLMfInputElement
     'mf-select': HTMLMfSelectElement
-    'mf-slider': HTMLMfSliderElement
+    'mf-number-input': HTMLMfNumberInputElement
     'mf-toggle': HTMLMfToggleElement
     'plan-details': HTMLPlanDetailsElement
     'plan-menu': HTMLPlanMenuElement
@@ -560,7 +560,7 @@ declare global {
     'mf-icon': HTMLMfIconElement;
     'mf-input': HTMLMfInputElement;
     'mf-select': HTMLMfSelectElement;
-    'mf-slider': HTMLMfSliderElement;
+    'mf-number-input': HTMLMfNumberInputElement;
     'mf-toggle': HTMLMfToggleElement;
     'plan-details': HTMLPlanDetailsElement;
     'plan-menu': HTMLPlanMenuElement;
