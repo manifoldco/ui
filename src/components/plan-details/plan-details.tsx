@@ -57,8 +57,10 @@ export class PlanDetails {
     ];
 
     if (feature.type === 'string') {
+      const displayValue = stringFeatureDisplayValue(feature.value);
+
       render.push(
-        <dd class="feature-value">
+        <dd class="feature-value" data-value={displayValue}>
           {feature.customizable ? (
             <mf-select
               name={feature.label}
@@ -67,7 +69,7 @@ export class PlanDetails {
               defaultValue={stringFeatureDefaultValue(feature.value)}
             />
           ) : (
-            stringFeatureDisplayValue(feature.value)
+            displayValue
           )}
         </dd>
       );
@@ -93,9 +95,12 @@ export class PlanDetails {
         typeof this.features[feature.label] === 'number'
           ? (this.features[feature.label] as number)
           : numberFeatureDefaultValue(feature.value);
+      const displayValue = feature.measurable
+        ? numberFeatureMeasurableDisplayValue(feature.value)
+        : numberFeatureDisplayValue(feature.value);
+
       render.push(
-        <dd class="feature-value">
-          {feature.measurable && numberFeatureMeasurableDisplayValue(feature.value)}
+        <dd class="feature-value" data-value={displayValue}>
           {feature.customizable && (
             <mf-number-input
               increment={feature.value.numeric_details.increment}
@@ -107,7 +112,7 @@ export class PlanDetails {
               value={value}
             />
           )}
-          {!feature.measurable && !feature.customizable && numberFeatureDisplayValue(feature.value)}
+          {!feature.customizable && displayValue}
         </dd>
       );
     }

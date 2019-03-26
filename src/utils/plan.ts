@@ -2,7 +2,6 @@ import { UserFeatures } from 'types/UserFeatures';
 import { Option } from 'types/Select';
 import { Connection } from './connections';
 import { $ } from './currency';
-import { singularize, pluralize } from './string';
 
 interface PlanCostOptions {
   planID: string;
@@ -102,20 +101,21 @@ export function numberFeatureMeasurableDisplayValue({
   if (numeric_details.cost_ranges.length === 1) {
     const [first] = numeric_details.cost_ranges;
     if (first.cost_multiple) {
-      return `${$(featureCost(first.cost_multiple))} / ${singularize(suffix)}`;
+      return `${$(featureCost(first.cost_multiple))} / ${suffix}`;
     }
     return 'Free';
   }
 
   // Multiple tiers
+  const withCommas = new Intl.NumberFormat().format;
   return sortedTiers
     .map(({ cost_multiple, limit }, index) => {
       const lowEnd = index === 0 ? numeric_details.min : sortedTiers[index - 1].limit;
       let highEnd = (limit && limit > 0 && limit) || '+';
-      if (typeof highEnd === 'number') highEnd = `–${highEnd}`;
+      if (typeof highEnd === 'number') highEnd = `–${withCommas(highEnd - 1)}`;
       const cost = cost_multiple ? $(featureCost(cost_multiple)) : 'free';
-      const spacedSuffix = suffix ? ` ${pluralize(suffix)}` : '';
-      return `${lowEnd || 0}${highEnd}${spacedSuffix}: ${cost}`;
+      const spacedSuffix = suffix ? ` ${suffix}` : '';
+      return `${withCommas(lowEnd || 0)}${highEnd}${spacedSuffix}: ${cost}`;
     })
     .join(' / ');
 }
@@ -124,10 +124,12 @@ export function numberFeatureMeasurableDisplayValue({
  * User-friendly display for a non-measurable number feature value
  */
 export function numberFeatureDisplayValue(value: Catalog.FeatureValueDetails): string {
-  const suffix = singularize((value.numeric_details && value.numeric_details.suffix) || '');
+  const suffix = value.numeric_details && value.numeric_details.suffix;
   return Number.isNaN(Number(value.name))
     ? value.name
-    : `${new Intl.NumberFormat('en-US').format(parseFloat(value.name))} ${suffix}`;
+    : `${new Intl.NumberFormat('en-US').format(parseFloat(value.name))}${
+        suffix ? ` ${suffix}` : ''
+      }`;
 }
 
 /**
