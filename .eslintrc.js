@@ -52,6 +52,5 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
-    '@typescript-eslint/no-namespace': 'off', // used in our generated catalog types
   },
 };
