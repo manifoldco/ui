@@ -118,12 +118,10 @@ namespace Gateway {
     multiply_factor: number;
     formula: string;
   }
-  export interface ProductTags {}
   export interface Price {
     cost: number;
     currency: string;
   }
-  export interface PlanCostResponse {}
   export interface PlanCostRequest {
     features: FeatureMap;
   }
@@ -262,7 +260,6 @@ namespace Gateway {
     // product, it is just used to inform consumers through our clients.
     featured?: boolean;
   }
-  export interface CatalogFeatureValuesList {}
   export interface CatalogFeatureValueDetails {
     label: string;
     name: string;

@@ -44,12 +44,16 @@ export class PlanDetails {
 
       let freeText = '';
       const freeTier = value.numeric_details.cost_ranges.find(
-        (feature: any) => !feature.cost_multiple || feature.cost_multiple === 0
+        (feature: Catalog.FeatureNumericRange) =>
+          !feature.cost_multiple || feature.cost_multiple === 0
       );
       if (freeTier) freeText = ` (free until ${freeTier.limit} ${suffix})`;
 
       const sortedCosts = value.numeric_details.cost_ranges
-        .filter((feature: any) => feature.cost_multiple > 0)
+        .filter(
+          (feature: Catalog.FeatureNumericRange) =>
+            feature.cost_multiple && feature.cost_multiple > 0
+        )
         .sort(
           (a: { cost_multiple: number }, b: { cost_multiple: number }) =>
             a.cost_multiple - b.cost_multiple

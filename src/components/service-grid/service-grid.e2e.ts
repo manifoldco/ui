@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 describe('<service-grid> sorted categories', () => {
   it('displays all services', async () => {
