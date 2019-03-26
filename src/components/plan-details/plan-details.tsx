@@ -147,6 +147,11 @@ export class PlanDetails {
       case 'number': {
         const details = (feature.value && feature.value.numeric_details) || {};
         const { min, max, increment, suffix } = details;
+        const value =
+          typeof this.features[feature.label] === 'number'
+            ? (this.features[feature.label] as number)
+            : this.getNumberDefaultValue(feature.value);
+
         return (
           <mf-number-input
             max={max}
@@ -155,9 +160,7 @@ export class PlanDetails {
             onUpdateValue={e => this.handleChangeValue(e)}
             suffix={suffix}
             increment={increment}
-            value={
-              (this.features[feature.label] as number) || this.getNumberDefaultValue(feature.value)
-            }
+            value={value}
           />
         );
       }
