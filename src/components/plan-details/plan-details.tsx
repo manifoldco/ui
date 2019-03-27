@@ -65,7 +65,7 @@ export class PlanDetails {
             <mf-select
               name={feature.label}
               options={stringFeatureOptions(feature.values || [])}
-              onUpdateValue={e => this.handleChangeValue(e)}
+              onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
               defaultValue={stringFeatureDefaultValue(feature.value)}
             />
           ) : (
@@ -83,7 +83,7 @@ export class PlanDetails {
               aria-labelledby={`-name`}
               defaultValue={booleanFeatureDefaultValue(feature.value)}
               name={feature.label}
-              onUpdateValue={e => this.handleChangeValue(e)}
+              onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
             />
           ) : (
             [displayValue === YES && <mf-icon icon="check" margin-right />, displayValue]
