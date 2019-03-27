@@ -53,8 +53,9 @@ describe('display value methods', () => {
   it('measurable number features return cost when flat cost', () =>
     expect(numberFeatureMeasurableDisplayValue(NumberFeatureMeasurableValuePaid)).toContain('$'));
   it('measurable number features display range when pricing tiers', () =>
+    // Drew: this test is a bit snapshot-y, but still valuable IMO
     expect(numberFeatureMeasurableDisplayValue(NumberFeatureMeasurableValueTiered)).toBe(
-      '0–10 hours: free / 10–100 hours: $0.90 / 100–200 hours: $0.60 / 200–300 hours: $0.50 / 300–400 hours: $0.30 / 400+ hours: $0.25'
+      '0–9 hour: free / 10–99 hour: $0.90 / 100–199 hour: $0.60 / 200–299 hour: $0.50 / 300–399 hour: $0.30 / 400+ hour: $0.25'
     ));
   it('boolean features return “Yes” when true', () =>
     expect(booleanFeatureDisplayValue(BooleanFeatureStaticTrue.value)).toBe('Yes'));

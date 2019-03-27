@@ -146,7 +146,7 @@ describe(`<plan-details>`, () => {
 
       await page.waitForChanges();
 
-      const numberInput = await page.find('plan-details >>> mf-slider');
+      const numberInput = await page.find('plan-details >>> mf-number-input');
       expect(numberInput).not.toBeNull();
     });
 
