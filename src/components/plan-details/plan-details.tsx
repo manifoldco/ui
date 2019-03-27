@@ -21,7 +21,7 @@ interface UserFeature {
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
-  @State() features: UserFeature;
+  @State() features: UserFeature = {};
 
   componentWillLoad() {
     this.features = this.initialFeatures();
@@ -145,7 +145,7 @@ export class PlanDetails {
         );
       }
       case 'number': {
-        const details = (feature.value && feature.value.numeric_details) || {};
+        const details = feature.value.numeric_details || {};
         const { min, max, increment, suffix } = details;
         const value =
           typeof this.features[feature.label] === 'number'

@@ -31,7 +31,11 @@ const numberPlan: Catalog.ExpandedPlan = {
         label: 'numby',
         name: 'Numby',
         value_string: '1',
-        value: { label: '1', name: '1' },
+        value: {
+          label: '1',
+          name: '1',
+          numeric_details: { min: 0, max: 10, increment: 2, suffix: 'GB' },
+        },
       },
     ],
   },
