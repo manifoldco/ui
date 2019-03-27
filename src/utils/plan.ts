@@ -94,7 +94,7 @@ export function numberFeatureMeasurableDisplayValue({
   const sortedTiers = numeric_details.cost_ranges.sort((a, b) => {
     if (a.limit === -1) return 1;
     if (b.limit === -1) return -1;
-    return a.limit! - b.limit!;
+    return (a.limit || 0) - (b.limit || 0);
   });
 
   // Flat cost

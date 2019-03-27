@@ -90,7 +90,7 @@ export class PlanDetails {
           )}
         </dd>
       );
-    } else if (feature.type === 'number' && typeof feature.value.numeric_details === 'object') {
+    } else if (feature.type === 'number' && feature.value.numeric_details) {
       const value =
         typeof this.features[feature.label] === 'number'
           ? (this.features[feature.label] as number)
