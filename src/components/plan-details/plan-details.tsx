@@ -163,6 +163,8 @@ export class PlanDetails {
             suffix={suffix}
             increment={increment}
             value={value}
+            decrement-disabled-label="This feature is not downgradable"
+            increment-disabled-label="This feature is not upgradable"
           />
         );
       }
