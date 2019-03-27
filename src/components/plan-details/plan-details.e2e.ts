@@ -1,118 +1,172 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { ExpandedPlanCustom, Product } from '../../spec/mock/catalog';
+import {
+  BooleanFeatureCustom,
+  BooleanFeatureStaticFalse,
+  BooleanFeatureStaticTrue,
+  ExpandedPlan,
+  ExpandedPlanCustom,
+  NumberFeatureCustom,
+  Product,
+  StringFeatureCustom,
+  StringFeatureStatic,
+} from '../../spec/mock/catalog';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 const stringPlan: Catalog.ExpandedPlan = {
-  ...ExpandedPlanCustom,
+  ...ExpandedPlan,
   body: {
-    ...ExpandedPlanCustom.body,
+    ...ExpandedPlan.body,
     expanded_features: [
-      {
-        type: 'string',
-        customizable: true,
-        label: 'stringy',
-        name: 'Stringy',
-        value_string: 'Yes',
-        value: { label: 'yes', name: 'Yes' },
-      },
+      { ...StringFeatureStatic, value: { ...StringFeatureStatic.value, name: 'Yes' } },
     ],
   },
 };
 
-const numberPlan: Catalog.ExpandedPlan = {
-  ...ExpandedPlanCustom,
-  body: {
-    ...ExpandedPlanCustom.body,
-    expanded_features: [
-      {
-        type: 'number',
-        customizable: true,
-        label: 'numby',
-        name: 'Numby',
-        value_string: '1',
-        value: {
-          label: '1',
-          name: '1',
-          numeric_details: { min: 0, max: 10, increment: 2, suffix: 'GB' },
-        },
-      },
-    ],
-  },
+const booleanPlanTrue: Catalog.ExpandedPlan = {
+  ...ExpandedPlan,
+  body: { ...ExpandedPlan.body, expanded_features: [BooleanFeatureStaticTrue] },
 };
 
-const booleanPlan: Catalog.ExpandedPlan = {
+const booleanPlanFalse: Catalog.ExpandedPlan = {
+  ...ExpandedPlan,
+  body: { ...ExpandedPlan.body, expanded_features: [BooleanFeatureStaticFalse] },
+};
+
+const stringPlanCustom: Catalog.ExpandedPlan = {
   ...ExpandedPlanCustom,
-  body: {
-    ...ExpandedPlanCustom.body,
-    expanded_features: [
-      {
-        type: 'boolean',
-        customizable: true,
-        label: 'george-bool',
-        name: 'George Bool',
-        value_string: 'True',
-        value: { label: 'true', name: 'True' },
-      },
-    ],
-  },
+  body: { ...ExpandedPlanCustom.body, expanded_features: [StringFeatureCustom] },
+};
+
+const numberPlanCustom: Catalog.ExpandedPlan = {
+  ...ExpandedPlanCustom,
+  body: { ...ExpandedPlanCustom.body, expanded_features: [NumberFeatureCustom] },
+};
+
+const booleanPlanCustom: Catalog.ExpandedPlan = {
+  ...ExpandedPlanCustom,
+  body: { ...ExpandedPlanCustom.body, expanded_features: [BooleanFeatureCustom] },
 };
 
 describe(`<plan-details>`, () => {
-  it('renders mf-select if string feature present', async () => {
-    const page = await newE2EPage({ html: `<plan-details />` });
+  describe('static features', () => {
+    it('sets data-value for string features', async () => {
+      const page = await newE2EPage({ html: `<plan-details />` });
 
-    const props = { plan: stringPlan, product: Product };
-    await page.$eval(
-      'plan-details',
-      (elm: any, { plan, product }: any) => {
-        elm.plan = plan;
-        elm.product = product;
-      },
-      props
-    );
+      const props = { plan: stringPlan, product: Product };
+      await page.$eval(
+        'plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
 
-    await page.waitForChanges();
+      await page.waitForChanges();
 
-    const select = await page.find('plan-details >>> mf-select');
-    expect(select).not.toBeNull();
+      const valueDisplay = await page.find('plan-details >>> .feature-value');
+      const value = await valueDisplay.getAttribute('data-value');
+      expect(value).toBe('Yes');
+    });
+
+    it('sets data-value for boolean features when true', async () => {
+      const page = await newE2EPage({ html: `<plan-details />` });
+
+      const props = { plan: booleanPlanTrue, product: Product };
+      await page.$eval(
+        'plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
+
+      await page.waitForChanges();
+
+      const valueDisplay = await page.find('plan-details >>> .feature-value');
+      const value = await valueDisplay.getAttribute('data-value');
+      expect(value).toBe('Yes');
+    });
+
+    it('sets data-value for boolean features when true', async () => {
+      const page = await newE2EPage({ html: `<plan-details />` });
+
+      const props = { plan: booleanPlanFalse, product: Product };
+      await page.$eval(
+        'plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
+
+      await page.waitForChanges();
+
+      const valueDisplay = await page.find('plan-details >>> .feature-value');
+      const value = await valueDisplay.getAttribute('data-value');
+      expect(value).toBe('No');
+    });
   });
 
-  it('renders mf-number-input if number feature present', async () => {
-    const page = await newE2EPage({ html: `<plan-details />` });
+  describe('custom features', () => {
+    it('renders mf-select if string feature present', async () => {
+      const page = await newE2EPage({ html: `<plan-details />` });
 
-    const props = { plan: numberPlan, product: Product };
-    await page.$eval(
-      'plan-details',
-      (elm: any, { plan, product }: any) => {
-        elm.plan = plan;
-        elm.product = product;
-      },
-      props
-    );
+      const props = { plan: stringPlanCustom, product: Product };
+      await page.$eval(
+        'plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
 
-    await page.waitForChanges();
+      await page.waitForChanges();
 
-    const numberInput = await page.find('plan-details >>> mf-number-input');
-    expect(numberInput).not.toBeNull();
-  });
+      const select = await page.find('plan-details >>> mf-select');
+      expect(select).not.toBeNull();
+    });
 
-  it('renders mf-toggle if boolean feature present', async () => {
-    const page = await newE2EPage({ html: `<plan-details />` });
+    it('renders mf-number-input if number feature present', async () => {
+      const page = await newE2EPage({ html: `<plan-details />` });
 
-    const props = { plan: booleanPlan, product: Product };
-    await page.$eval(
-      'plan-details',
-      (elm: any, { plan, product }: any) => {
-        elm.plan = plan;
-        elm.product = product;
-      },
-      props
-    );
+      const props = { plan: numberPlanCustom, product: Product };
+      await page.$eval(
+        'plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
 
-    await page.waitForChanges();
+      await page.waitForChanges();
 
-    const toggle = await page.find('plan-details >>> mf-toggle');
-    expect(toggle).not.toBeNull();
+      const numberInput = await page.find('plan-details >>> mf-number-input');
+      expect(numberInput).not.toBeNull();
+    });
+
+    it('renders mf-toggle if boolean feature present', async () => {
+      const page = await newE2EPage({ html: `<plan-details />` });
+
+      const props = { plan: booleanPlanCustom, product: Product };
+      await page.$eval(
+        'plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
+
+      await page.waitForChanges();
+
+      const toggle = await page.find('plan-details >>> mf-toggle');
+      expect(toggle).not.toBeNull();
+    });
   });
 });
