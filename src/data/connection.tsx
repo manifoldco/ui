@@ -1,16 +1,14 @@
 import { createProviderConsumer } from '@stencil/state-tunnel';
 
+import { Env, Connection, connections } from '../utils/connections';
+
 export interface State {
-  services: Catalog.Product[];
-  serviceLink?: string;
-  featured?: string;
+  connection: Connection;
 }
 
 export default createProviderConsumer<State>(
   {
-    services: [],
-    serviceLink: undefined,
-    featured: undefined,
+    connection: connections[Env.Prod],
   },
   (subscribe, child) => <context-consumer subscribe={subscribe} renderer={child} />
 );

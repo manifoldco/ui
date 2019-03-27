@@ -1,6 +1,6 @@
 import { newE2EPage, E2EPage } from '@stencil/core/testing';
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 const url = 'https://manifold.co';
 const label = 'Greatest Website Ever';

@@ -1,7 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { icon } from '../../assets/icons';
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 const iconKey = 'activity';
 

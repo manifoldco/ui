@@ -1,17 +1,18 @@
-import { Component, Prop, State } from '@stencil/core';
-import { Service } from 'types/Service';
-import { Collection } from 'types/Collection';
+import { Component, Prop, State, Element } from '@stencil/core';
+
+import Tunnel from '../../data/connection';
+import { Connection } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
+  @Element() el: HTMLElement;
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
-  @Prop() url: string = 'https://api.catalog.manifold.co/v1/';
-  @Prop() collections: Collection[] = [];
-  @State() services: Service[];
+  @Prop() connection: Connection;
+  @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {
-    return fetch(`${this.url.replace(/\/$/, '')}/products`)
+    return fetch(`${this.connection.catalog}/products`)
       .then(response => response.json())
       .then(data => {
         this.services = data;
@@ -20,14 +21,11 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <mani-tunnel
-        services={this.services}
-        serviceLink={this.serviceLink}
-        featured={this.featured}
-        collections={this.collections}
-      >
+      <mani-tunnel services={this.services} serviceLink={this.serviceLink} featured={this.featured}>
         <service-grid slot="marketplace-content" />
       </mani-tunnel>
     );
   }
 }
+
+Tunnel.injectProps(ManifoldMarketplace, ['connection']);

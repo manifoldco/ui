@@ -15,9 +15,10 @@ You can find the `:service` label for each at `https://manifold.co/services/:ser
 
 ## Properties
 
-| Property       | Attribute       | Description | Type     | Default     |
-| -------------- | --------------- | ----------- | -------- | ----------- |
-| `productLabel` | `product-label` |             | `string` | `undefined` |
+| Property       | Attribute       | Description | Type         | Default     |
+| -------------- | --------------- | ----------- | ------------ | ----------- |
+| `connection`   | --              |             | `Connection` | `undefined` |
+| `productLabel` | `product-label` |             | `string`     | `undefined` |
 
 
 ----------------------------------------------

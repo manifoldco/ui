@@ -1,7 +1,7 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { ExpandedPlanCustom, Product } from '../../spec/mock/catalog';
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 const stringPlan: Catalog.ExpandedPlan = {
   ...ExpandedPlanCustom,
