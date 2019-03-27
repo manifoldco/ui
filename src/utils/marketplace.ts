@@ -1,8 +1,7 @@
-import { Service } from 'types/Service';
+export interface CategoryMap {
+  [category: string]: Catalog.Product[];
+}
 
-export type CategoryMap = {
-  [category: string]: Service[];
-};
 export function formatCategoryLabel(tag: string): string {
   switch (tag) {
     case 'cms':
@@ -14,7 +13,7 @@ export function formatCategoryLabel(tag: string): string {
   }
 }
 
-export function categories(services?: Service[]): CategoryMap {
+export function categories(services?: Catalog.Product[]): CategoryMap {
   const categoryMap: CategoryMap = {};
 
   if (Array.isArray(services)) {
@@ -32,7 +31,7 @@ export function categories(services?: Service[]): CategoryMap {
   return categoryMap;
 }
 
-export function filteredServices(filter: string, services?: Service[]) {
+export function filteredServices(filter: string, services?: Catalog.Product[]): Catalog.Product[] {
   if (!filter || !services) {
     return [];
   }

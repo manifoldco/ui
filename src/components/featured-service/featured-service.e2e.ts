@@ -1,6 +1,6 @@
 import { newE2EPage, E2EPage } from '@stencil/core/testing';
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 const name = 'JawsDB MySQL';
 const logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png';

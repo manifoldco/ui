@@ -1,13 +1,7 @@
 import { Component, State, Element } from '@stencil/core';
 
 import { CategoryButtons } from './category-buttons';
-import { Collections } from './collections';
 import { FilteredServices } from './filtered-services';
-
-enum Tab {
-  Featured = 'featured',
-  Categorized = 'categorized',
-}
 
 @Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
 export class ServiceGrid {
@@ -16,7 +10,6 @@ export class ServiceGrid {
   @State() activeCategory?: string;
   @State() scrollToCategory: string | null;
   @State() filter: string | null;
-  @State() activeTab: Tab = Tab.Featured;
 
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe, {
@@ -57,7 +50,6 @@ export class ServiceGrid {
       this.scrollToCategory = category;
     }
 
-    this.activeTab = Tab.Categorized;
     this.filter = '';
   };
 
@@ -70,7 +62,6 @@ export class ServiceGrid {
   private updateFilter = (e: KeyboardEvent): void => {
     if (e.srcElement) {
       this.filter = (e.srcElement as HTMLInputElement).value;
-      this.activeTab = Tab.Categorized;
     }
   };
 
@@ -84,31 +75,6 @@ export class ServiceGrid {
       });
     }
   };
-
-  switchTab = (tabName: Tab) => () => {
-    this.activeTab = tabName;
-
-    if (tabName === Tab.Featured && this.root.shadowRoot) {
-      if (this.root.shadowRoot) {
-        const el = this.root.shadowRoot.querySelector('#results');
-        if (el) {
-          el.scrollIntoView();
-        }
-      }
-
-      this.activeCategory = undefined;
-      this.filter = null;
-    }
-  };
-
-  tab(tabName: Tab, label: string) {
-    const className = `category-button big${this.activeTab === tabName ? ' is-active' : ''}`;
-    return (
-      <button id={tabName} class={className} onClick={this.switchTab(tabName)}>
-        {label}
-      </button>
-    );
-  }
 
   render() {
     return (
@@ -125,8 +91,6 @@ export class ServiceGrid {
         <div class={'browse-catalog'}>
           <aside class="category-sidebar">
             <div class="category-sidebar-inner">
-              {this.tab(Tab.Featured, 'Featured')}
-              {this.tab(Tab.Categorized, 'All Services')}
               <CategoryButtons
                 activeCategory={this.activeCategory}
                 categoryClick={this.categoryClick}
@@ -135,17 +99,13 @@ export class ServiceGrid {
           </aside>
           <div id="results">
             <div class="results">
-              {this.activeTab === Tab.Categorized ? (
-                <div class="sorted-categories">
-                  {this.filter ? (
-                    <FilteredServices filter={this.filter} />
-                  ) : (
-                    <sorted-categories observeCategory={this.observeCategory} />
-                  )}
-                </div>
-              ) : (
-                <Collections />
-              )}
+              <div class="sorted-categories">
+                {this.filter ? (
+                  <FilteredServices filter={this.filter} />
+                ) : (
+                  <sorted-categories observeCategory={this.observeCategory} />
+                )}
+              </div>
             </div>
           </div>
         </div>

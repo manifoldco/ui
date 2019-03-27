@@ -1,4 +1,5 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, Watch } from '@stencil/core';
+import { UserFeatures } from 'types/UserFeatures';
 import { $ } from '../../utils/currency';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
@@ -9,10 +10,6 @@ const YES = 'Yes';
 const featureCost = (number: number) => $(number / NUMBER_FEATURE_COIN);
 const singularize = (word: string) => word.replace(/s$/i, '');
 
-interface UserFeature {
-  [key: string]: string | number | boolean;
-}
-
 @Component({
   tag: 'plan-details',
   styleUrl: 'plan-details.css',
@@ -21,7 +18,10 @@ interface UserFeature {
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
-  @State() features: UserFeature;
+  @State() features: UserFeatures;
+  @Watch('plan') onUpdate() {
+    this.features = this.initialFeatures();
+  }
 
   componentWillLoad() {
     this.features = this.initialFeatures();
@@ -44,12 +44,16 @@ export class PlanDetails {
 
       let freeText = '';
       const freeTier = value.numeric_details.cost_ranges.find(
-        (feature: any) => !feature.cost_multiple || feature.cost_multiple === 0
+        (feature: Catalog.FeatureNumericRange) =>
+          !feature.cost_multiple || feature.cost_multiple === 0
       );
       if (freeTier) freeText = ` (free until ${freeTier.limit} ${suffix})`;
 
       const sortedCosts = value.numeric_details.cost_ranges
-        .filter((feature: any) => feature.cost_multiple > 0)
+        .filter(
+          (feature: Catalog.FeatureNumericRange) =>
+            feature.cost_multiple && feature.cost_multiple > 0
+        )
         .sort(
           (a: { cost_multiple: number }, b: { cost_multiple: number }) =>
             a.cost_multiple - b.cost_multiple
@@ -88,16 +92,14 @@ export class PlanDetails {
       ...this.features,
       [name]: value,
     };
-    // TODO: replace this with pricing calculation call
-    console.log(this.features);
   }
 
-  initialFeatures(): UserFeature {
+  initialFeatures(): UserFeatures {
     if (!this.plan.body.expanded_features) return {};
 
+    // We want to set _all_ features, not just customizable ones, to calculate cost
     return this.plan.body.expanded_features.reduce((obj, feature) => {
-      // If not customizable, don’t worry about it
-      if (!feature.customizable || !feature.value) return obj;
+      if (!feature.value) return obj;
 
       if (feature.type === 'boolean')
         return { ...obj, [feature.label]: this.getBooleanDefaultValue(feature.value) };
@@ -179,7 +181,7 @@ export class PlanDetails {
     if (!this.product || !this.plan) return null;
 
     const { name: productName, logo_url: productLogo, label: productLabel } = this.product.body;
-    const { name, expanded_features = [], cost } = this.plan.body;
+    const { name, expanded_features = [] } = this.plan.body;
 
     return (
       <section itemscope itemtype="https://schema.org/IndividualProduct">
@@ -225,9 +227,7 @@ export class PlanDetails {
           </dl>
         </div>
         <footer class="footer">
-          <div class="cost" itemprop="price">
-            {$(cost)}&nbsp;<small>/ mo</small>
-          </div>
+          <manifold-product-cost features={this.features} planID={this.plan.id} />
           <link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"

@@ -9,11 +9,12 @@ import '@stencil/core';
 
 import '@stencil/state-tunnel';
 import {
-  Collection,
-} from 'types/Collection';
+  Connection,
+  Env,
+} from './utils/connections';
 import {
-  Service,
-} from 'types/Service';
+  UserFeatures,
+} from 'types/UserFeatures';
 import {
   FieldType,
 } from './types/Input';
@@ -56,42 +57,60 @@ export namespace Components {
   }
 
   interface ManiTunnel {
-    'collections': Collection[];
     'featured'?: string;
     'serviceLink'?: string;
-    'services': Service[];
+    'services': Catalog.Product[];
   }
   interface ManiTunnelAttributes extends StencilHTMLAttributes {
-    'collections'?: Collection[];
     'featured'?: string;
     'serviceLink'?: string;
-    'services'?: Service[];
+    'services'?: Catalog.Product[];
+  }
+
+  interface ManifoldConnection {
+    'env': Env;
+  }
+  interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
+    'env'?: Env;
   }
 
   interface ManifoldMarketplace {
-    'collections': Collection[];
+    'connection': Connection;
     'featured'?: string;
     'serviceLink'?: string;
-    'url': string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
-    'collections'?: Collection[];
+    'connection'?: Connection;
     'featured'?: string;
     'serviceLink'?: string;
-    'url'?: string;
   }
 
   interface ManifoldPlanSelector {
+    'connection': Connection;
     'productId': string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
     'productId'?: string;
   }
 
+  interface ManifoldProductCost {
+    'connection': Connection;
+    'features': UserFeatures;
+    'planID': string;
+  }
+  interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'features'?: UserFeatures;
+    'planID'?: string;
+  }
+
   interface ManifoldProduct {
+    'connection': Connection;
     'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
     'productLabel'?: string;
   }
 
@@ -111,12 +130,12 @@ export namespace Components {
   interface MarketplaceResults {
     'featured'?: string;
     'serviceLink'?: string;
-    'services': Service[];
+    'services': Catalog.Product[];
   }
   interface MarketplaceResultsAttributes extends StencilHTMLAttributes {
     'featured'?: string;
     'serviceLink'?: string;
-    'services'?: Service[];
+    'services'?: Catalog.Product[];
   }
 
   interface MfBadge {}
@@ -325,8 +344,10 @@ declare global {
     'ImageGallery': Components.ImageGallery;
     'LinkButton': Components.LinkButton;
     'ManiTunnel': Components.ManiTunnel;
+    'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
+    'ManifoldProductCost': Components.ManifoldProductCost;
     'ManifoldProduct': Components.ManifoldProduct;
     'MarketplaceCollection': Components.MarketplaceCollection;
     'MarketplaceResults': Components.MarketplaceResults;
@@ -352,8 +373,10 @@ declare global {
     'image-gallery': Components.ImageGalleryAttributes;
     'link-button': Components.LinkButtonAttributes;
     'mani-tunnel': Components.ManiTunnelAttributes;
+    'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
+    'manifold-product-cost': Components.ManifoldProductCostAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
     'marketplace-collection': Components.MarketplaceCollectionAttributes;
     'marketplace-results': Components.MarketplaceResultsAttributes;
@@ -399,6 +422,12 @@ declare global {
     new (): HTMLManiTunnelElement;
   };
 
+  interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
+  var HTMLManifoldConnectionElement: {
+    prototype: HTMLManifoldConnectionElement;
+    new (): HTMLManifoldConnectionElement;
+  };
+
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
@@ -409,6 +438,12 @@ declare global {
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
+  };
+
+  interface HTMLManifoldProductCostElement extends Components.ManifoldProductCost, HTMLStencilElement {}
+  var HTMLManifoldProductCostElement: {
+    prototype: HTMLManifoldProductCostElement;
+    new (): HTMLManifoldProductCostElement;
   };
 
   interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
@@ -524,8 +559,10 @@ declare global {
     'image-gallery': HTMLImageGalleryElement
     'link-button': HTMLLinkButtonElement
     'mani-tunnel': HTMLManiTunnelElement
+    'manifold-connection': HTMLManifoldConnectionElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
+    'manifold-product-cost': HTMLManifoldProductCostElement
     'manifold-product': HTMLManifoldProductElement
     'marketplace-collection': HTMLMarketplaceCollectionElement
     'marketplace-results': HTMLMarketplaceResultsElement
@@ -551,8 +588,10 @@ declare global {
     'image-gallery': HTMLImageGalleryElement;
     'link-button': HTMLLinkButtonElement;
     'mani-tunnel': HTMLManiTunnelElement;
+    'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
+    'manifold-product-cost': HTMLManifoldProductCostElement;
     'manifold-product': HTMLManifoldProductElement;
     'marketplace-collection': HTMLMarketplaceCollectionElement;
     'marketplace-results': HTMLMarketplaceResultsElement;

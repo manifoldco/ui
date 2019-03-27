@@ -3,27 +3,27 @@ export const ExpandedPlan: Catalog.ExpandedPlan = {
     cost: 500,
     features: [
       {
-        feature: 'ram',
-        value: 'Shared',
+        feature: 'static-ram',
+        value: 'ram-generated-0',
       },
       {
-        feature: 'storage',
-        value: '250 MB',
+        feature: 'static-storage',
+        value: 'storage-generated-1',
       },
       {
-        feature: 'connections',
-        value: '10',
+        feature: 'static-connections',
+        value: 'connections-generated-2',
       },
       {
-        feature: 'single-tenant',
+        feature: 'static-single-tenant',
         value: 'false',
       },
       {
-        feature: 'rollback',
-        value: '0 Days',
+        feature: 'static-rollback',
+        value: 'rollback-generated-4',
       },
       {
-        feature: 'high-availability',
+        feature: 'static-high-availability',
         value: 'false',
       },
     ],
@@ -32,45 +32,185 @@ export const ExpandedPlan: Catalog.ExpandedPlan = {
     product_id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
     provider_id: '2346mdxcuca9ez2n93f72nb2fpjgu',
     regions: ['235mhkk15ky7ha9qpu4gazrqjt2gr', '235m2c51y0625vvtk6ptf55bhpkty'],
-    resizable_to: [],
+    resizable_to: ['23556xtwybe9zv877e6g2c7ygnxpj', '2358u3xj4d8x5qud8x1atgafwchfy'],
     state: 'available',
     trial_days: 0,
     defaultCost: 500,
     expanded_features: [
       {
-        label: 'ram',
+        label: 'static-ram',
         name: 'RAM',
         type: 'string',
+        values: [
+          {
+            label: 'ram-generated-0',
+            name: 'Shared',
+          },
+          {
+            label: 'ram-generated-10',
+            name: '1 GB',
+          },
+          {
+            label: 'ram-generated-14',
+            name: '2 GB',
+          },
+          {
+            label: 'ram-generated-17',
+            name: '4 GB',
+          },
+          {
+            label: 'ram-generated-21',
+            name: '8 GB',
+          },
+        ],
+        value: {
+          label: 'ram-generated-0',
+          name: 'Shared',
+        },
         value_string: 'Shared',
       },
       {
-        label: 'storage',
+        label: 'static-storage',
         name: 'Storage',
         type: 'string',
+        values: [
+          {
+            label: 'storage-generated-1',
+            name: '250 MB',
+          },
+          {
+            label: 'storage-generated-6',
+            name: '1 GB',
+          },
+          {
+            label: 'storage-generated-8',
+            name: '2.5 GB',
+          },
+          {
+            label: 'storage-generated-11',
+            name: '5 GB',
+          },
+          {
+            label: 'storage-generated-15',
+            name: '50 GB',
+          },
+          {
+            label: 'storage-generated-18',
+            name: '100 GB',
+          },
+          {
+            label: 'storage-generated-22',
+            name: '250 GB',
+          },
+        ],
+        value: {
+          label: 'storage-generated-1',
+          name: '250 MB',
+        },
         value_string: '250 MB',
       },
       {
-        label: 'connections',
+        label: 'static-connections',
         name: 'Connections',
-        type: 'number',
+        type: 'string',
+        values: [
+          {
+            label: 'connections-generated-2',
+            name: '10',
+          },
+          {
+            label: 'connections-generated-7',
+            name: '15',
+          },
+          {
+            label: 'connections-generated-9',
+            name: '30',
+          },
+          {
+            label: 'connections-generated-12',
+            name: '66',
+          },
+          {
+            label: 'connections-generated-16',
+            name: '150',
+          },
+          {
+            label: 'connections-generated-19',
+            name: '300',
+          },
+          {
+            label: 'connections-generated-23',
+            name: '600',
+          },
+        ],
+        value: {
+          label: 'connections-generated-2',
+          name: '10',
+        },
         value_string: '10',
       },
       {
-        label: 'single-tenant',
+        label: 'static-single-tenant',
         name: 'Single Tenant',
         type: 'boolean',
+        values: [
+          {
+            label: 'true',
+            name: 'true',
+          },
+          {
+            label: 'false',
+            name: 'false',
+          },
+        ],
+        value: {
+          label: 'false',
+          name: 'false',
+        },
         value_string: 'false',
       },
       {
-        label: 'high-availability',
+        label: 'static-high-availability',
         name: 'High Availability',
         type: 'boolean',
+        values: [
+          {
+            label: 'true',
+            name: 'true',
+          },
+          {
+            label: 'false',
+            name: 'false',
+          },
+        ],
+        value: {
+          label: 'false',
+          name: 'false',
+        },
         value_string: 'false',
       },
       {
-        label: 'rollback',
+        label: 'static-rollback',
         name: 'Rollback',
         type: 'string',
+        values: [
+          {
+            label: 'rollback-generated-4',
+            name: '0 Days',
+          },
+          {
+            label: 'rollback-generated-13',
+            name: '1 Day',
+          },
+          {
+            label: 'rollback-generated-20',
+            name: '2 Days',
+          },
+        ],
+        value: {
+          label: 'rollback-generated-4',
+          name: '0 Days',
+        },
         value_string: '0 Days',
       },
     ],

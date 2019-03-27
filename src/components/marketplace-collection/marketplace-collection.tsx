@@ -1,7 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-
-import { Service } from 'types/Service';
-
 import Tunnel, { State } from '../../data/marketplace';
 
 @Component({ tag: 'marketplace-collection' })
@@ -22,7 +19,9 @@ export class Collection {
             tagline={this.tagLine}
           >
             <marketplace-results
-              services={state.services.filter((s: Service) => this.labels.includes(s.body.label))}
+              services={state.services.filter((s: Catalog.Product) =>
+                this.labels.includes(s.body.label)
+              )}
             />
           </service-category>
         )}

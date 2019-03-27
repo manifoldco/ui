@@ -11,6 +11,14 @@
   },
   "author": "manifoldco",
   "license": "ISC",
+  "files": [
+    "dist/"
+  ],
+  "main": "dist/index.js",
+  "esnext": "dist/esm",
+  "module": "dist/esm",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build",
     "dev": "stencil build --dev --docs --watch --serve",
@@ -22,8 +30,9 @@
     "format:ts": "prettier --write 'src/**/*.{ts,tsx}'",
     "format:watch": "npx onchange 'src/**/*.{css,ts,tsx}' -- npm run format",
     "generate:docs": "node scripts/docs",
-    "generate:specs": "npm run generate:specs:catalog",
+    "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway",
     "generate:specs:catalog": "npx @manifoldco/swagger-to-ts src/spec/catalog/v1.yaml -o src/types/catalog.ts -n Catalog",
+    "generate:specs:gateway": "npx @manifoldco/swagger-to-ts src/spec/gateway/v1.yaml -o src/types/gateway.ts -n Gateway",
     "postgenerate:docs": "npm run format:html",
     "generate:docs:watch": "npx onchange 'src/**/readme.md' -- npm run generate:docs",
     "lint": "npm run lint:js && npm run lint:css",
@@ -38,17 +47,19 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
-    "@stencil/core": "~0.18.0",
+    "@stencil/core": "^0.18.0",
     "@stencil/postcss": "^0.1.0",
     "@stencil/state-tunnel": "0.0.8"
   },
   "devDependencies": {
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
-    "@typescript-eslint/parser": "^1.1.1",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
+    "eslint-import-resolver-typescript": "^1.1.1",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-prettier": "^3.0.1",
     "jest": "23.6.0",

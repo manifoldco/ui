@@ -1,6 +1,11 @@
 module.exports = {
-  extends: ['airbnb-base', 'prettier'],
-  plugins: ['prettier'],
+  extends: [
+    'airbnb-base',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
+  ],
+  plugins: ['@typescript-eslint', 'prettier'],
   env: {
     browser: true,
     node: true,
@@ -14,7 +19,16 @@ module.exports = {
       jsx: true,
     },
   },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {},
+    },
+  },
   rules: {
+    parser: '@typescript-eslint/parser',
     'arrow-parens': 'off', // let Prettier decide
     camelcase: 'off', // underscores are a thing
     'class-methods-use-this': 'off', // component lifecycle methods sometimes don't use `this`
@@ -33,18 +47,10 @@ module.exports = {
     'import/prefer-default-export': 'off', // named exports are perfectly fine
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
-    'object-curly-newline': 'off', // let Prettier decide
+    'object-curly-newline': 'off', // let Prettier decide,
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
   },
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      parser: '@typescript-eslint/parser',
-      rules: {
-        'import/no-unresolved': 'off', // handled by TS
-        indent: 'off', // thrown off by types
-        'no-undef': 'off', // handled by TS
-        'no-unused-vars': 'off', // handled by TS
-      },
-    },
-  ],
 };
