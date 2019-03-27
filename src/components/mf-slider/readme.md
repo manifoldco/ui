@@ -7,15 +7,15 @@
 
 ## Properties
 
-| Property       | Attribute       | Description | Type                  | Default     |
-| -------------- | --------------- | ----------- | --------------------- | ----------- |
-| `defaultValue` | `default-value` |             | `number \| undefined` | `undefined` |
-| `error`        | `error`         |             | `string \| undefined` | `undefined` |
-| `increment`    | `increment`     |             | `number`              | `1`         |
-| `max`          | `max`           |             | `number`              | `undefined` |
-| `min`          | `min`           |             | `number`              | `0`         |
-| `name`         | `name`          |             | `string`              | `''`        |
-| `suffix`       | `suffix`        |             | `string`              | `''`        |
+| Property    | Attribute   | Description | Type                  | Default     |
+| ----------- | ----------- | ----------- | --------------------- | ----------- |
+| `error`     | `error`     |             | `string \| undefined` | `undefined` |
+| `increment` | `increment` |             | `number`              | `1`         |
+| `max`       | `max`       |             | `number`              | `undefined` |
+| `min`       | `min`       |             | `number`              | `0`         |
+| `name`      | `name`      |             | `string`              | `''`        |
+| `suffix`    | `suffix`    |             | `string`              | `''`        |
+| `value`     | `value`     |             | `number`              | `0`         |
 
 
 ## Events

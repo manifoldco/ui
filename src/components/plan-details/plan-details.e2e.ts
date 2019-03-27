@@ -31,7 +31,11 @@ const numberPlan: Catalog.ExpandedPlan = {
         label: 'numby',
         name: 'Numby',
         value_string: '1',
-        value: { label: '1', name: '1' },
+        value: {
+          label: '1',
+          name: '1',
+          numeric_details: { min: 0, max: 10, increment: 2, suffix: 'GB' },
+        },
       },
     ],
   },
@@ -74,7 +78,7 @@ describe(`<plan-details>`, () => {
     expect(select).not.toBeNull();
   });
 
-  it('renders mf-slider if number feature present', async () => {
+  it('renders mf-number-input if number feature present', async () => {
     const page = await newE2EPage({ html: `<plan-details />` });
 
     const props = { plan: numberPlan, product: Product };
@@ -89,8 +93,8 @@ describe(`<plan-details>`, () => {
 
     await page.waitForChanges();
 
-    const slider = await page.find('plan-details >>> mf-slider');
-    expect(slider).not.toBeNull();
+    const numberInput = await page.find('plan-details >>> mf-number-input');
+    expect(numberInput).not.toBeNull();
   });
 
   it('renders mf-toggle if boolean feature present', async () => {

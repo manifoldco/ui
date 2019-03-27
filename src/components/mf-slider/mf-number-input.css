@@ -1,0 +1,80 @@
+.container {
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template-areas: 'decrement field increment';
+  grid-template-columns: auto 1fr auto;
+  max-width: 150px;
+}
+
+.field {
+  grid-area: field;
+  width: auto;
+  padding: 0.5em 0.75em;
+  font-size: 1em;
+  text-align: center;
+  background: var(--mf-c-white);
+  border: 1px solid var(--mf-c-border);
+  border-radius: var(--mf-radius-default);
+  appearance: none;
+  font-variant-ligatures: none;
+
+  &::placeholder {
+    color: var(--mf-c-gray);
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    display: none;
+  }
+
+  &::-webkit-input-placeholder {
+    color: var(--mf-c-gray);
+  }
+
+  &:focus {
+    border-color: var(--mf-c-blue);
+    outline: 0;
+  }
+}
+
+.increment {
+  grid-area: increment;
+}
+
+.decrement {
+  grid-area: decrement;
+}
+
+.increment,
+.decrement {
+  padding: 0 0.5em;
+  font-size: 1.25em;
+  background-color: var(--mf-c-grayLightest);
+  border: none;
+  border-radius: var(--mf-radius-default);
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(87, 100, 198, 0.3);
+  }
+
+  &:active {
+    background-color: var(--mf-c-grayLight);
+  }
+}
+
+.display-units {
+  grid-column: 1 / -1;
+  margin-top: 0.25em;
+  color: var(--mf-c-gray);
+  font-size: var(--mf-font-d1);
+  text-align: center;
+}
+
+.field:invalid {
+  border-color: var(--mf-c-red);
+
+  & ~ .display-units {
+    color: var(--mf-c-red);
+  }
+}

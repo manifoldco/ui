@@ -18,7 +18,7 @@ const singularize = (word: string) => word.replace(/s$/i, '');
 export class PlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
-  @State() features: UserFeatures;
+  @State() features: UserFeatures = {};
   @Watch('plan') onUpdate() {
     this.features = this.initialFeatures();
   }
@@ -147,17 +147,22 @@ export class PlanDetails {
         );
       }
       case 'number': {
-        const details = (feature.value && feature.value.numeric_details) || {};
+        const details = feature.value.numeric_details || {};
         const { min, max, increment, suffix } = details;
+        const value =
+          typeof this.features[feature.label] === 'number'
+            ? (this.features[feature.label] as number)
+            : this.getNumberDefaultValue(feature.value);
+
         return (
-          <mf-slider
-            defaultValue={this.getNumberDefaultValue(feature.value)}
+          <mf-number-input
             max={max}
             min={min}
             name={feature.label}
             onUpdateValue={e => this.handleChangeValue(e)}
             suffix={suffix}
             increment={increment}
+            value={value}
           />
         );
       }

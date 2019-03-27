@@ -9,7 +9,7 @@ import { FieldType } from '../../types/Input';
 export class MfInput {
   @Prop() type: FieldType = FieldType.Text;
   @Prop() name: string;
-  @Prop() placeholder: string = 'hello';
+  @Prop() placeholder?: string;
   @Prop() value?: string | number;
   @Prop() required?: boolean;
   @Prop() onChange: (e: UIEvent) => void;
