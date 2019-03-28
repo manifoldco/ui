@@ -46,10 +46,6 @@ export class ManifoldPlanMenu {
     return [...this.fixedPlans, ...this.customPlans];
   }
 
-  measurableFeatures(features: Catalog.ExpandedFeature[]) {
-    return features.filter(({ measurable }) => typeof measurable === 'boolean' && measurable);
-  }
-
   render() {
     return (
       <ul class="plan-list">
