@@ -21,9 +21,13 @@ export class ManifoldMarketplace {
 
   render() {
     return (
-      <mani-tunnel services={this.services} serviceLink={this.serviceLink} featured={this.featured}>
-        <service-grid slot="marketplace-content" />
-      </mani-tunnel>
+      <manifold-services-tunnel
+        services={this.services}
+        serviceLink={this.serviceLink}
+        featured={this.featured}
+      >
+        <manifold-service-grid slot="marketplace-content" />
+      </manifold-services-tunnel>
     );
   }
 }

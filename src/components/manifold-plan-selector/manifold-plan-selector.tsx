@@ -32,7 +32,7 @@ export class ManifoldPlanSelector {
 
   render() {
     if (!this.product || !this.plans) return null;
-    return <plan-selector product={this.product} plans={this.plans} />;
+    return <manifold-active-plan product={this.product} plans={this.plans} />;
   }
 }
 

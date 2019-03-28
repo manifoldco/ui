@@ -1,0 +1,49 @@
+import { Component, Prop } from '@stencil/core';
+
+import Tunnel, { State } from '../../data/marketplace';
+import { themeIcons } from '../../assets/icons';
+import { categories, formatCategoryLabel } from '../../utils/marketplace';
+
+@Component({ tag: 'manifold-sorted-categories' })
+export class ManifoldSortedCategories {
+  @Prop() observeCategory: (el?: HTMLElement) => void;
+
+  render() {
+    return (
+      <Tunnel.Consumer>
+        {(state: State) => {
+          const categoryMap = categories(state.services);
+          const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
+          return (
+            <div>
+              {sortedCategories.map(tag => (
+                <manifold-service-category
+                  categoryLoaded={this.observeCategory}
+                  icon={themeIcons[tag]}
+                  name={tag}
+                  label={formatCategoryLabel(tag)}
+                >
+                  <manifold-marketplace-results
+                    services={categoryMap[tag]}
+                    featured={state.featured}
+                    service-link={state.serviceLink}
+                  >
+                    <manifold-service-card
+                      description={`Add your own ${formatCategoryLabel(tag)} service`}
+                      label={'bring-your-own'}
+                      logo={themeIcons[tag]}
+                      name={`Bring your own ${formatCategoryLabel(tag)} service`}
+                      is-custom={true}
+                      is-featured={false}
+                      slot="custom-card"
+                    />
+                  </manifold-marketplace-results>
+                </manifold-service-category>
+              ))}
+            </div>
+          );
+        }}
+      </Tunnel.Consumer>
+    );
+  }
+}
