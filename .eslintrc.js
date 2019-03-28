@@ -38,7 +38,7 @@ module.exports = {
         arrays: 'always-multiline',
         exports: 'never',
         functions: 'never', // function commas are weird
-        imports: 'never',
+        imports: 'always-multiline',
         objects: 'always-multiline',
       },
     ],

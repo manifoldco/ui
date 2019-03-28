@@ -1,31 +1,207 @@
-export const ExpandedPlan: Catalog.ExpandedPlan = {
+// Mock data is static, so we don’t need our null checks
+// These shims should only stay within this mock data, and never be exported
+interface TExpandedPlan extends Catalog.ExpandedPlan {
+  body: TExpandedPlanBody;
+}
+
+interface TExpandedPlanBody extends Catalog.ExpandedPlanBody {
+  expanded_features: TExpandedFeature[];
+}
+interface TExpandedFeature extends Catalog.ExpandedFeature {
+  values: Catalog.FeatureValueDetails[];
+  value: Catalog.FeatureValueDetails;
+}
+
+interface TNumberFeature extends Catalog.ExpandedFeature {
+  values: TNumberFeatureDetails[];
+  value: TNumberFeatureDetails;
+}
+
+interface TNumberFeatureDetails extends Catalog.FeatureValueDetails {
+  numeric_details: Catalog.FeatureNumericDetails;
+}
+
+export const StringFeatureStatic: TExpandedFeature = {
+  label: 'region',
+  name: 'Region',
+  type: 'string',
+  values: [
+    { label: 'us-east-1', name: 'US East' },
+    { label: 'us-west-1', name: 'US West' },
+    { label: 'ap-south-1', name: 'Asia Pacific (Mumbai)' },
+    { label: 'ca-central-1', name: 'Canada (Central)' },
+    { label: 'us-west-1', name: 'EU (Ireland)' },
+  ],
+  value: { label: 'us-east-1', name: 'US East 1' },
+};
+
+export const StringFeatureCustom: TExpandedFeature = {
+  customizable: true,
+  downgradable: true,
+  label: 'instance_class',
+  name: 'RAM',
+  type: 'string',
+  upgradable: true,
+  values: [
+    { label: 'db.t2.micro', name: '1 GB', price: {} },
+    { cost: 5400, label: 'db.t2.small', name: '2 GB', price: { cost: 5400 } },
+    { cost: 13400, label: 'db.m3.medium', name: '4 GB', price: { cost: 13400 } },
+    { cost: 31800, label: 'db.m4.large', name: '8 GB', price: { cost: 31800 } },
+    { cost: 54400, label: 'db.r4.large', name: '15 GB', price: { cost: 54400 } },
+    { cost: 89000, label: 'db.r4.xlarge', name: '31 GB', price: { cost: 89000 } },
+    { cost: 121000, label: 'db.r4.2xlarge', name: '61 GB', price: { cost: 121000 } },
+    { cost: 239000, label: 'db.r4.4xlarge', name: '122 GB', price: { cost: 239000 } },
+    { cost: 428000, label: 'db.r4.8xlarge', name: '244 GB', price: { cost: 428000 } },
+    { cost: 910000, label: 'db.r4.16xlarge', name: '488 GB', price: { cost: 910000 } },
+  ],
+  value: { label: 'db.t2.micro', name: '1 GB', price: {} },
+  value_string: '1 GB',
+};
+
+export const NumberFeatureStatic: TNumberFeature = {
+  label: 'storage',
+  name: 'Storage',
+  type: 'number',
+  values: [
+    {
+      label: 'storage',
+      name: '5 GB',
+      numeric_details: {
+        cost_ranges: [{ limit: 5 }, { cost_multiple: 200000000, limit: 16000 }],
+        increment: 1,
+        max: 16000,
+        min: 5,
+        suffix: 'GB',
+      },
+      price: {
+        description: 'Free',
+        formula: '(* storage#cost backups#number)',
+      },
+    },
+  ],
+  value: {
+    label: 'storage',
+    name: '5 GB',
+    numeric_details: {
+      cost_ranges: [{ limit: 5 }, { cost_multiple: 200000000, limit: 16000 }],
+      increment: 1,
+      max: 16000,
+      min: 5,
+      suffix: 'GB',
+    },
+    price: {
+      description: 'Free',
+      formula: '(* storage#cost backups#number)',
+    },
+  },
+  value_string: 'Storage',
+};
+
+export const NumberFeatureCustom: TNumberFeature = {
+  ...NumberFeatureStatic,
+  customizable: true,
+  upgradable: true,
+};
+
+export const NumberFeatureMeasurableValueFree: TNumberFeatureDetails = {
+  label: 'trial',
+  name: 'Trial GPU',
+  numeric_details: { cost_ranges: [{ limit: 10 }], increment: 1, suffix: 'hour' },
+};
+
+export const NumberFeatureMeasurableValuePaid: TNumberFeatureDetails = {
+  label: 'dual-nvidia-1070ti-500-gb-ssd',
+  name: 'Dual NVIDIA 1070ti 500 GB SSD',
+  numeric_details: {
+    cost_ranges: [{ cost_multiple: 900000000, limit: -1 }],
+    increment: 1,
+    suffix: 'hour',
+  },
+};
+
+export const NumberFeatureMeasurableValueUnavailable: TNumberFeatureDetails = {
+  label: 'too-expensive-4u',
+  name: 'No GPU',
+  numeric_details: { increment: 1, suffix: 'hour' },
+};
+
+export const NumberFeatureMeasurableValueTiered: TNumberFeatureDetails = {
+  label: 'tiered-plan',
+  name: 'NVIDIA Tiered PLan',
+  numeric_details: {
+    cost_ranges: [
+      { limit: 10 },
+      { cost_multiple: 900000000, limit: 100 },
+      { cost_multiple: 250000000, limit: -1 },
+      { cost_multiple: 300000000, limit: 400 },
+      { cost_multiple: 500000000, limit: 300 },
+      { cost_multiple: 600000000, limit: 200 },
+    ],
+    increment: 1,
+    suffix: 'hour',
+  },
+};
+
+export const NumberFeatureMeasurable: TNumberFeature = {
+  label: 'hourly-price',
+  measurable: true,
+  name: 'Hourly Price',
+  type: 'number',
+  values: [
+    NumberFeatureMeasurableValueFree,
+    NumberFeatureMeasurableValueUnavailable,
+    NumberFeatureMeasurableValueTiered,
+  ],
+  value: NumberFeatureMeasurableValueFree,
+  value_string: 'NVIDIA 1080ti 250 GB SSD',
+};
+
+export const BooleanFeatureStatic: TExpandedFeature = {
+  label: 'redundancy',
+  name: 'High Availability',
+  type: 'boolean',
+  values: [
+    {
+      label: 'true',
+      name: 'Yes',
+      price: {
+        description: 'Creates a clone of the DB to rescue from potential outages',
+        formula: '(* plan#partial_cost redundancy#multiply_factor)',
+        multiply_factor: 0.8,
+      },
+    },
+    { label: 'false', name: 'No' },
+  ],
+  value: { label: 'false', name: 'false' },
+  value_string: 'No',
+};
+
+export const BooleanFeatureStaticTrue = {
+  ...BooleanFeatureStatic,
+  value: { label: 'true', name: 'true' },
+  value_string: 'Yes',
+};
+
+export const BooleanFeatureStaticFalse = {
+  ...BooleanFeatureStatic,
+  value: { label: 'false', name: 'false' },
+  value_string: 'No',
+};
+
+export const BooleanFeatureCustom: TExpandedFeature = {
+  ...BooleanFeatureStatic,
+  customizable: true,
+  downgradable: true,
+  upgradable: true,
+};
+
+export const ExpandedPlan: TExpandedPlan = {
   body: {
     cost: 500,
     features: [
-      {
-        feature: 'static-ram',
-        value: 'ram-generated-0',
-      },
-      {
-        feature: 'static-storage',
-        value: 'storage-generated-1',
-      },
-      {
-        feature: 'static-connections',
-        value: 'connections-generated-2',
-      },
-      {
-        feature: 'static-single-tenant',
-        value: 'false',
-      },
-      {
-        feature: 'static-rollback',
-        value: 'rollback-generated-4',
-      },
-      {
-        feature: 'static-high-availability',
-        value: 'false',
-      },
+      { feature: StringFeatureStatic.label, value: StringFeatureStatic.value.label },
+      { feature: NumberFeatureStatic.label, value: NumberFeatureStatic.value.label },
+      { feature: BooleanFeatureStatic.label, value: BooleanFeatureStatic.value.label },
     ],
     label: 'kitefin',
     name: 'Kitefin',
@@ -36,184 +212,7 @@ export const ExpandedPlan: Catalog.ExpandedPlan = {
     state: 'available',
     trial_days: 0,
     defaultCost: 500,
-    expanded_features: [
-      {
-        label: 'static-ram',
-        name: 'RAM',
-        type: 'string',
-        values: [
-          {
-            label: 'ram-generated-0',
-            name: 'Shared',
-          },
-          {
-            label: 'ram-generated-10',
-            name: '1 GB',
-          },
-          {
-            label: 'ram-generated-14',
-            name: '2 GB',
-          },
-          {
-            label: 'ram-generated-17',
-            name: '4 GB',
-          },
-          {
-            label: 'ram-generated-21',
-            name: '8 GB',
-          },
-        ],
-        value: {
-          label: 'ram-generated-0',
-          name: 'Shared',
-        },
-        value_string: 'Shared',
-      },
-      {
-        label: 'static-storage',
-        name: 'Storage',
-        type: 'string',
-        values: [
-          {
-            label: 'storage-generated-1',
-            name: '250 MB',
-          },
-          {
-            label: 'storage-generated-6',
-            name: '1 GB',
-          },
-          {
-            label: 'storage-generated-8',
-            name: '2.5 GB',
-          },
-          {
-            label: 'storage-generated-11',
-            name: '5 GB',
-          },
-          {
-            label: 'storage-generated-15',
-            name: '50 GB',
-          },
-          {
-            label: 'storage-generated-18',
-            name: '100 GB',
-          },
-          {
-            label: 'storage-generated-22',
-            name: '250 GB',
-          },
-        ],
-        value: {
-          label: 'storage-generated-1',
-          name: '250 MB',
-        },
-        value_string: '250 MB',
-      },
-      {
-        label: 'static-connections',
-        name: 'Connections',
-        type: 'string',
-        values: [
-          {
-            label: 'connections-generated-2',
-            name: '10',
-          },
-          {
-            label: 'connections-generated-7',
-            name: '15',
-          },
-          {
-            label: 'connections-generated-9',
-            name: '30',
-          },
-          {
-            label: 'connections-generated-12',
-            name: '66',
-          },
-          {
-            label: 'connections-generated-16',
-            name: '150',
-          },
-          {
-            label: 'connections-generated-19',
-            name: '300',
-          },
-          {
-            label: 'connections-generated-23',
-            name: '600',
-          },
-        ],
-        value: {
-          label: 'connections-generated-2',
-          name: '10',
-        },
-        value_string: '10',
-      },
-      {
-        label: 'static-single-tenant',
-        name: 'Single Tenant',
-        type: 'boolean',
-        values: [
-          {
-            label: 'true',
-            name: 'true',
-          },
-          {
-            label: 'false',
-            name: 'false',
-          },
-        ],
-        value: {
-          label: 'false',
-          name: 'false',
-        },
-        value_string: 'false',
-      },
-      {
-        label: 'static-high-availability',
-        name: 'High Availability',
-        type: 'boolean',
-        values: [
-          {
-            label: 'true',
-            name: 'true',
-          },
-          {
-            label: 'false',
-            name: 'false',
-          },
-        ],
-        value: {
-          label: 'false',
-          name: 'false',
-        },
-        value_string: 'false',
-      },
-      {
-        label: 'static-rollback',
-        name: 'Rollback',
-        type: 'string',
-        values: [
-          {
-            label: 'rollback-generated-4',
-            name: '0 Days',
-          },
-          {
-            label: 'rollback-generated-13',
-            name: '1 Day',
-          },
-          {
-            label: 'rollback-generated-20',
-            name: '2 Days',
-          },
-        ],
-        value: {
-          label: 'rollback-generated-4',
-          name: '0 Days',
-        },
-        value_string: '0 Days',
-      },
-    ],
+    expanded_features: [StringFeatureStatic, NumberFeatureStatic, BooleanFeatureStatic],
     free: false,
   },
   id: '235abe2ba8b39e941u2h70ayw5m9j',
@@ -221,15 +220,13 @@ export const ExpandedPlan: Catalog.ExpandedPlan = {
   version: 1,
 };
 
-export const ExpandedPlanCustom: Catalog.ExpandedPlan = {
+export const ExpandedPlanCustom: TExpandedPlan = {
   body: {
     cost: 3300,
     features: [
-      { feature: 'storage', value: 'storage' },
-      { feature: 'backups', value: 'backups' },
-      { feature: 'redundancy', value: 'false' },
-      { feature: 'instance_class', value: 'db.t2.micro' },
-      { feature: 'static-single-tenant', value: 'true' },
+      { feature: StringFeatureCustom.label, value: StringFeatureCustom.value.label },
+      { feature: NumberFeatureCustom.label, value: NumberFeatureCustom.value.label },
+      { feature: BooleanFeatureCustom.label, value: BooleanFeatureCustom.value.label },
     ],
     label: 'custom',
     name: 'Custom',
@@ -240,136 +237,31 @@ export const ExpandedPlanCustom: Catalog.ExpandedPlan = {
     state: 'available',
     customizable: true,
     defaultCost: 3500,
-    expanded_features: [
-      {
-        label: 'static-single-tenant',
-        name: 'Single Tenant',
-        type: 'boolean',
-        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
-        value: { label: 'true', name: 'true' },
-        value_string: 'true',
-      },
-      {
-        customizable: true,
-        downgradable: true,
-        label: 'instance_class',
-        name: 'RAM',
-        type: 'string',
-        upgradable: true,
-        values: [
-          { label: 'db.t2.micro', name: '1 GB', price: {} },
-          { cost: 5400, label: 'db.t2.small', name: '2 GB', price: { cost: 5400 } },
-          { cost: 13400, label: 'db.m3.medium', name: '4 GB', price: { cost: 13400 } },
-          { cost: 31800, label: 'db.m4.large', name: '8 GB', price: { cost: 31800 } },
-          { cost: 54400, label: 'db.r4.large', name: '15 GB', price: { cost: 54400 } },
-          { cost: 89000, label: 'db.r4.xlarge', name: '31 GB', price: { cost: 89000 } },
-          { cost: 121000, label: 'db.r4.2xlarge', name: '61 GB', price: { cost: 121000 } },
-          { cost: 239000, label: 'db.r4.4xlarge', name: '122 GB', price: { cost: 239000 } },
-          { cost: 428000, label: 'db.r4.8xlarge', name: '244 GB', price: { cost: 428000 } },
-          { cost: 910000, label: 'db.r4.16xlarge', name: '488 GB', price: { cost: 910000 } },
-        ],
-        value: { label: 'db.t2.micro', name: '1 GB', price: {} },
-        value_string: '1 GB',
-      },
-      {
-        customizable: true,
-        label: 'storage',
-        name: 'Storage',
-        type: 'number',
-        upgradable: true,
-        values: [
-          {
-            label: 'storage',
-            name: 'Storage',
-            numeric_details: {
-              cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
-              increment: 1,
-              max: 16000,
-              min: 5,
-              suffix: 'GB',
-            },
-          },
-        ],
-        value: {
-          label: 'storage',
-          name: 'Storage',
-          numeric_details: {
-            cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
-            increment: 1,
-            max: 16000,
-            min: 5,
-            suffix: 'GB',
-          },
-        },
-        value_string: 'Storage',
-      },
-      {
-        customizable: true,
-        downgradable: true,
-        label: 'backups',
-        name: 'Backups',
-        type: 'number',
-        upgradable: true,
-        values: [
-          {
-            label: 'backups',
-            name: 'Backups',
-            numeric_details: {
-              cost_ranges: [{ limit: 35 }],
-              increment: 1,
-              max: 35,
-              min: 1,
-              suffix: 'Days',
-            },
-            price: {
-              description: 'Backups cost is directly related to storage size',
-              formula: '(* storage#cost backups#number)',
-            },
-          },
-        ],
-        value: {
-          label: 'backups',
-          name: 'Backups',
-          numeric_details: {
-            cost_ranges: [{ limit: 35 }],
-            increment: 1,
-            max: 35,
-            min: 1,
-            suffix: 'Days',
-          },
-          price: {
-            description: 'Backups cost is directly related to storage size',
-            formula: '(* storage#cost backups#number)',
-          },
-        },
-        value_string: 'Backups',
-      },
-      {
-        customizable: true,
-        downgradable: true,
-        label: 'redundancy',
-        name: 'High Availability',
-        type: 'boolean',
-        upgradable: true,
-        values: [
-          {
-            label: 'true',
-            name: 'Yes',
-            price: {
-              description: 'Creates a clone of the DB to rescue from potential outages',
-              formula: '(* plan#partial_cost redundancy#multiply_factor)',
-              multiply_factor: 0.8,
-            },
-          },
-          { label: 'false', name: 'No' },
-        ],
-        value: { label: 'false', name: 'No' },
-        value_string: 'No',
-      },
-    ],
+    expanded_features: [StringFeatureCustom, NumberFeatureCustom, BooleanFeatureCustom],
     free: false,
   },
   id: '235exy25wvzpxj52p87bh87gbnj4y',
+  type: 'plan',
+  version: 1,
+};
+
+export const ExpandedPlanMeasurable: TExpandedPlan = {
+  body: {
+    cost: 0,
+    features: [
+      { feature: NumberFeatureMeasurable.label, value: NumberFeatureMeasurable.value.label },
+    ],
+    label: 'nvidia-1080ti-250gb-ssd',
+    name: 'NVIDIA 1080Ti',
+    product_id: '234nbp17j5zrvb2ym49647kgtyv2a',
+    provider_id: '234a6uzew2vfe1j69ntn67bf24ac0',
+    regions: ['235n4f9pxf8eyraj3y159x89z6jer'],
+    resizable_to: [],
+    state: 'available',
+    expanded_features: [NumberFeatureMeasurable],
+    free: false,
+  },
+  id: '2357v8j36f5h866c32ddwwjxvfe8j',
   type: 'plan',
   version: 1,
 };
@@ -379,153 +271,13 @@ export const Product: Catalog.Product = {
     billing: { currency: 'usd', type: 'monthly-prorated' },
     documentation_url: 'https://jawsdb.com/docs',
     feature_types: [
-      {
-        label: 'static-ram',
-        name: 'RAM',
-        type: 'string',
-        values: [
-          { label: 'ram-generated-0', name: 'Shared' },
-          { label: 'ram-generated-10', name: '1 GB' },
-          { label: 'ram-generated-14', name: '2 GB' },
-          { label: 'ram-generated-17', name: '4 GB' },
-          { label: 'ram-generated-21', name: '8 GB' },
-        ],
-      },
-      {
-        label: 'static-storage',
-        name: 'Storage',
-        type: 'string',
-        values: [
-          { label: 'storage-generated-1', name: '250 MB' },
-          { label: 'storage-generated-6', name: '1 GB' },
-          { label: 'storage-generated-8', name: '2.5 GB' },
-          { label: 'storage-generated-11', name: '5 GB' },
-          { label: 'storage-generated-15', name: '50 GB' },
-          { label: 'storage-generated-18', name: '100 GB' },
-          { label: 'storage-generated-22', name: '250 GB' },
-        ],
-      },
-      {
-        label: 'static-connections',
-        name: 'Connections',
-        type: 'string',
-        values: [
-          { label: 'connections-generated-2', name: '10' },
-          { label: 'connections-generated-7', name: '15' },
-          { label: 'connections-generated-9', name: '30' },
-          { label: 'connections-generated-12', name: '66' },
-          { label: 'connections-generated-16', name: '150' },
-          { label: 'connections-generated-19', name: '300' },
-          { label: 'connections-generated-23', name: '600' },
-        ],
-      },
-      {
-        label: 'static-single-tenant',
-        name: 'Single Tenant',
-        type: 'boolean',
-        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
-      },
-      {
-        label: 'static-high-availability',
-        name: 'High Availability',
-        type: 'boolean',
-        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
-      },
-      {
-        label: 'static-rollback',
-        name: 'Rollback',
-        type: 'string',
-        values: [
-          { label: 'rollback-generated-4', name: '0 Days' },
-          { label: 'rollback-generated-13', name: '1 Day' },
-          { label: 'rollback-generated-20', name: '2 Days' },
-        ],
-      },
-      {
-        customizable: true,
-        downgradable: true,
-        label: 'instance_class',
-        name: 'RAM',
-        type: 'string',
-        upgradable: true,
-        values: [
-          { label: 'db.t2.micro', name: '1 GB', price: {} },
-          { cost: 5400, label: 'db.t2.small', name: '2 GB', price: { cost: 5400 } },
-          { cost: 13400, label: 'db.m3.medium', name: '4 GB', price: { cost: 13400 } },
-          { cost: 31800, label: 'db.m4.large', name: '8 GB', price: { cost: 31800 } },
-          { cost: 54400, label: 'db.r4.large', name: '15 GB', price: { cost: 54400 } },
-          { cost: 89000, label: 'db.r4.xlarge', name: '31 GB', price: { cost: 89000 } },
-          { cost: 121000, label: 'db.r4.2xlarge', name: '61 GB', price: { cost: 121000 } },
-          { cost: 239000, label: 'db.r4.4xlarge', name: '122 GB', price: { cost: 239000 } },
-          { cost: 428000, label: 'db.r4.8xlarge', name: '244 GB', price: { cost: 428000 } },
-          { cost: 910000, label: 'db.r4.16xlarge', name: '488 GB', price: { cost: 910000 } },
-        ],
-      },
-      {
-        customizable: true,
-        label: 'storage',
-        name: 'Storage',
-        type: 'number',
-        upgradable: true,
-        values: [
-          {
-            label: 'storage',
-            name: 'Storage',
-            numeric_details: {
-              cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
-              increment: 1,
-              max: 16000,
-              min: 5,
-              suffix: 'GB',
-            },
-          },
-        ],
-      },
-      {
-        customizable: true,
-        downgradable: true,
-        label: 'backups',
-        name: 'Backups',
-        type: 'number',
-        upgradable: true,
-        values: [
-          {
-            label: 'backups',
-            name: 'Backups',
-            numeric_details: {
-              cost_ranges: [{ limit: 35 }],
-              increment: 1,
-              max: 35,
-              min: 1,
-              suffix: 'Days',
-            },
-            price: {
-              description: 'Backups cost is directly related to storage size',
-              formula: '(* storage#cost backups#number)',
-            },
-          },
-        ],
-      },
-      {
-        customizable: true,
-        downgradable: true,
-        label: 'redundancy',
-        name: 'High Availability',
-        type: 'boolean',
-        upgradable: true,
-        values: [
-          {
-            label: 'true',
-            name: 'Yes',
-            price: {
-              description: 'Creates a clone of the DB to rescue from potential outages',
-              formula: '(* plan#partial_cost redundancy#multiply_factor)',
-              multiply_factor: 0.8,
-            },
-          },
-          { label: 'false', name: 'No' },
-        ],
-      },
+      StringFeatureStatic,
+      StringFeatureCustom,
+      NumberFeatureStatic,
+      NumberFeatureMeasurable,
+      NumberFeatureCustom,
+      BooleanFeatureStatic,
+      BooleanFeatureCustom,
     ],
     images: [
       'https://cdn.manifold.co/providers/jawsdb/screenshots/ss1.PNG',
@@ -589,50 +341,6 @@ export const Product: Catalog.Product = {
   },
   id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
   type: 'product',
-  version: 1,
-};
-
-export const Plan: Catalog.ExpandedPlan = {
-  body: {
-    cost: 500,
-    features: [
-      {
-        feature: 'ram',
-        value: 'Shared',
-      },
-      {
-        feature: 'storage',
-        value: '250 MB',
-      },
-      {
-        feature: 'connections',
-        value: '10',
-      },
-      {
-        feature: 'single-tenant',
-        value: 'false',
-      },
-      {
-        feature: 'rollback',
-        value: '0 Days',
-      },
-      {
-        feature: 'high-availability',
-        value: 'false',
-      },
-    ],
-    label: 'kitefin',
-    name: 'Kitefin',
-    product_id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
-    provider_id: '2346mdxcuca9ez2n93f72nb2fpjgu',
-    regions: ['235mhkk15ky7ha9qpu4gazrqjt2gr', '235m2c51y0625vvtk6ptf55bhpkty'],
-    resizable_to: [],
-    state: 'available',
-    trial_days: 0,
-    free: false,
-  },
-  id: '235abe2ba8b39e941u2h70ayw5m9j',
-  type: 'plan',
   version: 1,
 };
 
