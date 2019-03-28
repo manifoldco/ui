@@ -26,11 +26,11 @@ export class ManifoldPlanDetails {
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures = {};
   @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
-    this.setInitialFeatures(newPlan); // If plan changed, we want to reset all user-selected values
+    this.features = this.initialFeatures(newPlan); // If plan changed, we want to reset all user-selected values
   }
 
   componentWillLoad() {
-    this.setInitialFeatures(); // Set default values
+    this.features = this.initialFeatures(); // Set default values
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
@@ -40,8 +40,11 @@ export class ManifoldPlanDetails {
     };
   }
 
-  setInitialFeatures(plan: Catalog.ExpandedPlan = this.plan) {
-    if (plan.body.expanded_features) this.features = initialFeatures(plan.body.expanded_features);
+  initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
+    if (plan.body.expanded_features) {
+      return initialFeatures(plan.body.expanded_features);
+    }
+    return {};
   }
 
   renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {

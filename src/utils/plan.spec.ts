@@ -79,7 +79,14 @@ describe('cost utilities', () => {
   });
 
   it('sorts & returns pricing tiers for complex measured features', () =>
-    expect(pricingTiers(NumberFeatureMeasurableValueTiered)).toEqual([]));
+    expect(pricingTiers(NumberFeatureMeasurableValueTiered)).toEqual([
+      { cost: 0, limit: 10, suffix: 'hour' },
+      { cost: 90, limit: 100, suffix: 'hour' },
+      { cost: 60, limit: 200, suffix: 'hour' },
+      { cost: 50, limit: 300, suffix: 'hour' },
+      { cost: 30, limit: 400, suffix: 'hour' },
+      { cost: 25, limit: -1, suffix: 'hour' },
+    ]));
 });
 
 describe('other plan methods', () => {
