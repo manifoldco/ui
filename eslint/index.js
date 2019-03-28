@@ -14,7 +14,7 @@ module.exports.rules = {
             if (!name.startsWith('manifold-')) {
               context.report({
                 node,
-                message: `Component ${tag.value.value} should be prefixed with 'manifold-'`,
+                message: `Component ${name} should be prefixed with 'manifold-'`,
               });
             }
           }
