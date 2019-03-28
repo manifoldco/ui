@@ -147,7 +147,7 @@ export class ManifoldPlanDetails {
           <dl class="features">{expanded_features.map(feature => this.renderFeature(feature))}</dl>
         </div>
         <footer class="footer">
-          <manifold-product-cost features={this.features} planID={this.plan.id} />
+          <manifold-plan-cost features={this.features} planID={this.plan.id} />
           <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"

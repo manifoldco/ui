@@ -164,6 +164,17 @@ export namespace Components {
     'value'?: number;
   }
 
+  interface ManifoldPlanCost {
+    'connection': Connection;
+    'features': UserFeatures;
+    'planID': string;
+  }
+  interface ManifoldPlanCostAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'features'?: UserFeatures;
+    'planID'?: string;
+  }
+
   interface ManifoldPlanDetails {
     'plan': Catalog.ExpandedPlan;
     'product': Catalog.Product;
@@ -191,17 +202,6 @@ export namespace Components {
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'productId'?: string;
-  }
-
-  interface ManifoldProductCost {
-    'connection': Connection;
-    'features': UserFeatures;
-    'planID': string;
-  }
-  interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
-    'connection'?: Connection;
-    'features'?: UserFeatures;
-    'planID'?: string;
   }
 
   interface ManifoldProductDetails {
@@ -327,10 +327,10 @@ declare global {
     'ManifoldMarketplaceResults': Components.ManifoldMarketplaceResults;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldNumberInput': Components.ManifoldNumberInput;
+    'ManifoldPlanCost': Components.ManifoldPlanCost;
     'ManifoldPlanDetails': Components.ManifoldPlanDetails;
     'ManifoldPlanMenu': Components.ManifoldPlanMenu;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
-    'ManifoldProductCost': Components.ManifoldProductCost;
     'ManifoldProductDetails': Components.ManifoldProductDetails;
     'ManifoldProductPage': Components.ManifoldProductPage;
     'ManifoldProduct': Components.ManifoldProduct;
@@ -355,10 +355,10 @@ declare global {
     'manifold-marketplace-results': Components.ManifoldMarketplaceResultsAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-number-input': Components.ManifoldNumberInputAttributes;
+    'manifold-plan-cost': Components.ManifoldPlanCostAttributes;
     'manifold-plan-details': Components.ManifoldPlanDetailsAttributes;
     'manifold-plan-menu': Components.ManifoldPlanMenuAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
-    'manifold-product-cost': Components.ManifoldProductCostAttributes;
     'manifold-product-details': Components.ManifoldProductDetailsAttributes;
     'manifold-product-page': Components.ManifoldProductPageAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
@@ -438,6 +438,12 @@ declare global {
     new (): HTMLManifoldNumberInputElement;
   };
 
+  interface HTMLManifoldPlanCostElement extends Components.ManifoldPlanCost, HTMLStencilElement {}
+  var HTMLManifoldPlanCostElement: {
+    prototype: HTMLManifoldPlanCostElement;
+    new (): HTMLManifoldPlanCostElement;
+  };
+
   interface HTMLManifoldPlanDetailsElement extends Components.ManifoldPlanDetails, HTMLStencilElement {}
   var HTMLManifoldPlanDetailsElement: {
     prototype: HTMLManifoldPlanDetailsElement;
@@ -454,12 +460,6 @@ declare global {
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
-  };
-
-  interface HTMLManifoldProductCostElement extends Components.ManifoldProductCost, HTMLStencilElement {}
-  var HTMLManifoldProductCostElement: {
-    prototype: HTMLManifoldProductCostElement;
-    new (): HTMLManifoldProductCostElement;
   };
 
   interface HTMLManifoldProductDetailsElement extends Components.ManifoldProductDetails, HTMLStencilElement {}
@@ -534,10 +534,10 @@ declare global {
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-number-input': HTMLManifoldNumberInputElement
+    'manifold-plan-cost': HTMLManifoldPlanCostElement
     'manifold-plan-details': HTMLManifoldPlanDetailsElement
     'manifold-plan-menu': HTMLManifoldPlanMenuElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
-    'manifold-product-cost': HTMLManifoldProductCostElement
     'manifold-product-details': HTMLManifoldProductDetailsElement
     'manifold-product-page': HTMLManifoldProductPageElement
     'manifold-product': HTMLManifoldProductElement
@@ -562,10 +562,10 @@ declare global {
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
+    'manifold-plan-cost': HTMLManifoldPlanCostElement;
     'manifold-plan-details': HTMLManifoldPlanDetailsElement;
     'manifold-plan-menu': HTMLManifoldPlanMenuElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
-    'manifold-product-cost': HTMLManifoldProductCostElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-product': HTMLManifoldProductElement;

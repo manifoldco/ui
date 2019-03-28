@@ -5,8 +5,8 @@ import Tunnel from '../../data/connection';
 import { Connection } from '../../utils/connections';
 import { planCost } from '../../utils/plan';
 
-@Component({ tag: 'manifold-product-cost', styleUrl: 'manifold-product-cost.css', shadow: true })
-export class ManifoldProductCost {
+@Component({ tag: 'manifold-plan-cost', styleUrl: 'manifold-plan-cost.css', shadow: true })
+export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   @Prop() connection: Connection;
   @Prop() features: UserFeatures;
@@ -54,4 +54,4 @@ export class ManifoldProductCost {
   }
 }
 
-Tunnel.injectProps(ManifoldProductCost, ['connection']);
+Tunnel.injectProps(ManifoldPlanCost, ['connection']);

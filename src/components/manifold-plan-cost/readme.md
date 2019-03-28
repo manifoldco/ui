@@ -1,6 +1,4 @@
-# manifold-product-cost
-
-
+# manifold-plan-cost
 
 <!-- Auto Generated Below -->
 
