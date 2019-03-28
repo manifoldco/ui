@@ -2,7 +2,7 @@ import { Component, Prop } from '@stencil/core';
 
 import Tunnel from '../../data/marketplace';
 
-@Component({ tag: 'mani-tunnel' })
+@Component({ tag: 'manifold-services-tunnel' })
 export class ManiTunnel {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;

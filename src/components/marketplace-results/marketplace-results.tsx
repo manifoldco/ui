@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-@Component({ tag: 'marketplace-results', styleUrl: 'marketplace-results.css' })
+@Component({ tag: 'manifold-marketplace-results', styleUrl: 'marketplace-results.css' })
 export class ManifoldMarketplace {
   @Prop() featured?: string;
   @Prop() serviceLink?: string;
@@ -24,7 +24,7 @@ export class ManifoldMarketplace {
         {this.services
           .sort((a, b) => a.body.name.localeCompare(b.body.name))
           .map(({ body: { name, label, tagline, logo_url } }) => (
-            <service-card
+            <manifold-service-card
               description={tagline}
               label={label}
               logo={logo_url}

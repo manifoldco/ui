@@ -4,7 +4,7 @@ import { Component, Element, Prop } from '@stencil/core';
 import { icon } from '../../assets/icons';
 
 @Component({
-  tag: 'mf-icon',
+  tag: 'manifold-icon',
   styleUrl: 'mf-icon.css',
   shadow: true,
 })

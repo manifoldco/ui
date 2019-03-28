@@ -3,7 +3,7 @@ import { Component, Prop } from '@stencil/core';
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 
 @Component({
-  tag: 'product-details',
+  tag: 'manifold-product-details',
   styleUrl: 'product-details.css',
   shadow: true,
 })
@@ -17,14 +17,14 @@ export class ProductDetails {
       <div>
         <h1 class="title" itemprop="tagline">
           {tagline}
-          <link-button
+          <manifold-link-button
             href={`${RESOURCE_CREATE}${label}&plan=${'selectedPlan'}`}
             rel="noopener noreferrer"
             target="_blank"
           >
             Get {name}
-            <mf-icon icon="arrow_right" marginLeft />
-          </link-button>
+            <manifold-icon icon="arrow_right" marginLeft />
+          </manifold-link-button>
         </h1>
         <ul class="value-prop-list" itemprop="description">
           {value_props.map(({ body, header }) => (
@@ -34,7 +34,7 @@ export class ProductDetails {
             </li>
           ))}
         </ul>
-        <image-gallery title="Screenshots" images={this.product.body.images} />
+        <manifold-image-gallery title="Screenshots" images={this.product.body.images} />
       </div>
     );
   }

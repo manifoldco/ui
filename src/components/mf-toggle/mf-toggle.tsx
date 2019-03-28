@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
-  tag: 'mf-toggle',
+  tag: 'manifold-toggle',
   styleUrl: 'mf-toggle.css',
   scoped: true,
 })

@@ -1,7 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'product-page',
+  tag: 'manifold-product-page',
   styleUrl: 'product-page.css',
   shadow: true,
 })
@@ -14,18 +14,18 @@ export class ProductPage {
     return (
       <aside class="sidebar">
         <div class="sidebar-inner">
-          <featured-service
+          <manifold-featured-service
             name={name}
             logo={logo_url}
             service-color-id={`--service-color-${label}`}
           >
             {/* TODO get provider name */}
-          </featured-service>
+          </manifold-featured-service>
           {tags && (
             <div class="sidebar-section">
               {tags.map(tag => (
                 <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
-                  <mf-icon icon={tag} margin-right />
+                  <manifold-icon icon={tag} margin-right />
                   {tag}
                 </div>
               ))}
@@ -35,15 +35,15 @@ export class ProductPage {
             <h4>Provider Links</h4>
             <div class="provider-link">
               <a href="#plan_pricing">
-                <mf-icon icon="dollar_sign" color="--mf-c-gray" margin-right />
+                <manifold-icon icon="dollar_sign" color="--mf-c-gray" margin-right />
                 Pricing
               </a>
             </div>
             <div class="provider-link">
               <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                <mf-icon icon="life_buoy" color="--mf-c-gray" margin-right />
+                <manifold-icon icon="life_buoy" color="--mf-c-gray" margin-right />
                 Support
-                <mf-icon
+                <manifold-icon
                   class="external-link-icon"
                   icon="arrow_up_right"
                   color="--mf-c-grayLight"
@@ -53,9 +53,9 @@ export class ProductPage {
             </div>
             <div class="provider-link">
               <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                <mf-icon icon="book" color="--mf-c-gray" margin-right />
+                <manifold-icon icon="book" color="--mf-c-gray" margin-right />
                 Documentation
-                <mf-icon
+                <manifold-icon
                   class="external-link-icon"
                   icon="arrow_up_right"
                   color="--mf-c-grayLight"
@@ -75,7 +75,7 @@ export class ProductPage {
       <div class="wrapper" itemscope itemtype="http://schema.org/Product">
         <section class="grid">
           {this.renderSidebar()}
-          <product-details product={this.product} />
+          <manifold-product-details product={this.product} />
           {/* TODO <product-plans /> */}
         </section>
       </div>

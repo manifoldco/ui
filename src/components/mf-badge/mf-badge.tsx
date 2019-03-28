@@ -1,7 +1,7 @@
 import { Component } from '@stencil/core';
 
 @Component({
-  tag: 'mf-badge',
+  tag: 'manifold-badge',
   styleUrl: 'mf-badge.css',
   shadow: true,
 })

@@ -5,12 +5,12 @@ import { icon } from '../../assets/icons';
 
 const iconKey = 'activity';
 
-describe('<mf-icon>', () => {
+describe('<manifold-icon>', () => {
   it('displays the icon (gradient)', async () => {
     const page = await newE2EPage({
-      html: `<mf-icon />`,
+      html: `<manifold-icon />`,
     });
-    await page.$eval('mf-icon', (elm: any) => {
+    await page.$eval('manifold-icon', (elm: any) => {
       elm.icon = 'activity';
       elm.style = '--gradient: linear-gradient(to top right, #329dd1, #4f50a4)';
       elm.gradient = '--gradient';
@@ -18,24 +18,24 @@ describe('<mf-icon>', () => {
 
     await page.waitForChanges();
 
-    const el = await page.find('mf-icon >>> path');
+    const el = await page.find('manifold-icon >>> path');
     expect(el.getAttribute('d')).toBe(icon[iconKey]);
     expect(el.getAttribute('d')).toBeTruthy();
   });
 
   it('displays the icon (solid color)', async () => {
     const page = await newE2EPage({
-      html: `<mf-icon />`,
+      html: `<manifold-icon />`,
     });
 
-    await page.$eval('mf-icon', (elm: any) => {
+    await page.$eval('manifold-icon', (elm: any) => {
       elm.icon = 'activity';
       elm.color = '#888888';
     });
 
     await page.waitForChanges();
 
-    const el = await page.find('mf-icon >>> path');
+    const el = await page.find('manifold-icon >>> path');
     expect(el.getAttribute('d')).toBe(icon[iconKey]);
     expect(el.getAttribute('d')).toBeTruthy();
   });

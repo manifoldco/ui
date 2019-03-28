@@ -1,7 +1,7 @@
 import { PlanDetails } from './plan-details';
 import { ExpandedPlan, ExpandedPlanCustom, Product } from '../../spec/mock/catalog';
 
-describe(`<plan-details>`, () => {
+describe(`<manifold-plan-details>`, () => {
   it('initializes all features for fixed plans', () => {
     const planDetails = new PlanDetails();
     planDetails.plan = ExpandedPlan;

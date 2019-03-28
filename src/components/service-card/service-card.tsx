@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
-  tag: 'service-card',
+  tag: 'manifold-service-card',
   styleUrl: 'service-card.css',
   shadow: true,
 })
@@ -35,11 +35,11 @@ export class ServiceCard {
         href={this.serviceLink}
         onClick={this.onClick}
       >
-        {this.isCustom && <mf-icon class="gear" icon="settings" />}
+        {this.isCustom && <manifold-icon class="gear" icon="settings" />}
         <div class="logo">
           {this.isCustom ? (
             <div class="icon-border">
-              <mf-icon class="icon" icon={this.logo} />
+              <manifold-icon class="icon" icon={this.logo} />
             </div>
           ) : (
             <img src={this.logo} alt={this.name} itemprop="image" />

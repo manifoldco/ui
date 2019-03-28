@@ -1,7 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'featured-service',
+  tag: 'manifold-featured-service',
   styleUrl: 'featured-service.css',
   shadow: true,
 })

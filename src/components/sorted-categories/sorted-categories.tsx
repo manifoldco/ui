@@ -4,7 +4,7 @@ import Tunnel, { State } from '../../data/marketplace';
 import { themeIcons } from '../../assets/icons';
 import { categories, formatCategoryLabel } from '../../utils/marketplace';
 
-@Component({ tag: 'sorted-categories' })
+@Component({ tag: 'manifold-sorted-categories' })
 export class Categories {
   @Prop() observeCategory: (el?: HTMLElement) => void;
 
@@ -17,18 +17,18 @@ export class Categories {
           return (
             <div>
               {sortedCategories.map(tag => (
-                <service-category
+                <manifold-service-category
                   categoryLoaded={this.observeCategory}
                   icon={themeIcons[tag]}
                   name={tag}
                   label={formatCategoryLabel(tag)}
                 >
-                  <marketplace-results
+                  <manifold-marketplace-results
                     services={categoryMap[tag]}
                     featured={state.featured}
                     service-link={state.serviceLink}
                   >
-                    <service-card
+                    <manifold-service-card
                       description={`Add your own ${formatCategoryLabel(tag)} service`}
                       label={'bring-your-own'}
                       logo={themeIcons[tag]}
@@ -37,8 +37,8 @@ export class Categories {
                       is-featured={false}
                       slot="custom-card"
                     />
-                  </marketplace-results>
-                </service-category>
+                  </manifold-marketplace-results>
+                </manifold-service-category>
               ))}
             </div>
           );

@@ -17,7 +17,7 @@ import {
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 
 @Component({
-  tag: 'plan-details',
+  tag: 'manifold-plan-details',
   styleUrl: 'plan-details.css',
   shadow: true,
 })
@@ -62,7 +62,7 @@ export class PlanDetails {
       render.push(
         <dd class="feature-value" data-value={displayValue}>
           {feature.customizable ? (
-            <mf-select
+            <manifold-select
               name={feature.label}
               options={stringFeatureOptions(feature.values || [])}
               onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
@@ -79,14 +79,14 @@ export class PlanDetails {
       render.push(
         <dd class="feature-value" data-value={displayValue}>
           {feature.customizable ? (
-            <mf-toggle
+            <manifold-toggle
               aria-labelledby={`-name`}
               defaultValue={booleanFeatureDefaultValue(feature.value)}
               name={feature.label}
               onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
             />
           ) : (
-            [displayValue === YES && <mf-icon icon="check" margin-right />, displayValue]
+            [displayValue === YES && <manifold-icon icon="check" margin-right />, displayValue]
           )}
         </dd>
       );
@@ -102,7 +102,7 @@ export class PlanDetails {
       render.push(
         <dd class="feature-value" data-value={displayValue}>
           {feature.customizable && (
-            <mf-number-input
+            <manifold-number-input
               increment={feature.value.numeric_details.increment}
               max={feature.value.numeric_details.max}
               min={feature.value.numeric_details.min}
@@ -148,14 +148,14 @@ export class PlanDetails {
         </div>
         <footer class="footer">
           <manifold-product-cost features={this.features} planID={this.plan.id} />
-          <link-button
+          <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"
             target="_blank"
           >
             Get {name}
-            <mf-icon icon="arrow_right" marginLeft />
-          </link-button>
+            <manifold-icon icon="arrow_right" marginLeft />
+          </manifold-link-button>
         </footer>
       </section>
     );

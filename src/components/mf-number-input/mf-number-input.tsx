@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 @Component({
-  tag: 'mf-number-input',
+  tag: 'manifold-number-input',
   styleUrl: 'mf-number-input.css',
   shadow: true,
 })
@@ -79,7 +79,7 @@ export class MfNumberInput {
           {this.incrementDisabledLabel && this.upperBoundReached && (
             <div class="tooltip">{this.incrementDisabledLabel}</div>
           )}
-          <mf-icon icon="plus" />
+          <manifold-icon icon="plus" />
         </button>
         <button
           class="decrement"
@@ -89,7 +89,7 @@ export class MfNumberInput {
           {this.decrementDisabledLabel && this.lowerBoundReached && (
             <div class="tooltip">{this.decrementDisabledLabel}</div>
           )}
-          <mf-icon icon="minus" />
+          <manifold-icon icon="minus" />
         </button>
         <div class="display-units">
           {this.min.toLocaleString()} - {this.max.toLocaleString()} {this.suffix}

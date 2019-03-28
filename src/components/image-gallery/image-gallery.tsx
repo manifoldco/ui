@@ -1,7 +1,7 @@
 import { Component, Prop, State } from '@stencil/core';
 
 @Component({
-  tag: 'image-gallery',
+  tag: 'manifold-image-gallery',
   styleUrl: 'image-gallery.css',
   shadow: true,
 })

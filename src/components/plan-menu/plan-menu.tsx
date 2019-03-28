@@ -17,9 +17,9 @@ const PlanButton: FunctionalComponent<{
       <input name="plan" type="radio" {...props} />
       <div class="plan-button-inner">
         {children}
-        <mf-icon class="check-icon" icon="check" />
+        <manifold-icon class="check-icon" icon="check" />
         {props.customizable && (
-          <mf-icon class="custom-icon" icon="sliders" data-hidden={props.checked} />
+          <manifold-icon class="custom-icon" icon="sliders" data-hidden={props.checked} />
         )}
       </div>
     </label>
@@ -27,7 +27,7 @@ const PlanButton: FunctionalComponent<{
 );
 
 @Component({
-  tag: 'plan-menu',
+  tag: 'manifold-plan-menu',
   styleUrl: 'plan-menu.css',
   shadow: true,
 })
@@ -65,7 +65,7 @@ export class PlanMenu {
             >
               {name}
               {free ? (
-                <mf-badge>Free</mf-badge>
+                <manifold-badge>Free</manifold-badge>
               ) : (
                 <div class="cost">
                   {customizable && 'Starting at '}

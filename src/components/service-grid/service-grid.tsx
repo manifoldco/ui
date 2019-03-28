@@ -3,7 +3,7 @@ import { Component, State, Element } from '@stencil/core';
 import { CategoryButtons } from './category-buttons';
 import { FilteredServices } from './filtered-services';
 
-@Component({ tag: 'service-grid', styleUrl: 'service-grid.css', shadow: true })
+@Component({ tag: 'manifold-service-grid', styleUrl: 'service-grid.css', shadow: true })
 export class ServiceGrid {
   @Element() root: HTMLElement;
   @State() observer: IntersectionObserver;
@@ -103,7 +103,7 @@ export class ServiceGrid {
                 {this.filter ? (
                   <FilteredServices filter={this.filter} />
                 ) : (
-                  <sorted-categories observeCategory={this.observeCategory} />
+                  <manifold-sorted-categories observeCategory={this.observeCategory} />
                 )}
               </div>
             </div>

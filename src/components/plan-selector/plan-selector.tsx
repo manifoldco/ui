@@ -1,7 +1,7 @@
 import { Component, State, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'plan-selector',
+  tag: 'manifold-active-plan',
   styleUrl: 'plan-selector.css',
   shadow: true,
 })
@@ -22,13 +22,13 @@ export class PlanSelector {
 
   render() {
     return [
-      <plan-menu
+      <manifold-plan-menu
         plans={this.plans}
         selected-plan-id={this.selectedPlanId}
         selectPlan={this.selectPlan}
       />,
       <div>
-        <plan-details
+        <manifold-plan-details
           product={this.product}
           plan={this.plans.find(plan => plan.id === this.selectedPlanId)}
         />

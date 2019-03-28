@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-@Component({ tag: 'service-category', styleUrl: 'service-category.css' })
+@Component({ tag: 'manifold-service-category', styleUrl: 'service-category.css' })
 export class Categories {
   @Prop() categoryLoaded?: (el?: HTMLElement) => void;
   @Prop() icon?: string;
@@ -12,7 +12,7 @@ export class Categories {
     return (
       <div class="category-container">
         <h3 class="category" id={`category-${this.name}`} ref={this.categoryLoaded}>
-          {this.icon && <mf-icon icon={this.icon} marginRight />}
+          {this.icon && <manifold-icon icon={this.icon} marginRight />}
           {this.label}
           {this.tagline && <p class="tagline">{this.tagline}</p>}
         </h3>

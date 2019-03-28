@@ -11,7 +11,7 @@ export const FilteredServices: FunctionalComponent<FilteredServicesProps> = ({ f
   <Tunnel.Consumer>
     {(state: State) => {
       return (
-        <marketplace-results
+        <manifold-marketplace-results
           services={filteredServices(filter || '', state.services)}
           featured={state.featured}
           service-link={state.serviceLink}

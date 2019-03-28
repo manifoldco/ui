@@ -19,7 +19,7 @@ export class ManifoldProduct {
   }
 
   render() {
-    return this.product && <product-page product={this.product} />;
+    return this.product && <manifold-product-page product={this.product} />;
   }
 }
 

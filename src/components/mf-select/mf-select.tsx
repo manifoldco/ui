@@ -2,7 +2,7 @@ import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { Option } from 'types/Select';
 
 @Component({
-  tag: 'mf-select',
+  tag: 'manifold-select',
   styleUrl: 'mf-select.css',
   scoped: true,
 })

@@ -9,15 +9,15 @@ const images = [
   'https://cdn.manifold.co/providers/jawsdb/screenshots/ss4.PNG',
 ];
 
-describe('<image-gallery>', () => {
+describe('<manifold-image-gallery>', () => {
   let page: E2EPage;
 
   beforeAll(async () => {
     page = await newE2EPage({
-      html: `<image-gallery></image-gallery>`,
+      html: `<manifold-image-gallery></manifold-image-gallery>`,
     });
 
-    await page.$eval('image-gallery', (elm: any) => {
+    await page.$eval('manifold-image-gallery', (elm: any) => {
       elm.images = [
         'https://cdn.manifold.co/providers/jawsdb/screenshots/ss1.PNG',
         'https://cdn.manifold.co/providers/jawsdb/screenshots/ss2.PNG',
@@ -29,12 +29,12 @@ describe('<image-gallery>', () => {
   });
 
   it('displays the first image by default', async () => {
-    const el = await page.find('image-gallery >>> img[data-test="display-image"]');
+    const el = await page.find('manifold-image-gallery >>> img[data-test="display-image"]');
     expect(el.getAttribute('src')).toBe(images[0]);
   });
 
   it('displays the image thumbnails', async () => {
-    const els = await page.findAll('image-gallery >>> img[data-test="thumbnail"]');
+    const els = await page.findAll('manifold-image-gallery >>> img[data-test="thumbnail"]');
     expect(els.length).toBe(4);
   });
 });

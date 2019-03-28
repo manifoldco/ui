@@ -1,7 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'link-button',
+  tag: 'manifold-link-button',
   styleUrl: 'link-button.css',
   shadow: true,
 })
