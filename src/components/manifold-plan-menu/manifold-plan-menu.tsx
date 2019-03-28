@@ -54,7 +54,7 @@ export class ManifoldPlanMenu {
     return (
       <ul class="plan-list">
         {this.allPlans.map(
-          ({ id, body: { name, expanded_features = [], customizable } }: Catalog.ExpandedPlan) => (
+          ({ id, body: { name, customizable, expanded_features = [] } }: Catalog.ExpandedPlan) => (
             <PlanButton
               checked={id === this.selectedPlanId}
               value={id}
@@ -63,11 +63,7 @@ export class ManifoldPlanMenu {
             >
               {name}
               <div class="cost">
-                <manifold-plan-cost
-                  plan-id={id}
-                  compact={true}
-                  all-features={[...expanded_features]}
-                />
+                <manifold-plan-cost features={expanded_features} plan-id={id} compact={true} />
               </div>
             </PlanButton>
           )

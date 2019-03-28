@@ -15,28 +15,19 @@ import {
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   @Prop() connection: Connection;
-  @Prop() allFeatures: Catalog.ExpandedFeature[];
+  @Prop() features: Catalog.ExpandedFeature[];
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;
   @Prop() planId: string;
   @Prop() selectedFeatures: UserFeatures = {};
   @State() controller?: AbortController;
-  @State() baseCost: number;
-  @State() measuredCost: number;
+  @State() baseCost?: number;
+  @State() measuredCost: number = 0;
   @State() suffix?: string;
-  @Watch('allFeatures') allFeaturesChanged() {
-    if (Object.keys(this.allFeatures)) {
-      this.selectedFeatures = {
-        ...initialFeatures(this.allFeatures),
-        ...this.selectedFeatures,
-      };
-    }
+  @Watch('features') featuresChanged() {
     this.calculateCost();
   }
   @Watch('planId') planChanged() {
-    this.calculateCost();
-  }
-  @Watch('selectedFeatures') selectedFeaturesChanged() {
     this.calculateCost();
   }
 
@@ -44,53 +35,47 @@ export class ManifoldPlanCost {
     return this.calculateCost();
   }
 
+  setDefaultFeatures(features: Catalog.ExpandedFeature[] = this.features) {
+    if (!Array.isArray(features)) return;
+    this.selectedFeatures = { ...initialFeatures(features) };
+    this.calculateCost();
+  }
+
   // Note: isCustomizable & isMeasurable are not mutually exclusive; a plan may be both
   get isCustomizable() {
-    if (!Array.isArray(this.allFeatures)) return false;
-    return hasCustomizableFeatures(this.allFeatures);
+    if (!Array.isArray(this.features)) return false;
+    return hasCustomizableFeatures(this.features);
   }
 
   get isMeasurable() {
-    if (!Array.isArray(this.allFeatures)) return false;
-    return hasMeasurableFeatures(this.allFeatures);
-  }
-
-  get customizableFeatures() {
-    return this.allFeatures.filter(
-      ({ customizable }) => typeof customizable === 'boolean' && customizable
-    );
-  }
-
-  get measurableFeatures() {
-    return this.allFeatures.filter(
-      ({ measurable }) => typeof measurable === 'boolean' && measurable
-    );
+    if (!Array.isArray(this.features)) return false;
+    return hasMeasurableFeatures(this.features);
   }
 
   calculateCost() {
-    if (!this.planId) return Promise.resolve();
+    const allFeatures = { ...initialFeatures(this.features), ...this.selectedFeatures };
 
     // 1. Calculate metered pricing, if any
     if (this.isMeasurable) {
-      const firstFeature = this.measurableFeatures[0];
-      if (firstFeature && firstFeature.value) {
-        this.suffix =
-          firstFeature.value.numeric_details && firstFeature.value.numeric_details.suffix;
-        this.measuredCost = pricingTiers(firstFeature.value)[0].cost;
+      const setFeature = this.features.find(
+        ({ label, measurable }) => !!measurable && Object.keys(allFeatures).includes(label)
+      );
+      if (setFeature && setFeature.value) {
+        this.suffix = setFeature.value.numeric_details && setFeature.value.numeric_details.suffix;
+        this.measuredCost = pricingTiers(setFeature.value)[0].cost;
       }
     }
 
-    if (!Object.keys(this.selectedFeatures) && Array.isArray(this.allFeatures)) {
-      this.selectedFeatures = initialFeatures(this.allFeatures);
-    }
-
     // 2. Fetch base cost from cost API (and cancel in-flight reqs)
+    if (!this.planId) return Promise.resolve();
+    // Hide display while calculating
+    this.baseCost = undefined;
     if (this.controller) this.controller.abort(); // If a request is in flight, cancel it
     this.controller = new AbortController();
 
     return planCost(this.connection, {
       planID: this.planId,
-      features: this.selectedFeatures,
+      features: allFeatures,
       init: { signal: this.controller.signal },
     }).then(({ cost }: Gateway.Price) => {
       this.baseCost = cost || 0;
@@ -98,35 +83,43 @@ export class ManifoldPlanCost {
     });
   }
 
-  renderBaseCost(): JSX.Element {
-    if (this.baseCost > 0 && this.measuredCost > 0) {
-      return `${$(this.baseCost)} + {${$(this.measuredCost)}`;
-    }
-    if (this.baseCost === 0 && this.measuredCost > 0) {
-      return $(this.measuredCost);
-    }
-    if (this.baseCost === 0 && this.measuredCost === 0) {
-      return this.compact ? <mf-badge>Free</mf-badge> : 'Free';
-    }
-    return $(this.baseCost);
-  }
-
-  renderSuffix() {
-    if (this.measuredCost > 0) {
-      return <small>&nbsp;/&nbsp;{this.suffix || 'unit'}</small>;
-    }
-    if (this.baseCost > 0) {
-      return <small>&nbsp;/&nbsp;mo</small>;
-    }
+  renderPrefix() {
+    if (!this.compact) return null;
+    if (this.isCustomizable) return <span class="starting">Starting at</span>;
     return null;
   }
 
+  renderBaseCost(): JSX.Element | null {
+    if (typeof this.baseCost !== 'number') return null;
+
+    const monthlySuffix = <small>&nbsp;/&nbsp;mo</small>;
+    const measurableSuffix = <small>&nbsp;/&nbsp;{this.suffix}</small>;
+
+    // $5.00 / mo + $0.25 / hour
+    if (this.baseCost > 0 && this.measuredCost > 0) {
+      return [$(this.baseCost), monthlySuffix, ' + ', $(this.measuredCost), measurableSuffix];
+    }
+    // $0.25 / hour
+    if (this.baseCost === 0 && this.measuredCost > 0) {
+      return [$(this.measuredCost), measurableSuffix];
+    }
+    // Free
+    if (this.baseCost === 0 && this.measuredCost === 0) {
+      return this.compact ? <mf-badge>Free</mf-badge> : 'Free';
+    }
+    // $5.00 / mo
+    return $(this.baseCost);
+  }
+
+  renderSuffix() {}
+
   render() {
+    if (typeof this.baseCost !== 'number') return <div class="cost" />;
+
     return (
       <div class="cost" itemprop="price" data-compact={this.compact}>
-        {(this.isMeasurable || this.isCustomizable) && <span class="starting">Starting at</span>}
+        {this.renderPrefix()}
         <span itemprop="price">{this.renderBaseCost()}</span>
-        {this.renderSuffix()}
       </div>
     );
   }

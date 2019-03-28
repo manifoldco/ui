@@ -149,8 +149,8 @@ export class ManifoldPlanDetails {
         <footer class="footer">
           <manifold-plan-cost
             plan-id={this.plan.id}
+            features={expanded_features}
             selected-features={this.features}
-            all-features={expanded_features}
           />
           <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
