@@ -101,7 +101,7 @@ export class ManifoldPlanDetails {
 
       render.push(
         <dd class="feature-value" data-value={displayValue}>
-          {feature.customizable && (
+          {feature.customizable ? (
             <manifold-number-input
               increment={feature.value.numeric_details.increment}
               max={feature.value.numeric_details.max}
@@ -113,8 +113,9 @@ export class ManifoldPlanDetails {
               decrement-disabled-label="This feature is not downgradable"
               increment-disabled-label="This feature is not upgradable"
             />
+          ) : (
+            displayValue
           )}
-          {!feature.customizable && displayValue}
         </dd>
       );
     }
@@ -147,7 +148,7 @@ export class ManifoldPlanDetails {
           <dl class="features">{expanded_features.map(feature => this.renderFeature(feature))}</dl>
         </div>
         <footer class="footer">
-          <manifold-plan-cost features={this.features} planID={this.plan.id} />
+          <manifold-plan-cost features={this.features} plan-id={this.plan.id} />
           <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"

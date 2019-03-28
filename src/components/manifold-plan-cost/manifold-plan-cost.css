@@ -1,9 +1,15 @@
 .cost {
-  color: var(--mf-black);
-  font-size: 1rem;
+  color: inherit;
 
   & small {
+    font-size: var(--mf-font-d1);
     text-transform: uppercase;
     opacity: 0.6;
+  }
+
+  &[data-compact] {
+    & small {
+      display: none;
+    }
   }
 }

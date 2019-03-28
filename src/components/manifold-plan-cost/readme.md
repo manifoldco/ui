@@ -5,11 +5,12 @@
 
 ## Properties
 
-| Property     | Attribute  | Description | Type           | Default     |
-| ------------ | ---------- | ----------- | -------------- | ----------- |
-| `connection` | --         |             | `Connection`   | `undefined` |
-| `features`   | --         |             | `UserFeatures` | `undefined` |
-| `planID`     | `plan-i-d` |             | `string`       | `undefined` |
+| Property     | Attribute | Description | Type                   | Default     |
+| ------------ | --------- | ----------- | ---------------------- | ----------- |
+| `compact`    | `compact` |             | `boolean \| undefined` | `false`     |
+| `connection` | --        |             | `Connection`           | `undefined` |
+| `features`   | --        |             | `UserFeatures`         | `{}`        |
+| `planId`     | `plan-id` |             | `string`               | `undefined` |
 
 
 ----------------------------------------------

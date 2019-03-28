@@ -1,4 +1,4 @@
-# product-details
+# manifold-plan-selector
 
 Display the plans for a product.
 
@@ -8,7 +8,6 @@ Display the plans for a product.
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property     | Attribute    | Description | Type         | Default     |
@@ -16,7 +15,6 @@ Display the plans for a product.
 | `connection` | --           |             | `Connection` | `undefined` |
 | `productId`  | `product-id` |             | `string`     | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

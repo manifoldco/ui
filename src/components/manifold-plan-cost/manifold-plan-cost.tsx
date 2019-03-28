@@ -9,11 +9,12 @@ import { planCost } from '../../utils/plan';
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   @Prop() connection: Connection;
-  @Prop() features: UserFeatures;
-  @Prop() planID: string;
+  @Prop() compact?: boolean = false;
+  @Prop() features: UserFeatures = {};
+  @Prop() planId: string;
   @State() controller?: AbortController;
   @State() cost: number;
-  @Watch('planID') planChanged() {
+  @Watch('planId') planChanged() {
     this.calculateCost();
   }
   @Watch('features') featureChanged() {
@@ -21,7 +22,7 @@ export class ManifoldPlanCost {
   }
 
   componentWillLoad() {
-    if (!this.planID) {
+    if (this.planId) {
       return this.calculateCost();
     }
 
@@ -33,7 +34,7 @@ export class ManifoldPlanCost {
     this.controller = new AbortController();
 
     return planCost(this.connection, {
-      planID: this.planID,
+      planID: this.planId,
       features: this.features,
       init: { signal: this.controller.signal },
     }).then(({ cost }: Gateway.Price) => {
@@ -46,7 +47,7 @@ export class ManifoldPlanCost {
     if (!this.cost) return null;
 
     return (
-      <div class="cost" itemprop="price">
+      <div class="cost" itemprop="price" data-compact={this.compact}>
         <span itemprop="price">{$(this.cost)}</span>
         <small>&nbsp;/&nbsp;month</small>
       </div>

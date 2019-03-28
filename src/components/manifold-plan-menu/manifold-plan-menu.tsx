@@ -60,9 +60,10 @@ export class ManifoldPlanMenu {
             >
               {name}
               <div class="cost">
-                {customizable && 'Starting at '}
+                {customizable && <span>Starting at</span>}
                 <manifold-plan-cost
                   plan-id={id}
+                  compact={true}
                   features={initialFeatures(expanded_features || [])}
                 />
               </div>

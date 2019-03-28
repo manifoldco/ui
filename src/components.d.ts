@@ -165,14 +165,16 @@ export namespace Components {
   }
 
   interface ManifoldPlanCost {
+    'compact'?: boolean;
     'connection': Connection;
     'features': UserFeatures;
-    'planID': string;
+    'planId': string;
   }
   interface ManifoldPlanCostAttributes extends StencilHTMLAttributes {
+    'compact'?: boolean;
     'connection'?: Connection;
     'features'?: UserFeatures;
-    'planID'?: string;
+    'planId'?: string;
   }
 
   interface ManifoldPlanDetails {

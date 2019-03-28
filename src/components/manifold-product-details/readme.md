@@ -1,9 +1,6 @@
-# product-details
-
-
+# manifold-product-details
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | --------- | --------- | ----------- | ----------------- | ----------- |
 | `product` | --        |             | `ExpandedProduct` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
