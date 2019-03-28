@@ -25,12 +25,12 @@ export class ManifoldPlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures = {};
-  @Watch('plan') onUpdate() {
-    this.features = this.initialFeatures();
+  @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
+    this.setInitialFeatures(newPlan); // If plan changed, we want to reset all user-selected values
   }
 
   componentWillLoad() {
-    this.features = this.initialFeatures();
+    this.setInitialFeatures(); // Set default values
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
@@ -40,9 +40,8 @@ export class ManifoldPlanDetails {
     };
   }
 
-  initialFeatures(): UserFeatures {
-    if (!this.plan.body.expanded_features) return {};
-    return initialFeatures(this.plan.body.expanded_features);
+  setInitialFeatures(plan: Catalog.ExpandedPlan = this.plan) {
+    if (plan.body.expanded_features) this.features = initialFeatures(plan.body.expanded_features);
   }
 
   renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {
@@ -148,7 +147,11 @@ export class ManifoldPlanDetails {
           <dl class="features">{expanded_features.map(feature => this.renderFeature(feature))}</dl>
         </div>
         <footer class="footer">
-          <manifold-plan-cost features={this.features} plan-id={this.plan.id} />
+          <manifold-plan-cost
+            plan-id={this.plan.id}
+            selected-features={this.features}
+            all-features={expanded_features}
+          />
           <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"

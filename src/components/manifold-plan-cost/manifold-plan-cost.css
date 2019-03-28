@@ -1,9 +1,9 @@
 .cost {
+  display: flex;
+  align-items: center;
   color: inherit;
 
   & small {
-    font-size: var(--mf-font-d1);
-    text-transform: uppercase;
     opacity: 0.6;
   }
 
@@ -12,4 +12,8 @@
       display: none;
     }
   }
+}
+
+.starting {
+  margin-right: 0.25em;
 }

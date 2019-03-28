@@ -1,5 +1,4 @@
 import { Component, Prop, FunctionalComponent } from '@stencil/core';
-import { initialFeatures } from '../../utils/plan';
 
 const PlanButton: FunctionalComponent<{
   checked?: boolean;
@@ -47,11 +46,15 @@ export class ManifoldPlanMenu {
     return [...this.fixedPlans, ...this.customPlans];
   }
 
+  measurableFeatures(features: Catalog.ExpandedFeature[]) {
+    return features.filter(({ measurable }) => typeof measurable === 'boolean' && measurable);
+  }
+
   render() {
     return (
       <ul class="plan-list">
         {this.allPlans.map(
-          ({ id, body: { name, expanded_features, customizable } }: Catalog.ExpandedPlan) => (
+          ({ id, body: { name, expanded_features = [], customizable } }: Catalog.ExpandedPlan) => (
             <PlanButton
               checked={id === this.selectedPlanId}
               value={id}
@@ -60,11 +63,10 @@ export class ManifoldPlanMenu {
             >
               {name}
               <div class="cost">
-                {customizable && <span>Starting at</span>}
                 <manifold-plan-cost
                   plan-id={id}
                   compact={true}
-                  features={initialFeatures(expanded_features || [])}
+                  all-features={[...expanded_features]}
                 />
               </div>
             </PlanButton>
