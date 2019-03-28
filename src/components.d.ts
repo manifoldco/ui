@@ -22,6 +22,25 @@ import {
 
 export namespace Components {
 
+  interface ManifoldActivePlan {
+    'plans': Catalog.ExpandedPlan[];
+    'product': Catalog.ExpandedProduct;
+  }
+  interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
+    'plans'?: Catalog.ExpandedPlan[];
+    'product'?: Catalog.ExpandedProduct;
+  }
+
+  interface ManifoldBadge {}
+  interface ManifoldBadgeAttributes extends StencilHTMLAttributes {}
+
+  interface ManifoldConnection {
+    'env': Env;
+  }
+  interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
+    'env'?: Env;
+  }
+
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
@@ -32,98 +51,6 @@ export namespace Components {
     'name'?: string;
     'serviceColorId'?: string;
   }
-
-  interface ManifoldImageGallery {
-    'images': string[];
-    'title': string;
-  }
-  interface ManifoldImageGalleryAttributes extends StencilHTMLAttributes {
-    'images'?: string[];
-    'title'?: string;
-  }
-
-  interface ManifoldLinkButton {
-    'href': string;
-    'rel'?: string;
-    'target'?: string;
-  }
-  interface ManifoldLinkButtonAttributes extends StencilHTMLAttributes {
-    'href'?: string;
-    'rel'?: string;
-    'target'?: string;
-  }
-
-  interface ManifoldServicesTunnel {
-    'featured'?: string;
-    'serviceLink'?: string;
-    'services': Catalog.Product[];
-  }
-  interface ManifoldServicesTunnelAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
-    'serviceLink'?: string;
-    'services'?: Catalog.Product[];
-  }
-
-  interface ManifoldConnection {
-    'env': Env;
-  }
-  interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
-    'env'?: Env;
-  }
-
-  interface ManifoldMarketplace {
-    'connection': Connection;
-    'featured'?: string;
-    'serviceLink'?: string;
-  }
-  interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
-    'connection'?: Connection;
-    'featured'?: string;
-    'serviceLink'?: string;
-  }
-
-  interface ManifoldPlanSelector {
-    'connection': Connection;
-    'productId': string;
-  }
-  interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
-    'connection'?: Connection;
-    'productId'?: string;
-  }
-
-  interface ManifoldProductCost {
-    'connection': Connection;
-    'features': UserFeatures;
-    'planID': string;
-  }
-  interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
-    'connection'?: Connection;
-    'features'?: UserFeatures;
-    'planID'?: string;
-  }
-
-  interface ManifoldProduct {
-    'connection': Connection;
-    'productLabel': string;
-  }
-  interface ManifoldProductAttributes extends StencilHTMLAttributes {
-    'connection'?: Connection;
-    'productLabel'?: string;
-  }
-
-  interface ManifoldMarketplaceResults {
-    'featured'?: string;
-    'serviceLink'?: string;
-    'services': Catalog.Product[];
-  }
-  interface ManifoldMarketplaceResultsAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
-    'serviceLink'?: string;
-    'services'?: Catalog.Product[];
-  }
-
-  interface ManifoldBadge {}
-  interface ManifoldBadgeAttributes extends StencilHTMLAttributes {}
 
   interface ManifoldIcon {
     /**
@@ -160,6 +87,48 @@ export namespace Components {
     'title'?: string;
   }
 
+  interface ManifoldImageGallery {
+    'images': string[];
+    'title': string;
+  }
+  interface ManifoldImageGalleryAttributes extends StencilHTMLAttributes {
+    'images'?: string[];
+    'title'?: string;
+  }
+
+  interface ManifoldLinkButton {
+    'href': string;
+    'rel'?: string;
+    'target'?: string;
+  }
+  interface ManifoldLinkButtonAttributes extends StencilHTMLAttributes {
+    'href'?: string;
+    'rel'?: string;
+    'target'?: string;
+  }
+
+  interface ManifoldMarketplaceResults {
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services': Catalog.Product[];
+  }
+  interface ManifoldMarketplaceResultsAttributes extends StencilHTMLAttributes {
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services'?: Catalog.Product[];
+  }
+
+  interface ManifoldMarketplace {
+    'connection': Connection;
+    'featured'?: string;
+    'serviceLink'?: string;
+  }
+  interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'featured'?: string;
+    'serviceLink'?: string;
+  }
+
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
     'error'?: string;
@@ -184,36 +153,6 @@ export namespace Components {
     'value'?: number;
   }
 
-  interface ManifoldSelect {
-    'defaultValue'?: string;
-    'name': string;
-    'options': Option[];
-    'required'?: boolean;
-  }
-  interface ManifoldSelectAttributes extends StencilHTMLAttributes {
-    'defaultValue'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent) => void;
-    'options'?: Option[];
-    'required'?: boolean;
-  }
-
-  interface ManifoldToggle {
-    'ariaLabelledby'?: string;
-    'defaultValue'?: boolean;
-    'disabled'?: boolean;
-    'label'?: string;
-    'name': string;
-  }
-  interface ManifoldToggleAttributes extends StencilHTMLAttributes {
-    'ariaLabelledby'?: string;
-    'defaultValue'?: boolean;
-    'disabled'?: boolean;
-    'label'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent) => void;
-  }
-
   interface ManifoldPlanDetails {
     'plan': Catalog.ExpandedPlan;
     'product': Catalog.Product;
@@ -234,13 +173,24 @@ export namespace Components {
     'selectedPlanId'?: string;
   }
 
-  interface ManifoldActivePlan {
-    'plans': Catalog.ExpandedPlan[];
-    'product': Catalog.ExpandedProduct;
+  interface ManifoldPlanSelector {
+    'connection': Connection;
+    'productId': string;
   }
-  interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
-    'plans'?: Catalog.ExpandedPlan[];
-    'product'?: Catalog.ExpandedProduct;
+  interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'productId'?: string;
+  }
+
+  interface ManifoldProductCost {
+    'connection': Connection;
+    'features': UserFeatures;
+    'planID': string;
+  }
+  interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'features'?: UserFeatures;
+    'planID'?: string;
   }
 
   interface ManifoldProductDetails {
@@ -255,6 +205,29 @@ export namespace Components {
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
     'product'?: Catalog.ExpandedProduct;
+  }
+
+  interface ManifoldProduct {
+    'connection': Connection;
+    'productLabel': string;
+  }
+  interface ManifoldProductAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'productLabel'?: string;
+  }
+
+  interface ManifoldSelect {
+    'defaultValue'?: string;
+    'name': string;
+    'options': Option[];
+    'required'?: boolean;
+  }
+  interface ManifoldSelectAttributes extends StencilHTMLAttributes {
+    'defaultValue'?: string;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent) => void;
+    'options'?: Option[];
+    'required'?: boolean;
   }
 
   interface ManifoldServiceCard {
@@ -295,74 +268,125 @@ export namespace Components {
   interface ManifoldServiceGrid {}
   interface ManifoldServiceGridAttributes extends StencilHTMLAttributes {}
 
+  interface ManifoldServicesTunnel {
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services': Catalog.Product[];
+  }
+  interface ManifoldServicesTunnelAttributes extends StencilHTMLAttributes {
+    'featured'?: string;
+    'serviceLink'?: string;
+    'services'?: Catalog.Product[];
+  }
+
   interface ManifoldSortedCategories {
     'observeCategory': (el?: HTMLElement) => void;
   }
   interface ManifoldSortedCategoriesAttributes extends StencilHTMLAttributes {
     'observeCategory'?: (el?: HTMLElement) => void;
   }
+
+  interface ManifoldToggle {
+    'ariaLabelledby'?: string;
+    'defaultValue'?: boolean;
+    'disabled'?: boolean;
+    'label'?: string;
+    'name': string;
+  }
+  interface ManifoldToggleAttributes extends StencilHTMLAttributes {
+    'ariaLabelledby'?: string;
+    'defaultValue'?: boolean;
+    'disabled'?: boolean;
+    'label'?: string;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent) => void;
+  }
 }
 
 declare global {
   interface StencilElementInterfaces {
+    'ManifoldActivePlan': Components.ManifoldActivePlan;
+    'ManifoldBadge': Components.ManifoldBadge;
+    'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
+    'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
     'ManifoldLinkButton': Components.ManifoldLinkButton;
-    'ManifoldServicesTunnel': Components.ManifoldServicesTunnel;
-    'ManifoldConnection': Components.ManifoldConnection;
-    'ManifoldMarketplace': Components.ManifoldMarketplace;
-    'ManifoldPlanSelector': Components.ManifoldPlanSelector;
-    'ManifoldProductCost': Components.ManifoldProductCost;
-    'ManifoldProduct': Components.ManifoldProduct;
     'ManifoldMarketplaceResults': Components.ManifoldMarketplaceResults;
-    'ManifoldBadge': Components.ManifoldBadge;
-    'ManifoldIcon': Components.ManifoldIcon;
+    'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldNumberInput': Components.ManifoldNumberInput;
-    'ManifoldSelect': Components.ManifoldSelect;
-    'ManifoldToggle': Components.ManifoldToggle;
     'ManifoldPlanDetails': Components.ManifoldPlanDetails;
     'ManifoldPlanMenu': Components.ManifoldPlanMenu;
-    'ManifoldActivePlan': Components.ManifoldActivePlan;
+    'ManifoldPlanSelector': Components.ManifoldPlanSelector;
+    'ManifoldProductCost': Components.ManifoldProductCost;
     'ManifoldProductDetails': Components.ManifoldProductDetails;
     'ManifoldProductPage': Components.ManifoldProductPage;
+    'ManifoldProduct': Components.ManifoldProduct;
+    'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
     'ManifoldServiceCategory': Components.ManifoldServiceCategory;
     'ManifoldServiceGrid': Components.ManifoldServiceGrid;
+    'ManifoldServicesTunnel': Components.ManifoldServicesTunnel;
     'ManifoldSortedCategories': Components.ManifoldSortedCategories;
+    'ManifoldToggle': Components.ManifoldToggle;
   }
 
   interface StencilIntrinsicElements {
+    'manifold-active-plan': Components.ManifoldActivePlanAttributes;
+    'manifold-badge': Components.ManifoldBadgeAttributes;
+    'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
+    'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
     'manifold-link-button': Components.ManifoldLinkButtonAttributes;
-    'manifold-services-tunnel': Components.ManifoldServicesTunnelAttributes;
-    'manifold-connection': Components.ManifoldConnectionAttributes;
-    'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
-    'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
-    'manifold-product-cost': Components.ManifoldProductCostAttributes;
-    'manifold-product': Components.ManifoldProductAttributes;
     'manifold-marketplace-results': Components.ManifoldMarketplaceResultsAttributes;
-    'manifold-badge': Components.ManifoldBadgeAttributes;
-    'manifold-icon': Components.ManifoldIconAttributes;
+    'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-number-input': Components.ManifoldNumberInputAttributes;
-    'manifold-select': Components.ManifoldSelectAttributes;
-    'manifold-toggle': Components.ManifoldToggleAttributes;
     'manifold-plan-details': Components.ManifoldPlanDetailsAttributes;
     'manifold-plan-menu': Components.ManifoldPlanMenuAttributes;
-    'manifold-active-plan': Components.ManifoldActivePlanAttributes;
+    'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
+    'manifold-product-cost': Components.ManifoldProductCostAttributes;
     'manifold-product-details': Components.ManifoldProductDetailsAttributes;
     'manifold-product-page': Components.ManifoldProductPageAttributes;
+    'manifold-product': Components.ManifoldProductAttributes;
+    'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
     'manifold-service-category': Components.ManifoldServiceCategoryAttributes;
     'manifold-service-grid': Components.ManifoldServiceGridAttributes;
+    'manifold-services-tunnel': Components.ManifoldServicesTunnelAttributes;
     'manifold-sorted-categories': Components.ManifoldSortedCategoriesAttributes;
+    'manifold-toggle': Components.ManifoldToggleAttributes;
   }
 
+
+  interface HTMLManifoldActivePlanElement extends Components.ManifoldActivePlan, HTMLStencilElement {}
+  var HTMLManifoldActivePlanElement: {
+    prototype: HTMLManifoldActivePlanElement;
+    new (): HTMLManifoldActivePlanElement;
+  };
+
+  interface HTMLManifoldBadgeElement extends Components.ManifoldBadge, HTMLStencilElement {}
+  var HTMLManifoldBadgeElement: {
+    prototype: HTMLManifoldBadgeElement;
+    new (): HTMLManifoldBadgeElement;
+  };
+
+  interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
+  var HTMLManifoldConnectionElement: {
+    prototype: HTMLManifoldConnectionElement;
+    new (): HTMLManifoldConnectionElement;
+  };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
   var HTMLManifoldFeaturedServiceElement: {
     prototype: HTMLManifoldFeaturedServiceElement;
     new (): HTMLManifoldFeaturedServiceElement;
+  };
+
+  interface HTMLManifoldIconElement extends Components.ManifoldIcon, HTMLStencilElement {}
+  var HTMLManifoldIconElement: {
+    prototype: HTMLManifoldIconElement;
+    new (): HTMLManifoldIconElement;
   };
 
   interface HTMLManifoldImageGalleryElement extends Components.ManifoldImageGallery, HTMLStencilElement {}
@@ -377,16 +401,10 @@ declare global {
     new (): HTMLManifoldLinkButtonElement;
   };
 
-  interface HTMLManifoldServicesTunnelElement extends Components.ManifoldServicesTunnel, HTMLStencilElement {}
-  var HTMLManifoldServicesTunnelElement: {
-    prototype: HTMLManifoldServicesTunnelElement;
-    new (): HTMLManifoldServicesTunnelElement;
-  };
-
-  interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
-  var HTMLManifoldConnectionElement: {
-    prototype: HTMLManifoldConnectionElement;
-    new (): HTMLManifoldConnectionElement;
+  interface HTMLManifoldMarketplaceResultsElement extends Components.ManifoldMarketplaceResults, HTMLStencilElement {}
+  var HTMLManifoldMarketplaceResultsElement: {
+    prototype: HTMLManifoldMarketplaceResultsElement;
+    new (): HTMLManifoldMarketplaceResultsElement;
   };
 
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
@@ -395,58 +413,10 @@ declare global {
     new (): HTMLManifoldMarketplaceElement;
   };
 
-  interface HTMLManifoldPlanSelectorElement extends Components.ManifoldPlanSelector, HTMLStencilElement {}
-  var HTMLManifoldPlanSelectorElement: {
-    prototype: HTMLManifoldPlanSelectorElement;
-    new (): HTMLManifoldPlanSelectorElement;
-  };
-
-  interface HTMLManifoldProductCostElement extends Components.ManifoldProductCost, HTMLStencilElement {}
-  var HTMLManifoldProductCostElement: {
-    prototype: HTMLManifoldProductCostElement;
-    new (): HTMLManifoldProductCostElement;
-  };
-
-  interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
-  var HTMLManifoldProductElement: {
-    prototype: HTMLManifoldProductElement;
-    new (): HTMLManifoldProductElement;
-  };
-
-  interface HTMLManifoldMarketplaceResultsElement extends Components.ManifoldMarketplaceResults, HTMLStencilElement {}
-  var HTMLManifoldMarketplaceResultsElement: {
-    prototype: HTMLManifoldMarketplaceResultsElement;
-    new (): HTMLManifoldMarketplaceResultsElement;
-  };
-
-  interface HTMLManifoldBadgeElement extends Components.ManifoldBadge, HTMLStencilElement {}
-  var HTMLManifoldBadgeElement: {
-    prototype: HTMLManifoldBadgeElement;
-    new (): HTMLManifoldBadgeElement;
-  };
-
-  interface HTMLManifoldIconElement extends Components.ManifoldIcon, HTMLStencilElement {}
-  var HTMLManifoldIconElement: {
-    prototype: HTMLManifoldIconElement;
-    new (): HTMLManifoldIconElement;
-  };
-
   interface HTMLManifoldNumberInputElement extends Components.ManifoldNumberInput, HTMLStencilElement {}
   var HTMLManifoldNumberInputElement: {
     prototype: HTMLManifoldNumberInputElement;
     new (): HTMLManifoldNumberInputElement;
-  };
-
-  interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
-  var HTMLManifoldSelectElement: {
-    prototype: HTMLManifoldSelectElement;
-    new (): HTMLManifoldSelectElement;
-  };
-
-  interface HTMLManifoldToggleElement extends Components.ManifoldToggle, HTMLStencilElement {}
-  var HTMLManifoldToggleElement: {
-    prototype: HTMLManifoldToggleElement;
-    new (): HTMLManifoldToggleElement;
   };
 
   interface HTMLManifoldPlanDetailsElement extends Components.ManifoldPlanDetails, HTMLStencilElement {}
@@ -461,10 +431,16 @@ declare global {
     new (): HTMLManifoldPlanMenuElement;
   };
 
-  interface HTMLManifoldActivePlanElement extends Components.ManifoldActivePlan, HTMLStencilElement {}
-  var HTMLManifoldActivePlanElement: {
-    prototype: HTMLManifoldActivePlanElement;
-    new (): HTMLManifoldActivePlanElement;
+  interface HTMLManifoldPlanSelectorElement extends Components.ManifoldPlanSelector, HTMLStencilElement {}
+  var HTMLManifoldPlanSelectorElement: {
+    prototype: HTMLManifoldPlanSelectorElement;
+    new (): HTMLManifoldPlanSelectorElement;
+  };
+
+  interface HTMLManifoldProductCostElement extends Components.ManifoldProductCost, HTMLStencilElement {}
+  var HTMLManifoldProductCostElement: {
+    prototype: HTMLManifoldProductCostElement;
+    new (): HTMLManifoldProductCostElement;
   };
 
   interface HTMLManifoldProductDetailsElement extends Components.ManifoldProductDetails, HTMLStencilElement {}
@@ -477,6 +453,18 @@ declare global {
   var HTMLManifoldProductPageElement: {
     prototype: HTMLManifoldProductPageElement;
     new (): HTMLManifoldProductPageElement;
+  };
+
+  interface HTMLManifoldProductElement extends Components.ManifoldProduct, HTMLStencilElement {}
+  var HTMLManifoldProductElement: {
+    prototype: HTMLManifoldProductElement;
+    new (): HTMLManifoldProductElement;
+  };
+
+  interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
+  var HTMLManifoldSelectElement: {
+    prototype: HTMLManifoldSelectElement;
+    new (): HTMLManifoldSelectElement;
   };
 
   interface HTMLManifoldServiceCardElement extends Components.ManifoldServiceCard, HTMLStencilElement {}
@@ -497,64 +485,76 @@ declare global {
     new (): HTMLManifoldServiceGridElement;
   };
 
+  interface HTMLManifoldServicesTunnelElement extends Components.ManifoldServicesTunnel, HTMLStencilElement {}
+  var HTMLManifoldServicesTunnelElement: {
+    prototype: HTMLManifoldServicesTunnelElement;
+    new (): HTMLManifoldServicesTunnelElement;
+  };
+
   interface HTMLManifoldSortedCategoriesElement extends Components.ManifoldSortedCategories, HTMLStencilElement {}
   var HTMLManifoldSortedCategoriesElement: {
     prototype: HTMLManifoldSortedCategoriesElement;
     new (): HTMLManifoldSortedCategoriesElement;
   };
 
+  interface HTMLManifoldToggleElement extends Components.ManifoldToggle, HTMLStencilElement {}
+  var HTMLManifoldToggleElement: {
+    prototype: HTMLManifoldToggleElement;
+    new (): HTMLManifoldToggleElement;
+  };
+
   interface HTMLElementTagNameMap {
+    'manifold-active-plan': HTMLManifoldActivePlanElement
+    'manifold-badge': HTMLManifoldBadgeElement
+    'manifold-connection': HTMLManifoldConnectionElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
+    'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
     'manifold-link-button': HTMLManifoldLinkButtonElement
-    'manifold-services-tunnel': HTMLManifoldServicesTunnelElement
-    'manifold-connection': HTMLManifoldConnectionElement
-    'manifold-marketplace': HTMLManifoldMarketplaceElement
-    'manifold-plan-selector': HTMLManifoldPlanSelectorElement
-    'manifold-product-cost': HTMLManifoldProductCostElement
-    'manifold-product': HTMLManifoldProductElement
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement
-    'manifold-badge': HTMLManifoldBadgeElement
-    'manifold-icon': HTMLManifoldIconElement
+    'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-number-input': HTMLManifoldNumberInputElement
-    'manifold-select': HTMLManifoldSelectElement
-    'manifold-toggle': HTMLManifoldToggleElement
     'manifold-plan-details': HTMLManifoldPlanDetailsElement
     'manifold-plan-menu': HTMLManifoldPlanMenuElement
-    'manifold-active-plan': HTMLManifoldActivePlanElement
+    'manifold-plan-selector': HTMLManifoldPlanSelectorElement
+    'manifold-product-cost': HTMLManifoldProductCostElement
     'manifold-product-details': HTMLManifoldProductDetailsElement
     'manifold-product-page': HTMLManifoldProductPageElement
+    'manifold-product': HTMLManifoldProductElement
+    'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
     'manifold-service-category': HTMLManifoldServiceCategoryElement
     'manifold-service-grid': HTMLManifoldServiceGridElement
+    'manifold-services-tunnel': HTMLManifoldServicesTunnelElement
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement
+    'manifold-toggle': HTMLManifoldToggleElement
   }
 
   interface ElementTagNameMap {
+    'manifold-active-plan': HTMLManifoldActivePlanElement;
+    'manifold-badge': HTMLManifoldBadgeElement;
+    'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
+    'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-link-button': HTMLManifoldLinkButtonElement;
-    'manifold-services-tunnel': HTMLManifoldServicesTunnelElement;
-    'manifold-connection': HTMLManifoldConnectionElement;
-    'manifold-marketplace': HTMLManifoldMarketplaceElement;
-    'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
-    'manifold-product-cost': HTMLManifoldProductCostElement;
-    'manifold-product': HTMLManifoldProductElement;
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement;
-    'manifold-badge': HTMLManifoldBadgeElement;
-    'manifold-icon': HTMLManifoldIconElement;
+    'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
-    'manifold-select': HTMLManifoldSelectElement;
-    'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-plan-details': HTMLManifoldPlanDetailsElement;
     'manifold-plan-menu': HTMLManifoldPlanMenuElement;
-    'manifold-active-plan': HTMLManifoldActivePlanElement;
+    'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
+    'manifold-product-cost': HTMLManifoldProductCostElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
+    'manifold-product': HTMLManifoldProductElement;
+    'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-service-category': HTMLManifoldServiceCategoryElement;
     'manifold-service-grid': HTMLManifoldServiceGridElement;
+    'manifold-services-tunnel': HTMLManifoldServicesTunnelElement;
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement;
+    'manifold-toggle': HTMLManifoldToggleElement;
   }
 
 
