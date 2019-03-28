@@ -5,8 +5,10 @@ import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
   styleUrl: 'mf-number-input.css',
   shadow: true,
 })
-export class MfSlider {
+export class MfNumberInput {
   @Prop() error?: string;
+  @Prop() decrementDisabledLabel?: string;
+  @Prop() incrementDisabledLabel?: string;
   @Prop() increment: number = 1;
   @Prop() max: number;
   @Prop() min: number = 0;
@@ -74,6 +76,9 @@ export class MfSlider {
           onClick={() => this.setValue(this.value + this.increment)}
           disabled={this.upperBoundReached}
         >
+          {this.incrementDisabledLabel && this.upperBoundReached && (
+            <div class="tooltip">{this.incrementDisabledLabel}</div>
+          )}
           <mf-icon icon="plus" />
         </button>
         <button
@@ -81,6 +86,9 @@ export class MfSlider {
           onClick={() => this.setValue(this.value - this.increment)}
           disabled={this.lowerBoundReached}
         >
+          {this.decrementDisabledLabel && this.lowerBoundReached && (
+            <div class="tooltip">{this.decrementDisabledLabel}</div>
+          )}
           <mf-icon icon="minus" />
         </button>
         <div class="display-units">

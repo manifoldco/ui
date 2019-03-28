@@ -110,6 +110,8 @@ export class PlanDetails {
               onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
               suffix={feature.value.numeric_details.suffix}
               value={value}
+              decrement-disabled-label="This feature is not downgradable"
+              increment-disabled-label="This feature is not upgradable"
             />
           )}
           {!feature.customizable && displayValue}

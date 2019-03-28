@@ -78,3 +78,38 @@
     color: var(--mf-c-red);
   }
 }
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  display: none;
+  width: max-content;
+  max-width: 10em;
+  padding: 0.25em 0.5em;
+  color: var(--mf-c-white);
+  font-size: var(--mf-font-d1);
+  background: var(--mf-c-black);
+  border-radius: var(--mf-radius-default);
+  transform: translate(-50%, calc(-100% - 0.5em));
+
+  &::before {
+    position: absolute;
+    bottom: -0.25em;
+    left: calc(50% - 0.25em);
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    background: inherit;
+    border-bottom-right-radius: 2px;
+    transform: rotateZ(45deg);
+    content: '';
+  }
+}
+
+button {
+  position: relative;
+
+  &:hover .tooltip {
+    display: block;
+  }
+}

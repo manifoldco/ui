@@ -199,6 +199,30 @@ export namespace Components {
     'value'?: string | number;
   }
 
+  interface MfNumberInput {
+    'decrementDisabledLabel'?: string;
+    'error'?: string;
+    'increment': number;
+    'incrementDisabledLabel'?: string;
+    'max': number;
+    'min': number;
+    'name': string;
+    'suffix': string;
+    'value': number;
+  }
+  interface MfNumberInputAttributes extends StencilHTMLAttributes {
+    'decrementDisabledLabel'?: string;
+    'error'?: string;
+    'increment'?: number;
+    'incrementDisabledLabel'?: string;
+    'max'?: number;
+    'min'?: number;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent) => void;
+    'suffix'?: string;
+    'value'?: number;
+  }
+
   interface MfSelect {
     'defaultValue'?: string;
     'name': string;
@@ -211,26 +235,6 @@ export namespace Components {
     'onUpdateValue'?: (event: CustomEvent) => void;
     'options'?: Option[];
     'required'?: boolean;
-  }
-
-  interface MfNumberInput {
-    'error'?: string;
-    'increment': number;
-    'max': number;
-    'min': number;
-    'name': string;
-    'suffix': string;
-    'value': number;
-  }
-  interface MfNumberInputAttributes extends StencilHTMLAttributes {
-    'error'?: string;
-    'increment'?: number;
-    'max'?: number;
-    'min'?: number;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent) => void;
-    'suffix'?: string;
-    'value'?: number;
   }
 
   interface MfToggle {
@@ -354,8 +358,8 @@ declare global {
     'MfBadge': Components.MfBadge;
     'MfIcon': Components.MfIcon;
     'MfInput': Components.MfInput;
-    'MfSelect': Components.MfSelect;
     'MfNumberInput': Components.MfNumberInput;
+    'MfSelect': Components.MfSelect;
     'MfToggle': Components.MfToggle;
     'PlanDetails': Components.PlanDetails;
     'PlanMenu': Components.PlanMenu;
@@ -383,8 +387,8 @@ declare global {
     'mf-badge': Components.MfBadgeAttributes;
     'mf-icon': Components.MfIconAttributes;
     'mf-input': Components.MfInputAttributes;
-    'mf-select': Components.MfSelectAttributes;
     'mf-number-input': Components.MfNumberInputAttributes;
+    'mf-select': Components.MfSelectAttributes;
     'mf-toggle': Components.MfToggleAttributes;
     'plan-details': Components.PlanDetailsAttributes;
     'plan-menu': Components.PlanMenuAttributes;
@@ -482,16 +486,16 @@ declare global {
     new (): HTMLMfInputElement;
   };
 
-  interface HTMLMfSelectElement extends Components.MfSelect, HTMLStencilElement {}
-  var HTMLMfSelectElement: {
-    prototype: HTMLMfSelectElement;
-    new (): HTMLMfSelectElement;
-  };
-
   interface HTMLMfNumberInputElement extends Components.MfNumberInput, HTMLStencilElement {}
   var HTMLMfNumberInputElement: {
     prototype: HTMLMfNumberInputElement;
     new (): HTMLMfNumberInputElement;
+  };
+
+  interface HTMLMfSelectElement extends Components.MfSelect, HTMLStencilElement {}
+  var HTMLMfSelectElement: {
+    prototype: HTMLMfSelectElement;
+    new (): HTMLMfSelectElement;
   };
 
   interface HTMLMfToggleElement extends Components.MfToggle, HTMLStencilElement {}
@@ -569,8 +573,8 @@ declare global {
     'mf-badge': HTMLMfBadgeElement
     'mf-icon': HTMLMfIconElement
     'mf-input': HTMLMfInputElement
-    'mf-select': HTMLMfSelectElement
     'mf-number-input': HTMLMfNumberInputElement
+    'mf-select': HTMLMfSelectElement
     'mf-toggle': HTMLMfToggleElement
     'plan-details': HTMLPlanDetailsElement
     'plan-menu': HTMLPlanMenuElement
@@ -598,8 +602,8 @@ declare global {
     'mf-badge': HTMLMfBadgeElement;
     'mf-icon': HTMLMfIconElement;
     'mf-input': HTMLMfInputElement;
-    'mf-select': HTMLMfSelectElement;
     'mf-number-input': HTMLMfNumberInputElement;
+    'mf-select': HTMLMfSelectElement;
     'mf-toggle': HTMLMfToggleElement;
     'plan-details': HTMLPlanDetailsElement;
     'plan-menu': HTMLPlanMenuElement;
