@@ -105,7 +105,7 @@ export class ManifoldPlanCost {
     }
     // Free
     if (this.baseCost === 0 && this.measuredCost === 0) {
-      return this.compact ? <mf-badge>Free</mf-badge> : 'Free';
+      return this.compact ? <manifold-badge>Free</manifold-badge> : 'Free';
     }
     // $5.00 / mo
     return $(this.baseCost);

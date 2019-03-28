@@ -1,7 +1,7 @@
 .cost {
   display: flex;
   align-items: center;
-  min-height: 1em;
+  min-height: 1.25em;
   color: inherit;
 
   & small {

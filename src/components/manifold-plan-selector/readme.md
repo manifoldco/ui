@@ -8,6 +8,7 @@ Display the plans for a product.
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property     | Attribute    | Description | Type         | Default     |
@@ -15,6 +16,7 @@ Display the plans for a product.
 | `connection` | --           |             | `Connection` | `undefined` |
 | `productId`  | `product-id` |             | `string`     | `undefined` |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
