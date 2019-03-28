@@ -42,7 +42,7 @@ export class ManifoldServiceCard {
               <manifold-icon class="icon" icon={this.logo} />
             </div>
           ) : (
-            <img src={this.logo} alt={this.name} itemprop="image" />
+            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
           )}
         </div>
         <h3 class="name" itemprop="name">

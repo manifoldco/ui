@@ -96,6 +96,17 @@ export namespace Components {
     'title'?: string;
   }
 
+  interface ManifoldLazyImage {
+    'alt': string;
+    'itemprop': string;
+    'src': string;
+  }
+  interface ManifoldLazyImageAttributes extends StencilHTMLAttributes {
+    'alt'?: string;
+    'itemprop'?: string;
+    'src'?: string;
+  }
+
   interface ManifoldLinkButton {
     'href': string;
     'rel'?: string;
@@ -311,6 +322,7 @@ declare global {
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
+    'ManifoldLazyImage': Components.ManifoldLazyImage;
     'ManifoldLinkButton': Components.ManifoldLinkButton;
     'ManifoldMarketplaceResults': Components.ManifoldMarketplaceResults;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
@@ -338,6 +350,7 @@ declare global {
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
+    'manifold-lazy-image': Components.ManifoldLazyImageAttributes;
     'manifold-link-button': Components.ManifoldLinkButtonAttributes;
     'manifold-marketplace-results': Components.ManifoldMarketplaceResultsAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
@@ -393,6 +406,12 @@ declare global {
   var HTMLManifoldImageGalleryElement: {
     prototype: HTMLManifoldImageGalleryElement;
     new (): HTMLManifoldImageGalleryElement;
+  };
+
+  interface HTMLManifoldLazyImageElement extends Components.ManifoldLazyImage, HTMLStencilElement {}
+  var HTMLManifoldLazyImageElement: {
+    prototype: HTMLManifoldLazyImageElement;
+    new (): HTMLManifoldLazyImageElement;
   };
 
   interface HTMLManifoldLinkButtonElement extends Components.ManifoldLinkButton, HTMLStencilElement {}
@@ -510,6 +529,7 @@ declare global {
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
+    'manifold-lazy-image': HTMLManifoldLazyImageElement
     'manifold-link-button': HTMLManifoldLinkButtonElement
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
@@ -537,6 +557,7 @@ declare global {
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
+    'manifold-lazy-image': HTMLManifoldLazyImageElement;
     'manifold-link-button': HTMLManifoldLinkButtonElement;
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
