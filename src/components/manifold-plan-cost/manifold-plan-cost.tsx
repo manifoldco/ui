@@ -1,6 +1,5 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
 import { UserFeatures } from 'types/UserFeatures';
-import { $ } from '../../utils/currency';
 import Tunnel from '../../data/connection';
 import { Connection } from '../../utils/connections';
 import {
@@ -11,11 +10,11 @@ import {
   initialFeatures,
 } from '../../utils/plan';
 
-@Component({ tag: 'manifold-plan-cost', styleUrl: 'manifold-plan-cost.css', shadow: true })
+@Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   @Prop() connection: Connection;
-  @Prop() features: Catalog.ExpandedFeature[];
+  @Prop() allFeatures: Catalog.ExpandedFeature[];
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;
   @Prop() planId: string;
@@ -23,10 +22,13 @@ export class ManifoldPlanCost {
   @State() controller?: AbortController;
   @State() baseCost?: number;
   @State() measuredCosts: [number, string][] = [];
-  @Watch('features') featuresChanged() {
+  @Watch('allFeatures') featuresChanged() {
     this.calculateCost();
   }
   @Watch('planId') planChanged() {
+    this.calculateCost();
+  }
+  @Watch('selectedFeatures') selectedFeaturesChanged() {
     this.calculateCost();
   }
 
@@ -34,29 +36,23 @@ export class ManifoldPlanCost {
     return this.calculateCost();
   }
 
-  setDefaultFeatures(features: Catalog.ExpandedFeature[] = this.features) {
-    if (!Array.isArray(features)) return;
-    this.selectedFeatures = { ...initialFeatures(features) };
-    this.calculateCost();
-  }
-
   // Note: isCustomizable & isMeasurable are not mutually exclusive; a plan may be both
   get isCustomizable() {
-    if (!Array.isArray(this.features)) return false;
-    return hasCustomizableFeatures(this.features);
+    if (!Array.isArray(this.allFeatures)) return false;
+    return hasCustomizableFeatures(this.allFeatures);
   }
 
   get isMeasurable() {
-    if (!Array.isArray(this.features)) return false;
-    return hasMeasurableFeatures(this.features);
+    if (!Array.isArray(this.allFeatures)) return false;
+    return hasMeasurableFeatures(this.allFeatures);
   }
 
   calculateCost() {
-    const allFeatures = { ...initialFeatures(this.features), ...this.selectedFeatures };
+    const allFeatures = { ...initialFeatures(this.allFeatures), ...this.selectedFeatures };
 
     // 1. Calculate metered pricing, if any
     if (this.isMeasurable) {
-      const measurableFeatures = this.features.filter(({ measurable }) => !!measurable);
+      const measurableFeatures = this.allFeatures.filter(({ measurable }) => !!measurable);
       this.measuredCosts = measurableFeatures.reduce((allCosts, { value }): [number, string][] => {
         if (!value || !value.numeric_details) return allCosts;
         return [
@@ -73,6 +69,7 @@ export class ManifoldPlanCost {
     if (this.controller) this.controller.abort(); // If a request is in flight, cancel it
     this.controller = new AbortController();
 
+    // Returning the promise is necessary for componentWillLoad()
     return planCost(this.connection, {
       planID: this.planId,
       features: allFeatures,
@@ -83,41 +80,14 @@ export class ManifoldPlanCost {
     });
   }
 
-  renderBaseCost(): JSX.Element | null {
-    if (typeof this.baseCost !== 'number') return null;
-    // If there are measurable costs but no monthly cost, only show measurable
-    if (this.baseCost === 0 && this.measuredCosts.length > 0) return null;
-
-    if (this.baseCost === 0) {
-      // Show the badge for compact, large text otherwise
-      return this.compact ? <manifold-badge>Free</manifold-badge> : 'Free';
-    }
-    // $5.00 / mo
-    return this.compact ? $(this.baseCost) : [$(this.baseCost), <small>&nbsp;/&nbsp;mo</small>];
-  }
-
-  renderMeasurableCosts() {
-    return this.measuredCosts.map(([cost, suffix], index) => {
-      const shouldShowPlus = (index === 0 && this.baseCost > 0) || index > 0;
-      return [
-        shouldShowPlus ? <span>&nbsp;+&nbsp;</span> : '',
-        $(cost),
-        <small>&nbsp;/&nbsp;{suffix}</small>,
-      ];
-    });
-  }
-
   render() {
-    if (typeof this.baseCost !== 'number') return <div class="cost" />;
-
     return (
-      <div class="cost" itemprop="price" data-compact={this.compact}>
-        {this.compact && this.isCustomizable && !this.isMeasurable && (
-          <span class="starting">Starting at</span>
-        )}
-        <span itemprop="price">{this.renderBaseCost()}</span>
-        <span itemprop="price">{this.renderMeasurableCosts()}</span>
-      </div>
+      <manifold-cost-display
+        baseCost={this.baseCost}
+        compact={this.compact}
+        isCustomizable={this.isCustomizable}
+        measuredCosts={this.measuredCosts}
+      />
     );
   }
 }

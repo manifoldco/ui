@@ -26,8 +26,9 @@ export function featureCost(number: number) {
 
 export function hasCustomizableFeatures(features: Catalog.ExpandedFeature[]): boolean {
   return (
-    features.findIndex(({ customizable }) => typeof customizable === 'boolean' && customizable) !==
-    -1
+    features.findIndex(
+      ({ customizable }) => typeof customizable === 'boolean' && customizable === true
+    ) !== -1
   );
 }
 
@@ -37,7 +38,9 @@ export function hasCustomizableFeatures(features: Catalog.ExpandedFeature[]): bo
 
 export function hasMeasurableFeatures(features: Catalog.ExpandedFeature[]): boolean {
   return (
-    features.findIndex(({ measurable }) => typeof measurable === 'boolean' && measurable) !== -1
+    features.findIndex(
+      ({ measurable }) => typeof measurable === 'boolean' && measurable === true
+    ) !== -1
   );
 }
 

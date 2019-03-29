@@ -41,10 +41,8 @@ export class ManifoldPlanDetails {
   }
 
   initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
-    if (plan.body.expanded_features) {
-      return initialFeatures(plan.body.expanded_features);
-    }
-    return {};
+    if (!plan.body.expanded_features) return {};
+    return { ...initialFeatures(plan.body.expanded_features) };
   }
 
   renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {
@@ -151,9 +149,9 @@ export class ManifoldPlanDetails {
         </div>
         <footer class="footer">
           <manifold-plan-cost
-            plan-id={this.plan.id}
-            features={expanded_features}
-            selected-features={this.features}
+            planId={this.plan.id}
+            allFeatures={expanded_features}
+            selectedFeatures={this.features}
           />
           <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}

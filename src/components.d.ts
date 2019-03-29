@@ -41,6 +41,19 @@ export namespace Components {
     'env'?: Env;
   }
 
+  interface ManifoldCostDisplay {
+    'baseCost'?: number;
+    'compact'?: boolean;
+    'isCustomizable'?: boolean;
+    'measuredCosts': [number, string][];
+  }
+  interface ManifoldCostDisplayAttributes extends StencilHTMLAttributes {
+    'baseCost'?: number;
+    'compact'?: boolean;
+    'isCustomizable'?: boolean;
+    'measuredCosts'?: [number, string][];
+  }
+
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
@@ -165,18 +178,18 @@ export namespace Components {
   }
 
   interface ManifoldPlanCost {
+    'allFeatures': Catalog.ExpandedFeature[];
     'compact'?: boolean;
     'connection': Connection;
     'customizable'?: boolean;
-    'features': Catalog.ExpandedFeature[];
     'planId': string;
     'selectedFeatures': UserFeatures;
   }
   interface ManifoldPlanCostAttributes extends StencilHTMLAttributes {
+    'allFeatures'?: Catalog.ExpandedFeature[];
     'compact'?: boolean;
     'connection'?: Connection;
     'customizable'?: boolean;
-    'features'?: Catalog.ExpandedFeature[];
     'planId'?: string;
     'selectedFeatures'?: UserFeatures;
   }
@@ -325,6 +338,7 @@ declare global {
     'ManifoldActivePlan': Components.ManifoldActivePlan;
     'ManifoldBadge': Components.ManifoldBadge;
     'ManifoldConnection': Components.ManifoldConnection;
+    'ManifoldCostDisplay': Components.ManifoldCostDisplay;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
@@ -353,6 +367,7 @@ declare global {
     'manifold-active-plan': Components.ManifoldActivePlanAttributes;
     'manifold-badge': Components.ManifoldBadgeAttributes;
     'manifold-connection': Components.ManifoldConnectionAttributes;
+    'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
@@ -394,6 +409,12 @@ declare global {
   var HTMLManifoldConnectionElement: {
     prototype: HTMLManifoldConnectionElement;
     new (): HTMLManifoldConnectionElement;
+  };
+
+  interface HTMLManifoldCostDisplayElement extends Components.ManifoldCostDisplay, HTMLStencilElement {}
+  var HTMLManifoldCostDisplayElement: {
+    prototype: HTMLManifoldCostDisplayElement;
+    new (): HTMLManifoldCostDisplayElement;
   };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
@@ -532,6 +553,7 @@ declare global {
     'manifold-active-plan': HTMLManifoldActivePlanElement
     'manifold-badge': HTMLManifoldBadgeElement
     'manifold-connection': HTMLManifoldConnectionElement
+    'manifold-cost-display': HTMLManifoldCostDisplayElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
@@ -560,6 +582,7 @@ declare global {
     'manifold-active-plan': HTMLManifoldActivePlanElement;
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-connection': HTMLManifoldConnectionElement;
+    'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;

@@ -59,7 +59,7 @@ export class ManifoldPlanMenu {
             >
               {name}
               <div class="cost">
-                <manifold-plan-cost features={expanded_features} plan-id={id} compact={true} />
+                <manifold-plan-cost allFeatures={expanded_features} planId={id} compact={true} />
               </div>
             </PlanButton>
           )

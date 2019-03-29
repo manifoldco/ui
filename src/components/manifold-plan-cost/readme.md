@@ -24,10 +24,10 @@ one additional prop:
 
 | Property           | Attribute      | Description | Type                   | Default     |
 | ------------------ | -------------- | ----------- | ---------------------- | ----------- |
+| `allFeatures`      | --             |             | `ExpandedFeature[]`    | `undefined` |
 | `compact`          | `compact`      |             | `boolean \| undefined` | `false`     |
 | `connection`       | --             |             | `Connection`           | `undefined` |
 | `customizable`     | `customizable` |             | `boolean \| undefined` | `false`     |
-| `features`         | --             |             | `ExpandedFeature[]`    | `undefined` |
 | `planId`           | `plan-id`      |             | `string`               | `undefined` |
 | `selectedFeatures` | --             |             | `UserFeatures`         | `{}`        |
 
