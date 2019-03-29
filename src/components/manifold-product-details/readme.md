@@ -1,6 +1,4 @@
-# product-details
-
-
+# manifold-product-details
 
 <!-- Auto Generated Below -->
 

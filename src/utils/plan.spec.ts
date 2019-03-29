@@ -8,16 +8,22 @@ import {
   NumberFeatureMeasurableValuePaid,
   NumberFeatureMeasurableValueUnavailable,
   NumberFeatureMeasurableValueTiered,
+  NumberFeatureMeasurable,
+  StringFeatureCustom,
+  BooleanFeatureCustom,
 } from '../spec/mock/catalog';
 import {
   booleanFeatureDefaultValue,
   booleanFeatureDisplayValue,
   featureCost,
   featureDescription,
+  hasCustomizableFeatures,
+  hasMeasurableFeatures,
   initialFeatures,
   numberFeatureDefaultValue,
   numberFeatureDisplayValue,
   numberFeatureMeasurableDisplayValue,
+  pricingTiers,
   stringFeatureDefaultValue,
   stringFeatureDisplayValue,
 } from './plan';
@@ -71,9 +77,35 @@ describe('cost utilities', () => {
     const million = 1000000;
     expect(featureCost(price)).toBe(price / ten / million);
   });
+
+  it('sorts & returns pricing tiers for complex measured features', () =>
+    expect(pricingTiers(NumberFeatureMeasurableValueTiered)).toEqual([
+      { cost: 0, limit: 10, suffix: 'hour' },
+      { cost: 90, limit: 100, suffix: 'hour' },
+      { cost: 60, limit: 200, suffix: 'hour' },
+      { cost: 50, limit: 300, suffix: 'hour' },
+      { cost: 30, limit: 400, suffix: 'hour' },
+      { cost: 25, limit: -1, suffix: 'hour' },
+    ]));
 });
 
 describe('other plan methods', () => {
+  it('hasCustomizableFeatures returns false when no custom features present', () =>
+    expect(
+      hasCustomizableFeatures([StringFeatureStatic, NumberFeatureStatic, NumberFeatureMeasurable])
+    ).toBe(false));
+  it('hasCustomizableFeatures returns true when custom features present', () =>
+    expect(
+      hasCustomizableFeatures([StringFeatureStatic, NumberFeatureStatic, StringFeatureCustom])
+    ).toBe(true));
+  it('hasMeasurableFeatures returns false when no measurable features present', () =>
+    expect(
+      hasMeasurableFeatures([StringFeatureStatic, NumberFeatureStatic, BooleanFeatureCustom])
+    ).toBe(false));
+  it('hasMeasurableFeatures returns true when measurable features present', () =>
+    expect(
+      hasMeasurableFeatures([StringFeatureStatic, NumberFeatureStatic, NumberFeatureMeasurable])
+    ).toBe(true));
   it('features return price descriptions when present', () =>
     expect(featureDescription(NumberFeatureStatic.value)).toBe('Free'));
 });

@@ -41,6 +41,19 @@ export namespace Components {
     'env'?: Env;
   }
 
+  interface ManifoldCostDisplay {
+    'baseCost'?: number;
+    'compact'?: boolean;
+    'isCustomizable'?: boolean;
+    'measuredCosts': [number, string][];
+  }
+  interface ManifoldCostDisplayAttributes extends StencilHTMLAttributes {
+    'baseCost'?: number;
+    'compact'?: boolean;
+    'isCustomizable'?: boolean;
+    'measuredCosts'?: [number, string][];
+  }
+
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
@@ -164,6 +177,23 @@ export namespace Components {
     'value'?: number;
   }
 
+  interface ManifoldPlanCost {
+    'allFeatures': Catalog.ExpandedFeature[];
+    'compact'?: boolean;
+    'connection': Connection;
+    'customizable'?: boolean;
+    'planId': string;
+    'selectedFeatures': UserFeatures;
+  }
+  interface ManifoldPlanCostAttributes extends StencilHTMLAttributes {
+    'allFeatures'?: Catalog.ExpandedFeature[];
+    'compact'?: boolean;
+    'connection'?: Connection;
+    'customizable'?: boolean;
+    'planId'?: string;
+    'selectedFeatures'?: UserFeatures;
+  }
+
   interface ManifoldPlanDetails {
     'plan': Catalog.ExpandedPlan;
     'product': Catalog.Product;
@@ -191,17 +221,6 @@ export namespace Components {
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'productId'?: string;
-  }
-
-  interface ManifoldProductCost {
-    'connection': Connection;
-    'features': UserFeatures;
-    'planID': string;
-  }
-  interface ManifoldProductCostAttributes extends StencilHTMLAttributes {
-    'connection'?: Connection;
-    'features'?: UserFeatures;
-    'planID'?: string;
   }
 
   interface ManifoldProductDetails {
@@ -319,6 +338,7 @@ declare global {
     'ManifoldActivePlan': Components.ManifoldActivePlan;
     'ManifoldBadge': Components.ManifoldBadge;
     'ManifoldConnection': Components.ManifoldConnection;
+    'ManifoldCostDisplay': Components.ManifoldCostDisplay;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
@@ -327,10 +347,10 @@ declare global {
     'ManifoldMarketplaceResults': Components.ManifoldMarketplaceResults;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldNumberInput': Components.ManifoldNumberInput;
+    'ManifoldPlanCost': Components.ManifoldPlanCost;
     'ManifoldPlanDetails': Components.ManifoldPlanDetails;
     'ManifoldPlanMenu': Components.ManifoldPlanMenu;
     'ManifoldPlanSelector': Components.ManifoldPlanSelector;
-    'ManifoldProductCost': Components.ManifoldProductCost;
     'ManifoldProductDetails': Components.ManifoldProductDetails;
     'ManifoldProductPage': Components.ManifoldProductPage;
     'ManifoldProduct': Components.ManifoldProduct;
@@ -347,6 +367,7 @@ declare global {
     'manifold-active-plan': Components.ManifoldActivePlanAttributes;
     'manifold-badge': Components.ManifoldBadgeAttributes;
     'manifold-connection': Components.ManifoldConnectionAttributes;
+    'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
@@ -355,10 +376,10 @@ declare global {
     'manifold-marketplace-results': Components.ManifoldMarketplaceResultsAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-number-input': Components.ManifoldNumberInputAttributes;
+    'manifold-plan-cost': Components.ManifoldPlanCostAttributes;
     'manifold-plan-details': Components.ManifoldPlanDetailsAttributes;
     'manifold-plan-menu': Components.ManifoldPlanMenuAttributes;
     'manifold-plan-selector': Components.ManifoldPlanSelectorAttributes;
-    'manifold-product-cost': Components.ManifoldProductCostAttributes;
     'manifold-product-details': Components.ManifoldProductDetailsAttributes;
     'manifold-product-page': Components.ManifoldProductPageAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
@@ -388,6 +409,12 @@ declare global {
   var HTMLManifoldConnectionElement: {
     prototype: HTMLManifoldConnectionElement;
     new (): HTMLManifoldConnectionElement;
+  };
+
+  interface HTMLManifoldCostDisplayElement extends Components.ManifoldCostDisplay, HTMLStencilElement {}
+  var HTMLManifoldCostDisplayElement: {
+    prototype: HTMLManifoldCostDisplayElement;
+    new (): HTMLManifoldCostDisplayElement;
   };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
@@ -438,6 +465,12 @@ declare global {
     new (): HTMLManifoldNumberInputElement;
   };
 
+  interface HTMLManifoldPlanCostElement extends Components.ManifoldPlanCost, HTMLStencilElement {}
+  var HTMLManifoldPlanCostElement: {
+    prototype: HTMLManifoldPlanCostElement;
+    new (): HTMLManifoldPlanCostElement;
+  };
+
   interface HTMLManifoldPlanDetailsElement extends Components.ManifoldPlanDetails, HTMLStencilElement {}
   var HTMLManifoldPlanDetailsElement: {
     prototype: HTMLManifoldPlanDetailsElement;
@@ -454,12 +487,6 @@ declare global {
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
-  };
-
-  interface HTMLManifoldProductCostElement extends Components.ManifoldProductCost, HTMLStencilElement {}
-  var HTMLManifoldProductCostElement: {
-    prototype: HTMLManifoldProductCostElement;
-    new (): HTMLManifoldProductCostElement;
   };
 
   interface HTMLManifoldProductDetailsElement extends Components.ManifoldProductDetails, HTMLStencilElement {}
@@ -526,6 +553,7 @@ declare global {
     'manifold-active-plan': HTMLManifoldActivePlanElement
     'manifold-badge': HTMLManifoldBadgeElement
     'manifold-connection': HTMLManifoldConnectionElement
+    'manifold-cost-display': HTMLManifoldCostDisplayElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
@@ -534,10 +562,10 @@ declare global {
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-number-input': HTMLManifoldNumberInputElement
+    'manifold-plan-cost': HTMLManifoldPlanCostElement
     'manifold-plan-details': HTMLManifoldPlanDetailsElement
     'manifold-plan-menu': HTMLManifoldPlanMenuElement
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement
-    'manifold-product-cost': HTMLManifoldProductCostElement
     'manifold-product-details': HTMLManifoldProductDetailsElement
     'manifold-product-page': HTMLManifoldProductPageElement
     'manifold-product': HTMLManifoldProductElement
@@ -554,6 +582,7 @@ declare global {
     'manifold-active-plan': HTMLManifoldActivePlanElement;
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-connection': HTMLManifoldConnectionElement;
+    'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
@@ -562,10 +591,10 @@ declare global {
     'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
+    'manifold-plan-cost': HTMLManifoldPlanCostElement;
     'manifold-plan-details': HTMLManifoldPlanDetailsElement;
     'manifold-plan-menu': HTMLManifoldPlanMenuElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
-    'manifold-product-cost': HTMLManifoldProductCostElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-product': HTMLManifoldProductElement;

@@ -1,11 +1,5 @@
 import { Component, Prop, FunctionalComponent } from '@stencil/core';
 
-const $ = (amount: number, options: object = {}) => {
-  return Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', ...options }).format(
-    amount / 100
-  );
-};
-
 const PlanButton: FunctionalComponent<{
   checked?: boolean;
   customizable?: boolean;
@@ -56,7 +50,7 @@ export class ManifoldPlanMenu {
     return (
       <ul class="plan-list">
         {this.allPlans.map(
-          ({ id, body: { name, cost, customizable, free } }: Catalog.ExpandedPlan) => (
+          ({ id, body: { name, customizable, expanded_features = [] } }: Catalog.ExpandedPlan) => (
             <PlanButton
               checked={id === this.selectedPlanId}
               value={id}
@@ -64,14 +58,9 @@ export class ManifoldPlanMenu {
               customizable={customizable}
             >
               {name}
-              {free ? (
-                <manifold-badge>Free</manifold-badge>
-              ) : (
-                <div class="cost">
-                  {customizable && 'Starting at '}
-                  {$(cost)}&nbsp;<small>/ mo</small>
-                </div>
-              )}
+              <div class="cost">
+                <manifold-plan-cost allFeatures={expanded_features} planId={id} compact={true} />
+              </div>
             </PlanButton>
           )
         )}

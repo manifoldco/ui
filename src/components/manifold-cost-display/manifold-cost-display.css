@@ -1,0 +1,15 @@
+.cost {
+  display: flex;
+  align-items: center;
+  min-height: 1.25em;
+  color: inherit;
+
+  & small {
+    font-size: var(--mf-font-d1);
+    opacity: 0.6;
+  }
+}
+
+.starting {
+  margin-right: 0.25em;
+}

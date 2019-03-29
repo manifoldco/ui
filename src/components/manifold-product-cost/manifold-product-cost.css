@@ -1,9 +1,0 @@
-.cost {
-  color: var(--mf-black);
-  font-size: 1rem;
-
-  & small {
-    text-transform: uppercase;
-    opacity: 0.6;
-  }
-}

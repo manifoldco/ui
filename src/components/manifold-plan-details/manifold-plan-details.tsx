@@ -25,12 +25,12 @@ export class ManifoldPlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures = {};
-  @Watch('plan') onUpdate() {
-    this.features = this.initialFeatures();
+  @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
+    this.features = this.initialFeatures(newPlan); // If plan changed, we want to reset all user-selected values
   }
 
   componentWillLoad() {
-    this.features = this.initialFeatures();
+    this.features = this.initialFeatures(); // Set default values
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
@@ -40,9 +40,9 @@ export class ManifoldPlanDetails {
     };
   }
 
-  initialFeatures(): UserFeatures {
-    if (!this.plan.body.expanded_features) return {};
-    return initialFeatures(this.plan.body.expanded_features);
+  initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
+    if (!plan.body.expanded_features) return {};
+    return { ...initialFeatures(plan.body.expanded_features) };
   }
 
   renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {
@@ -101,7 +101,7 @@ export class ManifoldPlanDetails {
 
       render.push(
         <dd class="feature-value" data-value={displayValue}>
-          {feature.customizable && (
+          {feature.customizable ? (
             <manifold-number-input
               increment={feature.value.numeric_details.increment}
               max={feature.value.numeric_details.max}
@@ -113,8 +113,9 @@ export class ManifoldPlanDetails {
               decrement-disabled-label="This feature is not downgradable"
               increment-disabled-label="This feature is not upgradable"
             />
+          ) : (
+            displayValue
           )}
-          {!feature.customizable && displayValue}
         </dd>
       );
     }
@@ -147,7 +148,11 @@ export class ManifoldPlanDetails {
           <dl class="features">{expanded_features.map(feature => this.renderFeature(feature))}</dl>
         </div>
         <footer class="footer">
-          <manifold-product-cost features={this.features} planID={this.plan.id} />
+          <manifold-plan-cost
+            planId={this.plan.id}
+            allFeatures={expanded_features}
+            selectedFeatures={this.features}
+          />
           <manifold-link-button
             href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
             rel="noopener noreferrer"

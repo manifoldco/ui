@@ -21,6 +21,30 @@ export function featureCost(number: number) {
 }
 
 /**
+ * Determines whether plan has custom features
+ */
+
+export function hasCustomizableFeatures(features: Catalog.ExpandedFeature[]): boolean {
+  return (
+    features.findIndex(
+      ({ customizable }) => typeof customizable === 'boolean' && customizable === true
+    ) !== -1
+  );
+}
+
+/**
+ * Determines whether plan has measurable features
+ */
+
+export function hasMeasurableFeatures(features: Catalog.ExpandedFeature[]): boolean {
+  return (
+    features.findIndex(
+      ({ measurable }) => typeof measurable === 'boolean' && measurable === true
+    ) !== -1
+  );
+}
+
+/**
  * User-friendly display for price description (may be found on any feature type)
  */
 export function featureDescription(value: Catalog.FeatureValueDetails): string | undefined {
@@ -76,12 +100,35 @@ export function numberFeatureDefaultValue(value: Catalog.FeatureValueDetails): n
 }
 
 /**
+ * Calculate pricing tiers for metered features
+ */
+export function pricingTiers({
+  numeric_details,
+}: Catalog.FeatureValueDetails): { cost: number; limit: number; suffix: string }[] {
+  if (!numeric_details) return [];
+  const suffix = numeric_details.suffix || '';
+  if (!Array.isArray(numeric_details.cost_ranges)) return [{ limit: -1, cost: 0, suffix }];
+
+  return numeric_details.cost_ranges
+    .sort((a, b) => {
+      if (a.limit === -1) return 1;
+      if (b.limit === -1) return -1;
+      return (a.limit || 0) - (b.limit || 0);
+    })
+    .map(({ cost_multiple, limit }) => ({
+      cost: featureCost(cost_multiple || 0),
+      limit: limit || -1,
+      suffix,
+    }));
+}
+
+/**
  * User-friendly display for a measurable number feature value
  */
-export function numberFeatureMeasurableDisplayValue({
-  name,
-  numeric_details,
-}: Catalog.FeatureValueDetails): string | undefined {
+export function numberFeatureMeasurableDisplayValue(
+  value: Catalog.FeatureValueDetails
+): string | undefined {
+  const { name, numeric_details } = value;
   if (!numeric_details) return undefined;
 
   // Feature unavailable
@@ -89,13 +136,6 @@ export function numberFeatureMeasurableDisplayValue({
     return name.replace(/^No .*/, NO).replace(/^Yes/, YES);
 
   const suffix = numeric_details.suffix || '';
-
-  // Sort in ascending limit order, but place -1 at the end
-  const sortedTiers = numeric_details.cost_ranges.sort((a, b) => {
-    if (a.limit === -1) return 1;
-    if (b.limit === -1) return -1;
-    return (a.limit || 0) - (b.limit || 0);
-  });
 
   // Flat cost
   if (numeric_details.cost_ranges.length === 1) {
@@ -107,15 +147,19 @@ export function numberFeatureMeasurableDisplayValue({
   }
 
   // Multiple tiers
+  // Sort in ascending limit order, but place -1 at the end
+  const sortedTiers = pricingTiers(value);
+
   const withCommas = new Intl.NumberFormat().format;
   return sortedTiers
-    .map(({ cost_multiple, limit }, index) => {
+    .map(({ cost, limit }, index) => {
       const lowEnd = index === 0 ? numeric_details.min : sortedTiers[index - 1].limit;
       let highEnd = (limit && limit > 0 && limit) || '+';
       if (typeof highEnd === 'number') highEnd = `–${withCommas(highEnd - 1)}`;
-      const cost = cost_multiple ? $(featureCost(cost_multiple)) : 'free';
       const spacedSuffix = suffix ? ` ${suffix}` : '';
-      return `${withCommas(lowEnd || 0)}${highEnd}${spacedSuffix}: ${cost}`;
+      return `${withCommas(lowEnd || 0)}${highEnd}${spacedSuffix}: ${
+        cost === 0 ? 'free' : $(cost)
+      }`;
     })
     .join(' / ');
 }

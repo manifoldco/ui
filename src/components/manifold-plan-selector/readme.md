@@ -1,4 +1,4 @@
-# product-details
+# manifold-plan-selector
 
 Display the plans for a product.
 
