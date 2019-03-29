@@ -22,8 +22,7 @@ export class ManifoldPlanCost {
   @Prop() selectedFeatures: UserFeatures = {};
   @State() controller?: AbortController;
   @State() baseCost?: number;
-  @State() measuredCost: number = 0;
-  @State() suffix?: string;
+  @State() measuredCosts: [number, string][] = [];
   @Watch('features') featuresChanged() {
     this.calculateCost();
   }
@@ -57,13 +56,14 @@ export class ManifoldPlanCost {
 
     // 1. Calculate metered pricing, if any
     if (this.isMeasurable) {
-      const setFeature = this.features.find(
-        ({ label, measurable }) => !!measurable && Object.keys(allFeatures).includes(label)
-      );
-      if (setFeature && setFeature.value) {
-        this.suffix = setFeature.value.numeric_details && setFeature.value.numeric_details.suffix;
-        this.measuredCost = pricingTiers(setFeature.value)[0].cost;
-      }
+      const measurableFeatures = this.features.filter(({ measurable }) => !!measurable);
+      this.measuredCosts = measurableFeatures.reduce((allCosts, { value }): [number, string][] => {
+        if (!value || !value.numeric_details) return allCosts;
+        return [
+          ...allCosts,
+          [pricingTiers(value)[0].cost || 0, value.numeric_details.suffix || ''],
+        ];
+      }, []);
     }
 
     // 2. Fetch base cost from cost API (and cancel in-flight reqs)
@@ -83,43 +83,40 @@ export class ManifoldPlanCost {
     });
   }
 
-  renderPrefix() {
-    if (!this.compact) return null;
-    if (this.isCustomizable) return <span class="starting">Starting at</span>;
-    return null;
-  }
-
   renderBaseCost(): JSX.Element | null {
     if (typeof this.baseCost !== 'number') return null;
+    // If there are measurable costs but no monthly cost, only show measurable
+    if (this.baseCost === 0 && this.measuredCosts.length > 0) return null;
 
-    const monthlySuffix = <small>&nbsp;/&nbsp;mo</small>;
-    const measurableSuffix = <small>&nbsp;/&nbsp;{this.suffix}</small>;
-
-    // $5.00 / mo + $0.25 / hour
-    if (this.baseCost > 0 && this.measuredCost > 0) {
-      return [$(this.baseCost), monthlySuffix, ' + ', $(this.measuredCost), measurableSuffix];
-    }
-    // $0.25 / hour
-    if (this.baseCost === 0 && this.measuredCost > 0) {
-      return [$(this.measuredCost), measurableSuffix];
-    }
-    // Free
-    if (this.baseCost === 0 && this.measuredCost === 0) {
+    if (this.baseCost === 0) {
+      // Show the badge for compact, large text otherwise
       return this.compact ? <manifold-badge>Free</manifold-badge> : 'Free';
     }
     // $5.00 / mo
-    return $(this.baseCost);
+    return this.compact ? $(this.baseCost) : [$(this.baseCost), <small>&nbsp;/&nbsp;mo</small>];
   }
 
-  renderSuffix() {}
+  renderMeasurableCosts() {
+    return this.measuredCosts.map(([cost, suffix], index) => {
+      const shouldShowPlus = (index === 0 && this.baseCost > 0) || index > 0;
+      return [
+        shouldShowPlus ? <span>&nbsp;+&nbsp;</span> : '',
+        $(cost),
+        <small>&nbsp;/&nbsp;{suffix}</small>,
+      ];
+    });
+  }
 
   render() {
     if (typeof this.baseCost !== 'number') return <div class="cost" />;
 
     return (
       <div class="cost" itemprop="price" data-compact={this.compact}>
-        {this.renderPrefix()}
+        {this.compact && this.isCustomizable && !this.isMeasurable && (
+          <span class="starting">Starting at</span>
+        )}
         <span itemprop="price">{this.renderBaseCost()}</span>
+        <span itemprop="price">{this.renderMeasurableCosts()}</span>
       </div>
     );
   }

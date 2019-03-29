@@ -128,7 +128,6 @@
   background-color: var(--mf-c-white);
   border-color: var(--mf-c-blue);
   box-shadow: 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0.15);
-  opacity: 1;
 
   &::after {
     transform: scale(1);
@@ -159,7 +158,7 @@
   }
 }
 
-mf-badge {
+manifold-badge {
   margin-top: 0.5em;
   font-size: var(--mf-font-d4);
 }
