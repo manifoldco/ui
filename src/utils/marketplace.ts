@@ -9,9 +9,11 @@ export function formatCategoryLabel(tag: string): string {
     case 'ai-ml':
       return 'AI/ML';
     default:
-      return tag.replace('-', ' ');
+      return tag.replace(/-/g, ' ');
   }
 }
+
+export const customCardExcludeList = ['sell-your-service'];
 
 export function categories(services?: Catalog.Product[]): CategoryMap {
   const categoryMap: CategoryMap = {};
