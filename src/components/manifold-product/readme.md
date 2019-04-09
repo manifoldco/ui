@@ -10,6 +10,34 @@ Display the details for an individual product.
 
 You can find the `:service` label for each at `https://manifold.co/services/:service`.
 
+## Detecting changes
+
+Events are dispatched on the `manifold-planUpdated` custom event. Within the
+`manifold-planUpdated` event, the structure is as follows:
+
+```json
+
+```
+
+To access that, listen for the event on `document` like so:
+
+```js
+document.addEventListener('manifold-planUpdated', ({ detail }) => {
+  console.log(detail);
+  /*
+    {
+      "id": "2357v8j36f5h866c32ddwwjxvfe8j",
+      "label": "nvidia-1080ti-100gb-ssd",
+      "product": "zerosix",
+      "features": {
+        // user-defined features for this plan.
+      }
+    }
+   */
+}
+});
+```
+
 <!-- Auto Generated Below -->
 
 

@@ -13,6 +13,13 @@
 | `product` | --        |             | `Product`      | `undefined` |
 
 
+## Events
+
+| Event                  | Description | Type                |
+| ---------------------- | ----------- | ------------------- |
+| `manifold-planUpdated` |             | `CustomEvent<void>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

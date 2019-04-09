@@ -111,8 +111,7 @@
 &lt;/script&gt;</code></pre>
               <h3>HTML (No ESM Support)</h3>
               <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
-&lt;script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"&gt;&lt;/script&gt;
-  </code></pre>
+&lt;script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"&gt;&lt;/script&gt;</code></pre>
               <h3>React</h3>
               <pre><code class="js language-js">import React from 'react';
 import ReactDOM from 'react-dom';
@@ -176,8 +175,7 @@ marketplace.addEventListener('manifold-serviceCard-click', e =&gt; {
 // Or, attach the listener to the window object
 window.addEventListener('manifold-serviceCard-click', e =&gt; {
   alert(`You just clicked ${e.detail.label}`);
-});
-</code></pre>
+});</code></pre>
               <h4 id="handlingeventsinreact">Handling Events in React</h4>
               <p>
                 Attaching listeners to custom components in React
@@ -308,7 +306,7 @@ render() {
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-product product-label="zerosix"></manifold-product>
+                <manifold-product product-label="jawsdb-mysql"></manifold-product>
               </div>
             </div>
           </section>
@@ -366,7 +364,7 @@ render() {
                 <!-- picnic-basket-stage (staging): 234j94djrwxapnnbyqbjtg75g111j -->
                 <!-- ant-hill-stage (staging): 234tzpqcgjb5846mjn2vz1hp03yec -->
                 <manifold-plan-selector
-                  product-id="234nbp17j5zrvb2ym49647kgtyv2a"
+                  product-id="234w1jyaum5j0aqe3g3bmbqjgf20p"
                 ></manifold-plan-selector>
               </div>
             </div>
@@ -378,6 +376,10 @@ render() {
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/languages/xml.min.js"></script>
       <script>
         hljs.initHighlightingOnLoad();
+
+        document.addEventListener('manifold-planUpdated', ({ detail }) => {
+          console.log(detail);
+        });
 
         var marketplace = document.querySelector('manifold-marketplace');
         marketplace.addEventListener('manifold-serviceCard-click', e => {
