@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch } from '@stencil/core';
+import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { UserFeatures } from 'types/UserFeatures';
 import {
   booleanFeatureDefaultValue,
@@ -25,24 +25,46 @@ export class ManifoldPlanDetails {
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures = {};
+  @Event({
+    eventName: 'manifold-planUpdated',
+    bubbles: true,
+  })
+  planUpdated: EventEmitter;
   @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
-    this.features = this.initialFeatures(newPlan); // If plan changed, we want to reset all user-selected values
+    const features = this.initialFeatures(newPlan);
+    this.features = features; // If plan changed, we want to reset all user-selected values
+    this.updatedPlanHandler({ features }); // Dispatch change event when plan changed
   }
 
   componentWillLoad() {
-    this.features = this.initialFeatures(); // Set default values
+    const features = this.initialFeatures();
+    this.features = features; // Set default features the first time
+    this.updatedPlanHandler({ features }); // Dispatch change event when loaded
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
-    this.features = {
-      ...this.features,
-      [name]: value,
-    };
+    const features = { ...this.features, [name]: value };
+    this.features = features;
+    this.updatedPlanHandler({ features }); // Dispatch change event when user changed feature
   }
 
   initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
     if (!plan.body.expanded_features) return {};
     return { ...initialFeatures(plan.body.expanded_features) };
+  }
+
+  updatedPlanHandler({
+    id = this.plan.id,
+    label = this.plan.body.label,
+    product = this.product.body.label,
+    features = this.features,
+  }) {
+    this.planUpdated.emit({
+      id,
+      label,
+      product,
+      features,
+    });
   }
 
   renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {

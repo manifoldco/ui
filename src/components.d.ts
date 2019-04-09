@@ -199,6 +199,7 @@ export namespace Components {
     'product': Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
+    'onManifold-planUpdated'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
   }
