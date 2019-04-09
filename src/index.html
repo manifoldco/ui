@@ -80,6 +80,14 @@
             <h1>Manifold UI</h1>
             <div class="markdown-body">
               <p>
+                <em
+                  >This document provides an early look at the Manifold Marketplace as a Service
+                  (MaaS) API and integration points. With the aim of erring towards more rather than
+                  less information, related documentation is included as a preview for
+                  not-yet-written documentation.</em
+                >
+              </p>
+              <p>
                 Manifold’s
                 <a href="https://www.webcomponents.org/introduction" target="_blank"
                   >web component</a
@@ -97,25 +105,25 @@
               </p>
               <h3>HTML (ES Modules)</h3>
               <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
-  &lt;script type="module"&gt;
-    import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
-    defineCustomElements(window);
-  &lt;/script&gt;</code></pre>
+&lt;script type="module"&gt;
+  import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
+  defineCustomElements(window);
+&lt;/script&gt;</code></pre>
               <h3>HTML (No ESM Support)</h3>
               <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
-  &lt;script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"&gt;&lt;/script&gt;
   </code></pre>
               <h3>React</h3>
               <pre><code class="js language-js">import React from 'react';
-  import ReactDOM from 'react-dom';
-  import { defineCustomElements } from '@manifoldco/ui/dist/loader';
+import ReactDOM from 'react-dom';
+import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 
-  const App = () => (
-    &lt;manifold-marketplace /&gt;
-  );
+const App = () => (
+  &lt;manifold-marketplace /&gt;
+);
 
-  ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
-  defineCustomElements(window);</code></pre>
+ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+defineCustomElements(window);</code></pre>
               <h3>Other frameworks</h3>
               <p>
                 Initializing Manifold UI works the exact same as any other Stencil project. For more
