@@ -8,14 +8,8 @@ Display the plans for a product.
 
 ## Detecting changes
 
-Events are dispatched on the `manifold-planUpdated` custom event. Within the
-`manifold-planUpdated` event, the structure is as follows:
-
-```json
-
-```
-
-To access that, listen for the event on `document` like so:
+Events are dispatched on the `manifold-planUpdated` custom event. To listen
+for that, listen for the event on `document` like so:
 
 ```js
 document.addEventListener('manifold-planUpdated', ({ detail }) => {
@@ -30,7 +24,6 @@ document.addEventListener('manifold-planUpdated', ({ detail }) => {
       }
     }
    */
-}
 });
 ```
 

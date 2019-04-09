@@ -80,14 +80,6 @@
             <h1>Manifold UI</h1>
             <div class="markdown-body">
               <p>
-                <em
-                  >This document provides an early look at the Manifold Marketplace as a Service
-                  (MaaS) API and integration points. With the aim of erring towards more rather than
-                  less information, related documentation is included as a preview for
-                  not-yet-written documentation.</em
-                >
-              </p>
-              <p>
                 Manifold’s
                 <a href="https://www.webcomponents.org/introduction" target="_blank"
                   >web component</a
@@ -97,7 +89,7 @@
               </p>
               <h2>Installation</h2>
               <p>Installation is handled via npm:</p>
-              <pre><code class="bash language-bash">npm i --save @manifoldco/ui</code></pre>
+              <pre><code class="bash language-bash">npm i @manifoldco/ui</code></pre>
               <h2>Usage</h2>
               <p>
                 Manifold UI can be used in any frameworkless project (“vanilla” JS), or any modern
@@ -106,16 +98,16 @@
               <h3>HTML (ES Modules)</h3>
               <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
 &lt;script type="module"&gt;
-  import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
+  import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/esm/es2017/manifold.define.js';
   defineCustomElements(window);
 &lt;/script&gt;</code></pre>
               <h3>HTML (No ESM Support)</h3>
               <pre><code class="html language-html">&lt;manifold-marketplace&gt;&lt;/manifold-marketplace&gt;
-&lt;script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://unpkg.com/@manifoldco/ui/manifold.js"&gt;&lt;/script&gt;</code></pre>
               <h3>React</h3>
               <pre><code class="js language-js">import React from 'react';
 import ReactDOM from 'react-dom';
-import { defineCustomElements } from '@manifoldco/ui/dist/loader';
+import { defineCustomElements } from '@manifoldco/ui/loader';
 
 const App = () => (
   &lt;manifold-marketplace /&gt;
@@ -324,12 +316,9 @@ render() {
 </code></pre>
               <h2 id="detectingchanges">Detecting changes</h2>
               <p>
-                Events are dispatched on the <code>manifold-planUpdated</code> custom event. Within
-                the <code>manifold-planUpdated</code> event, the structure is as follows:
+                Events are dispatched on the <code>manifold-planUpdated</code> custom event. To
+                listen for that, listen for the event on <code>document</code> like so:
               </p>
-              <pre><code class="json language-json">
-</code></pre>
-              <p>To access that, listen for the event on <code>document</code> like so:</p>
               <pre><code class="js language-js">document.addEventListener('manifold-planUpdated', ({ detail }) =&gt; {
   console.log(detail);
   /*
@@ -342,7 +331,6 @@ render() {
       }
     }
    */
-}
 });
 </code></pre>
               <!-- Auto Generated Below -->

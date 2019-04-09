@@ -31,24 +31,26 @@ export class ManifoldPlanDetails {
   })
   planUpdated: EventEmitter;
   @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
-    this.setInitialFeatures(newPlan); // If plan changed, we want to reset all user-selected values
+    const features = this.initialFeatures(newPlan);
+    this.features = features; // If plan changed, we want to reset all user-selected values
+    this.updatedPlanHandler({ features }); // Dispatch change event when plan changed
   }
 
   componentWillLoad() {
-    this.setInitialFeatures(); // Set default features
+    const features = this.initialFeatures();
+    this.features = features; // Set default features the first time
+    this.updatedPlanHandler({ features }); // Dispatch change event when loaded
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
     const features = { ...this.features, [name]: value };
     this.features = features;
-    this.updatedPlanHandler({ features });
+    this.updatedPlanHandler({ features }); // Dispatch change event when user changed feature
   }
 
-  setInitialFeatures(plan: Catalog.ExpandedPlan = this.plan) {
-    if (!plan.body.expanded_features) return;
-    const features = { ...initialFeatures(plan.body.expanded_features) };
-    this.features = features;
-    this.updatedPlanHandler({ features });
+  initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
+    if (!plan.body.expanded_features) return {};
+    return { ...initialFeatures(plan.body.expanded_features) };
   }
 
   updatedPlanHandler({
