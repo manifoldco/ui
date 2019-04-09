@@ -39,20 +39,28 @@ export class ManifoldPlanDetails {
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
-    this.features = {
-      ...this.features,
-      [name]: value,
-    };
+    const features = { ...this.features, [name]: value };
+    this.features = features;
+    this.updatedPlanHandler({ features });
   }
 
   setInitialFeatures(plan: Catalog.ExpandedPlan = this.plan) {
     if (!plan.body.expanded_features) return;
     const features = { ...initialFeatures(plan.body.expanded_features) };
     this.features = features;
+    this.updatedPlanHandler({ features });
+  }
+
+  updatedPlanHandler({
+    id = this.plan.id,
+    label = this.plan.body.label,
+    product = this.product.body.label,
+    features = this.features,
+  }) {
     this.planUpdated.emit({
-      id: this.plan.id,
-      label: this.plan.body.label,
-      product: this.product.body.label,
+      id,
+      label,
+      product,
       features,
     });
   }

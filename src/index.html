@@ -175,7 +175,8 @@ marketplace.addEventListener('manifold-serviceCard-click', e =&gt; {
 // Or, attach the listener to the window object
 window.addEventListener('manifold-serviceCard-click', e =&gt; {
   alert(`You just clicked ${e.detail.label}`);
-});</code></pre>
+});
+</code></pre>
               <h4 id="handlingeventsinreact">Handling Events in React</h4>
               <p>
                 Attaching listeners to custom components in React
@@ -320,6 +321,29 @@ render() {
               <h1 id="manifoldplanselector">manifold-plan-selector</h1>
               <p>Display the plans for a product.</p>
               <pre><code class="html language-html">&lt;manifold-plan-selector product-id="234w1jyaum5j0aqe3g3bmbqjgf20p"&gt;&lt;/manifold-plan-selector&gt;
+</code></pre>
+              <h2 id="detectingchanges">Detecting changes</h2>
+              <p>
+                Events are dispatched on the <code>manifold-planUpdated</code> custom event. Within
+                the <code>manifold-planUpdated</code> event, the structure is as follows:
+              </p>
+              <pre><code class="json language-json">
+</code></pre>
+              <p>To access that, listen for the event on <code>document</code> like so:</p>
+              <pre><code class="js language-js">document.addEventListener('manifold-planUpdated', ({ detail }) =&gt; {
+  console.log(detail);
+  /*
+    {
+      "id": "2357v8j36f5h866c32ddwwjxvfe8j",
+      "label": "nvidia-1080ti-100gb-ssd",
+      "product": "zerosix",
+      "features": {
+        // user-defined features for this plan.
+      }
+    }
+   */
+}
+});
 </code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
