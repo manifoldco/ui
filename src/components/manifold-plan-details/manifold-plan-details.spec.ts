@@ -23,4 +23,21 @@ describe(`<manifold-plan-details>`, () => {
       storage: 5,
     });
   });
+
+  it('dispatches update event when loaded', () => {
+    const planDetails = new PlanDetails();
+    planDetails.plan = ExpandedPlanCustom;
+    planDetails.product = Product;
+
+    const mock = { emit: jest.fn() };
+    planDetails.planUpdated = mock;
+
+    planDetails.componentWillLoad();
+    expect(mock.emit).toHaveBeenCalledWith({
+      features: { instance_class: 'db.t2.micro', redundancy: false, storage: 5 },
+      id: '235exy25wvzpxj52p87bh87gbnj4y',
+      label: 'custom',
+      product: 'jawsdb-mysql',
+    });
+  });
 });
