@@ -1,4 +1,4 @@
-import { Component, Element, State, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { Connection } from '../../utils/connections';
@@ -14,19 +14,28 @@ export class ManifoldServiceCard {
   @Prop() name?: string;
   @Prop() connection: Connection;
   @Prop() description?: string;
-  @Prop() productId?: string;
+  @Prop() isCustom?: boolean;
   @Prop() isFeatured?: boolean;
   @Prop() label?: string;
   @Prop() logo?: string;
+  @Prop() productId?: string;
   @Prop() serviceLink?: string;
-  @Prop() isCustom?: boolean;
   @State() isFree?: boolean = false;
+  @Watch('productId') watchHandler(newProductId: string) {
+    this.fetchIsFree(newProductId);
+  }
 
   componentWillLoad() {
-    return fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`)
+    this.fetchIsFree();
+  }
+
+  fetchIsFree(productId = this.productId) {
+    if (typeof productId !== 'string') return;
+
+    fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`)
       .then(response => response.json())
       .then((data: Catalog.ExpandedPlan[]) => {
-        if (data.find(({ body: { free } }) => free === true)) {
+        if (data.findIndex(({ body: { free } }) => free === true) !== -1) {
           this.isFree = true;
         }
       });
@@ -65,7 +74,7 @@ export class ManifoldServiceCard {
         </h3>
         <div class="tags">
           {this.isFeatured && <div class="tag">featured</div>}
-          {this.isFree && <div class="tag">Free</div>}
+          {this.isFree && <div class="tag">free</div>}
         </div>
         <div class="info">
           <p class="description" itemprop="description">
