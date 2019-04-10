@@ -1,26 +1,41 @@
-import { Component, Prop, Event, EventEmitter } from '@stencil/core';
+import { Component, Element, State, Prop, Event, EventEmitter } from '@stencil/core';
+
+import Tunnel from '../../data/connection';
+import { Connection } from '../../utils/connections';
 
 @Component({
   tag: 'manifold-service-card',
-  styleUrl: 'service-card.css',
+  styleUrl: 'manifold-service-card.css',
   shadow: true,
 })
 export class ManifoldServiceCard {
+  @Element() el: HTMLElement;
   @Event({ eventName: 'manifold-serviceCard-click' }) cardClicked: EventEmitter;
   @Prop() name?: string;
+  @Prop() connection: Connection;
   @Prop() description?: string;
+  @Prop() productId?: string;
+  @Prop() isFeatured?: boolean;
   @Prop() label?: string;
   @Prop() logo?: string;
-  @Prop() isFeatured?: boolean;
   @Prop() serviceLink?: string;
   @Prop() isCustom?: boolean;
+  @State() isFree?: boolean = false;
+
+  componentWillLoad() {
+    return fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`)
+      .then(response => response.json())
+      .then((data: Catalog.ExpandedPlan[]) => {
+        if (data.find(({ body: { free } }) => free === true)) {
+          this.isFree = true;
+        }
+      });
+  }
 
   onClick = (e: Event): void => {
     if (!this.serviceLink) {
       e.preventDefault();
-      this.cardClicked.emit({
-        label: this.label,
-      });
+      this.cardClicked.emit({ label: this.label });
     }
   };
 
@@ -48,7 +63,10 @@ export class ManifoldServiceCard {
         <h3 class="name" itemprop="name">
           {this.name}
         </h3>
-        <div class="tags">{this.isFeatured && <div class="tag">featured</div>}</div>
+        <div class="tags">
+          {this.isFeatured && <div class="tag">featured</div>}
+          {this.isFree && <div class="tag">Free</div>}
+        </div>
         <div class="info">
           <p class="description" itemprop="description">
             {this.description}
@@ -58,3 +76,5 @@ export class ManifoldServiceCard {
     );
   }
 }
+
+Tunnel.injectProps(ManifoldServiceCard, ['connection']);
