@@ -97,6 +97,11 @@
 }
 
 .feature-value {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 0.5rem;
+  justify-content: start;
+
   &[data-value='No'],
   &[data-value='Yes'] {
     font-weight: 600;
@@ -109,6 +114,10 @@
 
   &[data-value='Yes'] {
     color: var(--mf-c-blue);
+  }
+
+  &[data-locked] {
+    opacity: 0.5;
   }
 }
 

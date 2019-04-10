@@ -16,6 +16,20 @@ import {
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 
+function getDisplayValue(feature: Catalog.ExpandedFeature): string {
+  if (!feature.value) return '';
+  switch (feature.type) {
+    case 'boolean':
+      return booleanFeatureDisplayValue(feature.value);
+    case 'number':
+      return numberFeatureDisplayValue(feature.value);
+    case 'string':
+      return numberFeatureDisplayValue(feature.value);
+    default:
+      return '';
+  }
+}
+
 @Component({
   tag: 'manifold-plan-details',
   styleUrl: 'plan-details.css',
@@ -78,7 +92,14 @@ export class ManifoldPlanDetails {
       </dt>,
     ];
 
-    if (feature.type === 'string') {
+    if (!feature.upgradable && !feature.downgradable) {
+      render.push(
+        <dd class="feature-value" data-locked>
+          <manifold-icon class="icon" icon="lock" />
+          {getDisplayValue(feature)}
+        </dd>
+      );
+    } else if (feature.type === 'string') {
       const displayValue = stringFeatureDisplayValue(feature.value);
 
       render.push(
@@ -97,7 +118,7 @@ export class ManifoldPlanDetails {
       );
     } else if (feature.type === 'boolean') {
       const displayValue = booleanFeatureDisplayValue(feature.value);
-
+      // console.log(feature);
       render.push(
         <dd class="feature-value" data-value={displayValue}>
           {feature.customizable ? (
@@ -113,6 +134,7 @@ export class ManifoldPlanDetails {
         </dd>
       );
     } else if (feature.type === 'number' && feature.value.numeric_details) {
+      console.log(feature);
       const value =
         typeof this.features[feature.label] === 'number'
           ? (this.features[feature.label] as number)
