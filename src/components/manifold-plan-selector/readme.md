@@ -27,6 +27,10 @@ document.addEventListener('manifold-planUpdated', ({ detail }) => {
 });
 ```
 
+### Hiding provision button
+
+If you would like to hide the button that provisions a selected service, add the `hide-provision-button` attribute.
+
 <!-- Auto Generated Below -->
 
 
