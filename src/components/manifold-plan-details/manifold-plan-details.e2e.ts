@@ -190,7 +190,7 @@ describe(`<manifold-plan-details>`, () => {
 
     it('provision button hides with prop', async () => {
       const page = await newE2EPage({
-        html: `<manifold-plan-details hide-provision-button="true"/>`,
+        html: `<manifold-plan-details />`,
       });
 
       const props = { plan: booleanPlanCustom, product: Product };
@@ -199,6 +199,7 @@ describe(`<manifold-plan-details>`, () => {
         (elm: any, { plan, product }: any) => {
           elm.plan = plan;
           elm.product = product;
+          elm.hideProvisionButton = true;
         },
         props
       );
