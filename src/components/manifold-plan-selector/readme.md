@@ -32,10 +32,11 @@ document.addEventListener('manifold-planUpdated', ({ detail }) => {
 
 ## Properties
 
-| Property     | Attribute    | Description | Type         | Default     |
-| ------------ | ------------ | ----------- | ------------ | ----------- |
-| `connection` | --           |             | `Connection` | `undefined` |
-| `productId`  | `product-id` |             | `string`     | `undefined` |
+| Property              | Attribute               | Description | Type                   | Default     |
+| --------------------- | ----------------------- | ----------- | ---------------------- | ----------- |
+| `connection`          | --                      |             | `Connection`           | `undefined` |
+| `hideProvisionButton` | `hide-provision-button` |             | `boolean \| undefined` | `undefined` |
+| `productId`           | `product-id`            |             | `string`               | `undefined` |
 
 
 ----------------------------------------------
