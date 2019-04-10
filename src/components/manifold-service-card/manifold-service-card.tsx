@@ -74,7 +74,11 @@ export class ManifoldServiceCard {
         </h3>
         <div class="tags">
           {this.isFeatured && <div class="tag">featured</div>}
-          {this.isFree && <div class="tag">free</div>}
+          {this.isFree && (
+            <div class="tag" data-tag="free">
+              free
+            </div>
+          )}
         </div>
         <div class="info">
           <p class="description" itemprop="description">

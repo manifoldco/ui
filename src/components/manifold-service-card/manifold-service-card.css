@@ -158,10 +158,8 @@
   margin-top: 0.125rem;
   margin-bottom: 0.125rem;
   margin-left: 0.5em;
-  padding-right: 1.5em;
-  padding-right: 1em;
-  padding-left: 1.5em;
-  padding-left: 1em;
+  padding-right: 0.75em;
+  padding-left: 0.75em;
   color: var(--mf-c-white);
   font-weight: 400;
   font-size: var(--mf-font-d3);
@@ -171,6 +169,10 @@
   text-transform: uppercase;
   background-image: var(--mf-g-blue);
   border-radius: 3rem;
+
+  &[data-tag='free'] {
+    background-image: var(--mf-g-green);
+  }
 }
 
 .tags {
