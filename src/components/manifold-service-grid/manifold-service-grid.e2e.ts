@@ -6,8 +6,7 @@ describe('<manifold-service-grid> sorted categories', () => {
   it('displays all services', async () => {
     // Set properties and wait
     const page = await newE2EPage({
-      html:
-        '<manifold-services-tunnel><manifold-service-grid></manifold-service-grid></manifold-services-tunnel>',
+      html: '<manifold-services-tunnel><manifold-service-grid /></manifold-services-tunnel>',
     });
     await page.$eval('manifold-services-tunnel', (elm: any) => {
       elm.services = [
@@ -26,15 +25,15 @@ describe('<manifold-service-grid> sorted categories', () => {
     categories.forEach(async cat => {
       const card = await cat.findAll('manifold-service-card');
       expect(card.length).toBe(2);
-      expect(card[1].getAttribute('is-custom')).toBe('');
+      const isCustom = await card[1].getProperty('isCustom');
+      expect(isCustom).toBe(true);
     });
   });
 
   it('formats links correctly', async () => {
     // Set properties and wait
     const page = await newE2EPage({
-      html:
-        '<manifold-services-tunnel><manifold-service-grid></manifold-service-grid></manifold-services-tunnel>',
+      html: '<manifold-services-tunnel><manifold-service-grid /></manifold-services-tunnel>',
     });
     await page.$eval('manifold-services-tunnel', (elm: any) => {
       elm.services = [{ body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } }];
@@ -48,15 +47,14 @@ describe('<manifold-service-grid> sorted categories', () => {
     expect(card).not.toBeNull();
 
     if (card) {
-      const href = card.getAttribute('service-link');
+      const href = await card.getProperty('serviceLink');
       expect(href).toBe('/discover/view/service/jawsdb-mysql');
     }
   });
 
   it('correctly filters results', async () => {
     const page = await newE2EPage({
-      html:
-        '<manifold-services-tunnel><manifold-service-grid></manifold-service-grid></manifold-services-tunnel>',
+      html: '<manifold-services-tunnel><manifold-service-grid /></manifold-services-tunnel>',
     });
     await page.$eval('manifold-services-tunnel', (elm: any) => {
       elm.services = [
@@ -81,8 +79,7 @@ describe('<manifold-service-grid> sorted categories', () => {
   it('correctly highlights featured services', async () => {
     // Set properties and wait
     const page = await newE2EPage({
-      html:
-        '<manifold-services-tunnel><manifold-service-grid></manifold-service-grid></manifold-services-tunnel>',
+      html: '<manifold-services-tunnel><manifold-service-grid /></manifold-services-tunnel>',
     });
     await page.$eval('manifold-services-tunnel', (elm: any) => {
       elm.services = [
@@ -100,11 +97,10 @@ describe('<manifold-service-grid> sorted categories', () => {
     expect(logDNA).not.toBeNull();
 
     if (jawsDB && logDNA) {
-      const jawsIsFeatured = jawsDB.getAttribute('is-featured');
-      const logDNAIsFeatured = logDNA.getAttribute('is-featured');
-
-      expect(jawsIsFeatured).toBeFalsy(); // this will be missing or null or something
-      expect(logDNAIsFeatured).toBe(''); // HTML attributes will read as '' if preset (true)
+      const jawsIsFeatured = await jawsDB.getProperty('isFeatured');
+      const logDNAIsFeatured = await logDNA.getProperty('isFeatured');
+      expect(jawsIsFeatured).toBe(false);
+      expect(logDNAIsFeatured).toBe(true);
     }
   });
 });
