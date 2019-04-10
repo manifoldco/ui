@@ -5,6 +5,7 @@
 .grid {
   display: grid;
   grid-column-gap: 3rem;
+  grid-template-columns: 1fr;
 
   @media (min-width: 600px) {
     grid-template-columns: auto 1fr;
@@ -14,6 +15,7 @@
 .sidebar {
   position: relative;
   min-width: 15rem;
+  max-width: 20rem;
   margin-right: auto;
   margin-left: auto;
 }

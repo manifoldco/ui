@@ -12,6 +12,7 @@
   display: block;
   flex-grow: 1;
   min-width: 10em;
+  max-width: 30em;
   padding-right: 1rem;
   padding-bottom: 1rem;
 }
