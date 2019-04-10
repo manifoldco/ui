@@ -76,7 +76,6 @@ export class ManifoldProductPage {
         <section class="grid">
           {this.renderSidebar()}
           <manifold-product-details product={this.product} />
-          {/* TODO <product-plans /> */}
         </section>
       </div>
     );

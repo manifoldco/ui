@@ -16,7 +16,7 @@ export class ManifoldProductDetails {
     return (
       <div>
         <h1 class="title" itemprop="tagline">
-          {tagline}
+          <span class="tagline">{tagline}</span>
           <manifold-link-button
             href={`${RESOURCE_CREATE}${label}&plan=${'selectedPlan'}`}
             rel="noopener noreferrer"
