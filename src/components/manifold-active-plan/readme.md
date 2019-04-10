@@ -7,10 +7,11 @@ Hello
 
 ## Properties
 
-| Property  | Attribute | Description | Type              | Default     |
-| --------- | --------- | ----------- | ----------------- | ----------- |
-| `plans`   | --        |             | `ExpandedPlan[]`  | `undefined` |
-| `product` | --        |             | `ExpandedProduct` | `undefined` |
+| Property              | Attribute               | Description | Type                   | Default     |
+| --------------------- | ----------------------- | ----------- | ---------------------- | ----------- |
+| `hideProvisionButton` | `hide-provision-button` |             | `boolean \| undefined` | `undefined` |
+| `plans`               | --                      |             | `ExpandedPlan[]`       | `undefined` |
+| `product`             | --                      |             | `ExpandedProduct`      | `undefined` |
 
 
 ----------------------------------------------

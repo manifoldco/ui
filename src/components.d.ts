@@ -23,10 +23,12 @@ import {
 export namespace Components {
 
   interface ManifoldActivePlan {
+    'hideProvisionButton'?: boolean;
     'plans': Catalog.ExpandedPlan[];
     'product': Catalog.ExpandedProduct;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
+    'hideProvisionButton'?: boolean;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
   }
@@ -195,10 +197,12 @@ export namespace Components {
   }
 
   interface ManifoldPlanDetails {
+    'hideProvisionButton': boolean;
     'plan': Catalog.ExpandedPlan;
     'product': Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
+    'hideProvisionButton'?: boolean;
     'onManifold-planUpdated'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
@@ -217,10 +221,12 @@ export namespace Components {
 
   interface ManifoldPlanSelector {
     'connection': Connection;
+    'hideProvisionButton'?: boolean;
     'productId': string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
+    'hideProvisionButton'?: boolean;
     'productId'?: string;
   }
 

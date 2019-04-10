@@ -168,5 +168,46 @@ describe(`<manifold-plan-details>`, () => {
       const toggle = await page.find('manifold-plan-details >>> manifold-toggle');
       expect(toggle).not.toBeNull();
     });
+
+    it('provision button is shown by default', async () => {
+      const page = await newE2EPage({ html: `<manifold-plan-details />` });
+
+      const props = { plan: booleanPlanCustom, product: Product };
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+        },
+        props
+      );
+
+      await page.waitForChanges();
+
+      const button = await page.find('manifold-plan-details >>> manifold-link-button');
+      expect(button).toBeDefined();
+    });
+
+    it('provision button hides with prop', async () => {
+      const page = await newE2EPage({
+        html: `<manifold-plan-details />`,
+      });
+
+      const props = { plan: booleanPlanCustom, product: Product };
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, { plan, product }: any) => {
+          elm.plan = plan;
+          elm.product = product;
+          elm.hideProvisionButton = true;
+        },
+        props
+      );
+
+      await page.waitForChanges();
+
+      const button = await page.find('manifold-plan-details >>> manifold-link-button');
+      expect(button).toBeNull();
+    });
   });
 });

@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type           | Default     |
-| --------- | --------- | ----------- | -------------- | ----------- |
-| `plan`    | --        |             | `ExpandedPlan` | `undefined` |
-| `product` | --        |             | `Product`      | `undefined` |
+| Property              | Attribute               | Description | Type           | Default     |
+| --------------------- | ----------------------- | ----------- | -------------- | ----------- |
+| `hideProvisionButton` | `hide-provision-button` |             | `boolean`      | `false`     |
+| `plan`                | --                      |             | `ExpandedPlan` | `undefined` |
+| `product`             | --                      |             | `Product`      | `undefined` |
 
 
 ## Events
