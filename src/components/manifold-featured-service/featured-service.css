@@ -32,6 +32,7 @@
 
 .logo-wrapper {
   width: 32.5%;
+  min-width: 3rem;
   margin-top: -2rem;
 }
 
@@ -39,7 +40,6 @@
   display: block;
   width: 100%;
   height: auto;
-  background: pink;
   border-radius: var(--mf-radius-m);
   object-fit: contain;
 }

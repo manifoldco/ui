@@ -1,22 +1,20 @@
 .title {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   margin: 0;
   padding-top: 1.5rem;
   font-weight: 400;
   font-size: var(--mf-font-u3);
   line-height: 1.25;
+}
 
-  @media (min-width: 800px) {
-    flex-wrap: nowrap;
-    font-size: var(--mf-font-u4);
-  }
-
-  & > * {
-    margin-left: auto;
-  }
+.tagline {
+  display: block;
+  flex-grow: 1;
+  min-width: 10em;
+  max-width: 30em;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
 }
 
 .value-prop-list {
