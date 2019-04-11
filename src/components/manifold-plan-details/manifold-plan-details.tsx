@@ -1,18 +1,8 @@
 import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { UserFeatures } from 'types/UserFeatures';
-import {
-  booleanFeatureDefaultValue,
-  booleanFeatureDisplayValue,
-  featureDescription,
-  initialFeatures,
-  numberFeatureDefaultValue,
-  numberFeatureDisplayValue,
-  numberFeatureMeasurableDisplayValue,
-  stringFeatureDefaultValue,
-  stringFeatureDisplayValue,
-  stringFeatureOptions,
-  YES,
-} from '../../utils/plan';
+import { initialFeatures } from '../../utils/plan';
+import { FeatureValue } from './components/FeatureValue';
+import { FeatureLabel } from './components/FeatureLabel';
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 
@@ -69,152 +59,76 @@ export class ManifoldPlanDetails {
     });
   }
 
-  renderLockedFeature(displayValue: JSX.Element): JSX.Element {
+  get header() {
+    const { name: productName, logo_url: productLogo } = this.product.body;
+
     return (
-      <dd class="feature-value">
-        <manifold-tooltip labelText="Feature cannot be changed from current plan">
-          <span class="value" data-value={displayValue} data-locked>
-            <manifold-icon class="icon" icon="lock" marginRight />
-            {displayValue}
-          </span>
-        </manifold-tooltip>
-      </dd>
+      <header class="header">
+        <div class="logo">
+          <img src={productLogo} alt={productName} itemprop="logo" />
+        </div>
+        <div>
+          <h1 class="plan-name" itemprop="name">
+            {this.plan.body.name}
+          </h1>
+          <h2 class="product-name" itemprop="brand">
+            {productName}
+          </h2>
+        </div>
+      </header>
     );
   }
 
-  renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {
-    if (!feature.value) return null;
+  get featureList() {
+    const { expanded_features = [] } = this.plan.body;
+    return (
+      <dl class="features">
+        {expanded_features.map(feature => [
+          <FeatureLabel feature={feature} />,
+          <FeatureValue
+            features={this.features}
+            feature={feature}
+            onChange={e => this.handleChangeValue(e)}
+          />,
+        ])}
+      </dl>
+    );
+  }
 
-    const description = featureDescription(feature.value);
-    const render: JSX.Element[] = [
-      <dt class="feature-name">
-        {feature.name}
-        {description && <p class="description">{description}</p>}
-      </dt>,
-    ];
-
-    if (feature.type === 'string') {
-      const displayValue = stringFeatureDisplayValue(feature.value);
-
-      if (this.isExistingResource && (!feature.upgradable || !feature.downgradable)) {
-        render.push(this.renderLockedFeature(displayValue));
-      } else {
-        render.push(
-          <dd class="feature-value" data-value={displayValue}>
-            {feature.customizable ? (
-              <manifold-select
-                name={feature.label}
-                options={stringFeatureOptions(feature.values || [])}
-                onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-                defaultValue={stringFeatureDefaultValue(feature.value)}
-              />
-            ) : (
-              displayValue
-            )}
-          </dd>
-        );
-      }
-    } else if (feature.type === 'boolean') {
-      const displayValue = booleanFeatureDisplayValue(feature.value);
-
-      if (this.isExistingResource && (!feature.upgradable || !feature.downgradable)) {
-        render.push(this.renderLockedFeature(displayValue));
-      } else {
-        render.push(
-          <dd class="feature-value" data-value={displayValue}>
-            {feature.customizable ? (
-              <manifold-toggle
-                aria-labelledby={`-name`}
-                defaultValue={booleanFeatureDefaultValue(feature.value)}
-                name={feature.label}
-                onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-              />
-            ) : (
-              <span class="value" data-value={displayValue}>
-                {displayValue === YES && <manifold-icon icon="check" />} {displayValue}
-              </span>
-            )}
-          </dd>
-        );
-      }
-    } else if (feature.type === 'number' && feature.value.numeric_details) {
-      const value =
-        typeof this.features[feature.label] === 'number'
-          ? (this.features[feature.label] as number)
-          : numberFeatureDefaultValue(feature.value);
-      const displayValue = feature.measurable
-        ? numberFeatureMeasurableDisplayValue(feature.value)
-        : numberFeatureDisplayValue(feature.value);
-
-      if (this.isExistingResource && (!feature.upgradable && !feature.downgradable)) {
-        render.push(this.renderLockedFeature(displayValue || ''));
-      } else {
-        render.push(
-          <dd class="feature-value" data-value={displayValue}>
-            {feature.customizable ? (
-              <manifold-number-input
-                increment={feature.value.numeric_details.increment}
-                max={feature.value.numeric_details.max}
-                min={feature.value.numeric_details.min}
-                name={feature.label}
-                onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-                suffix={feature.value.numeric_details.suffix}
-                value={value}
-                decrement-disabled-label="This feature is not downgradable"
-                increment-disabled-label="This feature is not upgradable"
-              />
-            ) : (
-              displayValue
-            )}
-          </dd>
-        );
-      }
-    }
-
-    return render;
+  get footer() {
+    const { label: productLabel } = this.product.body;
+    const { name, expanded_features = [] } = this.plan.body;
+    return (
+      <footer class="footer">
+        <manifold-plan-cost
+          planId={this.plan.id}
+          allFeatures={expanded_features}
+          selectedFeatures={this.features}
+        />
+        {!this.hideProvisionButton && (
+          <manifold-link-button
+            href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Get {name}
+            <manifold-icon icon="arrow_right" marginLeft />
+          </manifold-link-button>
+        )}
+      </footer>
+    );
   }
 
   render() {
     if (!this.product || !this.plan) return null;
 
-    const { name: productName, logo_url: productLogo, label: productLabel } = this.product.body;
-    const { name, expanded_features = [] } = this.plan.body;
-
     return (
       <section itemscope itemtype="https://schema.org/IndividualProduct">
         <div class="plan-details">
-          <header class="header">
-            <div class="logo">
-              <img src={productLogo} alt={productName} itemProp="logo" />
-            </div>
-            <div>
-              <h1 class="plan-name" itemProp="name">
-                {name}
-              </h1>
-              <h2 class="product-name" itemProp="brand">
-                {productName}
-              </h2>
-            </div>
-          </header>
-          <dl class="features">{expanded_features.map(feature => this.renderFeature(feature))}</dl>
+          {this.header}
+          {this.featureList}
         </div>
-        <footer class="footer">
-          <manifold-plan-cost
-            planId={this.plan.id}
-            allFeatures={expanded_features}
-            selectedFeatures={this.features}
-          />
-          {!this.hideProvisionButton && (
-            <manifold-link-button
-              href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Get {name}
-              <manifold-icon icon="arrow_right" marginLeft />
-            </manifold-link-button>
-          )}
-        </footer>
+        {this.footer}
       </section>
     );
   }

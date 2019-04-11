@@ -101,6 +101,10 @@
   justify-content: start;
 }
 
+.icon {
+  display: none;
+}
+
 .value {
   &[data-value='No'],
   &[data-value='Yes'] {
@@ -114,6 +118,10 @@
 
   &[data-value='Yes'] {
     color: var(--mf-c-blue);
+
+    & .icon {
+      display: inline-block;
+    }
   }
 
   &[data-locked] {

@@ -67,6 +67,7 @@ export class ManifoldNumberInput {
           }
         >
           <button
+            tabindex="-1"
             class="decrement"
             onClick={() => this.setValue(this.value - this.increment)}
             disabled={this.lowerBoundReached}
@@ -94,6 +95,7 @@ export class ManifoldNumberInput {
           }
         >
           <button
+            tabindex="-1"
             class="increment"
             onClick={() => this.setValue(this.value + this.increment)}
             disabled={this.upperBoundReached}

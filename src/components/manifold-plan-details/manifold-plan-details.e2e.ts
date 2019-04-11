@@ -66,7 +66,7 @@ describe(`<manifold-plan-details>`, () => {
       await page.waitForChanges();
 
       const valueDisplay = await page.find('manifold-plan-details >>> .feature-value');
-      const value = await valueDisplay.getAttribute('data-value');
+      const value = await valueDisplay.innerText;
       expect(value).toBe('Yes');
     });
 
@@ -85,8 +85,8 @@ describe(`<manifold-plan-details>`, () => {
 
       await page.waitForChanges();
 
-      const valueDisplay = await page.find('manifold-plan-details >>> .value');
-      const value = await valueDisplay.getAttribute('data-value');
+      const valueDisplay = await page.find('manifold-plan-details >>> .feature-value');
+      const value = await valueDisplay.innerText;
       expect(value).toBe('Yes');
     });
 
@@ -105,8 +105,8 @@ describe(`<manifold-plan-details>`, () => {
 
       await page.waitForChanges();
 
-      const valueDisplay = await page.find('manifold-plan-details >>> .value');
-      const value = await valueDisplay.getAttribute('data-value');
+      const valueDisplay = await page.find('manifold-plan-details >>> .feature-value');
+      const value = await valueDisplay.innerText;
       expect(value).toBe('No');
     });
   });
