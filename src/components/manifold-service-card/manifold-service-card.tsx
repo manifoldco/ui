@@ -35,7 +35,7 @@ export class ManifoldServiceCard {
     fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`)
       .then(response => response.json())
       .then((data: Catalog.ExpandedPlan[]) => {
-        if (data.findIndex(({ body: { free } }) => free === true) !== -1) {
+        if (data.find(plan => plan.body.free === true)) {
           this.isFree = true;
         }
       });
