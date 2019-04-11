@@ -66,12 +66,17 @@ export class ManifoldServiceCard {
               <manifold-icon class="icon" icon={this.logo} />
             </div>
           ) : (
-            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
-          )}
+              <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
+            )}
         </div>
         <h3 class="name" itemprop="name">
           {this.name}
         </h3>
+        <div class="info">
+          <p class="description" itemprop="description">
+            {this.description}
+          </p>
+        </div>
         <div class="tags">
           {this.isFeatured && <div class="tag">featured</div>}
           {this.isFree && (
@@ -79,11 +84,6 @@ export class ManifoldServiceCard {
               free
             </div>
           )}
-        </div>
-        <div class="info">
-          <p class="description" itemprop="description">
-            {this.description}
-          </p>
         </div>
       </a>
     );
