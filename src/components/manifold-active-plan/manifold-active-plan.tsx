@@ -9,6 +9,7 @@ export class ManifoldActivePlan {
   @Prop() isExistingResource?: boolean;
   @Prop() product: Catalog.ExpandedProduct;
   @Prop() plans: Catalog.ExpandedPlan[];
+  @Prop() hideProvisionButton?: boolean;
   @State() selectedPlanId: string;
 
   componentWillLoad() {
@@ -33,6 +34,7 @@ export class ManifoldActivePlan {
           isExistingResource={this.isExistingResource}
           product={this.product}
           plan={this.plans.find(plan => plan.id === this.selectedPlanId)}
+          hideProvisionButton={this.hideProvisionButton}
         />
       </div>,
     ];

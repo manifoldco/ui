@@ -14,6 +14,7 @@ export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   @Prop() connection: Connection;
   @Prop() resourceId?: string;
+  @Prop() hideProvisionButton?: boolean;
   @Prop() productId: string;
   @State() product: Catalog.ExpandedProduct;
   @State() plans: Catalog.Plan[];
@@ -38,6 +39,7 @@ export class ManifoldPlanSelector {
         product={this.product}
         plans={this.plans}
         isExistingResource={!!this.resourceId}
+        hideProvisionButton={this.hideProvisionButton}
       />
     );
   }

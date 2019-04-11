@@ -7,11 +7,12 @@ Hello
 
 ## Properties
 
-| Property             | Attribute              | Description | Type                   | Default     |
-| -------------------- | ---------------------- | ----------- | ---------------------- | ----------- |
-| `isExistingResource` | `is-existing-resource` |             | `boolean \| undefined` | `undefined` |
-| `plans`              | --                     |             | `ExpandedPlan[]`       | `undefined` |
-| `product`            | --                     |             | `ExpandedProduct`      | `undefined` |
+| Property              | Attribute               | Description | Type                   | Default     |
+| --------------------- | ----------------------- | ----------- | ---------------------- | ----------- |
+| `hideProvisionButton` | `hide-provision-button` |             | `boolean \| undefined` | `undefined` |
+| `isExistingResource`  | `is-existing-resource`  |             | `boolean \| undefined` | `undefined` |
+| `plans`               | --                      |             | `ExpandedPlan[]`       | `undefined` |
+| `product`             | --                      |             | `ExpandedProduct`      | `undefined` |
 
 
 ----------------------------------------------

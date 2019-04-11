@@ -25,6 +25,7 @@ export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean;
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
+  @Prop() hideProvisionButton: boolean = false;
   @State() features: UserFeatures = {};
   @Event({
     eventName: 'manifold-planUpdated',
@@ -203,14 +204,16 @@ export class ManifoldPlanDetails {
             allFeatures={expanded_features}
             selectedFeatures={this.features}
           />
-          <manifold-link-button
-            href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Get {name}
-            <manifold-icon icon="arrow_right" marginLeft />
-          </manifold-link-button>
+          {!this.hideProvisionButton && (
+            <manifold-link-button
+              href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Get {name}
+              <manifold-icon icon="arrow_right" marginLeft />
+            </manifold-link-button>
+          )}
         </footer>
       </section>
     );
