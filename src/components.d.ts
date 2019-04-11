@@ -23,10 +23,12 @@ import {
 export namespace Components {
 
   interface ManifoldActivePlan {
+    'isExistingResource'?: boolean;
     'plans': Catalog.ExpandedPlan[];
     'product': Catalog.ExpandedProduct;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
+    'isExistingResource'?: boolean;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
   }
@@ -195,10 +197,12 @@ export namespace Components {
   }
 
   interface ManifoldPlanDetails {
+    'isExistingResource'?: boolean;
     'plan': Catalog.ExpandedPlan;
     'product': Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
+    'isExistingResource'?: boolean;
     'onManifold-planUpdated'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
@@ -218,10 +222,12 @@ export namespace Components {
   interface ManifoldPlanSelector {
     'connection': Connection;
     'productId': string;
+    'resourceId'?: string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'productId'?: string;
+    'resourceId'?: string;
   }
 
   interface ManifoldProductDetails {

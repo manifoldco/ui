@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type           | Default     |
-| --------- | --------- | ----------- | -------------- | ----------- |
-| `plan`    | --        |             | `ExpandedPlan` | `undefined` |
-| `product` | --        |             | `Product`      | `undefined` |
+| Property             | Attribute              | Description | Type                   | Default     |
+| -------------------- | ---------------------- | ----------- | ---------------------- | ----------- |
+| `isExistingResource` | `is-existing-resource` |             | `boolean \| undefined` | `undefined` |
+| `plan`               | --                     |             | `ExpandedPlan`         | `undefined` |
+| `product`            | --                     |             | `Product`              | `undefined` |
 
 
 ## Events

@@ -22,6 +22,7 @@ const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
   shadow: true,
 })
 export class ManifoldPlanDetails {
+  @Prop() isExistingResource?: boolean;
   @Prop() plan: Catalog.ExpandedPlan;
   @Prop() product: Catalog.Product;
   @State() features: UserFeatures = {};
@@ -94,7 +95,7 @@ export class ManifoldPlanDetails {
     if (feature.type === 'string') {
       const displayValue = stringFeatureDisplayValue(feature.value);
 
-      if (!feature.upgradable || !feature.downgradable) {
+      if (this.isExistingResource && (!feature.upgradable || !feature.downgradable)) {
         render.push(this.renderLockedFeature(displayValue));
       } else {
         render.push(
@@ -115,7 +116,7 @@ export class ManifoldPlanDetails {
     } else if (feature.type === 'boolean') {
       const displayValue = booleanFeatureDisplayValue(feature.value);
 
-      if (!feature.upgradable || !feature.downgradable) {
+      if (this.isExistingResource && (!feature.upgradable || !feature.downgradable)) {
         render.push(this.renderLockedFeature(displayValue));
       } else {
         render.push(
@@ -128,7 +129,7 @@ export class ManifoldPlanDetails {
                 onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
               />
             ) : (
-              <span class="value">
+              <span class="value" data-value={displayValue}>
                 {displayValue === YES && <manifold-icon icon="check" />} {displayValue}
               </span>
             )}
@@ -145,7 +146,7 @@ export class ManifoldPlanDetails {
         ? numberFeatureMeasurableDisplayValue(feature.value)
         : numberFeatureDisplayValue(feature.value);
 
-      if (!feature.upgradable && !feature.downgradable) {
+      if (this.isExistingResource && (!feature.upgradable && !feature.downgradable)) {
         render.push(this.renderLockedFeature(displayValue || ''));
       } else {
         render.push(
