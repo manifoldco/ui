@@ -137,7 +137,6 @@ export class ManifoldPlanDetails {
         );
       }
     } else if (feature.type === 'number' && feature.value.numeric_details) {
-      console.log(feature);
       const value =
         typeof this.features[feature.label] === 'number'
           ? (this.features[feature.label] as number)
