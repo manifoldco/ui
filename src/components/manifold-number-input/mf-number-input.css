@@ -1,14 +1,11 @@
 .container {
   display: grid;
   grid-gap: 0.5em;
-  grid-template-areas: 'decrement field increment';
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr 2fr 1fr;
   max-width: 150px;
 }
 
 .field {
-  grid-area: field;
-  width: auto;
   padding: 0.5em 0.75em;
   font-size: 1em;
   text-align: center;
@@ -37,14 +34,6 @@
   }
 }
 
-.increment {
-  grid-area: increment;
-}
-
-.decrement {
-  grid-area: decrement;
-}
-
 .increment,
 .decrement {
   padding: 0 0.5em;
@@ -65,6 +54,7 @@
 
 .display-units {
   grid-column: 1 / -1;
+  grid-row: 2;
   margin-top: 0.25em;
   color: var(--mf-c-gray);
   font-size: var(--mf-font-d1);
@@ -76,40 +66,5 @@
 
   & ~ .display-units {
     color: var(--mf-c-red);
-  }
-}
-
-.tooltip {
-  position: absolute;
-  left: 50%;
-  display: none;
-  width: max-content;
-  max-width: 10em;
-  padding: 0.25em 0.5em;
-  color: var(--mf-c-white);
-  font-size: var(--mf-font-d1);
-  background: var(--mf-c-black);
-  border-radius: var(--mf-radius-default);
-  transform: translate(-50%, calc(-100% - 0.5em));
-
-  &::before {
-    position: absolute;
-    bottom: -0.25em;
-    left: calc(50% - 0.25em);
-    display: block;
-    width: 0.5em;
-    height: 0.5em;
-    background: inherit;
-    border-bottom-right-radius: 2px;
-    transform: rotateZ(45deg);
-    content: '';
-  }
-}
-
-button {
-  position: relative;
-
-  &:hover .tooltip {
-    display: block;
   }
 }

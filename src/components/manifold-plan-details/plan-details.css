@@ -98,10 +98,10 @@
 
 .feature-value {
   display: grid;
-  grid-auto-flow: column;
-  grid-gap: 0.5rem;
   justify-content: start;
+}
 
+.value {
   &[data-value='No'],
   &[data-value='Yes'] {
     font-weight: 600;

@@ -59,6 +59,21 @@ export class ManifoldNumberInput {
   render() {
     return (
       <div class="container" data-error={this.outOfBound}>
+        <manifold-tooltip
+          labelText={
+            this.decrementDisabledLabel && this.lowerBoundReached
+              ? this.decrementDisabledLabel
+              : undefined
+          }
+        >
+          <button
+            class="decrement"
+            onClick={() => this.setValue(this.value - this.increment)}
+            disabled={this.lowerBoundReached}
+          >
+            <manifold-icon icon="minus" />
+          </button>
+        </manifold-tooltip>
         <input
           class="field"
           type="number"
@@ -71,26 +86,21 @@ export class ManifoldNumberInput {
           step={this.increment}
           value={this.value}
         />
-        <button
-          class="increment"
-          onClick={() => this.setValue(this.value + this.increment)}
-          disabled={this.upperBoundReached}
+        <manifold-tooltip
+          labelText={
+            this.incrementDisabledLabel && this.upperBoundReached
+              ? this.incrementDisabledLabel
+              : undefined
+          }
         >
-          {this.incrementDisabledLabel && this.upperBoundReached && (
-            <div class="tooltip">{this.incrementDisabledLabel}</div>
-          )}
-          <manifold-icon icon="plus" />
-        </button>
-        <button
-          class="decrement"
-          onClick={() => this.setValue(this.value - this.increment)}
-          disabled={this.lowerBoundReached}
-        >
-          {this.decrementDisabledLabel && this.lowerBoundReached && (
-            <div class="tooltip">{this.decrementDisabledLabel}</div>
-          )}
-          <manifold-icon icon="minus" />
-        </button>
+          <button
+            class="increment"
+            onClick={() => this.setValue(this.value + this.increment)}
+            disabled={this.upperBoundReached}
+          >
+            <manifold-icon icon="plus" />
+          </button>
+        </manifold-tooltip>
         <div class="display-units">
           {this.min.toLocaleString()} - {this.max.toLocaleString()} {this.suffix}
         </div>

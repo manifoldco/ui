@@ -16,20 +16,6 @@ import {
 
 const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 
-function getDisplayValue(feature: Catalog.ExpandedFeature): string {
-  if (!feature.value) return '';
-  switch (feature.type) {
-    case 'boolean':
-      return booleanFeatureDisplayValue(feature.value);
-    case 'number':
-      return numberFeatureDisplayValue(feature.value);
-    case 'string':
-      return numberFeatureDisplayValue(feature.value);
-    default:
-      return '';
-  }
-}
-
 @Component({
   tag: 'manifold-plan-details',
   styleUrl: 'plan-details.css',
@@ -81,6 +67,19 @@ export class ManifoldPlanDetails {
     });
   }
 
+  renderLockedFeature(displayValue: JSX.Element): JSX.Element {
+    return (
+      <dd class="feature-value">
+        <manifold-tooltip labelText="Feature cannot be changed from current plan">
+          <span class="value" data-value={displayValue} data-locked>
+            <manifold-icon class="icon" icon="lock" marginRight />
+            {displayValue}
+          </span>
+        </manifold-tooltip>
+      </dd>
+    );
+  }
+
   renderFeature(feature: Catalog.ExpandedFeature): JSX.Element[] | null {
     if (!feature.value) return null;
 
@@ -92,47 +91,50 @@ export class ManifoldPlanDetails {
       </dt>,
     ];
 
-    if (!feature.upgradable && !feature.downgradable) {
-      render.push(
-        <dd class="feature-value" data-locked>
-          <manifold-icon class="icon" icon="lock" />
-          {getDisplayValue(feature)}
-        </dd>
-      );
-    } else if (feature.type === 'string') {
+    if (feature.type === 'string') {
       const displayValue = stringFeatureDisplayValue(feature.value);
 
-      render.push(
-        <dd class="feature-value" data-value={displayValue}>
-          {feature.customizable ? (
-            <manifold-select
-              name={feature.label}
-              options={stringFeatureOptions(feature.values || [])}
-              onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-              defaultValue={stringFeatureDefaultValue(feature.value)}
-            />
-          ) : (
-            displayValue
-          )}
-        </dd>
-      );
+      if (!feature.upgradable || !feature.downgradable) {
+        render.push(this.renderLockedFeature(displayValue));
+      } else {
+        render.push(
+          <dd class="feature-value" data-value={displayValue}>
+            {feature.customizable ? (
+              <manifold-select
+                name={feature.label}
+                options={stringFeatureOptions(feature.values || [])}
+                onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
+                defaultValue={stringFeatureDefaultValue(feature.value)}
+              />
+            ) : (
+              displayValue
+            )}
+          </dd>
+        );
+      }
     } else if (feature.type === 'boolean') {
       const displayValue = booleanFeatureDisplayValue(feature.value);
-      // console.log(feature);
-      render.push(
-        <dd class="feature-value" data-value={displayValue}>
-          {feature.customizable ? (
-            <manifold-toggle
-              aria-labelledby={`-name`}
-              defaultValue={booleanFeatureDefaultValue(feature.value)}
-              name={feature.label}
-              onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-            />
-          ) : (
-            [displayValue === YES && <manifold-icon icon="check" margin-right />, displayValue]
-          )}
-        </dd>
-      );
+
+      if (!feature.upgradable || !feature.downgradable) {
+        render.push(this.renderLockedFeature(displayValue));
+      } else {
+        render.push(
+          <dd class="feature-value" data-value={displayValue}>
+            {feature.customizable ? (
+              <manifold-toggle
+                aria-labelledby={`-name`}
+                defaultValue={booleanFeatureDefaultValue(feature.value)}
+                name={feature.label}
+                onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
+              />
+            ) : (
+              <span class="value">
+                {displayValue === YES && <manifold-icon icon="check" />} {displayValue}
+              </span>
+            )}
+          </dd>
+        );
+      }
     } else if (feature.type === 'number' && feature.value.numeric_details) {
       console.log(feature);
       const value =
@@ -143,25 +145,29 @@ export class ManifoldPlanDetails {
         ? numberFeatureMeasurableDisplayValue(feature.value)
         : numberFeatureDisplayValue(feature.value);
 
-      render.push(
-        <dd class="feature-value" data-value={displayValue}>
-          {feature.customizable ? (
-            <manifold-number-input
-              increment={feature.value.numeric_details.increment}
-              max={feature.value.numeric_details.max}
-              min={feature.value.numeric_details.min}
-              name={feature.label}
-              onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
-              suffix={feature.value.numeric_details.suffix}
-              value={value}
-              decrement-disabled-label="This feature is not downgradable"
-              increment-disabled-label="This feature is not upgradable"
-            />
-          ) : (
-            displayValue
-          )}
-        </dd>
-      );
+      if (!feature.upgradable && !feature.downgradable) {
+        render.push(this.renderLockedFeature(displayValue || ''));
+      } else {
+        render.push(
+          <dd class="feature-value" data-value={displayValue}>
+            {feature.customizable ? (
+              <manifold-number-input
+                increment={feature.value.numeric_details.increment}
+                max={feature.value.numeric_details.max}
+                min={feature.value.numeric_details.min}
+                name={feature.label}
+                onUpdateValue={(e: CustomEvent) => this.handleChangeValue(e)}
+                suffix={feature.value.numeric_details.suffix}
+                value={value}
+                decrement-disabled-label="This feature is not downgradable"
+                increment-disabled-label="This feature is not upgradable"
+              />
+            ) : (
+              displayValue
+            )}
+          </dd>
+        );
+      }
     }
 
     return render;
