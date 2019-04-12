@@ -53,5 +53,6 @@ module.exports = {
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
     'manifoldco-ui/stencil-component-prefix': 'error',
+    'manifoldco-ui/restrict-required-props': 'error',
   },
 };
