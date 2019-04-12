@@ -11,7 +11,7 @@
 | ------------- | -------------- | ----------- | --------------------- | ----------- |
 | `featured`    | `featured`     |             | `string \| undefined` | `undefined` |
 | `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |
-| `services`    | --             |             | `Product[]`           | `undefined` |
+| `services`    | --             |             | `Product[]`           | `[]`        |
 
 
 ----------------------------------------------

@@ -22,14 +22,14 @@ one additional prop:
 
 ## Properties
 
-| Property           | Attribute      | Description | Type                   | Default     |
-| ------------------ | -------------- | ----------- | ---------------------- | ----------- |
-| `allFeatures`      | --             |             | `ExpandedFeature[]`    | `undefined` |
-| `compact`          | `compact`      |             | `boolean \| undefined` | `false`     |
-| `connection`       | --             |             | `Connection`           | `undefined` |
-| `customizable`     | `customizable` |             | `boolean \| undefined` | `false`     |
-| `planId`           | `plan-id`      |             | `string`               | `undefined` |
-| `selectedFeatures` | --             |             | `UserFeatures`         | `{}`        |
+| Property           | Attribute      | Description | Type                   | Default                 |
+| ------------------ | -------------- | ----------- | ---------------------- | ----------------------- |
+| `allFeatures`      | --             |             | `ExpandedFeature[]`    | `[]`                    |
+| `compact`          | `compact`      |             | `boolean \| undefined` | `false`                 |
+| `connection`       | --             |             | `Connection`           | `connections[Env.Prod]` |
+| `customizable`     | `customizable` |             | `boolean \| undefined` | `false`                 |
+| `planId`           | `plan-id`      |             | `string`               | `undefined`             |
+| `selectedFeatures` | --             |             | `UserFeatures`         | `{}`                    |
 
 
 ----------------------------------------------
