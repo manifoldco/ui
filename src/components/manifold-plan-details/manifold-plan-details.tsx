@@ -41,14 +41,14 @@ export class ManifoldPlanDetails {
   }
 
   initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
-    if (!plan.body.expanded_features) return {};
+    if (!plan || !plan.body.expanded_features) return {};
     return { ...initialFeatures(plan.body.expanded_features) };
   }
 
   updatedPlanHandler({
-    id = this.plan.id,
-    label = this.plan.body.label,
-    product = this.product.body.label,
+    id = this.plan && this.plan.id,
+    label = this.plan && this.plan.body.label,
+    product = this.product && this.product.body.label,
     features = this.features,
   }) {
     this.planUpdated.emit({
