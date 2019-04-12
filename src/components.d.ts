@@ -201,8 +201,8 @@ export namespace Components {
   interface ManifoldPlanDetails {
     'hideProvisionButton': boolean;
     'isExistingResource'?: boolean;
-    'plan': Catalog.ExpandedPlan;
-    'product': Catalog.Product;
+    'plan'?: Catalog.ExpandedPlan;
+    'product'?: Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideProvisionButton'?: boolean;
