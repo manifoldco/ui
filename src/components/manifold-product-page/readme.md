@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type              | Default     |
-| --------- | --------- | ----------- | ----------------- | ----------- |
-| `product` | --        |             | `ExpandedProduct` | `undefined` |
+| Property  | Attribute | Description | Type                           | Default     |
+| --------- | --------- | ----------- | ------------------------------ | ----------- |
+| `product` | --        |             | `ExpandedProduct \| undefined` | `undefined` |
 
 
 ----------------------------------------------

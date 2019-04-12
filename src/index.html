@@ -214,7 +214,7 @@ render() {
                     <td>--</td>
                     <td></td>
                     <td><code>Connection</code></td>
-                    <td><code>undefined</code></td>
+                    <td><code>connections[Env.Prod]</code></td>
                   </tr>
                   <tr>
                     <td><code>featured</code></td>
@@ -279,7 +279,7 @@ render() {
                     <td>--</td>
                     <td></td>
                     <td><code>Connection</code></td>
-                    <td><code>undefined</code></td>
+                    <td><code>connections[Env.Prod]</code></td>
                   </tr>
                   <tr>
                     <td><code>productLabel</code></td>
@@ -333,6 +333,11 @@ render() {
    */
 });
 </code></pre>
+              <h3 id="hidingprovisionbutton">Hiding provision button</h3>
+              <p>
+                If you would like to hide the button that provisions a selected service, add the
+                <code>hide-provision-button</code> attribute.
+              </p>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -351,6 +356,13 @@ render() {
                     <td>--</td>
                     <td></td>
                     <td><code>Connection</code></td>
+                    <td><code>connections[Env.Prod]</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>hideProvisionButton</code></td>
+                    <td><code>hide-provision-button</code></td>
+                    <td></td>
+                    <td><code>boolean | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
@@ -358,6 +370,13 @@ render() {
                     <td><code>product-id</code></td>
                     <td></td>
                     <td><code>string</code></td>
+                    <td><code>undefined</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>resourceId</code></td>
+                    <td><code>resource-id</code></td>
+                    <td></td>
+                    <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                 </tbody>
