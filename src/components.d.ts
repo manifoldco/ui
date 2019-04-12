@@ -327,10 +327,10 @@ export namespace Components {
   }
 
   interface ManifoldSortedCategories {
-    'observeCategory': Observer;
+    'observeCategory': (el?: HTMLElement) => void;
   }
   interface ManifoldSortedCategoriesAttributes extends StencilHTMLAttributes {
-    'observeCategory'?: Observer;
+    'observeCategory'?: (el?: HTMLElement) => void;
   }
 
   interface ManifoldToggle {
