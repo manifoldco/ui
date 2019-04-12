@@ -26,7 +26,7 @@ export namespace Components {
     'hideProvisionButton'?: boolean;
     'isExistingResource'?: boolean;
     'plans': Catalog.ExpandedPlan[];
-    'product': Catalog.ExpandedProduct;
+    'product'?: Catalog.ExpandedProduct;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
     'hideProvisionButton'?: boolean;
@@ -237,14 +237,14 @@ export namespace Components {
   }
 
   interface ManifoldProductDetails {
-    'product': Catalog.ExpandedProduct;
+    'product'?: Catalog.ExpandedProduct;
   }
   interface ManifoldProductDetailsAttributes extends StencilHTMLAttributes {
     'product'?: Catalog.ExpandedProduct;
   }
 
   interface ManifoldProductPage {
-    'product': Catalog.ExpandedProduct;
+    'product'?: Catalog.ExpandedProduct;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
     'product'?: Catalog.ExpandedProduct;

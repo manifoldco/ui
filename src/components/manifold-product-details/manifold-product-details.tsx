@@ -8,9 +8,13 @@ const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
   shadow: true,
 })
 export class ManifoldProductDetails {
-  @Prop() product: Catalog.ExpandedProduct;
+  @Prop() product?: Catalog.ExpandedProduct;
 
   render() {
+    if (!this.product) {
+      return null;
+    }
+
     const { label, name, tagline, value_props } = this.product.body;
 
     return (

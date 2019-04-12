@@ -28,7 +28,7 @@ const PlanButton: FunctionalComponent<{
 export class ManifoldPlanMenu {
   @Prop() plans: Catalog.ExpandedPlan[] = [];
   @Prop() selectedPlanId: string;
-  @Prop() selectPlan: Function;
+  @Prop() selectPlan: Function = () => {};
 
   get customPlans() {
     return Array.isArray(this.plans)

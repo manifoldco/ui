@@ -1,12 +1,12 @@
 import { Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
-  @Prop() connection: Connection;
+  @Prop() connection: Connection = connections[Env.Prod];
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
 

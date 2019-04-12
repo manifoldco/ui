@@ -6,7 +6,7 @@ import Tunnel from '../../data/marketplace';
 export class ManiTunnel {
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
-  @Prop() services: Catalog.Product[];
+  @Prop() services: Catalog.Product[] = [];
 
   render() {
     return (

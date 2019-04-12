@@ -6,9 +6,13 @@ import { Component, Prop } from '@stencil/core';
   shadow: true,
 })
 export class ManifoldProductPage {
-  @Prop() product: Catalog.ExpandedProduct;
+  @Prop() product?: Catalog.ExpandedProduct;
 
   renderSidebar = () => {
+    if (!this.product) {
+      return null;
+    }
+
     const { label, name, logo_url, tags, support_email, documentation_url } = this.product.body;
 
     return (

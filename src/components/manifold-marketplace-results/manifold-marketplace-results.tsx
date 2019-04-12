@@ -4,7 +4,7 @@ import { Component, Prop } from '@stencil/core';
 export class ManifoldMarketplace {
   @Prop() featured?: string;
   @Prop() serviceLink?: string;
-  @Prop() services: Catalog.Product[];
+  @Prop() services: Catalog.Product[] = [];
 
   private formatHref(label: string): string {
     if (typeof label !== 'string') return '';

@@ -6,7 +6,7 @@ import { categories, formatCategoryLabel, customCardExcludeList } from '../../ut
 
 @Component({ tag: 'manifold-sorted-categories' })
 export class ManifoldSortedCategories {
-  @Prop() observeCategory: (el?: HTMLElement) => void;
+  @Prop() observeCategory: (el?: HTMLElement) => void = () => {};
 
   render() {
     return (

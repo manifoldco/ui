@@ -7,8 +7,8 @@ import { Component, State, Prop } from '@stencil/core';
 })
 export class ManifoldActivePlan {
   @Prop() isExistingResource?: boolean;
-  @Prop() product: Catalog.ExpandedProduct;
-  @Prop() plans: Catalog.ExpandedPlan[];
+  @Prop() product?: Catalog.ExpandedProduct;
+  @Prop() plans: Catalog.ExpandedPlan[] = [];
   @Prop() hideProvisionButton?: boolean;
   @State() selectedPlanId: string;
 
