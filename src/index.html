@@ -312,8 +312,13 @@ render() {
 
               <h1 id="manifoldplanselector">manifold-plan-selector</h1>
               <p>Display the plans for a product.</p>
-              <pre><code class="html language-html">&lt;manifold-plan-selector product-id="234w1jyaum5j0aqe3g3bmbqjgf20p"&gt;&lt;/manifold-plan-selector&gt;
+              <pre><code class="html language-html">&lt;manifold-plan-selector product-label="jawsdb-mysql"&gt;&lt;/manifold-plan-selector&gt;
 </code></pre>
+              <h2 id="productlabel">Product Label</h2>
+              <p>
+                You can find the <code>:service</code> label for each at
+                <code>https://manifold.co/services/:service</code>.
+              </p>
               <h2 id="detectingchanges">Detecting changes</h2>
               <p>
                 Events are dispatched on the <code>manifold-planUpdated</code> custom event. To
@@ -366,8 +371,8 @@ render() {
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
-                    <td><code>productId</code></td>
-                    <td><code>product-id</code></td>
+                    <td><code>productLabel</code></td>
+                    <td><code>product-label</code></td>
                     <td></td>
                     <td><code>string</code></td>
                     <td><code>undefined</code></td>
@@ -389,14 +394,7 @@ render() {
             </div>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <!-- jawsdb-mysql: 234w1jyaum5j0aqe3g3bmbqjgf20p -->
-                <!-- logdna: 234qkjvrptpy3thna4qttwt7m2nf6 -->
-                <!-- zerosix: 234nbp17j5zrvb2ym49647kgtyv2a -->
-                <!-- picnic-basket-stage (staging): 234j94djrwxapnnbyqbjtg75g111j -->
-                <!-- ant-hill-stage (staging): 234tzpqcgjb5846mjn2vz1hp03yec -->
-                <manifold-plan-selector
-                  product-id="234w1jyaum5j0aqe3g3bmbqjgf20p"
-                ></manifold-plan-selector>
+                <manifold-plan-selector product-label="jawsdb-mysql"></manifold-plan-selector>
               </div>
             </div>
           </section>
