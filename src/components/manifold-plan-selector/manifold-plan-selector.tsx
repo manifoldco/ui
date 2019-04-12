@@ -3,9 +3,6 @@ import { Component, State, Prop, Element } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { Connection, connections, Env } from '../../utils/connections';
 
-const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
-  a.body.cost < b.body.cost ? -1 : 1;
-
 @Component({
   tag: 'manifold-plan-selector',
   shadow: true,
@@ -15,20 +12,21 @@ export class ManifoldPlanSelector {
   @Prop() connection: Connection = connections[Env.Prod];
   @Prop() resourceId?: string;
   @Prop() hideProvisionButton?: boolean;
-  @Prop() productId: string;
+  @Prop() productLabel: string;
   @State() product: Catalog.ExpandedProduct;
   @State() plans: Catalog.Plan[];
 
   async componentWillLoad() {
-    await fetch(`${this.connection.catalog}/products/${this.productId}`)
+    await fetch(`${this.connection.catalog}/products/?label=${this.productLabel}`)
       .then(response => response.json())
-      .then(data => {
-        this.product = data;
-      });
-    await fetch(`${this.connection.catalog}/plans?product_id=${this.productId}`)
-      .then(response => response.json())
-      .then(data => {
-        this.plans = data.sort(byCost);
+      .then((products: Catalog.ExpandedProduct[]) => {
+        const [product] = products;
+        this.product = product
+        fetch(`${this.connection.catalog}/plans/?product_id=${product.id}`)
+          .then(response => response.json())
+          .then((plans: Catalog.ExpandedPlan[]) => {
+            this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)]
+          });
       });
   }
 

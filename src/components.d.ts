@@ -226,13 +226,13 @@ export namespace Components {
   interface ManifoldPlanSelector {
     'connection': Connection;
     'hideProvisionButton'?: boolean;
-    'productId': string;
+    'productLabel': string;
     'resourceId'?: string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'hideProvisionButton'?: boolean;
-    'productId'?: string;
+    'productLabel'?: string;
     'resourceId'?: string;
   }
 
