@@ -20,7 +20,7 @@ export class ManifoldServiceCard {
   @Prop() logo?: string;
   @Prop() productId?: string;
   @Prop() serviceLink?: string;
-  @State() isFree?: boolean = false;
+  @State() isFree: boolean = false;
   @Watch('productId') watchHandler(newProductId: string) {
     this.fetchIsFree(newProductId);
   }
