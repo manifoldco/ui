@@ -10,7 +10,7 @@ export class ManifoldNumberInput {
   @Prop() decrementDisabledLabel?: string;
   @Prop() incrementDisabledLabel?: string;
   @Prop() increment: number = 1;
-  @Prop() max: number;
+  @Prop() max: number = Infinity;
   @Prop() min: number = 0;
   @Prop() name: string = '';
   @Prop() suffix: string = '';

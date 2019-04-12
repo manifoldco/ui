@@ -1,7 +1,7 @@
 import { Component, State, Prop, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { Connection, connections, Env } from '../../utils/connections';
 
 const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
   a.body.cost < b.body.cost ? -1 : 1;
@@ -12,7 +12,7 @@ const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
 })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
-  @Prop() connection: Connection;
+  @Prop() connection: Connection = connections[Env.Prod];
   @Prop() resourceId?: string;
   @Prop() hideProvisionButton?: boolean;
   @Prop() productId: string;

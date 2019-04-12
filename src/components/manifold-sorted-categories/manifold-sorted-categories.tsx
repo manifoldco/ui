@@ -4,9 +4,12 @@ import Tunnel, { State } from '../../data/marketplace';
 import { themeIcons } from '../../assets/icons';
 import { categories, formatCategoryLabel, customCardExcludeList } from '../../utils/marketplace';
 
+type Observer = (el?: HTMLElement) => void;
+const noop: Observer = () => {};
+
 @Component({ tag: 'manifold-sorted-categories' })
 export class ManifoldSortedCategories {
-  @Prop() observeCategory: (el?: HTMLElement) => void;
+  @Prop() observeCategory: Observer = noop;
 
   render() {
     return (

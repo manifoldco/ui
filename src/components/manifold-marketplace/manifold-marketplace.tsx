@@ -1,14 +1,14 @@
 import { Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   @Prop() serviceLink?: string;
   @Prop() featured?: string;
-  @Prop() connection: Connection;
+  @Prop() connection: Connection = connections[Env.Prod];
   @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {

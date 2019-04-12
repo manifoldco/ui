@@ -1,7 +1,7 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({
   tag: 'manifold-service-card',
@@ -12,7 +12,7 @@ export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   @Event({ eventName: 'manifold-serviceCard-click' }) cardClicked: EventEmitter;
   @Prop() name?: string;
-  @Prop() connection: Connection;
+  @Prop() connection: Connection = connections[Env.Prod];
   @Prop() description?: string;
   @Prop() isCustom?: boolean;
   @Prop() isFeatured?: boolean;
@@ -66,8 +66,8 @@ export class ManifoldServiceCard {
               <manifold-icon class="icon" icon={this.logo} />
             </div>
           ) : (
-              <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
-            )}
+            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
+          )}
         </div>
         <h3 class="name" itemprop="name">
           {this.name}
