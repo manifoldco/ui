@@ -23,14 +23,15 @@ export class ManifoldMarketplace {
       <div class="results-grid">
         {this.services
           .sort((a, b) => a.body.name.localeCompare(b.body.name))
-          .map(({ body: { name, label, tagline, logo_url } }) => (
+          .map(({ id, body: { name, label, tagline, logo_url } }) => (
             <manifold-service-card
               description={tagline}
+              isFeatured={this.isFeatured(label)}
               label={label}
               logo={logo_url}
               name={name}
-              service-link={this.formatHref(label)}
-              is-featured={this.isFeatured(label)}
+              productId={id}
+              serviceLink={this.formatHref(label)}
             />
           ))}
         <slot name="custom-card" />

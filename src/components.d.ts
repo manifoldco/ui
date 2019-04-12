@@ -274,15 +274,18 @@ export namespace Components {
   }
 
   interface ManifoldServiceCard {
+    'connection': Connection;
     'description'?: string;
     'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'logo'?: string;
     'name'?: string;
+    'productId'?: string;
     'serviceLink'?: string;
   }
   interface ManifoldServiceCardAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
     'description'?: string;
     'isCustom'?: boolean;
     'isFeatured'?: boolean;
@@ -290,6 +293,7 @@ export namespace Components {
     'logo'?: string;
     'name'?: string;
     'onManifold-serviceCard-click'?: (event: CustomEvent) => void;
+    'productId'?: string;
     'serviceLink'?: string;
   }
 

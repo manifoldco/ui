@@ -26,16 +26,16 @@ export class ManifoldSortedCategories {
                   <manifold-marketplace-results
                     services={categoryMap[tag]}
                     featured={state.featured}
-                    service-link={state.serviceLink}
+                    serviceLink={state.serviceLink}
                   >
                     {!customCardExcludeList.includes(tag) && (
                       <manifold-service-card
                         description={`Add your own ${formatCategoryLabel(tag)} service`}
+                        isCustom={true}
+                        isFeatured={false}
                         label={'bring-your-own'}
                         logo={themeIcons[tag]}
                         name={`Bring your own ${formatCategoryLabel(tag)} service`}
-                        is-custom={true}
-                        is-featured={false}
                         slot="custom-card"
                       />
                     )}
