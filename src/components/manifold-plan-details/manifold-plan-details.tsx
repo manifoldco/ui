@@ -13,8 +13,8 @@ const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 })
 export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean;
-  @Prop() plan: Catalog.ExpandedPlan;
-  @Prop() product: Catalog.Product;
+  @Prop() plan?: Catalog.ExpandedPlan;
+  @Prop() product?: Catalog.Product;
   @Prop() hideProvisionButton: boolean = false;
   @State() features: UserFeatures = {};
   @Event({
@@ -40,15 +40,15 @@ export class ManifoldPlanDetails {
     this.updatedPlanHandler({ features }); // Dispatch change event when user changed feature
   }
 
-  initialFeatures(plan: Catalog.ExpandedPlan = this.plan): UserFeatures {
-    if (!plan.body.expanded_features) return {};
+  initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
+    if (!plan || !plan.body.expanded_features) return {};
     return { ...initialFeatures(plan.body.expanded_features) };
   }
 
   updatedPlanHandler({
-    id = this.plan.id,
-    label = this.plan.body.label,
-    product = this.product.body.label,
+    id = this.plan && this.plan.id,
+    label = this.plan && this.plan.body.label,
+    product = this.product && this.product.body.label,
     features = this.features,
   }) {
     this.planUpdated.emit({
@@ -60,6 +60,8 @@ export class ManifoldPlanDetails {
   }
 
   get header() {
+    if (!this.product || !this.plan) return null;
+
     const { name: productName, logo_url: productLogo } = this.product.body;
 
     return (
@@ -80,6 +82,8 @@ export class ManifoldPlanDetails {
   }
 
   get featureList() {
+    if (!this.plan) return null;
+
     const { expanded_features = [] } = this.plan.body;
     return (
       <dl class="features">
@@ -96,6 +100,8 @@ export class ManifoldPlanDetails {
   }
 
   get footer() {
+    if (!this.product || !this.plan) return null;
+
     const { label: productLabel } = this.product.body;
     const { name, expanded_features = [] } = this.plan.body;
     return (
