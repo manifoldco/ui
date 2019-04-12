@@ -1,8 +1,6 @@
 import { FunctionalComponent } from '@stencil/core';
 
-interface LockedFeatureProps {}
-
-export const LockedFeature: FunctionalComponent<LockedFeatureProps> = (_, children) => {
+export const LockedFeature: FunctionalComponent = (_, children) => {
   return (
     <manifold-tooltip labelText="Feature cannot be changed from current plan">
       <span class="value" data-value={children} data-locked>

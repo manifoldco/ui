@@ -5,7 +5,7 @@ import { LockedFeature } from './LockedFeature';
 interface BooleanFeatureProps {
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
-  onChange: (e: CustomEvent) => any;
+  onChange: (e: CustomEvent) => void;
 }
 
 export const BooleanFeature: FunctionalComponent<BooleanFeatureProps> = ({

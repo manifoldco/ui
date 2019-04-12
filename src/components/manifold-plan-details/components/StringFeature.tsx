@@ -9,7 +9,7 @@ import { LockedFeature } from './LockedFeature';
 interface StringFeatureProps {
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
-  onChange: (e: CustomEvent) => any;
+  onChange: (e: CustomEvent) => void;
 }
 
 export const StringFeature: FunctionalComponent<StringFeatureProps> = ({

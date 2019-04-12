@@ -1,17 +1,17 @@
 import { FunctionalComponent } from '@stencil/core';
+import { UserFeatures } from 'types/UserFeatures';
 import {
   numberFeatureDisplayValue,
   numberFeatureMeasurableDisplayValue,
   numberFeatureDefaultValue,
 } from '../../../utils/plan';
 import { LockedFeature } from './LockedFeature';
-import { UserFeatures } from 'types/UserFeatures';
 
 interface NumberFeatureProps {
   features: UserFeatures;
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
-  onChange: (e: CustomEvent) => any;
+  onChange: (e: CustomEvent) => void;
 }
 
 export const NumberFeature: FunctionalComponent<NumberFeatureProps> = ({

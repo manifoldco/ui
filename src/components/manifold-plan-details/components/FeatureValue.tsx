@@ -8,7 +8,7 @@ interface FeatureValueProps {
   features: UserFeatures;
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
-  onChange: (e: CustomEvent) => any;
+  onChange: (e: CustomEvent) => void;
 }
 export const FeatureValue: FunctionalComponent<FeatureValueProps> = props => {
   let feature;
@@ -16,12 +16,13 @@ export const FeatureValue: FunctionalComponent<FeatureValueProps> = props => {
     case 'boolean':
       feature = <BooleanFeature {...props} />;
       break;
-    case 'string':
-      feature = <StringFeature {...props} />;
-      break;
     case 'number':
       feature = <NumberFeature {...props} />;
       break;
+    case 'string':
+      feature = <StringFeature {...props} />;
+      break;
+    default:
   }
   return <dd class="feature-value">{feature}</dd>;
 };
