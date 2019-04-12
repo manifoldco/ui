@@ -1,0 +1,36 @@
+:host {
+  position: relative;
+  display: flex;
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  display: none;
+  width: max-content;
+  max-width: 10em;
+  padding: 0.5em;
+  color: var(--mf-c-white);
+  text-align: center;
+  background: var(--mf-c-black);
+  border-radius: var(--mf-radius-default);
+  transform: translate(-50%, calc(-100% - 0.25em));
+
+  &::before {
+    position: absolute;
+    bottom: -0.375em;
+    left: calc(50% - 0.375em);
+    display: block;
+    width: 0.75em;
+    height: 0.75em;
+    background: inherit;
+    border-top-left-radius: 100%;
+    border-bottom-right-radius: 3px;
+    transform: rotateZ(45deg);
+    content: '';
+  }
+}
+
+slot:hover + .tooltip {
+  display: block;
+}

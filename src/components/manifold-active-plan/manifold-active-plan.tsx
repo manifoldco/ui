@@ -6,6 +6,7 @@ import { Component, State, Prop } from '@stencil/core';
   shadow: true,
 })
 export class ManifoldActivePlan {
+  @Prop() isExistingResource?: boolean;
   @Prop() product: Catalog.ExpandedProduct;
   @Prop() plans: Catalog.ExpandedPlan[];
   @Prop() hideProvisionButton?: boolean;
@@ -30,6 +31,7 @@ export class ManifoldActivePlan {
       />,
       <div>
         <manifold-plan-details
+          isExistingResource={this.isExistingResource}
           product={this.product}
           plan={this.plans.find(plan => plan.id === this.selectedPlanId)}
           hideProvisionButton={this.hideProvisionButton}

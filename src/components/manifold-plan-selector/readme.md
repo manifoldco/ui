@@ -41,6 +41,7 @@ If you would like to hide the button that provisions a selected service, add the
 | `connection`          | --                      |             | `Connection`           | `undefined` |
 | `hideProvisionButton` | `hide-provision-button` |             | `boolean \| undefined` | `undefined` |
 | `productId`           | `product-id`            |             | `string`               | `undefined` |
+| `resourceId`          | `resource-id`           |             | `string \| undefined`  | `undefined` |
 
 
 ----------------------------------------------

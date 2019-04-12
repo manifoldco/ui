@@ -13,6 +13,7 @@ const byCost = (a: Catalog.ExpandedPlan, b: Catalog.ExpandedPlan) =>
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   @Prop() connection: Connection;
+  @Prop() resourceId?: string;
   @Prop() hideProvisionButton?: boolean;
   @Prop() productId: string;
   @State() product: Catalog.ExpandedProduct;
@@ -37,6 +38,7 @@ export class ManifoldPlanSelector {
       <manifold-active-plan
         product={this.product}
         plans={this.plans}
+        isExistingResource={!!this.resourceId}
         hideProvisionButton={this.hideProvisionButton}
       />
     );

@@ -24,11 +24,13 @@ export namespace Components {
 
   interface ManifoldActivePlan {
     'hideProvisionButton'?: boolean;
+    'isExistingResource'?: boolean;
     'plans': Catalog.ExpandedPlan[];
     'product': Catalog.ExpandedProduct;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
     'hideProvisionButton'?: boolean;
+    'isExistingResource'?: boolean;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
   }
@@ -198,11 +200,13 @@ export namespace Components {
 
   interface ManifoldPlanDetails {
     'hideProvisionButton': boolean;
+    'isExistingResource'?: boolean;
     'plan': Catalog.ExpandedPlan;
     'product': Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideProvisionButton'?: boolean;
+    'isExistingResource'?: boolean;
     'onManifold-planUpdated'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
@@ -223,11 +227,13 @@ export namespace Components {
     'connection': Connection;
     'hideProvisionButton'?: boolean;
     'productId': string;
+    'resourceId'?: string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'hideProvisionButton'?: boolean;
     'productId'?: string;
+    'resourceId'?: string;
   }
 
   interface ManifoldProductDetails {
@@ -338,6 +344,13 @@ export namespace Components {
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent) => void;
   }
+
+  interface ManifoldTooltip {
+    'labelText'?: string;
+  }
+  interface ManifoldTooltipAttributes extends StencilHTMLAttributes {
+    'labelText'?: string;
+  }
 }
 
 declare global {
@@ -368,6 +381,7 @@ declare global {
     'ManifoldServicesTunnel': Components.ManifoldServicesTunnel;
     'ManifoldSortedCategories': Components.ManifoldSortedCategories;
     'ManifoldToggle': Components.ManifoldToggle;
+    'ManifoldTooltip': Components.ManifoldTooltip;
   }
 
   interface StencilIntrinsicElements {
@@ -397,6 +411,7 @@ declare global {
     'manifold-services-tunnel': Components.ManifoldServicesTunnelAttributes;
     'manifold-sorted-categories': Components.ManifoldSortedCategoriesAttributes;
     'manifold-toggle': Components.ManifoldToggleAttributes;
+    'manifold-tooltip': Components.ManifoldTooltipAttributes;
   }
 
 
@@ -556,6 +571,12 @@ declare global {
     new (): HTMLManifoldToggleElement;
   };
 
+  interface HTMLManifoldTooltipElement extends Components.ManifoldTooltip, HTMLStencilElement {}
+  var HTMLManifoldTooltipElement: {
+    prototype: HTMLManifoldTooltipElement;
+    new (): HTMLManifoldTooltipElement;
+  };
+
   interface HTMLElementTagNameMap {
     'manifold-active-plan': HTMLManifoldActivePlanElement
     'manifold-badge': HTMLManifoldBadgeElement
@@ -583,6 +604,7 @@ declare global {
     'manifold-services-tunnel': HTMLManifoldServicesTunnelElement
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement
     'manifold-toggle': HTMLManifoldToggleElement
+    'manifold-tooltip': HTMLManifoldTooltipElement
   }
 
   interface ElementTagNameMap {
@@ -612,6 +634,7 @@ declare global {
     'manifold-services-tunnel': HTMLManifoldServicesTunnelElement;
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement;
     'manifold-toggle': HTMLManifoldToggleElement;
+    'manifold-tooltip': HTMLManifoldTooltipElement;
   }
 
 

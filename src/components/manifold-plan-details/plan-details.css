@@ -97,6 +97,15 @@
 }
 
 .feature-value {
+  display: grid;
+  justify-content: start;
+}
+
+.icon {
+  display: none;
+}
+
+.value {
   &[data-value='No'],
   &[data-value='Yes'] {
     font-weight: 600;
@@ -109,6 +118,14 @@
 
   &[data-value='Yes'] {
     color: var(--mf-c-blue);
+
+    & .icon {
+      display: inline-block;
+    }
+  }
+
+  &[data-locked] {
+    opacity: 0.5;
   }
 }
 
