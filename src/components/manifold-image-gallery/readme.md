@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type       | Default     |
 | -------- | --------- | ----------- | ---------- | ----------- |
-| `images` | --        |             | `string[]` | `['']`      |
+| `images` | --        |             | `string[]` | `[]`        |
 | `title`  | `title`   |             | `string`   | `undefined` |
 
 

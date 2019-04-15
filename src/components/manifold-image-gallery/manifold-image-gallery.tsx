@@ -1,4 +1,4 @@
-import { Component, Prop, State } from '@stencil/core';
+import { Component, Prop, State, FunctionalComponent } from '@stencil/core';
 
 @Component({
   tag: 'manifold-image-gallery',
@@ -7,12 +7,12 @@ import { Component, Prop, State } from '@stencil/core';
 })
 export class ImageGallery {
   @Prop() title: string;
-  @Prop() images: string[] = [''];
+  @Prop() images: string[] = [];
   @State() selectedImage?: string;
 
-  private selectImage(image: string) {
+  selectImage = (image: string) => {
     this.selectedImage = image;
-  }
+  };
 
   render() {
     return (
@@ -25,25 +25,32 @@ export class ImageGallery {
         </div>
         <div class="menu-scroll">
           <ul class="menu" style={{ '--item-count': `${this.images.length}` }}>
-            {this.images.map((image, i) => (
-              <li class="menu-item">
-                <button
-                  class="image-wrapper"
-                  data-selected={this.selectedImage === image}
-                  onClick={() => this.selectImage(image)}
-                >
-                  <img
-                    class="image-button"
-                    src={image}
-                    alt={`Screenshot ${i + 1}`}
-                    data-test="thumbnail"
-                  />
-                </button>
-              </li>
-            ))}
+            {this.images.length > 1 &&
+              this.images.map((image, i) => (
+                <Thumbnail
+                  src={image}
+                  alt={`Screenshot ${i + 1}`}
+                  isSelected={this.selectedImage === image}
+                  onClick={this.selectImage}
+                />
+              ))}
           </ul>
         </div>
       </div>
     );
   }
 }
+
+interface ThumbnailProps {
+  src: string;
+  alt: string;
+  isSelected?: boolean;
+  onClick: (image: string) => void;
+}
+const Thumbnail: FunctionalComponent<ThumbnailProps> = (isSelected, onClick, ...rest) => (
+  <li class="menu-item">
+    <button class="image-wrapper" data-selected={isSelected} onClick={() => onClick(src)}>
+      <img class="image-button" {...rest} data-test="thumbnail" />
+    </button>
+  </li>
+);
