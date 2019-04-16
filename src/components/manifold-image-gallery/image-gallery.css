@@ -5,9 +5,7 @@
 .container {
   position: relative;
   max-width: 100%;
-  padding-top: 1rem;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
+  padding: 1rem 1.5rem;
   background-color: var(--mf-c-offWhite);
   border-radius: var(--mf-radius-m);
   box-shadow: 0 0 0 1px var(--mf-c-grayLight);
@@ -67,7 +65,7 @@ img {
   width: calc(var(--item-count) * 2 * 4.75rem);
   min-width: 100%;
   margin: 0;
-  padding: 1.5rem 2px;
+  padding: 1rem 2px 0 2px;
   list-style: none;
 }
 

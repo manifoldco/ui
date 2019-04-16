@@ -37,10 +37,10 @@ export class ImageGallery {
             <img src={this.selectedImage || this.images[0]} alt="" data-test="display-image" />
           </div>
         </div>
-        <div class="menu-scroll">
-          <ul class="menu" style={{ '--item-count': `${this.images.length}` }}>
-            {this.images.length > 1 &&
-              this.images.map((image, i) => (
+        {this.images.length > 1 && (
+          <div class="menu-scroll">
+            <ul class="menu" style={{ '--item-count': `${this.images.length}` }}>
+              {this.images.map((image, i) => (
                 <Thumbnail
                   src={image}
                   alt={`Screenshot ${i + 1}`}
@@ -48,8 +48,9 @@ export class ImageGallery {
                   onClick={this.selectImage}
                 />
               ))}
-          </ul>
-        </div>
+            </ul>
+          </div>
+        )}
       </div>
     );
   }
