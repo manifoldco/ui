@@ -11,11 +11,9 @@ export class ManifoldProductDetails {
   @Prop() product?: Catalog.ExpandedProduct;
 
   render() {
-    if (!this.product) {
-      return null;
-    }
+    if (!this.product) return null;
 
-    const { label, name, tagline, value_props } = this.product.body;
+    const { label, name, tagline, value_props, images = [] } = this.product.body;
 
     return (
       <div>
@@ -38,7 +36,7 @@ export class ManifoldProductDetails {
             </li>
           ))}
         </ul>
-        <manifold-image-gallery title="Screenshots" images={this.product.body.images} />
+        {images.length > 0 && <manifold-image-gallery title="Screenshots" images={images} />}
       </div>
     );
   }
