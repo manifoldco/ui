@@ -47,9 +47,9 @@ interface ThumbnailProps {
   isSelected?: boolean;
   onClick: (image: string) => void;
 }
-const Thumbnail: FunctionalComponent<ThumbnailProps> = (isSelected, onClick, ...rest) => (
+const Thumbnail: FunctionalComponent<ThumbnailProps> = ({ isSelected, onClick, ...rest }) => (
   <li class="menu-item">
-    <button class="image-wrapper" data-selected={isSelected} onClick={() => onClick(src)}>
+    <button class="image-wrapper" data-selected={isSelected} onClick={() => onClick(rest.src)}>
       <img class="image-button" {...rest} data-test="thumbnail" />
     </button>
   </li>
