@@ -117,7 +117,7 @@
     color: transparent;
     border-radius: var(--mf-radius-m);
     opacity: 0.1;
-    transition: opacity 500ms linear 100ms;
+    transition: opacity 150ms linear 100ms;
 
     @media (--viewport-s) {
       width: var(--mf-product-logo-m);
