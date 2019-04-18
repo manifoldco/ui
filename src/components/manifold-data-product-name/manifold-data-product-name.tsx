@@ -7,12 +7,15 @@ import { Connection, connections, Env } from '../../utils/connections';
 
 export class ManifoldDataProductName {
   @Element() el: HTMLElement;
-  @Prop() productLabel: string; // E.g. 'jawsdb-mysql'
+  /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod]; // Provided by manifold-connection
+  /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
+  @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
 
   componentWillLoad() {
-    return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`)
+    // Don’t return this promise to invoke the loading state
+    fetch(`${this.connection.catalog}/products?label=${this.productLabel}`)
       .then(response => response.json())
       .then(data => {
         this.product = { ...data[0] };

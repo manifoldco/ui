@@ -65,11 +65,23 @@ export namespace Components {
   }
 
   interface ManifoldDataProductName {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
     'productLabel': string;
   }
   interface ManifoldDataProductNameAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
     'productLabel'?: string;
   }
 

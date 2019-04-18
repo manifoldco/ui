@@ -24,10 +24,10 @@ This data component supports an optional loading state by specifying a child slo
 
 ## Properties
 
-| Property       | Attribute       | Description | Type         | Default                 |
-| -------------- | --------------- | ----------- | ------------ | ----------------------- |
-| `connection`   | --              |             | `Connection` | `connections[Env.Prod]` |
-| `productLabel` | `product-label` |             | `string`     | `undefined`             |
+| Property       | Attribute       | Description                                  | Type         | Default                 |
+| -------------- | --------------- | -------------------------------------------- | ------------ | ----------------------- |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection` | `connections[Env.Prod]` |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string`     | `undefined`             |
 
 
 ----------------------------------------------
