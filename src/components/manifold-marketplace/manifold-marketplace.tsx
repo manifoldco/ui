@@ -6,9 +6,12 @@ import { Connection, connections, Env } from '../../utils/connections';
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
-  @Prop() serviceLink?: string;
-  @Prop() featured?: string;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
+  /** _(optional)_ If cards are `<a>` tags, how should link work? */
+  @Prop() serviceLink?: string;
+  /** _(optional)_ Comma-separated list of featured products (labels) */
+  @Prop() featured?: string;
   @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {

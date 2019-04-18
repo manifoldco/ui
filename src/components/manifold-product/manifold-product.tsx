@@ -6,7 +6,9 @@ import { Connection, connections, Env } from '../../utils/connections';
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
+  /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
 

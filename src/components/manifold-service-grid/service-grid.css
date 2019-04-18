@@ -58,11 +58,11 @@
 }
 
 .category-sidebar {
-  position: relative;
   display: none;
 
   @media (min-width: 600px) {
     display: block;
+    margin-top: 0.5rem;
   }
 }
 
@@ -72,6 +72,7 @@
   display: flex;
   flex-direction: column;
   margin-left: auto;
+  padding-top: var(--grid-s);
 }
 
 .category-buttons {
@@ -124,7 +125,7 @@
 .results-grid {
   display: grid;
   grid-gap: var(--grid-s);
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   box-sizing: border-box;
   margin: 0;
   color: var(--text-color);
