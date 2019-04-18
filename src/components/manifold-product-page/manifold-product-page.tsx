@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+import { themeIcons } from '../../assets/icons';
 
 @Component({
   tag: 'manifold-product-page',
@@ -33,26 +34,21 @@ export class ManifoldProductPage {
           </manifold-featured-service>
           {tags && (
             <div class="sidebar-section">
+              <h4>Category</h4>
               {tags.map(tag => (
                 <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
-                  <manifold-icon icon={tag} margin-right />
+                  <manifold-icon icon={themeIcons[tag] || themeIcons.uncategorized} margin-right />
                   {tag}
                 </div>
               ))}
             </div>
           )}
           <div class="sidebar-section">
-            <h4>Provider Links</h4>
+            <h4>Links</h4>
             <div class="provider-link">
-              <a href="#plan_pricing">
-                <manifold-icon icon="dollar_sign" color="--mf-c-gray" margin-right />
-                Pricing
-              </a>
-            </div>
-            <div class="provider-link">
-              <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                <manifold-icon icon="life_buoy" color="--mf-c-gray" margin-right />
-                Support
+              <a href={documentation_url} target="_blank" rel="noopener noreferrer">
+                <manifold-icon icon="book" color="--mf-c-gray" margin-right />
+                Docs
                 <manifold-icon
                   class="external-link-icon"
                   icon="arrow_up_right"
@@ -62,9 +58,9 @@ export class ManifoldProductPage {
               </a>
             </div>
             <div class="provider-link">
-              <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                <manifold-icon icon="book" color="--mf-c-gray" margin-right />
-                Documentation
+              <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
+                <manifold-icon icon="life_buoy" color="--mf-c-gray" margin-right />
+                Support
                 <manifold-icon
                   class="external-link-icon"
                   icon="arrow_up_right"
