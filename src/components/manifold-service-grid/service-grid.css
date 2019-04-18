@@ -5,6 +5,7 @@
 
 .wrapper {
   display: grid;
+  text-align: left;
 }
 
 .browse-catalog {
@@ -36,9 +37,7 @@
   margin-top: 0;
   margin-bottom: var(--grid-s);
   padding-top: var(--grid-s);
-  padding-right: var(--grid-s);
   padding-bottom: var(--grid-s);
-  padding-left: var(--grid-s);
   color: var(--mf-c-gray-s1);
   font-weight: 400;
   font-size: 1em;
@@ -49,8 +48,6 @@
 
   @media (min-width: 600px) {
     position: static;
-    padding-right: 0;
-    padding-left: 0;
     font-size: var(--mf-font-u1);
     background: transparent;
     border-bottom: none;
@@ -150,6 +147,7 @@
   border-radius: 0.25rem;
   box-shadow: rgba(0, 0, 0, 0) 0 2px 8px;
   transition: background-color 100ms linear;
+  -webkit-appearance: none;
 
   &:focus {
     background-color: var(--mf-c-white);

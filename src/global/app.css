@@ -74,13 +74,13 @@ body {
 
 .docs-nav-logo {
   display: block;
-  width: 100%;
-  max-width: 5rem;
-  height: auto;
+  width: 96px;
+  height: 32px;
   margin-left: -0.25rem;
 
   @media (min-width: 750px) {
-    max-width: 8rem;
+    width: 128px;
+    height: 43px;
   }
 }
 

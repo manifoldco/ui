@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property         | Attribute          | Description | Type     | Default     |
-| ---------------- | ------------------ | ----------- | -------- | ----------- |
-| `logo`           | `logo`             |             | `string` | `undefined` |
-| `name`           | `name`             |             | `string` | `undefined` |
-| `serviceColorId` | `service-color-id` |             | `string` | `undefined` |
+| Property          | Attribute          | Description | Type     | Default     |
+| ----------------- | ------------------ | ----------- | -------- | ----------- |
+| `logo`            | `logo`             |             | `string` | `undefined` |
+| `name`            | `name`             |             | `string` | `undefined` |
+| `productGradient` | `product-gradient` |             | `string` | `undefined` |
 
 
 ----------------------------------------------

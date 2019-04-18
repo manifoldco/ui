@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element } from '@stencil/core';
+import { Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
@@ -12,17 +12,26 @@ export class ManifoldProduct {
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
+  @State() provider?: Catalog.Provider;
+  @Watch('product') watchHandler(newProduct: Catalog.ExpandedProduct) {
+    fetch(`${this.connection.catalog}/providers/${newProduct.body.provider_id}`, withAuth())
+      .then(response => response.json())
+      .then(provider => {
+        this.provider = provider;
+      })
+  }
 
   componentWillLoad() {
     return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
       .then(response => response.json())
-      .then(data => {
-        this.product = { ...data[0] };
+      .then(products => {
+        const [product] = products;
+        this.product = { ...product };
       });
   }
 
   render() {
-    return this.product && <manifold-product-page product={this.product} />;
+    return this.product && <manifold-product-page product={this.product} provider={this.provider} />;
   }
 }
 

@@ -8,10 +8,10 @@ import { Component, Prop } from '@stencil/core';
 export class FeaturedService {
   @Prop() name: string;
   @Prop() logo: string;
-  @Prop() serviceColorId: string;
+  @Prop() productGradient: string;
 
   get backgroundColor() {
-    return { '--service-color': `var(${this.serviceColorId})` };
+    return { '--background-gradient': this.productGradient };
   }
 
   render() {

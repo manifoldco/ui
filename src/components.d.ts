@@ -117,12 +117,12 @@ export namespace Components {
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
-    'serviceColorId': string;
+    'productGradient': string;
   }
   interface ManifoldFeaturedServiceAttributes extends StencilHTMLAttributes {
     'logo'?: string;
     'name'?: string;
-    'serviceColorId'?: string;
+    'productGradient'?: string;
   }
 
   interface ManifoldIcon {
@@ -343,9 +343,11 @@ export namespace Components {
 
   interface ManifoldProductPage {
     'product'?: Catalog.ExpandedProduct;
+    'provider'?: Catalog.Provider;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
     'product'?: Catalog.ExpandedProduct;
+    'provider'?: Catalog.Provider;
   }
 
   interface ManifoldProduct {

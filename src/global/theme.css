@@ -89,6 +89,12 @@
   --mf-c-search: var(--mf-c-teal);
   --mf-c-worker: var(--mf-c-green);
 
+  /* product gradients */
+  --mf-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
+  --mf-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
+  --mf-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --mf-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
+
   /* text-colors */
   --mf-c-text: var(--mf-c-grayDarker);
   --mf-c-textSubdue: var(--mf-c-gray);
