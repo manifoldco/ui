@@ -1,3 +1,7 @@
+/**
+ * Autogenerates src/index.html with READMEs
+ */
+
 const { existsSync, readFileSync, writeFileSync } = require('fs');
 const { resolve } = require('path');
 const Showdown = require('showdown');

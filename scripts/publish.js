@@ -1,3 +1,7 @@
+/**
+ * Allows Travis to autopublish to npm using Git tags (don’t run manually!)
+ */
+
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs');
 const { resolve } = require('path');
 const { execSync } = require('child_process');
