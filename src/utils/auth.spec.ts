@@ -17,4 +17,17 @@ describe('withAuth method', () => {
 
     expect(withAuth()).toEqual({ headers: { authorization: 'Bearer larry' } });
   });
+
+  it('ignores when manifold_api_token isn’t a string', () => {
+    const myObj = { method: 'POST' };
+    const store: { [key: string]: undefined } = { manifold_api_token: undefined };
+    const localStorageMock = {
+      getItem(key: string): string | null {
+        return store[key] || null;
+      },
+    };
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock, writable: true });
+
+    expect(withAuth(myObj)).toEqual(myObj);
+  });
 });
