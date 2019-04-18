@@ -1,6 +1,6 @@
 # Connection
 
-The connection is necessarry to wrap all child web components, and must live
+The connection is necessary to wrap all child web components, and must live
 at the top level. This sets the base URL (production or staging) for all
 children’s API calls.
 
