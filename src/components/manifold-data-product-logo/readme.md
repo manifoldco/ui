@@ -9,6 +9,15 @@ Retrieve an unstyled `<img>` tag with the product’s logo from a `:productLabel
 <!-- <img src="https://cdn.manifold.co/providers/scout/logos/h3z4mxt33k3ufm7rzmth0xa4r8.png" alt="Scout" /> -->
 ```
 
+## Alt attribute
+
+By default, the `<img>` tag’s `alt` attribute is the provider’s name. But you
+can override this by specifying one of your own:
+
+```html
+<manifold-data-product-logo product-label="iron_cache" alt="My alternate text" />
+```
+
 ## Loading State
 
 This data component supports an optional loading state by specifying a child slot:
