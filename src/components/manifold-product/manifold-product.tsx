@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import { Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
@@ -13,13 +13,6 @@ export class ManifoldProduct {
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
   @State() provider?: Catalog.Provider;
-  @Watch('product') watchHandler(newProduct: Catalog.ExpandedProduct) {
-    fetch(`${this.connection.catalog}/providers/${newProduct.body.provider_id}`, withAuth())
-      .then(response => response.json())
-      .then(provider => {
-        this.provider = provider;
-      })
-  }
 
   componentWillLoad() {
     return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
@@ -27,6 +20,12 @@ export class ManifoldProduct {
       .then(products => {
         const [product] = products;
         this.product = { ...product };
+        // We’re not returning so this 2nd fetch will happen async
+        fetch(`${this.connection.catalog}/providers/${product.body.provider_id}`, withAuth())
+          .then(response => response.json())
+          .then(provider => {
+            this.provider = provider;
+          })
       });
   }
 
