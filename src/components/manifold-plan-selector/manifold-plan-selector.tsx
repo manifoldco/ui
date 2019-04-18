@@ -1,6 +1,7 @@
 import { Component, State, Prop, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
+import { withAuth } from '../../utils/auth';
 import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({
@@ -21,7 +22,7 @@ export class ManifoldPlanSelector {
   @State() plans: Catalog.Plan[];
 
   async componentWillLoad() {
-    await fetch(`${this.connection.catalog}/products/?label=${this.productLabel}`)
+    await fetch(`${this.connection.catalog}/products/?label=${this.productLabel}`, withAuth())
       .then(response => response.json())
       .then((products: Catalog.ExpandedProduct[]) => {
         const [product] = products;

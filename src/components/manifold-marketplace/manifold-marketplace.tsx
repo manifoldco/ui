@@ -1,6 +1,7 @@
 import { Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
+import { withAuth } from '../../utils/auth';
 import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
@@ -15,7 +16,7 @@ export class ManifoldMarketplace {
   @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {
-    return fetch(`${this.connection.catalog}/products`)
+    return fetch(`${this.connection.catalog}/products`, withAuth())
       .then(response => response.json())
       .then(data => {
         this.services = data;
