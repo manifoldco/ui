@@ -3,7 +3,7 @@
 Display the plans for a product.
 
 ```html
-<manifold-plan-selector product-label="jawsdb-mysql"></manifold-plan-selector>
+<manifold-plan-selector product-label="jawsdb-mysql" />
 ```
 
 ## Product Label

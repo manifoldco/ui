@@ -64,6 +64,35 @@ export namespace Components {
     'measuredCosts'?: [number, string][];
   }
 
+  interface ManifoldDataProductLogo {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel': string;
+  }
+  interface ManifoldDataProductLogoAttributes extends StencilHTMLAttributes {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel'?: string;
+  }
+
   interface ManifoldDataProductName {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -444,6 +473,7 @@ declare global {
     'ManifoldBadge': Components.ManifoldBadge;
     'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldCostDisplay': Components.ManifoldCostDisplay;
+    'ManifoldDataProductLogo': Components.ManifoldDataProductLogo;
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
@@ -475,6 +505,7 @@ declare global {
     'manifold-badge': Components.ManifoldBadgeAttributes;
     'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
+    'manifold-data-product-logo': Components.ManifoldDataProductLogoAttributes;
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
@@ -524,6 +555,12 @@ declare global {
   var HTMLManifoldCostDisplayElement: {
     prototype: HTMLManifoldCostDisplayElement;
     new (): HTMLManifoldCostDisplayElement;
+  };
+
+  interface HTMLManifoldDataProductLogoElement extends Components.ManifoldDataProductLogo, HTMLStencilElement {}
+  var HTMLManifoldDataProductLogoElement: {
+    prototype: HTMLManifoldDataProductLogoElement;
+    new (): HTMLManifoldDataProductLogoElement;
   };
 
   interface HTMLManifoldDataProductNameElement extends Components.ManifoldDataProductName, HTMLStencilElement {}
@@ -675,6 +712,7 @@ declare global {
     'manifold-badge': HTMLManifoldBadgeElement
     'manifold-connection': HTMLManifoldConnectionElement
     'manifold-cost-display': HTMLManifoldCostDisplayElement
+    'manifold-data-product-logo': HTMLManifoldDataProductLogoElement
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
@@ -706,6 +744,7 @@ declare global {
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
+    'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;

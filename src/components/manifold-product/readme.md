@@ -3,7 +3,7 @@
 Display the details for an individual product.
 
 ```html
-<manifold-product product-label="jawsdbmysql"></manifold-product>
+<manifold-product product-label="jawsdbmysql" />
 ```
 
 ## Product Label

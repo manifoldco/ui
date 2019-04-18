@@ -3,7 +3,7 @@
 A list of all Manifold services.
 
 ```html
-<manifold-marketplace></manifold-marketplace>
+<manifold-marketplace />
 ```
 
 ## Navigation
@@ -13,7 +13,7 @@ There are two ways to trigger navigation when clicking on a service card.
 ### 1. Provide a URL Format
 
 ```html
-<manifold-marketplace service-link="/services/:service"></manifold-marketplace>
+<manifold-marketplace service-link="/services/:service" />
 ```
 
 This turns the service cards into `<a>` tags with the URL structure of `<a href="/services/jawsdb-mysql">`, etc. `:service` is the only dynamic paramater accepted. Everything else in the formula will be displayed as-is.
