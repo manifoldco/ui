@@ -1,3 +1,6 @@
+[![version (scoped)](https://img.shields.io/npm/v/@manifoldco/ui.svg)](https://www.npmjs.com/package/@manifoldco/ui)
+[![codecov](https://codecov.io/gh/manifoldco/ui/branch/master/graph/badge.svg?token=wDhQnzqKXR)](https://codecov.io/gh/manifoldco/ui)
+
 # @manifoldco/ui
 
 Manifold’s reusable web components, built with [Stencil][stencil]

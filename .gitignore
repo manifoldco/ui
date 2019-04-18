@@ -1,4 +1,5 @@
 dist/
+pkg/
 !www/favicon.ico
 www/
 
