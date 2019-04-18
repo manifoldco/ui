@@ -11,7 +11,7 @@ Retrieve an unstyled `<img>` tag with the product’s logo from a `:productLabel
 
 ## Alt attribute
 
-By default, the `<img>` tag’s `alt` attribute is the provider’s name. But you
+By default, the `<img>` tag’s `alt` attribute is the product name. But you
 can override this by specifying one of your own:
 
 ```html
