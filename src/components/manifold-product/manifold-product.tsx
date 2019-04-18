@@ -9,6 +9,8 @@ export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
+  /** _(optional)_ Link format structure, with `:product` placeholder */
+  @Prop() linkFormat?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel: string;
   @State() product?: Catalog.ExpandedProduct;
@@ -30,7 +32,7 @@ export class ManifoldProduct {
   }
 
   render() {
-    return this.product && <manifold-product-page product={this.product} provider={this.provider} />;
+    return this.product && <manifold-product-page product={this.product} linkFormat={this.linkFormat} provider={this.provider} />;
   }
 }
 

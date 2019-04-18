@@ -6,7 +6,7 @@ import { categories, formatCategoryLabel, customCardExcludeList } from '../../ut
 
 @Component({ tag: 'manifold-sorted-categories' })
 export class ManifoldSortedCategories {
-  @Prop() observeCategory: (el?: HTMLElement) => void = () => {};
+  @Prop() observeCategory: (el?: HTMLElement) => void = () => { };
 
   render() {
     return (
@@ -26,7 +26,7 @@ export class ManifoldSortedCategories {
                   <manifold-marketplace-results
                     services={categoryMap[tag]}
                     featured={state.featured}
-                    serviceLink={state.serviceLink}
+                    linkFormat={state.linkFormat}
                   >
                     {!customCardExcludeList.includes(tag) && (
                       <manifold-service-card

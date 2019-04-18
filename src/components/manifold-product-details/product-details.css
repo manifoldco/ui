@@ -1,6 +1,4 @@
 .title {
-  display: flex;
-  flex-wrap: wrap;
   margin: 0;
   padding-top: 1.5rem;
   font-weight: 400;
@@ -10,16 +8,12 @@
 
 .tagline {
   display: block;
-  flex-grow: 1;
-  min-width: 10em;
-  max-width: 30em;
-  padding-right: 1rem;
   padding-bottom: 1rem;
 }
 
 .value-prop-list {
   display: block;
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 2.5rem;
   padding: 0;
   list-style: none;

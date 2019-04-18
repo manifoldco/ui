@@ -7,10 +7,18 @@
 
 ## Properties
 
-| Property   | Attribute | Description | Type                           | Default     |
-| ---------- | --------- | ----------- | ------------------------------ | ----------- |
-| `product`  | --        |             | `ExpandedProduct \| undefined` | `undefined` |
-| `provider` | --        |             | `Provider \| undefined`        | `undefined` |
+| Property     | Attribute     | Description | Type                           | Default     |
+| ------------ | ------------- | ----------- | ------------------------------ | ----------- |
+| `linkFormat` | `link-format` |             | `string \| undefined`          | `undefined` |
+| `product`    | --            |             | `ExpandedProduct \| undefined` | `undefined` |
+| `provider`   | --            |             | `Provider \| undefined`        | `undefined` |
+
+
+## Events
+
+| Event                       | Description | Type                |
+| --------------------------- | ----------- | ------------------- |
+| `manifold-productCTA-click` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

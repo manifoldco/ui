@@ -3,13 +3,13 @@ import { Component, Prop } from '@stencil/core';
 @Component({ tag: 'manifold-marketplace-results', styleUrl: 'marketplace-results.css' })
 export class ManifoldMarketplace {
   @Prop() featured?: string;
-  @Prop() serviceLink?: string;
+  @Prop() linkFormat?: string;
   @Prop() services: Catalog.Product[] = [];
 
   private formatHref(label: string): string {
     if (typeof label !== 'string') return '';
-    if (!this.serviceLink) return '';
-    return this.serviceLink.replace(':service', label);
+    if (!this.linkFormat) return '';
+    return this.linkFormat.replace(/:product/gi, label);
   }
 
   private isFeatured(label: string) {
@@ -31,7 +31,7 @@ export class ManifoldMarketplace {
               logo={logo_url}
               name={name}
               productId={id}
-              serviceLink={this.formatHref(label)}
+              linkFormat={this.formatHref(label)}
             />
           ))}
         <slot name="custom-card" />

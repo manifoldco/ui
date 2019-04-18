@@ -7,11 +7,11 @@
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                  | Default     |
-| ------------- | -------------- | ----------- | --------------------- | ----------- |
-| `featured`    | `featured`     |             | `string \| undefined` | `undefined` |
-| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined` |
-| `services`    | --             |             | `Product[]`           | `[]`        |
+| Property     | Attribute     | Description | Type                  | Default     |
+| ------------ | ------------- | ----------- | --------------------- | ----------- |
+| `featured`   | `featured`    |             | `string \| undefined` | `undefined` |
+| `linkFormat` | `link-format` |             | `string \| undefined` | `undefined` |
+| `services`   | --            |             | `Product[]`           | `[]`        |
 
 
 ----------------------------------------------

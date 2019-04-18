@@ -25,12 +25,14 @@ export namespace Components {
   interface ManifoldActivePlan {
     'hideProvisionButton'?: boolean;
     'isExistingResource'?: boolean;
+    'linkFormat'?: string;
     'plans': Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
     'hideProvisionButton'?: boolean;
     'isExistingResource'?: boolean;
+    'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
   }
@@ -181,24 +183,26 @@ export namespace Components {
   }
 
   interface ManifoldLinkButton {
-    'href': string;
+    'href'?: string;
+    'onClick'?: (e: Event) => void;
     'rel'?: string;
     'target'?: string;
   }
   interface ManifoldLinkButtonAttributes extends StencilHTMLAttributes {
     'href'?: string;
+    'onClick'?: (e: Event) => void;
     'rel'?: string;
     'target'?: string;
   }
 
   interface ManifoldMarketplaceResults {
     'featured'?: string;
-    'serviceLink'?: string;
+    'linkFormat'?: string;
     'services': Catalog.Product[];
   }
   interface ManifoldMarketplaceResultsAttributes extends StencilHTMLAttributes {
     'featured'?: string;
-    'serviceLink'?: string;
+    'linkFormat'?: string;
     'services'?: Catalog.Product[];
   }
 
@@ -212,9 +216,9 @@ export namespace Components {
     */
     'featured'?: string;
     /**
-    * _(optional)_ If cards are `<a>` tags, how should link work?
+    * _(optional)_ Link format structure, with `:product` placeholder
     */
-    'serviceLink'?: string;
+    'linkFormat'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
     /**
@@ -226,9 +230,9 @@ export namespace Components {
     */
     'featured'?: string;
     /**
-    * _(optional)_ If cards are `<a>` tags, how should link work?
+    * _(optional)_ Link format structure, with `:product` placeholder
     */
-    'serviceLink'?: string;
+    'linkFormat'?: string;
   }
 
   interface ManifoldNumberInput {
@@ -275,12 +279,15 @@ export namespace Components {
   interface ManifoldPlanDetails {
     'hideProvisionButton': boolean;
     'isExistingResource'?: boolean;
+    'linkFormat'?: string;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideProvisionButton'?: boolean;
     'isExistingResource'?: boolean;
+    'linkFormat'?: string;
+    'onManifold-planCTA-click'?: (event: CustomEvent) => void;
     'onManifold-planUpdated'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
@@ -303,9 +310,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * _(optional)_ Hide bottom-right button?
+    * _(optional)_ Hide button?
     */
     'hideProvisionButton'?: boolean;
+    /**
+    * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
+    */
+    'linkFormat'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -321,9 +332,13 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * _(optional)_ Hide bottom-right button?
+    * _(optional)_ Hide button?
     */
     'hideProvisionButton'?: boolean;
+    /**
+    * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
+    */
+    'linkFormat'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -342,10 +357,13 @@ export namespace Components {
   }
 
   interface ManifoldProductPage {
+    'linkFormat'?: string;
     'product'?: Catalog.ExpandedProduct;
     'provider'?: Catalog.Provider;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
+    'linkFormat'?: string;
+    'onManifold-productCTA-click'?: (event: CustomEvent) => void;
     'product'?: Catalog.ExpandedProduct;
     'provider'?: Catalog.Provider;
   }
@@ -356,6 +374,10 @@ export namespace Components {
     */
     'connection': Connection;
     /**
+    * _(optional)_ Link format structure, with `:product` placeholder
+    */
+    'linkFormat'?: string;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel': string;
@@ -365,6 +387,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(optional)_ Link format structure, with `:product` placeholder
+    */
+    'linkFormat'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -391,10 +417,10 @@ export namespace Components {
     'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
+    'linkFormat'?: string;
     'logo'?: string;
     'name'?: string;
     'productId'?: string;
-    'serviceLink'?: string;
   }
   interface ManifoldServiceCardAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
@@ -402,11 +428,11 @@ export namespace Components {
     'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
+    'linkFormat'?: string;
     'logo'?: string;
     'name'?: string;
     'onManifold-serviceCard-click'?: (event: CustomEvent) => void;
     'productId'?: string;
-    'serviceLink'?: string;
   }
 
   interface ManifoldServiceCategory {
@@ -429,12 +455,12 @@ export namespace Components {
 
   interface ManifoldServicesTunnel {
     'featured'?: string;
-    'serviceLink'?: string;
+    'linkFormat'?: string;
     'services': Catalog.Product[];
   }
   interface ManifoldServicesTunnelAttributes extends StencilHTMLAttributes {
     'featured'?: string;
-    'serviceLink'?: string;
+    'linkFormat'?: string;
     'services'?: Catalog.Product[];
   }
 

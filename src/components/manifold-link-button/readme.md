@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                  | Default     |
-| -------- | --------- | ----------- | --------------------- | ----------- |
-| `href`   | `href`    |             | `string`              | `undefined` |
-| `rel`    | `rel`     |             | `string \| undefined` | `undefined` |
-| `target` | `target`  |             | `string \| undefined` | `undefined` |
+| Property  | Attribute | Description | Type                                | Default     |
+| --------- | --------- | ----------- | ----------------------------------- | ----------- |
+| `href`    | `href`    |             | `string \| undefined`               | `undefined` |
+| `onClick` | --        |             | `((e: Event) => void) \| undefined` | `undefined` |
+| `rel`     | `rel`     |             | `string \| undefined`               | `undefined` |
+| `target`  | `target`  |             | `string \| undefined`               | `undefined` |
 
 
 ----------------------------------------------

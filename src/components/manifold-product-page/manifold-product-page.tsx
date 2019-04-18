@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { themeIcons } from '../../assets/icons';
 
 @Component({
@@ -7,13 +7,32 @@ import { themeIcons } from '../../assets/icons';
   shadow: true,
 })
 export class ManifoldProductPage {
+  @Prop() linkFormat?: string;
   @Prop() product?: Catalog.ExpandedProduct;
   @Prop() provider?: Catalog.Provider;
+  @Event({
+    eventName: 'manifold-productCTA-click',
+    bubbles: true,
+  }) ctaClicked: EventEmitter;
+
+  get ctaLink() {
+    if (!this.product) return undefined;
+    if (typeof this.linkFormat !== 'string') return undefined;
+    return this.linkFormat.replace(/:product/ig, this.product.body.label);
+  }
 
   get providerName() {
     if (!this.product || !this.provider) return undefined;
     return (this.provider.body.name !== this.product.body.name && this.provider.body.name) || undefined;
   }
+
+  onClick = (e: Event): void => {
+    if (!this.linkFormat) {
+      e.preventDefault();
+      const label = this.product && this.product.body.label;
+      this.ctaClicked.emit({ label });
+    }
+  };
 
   renderSidebar = () => {
     if (!this.product) {
@@ -32,6 +51,17 @@ export class ManifoldProductPage {
           >
             {this.providerName && `from ${this.providerName}`}
           </manifold-featured-service>
+          <div class="sidebar-cta">
+            <manifold-link-button
+              href={this.ctaLink}
+              onClick={this.onClick}
+              rel={this.ctaLink && 'noopener noreferrer'}
+              target={this.ctaLink && '_blank'}
+            >
+              Get {name}
+              <manifold-icon icon="arrow_right" marginLeft />
+            </manifold-link-button>
+          </div>
           {tags && (
             <div class="sidebar-section">
               <h4>Category</h4>
