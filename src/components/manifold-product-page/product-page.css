@@ -1,5 +1,16 @@
 :host {
   --service-color-jawsdb-mysql: #003b6e;
+  --mf-c-authentication: #1a4898;
+  --mf-c-CMS: #ffde52;
+  --mf-c-cms: #ffde52;
+  --mf-c-database: #fe714b;
+  --mf-c-logging: #222;
+  --mf-c-memory-store: #1e50da;
+  --mf-c-messaging: #d50f49;
+  --mf-c-monitoring: #7748d1;
+  --mf-c-optimization: #0fb5d0;
+  --mf-c-search: #0fb5d0;
+  --mf-c-worker: #31baa2;
 }
 
 .grid {

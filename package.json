@@ -16,7 +16,7 @@
   ],
   "main": "dist/index.js",
   "esnext": "dist/esm",
-  "module": "dist/esm",
+  "module": "dist/esm/es5/index.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {

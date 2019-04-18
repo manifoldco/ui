@@ -37,6 +37,19 @@
   --mf-c-gray-rgb: 143, 143, 149;
   --mf-c-black-rgb: 0, 0, 0;
 
+  /* grays */
+  --mf-c-black-10: rgba(0, 0, 0, 0.1);
+  --mf-c-black-20: rgba(0, 0, 0, 0.2);
+  --mf-c-black-25: rgba(0, 0, 0, 0.25);
+  --mf-c-black-30: rgba(0, 0, 0, 0.3);
+  --mf-c-black-40: rgba(0, 0, 0, 0.4);
+  --mf-c-black-50: rgba(0, 0, 0, 0.5);
+  --mf-c-black-60: rgba(0, 0, 0, 0.6);
+  --mf-c-black-70: rgba(0, 0, 0, 0.6);
+  --mf-c-black-75: rgba(0, 0, 0, 0.75);
+  --mf-c-black-80: rgba(0, 0, 0, 0.8);
+  --mf-c-black-90: rgba(0, 0, 0, 0.9);
+
   /* TODO replace instances with above colors */
   --mf-c-gray-t1: var(--mf-c-grayLight);
   --mf-c-gray-s1: var(--mf-c-grayDark);
@@ -131,4 +144,9 @@
   --mf-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
   --mf-text-color: var(--mf-c-black);
   --mf-background-color: var(--mf-c-white);
+
+  /* layer */
+  --mf-layer-base: 10;
+  --mf-layer-hover: 20;
+  --mf-layer-nav: 30;
 }

@@ -1,6 +1,9 @@
 import { Component, Prop } from '@stencil/core';
 
-@Component({ tag: 'manifold-service-category', styleUrl: 'service-category.css' })
+@Component({
+  tag: 'manifold-service-category',
+  styleUrl: 'service-category.css',
+})
 export class ManifoldServiceCategory {
   @Prop() categoryLoaded?: (el?: HTMLElement) => void;
   @Prop() icon?: string;
