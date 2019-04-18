@@ -11,11 +11,6 @@ body {
     'Apple Color Emoji';
 }
 
-.docs-wrapper {
-  display: grid;
-  grid-template-columns: 15rem calc(100% - 15rem);
-}
-
 .docs-sidebar {
   position: relative;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -32,22 +27,73 @@ body {
   text-transform: uppercase;
 }
 
-.docs-sidebar svg {
-  display: block;
+.docs-nav {
+  position: absolute;
+  z-index: var(--mf-layer-nav);
+  box-sizing: border-box;
   width: 100%;
-  max-width: 10rem;
-  height: auto;
-  margin-bottom: 2rem;
-  margin-left: -0.25rem;
+  margin: 0;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+
+  @media (min-width: 750px) {
+    top: 0;
+    left: 0;
+    width: 15rem;
+    height: 100vh;
+    padding: 1.5rem;
+  }
 }
 
-.docs-nav {
-  position: sticky;
-  top: 0;
-  box-sizing: border-box;
-  height: 100vh;
-  margin: 0;
-  padding: 1.5rem;
+.docs-nav-button {
+  margin-right: 0.625rem;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  appearance: none;
+
+  @media (min-width: 750px) {
+    display: none;
+  }
+
+  & svg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.docs-nav-header {
+  display: flex;
+  margin-left: -0.5rem;
+
+  @media (min-width: 750px) {
+    margin-left: -0.125rem;
+  }
+}
+
+.docs-nav-logo {
+  display: block;
+  width: 100%;
+  max-width: 5rem;
+  height: auto;
+  margin-left: -0.25rem;
+
+  @media (min-width: 750px) {
+    max-width: 8rem;
+  }
+}
+
+.docs-nav-expanded {
+  display: none;
+
+  @media (min-width: 750px) {
+    display: block;
+  }
+
+  &.is-expanded {
+    display: block;
+  }
 }
 
 .docs-nav ul {
@@ -72,11 +118,23 @@ body {
 }
 
 .docs-main {
-  font-size: 14px;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  @media (min-width: 750px) {
+    padding-left: 15rem;
+  }
 }
 
 .docs-section {
+  box-sizing: border-box;
+  width: 100%;
   padding-top: 1.5rem;
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .docs-section + .docs-section {
@@ -84,19 +142,29 @@ body {
 }
 
 .docs-example {
-  padding-top: 3rem;
-  padding-right: 3rem;
-  padding-bottom: 3rem;
-  padding-left: 3rem;
+  box-sizing: border-box;
+  width: 100vw;
+  margin-left: -1.5rem;
+  padding: 1rem;
   font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.05);
+
+  @media (min-width: 750px) {
+    width: calc(100% + 3rem);
+    margin-right: 0;
+    margin-left: -1.5rem;
+    padding: 3rem;
+    background-color: rgba(0, 0, 0, 0.025);
+  }
 }
 
 .docs-example-inner {
-  padding: 1.5rem;
   background-color: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 750px) {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* GitHub CSS Overrides */
@@ -168,12 +236,20 @@ code,
 
 /* highlight.js */
 
+.hljs {
+  color: #ea62b3;
+}
+
 .hljs-attr {
   color: var(--mf-c-teal);
 }
 
 .hljs-built_in {
   color: var(--mf-c-teal);
+}
+
+.hljs-comment {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .hljs-function {
@@ -194,8 +270,12 @@ code,
   color: var(--mf-c-green);
 }
 
+.hljs-subst {
+  color: var(--mf-c-orange);
+}
+
 .hljs-tag {
-  color: var(--mf-c-magenta);
+  color: #e77878;
 }
 
 .overlay {

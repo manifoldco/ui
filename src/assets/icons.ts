@@ -542,6 +542,7 @@ export const themeIcons: { [key: string]: string } = {
   payment: 'credit_card',
   runtime: 'play_circle',
   search: 'search',
+  'sell-your-service': 'dollar_sign',
   worker: 'worker',
   uncategorized: 'square',
   utility: 'tool',
