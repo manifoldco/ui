@@ -37,7 +37,7 @@ describe('<manifold-service-grid> sorted categories', () => {
     });
     await page.$eval('manifold-services-tunnel', (elm: any) => {
       elm.services = [{ body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } }];
-      elm.serviceLink = '/discover/view/service/:service';
+      elm.linkFormat = '/discover/view/service/:product';
     });
     await page.waitForChanges();
 
@@ -47,7 +47,7 @@ describe('<manifold-service-grid> sorted categories', () => {
     expect(card).not.toBeNull();
 
     if (card) {
-      const href = await card.getProperty('serviceLink');
+      const href = await card.getProperty('linkFormat');
       expect(href).toBe('/discover/view/service/jawsdb-mysql');
     }
   });

@@ -9,8 +9,8 @@ export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
-  /** _(optional)_ If cards are `<a>` tags, how should link work? */
-  @Prop() serviceLink?: string;
+  /** _(optional)_ Link format structure, with `:product` placeholder */
+  @Prop() linkFormat?: string;
   /** _(optional)_ Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   @State() services: Catalog.Product[] = [];
@@ -27,7 +27,7 @@ export class ManifoldMarketplace {
     return (
       <manifold-services-tunnel
         services={this.services}
-        serviceLink={this.serviceLink}
+        linkFormat={this.linkFormat}
         featured={this.featured}
       >
         <manifold-service-grid slot="marketplace-content" />

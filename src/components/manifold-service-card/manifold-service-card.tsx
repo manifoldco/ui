@@ -11,7 +11,10 @@ import { Connection, connections, Env } from '../../utils/connections';
 })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
-  @Event({ eventName: 'manifold-serviceCard-click' }) cardClicked: EventEmitter;
+  @Event({
+    eventName: 'manifold-serviceCard-click',
+    bubbles: true,
+  }) cardClicked: EventEmitter;
   @Prop() name?: string;
   @Prop() connection: Connection = connections[Env.Prod];
   @Prop() description?: string;
@@ -20,7 +23,7 @@ export class ManifoldServiceCard {
   @Prop() label?: string;
   @Prop() logo?: string;
   @Prop() productId?: string;
-  @Prop() serviceLink?: string;
+  @Prop() linkFormat?: string;
   @State() isFree: boolean = false;
   @Watch('productId') watchHandler(newProductId: string) {
     this.fetchIsFree(newProductId);
@@ -43,7 +46,7 @@ export class ManifoldServiceCard {
   }
 
   onClick = (e: Event): void => {
-    if (!this.serviceLink) {
+    if (!this.linkFormat) {
       e.preventDefault();
       this.cardClicked.emit({ label: this.label });
     }
@@ -57,7 +60,7 @@ export class ManifoldServiceCard {
         itemscope
         itemtype="https://schema.org/Product"
         itemprop="url"
-        href={this.serviceLink}
+        href={this.linkFormat}
         onClick={this.onClick}
       >
         {this.isCustom && <manifold-icon class="gear" icon="settings" />}

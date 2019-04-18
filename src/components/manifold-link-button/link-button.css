@@ -1,14 +1,11 @@
 a {
-  --padding-left-alt: 1em;
-
   display: inline-flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  min-height: 2.5rem;
-  padding-top: 0.75em;
+  width: 100%;
+  height: 2.375rem;
   padding-right: 1.5em;
-  padding-bottom: 0.75em;
   padding-left: 1.5em;
   color: var(--mf-c-white);
   font-size: 15px;
@@ -21,7 +18,7 @@ a {
   border-radius: var(--mf-radius-m);
   box-shadow: var(--mf-shadow-default);
   cursor: pointer;
-  transition: background-color 200ms, border-color 150ms, color 200ms;
+  transition: filter 200ms linear;
 
   &:focus,
   &:hover {

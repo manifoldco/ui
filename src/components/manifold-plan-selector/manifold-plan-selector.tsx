@@ -12,8 +12,10 @@ export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
-  /** _(optional)_ Hide bottom-right button? */
+  /** _(optional)_ Hide button? */
   @Prop() hideProvisionButton?: boolean;
+  /** _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders */
+  @Prop() linkFormat?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel: string;
   /** _(optional)_ Is this modifying an existing resource? */
@@ -39,10 +41,11 @@ export class ManifoldPlanSelector {
     if (!this.product || !this.plans) return null;
     return (
       <manifold-active-plan
-        product={this.product}
-        plans={this.plans}
-        isExistingResource={!!this.resourceId}
         hideProvisionButton={this.hideProvisionButton}
+        isExistingResource={!!this.resourceId}
+        linkFormat={this.linkFormat}
+        plans={this.plans}
+        product={this.product}
       />
     );
   }

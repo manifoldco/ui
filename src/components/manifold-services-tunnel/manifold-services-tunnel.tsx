@@ -4,7 +4,7 @@ import Tunnel from '../../data/marketplace';
 
 @Component({ tag: 'manifold-services-tunnel' })
 export class ManiTunnel {
-  @Prop() serviceLink?: string;
+  @Prop() linkFormat?: string;
   @Prop() featured?: string;
   @Prop() services: Catalog.Product[] = [];
 
@@ -13,7 +13,7 @@ export class ManiTunnel {
       <Tunnel.Provider
         state={{
           services: this.services,
-          serviceLink: this.serviceLink,
+          linkFormat: this.linkFormat,
           featured: this.featured,
         }}
       >

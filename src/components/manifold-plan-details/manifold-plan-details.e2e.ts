@@ -209,5 +209,31 @@ describe(`<manifold-plan-details>`, () => {
       const button = await page.find('manifold-plan-details >>> manifold-link-button');
       expect(button).toBeNull();
     });
+
+    it('formats links correctly', async () => {
+      // Set properties and wait
+      const page = await newE2EPage({
+        html: '<manifold-plan-details />',
+      });
+      await page.$eval('manifold-plan-details', (elm: any) => {
+        elm.product = { body: { label: 'cloudcube' } };
+        elm.plan = {
+          body: {
+            label: 'venture',
+            expanded_features: [
+              { type: 'number', label: 'storage', value: { numeric_details: { min: 500 } } },
+              { type: 'boolean', label: 'highAvailability', value: { label: 'true' } },
+            ],
+          },
+        };
+        elm.linkFormat = '/create/:product/?plan=:plan&:features';
+      });
+      await page.waitForChanges();
+
+      const el = await page.find('manifold-plan-details >>> manifold-link-button');
+      expect(await el.getProperty('href')).toBe(
+        '/create/cloudcube/?plan=venture&storage=500&highAvailability=true'
+      );
+    });
   });
 });

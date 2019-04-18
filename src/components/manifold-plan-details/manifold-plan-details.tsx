@@ -4,8 +4,6 @@ import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
 
-const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
-
 @Component({
   tag: 'manifold-plan-details',
   styleUrl: 'plan-details.css',
@@ -14,6 +12,7 @@ const RESOURCE_CREATE = '/resource/create?product='; // TODO get actual url
 export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean;
   @Prop() plan?: Catalog.ExpandedPlan;
+  @Prop() linkFormat?: string;
   @Prop() product?: Catalog.Product;
   @Prop() hideProvisionButton: boolean = false;
   @State() features: UserFeatures = {};
@@ -27,6 +26,10 @@ export class ManifoldPlanDetails {
     this.features = features; // If plan changed, we want to reset all user-selected values
     this.updatedPlanHandler({ features }); // Dispatch change event when plan changed
   }
+  @Event({
+    eventName: 'manifold-planCTA-click',
+    bubbles: true,
+  }) ctaClicked: EventEmitter;
 
   componentWillLoad() {
     const features = this.initialFeatures();
@@ -57,6 +60,21 @@ export class ManifoldPlanDetails {
       product,
       features,
     });
+  }
+
+  get ctaLink() {
+    if (!this.product || !this.plan) return undefined;
+    if (typeof this.linkFormat !== 'string') return undefined;
+    const params = new URLSearchParams();
+    if (Object.keys(this.features)) {
+      Object.entries(this.features).forEach(([key, value]) => {
+        params.append(key, value.toString());
+      });
+    }
+    return this.linkFormat
+      .replace(/:product/ig, this.product.body.label)
+      .replace(/:plan/ig, this.plan.body.label)
+      .replace(/:features/ig, params.toString())
   }
 
   get header() {
@@ -101,8 +119,6 @@ export class ManifoldPlanDetails {
 
   get footer() {
     if (!this.product || !this.plan) return null;
-
-    const { label: productLabel } = this.product.body;
     const { name, expanded_features = [] } = this.plan.body;
     return (
       <footer class="footer">
@@ -113,9 +129,10 @@ export class ManifoldPlanDetails {
         />
         {!this.hideProvisionButton && (
           <manifold-link-button
-            href={`${RESOURCE_CREATE}${productLabel}&plan=${this.plan.id}`}
-            rel="noopener noreferrer"
-            target="_blank"
+            onClick={this.onClick}
+            href={this.ctaLink}
+            rel={this.ctaLink && 'noopener noreferrer'}
+            target={this.ctaLink && '_blank'}
           >
             Get {name}
             <manifold-icon icon="arrow_right" marginLeft />
@@ -124,6 +141,15 @@ export class ManifoldPlanDetails {
       </footer>
     );
   }
+
+  onClick = (e: Event): void => {
+    if (!this.linkFormat) {
+      e.preventDefault();
+      const product = this.product && this.product.body.label;
+      const plan = this.plan && this.plan.body.label;
+      this.ctaClicked.emit({ product, plan, features: this.features });
+    }
+  };
 
   render() {
     if (!this.product || !this.plan) return null;

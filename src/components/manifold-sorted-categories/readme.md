@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property          | Attribute | Description | Type                                      | Default    |
-| ----------------- | --------- | ----------- | ----------------------------------------- | ---------- |
-| `observeCategory` | --        |             | `(el?: HTMLElement \| undefined) => void` | `() => {}` |
+| Property          | Attribute | Description | Type                                      | Default     |
+| ----------------- | --------- | ----------- | ----------------------------------------- | ----------- |
+| `observeCategory` | --        |             | `(el?: HTMLElement \| undefined) => void` | `() => { }` |
 
 
 ----------------------------------------------
