@@ -45,15 +45,9 @@ export class ManifoldProductPage {
           <div class="sidebar-section">
             <h4>Provider Links</h4>
             <div class="provider-link">
-              <a href="#plan_pricing">
-                <manifold-icon icon="dollar_sign" color="--mf-c-gray" margin-right />
-                Pricing
-              </a>
-            </div>
-            <div class="provider-link">
-              <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                <manifold-icon icon="life_buoy" color="--mf-c-gray" margin-right />
-                Support
+              <a href={documentation_url} target="_blank" rel="noopener noreferrer">
+                <manifold-icon icon="book" color="--mf-c-gray" margin-right />
+                Docs
                 <manifold-icon
                   class="external-link-icon"
                   icon="arrow_up_right"
@@ -63,9 +57,9 @@ export class ManifoldProductPage {
               </a>
             </div>
             <div class="provider-link">
-              <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                <manifold-icon icon="book" color="--mf-c-gray" margin-right />
-                Documentation
+              <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
+                <manifold-icon icon="life_buoy" color="--mf-c-gray" margin-right />
+                Support
                 <manifold-icon
                   class="external-link-icon"
                   icon="arrow_up_right"
