@@ -171,7 +171,7 @@ export namespace Components {
     */
     'featured'?: string;
     /**
-    * _(optional)_ If cards are <a> tags, how should link work?
+    * _(optional)_ If cards are `<a>` tags, how should link work?
     */
     'serviceLink'?: string;
   }
@@ -185,7 +185,7 @@ export namespace Components {
     */
     'featured'?: string;
     /**
-    * _(optional)_ If cards are <a> tags, how should link work?
+    * _(optional)_ If cards are `<a>` tags, how should link work?
     */
     'serviceLink'?: string;
   }

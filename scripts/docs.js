@@ -46,7 +46,12 @@ if (Array.isArray(readmes)) {
       return;
     }
     const md = readFileSync(filepath, 'utf8');
-    const html = converter.makeHtml(md);
+    const html = converter
+      .makeHtml(md)
+      .replace(
+        '<hr />\n<p><em>Built with <a href="https://stenciljs.com/">StencilJS</a></em></p>',
+        ''
+      );
     // We included the opening comment in our selection, so let’s put it back
     const newContents = `<!-- BEGIN README ${component} -->
 ${HTML_BEFORE}

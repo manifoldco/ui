@@ -62,7 +62,7 @@ render() {
 | ------------- | -------------- | --------------------------------------------------------------- | --------------------- | ----------------------- |
 | `connection`  | --             | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections[Env.Prod]` |
 | `featured`    | `featured`     | _(optional)_ Comma-separated list of featured products (labels) | `string \| undefined` | `undefined`             |
-| `serviceLink` | `service-link` | _(optional)_ If cards are <a> tags, how should link work?       | `string \| undefined` | `undefined`             |
+| `serviceLink` | `service-link` | _(optional)_ If cards are `<a>` tags, how should link work?     | `string \| undefined` | `undefined`             |
 
 
 ----------------------------------------------
