@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+import { themeIcons } from '../../assets/icons';
 
 @Component({
   tag: 'manifold-product-page',
@@ -35,7 +36,7 @@ export class ManifoldProductPage {
             <div class="sidebar-section">
               {tags.map(tag => (
                 <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
-                  <manifold-icon icon={tag} margin-right />
+                  <manifold-icon icon={themeIcons[tag] || themeIcons.uncategorized} margin-right />
                   {tag}
                 </div>
               ))}

@@ -2,6 +2,9 @@
   --mf-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
   --mf-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
   --mf-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --mf-g-iron_cache: linear-gradient(to right top, #099542, #2bd15a);
+  --mf-g-iron_mq: linear-gradient(to right top, #de6500, #e8b600);
+  --mf-g-iron_worker: linear-gradient(to right top, #2977be, #57aee4);
   --mf-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
   --mf-c-authentication: #1a4898;
   --mf-c-CMS: #ffde52;
