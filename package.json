@@ -38,6 +38,8 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "lint:css": "stylelint 'src/**/*.css'",
+    "preprofile": "npm run build",
+    "profile": "bundlesize",
     "prepublish": "npm run build",
     "publish": "node scripts/publish",
     "start": "NODE_ENV=production npx serve -l \"tcp://0.0.0.0:$PORT\" -s www",
@@ -53,11 +55,19 @@
     "@stencil/postcss": "^0.1.0",
     "@stencil/state-tunnel": "0.0.8"
   },
+  "bundlesize": [
+    {
+      "path": "./dist/esm/es2017/manifold.*.js",
+      "compression": "none",
+      "maxSize": "17 KB"
+    }
+  ],
   "devDependencies": {
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
+    "bundlesize": "^0.17.1",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
