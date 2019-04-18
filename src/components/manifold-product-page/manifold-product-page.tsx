@@ -7,6 +7,12 @@ import { Component, Prop } from '@stencil/core';
 })
 export class ManifoldProductPage {
   @Prop() product?: Catalog.ExpandedProduct;
+  @Prop() provider?: Catalog.Provider;
+
+  get providerName() {
+    if (!this.product || !this.provider) return undefined;
+    return (this.provider.body.name !== this.product.body.name && this.provider.body.name) || undefined;
+  }
 
   renderSidebar = () => {
     if (!this.product) {
@@ -21,9 +27,9 @@ export class ManifoldProductPage {
           <manifold-featured-service
             name={name}
             logo={logo_url}
-            service-color-id={`--service-color-${label}`}
+            productGradient={`var(--mf-g-${label})`}
           >
-            {/* TODO get provider name */}
+            {this.providerName && `from ${this.providerName}`}
           </manifold-featured-service>
           {tags && (
             <div class="sidebar-section">

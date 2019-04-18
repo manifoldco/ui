@@ -1,5 +1,8 @@
 :host {
-  --service-color-jawsdb-mysql: #003b6e;
+  --mf-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
+  --mf-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
+  --mf-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --mf-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
   --mf-c-authentication: #1a4898;
   --mf-c-CMS: #ffde52;
   --mf-c-cms: #ffde52;
@@ -77,23 +80,28 @@
   margin-bottom: 0.5rem;
   font-size: var(--mf-font-d1);
 
-  & mf-icon {
-    opacity: 0.5;
+  & manifold-icon {
+    display: block;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.375rem;
+    opacity: 0.375;
     transition: opacity 200ms;
   }
 
   & a {
     display: flex;
     align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
     color: inherit;
-    line-height: 21px;
     text-decoration: none;
     transition: color 200ms;
 
     &:hover {
       color: var(--mf-c-grayDarker);
 
-      & mf-icon {
+      & manifold-icon {
         opacity: 1;
       }
     }

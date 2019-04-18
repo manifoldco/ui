@@ -38,6 +38,7 @@
   --mf-c-black-rgb: 0, 0, 0;
 
   /* grays */
+  --mf-c-black-0: rgba(0, 0, 0, 0);
   --mf-c-black-10: rgba(0, 0, 0, 0.1);
   --mf-c-black-20: rgba(0, 0, 0, 0.2);
   --mf-c-black-25: rgba(0, 0, 0, 0.25);
@@ -88,6 +89,17 @@
   --mf-c-optimization: var(--mf-c-teal);
   --mf-c-search: var(--mf-c-teal);
   --mf-c-worker: var(--mf-c-green);
+
+  /* product gradients */
+  --mf-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
+  --mf-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
+  --mf-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --mf-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
+
+  /* product logo sizes */
+  --mf-product-logo-s: 2rem;
+  --mf-product-logo-m: 2.75rem;
+  --mf-product-logo-l: 3rem;
 
   /* text-colors */
   --mf-c-text: var(--mf-c-grayDarker);

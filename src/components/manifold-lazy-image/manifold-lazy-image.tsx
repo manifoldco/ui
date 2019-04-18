@@ -19,8 +19,10 @@ export class ManifoldLazyImage {
     observer: IntersectionObserver
   ): void => {
     const entry = entries[0];
+    const image = entry.target as HTMLImageElement;
+    image.onload = () => image.setAttribute('data-loaded', 'true');
+
     if (entry && entry.isIntersecting) {
-      const image = entry.target as HTMLImageElement;
       const source = image.getAttribute('data-src');
 
       if (source) {

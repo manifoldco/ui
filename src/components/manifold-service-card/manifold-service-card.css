@@ -10,7 +10,7 @@
     'logo name'
     'info info'
     'tags tags';
-  grid-template-columns: 2rem auto;
+  grid-template-columns: var(--mf-product-logo-s) auto;
   grid-template-rows: min-content auto min-content;
   box-sizing: border-box;
   height: 100%;
@@ -31,11 +31,11 @@
       'logo name'
       'logo info'
       'tags tags';
-    grid-template-columns: 2.75rem auto;
+    grid-template-columns: var(--mf-product-logo-m) auto;
   }
 
   @media (--viewport-m) {
-    grid-template-columns: 3rem auto;
+    grid-template-columns: var(--mf-product-logo-l) auto;
     padding: 0.875rem;
   }
 
@@ -111,9 +111,27 @@
   align-content: start;
 
   & img {
-    width: 100%;
-    height: auto;
+    width: var(--mf-product-logo-s);
+    height: var(--mf-product-logo-s);
+    overflow: hidden;
+    color: transparent;
     border-radius: var(--mf-radius-m);
+    opacity: 0.1;
+    transition: opacity 150ms linear 100ms;
+
+    @media (--viewport-s) {
+      width: var(--mf-product-logo-m);
+      height: var(--mf-product-logo-m);
+    }
+
+    @media (--viewport-m) {
+      width: var(--mf-product-logo-l);
+      height: var(--mf-product-logo-l);
+    }
+
+    &[data-loaded] {
+      opacity: 1;
+    }
   }
 }
 
