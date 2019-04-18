@@ -34,6 +34,7 @@ export class ManifoldProductPage {
           </manifold-featured-service>
           {tags && (
             <div class="sidebar-section">
+              <h4>Category</h4>
               {tags.map(tag => (
                 <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
                   <manifold-icon icon={themeIcons[tag] || themeIcons.uncategorized} margin-right />
@@ -43,7 +44,7 @@ export class ManifoldProductPage {
             </div>
           )}
           <div class="sidebar-section">
-            <h4>Provider Links</h4>
+            <h4>Links</h4>
             <div class="provider-link">
               <a href={documentation_url} target="_blank" rel="noopener noreferrer">
                 <manifold-icon icon="book" color="--mf-c-gray" margin-right />
