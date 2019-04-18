@@ -9,10 +9,14 @@ import { Connection, connections, Env } from '../../utils/connections';
 })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
-  @Prop() resourceId?: string;
+  /** _(optional)_ Hide bottom-right button? */
   @Prop() hideProvisionButton?: boolean;
+  /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel: string;
+  /** _(optional)_ Is this modifying an existing resource? */
+  @Prop() resourceId?: string;
   @State() product: Catalog.ExpandedProduct;
   @State() plans: Catalog.Plan[];
 

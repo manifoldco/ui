@@ -53,26 +53,16 @@ render() {
 }
 ```
 
-## Point to a Different Environment
-
-By default, `manifold-marketplace` connects to production. To have it point to our staging environment instead, you can wrap it in a `manifold-connection` and set the `env` attribute to `"stage"`:
-
-```html
-<manifold-connection env="stage">
-  <manifold-marketplace></manifold-marketplace>
-</manifold-connection>
-```
-
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property      | Attribute      | Description | Type                  | Default                 |
-| ------------- | -------------- | ----------- | --------------------- | ----------------------- |
-| `connection`  | --             |             | `Connection`          | `connections[Env.Prod]` |
-| `featured`    | `featured`     |             | `string \| undefined` | `undefined`             |
-| `serviceLink` | `service-link` |             | `string \| undefined` | `undefined`             |
+| Property      | Attribute      | Description                                                     | Type                  | Default                 |
+| ------------- | -------------- | --------------------------------------------------------------- | --------------------- | ----------------------- |
+| `connection`  | --             | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections[Env.Prod]` |
+| `featured`    | `featured`     | _(optional)_ Comma-separated list of featured products (labels) | `string \| undefined` | `undefined`             |
+| `serviceLink` | `service-link` | _(optional)_ If cards are <a> tags, how should link work?       | `string \| undefined` | `undefined`             |
 
 
 ----------------------------------------------

@@ -1,4 +1,4 @@
-# Development
+# 🔨 Development
 
 To run this project locally, clone this repo, navigate to the project root, and run:
 
@@ -15,7 +15,7 @@ npm run dev
 _Note: you may also want to run `npm run format:css:watch` in a separate
 process, to automatically format CSS as you save._
 
-## Testing
+## 📋 Testing
 
 To run the unit tests once, run:
 
@@ -29,7 +29,7 @@ To run the unit tests and watch for file changes during development, run:
 npm run test.watch
 ```
 
-## Editing documentation
+## 🖋️ Editing documentation
 
 Documentation for each component lives in its corresponding `readme.md` file.
 All pertinent info should go in there.
@@ -88,7 +88,7 @@ that breaks (very likely), bug @dangodev.
 Currently we’re only using `spec/catalog/v1.yaml`, but we may need other
 endpoint specs as this grows.
 
-## Publishing to npm
+## 🚀 Publishing to npm
 
 To publish to npm, tag it in Git with a valid [npm-semver][npm-semver].
 
@@ -122,3 +122,57 @@ requests the flag (e.g.: `npm i --save @manifoldco/ui@rc` or `npm i --save @mani
 [npm-semver]: https://docs.npmjs.com/misc/semver
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
 [swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts
+
+## 💁 Tips
+
+### Attributes vs Properties
+
+An important concept to understand when working with web components is the
+differences between an HTML attribute and a DOM node property. A simple
+example would involve an input element:
+
+```html
+<input type="text" value="" />
+```
+
+Imagine a user typed something into that box. If we ran the following
+functions in a browser console, we’d get the following:
+
+```js
+document.querySelector('[type=text]').value;
+// "Sarah Anderson"
+document.querySelector('[type=text]').getAttribute('value');
+// ""
+```
+
+In the DOM, `value=""` didn’t update, but as the user typed, the node’s
+`.value property updated to reflect the user’s status.
+
+#### Applying it to Stencil
+
+Stencil treats attributes & properties very differently, especially within
+JSX. Consider the two **in JSX**:
+
+```jsx
+<user-card user-info={user} /> // 🚫
+<user-card userInfo={user} /> // ✅
+```
+
+Of the two, the `kebab-case` one is an HTML attribute. As such, Stencil will
+do its best to try and figure out what you meant, but this isn’t meant for
+nested objects, and **it won’t receive updates.**
+
+However, when dealing with HTML, it’s totally different—only attributes are
+supported (this means only strings!):
+
+```jsx
+<user-card user-info={user} /> // ✅
+<user-card userInfo={user} /> // 🚫
+```
+
+In this example, `userInfo` is actually converted to `userinfo` (HTML is
+case-insensitive), so it’s a different prop. Also, if you want to set
+non-strings, you’ll have to do so [via
+JS](https://stenciljs.com/docs/properties).
+
+**TL;DR use `camelCase` in JSX; `kebab-case` in HTML.**

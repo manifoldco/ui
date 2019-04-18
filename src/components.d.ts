@@ -39,9 +39,15 @@ export namespace Components {
   interface ManifoldBadgeAttributes extends StencilHTMLAttributes {}
 
   interface ManifoldConnection {
+    /**
+    * _(optional)_ Specify `env="stage"` for staging
+    */
     'env': Env;
   }
   interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
+    /**
+    * _(optional)_ Specify `env="stage"` for staging
+    */
     'env'?: Env;
   }
 
@@ -56,6 +62,15 @@ export namespace Components {
     'compact'?: boolean;
     'isCustomizable'?: boolean;
     'measuredCosts'?: [number, string][];
+  }
+
+  interface ManifoldDataProductName {
+    'connection': Connection;
+    'productLabel': string;
+  }
+  interface ManifoldDataProductNameAttributes extends StencilHTMLAttributes {
+    'connection'?: Connection;
+    'productLabel'?: string;
   }
 
   interface ManifoldFeaturedService {
@@ -147,13 +162,31 @@ export namespace Components {
   }
 
   interface ManifoldMarketplace {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
+    /**
+    * _(optional)_ Comma-separated list of featured products (labels)
+    */
     'featured'?: string;
+    /**
+    * _(optional)_ If cards are <a> tags, how should link work?
+    */
     'serviceLink'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
+    /**
+    * _(optional)_ Comma-separated list of featured products (labels)
+    */
     'featured'?: string;
+    /**
+    * _(optional)_ If cards are <a> tags, how should link work?
+    */
     'serviceLink'?: string;
   }
 
@@ -224,15 +257,39 @@ export namespace Components {
   }
 
   interface ManifoldPlanSelector {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
+    /**
+    * _(optional)_ Hide bottom-right button?
+    */
     'hideProvisionButton'?: boolean;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
     'productLabel': string;
+    /**
+    * _(optional)_ Is this modifying an existing resource?
+    */
     'resourceId'?: string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
+    /**
+    * _(optional)_ Hide bottom-right button?
+    */
     'hideProvisionButton'?: boolean;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
     'productLabel'?: string;
+    /**
+    * _(optional)_ Is this modifying an existing resource?
+    */
     'resourceId'?: string;
   }
 
@@ -251,11 +308,23 @@ export namespace Components {
   }
 
   interface ManifoldProduct {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
     'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
     'productLabel'?: string;
   }
 
@@ -363,6 +432,7 @@ declare global {
     'ManifoldBadge': Components.ManifoldBadge;
     'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldCostDisplay': Components.ManifoldCostDisplay;
+    'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
@@ -393,6 +463,7 @@ declare global {
     'manifold-badge': Components.ManifoldBadgeAttributes;
     'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
+    'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
@@ -441,6 +512,12 @@ declare global {
   var HTMLManifoldCostDisplayElement: {
     prototype: HTMLManifoldCostDisplayElement;
     new (): HTMLManifoldCostDisplayElement;
+  };
+
+  interface HTMLManifoldDataProductNameElement extends Components.ManifoldDataProductName, HTMLStencilElement {}
+  var HTMLManifoldDataProductNameElement: {
+    prototype: HTMLManifoldDataProductNameElement;
+    new (): HTMLManifoldDataProductNameElement;
   };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
@@ -586,6 +663,7 @@ declare global {
     'manifold-badge': HTMLManifoldBadgeElement
     'manifold-connection': HTMLManifoldConnectionElement
     'manifold-cost-display': HTMLManifoldCostDisplayElement
+    'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
@@ -616,6 +694,7 @@ declare global {
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
+    'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
