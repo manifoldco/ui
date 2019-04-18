@@ -1,6 +1,7 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
+import { withAuth } from '../../utils/auth';
 import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({
@@ -32,7 +33,7 @@ export class ManifoldServiceCard {
   fetchIsFree(productId = this.productId) {
     if (typeof productId !== 'string') return;
 
-    fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`)
+    fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`, withAuth())
       .then(response => response.json())
       .then((data: Catalog.ExpandedPlan[]) => {
         if (data.find(plan => plan.body.free === true)) {
@@ -66,8 +67,8 @@ export class ManifoldServiceCard {
               <manifold-icon class="icon" icon={this.logo} />
             </div>
           ) : (
-            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
-          )}
+              <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
+            )}
         </div>
         <h3 class="name" itemprop="name">
           {this.name}

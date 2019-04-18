@@ -1,6 +1,7 @@
 import { Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
+import { withAuth } from '../../utils/auth';
 import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({ tag: 'manifold-product' })
@@ -13,7 +14,7 @@ export class ManifoldProduct {
   @State() product?: Catalog.ExpandedProduct;
 
   componentWillLoad() {
-    return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`)
+    return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
       .then(response => response.json())
       .then(data => {
         this.product = { ...data[0] };

@@ -1,6 +1,7 @@
 
 import { Component, Prop, State, Element } from '@stencil/core';
 import Tunnel from '../../data/connection';
+import { withAuth } from '../../utils/auth';
 import { Connection, connections, Env } from '../../utils/connections';
 
 @Component({ tag: 'manifold-data-product-logo' })
@@ -17,7 +18,7 @@ export class ManifoldDataProductLogo {
 
   componentWillLoad() {
     // Don’t return this promise to invoke the loading state
-    fetch(`${this.connection.catalog}/products?label=${this.productLabel}`)
+    fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
       .then(response => response.json())
       .then(data => {
         this.product = { ...data[0] };
