@@ -23,6 +23,8 @@
   font-family: var(--mf-font-family);
   text-align: center;
   text-decoration: none;
+  background-color: var(--mf-c-black);
+  background-image: linear-gradient(to right top, #222, #444);
   background-image: var(--background-gradient);
   border-radius: var(--mf-radius-m);
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.17);

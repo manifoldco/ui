@@ -91,13 +91,46 @@
   --mf-c-worker: var(--mf-c-green);
 
   /* product gradients */
+  --mf-g-aiven-cassandra: linear-gradient(to right top, #222, #444);
+  --mf-g-aiven-elasticsearch: linear-gradient(to right top, #222, #444);
+  --mf-g-aiven-grafana: linear-gradient(to right top, #222, #444);
+  --mf-g-aiven-kafka: linear-gradient(to right top, #222, #444);
+  --mf-g-aiven-pg: linear-gradient(to right top, #222, #444);
+  --mf-g-aiven-redis: linear-gradient(to right top, #222, #444);
   --mf-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
+  --mf-g-bonsai-elasticsearch: linear-gradient(to right top, #222, #444);
+  --mf-g-cloudamqp: linear-gradient(to right top, #222, #444);
+  --mf-g-cloudcube: linear-gradient(to right top, #222, #444);
+  --mf-g-custom-recognition: linear-gradient(to right top, #222, #444);
   --mf-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
   --mf-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --mf-g-generic-tagging: linear-gradient(to right top, #222, #444);
+  --mf-g-hostedmetrics-influxdb: linear-gradient(to right top, #222, #444);
+  --mf-g-hostedmetrics-prometheus: linear-gradient(to right top, #222, #444);
+  --mf-g-hypdf: linear-gradient(to right top, #222, #444);
+  --mf-g-informant: linear-gradient(to right top, #222, #444);
   --mf-g-iron_cache: linear-gradient(to right top, #099542, #2bd15a);
   --mf-g-iron_mq: linear-gradient(to right top, #de6500, #e8b600);
   --mf-g-iron_worker: linear-gradient(to right top, #2977be, #57aee4);
+  --mf-g-jawsdb-maria: linear-gradient(to right top, #222, #444);
   --mf-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
+  --mf-g-jawsdb-postgres: linear-gradient(to right top, #222, #444);
+  --mf-g-logdna: linear-gradient(to right top, #222, #444);
+  --mf-g-mailgun: linear-gradient(to right top, #222, #444);
+  --mf-g-memcachier-cache: linear-gradient(to right top, #222, #444);
+  --mf-g-oauth-io: linear-gradient(to right top, #222, #444);
+  --mf-g-pdfshift: linear-gradient(to right top, #222, #444);
+  --mf-g-piio: linear-gradient(to right top, #222, #444);
+  --mf-g-posthook: linear-gradient(to right top, #222, #444);
+  --mf-g-prefab: linear-gradient(to right top, #222, #444);
+  --mf-g-provider-dashboard: linear-gradient(to right top, #222, #444);
+  --mf-g-scoutapp: linear-gradient(to right top, #222, #444);
+  --mf-g-statushub: linear-gradient(to right top, #222, #444);
+  --mf-g-till: linear-gradient(to right top, #222, #444);
+  --mf-g-timber-logging: linear-gradient(to right top, #222, #444);
+  --mf-g-websolr: linear-gradient(to right top, #222, #444);
+  --mf-g-zerosix: linear-gradient(to right top, #222, #444);
+  --mf-g-ziggeo: linear-gradient(to right top, #222, #444);
 
   /* product logo sizes */
   --mf-product-logo-s: 2rem;
