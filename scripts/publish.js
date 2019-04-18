@@ -1,7 +1,7 @@
 const { existsSync, mkdirSync, readFileSync, writeFileSync } = require('fs');
 const { resolve } = require('path');
 const { execSync } = require('child_process');
-const { copySync } = require('fs-extra');
+const { copySync, emptyDirSync } = require('fs-extra');
 const prettier = require('prettier');
 
 /* eslint-disable no-console */
@@ -13,6 +13,7 @@ const pkgDir = resolve(__dirname, '..', 'pkg');
 
 // 1. Setup: make dirs, copy README
 if (!existsSync(pkgDir)) mkdirSync(pkgDir);
+emptyDirSync(pkgDir);
 copySync(oldDistDir, newDistDir);
 copySync(resolve(__dirname, '..', 'readme.md'), resolve(pkgDir, 'readme.md'));
 
