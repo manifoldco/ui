@@ -10,7 +10,7 @@ export class ManifoldActivePlan {
   @Prop() linkFormat?: string;
   @Prop() product?: Catalog.ExpandedProduct;
   @Prop() plans: Catalog.ExpandedPlan[] = [];
-  @Prop() hideProvisionButton?: boolean;
+  @Prop() hideCta?: boolean;
   @State() selectedPlanId: string;
 
   componentWillLoad() {
@@ -32,7 +32,7 @@ export class ManifoldActivePlan {
       />,
       <div>
         <manifold-plan-details
-          hideProvisionButton={this.hideProvisionButton}
+          hideCta={this.hideCta}
           isExistingResource={this.isExistingResource}
           linkFormat={this.linkFormat}
           plan={this.plans.find(plan => plan.id === this.selectedPlanId)}

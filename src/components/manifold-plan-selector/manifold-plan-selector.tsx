@@ -12,8 +12,8 @@ export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections[Env.Prod];
-  /** _(optional)_ Hide button? */
-  @Prop() hideProvisionButton?: boolean;
+  /** _(optional)_ Hide CTA? */
+  @Prop() hideCta?: boolean;
   /** _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders */
   @Prop() linkFormat?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -41,7 +41,7 @@ export class ManifoldPlanSelector {
     if (!this.product || !this.plans) return null;
     return (
       <manifold-active-plan
-        hideProvisionButton={this.hideProvisionButton}
+        hideCta={this.hideCta}
         isExistingResource={!!this.resourceId}
         linkFormat={this.linkFormat}
         plans={this.plans}
