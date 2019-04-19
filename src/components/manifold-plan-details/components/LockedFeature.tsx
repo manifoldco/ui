@@ -1,5 +1,5 @@
 import { FunctionalComponent } from '@stencil/core';
-import { lock } from '../../../assets/icons';
+import { lock } from '@manifoldco/icons';
 
 export const LockedFeature: FunctionalComponent = (_, children) => {
   return (

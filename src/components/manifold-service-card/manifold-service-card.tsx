@@ -1,6 +1,6 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
+import { settings } from '@manifoldco/icons';
 
-import { settings } from '../../assets/icons';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';

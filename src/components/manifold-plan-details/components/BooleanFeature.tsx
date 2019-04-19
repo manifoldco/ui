@@ -1,7 +1,7 @@
 import { FunctionalComponent } from '@stencil/core';
+import { check } from '@manifoldco/icons';
 import { booleanFeatureDisplayValue, booleanFeatureDefaultValue } from '../../../utils/plan';
 import { LockedFeature } from './LockedFeature';
-import { check } from '../../../assets/icons';
 
 interface BooleanFeatureProps {
   feature: Catalog.ExpandedFeature;

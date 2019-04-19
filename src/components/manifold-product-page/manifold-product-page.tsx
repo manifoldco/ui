@@ -1,5 +1,7 @@
 import { Component, Prop, Event, EventEmitter } from '@stencil/core';
-import { arrow_right, arrow_up_right, book, life_buoy, themeIcons } from '../../assets/icons';
+import { arrow_right, arrow_up_right, book, life_buoy } from '@manifoldco/icons';
+
+import { themeIcons } from '../../assets/icons';
 
 @Component({
   tag: 'manifold-product-page',

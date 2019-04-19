@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { icon } from '../../assets/icons';
+import { icon } from '@manifoldco/icons';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 

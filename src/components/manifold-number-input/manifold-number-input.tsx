@@ -1,5 +1,5 @@
 import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { minus, plus } from '../../assets/icons';
+import { minus, plus } from '@manifoldco/icons';
 
 @Component({
   tag: 'manifold-number-input',

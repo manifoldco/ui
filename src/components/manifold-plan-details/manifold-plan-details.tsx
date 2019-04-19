@@ -1,7 +1,7 @@
 import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { arrow_right } from '@manifoldco/icons';
 import { UserFeatures } from 'types/UserFeatures';
 import { initialFeatures } from '../../utils/plan';
-import { arrow_right } from '../../assets/icons';
 import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
 

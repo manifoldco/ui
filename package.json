@@ -63,6 +63,7 @@
     }
   ],
   "devDependencies": {
+    "@manifoldco/icons": "0.0.2",
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
