@@ -23,14 +23,14 @@ import {
 export namespace Components {
 
   interface ManifoldActivePlan {
-    'hideProvisionButton'?: boolean;
+    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'plans': Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
-    'hideProvisionButton'?: boolean;
+    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
@@ -277,14 +277,14 @@ export namespace Components {
   }
 
   interface ManifoldPlanDetails {
-    'hideProvisionButton': boolean;
+    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
-    'hideProvisionButton'?: boolean;
+    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'onManifold-planCTA-click'?: (event: CustomEvent) => void;
@@ -310,9 +310,9 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * _(optional)_ Hide button?
+    * _(optional)_ Hide CTA?
     */
-    'hideProvisionButton'?: boolean;
+    'hideCta'?: boolean;
     /**
     * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
     */
@@ -332,9 +332,9 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * _(optional)_ Hide button?
+    * _(optional)_ Hide CTA?
     */
-    'hideProvisionButton'?: boolean;
+    'hideCta'?: boolean;
     /**
     * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
     */

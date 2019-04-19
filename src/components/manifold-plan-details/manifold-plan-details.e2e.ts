@@ -169,7 +169,7 @@ describe(`<manifold-plan-details>`, () => {
       expect(toggle).not.toBeNull();
     });
 
-    it('provision button is shown by default', async () => {
+    it('cta is shown by default', async () => {
       const page = await newE2EPage({ html: `<manifold-plan-details />` });
 
       const props = { plan: booleanPlanCustom, product: Product };
@@ -188,7 +188,7 @@ describe(`<manifold-plan-details>`, () => {
       expect(button).toBeDefined();
     });
 
-    it('provision button hides with prop', async () => {
+    it('cta button hides with prop', async () => {
       const page = await newE2EPage({
         html: `<manifold-plan-details />`,
       });
@@ -199,7 +199,7 @@ describe(`<manifold-plan-details>`, () => {
         (elm: any, { plan, product }: any) => {
           elm.plan = plan;
           elm.product = product;
-          elm.hideProvisionButton = true;
+          elm.hideCta = true;
         },
         props
       );

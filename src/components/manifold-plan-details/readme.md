@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property              | Attribute               | Description | Type                        | Default     |
-| --------------------- | ----------------------- | ----------- | --------------------------- | ----------- |
-| `hideProvisionButton` | `hide-provision-button` |             | `boolean`                   | `false`     |
-| `isExistingResource`  | `is-existing-resource`  |             | `boolean \| undefined`      | `undefined` |
-| `linkFormat`          | `link-format`           |             | `string \| undefined`       | `undefined` |
-| `plan`                | --                      |             | `ExpandedPlan \| undefined` | `undefined` |
-| `product`             | --                      |             | `Product \| undefined`      | `undefined` |
+| Property             | Attribute              | Description | Type                        | Default     |
+| -------------------- | ---------------------- | ----------- | --------------------------- | ----------- |
+| `hideCta`            | `hide-cta`             |             | `boolean \| undefined`      | `false`     |
+| `isExistingResource` | `is-existing-resource` |             | `boolean \| undefined`      | `undefined` |
+| `linkFormat`         | `link-format`          |             | `string \| undefined`       | `undefined` |
+| `plan`               | --                     |             | `ExpandedPlan \| undefined` | `undefined` |
+| `product`            | --                     |             | `Product \| undefined`      | `undefined` |
 
 
 ## Events

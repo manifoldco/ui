@@ -14,7 +14,7 @@ export class ManifoldPlanDetails {
   @Prop() plan?: Catalog.ExpandedPlan;
   @Prop() linkFormat?: string;
   @Prop() product?: Catalog.Product;
-  @Prop() hideProvisionButton: boolean = false;
+  @Prop() hideCta?: boolean = false;
   @State() features: UserFeatures = {};
   @Event({
     eventName: 'manifold-planUpdated',
@@ -127,7 +127,7 @@ export class ManifoldPlanDetails {
           allFeatures={expanded_features}
           selectedFeatures={this.features}
         />
-        {!this.hideProvisionButton && (
+        {this.hideCta !== true && (
           <manifold-link-button
             onClick={this.onClick}
             href={this.ctaLink}

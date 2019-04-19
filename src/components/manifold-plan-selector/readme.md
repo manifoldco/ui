@@ -55,10 +55,10 @@ To turn the CTA into an `<a>` tag, specify a `link-format` attribute, using
 
 ### Hiding provision button
 
-If you would like to hide the CTA altogether, specify `hide-provision-button`:
+If you would like to hide the CTA altogether, specify `hide-cta`:
 
 ```html
-<manifold-product product-label="till" hide-provision-button />
+<manifold-product product-label="till" hide-cta />
 ```
 
 <!-- Auto Generated Below -->
@@ -66,13 +66,13 @@ If you would like to hide the CTA altogether, specify `hide-provision-button`:
 
 ## Properties
 
-| Property              | Attribute               | Description                                                                                | Type                   | Default                 |
-| --------------------- | ----------------------- | ------------------------------------------------------------------------------------------ | ---------------------- | ----------------------- |
-| `connection`          | --                      | _(hidden)_ Passed by `<manifold-connection>`                                               | `Connection`           | `connections[Env.Prod]` |
-| `hideProvisionButton` | `hide-provision-button` | _(optional)_ Hide button?                                                                  | `boolean \| undefined` | `undefined`             |
-| `linkFormat`          | `link-format`           | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`             |
-| `productLabel`        | `product-label`         | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`             |
-| `resourceId`          | `resource-id`           | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`             |
+| Property       | Attribute       | Description                                                                                | Type                   | Default                 |
+| -------------- | --------------- | ------------------------------------------------------------------------------------------ | ---------------------- | ----------------------- |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                                               | `Connection`           | `connections[Env.Prod]` |
+| `hideCta`      | `hide-cta`      | _(optional)_ Hide CTA?                                                                     | `boolean \| undefined` | `undefined`             |
+| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`             |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`             |
+| `resourceId`   | `resource-id`   | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`             |
 
 
 ----------------------------------------------
