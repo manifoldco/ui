@@ -1,4 +1,5 @@
 import { Component, Prop, FunctionalComponent } from '@stencil/core';
+import { check, sliders } from '../../assets/icons';
 
 const PlanButton: FunctionalComponent<{
   checked?: boolean;
@@ -11,9 +12,9 @@ const PlanButton: FunctionalComponent<{
       <input name="plan" type="radio" {...props} />
       <div class="plan-button-inner">
         {children}
-        <manifold-icon class="check-icon" icon="check" />
+        <manifold-icon class="check-icon" icon={check} />
         {props.customizable && (
-          <manifold-icon class="custom-icon" icon="sliders" data-hidden={props.checked} />
+          <manifold-icon class="custom-icon" icon={sliders} data-hidden={props.checked} />
         )}
       </div>
     </label>
@@ -28,7 +29,7 @@ const PlanButton: FunctionalComponent<{
 export class ManifoldPlanMenu {
   @Prop() plans: Catalog.ExpandedPlan[] = [];
   @Prop() selectedPlanId: string;
-  @Prop() selectPlan: Function = () => {};
+  @Prop() selectPlan: Function = () => { };
 
   get customPlans() {
     return Array.isArray(this.plans)

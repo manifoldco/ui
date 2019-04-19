@@ -1,5 +1,6 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 
+import { settings } from '../../assets/icons';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
@@ -63,7 +64,7 @@ export class ManifoldServiceCard {
         href={this.linkFormat}
         onClick={this.onClick}
       >
-        {this.isCustom && <manifold-icon class="gear" icon="settings" />}
+        {this.isCustom && <manifold-icon class="gear" icon={settings} />}
         <div class="logo">
           {this.isCustom ? (
             <div class="icon-border">
