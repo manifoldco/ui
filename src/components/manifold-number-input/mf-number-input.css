@@ -15,6 +15,7 @@
   background: var(--mf-c-white);
   border: 1px solid var(--mf-c-border);
   border-radius: var(--mf-radius-default);
+  -webkit-appearance: none;
   -moz-appearance: textfield; /* hides up/down buttons on firefox */
   font-variant-ligatures: none;
 

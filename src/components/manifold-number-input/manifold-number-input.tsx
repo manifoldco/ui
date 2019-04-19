@@ -78,7 +78,6 @@ export class ManifoldNumberInput {
         <input
           class="field"
           type="number"
-          inputmode="numeric"
           max={this.max}
           min={this.min}
           pattern="[0-9]*"
