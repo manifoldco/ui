@@ -121,7 +121,7 @@
                   >web component</a
                 >
                 UI library, powered by
-                <a href="https://stenciljs.com/" target="_blank">Stencil</a> 🎉.
+                <a href="https://stenciljs.com/" target="_blank">Stencil</a> <code>v0.18.0</code>.
               </p>
               <h2>Installation</h2>
               <p>Installation is handled via npm:</p>
@@ -145,12 +145,37 @@
 import ReactDOM from 'react-dom';
 import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 
-const App = () => (
-  &lt;manifold-marketplace /&gt;
-);
+const App = () => &lt;manifold-marketplace /&gt;
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
 defineCustomElements(window);</code></pre>
+              <h3>TypeScript + JSX setup</h3>
+              <p>
+                When using inside TypeScript, you’ll likely see this error (
+                <code>manifold-connection</code> could be any custom element):
+              </p>
+              <pre><code>Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'</code></pre>
+              <p>
+                To solve that, add the <code>@manifoldco/ui</code> directory to
+                <code>typeRoots</code> in <code>tsconfig.json</code>:
+              </p>
+              <pre lang="json"><code>"compilerOptions": {
+  "typeRoots": ["./node_modules/@types", "./node_modules/@manifoldco"],
+  "types": ["ui"]
+}</code></pre>
+              <p>
+                Next, create a <code>custom-elements.d.ts</code> file somewhere inside your project
+                (must be inside the
+                <a href="https://www.typescriptlang.org/docs/handbook/tsconfig-json.htm">include</a>
+                option in <code>tsconfig.json</code>):
+              </p>
+              <pre lang="ts"><code>declare module JSX {
+  interface IntrinsicElements extends StencilIntrinsicElements {}
+}</code></pre>
+              <p>
+                This will expose the types from Stencil to JSX, and you’ll be able to get
+                typechecking as you write.
+              </p>
               <h3>Other frameworks</h3>
               <p>
                 Initializing Manifold UI works the exact same as any other Stencil project. For more
