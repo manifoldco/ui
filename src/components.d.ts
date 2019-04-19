@@ -10,7 +10,6 @@ import '@stencil/core';
 import '@stencil/state-tunnel';
 import {
   Connection,
-  Env,
 } from './utils/connections';
 import {
   UserFeatures,
@@ -44,13 +43,13 @@ export namespace Components {
     /**
     * _(optional)_ Specify `env="stage"` for staging
     */
-    'env': Env;
+    'env': 'stage' | 'prod';
   }
   interface ManifoldConnectionAttributes extends StencilHTMLAttributes {
     /**
     * _(optional)_ Specify `env="stage"` for staging
     */
-    'env'?: Env;
+    'env'?: 'stage' | 'prod';
   }
 
   interface ManifoldCostDisplay {

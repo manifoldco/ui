@@ -30,10 +30,10 @@ The loading slot supports text as well as HTML elements.
 
 ## Properties
 
-| Property       | Attribute       | Description                                  | Type         | Default                 |
-| -------------- | --------------- | -------------------------------------------- | ------------ | ----------------------- |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection` | `connections[Env.Prod]` |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string`     | `undefined`             |
+| Property       | Attribute       | Description                                  | Type         | Default            |
+| -------------- | --------------- | -------------------------------------------- | ------------ | ------------------ |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection` | `connections.prod` |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string`     | `undefined`        |
 
 
 ----------------------------------------------

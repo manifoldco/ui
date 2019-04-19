@@ -50,11 +50,11 @@ render() {
 
 ## Properties
 
-| Property     | Attribute     | Description                                                     | Type                  | Default                 |
-| ------------ | ------------- | --------------------------------------------------------------- | --------------------- | ----------------------- |
-| `connection` | --            | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections[Env.Prod]` |
-| `featured`   | `featured`    | _(optional)_ Comma-separated list of featured products (labels) | `string \| undefined` | `undefined`             |
-| `linkFormat` | `link-format` | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined` | `undefined`             |
+| Property     | Attribute     | Description                                                     | Type                  | Default            |
+| ------------ | ------------- | --------------------------------------------------------------- | --------------------- | ------------------ |
+| `connection` | --            | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections.prod` |
+| `featured`   | `featured`    | _(optional)_ Comma-separated list of featured products (labels) | `string \| undefined` | `undefined`        |
+| `linkFormat` | `link-format` | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined` | `undefined`        |
 
 
 ----------------------------------------------

@@ -66,13 +66,13 @@ If you would like to hide the CTA altogether, specify `hide-cta`:
 
 ## Properties
 
-| Property       | Attribute       | Description                                                                                | Type                   | Default                 |
-| -------------- | --------------- | ------------------------------------------------------------------------------------------ | ---------------------- | ----------------------- |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                                               | `Connection`           | `connections[Env.Prod]` |
-| `hideCta`      | `hide-cta`      | _(optional)_ Hide CTA?                                                                     | `boolean \| undefined` | `undefined`             |
-| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`             |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`             |
-| `resourceId`   | `resource-id`   | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`             |
+| Property       | Attribute       | Description                                                                                | Type                   | Default            |
+| -------------- | --------------- | ------------------------------------------------------------------------------------------ | ---------------------- | ------------------ |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                                               | `Connection`           | `connections.prod` |
+| `hideCta`      | `hide-cta`      | _(optional)_ Hide CTA?                                                                     | `boolean \| undefined` | `undefined`        |
+| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`        |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`        |
+| `resourceId`   | `resource-id`   | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`        |
 
 
 ----------------------------------------------

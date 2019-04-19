@@ -36,11 +36,11 @@ To turn the CTA into an `<a>` tag, specify a `link-format` attribute, using
 
 ## Properties
 
-| Property       | Attribute       | Description                                                     | Type                  | Default                 |
-| -------------- | --------------- | --------------------------------------------------------------- | --------------------- | ----------------------- |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections[Env.Prod]` |
-| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined` | `undefined`             |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                       | `string`              | `undefined`             |
+| Property       | Attribute       | Description                                                     | Type                  | Default            |
+| -------------- | --------------- | --------------------------------------------------------------- | --------------------- | ------------------ |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections.prod` |
+| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined` | `undefined`        |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                       | `string`              | `undefined`        |
 
 
 ----------------------------------------------

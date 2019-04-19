@@ -2,7 +2,7 @@ import { Component, State, Prop, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
-import { Connection, connections, Env } from '../../utils/connections';
+import { Connection, connections } from '../../utils/connections';
 
 @Component({
   tag: 'manifold-plan-selector',
@@ -11,7 +11,7 @@ import { Connection, connections, Env } from '../../utils/connections';
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections[Env.Prod];
+  @Prop() connection: Connection = connections.prod;
   /** _(optional)_ Hide CTA? */
   @Prop() hideCta?: boolean;
   /** _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders */

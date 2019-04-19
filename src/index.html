@@ -213,8 +213,8 @@ defineCustomElements(window);</code></pre>
                     <td><code>env</code></td>
                     <td><code>env</code></td>
                     <td><em>(optional)</em> Specify <code>env="stage"</code> for staging</td>
-                    <td><code>Env.Prod | Env.Stage</code></td>
-                    <td><code>Env.Prod</code></td>
+                    <td><code>"prod" | "stage"</code></td>
+                    <td><code>'prod'</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -296,7 +296,7 @@ render() {
                     <td>--</td>
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
-                    <td><code>connections[Env.Prod]</code></td>
+                    <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
                     <td><code>featured</code></td>
@@ -379,7 +379,7 @@ render() {
                     <td>--</td>
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
-                    <td><code>connections[Env.Prod]</code></td>
+                    <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
                     <td><code>linkFormat</code></td>
@@ -486,12 +486,12 @@ render() {
                     <td>--</td>
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
-                    <td><code>connections[Env.Prod]</code></td>
+                    <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>hideProvisionButton</code></td>
-                    <td><code>hide-provision-button</code></td>
-                    <td><em>(optional)</em> Hide button?</td>
+                    <td><code>hideCta</code></td>
+                    <td><code>hide-cta</code></td>
+                    <td><em>(optional)</em> Hide CTA?</td>
                     <td><code>boolean | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -595,7 +595,7 @@ render() {
                     <td>--</td>
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
-                    <td><code>connections[Env.Prod]</code></td>
+                    <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
                     <td><code>productLabel</code></td>
@@ -673,7 +673,7 @@ render() {
                     <td>--</td>
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
-                    <td><code>connections[Env.Prod]</code></td>
+                    <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
                     <td><code>productLabel</code></td>
