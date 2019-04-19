@@ -3,14 +3,14 @@ import { createProviderConsumer } from '@stencil/state-tunnel';
 export interface State {
   services: Catalog.Product[];
   linkFormat?: string;
-  featured?: string;
+  featured: string[];
 }
 
 export default createProviderConsumer<State>(
   {
     services: [],
     linkFormat: undefined,
-    featured: undefined,
+    featured: [],
   },
   (subscribe, child) => <context-consumer subscribe={subscribe} renderer={child} />
 );

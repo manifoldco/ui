@@ -278,6 +278,12 @@ render() {
   return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
 }
 </code></pre>
+              <h2 id="featured">Featured</h2>
+              <p>
+                You can add a “featured” tag to services by specifying URL slugs in JSON format:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace featured="['iron_cache', 'iron_mq', 'iron_worker']" /&gt;
+</code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -323,7 +329,7 @@ render() {
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-marketplace featured="piio,zerosix" />
+                <manifold-marketplace featured="['piio','zerosix']" />
               </div>
             </div>
           </section>
@@ -489,9 +495,9 @@ render() {
                     <td><code>connections[Env.Prod]</code></td>
                   </tr>
                   <tr>
-                    <td><code>hideProvisionButton</code></td>
-                    <td><code>hide-provision-button</code></td>
-                    <td><em>(optional)</em> Hide button?</td>
+                    <td><code>hideCta</code></td>
+                    <td><code>hide-cta</code></td>
+                    <td><em>(optional)</em> Hide CTA?</td>
                     <td><code>boolean | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>

@@ -2,7 +2,7 @@ import { Component, Prop } from '@stencil/core';
 
 @Component({ tag: 'manifold-marketplace-results', styleUrl: 'marketplace-results.css' })
 export class ManifoldMarketplace {
-  @Prop() featured?: string;
+  @Prop() featured: string[] = [];
   @Prop() linkFormat?: string;
   @Prop() services: Catalog.Product[] = [];
 
@@ -13,9 +13,7 @@ export class ManifoldMarketplace {
   }
 
   private isFeatured(label: string) {
-    if (typeof this.featured !== 'string') return false;
-    const parsedFeatures = this.featured.split(',').map(featureList => featureList.trim());
-    return parsedFeatures.includes(label);
+    return this.featured.map(product => product.toLowerCase()).includes(label);
   }
 
   render() {

@@ -9,7 +9,7 @@
 
 | Property     | Attribute     | Description | Type                  | Default     |
 | ------------ | ------------- | ----------- | --------------------- | ----------- |
-| `featured`   | `featured`    |             | `string \| undefined` | `undefined` |
+| `featured`   | --            |             | `string[]`            | `[]`        |
 | `linkFormat` | `link-format` |             | `string \| undefined` | `undefined` |
 | `services`   | --            |             | `Product[]`           | `[]`        |
 

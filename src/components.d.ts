@@ -196,12 +196,12 @@ export namespace Components {
   }
 
   interface ManifoldMarketplaceResults {
-    'featured'?: string;
+    'featured': string[];
     'linkFormat'?: string;
     'services': Catalog.Product[];
   }
   interface ManifoldMarketplaceResultsAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
+    'featured'?: string[];
     'linkFormat'?: string;
     'services'?: Catalog.Product[];
   }
@@ -454,12 +454,12 @@ export namespace Components {
   interface ManifoldServiceGridAttributes extends StencilHTMLAttributes {}
 
   interface ManifoldServicesTunnel {
-    'featured'?: string;
+    'featured': string[];
     'linkFormat'?: string;
     'services': Catalog.Product[];
   }
   interface ManifoldServicesTunnelAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
+    'featured'?: string[];
     'linkFormat'?: string;
     'services'?: Catalog.Product[];
   }

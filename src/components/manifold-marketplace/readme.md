@@ -45,6 +45,14 @@ render() {
 }
 ```
 
+## Featured
+
+You can add a “featured” tag to services by specifying URL slugs in JSON format:
+
+```html
+<manifold-marketplace featured="['iron_cache', 'iron_mq', 'iron_worker']" />
+```
+
 <!-- Auto Generated Below -->
 
 
