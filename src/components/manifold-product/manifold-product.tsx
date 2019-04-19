@@ -2,13 +2,13 @@ import { Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
-import { Connection, connections, Env } from '../../utils/connections';
+import { Connection, connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections[Env.Prod];
+  @Prop() connection: Connection = connections.prod
   /** _(optional)_ Link format structure, with `:product` placeholder */
   @Prop() linkFormat?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */

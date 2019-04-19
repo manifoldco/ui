@@ -1,7 +1,7 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
 import { UserFeatures } from 'types/UserFeatures';
 import Tunnel from '../../data/connection';
-import { Connection, connections, Env } from '../../utils/connections';
+import { Connection, connections } from '../../utils/connections';
 import {
   planCost,
   hasMeasurableFeatures,
@@ -13,7 +13,7 @@ import {
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
-  @Prop() connection: Connection = connections[Env.Prod];
+  @Prop() connection: Connection = connections.prod;
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;

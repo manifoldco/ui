@@ -2,7 +2,7 @@ import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@st
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
-import { Connection, connections, Env } from '../../utils/connections';
+import { Connection, connections } from '../../utils/connections';
 
 @Component({
   tag: 'manifold-service-card',
@@ -16,7 +16,7 @@ export class ManifoldServiceCard {
     bubbles: true,
   }) cardClicked: EventEmitter;
   @Prop() name?: string;
-  @Prop() connection: Connection = connections[Env.Prod];
+  @Prop() connection: Connection = connections.prod;
   @Prop() description?: string;
   @Prop() isCustom?: boolean;
   @Prop() isFeatured?: boolean;

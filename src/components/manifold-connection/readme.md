@@ -30,9 +30,9 @@ If you omit the `env` property, `manifold-connection` will point to production b
 
 ## Properties
 
-| Property | Attribute | Description                                    | Type                    | Default    |
-| -------- | --------- | ---------------------------------------------- | ----------------------- | ---------- |
-| `env`    | `env`     | _(optional)_ Specify `env="stage"` for staging | `Env.Prod \| Env.Stage` | `Env.Prod` |
+| Property | Attribute | Description                                    | Type                | Default  |
+| -------- | --------- | ---------------------------------------------- | ------------------- | -------- |
+| `env`    | `env`     | _(optional)_ Specify `env="stage"` for staging | `"prod" \| "stage"` | `'prod'` |
 
 
 ----------------------------------------------
