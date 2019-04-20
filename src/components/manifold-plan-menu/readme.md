@@ -10,7 +10,7 @@
 | Property         | Attribute          | Description | Type             | Default     |
 | ---------------- | ------------------ | ----------- | ---------------- | ----------- |
 | `plans`          | --                 |             | `ExpandedPlan[]` | `[]`        |
-| `selectPlan`     | --                 |             | `Function`       | `() => {}`  |
+| `selectPlan`     | --                 |             | `Function`       | `() => { }` |
 | `selectedPlanId` | `selected-plan-id` |             | `string`         | `undefined` |
 
 

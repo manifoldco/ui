@@ -17,7 +17,6 @@ export class ManifoldProductDetails {
       <div>
         <h1 class="title" itemprop="tagline">
           <span class="tagline">{tagline}</span>
-
         </h1>
         <ul class="value-prop-list" itemprop="description">
           {value_props.map(({ body, header }) => (

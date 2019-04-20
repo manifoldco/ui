@@ -356,11 +356,13 @@ export namespace Components {
   }
 
   interface ManifoldProductPage {
+    'hideCta'?: boolean;
     'linkFormat'?: string;
     'product'?: Catalog.ExpandedProduct;
     'provider'?: Catalog.Provider;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
+    'hideCta'?: boolean;
     'linkFormat'?: string;
     'onManifold-productCTA-click'?: (event: CustomEvent) => void;
     'product'?: Catalog.ExpandedProduct;
@@ -372,6 +374,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
+    /**
+    * _(optional)_ Hide the CTA on the left?
+    */
+    'hideCta'?: boolean;
     /**
     * _(optional)_ Link format structure, with `:product` placeholder
     */
@@ -386,6 +392,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(optional)_ Hide the CTA on the left?
+    */
+    'hideCta'?: boolean;
     /**
     * _(optional)_ Link format structure, with `:product` placeholder
     */

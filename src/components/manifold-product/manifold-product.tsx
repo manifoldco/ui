@@ -8,7 +8,9 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod
+  @Prop() connection: Connection = connections.prod;
+  /** _(optional)_ Hide the CTA on the left? */
+  @Prop() hideCta?: boolean = false;
   /** _(optional)_ Link format structure, with `:product` placeholder */
   @Prop() linkFormat?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -27,12 +29,21 @@ export class ManifoldProduct {
           .then(response => response.json())
           .then(provider => {
             this.provider = provider;
-          })
+          });
       });
   }
 
   render() {
-    return this.product && <manifold-product-page product={this.product} linkFormat={this.linkFormat} provider={this.provider} />;
+    return (
+      this.product && (
+        <manifold-product-page
+          product={this.product}
+          hideCta={this.hideCta}
+          linkFormat={this.linkFormat}
+          provider={this.provider}
+        />
+      )
+    );
   }
 }
 
