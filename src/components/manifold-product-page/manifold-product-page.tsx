@@ -1,4 +1,6 @@
 import { Component, Prop, Event, EventEmitter } from '@stencil/core';
+import { arrow_right, arrow_up_right, book, life_buoy } from '@manifoldco/icons';
+
 import { themeIcons } from '../../assets/icons';
 
 @Component({
@@ -59,7 +61,7 @@ export class ManifoldProductPage {
               target={this.ctaLink && '_blank'}
             >
               Get {name}
-              <manifold-icon icon="arrow_right" marginLeft />
+              <manifold-icon icon={arrow_right} marginLeft />
             </manifold-link-button>
           </div>
           {tags && (
@@ -77,11 +79,11 @@ export class ManifoldProductPage {
             <h4>Links</h4>
             <div class="provider-link">
               <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                <manifold-icon icon="book" color="--mf-c-gray" margin-right />
+                <manifold-icon icon={book} color="--mf-c-gray" margin-right />
                 Docs
                 <manifold-icon
                   class="external-link-icon"
-                  icon="arrow_up_right"
+                  icon={arrow_up_right}
                   color="--mf-c-grayLight"
                   margin-left
                 />
@@ -89,11 +91,11 @@ export class ManifoldProductPage {
             </div>
             <div class="provider-link">
               <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                <manifold-icon icon="life_buoy" color="--mf-c-gray" margin-right />
+                <manifold-icon icon={life_buoy} color="--mf-c-gray" margin-right />
                 Support
                 <manifold-icon
                   class="external-link-icon"
-                  icon="arrow_up_right"
+                  icon={arrow_up_right}
                   color="--mf-c-grayLight"
                   margin-left
                 />

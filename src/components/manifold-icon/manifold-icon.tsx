@@ -1,8 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
 
-// import { gradient } from '../theme';
-import { icon } from '../../assets/icons';
-
 @Component({
   tag: 'manifold-icon',
   styleUrl: 'mf-icon.css',
@@ -60,14 +57,14 @@ export class ManifoldIcon {
                 ))}
               </linearGradient>
             </defs>,
-            <path fill={`url(#${this.gradientID})`} d={icon[this.icon]} />,
+            <path fill={`url(#${this.gradientID})`} d={this.icon} />,
           ]
         ) : (
-          <path
-            d={icon[this.icon]}
-            fill={this.color.startsWith('--') ? `var(${this.color})` : this.color}
-          />
-        )}
+            <path
+              d={this.icon}
+              fill={this.color.startsWith('--') ? `var(${this.color})` : this.color}
+            />
+          )}
       </svg>
     );
   }

@@ -1,4 +1,5 @@
 import { FunctionalComponent } from '@stencil/core';
+import { check } from '@manifoldco/icons';
 import { booleanFeatureDisplayValue, booleanFeatureDefaultValue } from '../../../utils/plan';
 import { LockedFeature } from './LockedFeature';
 
@@ -21,7 +22,7 @@ export const BooleanFeature: FunctionalComponent<BooleanFeatureProps> = ({
   if (!feature.customizable) {
     return (
       <span class="value" data-value={displayValue}>
-        <manifold-icon class="icon" icon="check" marginRight />
+        <manifold-icon class="icon" icon={check} marginRight />
         {displayValue}
       </span>
     );

@@ -1,4 +1,5 @@
 import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { arrow_right } from '@manifoldco/icons';
 import { UserFeatures } from 'types/UserFeatures';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
@@ -135,7 +136,7 @@ export class ManifoldPlanDetails {
             target={this.ctaLink && '_blank'}
           >
             Get {name}
-            <manifold-icon icon="arrow_right" marginLeft />
+            <manifold-icon icon={arrow_right} marginLeft />
           </manifold-link-button>
         )}
       </footer>

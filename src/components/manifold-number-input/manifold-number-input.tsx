@@ -1,4 +1,5 @@
 import { Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
+import { minus, plus } from '@manifoldco/icons';
 
 @Component({
   tag: 'manifold-number-input',
@@ -72,7 +73,7 @@ export class ManifoldNumberInput {
             onClick={() => this.setValue(this.value - this.increment)}
             disabled={this.lowerBoundReached}
           >
-            <manifold-icon icon="minus" />
+            <manifold-icon icon={minus} />
           </button>
         </manifold-tooltip>
         <input
@@ -99,7 +100,7 @@ export class ManifoldNumberInput {
             onClick={() => this.setValue(this.value + this.increment)}
             disabled={this.upperBoundReached}
           >
-            <manifold-icon icon="plus" />
+            <manifold-icon icon={plus} />
           </button>
         </manifold-tooltip>
         <div class="display-units">

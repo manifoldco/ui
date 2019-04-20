@@ -50,11 +50,7 @@
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
-  "dependencies": {
-    "@stencil/core": "^0.18.0",
-    "@stencil/postcss": "^0.1.0",
-    "@stencil/state-tunnel": "0.0.8"
-  },
+  "dependencies": {},
   "bundlesize": [
     {
       "path": "./dist/esm/es2017/manifold.*.js",
@@ -63,6 +59,10 @@
     }
   ],
   "devDependencies": {
+    "@manifoldco/icons": "0.0.3",
+    "@stencil/core": "^0.18.0",
+    "@stencil/postcss": "^0.1.0",
+    "@stencil/state-tunnel": "0.0.8",
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
