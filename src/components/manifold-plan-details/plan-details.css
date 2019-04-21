@@ -35,11 +35,11 @@
   overflow: hidden;
   border-radius: var(--mf-radius-default);
 
-  @media (--breakpoint-s) {
+  @media (--viewport-s) {
     --logo-size: 3rem;
   }
 
-  @media (--breakpoint-m) {
+  @media (--viewport-m) {
     --logo-size: 3.5rem;
   }
 
@@ -58,7 +58,7 @@
   font-size: var(--mf-font-u3);
   line-height: 1;
 
-  @media (--breakpoint-m) {
+  @media (--viewport-m) {
     font-size: var(--mf-font-u4);
   }
 }

@@ -273,6 +273,52 @@ defineCustomElements(window);</code></pre>
               <p>A list of all Manifold services.</p>
               <pre><code class="html language-html">&lt;manifold-marketplace /&gt;
 </code></pre>
+              <h2 id="blacklistwhitelist">Blacklist/whitelist</h2>
+              <p>
+                Blacklists (banned products) and whitelists (allowed services) are two ways to
+                filter the services you’d like to display to users.
+              </p>
+              <p>
+                Either specify <code>blacklist</code> or <code>whitelist</code>; don’t use both.
+              </p>
+              <h4 id="blacklist">Blacklist</h4>
+              <p>
+                By default, blacklist will start with <strong>all products</strong>, but let you
+                specify which ones you’d like to hide:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace blacklist="manifold-provider" /&gt;
+</code></pre>
+              <h4 id="whitelist">Whitelist</h4>
+              <p>
+                Conversely, whitelisting will start with <strong>no products</strong>, and let you
+                manually specify every product that should be shown.
+              </p>
+              <p>
+                A common usecase is using <code>whitelist</code> in conjuction with
+                <code>hide-categories</code> (below).
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace whitelist="aiven-redis,cloudamqp,iron_cache,iron_mq,memcachier-cache" /&gt;
+</code></pre>
+              <h2 id="hidecategories">Hide categories</h2>
+              <p>
+                Hiding the categories is a great way to have a more compact display. Perfect for
+                small displays, or if you’re <code>whitelist</code>-ing products (above):
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace hide-categories /&gt;
+</code></pre>
+              <h2 id="hidecustomcards">Hide custom cards</h2>
+              <p>
+                Add the <code>hide-custom</code> attribute to hide custom cards &amp; categories:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace hide-custom /&gt;
+</code></pre>
+              <h2 id="featuringproducts">Featuring products</h2>
+              <p>
+                You can add <code>featured</code> styling to certain products by specifing a
+                comma-separated list:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace featured="piio,zerosix" /&gt;
+</code></pre>
               <h2 id="navigation">Navigation</h2>
               <p>
                 When users click on a product card, you expect something to happen, right? By
@@ -309,12 +355,6 @@ render() {
   return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
 }
 </code></pre>
-              <h2 id="hidecustomcards">Hide custom cards</h2>
-              <p>
-                Add the <code>hide-custom</code> attribute to hide custom cards &amp; categories:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-marketplace hide-custom /&gt;
-</code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -328,6 +368,13 @@ render() {
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td><code>blacklist</code></td>
+                    <td><code>blacklist</code></td>
+                    <td>Comma-separated list of hidden products (labels)</td>
+                    <td><code>string | undefined</code></td>
+                    <td><code>undefined</code></td>
+                  </tr>
                   <tr>
                     <td><code>connection</code></td>
                     <td>--</td>
@@ -343,6 +390,13 @@ render() {
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
+                    <td><code>hideCategories</code></td>
+                    <td><code>hide-categories</code></td>
+                    <td>Hide categories &amp; side menu?</td>
+                    <td><code>boolean | undefined</code></td>
+                    <td><code>false</code></td>
+                  </tr>
+                  <tr>
                     <td><code>hideCustom</code></td>
                     <td><code>hide-custom</code></td>
                     <td>Link format structure, with <code>:product</code> placeholder</td>
@@ -353,6 +407,13 @@ render() {
                     <td><code>linkFormat</code></td>
                     <td><code>link-format</code></td>
                     <td>Hide custom cards?</td>
+                    <td><code>string | undefined</code></td>
+                    <td><code>undefined</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>whitelist</code></td>
+                    <td><code>whitelist</code></td>
+                    <td>Comma-separated list of allowed products (labels)</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -834,26 +895,27 @@ render() {
       <script>
         hljs.initHighlightingOnLoad();
 
-        var marketplace = document.querySelector('manifold-marketplace');
-        marketplace.addEventListener('manifold-serviceCard-click', e => {
-          const overlay = document.createElement('div');
-          overlay.className = 'overlay';
-          const modal = document.createElement('div');
-          modal.className = 'modal';
-          overlay.appendChild(modal);
-          const productPage = document.createElement('manifold-product');
-          productPage.productLabel = e.detail.label;
-          modal.appendChild(productPage);
-          document.body.appendChild(overlay);
+        document
+          .querySelector('manifold-marketplace')
+          .addEventListener('manifold-serviceCard-click', e => {
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            overlay.appendChild(modal);
+            const productPage = document.createElement('manifold-product');
+            productPage.productLabel = e.detail.label;
+            modal.appendChild(productPage);
+            document.body.appendChild(overlay);
 
-          modal.addEventListener('click', e => {
-            e.stopPropagation();
-          });
+            modal.addEventListener('click', e => {
+              e.stopPropagation();
+            });
 
-          overlay.addEventListener('click', () => {
-            document.body.removeChild(overlay);
+            overlay.addEventListener('click', () => {
+              document.body.removeChild(overlay);
+            });
           });
-        });
       </script>
     </manifold-connection>
   </body>
