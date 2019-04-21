@@ -30,7 +30,8 @@ export class ManifoldPlanDetails {
   @Event({
     eventName: 'manifold-planCTA-click',
     bubbles: true,
-  }) ctaClicked: EventEmitter;
+  })
+  ctaClicked: EventEmitter;
 
   componentWillLoad() {
     const features = this.initialFeatures();
@@ -73,9 +74,9 @@ export class ManifoldPlanDetails {
       });
     }
     return this.linkFormat
-      .replace(/:product/ig, this.product.body.label)
-      .replace(/:plan/ig, this.plan.body.label)
-      .replace(/:features/ig, params.toString())
+      .replace(/:product/gi, this.product.body.label)
+      .replace(/:plan/gi, this.plan.body.label)
+      .replace(/:features/gi, params.toString());
   }
 
   get header() {
