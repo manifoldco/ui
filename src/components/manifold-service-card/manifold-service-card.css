@@ -1,11 +1,15 @@
-@custom-media --viewport-s (min-width: 450px);
-@custom-media --viewport-m (min-width: 750px);
-@custom-media --viewport-l (min-width: 1080px);
+:host {
+  @custom-media --viewport-s (min-width: 450px);
+  @custom-media --viewport-m (min-width: 750px);
+  @custom-media --viewport-l (min-width: 1080px);
+
+  --padding: 0.75rem;
+}
 
 .wrapper {
   position: relative;
   display: grid;
-  grid-column-gap: 0.75rem;
+  grid-column-gap: var(--padding);
   grid-template-areas:
     'logo name'
     'info info'
@@ -14,7 +18,7 @@
   grid-template-rows: min-content auto min-content;
   box-sizing: border-box;
   height: 100%;
-  padding: 0.75rem;
+  padding: var(--padding);
   color: inherit;
   font-size: 1em;
   font-family: var(--mf-font-family);
@@ -24,7 +28,7 @@
   border-radius: var(--mf-radius-l);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
   cursor: pointer;
-  transition: border-color 200ms linear, box-shadow 200ms linear;
+  transition: border-color 150ms linear, box-shadow 150ms linear;
 
   @media (--viewport-s) {
     grid-template-areas:
@@ -39,6 +43,7 @@
     padding: 0.875rem;
   }
 
+  &:focus,
   &:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   }

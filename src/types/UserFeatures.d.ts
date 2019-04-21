@@ -1,3 +1,3 @@
-export interface UserFeatures {
+declare interface UserFeatures {
   [index: string]: string | number | boolean;
 }

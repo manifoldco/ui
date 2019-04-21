@@ -45,16 +45,25 @@ render() {
 }
 ```
 
+## Hide custom cards
+
+Add the `hide-custom` attribute to hide custom cards & categories:
+
+```html
+<manifold-marketplace hide-custom />
+```
+
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property     | Attribute     | Description                                                     | Type                  | Default            |
-| ------------ | ------------- | --------------------------------------------------------------- | --------------------- | ------------------ |
-| `connection` | --            | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections.prod` |
-| `featured`   | `featured`    | _(optional)_ Comma-separated list of featured products (labels) | `string \| undefined` | `undefined`        |
-| `linkFormat` | `link-format` | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined` | `undefined`        |
+| Property     | Attribute     | Description                                        | Type                   | Default            |
+| ------------ | ------------- | -------------------------------------------------- | ---------------------- | ------------------ |
+| `connection` | --            | _(hidden)_ Passed by `<manifold-connection>`       | `Connection`           | `connections.prod` |
+| `featured`   | `featured`    | Comma-separated list of featured products (labels) | `string \| undefined`  | `undefined`        |
+| `hideCustom` | `hide-custom` | Link format structure, with `:product` placeholder | `boolean \| undefined` | `false`            |
+| `linkFormat` | `link-format` | Hide custom cards?                                 | `string \| undefined`  | `undefined`        |
 
 
 ----------------------------------------------

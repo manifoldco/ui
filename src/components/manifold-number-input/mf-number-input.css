@@ -13,7 +13,7 @@
   font-size: 1em;
   text-align: center;
   background: var(--mf-c-white);
-  border: 1px solid var(--mf-c-black30);
+  border: 1px solid var(--mf-c-black-30);
   border-radius: var(--mf-radius-default);
   -webkit-appearance: none;
   -moz-appearance: textfield; /* hides up/down buttons on firefox */

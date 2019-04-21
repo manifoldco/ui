@@ -14,6 +14,7 @@ describe('<manifold-service-grid> sorted categories', () => {
         { body: { name: 'bartastic', tags: ['bar'] } },
         { body: { name: 'baztastic', tags: ['baz'] } },
       ];
+      elm.hideCustom = true;
     });
     await page.waitForChanges();
 
@@ -21,12 +22,10 @@ describe('<manifold-service-grid> sorted categories', () => {
     const categories = await page.findAll('manifold-service-grid >>> manifold-marketplace-results');
     expect(categories.length).toBe(3);
 
-    // Each category should have one service card and one custom card
+    // Each category should have one service card
     categories.forEach(async cat => {
       const card = await cat.findAll('manifold-service-card');
-      expect(card.length).toBe(2);
-      const isCustom = await card[1].getProperty('isCustom');
-      expect(isCustom).toBe(true);
+      expect(card.length).toBe(1);
     });
   });
 
@@ -37,6 +36,7 @@ describe('<manifold-service-grid> sorted categories', () => {
     });
     await page.$eval('manifold-services-tunnel', (elm: any) => {
       elm.services = [{ body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } }];
+      elm.hideCustom = true;
       elm.linkFormat = '/discover/view/service/:product';
     });
     await page.waitForChanges();
@@ -61,6 +61,7 @@ describe('<manifold-service-grid> sorted categories', () => {
         { body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } },
         { body: { name: 'LogDNA', tags: ['logging'], label: 'logdna' } },
       ];
+      elm.hideCustom = true;
     });
     await page.waitForChanges();
 
@@ -86,6 +87,7 @@ describe('<manifold-service-grid> sorted categories', () => {
         { body: { name: 'JawsDB MySQL', tags: ['db'], label: 'jawsdb-mysql' } },
         { body: { name: 'LogDNA', tags: ['logging'], label: 'logdna' } },
       ];
+      elm.hideCustom = true;
       elm.featured = 'fake,logdna,fake-2';
     });
     await page.waitForChanges();

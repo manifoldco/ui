@@ -12,9 +12,6 @@ import {
   Connection,
 } from './utils/connections';
 import {
-  UserFeatures,
-} from 'types/UserFeatures';
-import {
   Option,
 } from 'types/Select';
 
@@ -211,11 +208,15 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * _(optional)_ Comma-separated list of featured products (labels)
+    * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
     /**
-    * _(optional)_ Link format structure, with `:product` placeholder
+    * Link format structure, with `:product` placeholder
+    */
+    'hideCustom'?: boolean;
+    /**
+    * Hide custom cards?
     */
     'linkFormat'?: string;
   }
@@ -225,11 +226,15 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * _(optional)_ Comma-separated list of featured products (labels)
+    * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
     /**
-    * _(optional)_ Link format structure, with `:product` placeholder
+    * Link format structure, with `:product` placeholder
+    */
+    'hideCustom'?: boolean;
+    /**
+    * Hide custom cards?
     */
     'linkFormat'?: string;
   }
@@ -423,7 +428,6 @@ export namespace Components {
   interface ManifoldServiceCard {
     'connection': Connection;
     'description'?: string;
-    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'linkFormat'?: string;
@@ -434,7 +438,6 @@ export namespace Components {
   interface ManifoldServiceCardAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
     'description'?: string;
-    'isCustom'?: boolean;
     'isFeatured'?: boolean;
     'label'?: string;
     'linkFormat'?: string;
@@ -464,11 +467,13 @@ export namespace Components {
 
   interface ManifoldServicesTunnel {
     'featured'?: string;
+    'hideCustom'?: boolean;
     'linkFormat'?: string;
     'services': Catalog.Product[];
   }
   interface ManifoldServicesTunnelAttributes extends StencilHTMLAttributes {
     'featured'?: string;
+    'hideCustom'?: boolean;
     'linkFormat'?: string;
     'services'?: Catalog.Product[];
   }
@@ -478,6 +483,16 @@ export namespace Components {
   }
   interface ManifoldSortedCategoriesAttributes extends StencilHTMLAttributes {
     'observeCategory'?: (el?: HTMLElement) => void;
+  }
+
+  interface ManifoldTemplateCard {
+    'category': string;
+    'linkFormat'?: string;
+  }
+  interface ManifoldTemplateCardAttributes extends StencilHTMLAttributes {
+    'category'?: string;
+    'linkFormat'?: string;
+    'onManifold-templateCard-click'?: (event: CustomEvent) => void;
   }
 
   interface ManifoldToast {
@@ -562,6 +577,7 @@ declare global {
     'ManifoldServiceGrid': Components.ManifoldServiceGrid;
     'ManifoldServicesTunnel': Components.ManifoldServicesTunnel;
     'ManifoldSortedCategories': Components.ManifoldSortedCategories;
+    'ManifoldTemplateCard': Components.ManifoldTemplateCard;
     'ManifoldToast': Components.ManifoldToast;
     'ManifoldToggle': Components.ManifoldToggle;
     'ManifoldTooltip': Components.ManifoldTooltip;
@@ -595,6 +611,7 @@ declare global {
     'manifold-service-grid': Components.ManifoldServiceGridAttributes;
     'manifold-services-tunnel': Components.ManifoldServicesTunnelAttributes;
     'manifold-sorted-categories': Components.ManifoldSortedCategoriesAttributes;
+    'manifold-template-card': Components.ManifoldTemplateCardAttributes;
     'manifold-toast': Components.ManifoldToastAttributes;
     'manifold-toggle': Components.ManifoldToggleAttributes;
     'manifold-tooltip': Components.ManifoldTooltipAttributes;
@@ -763,6 +780,12 @@ declare global {
     new (): HTMLManifoldSortedCategoriesElement;
   };
 
+  interface HTMLManifoldTemplateCardElement extends Components.ManifoldTemplateCard, HTMLStencilElement {}
+  var HTMLManifoldTemplateCardElement: {
+    prototype: HTMLManifoldTemplateCardElement;
+    new (): HTMLManifoldTemplateCardElement;
+  };
+
   interface HTMLManifoldToastElement extends Components.ManifoldToast, HTMLStencilElement {}
   var HTMLManifoldToastElement: {
     prototype: HTMLManifoldToastElement;
@@ -809,6 +832,7 @@ declare global {
     'manifold-service-grid': HTMLManifoldServiceGridElement
     'manifold-services-tunnel': HTMLManifoldServicesTunnelElement
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement
+    'manifold-template-card': HTMLManifoldTemplateCardElement
     'manifold-toast': HTMLManifoldToastElement
     'manifold-toggle': HTMLManifoldToggleElement
     'manifold-tooltip': HTMLManifoldTooltipElement
@@ -842,6 +866,7 @@ declare global {
     'manifold-service-grid': HTMLManifoldServiceGridElement;
     'manifold-services-tunnel': HTMLManifoldServicesTunnelElement;
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement;
+    'manifold-template-card': HTMLManifoldTemplateCardElement;
     'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-tooltip': HTMLManifoldTooltipElement;

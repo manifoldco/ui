@@ -1,5 +1,4 @@
 import { Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { settings } from '@manifoldco/icons';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
@@ -20,7 +19,6 @@ export class ManifoldServiceCard {
   @Prop() name?: string;
   @Prop() connection: Connection = connections.prod;
   @Prop() description?: string;
-  @Prop() isCustom?: boolean;
   @Prop() isFeatured?: boolean;
   @Prop() label?: string;
   @Prop() logo?: string;
@@ -57,7 +55,7 @@ export class ManifoldServiceCard {
   render() {
     return (
       <a
-        class={`wrapper ${this.isCustom ? 'is-custom' : ''}`}
+        class="wrapper"
         role="button"
         itemscope
         itemtype="https://schema.org/Product"
@@ -65,15 +63,8 @@ export class ManifoldServiceCard {
         href={this.linkFormat}
         onClick={this.onClick}
       >
-        {this.isCustom && <manifold-icon class="gear" icon={settings} />}
         <div class="logo">
-          {this.isCustom ? (
-            <div class="icon-border">
-              <manifold-icon class="icon" icon={this.logo} />
-            </div>
-          ) : (
-            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
-          )}
+          <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
         </div>
         <h3 class="name" itemprop="name">
           {this.name}

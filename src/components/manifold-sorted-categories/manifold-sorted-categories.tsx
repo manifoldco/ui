@@ -1,12 +1,11 @@
 import { Component, Prop } from '@stencil/core';
 
+import { categories, formatCategoryLabel, categoryIcon } from '../../utils/marketplace';
 import Tunnel, { State } from '../../data/marketplace';
-import { themeIcons } from '../../assets/icons';
-import { categories, formatCategoryLabel, customCardExcludeList } from '../../utils/marketplace';
 
 @Component({ tag: 'manifold-sorted-categories' })
 export class ManifoldSortedCategories {
-  @Prop() observeCategory: (el?: HTMLElement) => void = () => { };
+  @Prop() observeCategory: (el?: HTMLElement) => void = () => {};
 
   render() {
     return (
@@ -14,12 +13,15 @@ export class ManifoldSortedCategories {
         {(state: State) => {
           const categoryMap = categories(state.services);
           const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
+          const nonEmptyCategories = sortedCategories.filter(category =>
+            state.hideCustom ? categoryMap[category].length : true
+          );
           return (
             <div>
-              {sortedCategories.map(tag => (
+              {nonEmptyCategories.map(tag => (
                 <manifold-service-category
                   categoryLoaded={this.observeCategory}
-                  icon={themeIcons[tag]}
+                  icon={categoryIcon[tag]}
                   name={tag}
                   label={formatCategoryLabel(tag)}
                 >
@@ -28,15 +30,11 @@ export class ManifoldSortedCategories {
                     featured={state.featured}
                     linkFormat={state.linkFormat}
                   >
-                    {!customCardExcludeList.includes(tag) && (
-                      <manifold-service-card
-                        description={`Add your own ${formatCategoryLabel(tag)} service`}
-                        isCustom={true}
-                        isFeatured={false}
-                        label={'bring-your-own'}
-                        logo={themeIcons[tag]}
-                        name={`Bring your own ${formatCategoryLabel(tag)} service`}
+                    {!state.hideCustom && (
+                      <manifold-template-card
                         slot="custom-card"
+                        linkFormat={state.linkFormat}
+                        category={tag}
                       />
                     )}
                   </manifold-marketplace-results>

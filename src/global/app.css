@@ -316,9 +316,12 @@ code,
 }
 
 .modal {
-  max-width: 80%;
-  max-height: 80%;
+  box-sizing: border-box;
+  width: calc(100vw - 3rem);
+  max-width: 1200px;
+  max-height: calc(100vh - 3rem);
   padding: 1rem;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   background-color: white;
 }

@@ -309,6 +309,12 @@ render() {
   return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
 }
 </code></pre>
+              <h2 id="hidecustomcards">Hide custom cards</h2>
+              <p>
+                Add the <code>hide-custom</code> attribute to hide custom cards &amp; categories:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-marketplace hide-custom /&gt;
+</code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -332,17 +338,21 @@ render() {
                   <tr>
                     <td><code>featured</code></td>
                     <td><code>featured</code></td>
-                    <td><em>(optional)</em> Comma-separated list of featured products (labels)</td>
+                    <td>Comma-separated list of featured products (labels)</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
+                    <td><code>hideCustom</code></td>
+                    <td><code>hide-custom</code></td>
+                    <td>Link format structure, with <code>:product</code> placeholder</td>
+                    <td><code>boolean | undefined</code></td>
+                    <td><code>false</code></td>
+                  </tr>
+                  <tr>
                     <td><code>linkFormat</code></td>
                     <td><code>link-format</code></td>
-                    <td>
-                      <em>(optional)</em> Link format structure, with
-                      <code>:product</code> placeholder
-                    </td>
+                    <td>Hide custom cards?</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
