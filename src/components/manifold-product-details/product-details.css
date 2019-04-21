@@ -35,7 +35,7 @@
   & p {
     max-width: 38em;
     margin: 0;
-    color: var(--mf-c-grayDark);
+    color: var(--mf-c-gray-s1);
     font-size: var(--mf-font-d1);
     line-height: 1.5;
   }

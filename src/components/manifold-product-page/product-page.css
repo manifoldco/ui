@@ -87,7 +87,7 @@
 .sidebar-section {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  box-shadow: 0 -1px var(--mf-c-grayLight);
+  box-shadow: 0 -1px var(--mf-c-gray-t3);
 
   & h4 {
     margin-top: 0;
@@ -144,7 +144,7 @@
     transition: color 200ms;
 
     &:hover {
-      color: var(--mf-c-grayDarker);
+      color: var(--mf-c-gray-s2);
 
       & manifold-icon {
         opacity: 1;

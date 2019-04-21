@@ -86,6 +86,16 @@ body {
   }
 }
 
+.docs-nav-underlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+}
+
 .docs-nav-expanded {
   display: none;
 
@@ -94,9 +104,15 @@ body {
   }
 
   &.is-expanded {
+    position: relative;
+    z-index: var(--mf-layer-nav);
     display: block;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.95);
+
+    & ~ .docs-nav-underlay {
+      display: block;
+    }
   }
 }
 

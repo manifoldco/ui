@@ -1,0 +1,103 @@
+:host {
+  --animation-duration: 350ms;
+}
+
+@keyframes collapse {
+  from {
+    height: var(--height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+.toast {
+  box-sizing: border-box;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--mf-c-blue);
+  line-height: 1;
+  background-color: rgba(var(--mf-c-blue-rgb), 0.05);
+  border-radius: var(--mf-radius-default);
+  box-shadow: inset 0 0 0 1px rgba(var(--mf-c-blue-rgb), 0.375);
+
+  & a {
+    color: var(--mf-c-blue);
+  }
+
+  &[data-alert-type='error'] {
+    color: var(--mf-c-red);
+    background-color: rgba(var(--mf-c-red-rgb), 0.05);
+    box-shadow: inset 0 0 0 1px rgba(var(--mf-c-red-rgb), 0.375);
+
+    & a {
+      color: var(--mf-c-red);
+    }
+  }
+
+  &[data-alert-type='success'] {
+    color: var(--mf-c-green);
+    background-color: rgba(var(--mf-c-green-rgb), 0.05);
+    box-shadow: inset 0 0 0 1px rgba(var(--mf-c-green-rgb), 0.5);
+
+    & a {
+      color: var(--mf-c-green);
+    }
+  }
+
+  &[data-alert-type='warning'] {
+    color: var(--mf-c-gold);
+    background-color: rgba(var(--mf-c-gold-rgb), 0.05);
+    box-shadow: inset 0 0 0 1px rgba(var(--mf-c-gold-rgb), 0.6);
+
+    & a {
+      color: var(--mf-c-gold);
+    }
+  }
+
+  &[data-dismissed] {
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility 0ms var(--animation-duration);
+    animation-name: collapse;
+    animation-duration: var(--animation-duration);
+    animation-timing-function: var(--mf-ease-out);
+    animation-fill-mode: forwards;
+    pointer-events: none;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-column-gap: 0.625rem;
+  grid-template-columns: min-content auto;
+  padding-top: 0.75rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 0.75rem;
+
+  &[data-dismissable] {
+    position: relative;
+    padding-right: 4rem;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 2.5em;
+  height: 2.5em;
+  padding: 0;
+  color: currentColor;
+  font-size: 1.125em;
+  line-height: 1;
+  background: none;
+  border: none;
+  appearance: none;
+}

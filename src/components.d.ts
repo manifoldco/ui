@@ -480,6 +480,35 @@ export namespace Components {
     'observeCategory'?: (el?: HTMLElement) => void;
   }
 
+  interface ManifoldToast {
+    /**
+    * `success` | `warning` | `error`
+    */
+    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+    /**
+    * Is this dismissable?
+    */
+    'dismissable'?: boolean;
+    /**
+    * Use custom icon path data (1024×1024)
+    */
+    'icon'?: string;
+  }
+  interface ManifoldToastAttributes extends StencilHTMLAttributes {
+    /**
+    * `success` | `warning` | `error`
+    */
+    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+    /**
+    * Is this dismissable?
+    */
+    'dismissable'?: boolean;
+    /**
+    * Use custom icon path data (1024×1024)
+    */
+    'icon'?: string;
+  }
+
   interface ManifoldToggle {
     'ariaLabelledby'?: string;
     'defaultValue'?: boolean;
@@ -533,6 +562,7 @@ declare global {
     'ManifoldServiceGrid': Components.ManifoldServiceGrid;
     'ManifoldServicesTunnel': Components.ManifoldServicesTunnel;
     'ManifoldSortedCategories': Components.ManifoldSortedCategories;
+    'ManifoldToast': Components.ManifoldToast;
     'ManifoldToggle': Components.ManifoldToggle;
     'ManifoldTooltip': Components.ManifoldTooltip;
   }
@@ -565,6 +595,7 @@ declare global {
     'manifold-service-grid': Components.ManifoldServiceGridAttributes;
     'manifold-services-tunnel': Components.ManifoldServicesTunnelAttributes;
     'manifold-sorted-categories': Components.ManifoldSortedCategoriesAttributes;
+    'manifold-toast': Components.ManifoldToastAttributes;
     'manifold-toggle': Components.ManifoldToggleAttributes;
     'manifold-tooltip': Components.ManifoldTooltipAttributes;
   }
@@ -732,6 +763,12 @@ declare global {
     new (): HTMLManifoldSortedCategoriesElement;
   };
 
+  interface HTMLManifoldToastElement extends Components.ManifoldToast, HTMLStencilElement {}
+  var HTMLManifoldToastElement: {
+    prototype: HTMLManifoldToastElement;
+    new (): HTMLManifoldToastElement;
+  };
+
   interface HTMLManifoldToggleElement extends Components.ManifoldToggle, HTMLStencilElement {}
   var HTMLManifoldToggleElement: {
     prototype: HTMLManifoldToggleElement;
@@ -772,6 +809,7 @@ declare global {
     'manifold-service-grid': HTMLManifoldServiceGridElement
     'manifold-services-tunnel': HTMLManifoldServicesTunnelElement
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement
+    'manifold-toast': HTMLManifoldToastElement
     'manifold-toggle': HTMLManifoldToggleElement
     'manifold-tooltip': HTMLManifoldTooltipElement
   }
@@ -804,6 +842,7 @@ declare global {
     'manifold-service-grid': HTMLManifoldServiceGridElement;
     'manifold-services-tunnel': HTMLManifoldServicesTunnelElement;
     'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement;
+    'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-tooltip': HTMLManifoldTooltipElement;
   }
