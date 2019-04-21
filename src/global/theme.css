@@ -1,44 +1,35 @@
 :root {
-  --mf-c-black: #222;
-  --mf-c-offWhite: #f7f7f8;
-  --mf-c-grayLightest: #f5f7f9;
-  --mf-c-grayLighter: #ececed;
-  --mf-c-grayLight: #ddddde;
-  --mf-c-grayMed: #cfcfcf;
-  --mf-c-gray: #8f8f95;
-  --mf-c-grayDark: #575b5f;
-  --mf-c-grayDarker: #323940;
+  --mf-c-black: rgb(34, 34, 34);
+  --mf-c-offWhite: rgb(247, 247, 248);
+  --mf-c-gray-t5: rgb(245, 247, 249);
+  --mf-c-gray-t3: rgb(221, 221, 222);
+  --mf-c-gray-t2: rgb(207, 207, 207);
+  --mf-c-gray: rgb(143, 143, 149);
+  --mf-c-gray-s1: rgb(87, 91, 95);
+  --mf-c-gray-s2: rgb(50, 57, 64);
   --mf-c-white: #fff;
-  --mf-c-border: #c4c7ca;
-  --mf-c-borderDark: #a9adb2;
-  --mf-c-borderLight: #e2e5e9;
-  --mf-c-purple: #7748d1;
-  --mf-c-blueDark: #1a4898;
-  --mf-c-blue: #1e50da;
-  --mf-c-blueLight: #4a90e2;
-  --mf-c-bluePale: #dde9fe;
-  --mf-c-bluePaler: #c3d6f7;
-  --mf-c-orange: #fe714b;
-  --mf-c-orangeDark: #e46407;
-  --mf-c-orangePale: #ffcaa5;
-  --mf-c-magenta: #b45877;
-  --mf-c-red: #d50f49;
-  --mf-c-redPale: #ffc4d2;
-  --mf-c-teal: #0fb5d0;
-  --mf-c-green: #31baa2;
-  --mf-c-greenDark: #008a54;
-  --mf-c-greenPale: #a4eacf;
-  --mf-c-yellow: #ffde52;
-  --mf-c-yellowPale: #fff2b9;
-  --mf-c-transparent: rgba(255, 255, 255, 0);
+  --mf-c-purple: rgb(119, 72, 209);
+  --mf-c-blue-t4: rgb(237, 245, 255);
+  --mf-c-blue: rgb(30, 80, 218);
+  --mf-c-orange: rgb(254, 113, 75);
+  --mf-c-magenta: rgb(180, 88, 119);
+  --mf-c-red: rgb(213, 15, 73);
+  --mf-c-teal: rgb(15, 181, 208);
+  --mf-c-gold: rgb(245, 139, 35);
+  --mf-c-green: rgb(49, 186, 162);
+  --mf-c-yellow: rgb(255, 222, 82);
 
   /* rgb colors */
   --mf-c-blue-rgb: 30, 80, 218;
   --mf-c-gray-rgb: 143, 143, 149;
-  --mf-c-black-rgb: 0, 0, 0;
+  --mf-c-red-rgb: 213, 15, 73;
+  --mf-c-gold-rgb: 245, 139, 35;
+  --mf-c-green-rgb: 49, 186, 162;
 
   /* grays */
   --mf-c-black-0: rgba(0, 0, 0, 0);
+  --mf-c-black-05: rgba(0, 0, 0, 0.05);
+  --mf-c-black-07: rgba(0, 0, 0, 0.07);
   --mf-c-black-10: rgba(0, 0, 0, 0.1);
   --mf-c-black-20: rgba(0, 0, 0, 0.2);
   --mf-c-black-25: rgba(0, 0, 0, 0.25);
@@ -51,15 +42,11 @@
   --mf-c-black-80: rgba(0, 0, 0, 0.8);
   --mf-c-black-90: rgba(0, 0, 0, 0.9);
 
-  /* TODO replace instances with above colors */
-  --mf-c-gray-t1: var(--mf-c-grayLight);
-  --mf-c-gray-s1: var(--mf-c-grayDark);
-
   /* gradients */
   --mf-g-blue: linear-gradient(to top right, #329dd1, #4f50a4);
   --mf-g-blueFaded: linear-gradient(to top right, #c5c6ff, #b1e5ff);
   --mf-g-cta: linear-gradient(63deg, #f56d41, #b54a84);
-  --mf-g-gray: linear-gradient(45deg, var(--mf-c-grayLight), var(--mf-c-grayLightest));
+  --mf-g-gray: linear-gradient(45deg, var(--mf-c-gray-t3), var(--mf-c-gray-t5));
   --mf-g-green: linear-gradient(to top right, #329dd1, #4cbc88);
   --mf-g-greenFaded: linear-gradient(to top right, #d5f1ff, #d2f5e4);
   --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
@@ -78,7 +65,7 @@
   --mf-g-elegant-cm: linear-gradient(to top right, #0e517e, #218ab5);
 
   /* context colors */
-  --mf-c-authentication: var(--mf-c-blueDark);
+  --mf-c-authentication: var(--mf-c-blue-s1);
   --mf-c-CMS: var(--mf-c-yellow);
   --mf-c-cms: var(--mf-c-yellow);
   --mf-c-database: var(--mf-c-orange);
@@ -138,7 +125,7 @@
   --mf-product-logo-l: 3rem;
 
   /* text-colors */
-  --mf-c-text: var(--mf-c-grayDarker);
+  --mf-c-text: var(--mf-c-gray-s2);
   --mf-c-textSubdue: var(--mf-c-gray);
   --mf-c-background: var(--mf-c-white);
   --mf-c-backgroundSubdue: var(--mf-c-offWhite);
@@ -192,6 +179,13 @@
   --mf-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
   --mf-text-color: var(--mf-c-black);
   --mf-background-color: var(--mf-c-white);
+
+  /* easing */
+
+  --mf-ease-in-out: 'cubic-bezier(0.4, 0, 0.2, 1)'; /* This is the most common easing curve. */
+  --mf-ease-out: 'cubic-bezier(0.0, 0, 0.2, 1)'; /* Objects enter the screen at full velocity from off-screen and slowly decelerate to a resting point. */
+  --mf-ease-in: 'cubic-bezier(0.4, 0, 1, 1)'; /* Objects leave the screen at full velocity. They do not decelerate when off-screen. */
+  --mf-ease-sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'; /* The sharp curve is used by objects that may return to the screen at any time. */
 
   /* layer */
   --mf-layer-base: 10;

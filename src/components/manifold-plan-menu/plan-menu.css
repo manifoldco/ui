@@ -73,7 +73,7 @@
   white-space: nowrap;
   text-align: left;
   background-color: transparent;
-  border: 1px solid var(--mf-c-grayLight);
+  border: 1px solid var(--mf-c-gray-t3);
   border-radius: var(--mf-radius-large);
   box-shadow: 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0);
   transition: background-color 200ms linear, border-color 200ms linear, box-shadow 200ms linear;
@@ -103,7 +103,7 @@
 
   &:focus,
   &:hover {
-    border-color: var(--mf-c-grayLight);
+    border-color: var(--mf-c-gray-t3);
     box-shadow: 0 0 0.5rem rgba(var(--mf-c-gray-rgb), 0.5);
   }
 }

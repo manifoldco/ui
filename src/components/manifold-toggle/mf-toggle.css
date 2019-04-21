@@ -31,7 +31,7 @@ input {
   height: var(--size);
   padding: var(--spacing);
   background-image: var(--mf-g-gray);
-  border: 1px solid var(--mf-c-grayLight);
+  border: 1px solid var(--mf-c-gray-t3);
   border-radius: 2.5em;
   transition: opacity 200ms;
   pointer-events: none;
@@ -42,7 +42,7 @@ input {
     box-sizing: border-box;
     background: white;
     border-radius: 50%;
-    box-shadow: 0 0 0.1em 0.05em rgba(var(--mf-c-black-rgb), 0.1);
+    box-shadow: 0 0 0.1em 0.05em rgba(0, 0, 0, 0.1);
     transition: transform 100ms ease-in-out;
     content: '';
   }

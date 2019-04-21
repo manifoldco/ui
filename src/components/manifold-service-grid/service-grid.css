@@ -19,7 +19,7 @@
 .category-container,
 .collection-container {
   padding: 1.5rem 0;
-  border-top: 1px solid var(--mf-c-grayLight);
+  border-top: 1px solid var(--mf-c-gray-t3);
 
   &:first-child {
     padding-top: 0;
@@ -38,7 +38,7 @@
   margin-bottom: var(--grid-s);
   padding-top: var(--grid-s);
   padding-bottom: var(--grid-s);
-  color: var(--mf-c-gray-s1);
+  color: var(--mf-c-black-60);
   font-weight: 400;
   font-size: 1em;
   font-family: var(--mf-font-family);
@@ -89,7 +89,7 @@
   cursor: pointer;
 
   &.is-active {
-    color: var(--mf-c-grayDarker);
+    color: var(--mf-c-gray-s2);
   }
 
   &:focus {
@@ -98,7 +98,7 @@
   }
 
   &.big {
-    color: var(--mf-c-grayDarker);
+    color: var(--mf-c-gray-s2);
     font-size: var(--mf-font-d0);
 
     &:hover {
@@ -142,8 +142,8 @@
   padding: 0.75rem;
   padding-right: 0;
   font-size: 1em;
-  background-color: var(--mf-c-grayLightest);
-  border: 1px solid var(--mf-c-grayLightest);
+  background-color: var(--mf-c-gray-t5);
+  border: 1px solid var(--mf-c-gray-t5);
   border-radius: 0.25rem;
   box-shadow: rgba(0, 0, 0, 0) 0 2px 8px;
   transition: background-color 100ms linear;

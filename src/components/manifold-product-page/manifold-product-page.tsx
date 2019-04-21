@@ -90,7 +90,7 @@ export class ManifoldProductPage {
                 <manifold-icon
                   class="external-link-icon"
                   icon={arrow_up_right}
-                  color="--mf-c-grayLight"
+                  color="--mf-c-gray-t3"
                   margin-left
                 />
               </a>
@@ -102,7 +102,7 @@ export class ManifoldProductPage {
                 <manifold-icon
                   class="external-link-icon"
                   icon={arrow_up_right}
-                  color="--mf-c-grayLight"
+                  color="--mf-c-gray-t3"
                   margin-left
                 />
               </a>

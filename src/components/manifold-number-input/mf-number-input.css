@@ -13,7 +13,7 @@
   font-size: 1em;
   text-align: center;
   background: var(--mf-c-white);
-  border: 1px solid var(--mf-c-border);
+  border: 1px solid var(--mf-c-black30);
   border-radius: var(--mf-radius-default);
   -webkit-appearance: none;
   -moz-appearance: textfield; /* hides up/down buttons on firefox */
@@ -42,7 +42,7 @@
 .decrement {
   padding: 0 0.5em;
   font-size: 1.25em;
-  background-color: var(--mf-c-grayLightest);
+  background-color: var(--mf-c-gray-t5);
   border: none;
   border-radius: var(--mf-radius-default);
 
@@ -52,7 +52,7 @@
   }
 
   &:active {
-    background-color: var(--mf-c-grayLight);
+    background-color: var(--mf-c-gray-t3);
   }
 }
 
