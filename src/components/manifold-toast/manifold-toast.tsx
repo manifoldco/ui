@@ -38,10 +38,9 @@ export class ManifoldToast {
     if (this.observer) this.observer.unobserve();
   }
 
-  handleDismiss(e: Event) {
-    e.preventDefault();
-    if (this.observer) this.observer.unobserve();
+  handleDismiss() {
     this.status = DISMISSED;
+    if (this.observer) this.observer.unobserve();
   }
 
   handleResize({ height }: ClientRect) {
@@ -77,12 +76,12 @@ export class ManifoldToast {
       <p
         role="alert"
         class="toast"
-        data-alert-type={this.alertType || undefined}
-        data-dismissed={this.status === DISMISSED || undefined}
+        data-alert-type={this.alertType}
+        data-dismissed={this.status === DISMISSED}
       >
         <div class="grid" data-dismissable={this.dismissable}>
           {this.dismissable && (
-            <button class="close" type="button" onClick={e => this.handleDismiss(e)}>
+            <button class="close" type="button" onClick={() => this.handleDismiss()}>
               <manifold-icon icon={x} />
             </button>
           )}
