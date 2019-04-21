@@ -16,9 +16,12 @@ export const CategoryButtons: FunctionalComponent<CategoryButtonsProps> = ({
     {(state: State) => {
       const categoryMap = categories(state.services);
       const sortedCategories = Object.keys(categoryMap).sort((a, b) => a.localeCompare(b));
+      const nonEmptyCategories = sortedCategories.filter(category =>
+        state.hideCustom ? categoryMap[category].length : true
+      );
       return (
         <div class="category-buttons">
-          {sortedCategories.map(tag => (
+          {nonEmptyCategories.map(tag => (
             <button
               class={`category-button${activeCategory === tag ? ' is-active' : ''}`}
               onClick={categoryClick}

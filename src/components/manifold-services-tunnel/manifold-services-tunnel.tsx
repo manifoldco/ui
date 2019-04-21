@@ -4,6 +4,7 @@ import Tunnel from '../../data/marketplace';
 
 @Component({ tag: 'manifold-services-tunnel' })
 export class ManiTunnel {
+  @Prop() hideCustom?: boolean = false;
   @Prop() linkFormat?: string;
   @Prop() featured?: string;
   @Prop() services: Catalog.Product[] = [];
@@ -13,8 +14,9 @@ export class ManiTunnel {
       <Tunnel.Provider
         state={{
           services: this.services,
-          linkFormat: this.linkFormat,
           featured: this.featured,
+          hideCustom: this.hideCustom,
+          linkFormat: this.linkFormat,
         }}
       >
         <slot name="marketplace-content" />

@@ -9,9 +9,11 @@ export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
-  /** _(optional)_ Link format structure, with `:product` placeholder */
+  /** Link format structure, with `:product` placeholder */
+  @Prop() hideCustom?: boolean = false;
+  /** Hide custom cards? */
   @Prop() linkFormat?: string;
-  /** _(optional)_ Comma-separated list of featured products (labels) */
+  /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   @State() services: Catalog.Product[] = [];
 
@@ -27,8 +29,9 @@ export class ManifoldMarketplace {
     return (
       <manifold-services-tunnel
         services={this.services}
-        linkFormat={this.linkFormat}
         featured={this.featured}
+        hideCustom={this.hideCustom}
+        linkFormat={this.linkFormat}
       >
         <manifold-service-grid slot="marketplace-content" />
       </manifold-services-tunnel>

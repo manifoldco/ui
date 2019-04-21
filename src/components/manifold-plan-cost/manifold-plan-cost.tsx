@@ -1,5 +1,4 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { UserFeatures } from 'types/UserFeatures';
 import Tunnel from '../../data/connection';
 import { Connection, connections } from '../../utils/connections';
 import {

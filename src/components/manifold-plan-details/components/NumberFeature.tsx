@@ -1,5 +1,4 @@
 import { FunctionalComponent } from '@stencil/core';
-import { UserFeatures } from 'types/UserFeatures';
 import {
   numberFeatureDisplayValue,
   numberFeatureMeasurableDisplayValue,

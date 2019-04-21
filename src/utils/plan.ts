@@ -1,4 +1,3 @@
-import { UserFeatures } from 'types/UserFeatures';
 import { Option } from 'types/Select';
 import { withAuth } from './auth';
 import { Connection } from './connections';

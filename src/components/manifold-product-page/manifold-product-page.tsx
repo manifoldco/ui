@@ -1,7 +1,7 @@
 import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { arrow_right, arrow_up_right, book, life_buoy } from '@manifoldco/icons';
 
-import { themeIcons } from '../../assets/icons';
+import { categoryIcon } from '../../utils/marketplace';
 
 @Component({
   tag: 'manifold-product-page',
@@ -75,7 +75,10 @@ export class ManifoldProductPage {
               <h4>Category</h4>
               {tags.map(tag => (
                 <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
-                  <manifold-icon icon={themeIcons[tag] || themeIcons.uncategorized} margin-right />
+                  <manifold-icon
+                    icon={categoryIcon[tag] || categoryIcon.uncategorized}
+                    margin-right
+                  />
                   {tag}
                 </div>
               ))}

@@ -11,7 +11,6 @@ Clickable service cards.
 | ------------- | ------------- | ----------- | ---------------------- | ------------------ |
 | `connection`  | --            |             | `Connection`           | `connections.prod` |
 | `description` | `description` |             | `string \| undefined`  | `undefined`        |
-| `isCustom`    | `is-custom`   |             | `boolean \| undefined` | `undefined`        |
 | `isFeatured`  | `is-featured` |             | `boolean \| undefined` | `undefined`        |
 | `label`       | `label`       |             | `string \| undefined`  | `undefined`        |
 | `linkFormat`  | `link-format` |             | `string \| undefined`  | `undefined`        |

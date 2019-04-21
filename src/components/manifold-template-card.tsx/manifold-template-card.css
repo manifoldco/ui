@@ -1,0 +1,102 @@
+:host {
+  --padding: 0.75rem;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-rows: min-content auto;
+  height: 100%;
+  text-decoration: none;
+  background-color: var(--mf-c-white);
+  border: 1px solid #d3d3d4;
+  border-radius: var(--mf-radius-l);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
+  cursor: pointer;
+  transition: border-color 150ms linear, box-shadow 150ms linear;
+
+  &:focus,
+  &:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.heading {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: var(--padding);
+  color: var(--mf-c-black-70);
+  font-weight: 400;
+  font-size: var(--mf-font-d1);
+  line-height: 1;
+
+  & manifold-icon {
+    margin-right: calc(var(--padding) - 0.25em);
+  }
+}
+
+.body {
+  margin: 0;
+  padding-top: var(--padding);
+  overflow: hidden;
+  color: var(--mf-c-black-50);
+  font-weight: 500;
+  font-size: var(--mf-font-d2);
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
+  background-color: var(--mf-c-gray-t5);
+  border-top: 1px solid var(--mf-c-black-07);
+  border-bottom-right-radius: var(--mf-radius-default);
+  border-bottom-left-radius: var(--mf-radius-default);
+
+  & span {
+    padding-right: var(--padding);
+    padding-left: var(--padding);
+  }
+}
+
+.service-list-container {
+  position: relative;
+  padding-top: calc(var(--padding));
+  padding-bottom: calc(var(--padding));
+  padding-left: calc(var(--padding));
+  overflow: hidden;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5rem;
+    height: 100%;
+    content: '';
+    background-image: linear-gradient(to right, rgba(245, 247, 279, 0), rgb(245, 247, 249));
+    z-index: 2;
+  }
+}
+
+.service-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & li {
+    width: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: var(--mf-radius-default);
+    object-fit: cover;
+
+    & + li {
+      margin-left: calc(var(--padding) / 2);
+    }
+  }
+
+  & img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}

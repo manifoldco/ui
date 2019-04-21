@@ -1,6 +1,9 @@
 import { Component, Prop } from '@stencil/core';
 
-@Component({ tag: 'manifold-marketplace-results', styleUrl: 'marketplace-results.css' })
+@Component({
+  tag: 'manifold-marketplace-results',
+  styleUrl: 'marketplace-results.css',
+})
 export class ManifoldMarketplace {
   @Prop() featured?: string;
   @Prop() linkFormat?: string;
@@ -21,19 +24,20 @@ export class ManifoldMarketplace {
   render() {
     return (
       <div class="results-grid">
-        {this.services
-          .sort((a, b) => a.body.name.localeCompare(b.body.name))
-          .map(({ id, body: { name, label, tagline, logo_url } }) => (
-            <manifold-service-card
-              description={tagline}
-              isFeatured={this.isFeatured(label)}
-              label={label}
-              logo={logo_url}
-              name={name}
-              productId={id}
-              linkFormat={this.formatHref(label)}
-            />
-          ))}
+        {this.services.length > 0 &&
+          this.services
+            .sort((a, b) => a.body.name.localeCompare(b.body.name))
+            .map(({ id, body: { name, label, tagline, logo_url } }) => (
+              <manifold-service-card
+                description={tagline}
+                isFeatured={this.isFeatured(label)}
+                label={label}
+                logo={logo_url}
+                name={name}
+                productId={id}
+                linkFormat={this.formatHref(label)}
+              />
+            ))}
         <slot name="custom-card" />
       </div>
     );
