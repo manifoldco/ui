@@ -36,12 +36,6 @@ describe('<manifold-service-card>', () => {
     expect(el.innerText).toBe('featured');
   });
 
-  it('has an is-custom class if custom', async () => {
-    const page = await newE2EPage({ html: `<manifold-service-card is-custom />` });
-    const el = await page.find('manifold-service-card >>> .is-custom');
-    expect(el).not.toBeNull();
-  });
-
   it('doesn’t display “free” tag by default (when not featured)', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card />` });
     const el = await page.find('manifold-service-card >>> .tag');
