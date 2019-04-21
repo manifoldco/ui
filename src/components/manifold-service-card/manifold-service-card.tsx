@@ -15,7 +15,8 @@ export class ManifoldServiceCard {
   @Event({
     eventName: 'manifold-serviceCard-click',
     bubbles: true,
-  }) cardClicked: EventEmitter;
+  })
+  cardClicked: EventEmitter;
   @Prop() name?: string;
   @Prop() connection: Connection = connections.prod;
   @Prop() description?: string;
@@ -71,8 +72,8 @@ export class ManifoldServiceCard {
               <manifold-icon class="icon" icon={this.logo} />
             </div>
           ) : (
-              <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
-            )}
+            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
+          )}
         </div>
         <h3 class="name" itemprop="name">
           {this.name}

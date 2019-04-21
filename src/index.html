@@ -385,6 +385,12 @@ render() {
               <pre><code class="html language-html">&lt;manifold-product product-label="aiven-redis" link-format="/product/:product" /&gt;
 &lt;!-- &lt;a href="/product/aiven-redis"&gt; --&gt;
 </code></pre>
+              <h2 id="hidecta">Hide CTA</h2>
+              <p>
+                You can alternately hide the CTA on the left altogether with <code>hide-cta</code>:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-product product-label="aiven-cassandra" hide-cta /&gt;
+</code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -404,6 +410,13 @@ render() {
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
                     <td><code>connections.prod</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>hideCta</code></td>
+                    <td><code>hide-cta</code></td>
+                    <td><em>(optional)</em> Hide the CTA on the left?</td>
+                    <td><code>boolean | undefined</code></td>
+                    <td><code>false</code></td>
                   </tr>
                   <tr>
                     <td><code>linkFormat</code></td>

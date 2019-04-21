@@ -60,11 +60,11 @@ export class ManifoldIcon {
             <path fill={`url(#${this.gradientID})`} d={this.icon} />,
           ]
         ) : (
-            <path
-              d={this.icon}
-              fill={this.color.startsWith('--') ? `var(${this.color})` : this.color}
-            />
-          )}
+          <path
+            d={this.icon}
+            fill={this.color.startsWith('--') ? `var(${this.color})` : this.color}
+          />
+        )}
       </svg>
     );
   }

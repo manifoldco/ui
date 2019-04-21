@@ -31,16 +31,25 @@ To turn the CTA into an `<a>` tag, specify a `link-format` attribute, using
 <!-- <a href="/product/aiven-redis"> -->
 ```
 
+## Hide CTA
+
+You can alternately hide the CTA on the left altogether with `hide-cta`:
+
+```html
+<manifold-product product-label="aiven-cassandra" hide-cta />
+```
+
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property       | Attribute       | Description                                                     | Type                  | Default            |
-| -------------- | --------------- | --------------------------------------------------------------- | --------------------- | ------------------ |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`          | `connections.prod` |
-| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined` | `undefined`        |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                       | `string`              | `undefined`        |
+| Property       | Attribute       | Description                                                     | Type                   | Default            |
+| -------------- | --------------- | --------------------------------------------------------------- | ---------------------- | ------------------ |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`           | `connections.prod` |
+| `hideCta`      | `hide-cta`      | _(optional)_ Hide the CTA on the left?                          | `boolean \| undefined` | `false`            |
+| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined`  | `undefined`        |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                       | `string`               | `undefined`        |
 
 
 ----------------------------------------------
