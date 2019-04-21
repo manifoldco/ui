@@ -81,7 +81,12 @@ export class ManifoldToast {
       >
         <div class="grid" data-dismissable={this.dismissable}>
           {this.dismissable && (
-            <button class="close" type="button" onClick={() => this.handleDismiss()}>
+            <button
+              class="close"
+              type="button"
+              title="Dismiss"
+              onClick={() => this.handleDismiss()}
+            >
               <manifold-icon icon={x} />
             </button>
           )}

@@ -1,13 +1,19 @@
 :host {
   --animation-duration: 350ms;
+  --padding: 0.75rem;
 }
 
 @keyframes collapse {
-  from {
+  0% {
     height: var(--height);
   }
 
-  to {
+  99% {
+    position: static; /*  animate position on last frame so it doesn’t “jump” at the end */
+  }
+
+  100% {
+    position: absolute; /* without this, surrounding margins won’t collapse (also we can’t animate display: none) */
     height: 0;
   }
 }
@@ -21,6 +27,7 @@
   background-color: rgba(var(--mf-c-blue-rgb), 0.05);
   border-radius: var(--mf-radius-default);
   box-shadow: inset 0 0 0 1px rgba(var(--mf-c-blue-rgb), 0.375);
+  will-change: height;
 
   & a {
     color: var(--mf-c-blue);
@@ -70,12 +77,12 @@
 
 .grid {
   display: grid;
-  grid-column-gap: 0.625rem;
+  grid-column-gap: calc(var(--padding) - 0.125rem);
   grid-template-columns: min-content auto;
-  padding-top: 0.75rem;
-  padding-right: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 0.75rem;
+  padding-top: var(--padding);
+  padding-right: var(--padding);
+  padding-bottom: var(--padding);
+  padding-left: var(--padding);
 
   &[data-dismissable] {
     position: relative;
@@ -85,19 +92,28 @@
 
 .close {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 1px; /* 1px border */
+  right: 1px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 2.5em;
-  height: 2.5em;
+  width: calc(1rem + var(--padding) + var(--padding));
+  height: calc(1rem + var(--padding) + var(--padding));
   padding: 0;
   color: currentColor;
   font-size: 1.125em;
   line-height: 1;
   background: none;
   border: none;
+  border-top-right-radius: var(--mf-radius-default);
+  border-bottom-right-radius: var(--mf-radius-default);
+  transition: background-color 150ms linear, filter 150ms linear;
   appearance: none;
+
+  &:focus {
+    background-color: rgba(var(--mf-c-blue-rgb), 0.2);
+    outline: none;
+    filter: saturate(150%);
+  }
 }

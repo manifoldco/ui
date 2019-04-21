@@ -47,7 +47,7 @@ export class ManifoldIcon {
         xmlns="http://www.w3.org/2000/svg"
         xmlnsX="http://www.w3.org/1999/xlink"
       >
-        <title>{this.title || this.icon}</title>
+        {this.title && <title>{this.title}</title>}
         {this.gradient ? (
           [
             <defs>
