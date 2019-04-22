@@ -11,7 +11,7 @@ A list of all Manifold services.
 Blacklists (banned products) and whitelists (allowed services) are two ways
 to filter the services you’d like to display to users.
 
-Either specify `blacklist` or `whitelist`; don’t use both.
+Either specify `blacklist` or `whitelist`; **don’t use both**.
 
 #### Blacklist
 
@@ -35,8 +35,8 @@ A common usecase is using `whitelist` in conjuction with `hide-categories` (belo
 
 ## Hide categories
 
-Hiding the categories is a great way to have a more compact display. Perfect
-for small displays, or if you’re `whitelist`-ing products (above):
+Hiding the categories is a great way to have a more compact display. In this
+Great if you’re also `whitelist`-ing products (above):
 
 ```html
 <manifold-marketplace hide-categories />

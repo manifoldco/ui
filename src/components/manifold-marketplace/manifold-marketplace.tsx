@@ -7,20 +7,20 @@ import { Connection, connections } from '../../utils/connections';
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
   /** Comma-separated list of hidden products (labels) */
   @Prop() blacklist?: string;
-  /** Comma-separated list of allowed products (labels) */
-  @Prop() whitelist?: string;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() connection: Connection = connections.prod;
+  /** Comma-separated list of featured products (labels) */
+  @Prop() featured?: string;
   /** Link format structure, with `:product` placeholder */
   @Prop() hideCustom?: boolean = false;
   /** Hide categories & side menu? */
   @Prop() hideCategories?: boolean = false;
   /** Hide custom cards? */
   @Prop() linkFormat?: string;
-  /** Comma-separated list of featured products (labels) */
-  @Prop() featured?: string;
+  /** Comma-separated list of allowed products (labels) */
+  @Prop() whitelist?: string;
   @State() parsedBlacklist: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedWhitelist: string[] = [];
@@ -56,7 +56,7 @@ export class ManifoldMarketplace {
         hideCustom={this.hideCustom}
         linkFormat={this.linkFormat}
         services={this.services}
-        whitelist={this.parsedBlacklist}
+        whitelist={this.parsedWhitelist}
       />
     );
   }

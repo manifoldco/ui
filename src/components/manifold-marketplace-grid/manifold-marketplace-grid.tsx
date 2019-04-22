@@ -14,13 +14,13 @@ import {
 })
 export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
-  @Prop() blacklist: string[] = [];
-  @Prop() featured: string[] = [];
-  @Prop() hideCategories: boolean = false;
-  @Prop() hideCustom: boolean = false;
+  @Prop() blacklist?: string[] = [];
+  @Prop() featured?: string[] = [];
+  @Prop() hideCategories?: boolean = false;
+  @Prop() hideCustom?: boolean = false;
   @Prop() linkFormat?: string;
-  @Prop() services: Catalog.Product[] = [];
-  @Prop() whitelist: string[] = [];
+  @Prop() services?: Catalog.Product[] = [];
+  @Prop() whitelist?: string[] = [];
   @State() filter: string | null;
   @State() activeCategory?: string;
   @State() observer: IntersectionObserver;
@@ -50,7 +50,7 @@ export class ManifoldMarketplaceGrid {
     const categoryList: string[] = [];
 
     // Iterate through services, only add unique categories
-    this.services.forEach(({ body: { tags } }: Catalog.Product) => {
+    this.filteredServices.forEach(({ body: { tags } }: Catalog.Product) => {
       if (!Array.isArray(tags)) return;
       tags.forEach(tag => {
         if (!categoryList.includes(tag)) categoryList.push(tag);
@@ -69,19 +69,23 @@ export class ManifoldMarketplaceGrid {
   }
 
   get filteredServices(): Catalog.Product[] {
-    // Start out with all, or none of services, depending on whitelist
-    let services = this.whitelist.length > 0 ? [] : this.services;
+    let services: Catalog.Product[] = [];
+    // If not whitelisting, start out with all services
+    if (this.whitelist && !this.whitelist.length && this.services) services = this.services; // eslint-disable-line prefer-destructuring
 
     // Handle whitelist
-    if (this.whitelist.length)
+    if (Array.isArray(this.whitelist))
       this.whitelist.forEach(whitelisted => {
-        const service = this.services.find(({ body: { label } }) => label === whitelisted);
+        const service =
+          this.services && this.services.find(({ body: { label } }) => label === whitelisted);
         if (service) services.push(service);
       });
 
     // Handle blacklist
-    if (this.blacklist.length)
-      services = services.filter(({ body: { label } }) => !this.blacklist.includes(label));
+    if (Array.isArray(this.blacklist))
+      services = services.filter(
+        ({ body: { label } }) => this.blacklist && !this.blacklist.includes(label)
+      );
 
     // Handle search
     if (this.filter && this.filter.length) services = filteredServices(this.filter, services);
@@ -114,10 +118,6 @@ export class ManifoldMarketplaceGrid {
     });
   };
 
-  private isFeatured = (label: string) => {
-    return this.featured.includes(label);
-  };
-
   private updateFilter = (e: KeyboardEvent): void => {
     if (e.srcElement) this.filter = (e.srcElement as HTMLInputElement).value;
   };
@@ -137,6 +137,22 @@ export class ManifoldMarketplaceGrid {
   private observeCategory = (el?: HTMLElement) => {
     if (el) this.observer.observe(el);
   };
+
+  private renderServiceCard = ({
+    id,
+    body: { name, tagline, label, logo_url },
+  }: Catalog.Product) => (
+    <manifold-service-card
+      data-label={label}
+      description={tagline}
+      isFeatured={this.featured && this.featured.includes(label)}
+      label={label}
+      linkFormat={this.linkFormat}
+      logo={logo_url}
+      name={name}
+      productId={id}
+    />
+  );
 
   render() {
     return (
@@ -171,32 +187,12 @@ export class ManifoldMarketplaceGrid {
                   <manifold-icon icon={categoryIcon[category]} />
                   {formatCategoryLabel(category)}
                 </h1>,
-                this.categorizedServices(category).map(
-                  ({ id, body: { name, label, tagline, logo_url } }) => (
-                    <manifold-service-card
-                      description={tagline}
-                      isFeatured={this.isFeatured(label)}
-                      label={label}
-                      linkFormat={this.linkFormat}
-                      logo={logo_url}
-                      name={name}
-                      productId={id}
-                    />
-                  )
+                this.categorizedServices(category).map(service => this.renderServiceCard(service)),
+                !this.hideCustom && (
+                  <manifold-template-card category={category} linkFormat={this.linkFormat} />
                 ),
-                <manifold-template-card category={category} linkFormat={this.linkFormat} />,
               ])
-            : this.filteredServices.map(({ id, body: { name, tagline, label, logo_url } }) => (
-                <manifold-service-card
-                  description={tagline}
-                  isFeatured={this.isFeatured(label)}
-                  label={label}
-                  linkFormat={this.linkFormat}
-                  logo={logo_url}
-                  name={name}
-                  productId={id}
-                />
-              ))}
+            : this.filteredServices.map(service => this.renderServiceCard(service))}
           {this.filteredServices.length === 0 && <manifold-toast>No services found</manifold-toast>}
         </div>
       </div>

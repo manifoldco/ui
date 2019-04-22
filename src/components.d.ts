@@ -192,13 +192,13 @@ export namespace Components {
   }
 
   interface ManifoldMarketplaceGrid {
-    'blacklist': string[];
-    'featured': string[];
-    'hideCategories': boolean;
-    'hideCustom': boolean;
+    'blacklist'?: string[];
+    'featured'?: string[];
+    'hideCategories'?: boolean;
+    'hideCustom'?: boolean;
     'linkFormat'?: string;
-    'services': Catalog.Product[];
-    'whitelist': string[];
+    'services'?: Catalog.Product[];
+    'whitelist'?: string[];
   }
   interface ManifoldMarketplaceGridAttributes extends StencilHTMLAttributes {
     'blacklist'?: string[];
