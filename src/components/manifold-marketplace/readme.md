@@ -8,15 +8,14 @@ A list of all Manifold services.
 
 ## Blacklist/whitelist
 
-Blacklists (banned products) and whitelists (allowed services) are two ways
-to filter the services you’d like to display to users.
-
-Either specify `blacklist` or `whitelist`; **don’t use both**.
+Blacklists (hidden products) and whitelists (allowed services) are two ways
+to filter the services you’d like to display to users. Use either `blacklist`
+or `whitelist`; **don’t use both**.
 
 #### Blacklist
 
-By default, blacklist will start with **all products**, but let you specify which
-ones you’d like to hide:
+Blacklist will start with **all products**, but let you specify which ones
+you’d like to hide:
 
 ```html
 <manifold-marketplace blacklist="manifold-provider" />
@@ -35,8 +34,9 @@ A common usecase is using `whitelist` in conjuction with `hide-categories` (belo
 
 ## Hide categories
 
-Hiding the categories is a great way to have a more compact display. Great if
-you’re also `whitelist`-ing products (above):
+Hiding the categories is a great way to have a more compact display. It’s
+recommended to use this if you’re only displaying a few products via
+`whitelist` (above):
 
 ```html
 <manifold-marketplace hide-categories />
@@ -44,7 +44,8 @@ you’re also `whitelist`-ing products (above):
 
 ## Hide template cards
 
-Add the `hide-templates` attribute to hide templates:
+Add the `hide-templates` attribute to hide external service template cards
+(GitHub, Stripe, etc.):
 
 ```html
 <manifold-marketplace hide-templates />
@@ -52,7 +53,7 @@ Add the `hide-templates` attribute to hide templates:
 
 ## Featuring products
 
-You can add `featured` styling to certain products by specifing a
+You can add a “Featured” tag to select products by specifing a
 comma-separated list:
 
 ```html
@@ -81,6 +82,9 @@ with each product’s URL-friendly slug:
 <manifold-marketplace link-format="/product/:product" />
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
+
+Note that template cards also emit an event as well:
+`manifold-templateCard-click`.
 
 #### Handling Events in React
 

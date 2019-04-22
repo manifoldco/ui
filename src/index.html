@@ -275,17 +275,14 @@ defineCustomElements(window);</code></pre>
 </code></pre>
               <h2 id="blacklistwhitelist">Blacklist/whitelist</h2>
               <p>
-                Blacklists (banned products) and whitelists (allowed services) are two ways to
-                filter the services you’d like to display to users.
-              </p>
-              <p>
-                Either specify <code>blacklist</code> or <code>whitelist</code>;
-                <strong>don’t use both</strong>.
+                Blacklists (hidden products) and whitelists (allowed services) are two ways to
+                filter the services you’d like to display to users. Use either
+                <code>blacklist</code> or <code>whitelist</code>; <strong>don’t use both</strong>.
               </p>
               <h4 id="blacklist">Blacklist</h4>
               <p>
-                By default, blacklist will start with <strong>all products</strong>, but let you
-                specify which ones you’d like to hide:
+                Blacklist will start with <strong>all products</strong>, but let you specify which
+                ones you’d like to hide:
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace blacklist="manifold-provider" /&gt;
 </code></pre>
@@ -302,19 +299,22 @@ defineCustomElements(window);</code></pre>
 </code></pre>
               <h2 id="hidecategories">Hide categories</h2>
               <p>
-                Hiding the categories is a great way to have a more compact display. Great if you’re
-                also <code>whitelist</code>-ing products (above):
+                Hiding the categories is a great way to have a more compact display. It’s
+                recommended to use this if you’re only displaying a few products via
+                <code>whitelist</code> (above):
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace hide-categories /&gt;
 </code></pre>
               <h2 id="hidetemplatecards">Hide template cards</h2>
-              <p>Add the <code>hide-templates</code> attribute to hide templates:</p>
+              <p>
+                Add the <code>hide-templates</code> attribute to hide external service template
+                cards (GitHub, Stripe, etc.):
+              </p>
               <pre><code class="html language-html">&lt;manifold-marketplace hide-templates /&gt;
 </code></pre>
               <h2 id="featuringproducts">Featuring products</h2>
               <p>
-                You can add <code>featured</code> styling to certain products by specifing a
-                comma-separated list:
+                You can add a “Featured” tag to select products by specifing a comma-separated list:
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace featured="piio,zerosix" /&gt;
 </code></pre>
@@ -338,6 +338,10 @@ defineCustomElements(window);</code></pre>
               <pre><code class="html language-html">&lt;manifold-marketplace link-format="/product/:product" /&gt;
 &lt;!-- &lt;a href="/product/jawsdb-mysql"&gt; --&gt;
 </code></pre>
+              <p>
+                Note that template cards also emit an event as well:
+                <code>manifold-templateCard-click</code>.
+              </p>
               <h4 id="handlingeventsinreact">Handling Events in React</h4>
               <p>
                 Attaching listeners to custom components in React
