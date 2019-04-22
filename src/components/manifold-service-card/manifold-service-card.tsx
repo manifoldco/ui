@@ -4,6 +4,11 @@ import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
+interface EventDetail {
+  productId?: string;
+  productLabel?: string;
+}
+
 @Component({
   tag: 'manifold-service-card',
   styleUrl: 'manifold-service-card.css',
@@ -11,11 +16,6 @@ import { Connection, connections } from '../../utils/connections';
 })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
-  @Event({
-    eventName: 'manifold-serviceCard-click',
-    bubbles: true,
-  })
-  cardClicked: EventEmitter;
   @Prop() name?: string;
   @Prop() connection: Connection = connections.prod;
   @Prop() description?: string;
@@ -25,7 +25,9 @@ export class ManifoldServiceCard {
   @Prop() productId?: string;
   @Prop() linkFormat?: string;
   @State() isFree: boolean = false;
-  @Watch('productId') watchHandler(newProductId: string) {
+  @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
+  @Watch('productId')
+  watchHandler(newProductId: string) {
     this.fetchIsFree(newProductId);
   }
 
@@ -53,7 +55,11 @@ export class ManifoldServiceCard {
   onClick = (e: Event): void => {
     if (!this.linkFormat) {
       e.preventDefault();
-      this.cardClicked.emit({ label: this.label });
+      const detail: EventDetail = {
+        productId: this.productId,
+        productLabel: this.label,
+      };
+      this.marketplaceClick.emit(detail);
     }
   };
 

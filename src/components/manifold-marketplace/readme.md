@@ -60,47 +60,38 @@ comma-separated list:
 <manifold-marketplace featured="piio,zerosix" />
 ```
 
-## Navigation
+## Events
 
-When users click on a product card, you expect something to happen, right? By
-default, service cards will emit a `manifold-serviceCard-click` custom event
-whenever a user clicks anywhere on a card. You can listen for it like so,
-and use this value to navigate client-side or perform some other action of
-your choice:
+This component emits [custom
+events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
+when it updates. To listen to those events, add an event listener either on
+the component itself, or `document`.
 
 ```js
-document.addEventListener('manifold-serviceCard-click', { detail: { label } } => {
-  alert(`You clicked the card for ${label}`);
+document.addEventListener('manifold-marketplace-click', { detail: { productLabel } } => {
+  alert(`You clicked the card for ${productLabel}`);
 });
 ```
 
-Alternately, if you’d like the service cards to be plain, ol’ `<a>` tags, you
-can specify a `link-format` attribute, where `:product` will be substituted
-with each product’s URL-friendly slug:
+The following events are emitted:
+
+| Event Name                   | Description                                             | Data                        |
+| :--------------------------- | :------------------------------------------------------ | :-------------------------- |
+| `manifold-marketplace-click` | Fires whenever a user has clicked on a product.         | `productId`, `productLabel` |
+| `manifold-template-click`    | Fires whenever a user has clicked on a custom template. | `category`                  |
+
+## Navigation
+
+By default, service cards will only emit the `manifold-marketplace-click`
+event (above). But it can also be turned into an `<a>` tag by specifying
+`link-format`:
 
 ```html
 <manifold-marketplace link-format="/product/:product" />
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
-Note that template cards also emit an event as well:
-`manifold-templateCard-click`.
-
-#### Handling Events in React
-
-Attaching listeners to custom components in React [requires the use of refs](https://custom-elements-everywhere.com/). Example:
-
-```js
-marketplaceLoaded(node) {
-  node.addEventListener("manifold-serviceCard-click", ({ detail: { label } }) => {
-    alert(`You clicked the card for ${label}`);
-  });
-}
-
-render() {
-  return <manifold-marketplace ref={this.marketplaceLoaded} />;
-}
-```
+`:product` will be replaced with the url-friendly slug for the product.
 
 <!-- Auto Generated Below -->
 

@@ -6,44 +6,36 @@ Display the plans for a product.
 <manifold-plan-selector product-label="jawsdb-mysql" />
 ```
 
-## Product Label
+You can find the `:product` label for each at
+`https://manifold.co/services/:product`.
 
-You can find the `:product` label for each at `https://manifold.co/services/:product`.
+## Events
 
-## Detecting changes
-
-Events are dispatched on the `manifold-planUpdated` custom event. To listen
-for that, listen for the event on `document` like so:
+This component emits [custom
+events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
+when it updates. To listen to those events, add an event listener either on
+the component itself, or `document`.
 
 ```js
-document.addEventListener('manifold-planUpdated', ({ detail }) => {
+document.addEventListener('manifold-planSelector-change', ({ detail }) => {
   console.log(detail);
 });
-// { id: "2357v8j36f5h866c32ddwwjxvfe8j", label: "nvidia-1080ti-100gb-ssd", product: "zerosix", features: { … } } }
+// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", productLabel: "zerosix", features: { … } } }
 ```
+
+The following events are emitted:
+
+| Event Name                     | Description                                                                                                                | Data                                              |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------ |
+| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `productLabel`, `features` |
+| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `productLabel`, `features` |
+| `manifold-planSelector-click`  | If the CTA is showing (see `hide-cta` below), this will fire when clicked.                                                 | `planID`, `planLabel`, `productLabel`, `features` |
 
 ## Navigation
 
-The large CTA in the bottom-right
-is configurable. By default, this component emits a
-`manifold-planCTA-click` custom event whenever the main CTA is clicked.
-Listen for it like so:
-
-```js
-document.addEventListener(
-  'manifold-productCTA-click',
-  ({ detail: { product, plan, features } }) => {
-    alert(
-      `You clicked the CTA for the ${plan} plan on ${product} with these features: ${JSON.stringify(
-        features
-      )}`
-    );
-  }
-);
-```
-
-To turn the CTA into an `<a>` tag, specify a `link-format` attribute, using
-`:product`, `:plan`, and `:features` as placeholders:
+By default, the CTA bottom-right will fire the `manifold-planSelector-click`
+event (above). But it can also be turned into an `<a>` tag by specifying
+`link-format`:
 
 ```html
 <manifold-product
@@ -53,7 +45,11 @@ To turn the CTA into an `<a>` tag, specify a `link-format` attribute, using
 <!-- <a href="/product/aiven-redis?plan=startup-4&cpus=1"> -->
 ```
 
-### Hiding provision button
+`:plan`, `:product`, and `:features` (for customizable plans) will all be
+replaced with url-friendly slugs for each. In most cases, these are all
+passable to [**data components**](#data-components).
+
+### Hiding CTA
 
 If you would like to hide the CTA altogether, specify `hide-cta`:
 

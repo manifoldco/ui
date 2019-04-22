@@ -4,6 +4,13 @@ import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
 
+interface EventDetail {
+  planId: string;
+  planLabel: string;
+  productLabel: string | undefined;
+  features: UserFeatures;
+}
+
 @Component({
   tag: 'manifold-plan-details',
   styleUrl: 'plan-details.css',
@@ -11,56 +18,59 @@ import { FeatureLabel } from './components/FeatureLabel';
 })
 export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean;
-  @Prop() plan?: Catalog.ExpandedPlan;
-  @Prop() linkFormat?: string;
-  @Prop() product?: Catalog.Product;
   @Prop() hideCta?: boolean = false;
+  @Prop() linkFormat?: string;
+  @Prop() plan?: Catalog.ExpandedPlan;
+  @Prop() product?: Catalog.Product;
   @State() features: UserFeatures = {};
-  @Event({
-    eventName: 'manifold-planUpdated',
-    bubbles: true,
-  })
-  planUpdated: EventEmitter;
+  @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
+  @Event({ eventName: 'manifold-planSelector-click', bubbles: true }) planClick: EventEmitter;
+  @Event({ eventName: 'manifold-planSelector-load', bubbles: true }) planLoad: EventEmitter;
   @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
     const features = this.initialFeatures(newPlan);
     this.features = features; // If plan changed, we want to reset all user-selected values
-    this.updatedPlanHandler({ features }); // Dispatch change event when plan changed
+    const detail: EventDetail = {
+      planId: newPlan.id,
+      planLabel: newPlan.body.label,
+      productLabel: this.product && this.product.body.label,
+      features,
+    };
+    this.planUpdate.emit(detail);
   }
-  @Event({
-    eventName: 'manifold-planCTA-click',
-    bubbles: true,
-  })
-  ctaClicked: EventEmitter;
 
   componentWillLoad() {
     const features = this.initialFeatures();
     this.features = features; // Set default features the first time
-    this.updatedPlanHandler({ features }); // Dispatch change event when loaded
+    if (this.plan && this.product) {
+      // Drew: not sure how to tell Stencil that these should always be here on load
+      const detail: EventDetail = {
+        planId: this.plan.id,
+        planLabel: this.plan.body.label,
+        productLabel: this.product.body.label,
+        features,
+      };
+      this.planLoad.emit(detail);
+    }
   }
 
   handleChangeValue({ detail: { name, value } }: CustomEvent) {
     const features = { ...this.features, [name]: value };
-    this.features = features;
-    this.updatedPlanHandler({ features }); // Dispatch change event when user changed feature
+    this.features = features; // User-selected features
+    if (this.plan && this.product) {
+      // Same as above: parent prevents loading this component till these are set
+      const detail: EventDetail = {
+        planId: this.plan.id,
+        planLabel: this.plan.body.label,
+        productLabel: this.product.body.label,
+        features,
+      };
+      this.planUpdate.emit(detail);
+    }
   }
 
   initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
     if (!plan || !plan.body.expanded_features) return {};
     return { ...initialFeatures(plan.body.expanded_features) };
-  }
-
-  updatedPlanHandler({
-    id = this.plan && this.plan.id,
-    label = this.plan && this.plan.body.label,
-    product = this.product && this.product.body.label,
-    features = this.features,
-  }) {
-    this.planUpdated.emit({
-      id,
-      label,
-      product,
-      features,
-    });
   }
 
   get ctaLink() {
@@ -144,11 +154,15 @@ export class ManifoldPlanDetails {
   }
 
   onClick = (e: Event): void => {
-    if (!this.linkFormat) {
+    if (!this.linkFormat && this.plan && this.product) {
       e.preventDefault();
-      const product = this.product && this.product.body.label;
-      const plan = this.plan && this.plan.body.label;
-      this.ctaClicked.emit({ product, plan, features: this.features });
+      const detail: EventDetail = {
+        productLabel: this.product.body.label,
+        planId: this.plan.id,
+        planLabel: this.plan.body.label,
+        features: this.features,
+      };
+      this.planClick.emit(detail);
     }
   };
 

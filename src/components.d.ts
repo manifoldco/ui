@@ -323,8 +323,9 @@ export namespace Components {
     'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
-    'onManifold-planCTA-click'?: (event: CustomEvent) => void;
-    'onManifold-planUpdated'?: (event: CustomEvent) => void;
+    'onManifold-planSelector-change'?: (event: CustomEvent) => void;
+    'onManifold-planSelector-click'?: (event: CustomEvent) => void;
+    'onManifold-planSelector-load'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
   }
@@ -475,7 +476,7 @@ export namespace Components {
     'linkFormat'?: string;
     'logo'?: string;
     'name'?: string;
-    'onManifold-serviceCard-click'?: (event: CustomEvent) => void;
+    'onManifold-marketplace-click'?: (event: CustomEvent) => void;
     'productId'?: string;
   }
 
@@ -486,7 +487,7 @@ export namespace Components {
   interface ManifoldTemplateCardAttributes extends StencilHTMLAttributes {
     'category'?: string;
     'linkFormat'?: string;
-    'onManifold-templateCard-click'?: (event: CustomEvent) => void;
+    'onManifold-template-click'?: (event: CustomEvent) => void;
   }
 
   interface ManifoldToast {

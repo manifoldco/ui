@@ -18,10 +18,11 @@
 
 ## Events
 
-| Event                    | Description | Type                |
-| ------------------------ | ----------- | ------------------- |
-| `manifold-planCTA-click` |             | `CustomEvent<void>` |
-| `manifold-planUpdated`   |             | `CustomEvent<void>` |
+| Event                          | Description | Type                |
+| ------------------------------ | ----------- | ------------------- |
+| `manifold-planSelector-change` |             | `CustomEvent<void>` |
+| `manifold-planSelector-click`  |             | `CustomEvent<void>` |
+| `manifold-planSelector-load`   |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------
