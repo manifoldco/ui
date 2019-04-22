@@ -15,6 +15,13 @@
 | `name`           | `name`       |             | `string`     | `undefined`        |
 
 
+## Events
+
+| Event    | Description | Type                |
+| -------- | ----------- | ------------------- |
+| `change` |             | `CustomEvent<void>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -1,5 +1,6 @@
 import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { arrow_right } from '@manifoldco/icons';
+import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
@@ -9,6 +10,7 @@ interface EventDetail {
   planLabel: string;
   productLabel: string | undefined;
   features: UserFeatures;
+  regionId: string;
 }
 
 @Component({
@@ -22,6 +24,7 @@ export class ManifoldPlanDetails {
   @Prop() linkFormat?: string;
   @Prop() plan?: Catalog.ExpandedPlan;
   @Prop() product?: Catalog.Product;
+  @State() regionId: string = globalRegion.id;
   @State() features: UserFeatures = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-click', bubbles: true }) planClick: EventEmitter;
@@ -29,11 +32,15 @@ export class ManifoldPlanDetails {
   @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
     const features = this.initialFeatures(newPlan);
     this.features = features; // If plan changed, we want to reset all user-selected values
+
+    this.updateRegionId(newPlan);
+
     const detail: EventDetail = {
       planId: newPlan.id,
       planLabel: newPlan.body.label,
       productLabel: this.product && this.product.body.label,
       features,
+      regionId: this.regionId,
     };
     this.planUpdate.emit(detail);
   }
@@ -42,12 +49,14 @@ export class ManifoldPlanDetails {
     const features = this.initialFeatures();
     this.features = features; // Set default features the first time
     if (this.plan && this.product) {
+      this.updateRegionId(this.plan);
       // This conditional should always fire on component load
       const detail: EventDetail = {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
         features,
+        regionId: this.regionId,
       };
       this.planLoad.emit(detail);
     }
@@ -63,6 +72,22 @@ export class ManifoldPlanDetails {
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
         features,
+        regionId: this.regionId,
+      };
+      this.planUpdate.emit(detail);
+    }
+  }
+
+  handleChangeRegion(e: CustomEvent) {
+    if (!e.detail || !e.detail.value) return;
+    this.regionId = e.detail.value;
+    if (this.plan && this.product) {
+      const detail: EventDetail = {
+        planId: this.plan.id,
+        planLabel: this.plan.body.label,
+        productLabel: this.product.body.label,
+        features: this.features,
+        regionId: e.detail.value,
       };
       this.planUpdate.emit(detail);
     }
@@ -163,9 +188,10 @@ export class ManifoldPlanDetails {
           Region
         </label>
         <manifold-region-selector
+          allowedRegions={this.plan.body.regions}
           ariaLabel={name}
           name={name}
-          allowedRegions={this.plan.body.regions}
+          onChange={e => this.handleChangeRegion(e)}
         />
       </div>
     );
@@ -179,8 +205,17 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         features: this.features,
+        regionId: this.regionId,
       };
       this.planClick.emit(detail);
+    }
+  };
+
+  updateRegionId = (plan: Catalog.ExpandedPlan) => {
+    // Only update the region if the values are different
+    if (!plan.body.regions.includes(this.regionId)) {
+      const [firstRegion] = plan.body.regions;
+      if (firstRegion) this.regionId = firstRegion;
     }
   };
 

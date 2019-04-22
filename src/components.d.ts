@@ -455,6 +455,7 @@ export namespace Components {
     'ariaLabel'?: string;
     'connection'?: Connection;
     'name'?: string;
+    'onChange'?: (event: CustomEvent) => void;
   }
 
   interface ManifoldResourceDetails {
