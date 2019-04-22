@@ -211,10 +211,10 @@ export class ManifoldPlanDetails {
     }
   };
 
-  updateRegionId = (plan: Catalog.ExpandedPlan) => {
-    // Only update the region if the values are different
-    if (!plan.body.regions.includes(this.regionId)) {
-      const [firstRegion] = plan.body.regions;
+  updateRegionId = (newPlan: Catalog.ExpandedPlan) => {
+    // Only change regionID if it doesn’t exist on the new plan
+    if (!newPlan.body.regions.includes(this.regionId)) {
+      const [firstRegion] = newPlan.body.regions;
       if (firstRegion) this.regionId = firstRegion;
     }
   };
