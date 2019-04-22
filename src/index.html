@@ -949,14 +949,14 @@ defineCustomElements(window);</code></pre>
 
         document
           .querySelector('manifold-marketplace')
-          .addEventListener('manifold-serviceCard-click', e => {
+          .addEventListener('manifold-marketplace-click', e => {
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
             const modal = document.createElement('div');
             modal.className = 'modal';
             overlay.appendChild(modal);
             const productPage = document.createElement('manifold-product');
-            productPage.productLabel = e.detail.label;
+            productPage.productLabel = e.detail.productLabel;
             modal.appendChild(productPage);
             document.body.appendChild(overlay);
 

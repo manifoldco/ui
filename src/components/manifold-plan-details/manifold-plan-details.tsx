@@ -42,7 +42,7 @@ export class ManifoldPlanDetails {
     const features = this.initialFeatures();
     this.features = features; // Set default features the first time
     if (this.plan && this.product) {
-      // Drew: not sure how to tell Stencil that these should always be here on load
+      // This conditional should always fire on component load
       const detail: EventDetail = {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
@@ -57,7 +57,7 @@ export class ManifoldPlanDetails {
     const features = { ...this.features, [name]: value };
     this.features = features; // User-selected features
     if (this.plan && this.product) {
-      // Same as above: parent prevents loading this component till these are set
+      // Same as above: this should always fire; just needed for TS
       const detail: EventDetail = {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
