@@ -1,5 +1,9 @@
 dist/
 pkg/
+src/spec/catalog
+src/spec/gateway
+src/spec/marketplace
+src/spec/provisioning
 !www/favicon.ico
 www/
 

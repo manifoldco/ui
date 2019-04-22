@@ -1,4 +1,4 @@
-declare namespace Gateway {
+namespace Gateway {
   export interface Timed {
     created_at: string;
     updated_at: string;
@@ -9,7 +9,9 @@ declare namespace Gateway {
     features?: FeatureMap;
     annotations?: AnnotationsMap;
   }
-  export interface ResourceCreateRequest extends ResourceBodyWrite, ResourceBodySource {
+  export interface ResourceCreateRequest
+    extends ResourceBodyWrite,
+      ResourceBodySource {
     product_id?: string;
     plan_id?: string;
     region_id?: string;
@@ -28,7 +30,9 @@ declare namespace Gateway {
     label: string;
     owner: Owner;
   }
-  export interface ResourceBodyReadSource extends ResourceBodySource, ResourceBodyRead {}
+  export interface ResourceBodyReadSource
+    extends ResourceBodySource,
+      ResourceBodyRead {}
   export interface ResourceBodyReadFeatures extends ResourceBodyReadSource {
     features?: ResolvedFeature[];
   }
@@ -49,8 +53,12 @@ declare namespace Gateway {
     state?: string;
     message?: string;
   }
-  export interface ResourceBodyFeatures extends ResourceBodyRequired, ResourceBodyReadFeatures {}
-  export interface ResourceBody extends ResourceBodyRequired, ResourceBodyReadSource {}
+  export interface ResourceBodyFeatures
+    extends ResourceBodyRequired,
+      ResourceBodyReadFeatures {}
+  export interface ResourceBody
+    extends ResourceBodyRequired,
+      ResourceBodyReadSource {}
   export interface Resource extends ResourceBodyFeatures, Timed {
     id?: string;
     product?: ResolvedProduct;
