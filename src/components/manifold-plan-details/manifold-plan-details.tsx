@@ -153,6 +153,24 @@ export class ManifoldPlanDetails {
     );
   }
 
+  get regionSelector() {
+    if (!this.plan) return null;
+
+    const name = `${this.plan.body.label}-region`;
+    return (
+      <div class="region">
+        <label class="region-label" id={name}>
+          Region
+        </label>
+        <manifold-region-selector
+          ariaLabel={name}
+          name={name}
+          allowedRegions={this.plan.body.regions}
+        />
+      </div>
+    );
+  }
+
   onClick = (e: Event): void => {
     if (!this.linkFormat && this.plan && this.product) {
       e.preventDefault();
@@ -174,6 +192,7 @@ export class ManifoldPlanDetails {
         <div class="plan-details">
           {this.header}
           {this.featureList}
+          {this.regionSelector}
         </div>
         {this.footer}
       </section>

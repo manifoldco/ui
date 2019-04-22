@@ -31,9 +31,9 @@ export class ManifoldMarketplace {
 
     return fetch(`${this.connection.catalog}/products`, withAuth())
       .then(response => response.json())
-      .then(data => {
+      .then((products: Catalog.Product[]) => {
         // Alphabetize once, then don’t worry about it
-        this.services = [...data].sort((a, b) => a.body.name.localeCompare(b.body.name));
+        this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
       });
   }
 
