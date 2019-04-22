@@ -1,9 +1,12 @@
-declare namespace Catalog {
+namespace Catalog {
   export interface ValueProp {
     // Heading of a value proposition.
     header: string;
     // Body of a value proposition.
     body: string;
+  }
+  export interface UpdateRegion {
+    name: string;
   }
   export interface UpdateProviderBody {
     owner_id?: string;
@@ -140,6 +143,12 @@ declare namespace Catalog {
     // unspecified, then regions have no impact on this
     // resource.
     region?: 'user-specified' | 'unspecified';
+    // Describes the credential type that is supported by this product.
+    //
+    // * `single`: Only one credential is supported at the same time.
+    // * `multiple`: Multiple credentials are supported at the same time.
+    // * `unknown`: The credential type is unknown.
+    credential?: 'single' | 'multiple' | 'unknown';
   }
   export interface ProductBody {
     provider_id: string;

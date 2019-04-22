@@ -15,6 +15,16 @@ npm run dev
 _Note: you may also want to run `npm run format:css:watch` in a separate
 process, to automatically format CSS as you save._
 
+Lastly, copy these specs from [our specs][specs] into here:
+
+- `src/spec/catalog/v1.yaml`
+- `src/spec/gateway/v1.yaml`
+- `src/spec/marketplace/v1.yaml`
+- `src/spec/provisioning/v1.yaml`
+
+This is a public repo, but our API specs aren’t public for now (the types are
+OK though).
+
 ## 📋 Testing
 
 To run the unit tests once, run:
@@ -176,3 +186,5 @@ non-strings, you’ll have to do so [via
 JS](https://stenciljs.com/docs/properties).
 
 **TL;DR use `camelCase` in JSX; `kebab-case` in HTML.**
+
+[specs]: https://github.com/manifoldco/marketplace/tree/master/specs

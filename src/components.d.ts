@@ -444,6 +444,27 @@ export namespace Components {
     'productLabel'?: string;
   }
 
+  interface ManifoldResourceDetails {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * ID of resource
+    */
+    'resourceId': string;
+  }
+  interface ManifoldResourceDetailsAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * ID of resource
+    */
+    'resourceId'?: string;
+  }
+
   interface ManifoldSelect {
     'defaultValue'?: string;
     'name': string;
@@ -566,6 +587,7 @@ declare global {
     'ManifoldProductDetails': Components.ManifoldProductDetails;
     'ManifoldProductPage': Components.ManifoldProductPage;
     'ManifoldProduct': Components.ManifoldProduct;
+    'ManifoldResourceDetails': Components.ManifoldResourceDetails;
     'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
     'ManifoldTemplateCard': Components.ManifoldTemplateCard;
@@ -596,6 +618,7 @@ declare global {
     'manifold-product-details': Components.ManifoldProductDetailsAttributes;
     'manifold-product-page': Components.ManifoldProductPageAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
+    'manifold-resource-details': Components.ManifoldResourceDetailsAttributes;
     'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
     'manifold-template-card': Components.ManifoldTemplateCardAttributes;
@@ -731,6 +754,12 @@ declare global {
     new (): HTMLManifoldProductElement;
   };
 
+  interface HTMLManifoldResourceDetailsElement extends Components.ManifoldResourceDetails, HTMLStencilElement {}
+  var HTMLManifoldResourceDetailsElement: {
+    prototype: HTMLManifoldResourceDetailsElement;
+    new (): HTMLManifoldResourceDetailsElement;
+  };
+
   interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
   var HTMLManifoldSelectElement: {
     prototype: HTMLManifoldSelectElement;
@@ -789,6 +818,7 @@ declare global {
     'manifold-product-details': HTMLManifoldProductDetailsElement
     'manifold-product-page': HTMLManifoldProductPageElement
     'manifold-product': HTMLManifoldProductElement
+    'manifold-resource-details': HTMLManifoldResourceDetailsElement
     'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
     'manifold-template-card': HTMLManifoldTemplateCardElement
@@ -819,6 +849,7 @@ declare global {
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-product': HTMLManifoldProductElement;
+    'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;

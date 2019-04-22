@@ -15,3 +15,5 @@ components.d.ts
 
 src/types/gateway.ts
 src/types/catalog.ts
+src/types/marketplace.ts
+src/types/provisioning.ts
