@@ -195,7 +195,7 @@ export namespace Components {
     'blacklist'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
-    'hideCustom'?: boolean;
+    'hideTemplates'?: boolean;
     'linkFormat'?: string;
     'services'?: Catalog.Product[];
     'whitelist'?: string[];
@@ -204,7 +204,7 @@ export namespace Components {
     'blacklist'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
-    'hideCustom'?: boolean;
+    'hideTemplates'?: boolean;
     'linkFormat'?: string;
     'services'?: Catalog.Product[];
     'whitelist'?: string[];
@@ -228,11 +228,11 @@ export namespace Components {
     */
     'hideCategories'?: boolean;
     /**
-    * Link format structure, with `:product` placeholder
+    * Hide template cards?
     */
-    'hideCustom'?: boolean;
+    'hideTemplates'?: boolean;
     /**
-    * Hide custom cards?
+    * Link format structure, with `:product` placeholder
     */
     'linkFormat'?: string;
     /**
@@ -258,11 +258,11 @@ export namespace Components {
     */
     'hideCategories'?: boolean;
     /**
-    * Link format structure, with `:product` placeholder
+    * Hide template cards?
     */
-    'hideCustom'?: boolean;
+    'hideTemplates'?: boolean;
     /**
-    * Hide custom cards?
+    * Link format structure, with `:product` placeholder
     */
     'linkFormat'?: string;
     /**

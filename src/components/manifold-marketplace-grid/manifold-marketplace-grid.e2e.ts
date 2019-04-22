@@ -207,13 +207,13 @@ describe('manifold-marketplace-grid', () => {
     expect(await page.findAll('manifold-marketplace-grid >>> [id^="category-"]')).toHaveLength(0);
   });
 
-  it('hides template cards with hide-custom', async () => {
+  it('hides template cards with hide-templates', async () => {
     const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
     await page.$eval(
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
-        elm.hideCustom = true;
+        elm.hideTemplates = true;
       },
       { services }
     );

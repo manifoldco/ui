@@ -35,19 +35,19 @@ A common usecase is using `whitelist` in conjuction with `hide-categories` (belo
 
 ## Hide categories
 
-Hiding the categories is a great way to have a more compact display. In this
-Great if you’re also `whitelist`-ing products (above):
+Hiding the categories is a great way to have a more compact display. Great if
+you’re also `whitelist`-ing products (above):
 
 ```html
 <manifold-marketplace hide-categories />
 ```
 
-## Hide custom cards
+## Hide template cards
 
-Add the `hide-custom` attribute to hide custom cards & categories:
+Add the `hide-templates` attribute to hide templates:
 
 ```html
-<manifold-marketplace hide-custom />
+<manifold-marketplace hide-templates />
 ```
 
 ## Featuring products
@@ -109,8 +109,8 @@ render() {
 | `connection`     | --                | _(hidden)_ Passed by `<manifold-connection>`       | `Connection`           | `connections.prod` |
 | `featured`       | `featured`        | Comma-separated list of featured products (labels) | `string \| undefined`  | `undefined`        |
 | `hideCategories` | `hide-categories` | Hide categories & side menu?                       | `boolean \| undefined` | `false`            |
-| `hideCustom`     | `hide-custom`     | Link format structure, with `:product` placeholder | `boolean \| undefined` | `false`            |
-| `linkFormat`     | `link-format`     | Hide custom cards?                                 | `string \| undefined`  | `undefined`        |
+| `hideTemplates`  | `hide-templates`  | Hide template cards?                               | `boolean \| undefined` | `false`            |
+| `linkFormat`     | `link-format`     | Link format structure, with `:product` placeholder | `string \| undefined`  | `undefined`        |
 | `whitelist`      | `whitelist`       | Comma-separated list of allowed products (labels)  | `string \| undefined`  | `undefined`        |
 
 

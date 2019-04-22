@@ -17,7 +17,7 @@ export class ManifoldMarketplaceGrid {
   @Prop() blacklist?: string[] = [];
   @Prop() featured?: string[] = [];
   @Prop() hideCategories?: boolean = false;
-  @Prop() hideCustom?: boolean = false;
+  @Prop() hideTemplates?: boolean = false;
   @Prop() linkFormat?: string;
   @Prop() services?: Catalog.Product[] = [];
   @Prop() whitelist?: string[] = [];
@@ -58,7 +58,7 @@ export class ManifoldMarketplaceGrid {
     });
 
     // Skip template-only categories if hiding custom
-    if (!this.hideCustom) {
+    if (!this.hideTemplates) {
       serviceTemplates.forEach(({ category }) => {
         if (!categoryList.includes(category)) categoryList.push(category);
       });
@@ -188,7 +188,7 @@ export class ManifoldMarketplaceGrid {
                   {formatCategoryLabel(category)}
                 </h1>,
                 this.categorizedServices(category).map(service => this.renderServiceCard(service)),
-                !this.hideCustom && (
+                !this.hideTemplates && (
                   <manifold-template-card category={category} linkFormat={this.linkFormat} />
                 ),
               ])

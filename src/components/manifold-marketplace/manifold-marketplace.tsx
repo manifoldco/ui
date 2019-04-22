@@ -13,11 +13,11 @@ export class ManifoldMarketplace {
   @Prop() connection: Connection = connections.prod;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
-  /** Link format structure, with `:product` placeholder */
-  @Prop() hideCustom?: boolean = false;
+  /** Hide template cards? */
+  @Prop() hideTemplates?: boolean = false;
   /** Hide categories & side menu? */
   @Prop() hideCategories?: boolean = false;
-  /** Hide custom cards? */
+  /** Link format structure, with `:product` placeholder */
   @Prop() linkFormat?: string;
   /** Comma-separated list of allowed products (labels) */
   @Prop() whitelist?: string;
@@ -53,7 +53,7 @@ export class ManifoldMarketplace {
         blacklist={this.parsedBlacklist}
         featured={this.parsedFeatured}
         hideCategories={this.hideCategories}
-        hideCustom={this.hideCustom}
+        hideTemplates={this.hideTemplates}
         linkFormat={this.linkFormat}
         services={this.services}
         whitelist={this.parsedWhitelist}
