@@ -33,6 +33,11 @@ export class ManifoldServiceCard {
     this.fetchIsFree();
   }
 
+  get href() {
+    if (!this.linkFormat || !this.label) return '';
+    return this.linkFormat.replace(/:product/gi, this.label);
+  }
+
   fetchIsFree(productId = this.productId) {
     if (typeof productId !== 'string') return;
 
@@ -60,7 +65,7 @@ export class ManifoldServiceCard {
         itemscope
         itemtype="https://schema.org/Product"
         itemprop="url"
-        href={this.linkFormat}
+        href={this.href}
         onClick={this.onClick}
       >
         <div class="logo">

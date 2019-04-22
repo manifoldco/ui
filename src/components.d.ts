@@ -191,18 +191,30 @@ export namespace Components {
     'target'?: string;
   }
 
-  interface ManifoldMarketplaceResults {
-    'featured'?: string;
-    'linkFormat'?: string;
-    'services': Catalog.Product[];
-  }
-  interface ManifoldMarketplaceResultsAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
+  interface ManifoldMarketplaceGrid {
+    'blacklist'?: string[];
+    'featured'?: string[];
+    'hideCategories'?: boolean;
+    'hideTemplates'?: boolean;
     'linkFormat'?: string;
     'services'?: Catalog.Product[];
+    'whitelist'?: string[];
+  }
+  interface ManifoldMarketplaceGridAttributes extends StencilHTMLAttributes {
+    'blacklist'?: string[];
+    'featured'?: string[];
+    'hideCategories'?: boolean;
+    'hideTemplates'?: boolean;
+    'linkFormat'?: string;
+    'services'?: Catalog.Product[];
+    'whitelist'?: string[];
   }
 
   interface ManifoldMarketplace {
+    /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'blacklist'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -212,15 +224,27 @@ export namespace Components {
     */
     'featured'?: string;
     /**
+    * Hide categories & side menu?
+    */
+    'hideCategories'?: boolean;
+    /**
+    * Hide template cards?
+    */
+    'hideTemplates'?: boolean;
+    /**
     * Link format structure, with `:product` placeholder
     */
-    'hideCustom'?: boolean;
-    /**
-    * Hide custom cards?
-    */
     'linkFormat'?: string;
+    /**
+    * Comma-separated list of allowed products (labels)
+    */
+    'whitelist'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
+    /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'blacklist'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -230,13 +254,21 @@ export namespace Components {
     */
     'featured'?: string;
     /**
+    * Hide categories & side menu?
+    */
+    'hideCategories'?: boolean;
+    /**
+    * Hide template cards?
+    */
+    'hideTemplates'?: boolean;
+    /**
     * Link format structure, with `:product` placeholder
     */
-    'hideCustom'?: boolean;
-    /**
-    * Hide custom cards?
-    */
     'linkFormat'?: string;
+    /**
+    * Comma-separated list of allowed products (labels)
+    */
+    'whitelist'?: string;
   }
 
   interface ManifoldNumberInput {
@@ -447,44 +479,6 @@ export namespace Components {
     'productId'?: string;
   }
 
-  interface ManifoldServiceCategory {
-    'categoryLoaded'?: (el?: HTMLElement) => void;
-    'icon'?: string;
-    'label': string;
-    'name': string;
-    'tagline'?: string;
-  }
-  interface ManifoldServiceCategoryAttributes extends StencilHTMLAttributes {
-    'categoryLoaded'?: (el?: HTMLElement) => void;
-    'icon'?: string;
-    'label'?: string;
-    'name'?: string;
-    'tagline'?: string;
-  }
-
-  interface ManifoldServiceGrid {}
-  interface ManifoldServiceGridAttributes extends StencilHTMLAttributes {}
-
-  interface ManifoldServicesTunnel {
-    'featured'?: string;
-    'hideCustom'?: boolean;
-    'linkFormat'?: string;
-    'services': Catalog.Product[];
-  }
-  interface ManifoldServicesTunnelAttributes extends StencilHTMLAttributes {
-    'featured'?: string;
-    'hideCustom'?: boolean;
-    'linkFormat'?: string;
-    'services'?: Catalog.Product[];
-  }
-
-  interface ManifoldSortedCategories {
-    'observeCategory': (el?: HTMLElement) => void;
-  }
-  interface ManifoldSortedCategoriesAttributes extends StencilHTMLAttributes {
-    'observeCategory'?: (el?: HTMLElement) => void;
-  }
-
   interface ManifoldTemplateCard {
     'category': string;
     'linkFormat'?: string;
@@ -561,7 +555,7 @@ declare global {
     'ManifoldImageGallery': Components.ManifoldImageGallery;
     'ManifoldLazyImage': Components.ManifoldLazyImage;
     'ManifoldLinkButton': Components.ManifoldLinkButton;
-    'ManifoldMarketplaceResults': Components.ManifoldMarketplaceResults;
+    'ManifoldMarketplaceGrid': Components.ManifoldMarketplaceGrid;
     'ManifoldMarketplace': Components.ManifoldMarketplace;
     'ManifoldNumberInput': Components.ManifoldNumberInput;
     'ManifoldPlanCost': Components.ManifoldPlanCost;
@@ -573,10 +567,6 @@ declare global {
     'ManifoldProduct': Components.ManifoldProduct;
     'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
-    'ManifoldServiceCategory': Components.ManifoldServiceCategory;
-    'ManifoldServiceGrid': Components.ManifoldServiceGrid;
-    'ManifoldServicesTunnel': Components.ManifoldServicesTunnel;
-    'ManifoldSortedCategories': Components.ManifoldSortedCategories;
     'ManifoldTemplateCard': Components.ManifoldTemplateCard;
     'ManifoldToast': Components.ManifoldToast;
     'ManifoldToggle': Components.ManifoldToggle;
@@ -595,7 +585,7 @@ declare global {
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
     'manifold-lazy-image': Components.ManifoldLazyImageAttributes;
     'manifold-link-button': Components.ManifoldLinkButtonAttributes;
-    'manifold-marketplace-results': Components.ManifoldMarketplaceResultsAttributes;
+    'manifold-marketplace-grid': Components.ManifoldMarketplaceGridAttributes;
     'manifold-marketplace': Components.ManifoldMarketplaceAttributes;
     'manifold-number-input': Components.ManifoldNumberInputAttributes;
     'manifold-plan-cost': Components.ManifoldPlanCostAttributes;
@@ -607,10 +597,6 @@ declare global {
     'manifold-product': Components.ManifoldProductAttributes;
     'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
-    'manifold-service-category': Components.ManifoldServiceCategoryAttributes;
-    'manifold-service-grid': Components.ManifoldServiceGridAttributes;
-    'manifold-services-tunnel': Components.ManifoldServicesTunnelAttributes;
-    'manifold-sorted-categories': Components.ManifoldSortedCategoriesAttributes;
     'manifold-template-card': Components.ManifoldTemplateCardAttributes;
     'manifold-toast': Components.ManifoldToastAttributes;
     'manifold-toggle': Components.ManifoldToggleAttributes;
@@ -684,10 +670,10 @@ declare global {
     new (): HTMLManifoldLinkButtonElement;
   };
 
-  interface HTMLManifoldMarketplaceResultsElement extends Components.ManifoldMarketplaceResults, HTMLStencilElement {}
-  var HTMLManifoldMarketplaceResultsElement: {
-    prototype: HTMLManifoldMarketplaceResultsElement;
-    new (): HTMLManifoldMarketplaceResultsElement;
+  interface HTMLManifoldMarketplaceGridElement extends Components.ManifoldMarketplaceGrid, HTMLStencilElement {}
+  var HTMLManifoldMarketplaceGridElement: {
+    prototype: HTMLManifoldMarketplaceGridElement;
+    new (): HTMLManifoldMarketplaceGridElement;
   };
 
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
@@ -756,30 +742,6 @@ declare global {
     new (): HTMLManifoldServiceCardElement;
   };
 
-  interface HTMLManifoldServiceCategoryElement extends Components.ManifoldServiceCategory, HTMLStencilElement {}
-  var HTMLManifoldServiceCategoryElement: {
-    prototype: HTMLManifoldServiceCategoryElement;
-    new (): HTMLManifoldServiceCategoryElement;
-  };
-
-  interface HTMLManifoldServiceGridElement extends Components.ManifoldServiceGrid, HTMLStencilElement {}
-  var HTMLManifoldServiceGridElement: {
-    prototype: HTMLManifoldServiceGridElement;
-    new (): HTMLManifoldServiceGridElement;
-  };
-
-  interface HTMLManifoldServicesTunnelElement extends Components.ManifoldServicesTunnel, HTMLStencilElement {}
-  var HTMLManifoldServicesTunnelElement: {
-    prototype: HTMLManifoldServicesTunnelElement;
-    new (): HTMLManifoldServicesTunnelElement;
-  };
-
-  interface HTMLManifoldSortedCategoriesElement extends Components.ManifoldSortedCategories, HTMLStencilElement {}
-  var HTMLManifoldSortedCategoriesElement: {
-    prototype: HTMLManifoldSortedCategoriesElement;
-    new (): HTMLManifoldSortedCategoriesElement;
-  };
-
   interface HTMLManifoldTemplateCardElement extends Components.ManifoldTemplateCard, HTMLStencilElement {}
   var HTMLManifoldTemplateCardElement: {
     prototype: HTMLManifoldTemplateCardElement;
@@ -816,7 +778,7 @@ declare global {
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
     'manifold-lazy-image': HTMLManifoldLazyImageElement
     'manifold-link-button': HTMLManifoldLinkButtonElement
-    'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement
+    'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement
     'manifold-marketplace': HTMLManifoldMarketplaceElement
     'manifold-number-input': HTMLManifoldNumberInputElement
     'manifold-plan-cost': HTMLManifoldPlanCostElement
@@ -828,10 +790,6 @@ declare global {
     'manifold-product': HTMLManifoldProductElement
     'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
-    'manifold-service-category': HTMLManifoldServiceCategoryElement
-    'manifold-service-grid': HTMLManifoldServiceGridElement
-    'manifold-services-tunnel': HTMLManifoldServicesTunnelElement
-    'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement
     'manifold-template-card': HTMLManifoldTemplateCardElement
     'manifold-toast': HTMLManifoldToastElement
     'manifold-toggle': HTMLManifoldToggleElement
@@ -850,7 +808,7 @@ declare global {
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-lazy-image': HTMLManifoldLazyImageElement;
     'manifold-link-button': HTMLManifoldLinkButtonElement;
-    'manifold-marketplace-results': HTMLManifoldMarketplaceResultsElement;
+    'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
     'manifold-plan-cost': HTMLManifoldPlanCostElement;
@@ -862,10 +820,6 @@ declare global {
     'manifold-product': HTMLManifoldProductElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
-    'manifold-service-category': HTMLManifoldServiceCategoryElement;
-    'manifold-service-grid': HTMLManifoldServiceGridElement;
-    'manifold-services-tunnel': HTMLManifoldServicesTunnelElement;
-    'manifold-sorted-categories': HTMLManifoldSortedCategoriesElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
     'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;

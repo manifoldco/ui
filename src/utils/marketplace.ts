@@ -19,7 +19,6 @@ import {
   tool,
   worker,
 } from '@manifoldco/icons';
-import serviceTemplates from '../data/templates';
 
 export interface CategoryMap {
   [category: string]: Catalog.Product[];
@@ -50,12 +49,6 @@ export function categories(services?: Catalog.Product[]): CategoryMap {
       return {};
     });
   }
-
-  serviceTemplates.forEach(({ category }) => {
-    if (!Array.isArray(categoryMap[category])) {
-      categoryMap[category] = [];
-    }
-  });
 
   return categoryMap;
 }

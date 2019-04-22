@@ -7,34 +7,57 @@ import { Connection, connections } from '../../utils/connections';
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
+  /** Comma-separated list of hidden products (labels) */
+  @Prop() blacklist?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
-  /** Link format structure, with `:product` placeholder */
-  @Prop() hideCustom?: boolean = false;
-  /** Hide custom cards? */
-  @Prop() linkFormat?: string;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
+  /** Hide template cards? */
+  @Prop() hideTemplates?: boolean = false;
+  /** Hide categories & side menu? */
+  @Prop() hideCategories?: boolean = false;
+  /** Link format structure, with `:product` placeholder */
+  @Prop() linkFormat?: string;
+  /** Comma-separated list of allowed products (labels) */
+  @Prop() whitelist?: string;
+  @State() parsedBlacklist: string[] = [];
+  @State() parsedFeatured: string[] = [];
+  @State() parsedWhitelist: string[] = [];
   @State() services: Catalog.Product[] = [];
 
   componentWillLoad() {
+    this.parseProps();
+
     return fetch(`${this.connection.catalog}/products`, withAuth())
       .then(response => response.json())
       .then(data => {
-        this.services = data;
+        // Alphabetize once, then don’t worry about it
+        this.services = [...data].sort((a, b) => a.body.name.localeCompare(b.body.name));
       });
+  }
+
+  private parse(list: string): string[] {
+    return list.split(',').map(item => item.trim());
+  }
+
+  private parseProps() {
+    if (typeof this.featured === 'string') this.parsedFeatured = this.parse(this.featured);
+    if (typeof this.blacklist === 'string') this.parsedBlacklist = this.parse(this.blacklist);
+    if (typeof this.whitelist === 'string') this.parsedWhitelist = this.parse(this.whitelist);
   }
 
   render() {
     return (
-      <manifold-services-tunnel
-        services={this.services}
-        featured={this.featured}
-        hideCustom={this.hideCustom}
+      <manifold-marketplace-grid
+        blacklist={this.parsedBlacklist}
+        featured={this.parsedFeatured}
+        hideCategories={this.hideCategories}
+        hideTemplates={this.hideTemplates}
         linkFormat={this.linkFormat}
-      >
-        <manifold-service-grid slot="marketplace-content" />
-      </manifold-services-tunnel>
+        services={this.services}
+        whitelist={this.parsedWhitelist}
+      />
     );
   }
 }
