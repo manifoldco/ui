@@ -15,9 +15,9 @@
 
 ## Events
 
-| Event                         | Description | Type                |
-| ----------------------------- | ----------- | ------------------- |
-| `manifold-templateCard-click` |             | `CustomEvent<void>` |
+| Event                     | Description | Type                |
+| ------------------------- | ----------- | ------------------- |
+| `manifold-template-click` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

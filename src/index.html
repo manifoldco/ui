@@ -318,46 +318,59 @@ defineCustomElements(window);</code></pre>
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace featured="piio,zerosix" /&gt;
 </code></pre>
-              <h2 id="navigation">Navigation</h2>
+              <h2 id="events">Events</h2>
               <p>
-                When users click on a product card, you expect something to happen, right? By
-                default, service cards will emit a <code>manifold-serviceCard-click</code> custom
-                event whenever a user clicks anywhere on a card. You can listen for it like so, and
-                use this value to navigate client-side or perform some other action of your choice:
+                This component emits
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent"
+                  >custom events</a
+                >
+                when it updates. To listen to those events, add an event listener either on the
+                component itself, or <code>document</code>.
               </p>
-              <pre><code class="js language-js">document.addEventListener('manifold-serviceCard-click', { detail: { label } } =&gt; {
-  alert(`You clicked the card for ${label}`);
+              <pre><code class="js language-js">document.addEventListener('manifold-marketplace-click', { detail: { productLabel } } =&gt; {
+  alert(`You clicked the card for ${productLabel}`);
 });
 </code></pre>
+              <p>The following events are emitted:</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Event Name</th>
+                    <th style="text-align:left;">Description</th>
+                    <th style="text-align:left;">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-marketplace-click</code></td>
+                    <td style="text-align:left;">
+                      Fires whenever a user has clicked on a product.
+                    </td>
+                    <td style="text-align:left;">
+                      <code>productId</code>, <code>productLabel</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-template-click</code></td>
+                    <td style="text-align:left;">
+                      Fires whenever a user has clicked on a custom template.
+                    </td>
+                    <td style="text-align:left;"><code>category</code></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h2 id="navigation">Navigation</h2>
               <p>
-                Alternately, if you’d like the service cards to be plain, ol’
-                <code>&lt;a&gt;</code> tags, you can specify a <code>link-format</code> attribute,
-                where <code>:product</code> will be substituted with each product’s URL-friendly
-                slug:
+                By default, service cards will only emit the
+                <code>manifold-marketplace-click</code> event (above). But it can also be turned
+                into an <code>&lt;a&gt;</code> tag by specifying <code>link-format</code>:
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace link-format="/product/:product" /&gt;
 &lt;!-- &lt;a href="/product/jawsdb-mysql"&gt; --&gt;
 </code></pre>
               <p>
-                Note that template cards also emit an event as well:
-                <code>manifold-templateCard-click</code>.
+                <code>:product</code> will be replaced with the url-friendly slug for the product.
               </p>
-              <h4 id="handlingeventsinreact">Handling Events in React</h4>
-              <p>
-                Attaching listeners to custom components in React
-                <a href="https://custom-elements-everywhere.com/">requires the use of refs</a>.
-                Example:
-              </p>
-              <pre><code class="js language-js">marketplaceLoaded(node) {
-  node.addEventListener("manifold-serviceCard-click", ({ detail: { label } }) =&gt; {
-    alert(`You clicked the card for ${label}`);
-  });
-}
-
-render() {
-  return &lt;manifold-marketplace ref={this.marketplaceLoaded} /&gt;;
-}
-</code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -539,42 +552,71 @@ render() {
               <p>Display the plans for a product.</p>
               <pre><code class="html language-html">&lt;manifold-plan-selector product-label="jawsdb-mysql" /&gt;
 </code></pre>
-              <h2 id="productlabel">Product Label</h2>
               <p>
                 You can find the <code>:product</code> label for each at
                 <code>https://manifold.co/services/:product</code>.
               </p>
-              <h2 id="detectingchanges">Detecting changes</h2>
+              <h2 id="events">Events</h2>
               <p>
-                Events are dispatched on the <code>manifold-planUpdated</code> custom event. To
-                listen for that, listen for the event on <code>document</code> like so:
+                This component emits
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent"
+                  >custom events</a
+                >
+                when it updates. To listen to those events, add an event listener either on the
+                component itself, or <code>document</code>.
               </p>
-              <pre><code class="js language-js">document.addEventListener('manifold-planUpdated', ({ detail }) =&gt; {
+              <pre><code class="js language-js">document.addEventListener('manifold-planSelector-change', ({ detail }) =&gt; {
   console.log(detail);
 });
-// { id: "2357v8j36f5h866c32ddwwjxvfe8j", label: "nvidia-1080ti-100gb-ssd", product: "zerosix", features: { … } } }
+// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", productLabel: "zerosix", features: { … } } }
 </code></pre>
+              <p>The following events are emitted:</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Event Name</th>
+                    <th style="text-align:left;">Description</th>
+                    <th style="text-align:left;">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-planSelector-change</code></td>
+                    <td style="text-align:left;">Fires whenever a user makes a change.</td>
+                    <td style="text-align:left;">
+                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
+                      <code>features</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-planSelector-load</code></td>
+                    <td style="text-align:left;">
+                      Identical to <code>-update</code> above, but this fires once on DOM mount to
+                      set the initial state (i.e. user hasn’t interacted yet).
+                    </td>
+                    <td style="text-align:left;">
+                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
+                      <code>features</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-planSelector-click</code></td>
+                    <td style="text-align:left;">
+                      If the CTA is showing (see <code>hide-cta</code> below), this will fire when
+                      clicked.
+                    </td>
+                    <td style="text-align:left;">
+                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
+                      <code>features</code>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <h2 id="navigation">Navigation</h2>
               <p>
-                The large CTA in the bottom-right is configurable. By default, this component emits
-                a <code>manifold-planCTA-click</code> custom event whenever the main CTA is clicked.
-                Listen for it like so:
-              </p>
-              <pre><code class="js language-js">document.addEventListener(
-  'manifold-productCTA-click',
-  ({ detail: { product, plan, features } }) =&gt; {
-    alert(
-      `You clicked the CTA for the ${plan} plan on ${product} with these features: ${JSON.stringify(
-        features
-      )}`
-    );
-  }
-);
-</code></pre>
-              <p>
-                To turn the CTA into an <code>&lt;a&gt;</code> tag, specify a
-                <code>link-format</code> attribute, using <code>:product</code>, <code>:plan</code>,
-                and <code>:features</code> as placeholders:
+                By default, the CTA bottom-right will fire the
+                <code>manifold-planSelector-click</code> event (above). But it can also be turned
+                into an <code>&lt;a&gt;</code> tag by specifying <code>link-format</code>:
               </p>
               <pre><code class="html language-html">&lt;manifold-product
   product-label="aiven-redis"
@@ -582,7 +624,14 @@ render() {
 /&gt;
 &lt;!-- &lt;a href="/product/aiven-redis?plan=startup-4&amp;cpus=1"&gt; --&gt;
 </code></pre>
-              <h3 id="hidingprovisionbutton">Hiding provision button</h3>
+              <p>
+                <code>:plan</code>, <code>:product</code>, and <code>:features</code> (for
+                customizable plans) will all be replaced with url-friendly slugs for each. In most
+                cases, these are all passable to
+                <a href="#data-components"><strong>data components</strong></a
+                >.
+              </p>
+              <h3 id="hidingcta">Hiding CTA</h3>
               <p>If you would like to hide the CTA altogether, specify <code>hide-cta</code>:</p>
               <pre><code class="html language-html">&lt;manifold-product product-label="till" hide-cta /&gt;
 </code></pre>
@@ -900,14 +949,14 @@ render() {
 
         document
           .querySelector('manifold-marketplace')
-          .addEventListener('manifold-serviceCard-click', e => {
+          .addEventListener('manifold-marketplace-click', e => {
             const overlay = document.createElement('div');
             overlay.className = 'overlay';
             const modal = document.createElement('div');
             modal.className = 'modal';
             overlay.appendChild(modal);
             const productPage = document.createElement('manifold-product');
-            productPage.productLabel = e.detail.label;
+            productPage.productLabel = e.detail.productLabel;
             modal.appendChild(productPage);
             document.body.appendChild(overlay);
 

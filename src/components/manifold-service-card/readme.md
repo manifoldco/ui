@@ -23,7 +23,7 @@ Clickable service cards.
 
 | Event                        | Description | Type                |
 | ---------------------------- | ----------- | ------------------- |
-| `manifold-serviceCard-click` |             | `CustomEvent<void>` |
+| `manifold-marketplace-click` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

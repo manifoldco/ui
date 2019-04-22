@@ -24,20 +24,60 @@ describe(`<manifold-plan-details>`, () => {
     });
   });
 
-  it('dispatches update event when loaded', () => {
+  it('dispatches load event', () => {
     const planDetails = new PlanDetails();
     planDetails.plan = ExpandedPlanCustom;
     planDetails.product = Product;
 
     const mock = { emit: jest.fn() };
-    planDetails.planUpdated = mock;
+    planDetails.planLoad = mock;
 
     planDetails.componentWillLoad();
     expect(mock.emit).toHaveBeenCalledWith({
       features: { instance_class: 'db.t2.micro', redundancy: false, storage: 5 },
-      id: '235exy25wvzpxj52p87bh87gbnj4y',
-      label: 'custom',
-      product: 'jawsdb-mysql',
+      planId: '235exy25wvzpxj52p87bh87gbnj4y',
+      planLabel: 'custom',
+      productLabel: 'jawsdb-mysql',
+    });
+  });
+
+  it('dispatches update event', () => {
+    const planDetails = new PlanDetails();
+    planDetails.plan = ExpandedPlanCustom;
+    planDetails.product = Product;
+    planDetails.planLoad = { emit: jest.fn() };
+    planDetails.componentWillLoad(); // Set initial features
+
+    const mock = { emit: jest.fn() };
+    planDetails.planUpdate = mock;
+
+    // Set redundancy: true
+    const e = new CustomEvent('', { detail: { name: 'redundancy', value: true } });
+    planDetails.handleChangeValue(e);
+    expect(mock.emit).toHaveBeenCalledWith({
+      features: { redundancy: true, instance_class: 'db.t2.micro', storage: 5 },
+      planId: '235exy25wvzpxj52p87bh87gbnj4y',
+      planLabel: 'custom',
+      productLabel: 'jawsdb-mysql',
+    });
+  });
+
+  it('dispatches click event', () => {
+    const planDetails = new PlanDetails();
+    planDetails.plan = ExpandedPlanCustom;
+    planDetails.product = Product;
+    planDetails.planLoad = { emit: jest.fn() };
+    planDetails.componentWillLoad(); // Set initial features
+
+    const mock = { emit: jest.fn() };
+    planDetails.planClick = mock;
+
+    planDetails.onClick(new Event('click'));
+    expect(mock.emit).toHaveBeenCalledWith({
+      features: { instance_class: 'db.t2.micro', redundancy: false, storage: 5 },
+      planId: '235exy25wvzpxj52p87bh87gbnj4y',
+      planLabel: 'custom',
+      productLabel: 'jawsdb-mysql',
     });
   });
 });

@@ -2,17 +2,17 @@ import { Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { categoryIcon } from '../../utils/marketplace';
 import serviceTemplates from '../../data/templates';
 
+interface EventDetail {
+  category: string;
+}
+
 @Component({
   tag: 'manifold-template-card',
   styleUrl: 'manifold-template-card.css',
   shadow: true,
 })
 export class ManifoldTemplateCard {
-  @Event({
-    eventName: 'manifold-templateCard-click',
-    bubbles: true,
-  })
-  cardClicked: EventEmitter;
+  @Event({ eventName: 'manifold-template-click', bubbles: true }) templateClick: EventEmitter;
   @Prop() category: string;
   @Prop() linkFormat?: string;
 
@@ -24,7 +24,8 @@ export class ManifoldTemplateCard {
   onClick = (e: Event): void => {
     if (!this.linkFormat) {
       e.preventDefault();
-      this.cardClicked.emit({ label: this.category });
+      const detail: EventDetail = { category: this.category };
+      this.templateClick.emit(detail);
     }
   };
 
