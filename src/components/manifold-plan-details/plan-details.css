@@ -75,6 +75,8 @@
 .features {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 1rem;
+  margin-bottom: 0;
   font-size: var(--mf-font-d1);
 }
 
@@ -103,6 +105,23 @@
 
 .icon {
   display: none;
+}
+
+.region {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: var(--mf-font-d1);
+  border-top: 1px dotted var(--mf-c-gray-t3);
+  border-bottom: 1px dotted var(--mf-c-gray-t3);
+}
+
+.region-label {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
 }
 
 .value {

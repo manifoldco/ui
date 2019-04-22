@@ -38,6 +38,7 @@ describe(`<manifold-plan-details>`, () => {
       planId: '235exy25wvzpxj52p87bh87gbnj4y',
       planLabel: 'custom',
       productLabel: 'jawsdb-mysql',
+      regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
   });
 
@@ -59,6 +60,7 @@ describe(`<manifold-plan-details>`, () => {
       planId: '235exy25wvzpxj52p87bh87gbnj4y',
       planLabel: 'custom',
       productLabel: 'jawsdb-mysql',
+      regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
   });
 
@@ -78,6 +80,7 @@ describe(`<manifold-plan-details>`, () => {
       planId: '235exy25wvzpxj52p87bh87gbnj4y',
       planLabel: 'custom',
       productLabel: 'jawsdb-mysql',
+      regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
   });
 });

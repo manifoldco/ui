@@ -947,6 +947,10 @@ defineCustomElements(window);</code></pre>
       <script>
         hljs.initHighlightingOnLoad();
 
+        document.addEventListener('manifold-planSelector-load', e => console.log(e.detail));
+        document.addEventListener('manifold-planSelector-change', e => console.log(e.detail));
+        document.addEventListener('manifold-planSelector-click', e => console.log(e.detail));
+
         document
           .querySelector('manifold-marketplace')
           .addEventListener('manifold-marketplace-click', e => {
