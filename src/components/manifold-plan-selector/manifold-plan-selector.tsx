@@ -28,11 +28,11 @@ export class ManifoldPlanSelector {
       .then(response => response.json())
       .then((products: Catalog.ExpandedProduct[]) => {
         const [product] = products;
-        this.product = product
+        this.product = product;
         fetch(`${this.connection.catalog}/plans/?product_id=${product.id}`)
           .then(response => response.json())
           .then((plans: Catalog.ExpandedPlan[]) => {
-            this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)]
+            this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)];
           });
       });
   }

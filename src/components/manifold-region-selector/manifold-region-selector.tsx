@@ -13,6 +13,7 @@ export class ManifoldRegionSelector {
   @Prop() ariaLabel: string;
   @Prop() connection: Connection = connections.prod;
   @Prop() name: string;
+  @Prop() value?: string;
   @State() globalRegion: Catalog.Region = globalRegion;
   @State() regions?: Catalog.Region[];
   @Event() change: EventEmitter;
@@ -21,7 +22,8 @@ export class ManifoldRegionSelector {
     return fetch(`${this.connection.catalog}/regions`, withAuth())
       .then(response => response.json())
       .then((regions: Catalog.Region[]) => {
-        this.regions = regions;
+        // Sorting is important
+        this.regions = [...regions].sort((a, b) => a.body.name.localeCompare(b.body.name));
         // Set global region (the one in src/data is just a fallback; we should always grab live)
         const global = this.regions.find(({ body: { location } }) => location === 'global');
         if (global) this.globalRegion = global;
@@ -33,14 +35,8 @@ export class ManifoldRegionSelector {
   };
 
   filterRegions(regions: Catalog.Region[]): Catalog.Region[] {
-    const regionMap: { [index: string]: Catalog.Region } = regions.reduce(
-      (map, region) => ({
-        ...map,
-        [region.id]: region,
-      }),
-      {}
-    );
-    const filtered = this.allowedRegions.map(id => regionMap[id]);
+    if (!this.regions) return [this.globalRegion];
+    const filtered = regions.filter(({ id }) => this.allowedRegions.includes(id));
     return filtered.length > 1 ? filtered : [this.globalRegion];
   }
 
@@ -59,7 +55,7 @@ export class ManifoldRegionSelector {
         aria-label={this.ariaLabel}
         name={this.name}
         onUpdateValue={this.handleChange}
-        defaultValue={this.allowedRegions[0]}
+        defaultValue={this.value}
         options={this.regionOptions(regions)}
       />
     ) : (

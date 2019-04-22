@@ -198,6 +198,7 @@ export class ManifoldPlanDetails {
           ariaLabel={name}
           name={name}
           onChange={e => this.handleChangeRegion(e)}
+          value={this.regionId}
         />
       </div>
     );

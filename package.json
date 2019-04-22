@@ -61,6 +61,7 @@
     }
   ],
   "devDependencies": {
+    "@ctrl/ts-base32": "^1.1.0",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
     "@stencil/core": "^0.18.0",
@@ -71,6 +72,7 @@
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
     "bundlesize": "^0.17.1",
+    "crypto": "^1.0.1",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
