@@ -697,7 +697,7 @@ defineCustomElements(window);</code></pre>
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-plan-selector product-label="aiven-elasticsearch" />
+                <manifold-plan-selector product-label="logdna" />
               </div>
             </div>
           </section>
@@ -1056,6 +1056,7 @@ document.querySelector('manifold-data-provision-button').regionId = regionId;
           btn.productLabel = detail.productLabel;
           btn.planId = detail.planId;
           btn.resourceName = detail.planLabel;
+          if (btn.features && Object.keys(btn.features)) btn.features = detail.features;
           if (detail.regionId) btn.regionId = detail.regionId;
         }
 

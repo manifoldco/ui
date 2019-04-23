@@ -117,10 +117,14 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
+    'features': UserFeatures;
+    'planId': string;
+    'productId': string;
     /**
     * Product to provision (slug)
     */
     'productLabel': string;
+    'regionId'?: string;
     /**
     * Name of new resource
     */
@@ -131,10 +135,14 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    'features'?: UserFeatures;
+    'planId'?: string;
+    'productId'?: string;
     /**
     * Product to provision (slug)
     */
     'productLabel'?: string;
+    'regionId'?: string;
     /**
     * Name of new resource
     */

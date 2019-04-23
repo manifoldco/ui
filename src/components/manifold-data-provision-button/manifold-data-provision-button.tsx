@@ -1,9 +1,8 @@
-import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import { Component, Prop, Element, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
-import newID from '../../utils/new-id';
 
 /* eslint-disable no-console */
 
@@ -16,10 +15,10 @@ export class ManifoldDataProvisionButton {
   @Prop() productLabel: string;
   /** Name of new resource */
   @Prop() resourceName: string;
-  @State() features: UserFeatures = {};
-  @State() planId: string = '';
-  @State() productId: string = '';
-  @State() regionId?: string = globalRegion.id;
+  @Prop() features: UserFeatures = {};
+  @Prop() planId: string = '';
+  @Prop({ mutable: true }) productId: string = '';
+  @Prop() regionId?: string = globalRegion.id;
   @Watch('productLabel') productLabelChanged(newLabel: string) {
     this.fetchProductId(newLabel);
   }
@@ -29,29 +28,24 @@ export class ManifoldDataProvisionButton {
   }
 
   provision() {
-    const id = newID('resource');
-
-    const body = {
-      id,
-      type: 'operation',
-      version: 1,
-      body: {
-        features: this.features,
-        label: this.resourceName,
-        message: '',
-        name: this.resourceName,
-        product_id: this.productId,
-        region_id: this.regionId,
-        state: 'provision',
-        type: 'provision',
-        user_id: '',
+    const body: Gateway.ResourceCreateRequest = {
+      label: this.resourceName,
+      owner: {
+        id: '',
+        type: 'user',
       },
+      plan_id: this.planId,
+      product_id: this.productId,
+      region_id: this.regionId,
+      source: 'catalog',
     };
 
+    if (Object.keys(this.features).length) body.features = this.features;
+
     fetch(
-      `${this.connection.provisioning}/operations/${id}`,
+      `${this.connection.gateway}/resource/`,
       withAuth({
-        method: 'PUT',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })

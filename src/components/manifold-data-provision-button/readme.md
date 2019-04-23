@@ -46,11 +46,15 @@ document.querySelector('manifold-data-provision-button').regionId = regionId;
 
 ## Properties
 
-| Property       | Attribute       | Description                                  | Type         | Default            |
-| -------------- | --------------- | -------------------------------------------- | ------------ | ------------------ |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection` | `connections.prod` |
-| `productLabel` | `product-label` | Product to provision (slug)                  | `string`     | `undefined`        |
-| `resourceName` | `resource-name` | Name of new resource                         | `string`     | `undefined`        |
+| Property       | Attribute       | Description                                  | Type                  | Default            |
+| -------------- | --------------- | -------------------------------------------- | --------------------- | ------------------ |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection`          | `connections.prod` |
+| `features`     | --              |                                              | `UserFeatures`        | `{}`               |
+| `planId`       | `plan-id`       |                                              | `string`              | `''`               |
+| `productId`    | `product-id`    |                                              | `string`              | `''`               |
+| `productLabel` | `product-label` | Product to provision (slug)                  | `string`              | `undefined`        |
+| `regionId`     | `region-id`     |                                              | `string \| undefined` | `globalRegion.id`  |
+| `resourceName` | `resource-name` | Name of new resource                         | `string`              | `undefined`        |
 
 
 ----------------------------------------------

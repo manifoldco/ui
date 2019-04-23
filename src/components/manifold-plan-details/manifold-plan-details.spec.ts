@@ -24,6 +24,22 @@ describe(`<manifold-plan-details>`, () => {
     });
   });
 
+  it('filters out non-custom features', () => {
+    const planDetails = new PlanDetails();
+    planDetails.plan = ExpandedPlanCustom;
+    planDetails.product = Product;
+
+    expect(
+      planDetails.customFeatures({
+        non_custom1: 'yes',
+        non_custom2: 'yes',
+        instance_class: 'db.t2.micro',
+        redundancy: false,
+        storage: 5,
+      })
+    ).toEqual({ instance_class: 'db.t2.micro', redundancy: false, storage: 5 });
+  });
+
   it('dispatches load event', () => {
     const planDetails = new PlanDetails();
     planDetails.plan = ExpandedPlanCustom;

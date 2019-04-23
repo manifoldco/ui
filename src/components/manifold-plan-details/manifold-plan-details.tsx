@@ -39,7 +39,7 @@ export class ManifoldPlanDetails {
       planId: newPlan.id,
       planLabel: newPlan.body.label,
       productLabel: this.product && this.product.body.label,
-      features,
+      features: this.customFeatures(features), // We need all features for plan cost, but only need to expose the custom ones
       regionId: this.regionId,
     };
     this.planUpdate.emit(detail);
@@ -55,7 +55,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
-        features,
+        features: this.customFeatures(features),
         regionId: this.regionId,
       };
       this.planLoad.emit(detail);
@@ -71,7 +71,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
-        features,
+        features: this.customFeatures(features),
         regionId: this.regionId,
       };
       this.planUpdate.emit(detail);
@@ -86,7 +86,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
-        features: this.features,
+        features: this.customFeatures(this.features),
         regionId: e.detail.value,
       };
       this.planUpdate.emit(detail);
@@ -96,6 +96,15 @@ export class ManifoldPlanDetails {
   initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
     if (!plan || !plan.body.expanded_features) return {};
     return { ...initialFeatures(plan.body.expanded_features) };
+  }
+
+  customFeatures(features: UserFeatures): UserFeatures {
+    if (!this.plan || !this.plan.body.expanded_features) return features;
+    const customFeatures = features;
+    this.plan.body.expanded_features.forEach(({ customizable, label }) => {
+      if (!customizable && customFeatures[label]) delete customFeatures[label];
+    });
+    return features;
   }
 
   get ctaLink() {
