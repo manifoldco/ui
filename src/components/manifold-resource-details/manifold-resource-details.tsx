@@ -12,17 +12,35 @@ export class ManifoldResourceDetails {
   /** ID of resource */
   @Prop() resourceId: string;
   @State() resource?: Marketplace.Resource;
+  @State() plan?: Catalog.Plan;
 
-  componentWillLoad() {
-    return fetch(`${this.connection.marketplace}/resources/${this.resourceId}`, withAuth())
-      .then(response => response.json())
-      .then((resource: Marketplace.Resource) => {
-        this.resource = resource;
-      });
+  async componentWillLoad() {
+    // get resource data
+    const resourceResponse = await fetch(
+      `${this.connection.marketplace}/resources/${this.resourceId}`,
+      withAuth()
+    );
+    const resource = await resourceResponse.json();
+    this.resource = { ...resource };
+
+    // get plan data
+    if (this.resource) {
+      const planResponse = await fetch(
+        `${this.connection.catalog}/plans/${this.resource.body.plan_id}`,
+        withAuth()
+      );
+      const plan = await planResponse.json();
+      this.plan = { ...plan };
+    }
   }
 
   render() {
-    return <div>{JSON.stringify(this.resource)}</div>;
+    return (
+      <div>
+        Resource: <pre>{JSON.stringify(this.resource, null, 2)}</pre>
+        Plan: <pre>{JSON.stringify(this.plan, null, 2)}</pre>
+      </div>
+    );
   }
 }
 
