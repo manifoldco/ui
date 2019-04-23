@@ -100,11 +100,13 @@ export class ManifoldPlanDetails {
 
   customFeatures(features: UserFeatures): UserFeatures {
     if (!this.plan || !this.plan.body.expanded_features) return features;
-    const customFeatures = features;
-    this.plan.body.expanded_features.forEach(({ customizable, label }) => {
-      if (!customizable && customFeatures[label]) delete customFeatures[label];
+    const { expanded_features } = this.plan.body;
+    const customFeatures = { ...features };
+    Object.entries(customFeatures).forEach(([label]) => {
+      const feature = expanded_features.find(f => f.label === label);
+      if (!feature || !feature.customizable) delete customFeatures[label];
     });
-    return features;
+    return customFeatures;
   }
 
   get ctaLink() {
