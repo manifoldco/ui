@@ -53,13 +53,13 @@ export namespace Components {
     'baseCost'?: number;
     'compact'?: boolean;
     'isCustomizable'?: boolean;
-    'measuredCosts': [number, string][];
+    'measuredFeatures': Catalog.ExpandedFeature[];
   }
   interface ManifoldCostDisplayAttributes extends StencilHTMLAttributes {
     'baseCost'?: number;
     'compact'?: boolean;
     'isCustomizable'?: boolean;
-    'measuredCosts'?: [number, string][];
+    'measuredFeatures'?: Catalog.ExpandedFeature[];
   }
 
   interface ManifoldDataProductLogo {

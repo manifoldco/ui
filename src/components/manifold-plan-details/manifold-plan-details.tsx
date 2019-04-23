@@ -19,7 +19,7 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldPlanDetails {
-  @Prop() isExistingResource?: boolean;
+  @Prop() isExistingResource?: boolean = false;
   @Prop() hideCta?: boolean = false;
   @Prop() linkFormat?: string;
   @Prop() plan?: Catalog.ExpandedPlan;
@@ -181,7 +181,13 @@ export class ManifoldPlanDetails {
   get regionSelector() {
     if (!this.plan) return null;
 
+    // Don’t show the non-region
+    if (this.plan.body.regions.length === 1 && this.plan.body.regions[0] === globalRegion.id) {
+      return null;
+    }
+
     const name = `${this.plan.body.label}-region`;
+
     return (
       <div class="region">
         <label class="region-label" id={name}>

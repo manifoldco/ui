@@ -962,6 +962,10 @@ defineCustomElements(window);</code></pre>
             const productPage = document.createElement('manifold-product');
             productPage.productLabel = e.detail.productLabel;
             modal.appendChild(productPage);
+            const planSelector = document.createElement('manifold-plan-selector');
+            planSelector.productLabel = e.detail.productLabel;
+            planSelector.style.marginTop = 32;
+            modal.appendChild(planSelector);
             document.body.appendChild(overlay);
 
             modal.addEventListener('click', e => {

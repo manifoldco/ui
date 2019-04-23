@@ -23,6 +23,7 @@ import {
   numberFeatureDefaultValue,
   numberFeatureDisplayValue,
   numberFeatureMeasurableDisplayValue,
+  oneCent,
   pricingTiers,
   stringFeatureDefaultValue,
   stringFeatureDisplayValue,
@@ -58,10 +59,9 @@ describe('display value methods', () => {
     ));
   it('measurable number features return cost when flat cost', () =>
     expect(numberFeatureMeasurableDisplayValue(NumberFeatureMeasurableValuePaid)).toContain('$'));
-  it('measurable number features display range when pricing tiers', () =>
-    // Drew: this test is a bit snapshot-y, but still valuable IMO
+  it('measurable number features return undefined when pricing tiers', () =>
     expect(numberFeatureMeasurableDisplayValue(NumberFeatureMeasurableValueTiered)).toBe(
-      '0–9 hour: free / 10–99 hour: $0.90 / 100–199 hour: $0.60 / 200–299 hour: $0.50 / 300–399 hour: $0.30 / 400+ hour: $0.25'
+      undefined
     ));
   it('boolean features return “Yes” when true', () =>
     expect(booleanFeatureDisplayValue(BooleanFeatureStaticTrue.value)).toBe('Yes'));
@@ -78,15 +78,39 @@ describe('cost utilities', () => {
     expect(featureCost(price)).toBe(price / ten / million);
   });
 
+  it('oneCent returns the number of features it takes to equal $0.01', () => {
+    const price = 5000;
+    const ten = 10;
+    const million = 1000000;
+    expect(oneCent(price)).toBe(Math.ceil((ten * million) / price));
+  });
+
   it('sorts & returns pricing tiers for complex measured features', () =>
     expect(pricingTiers(NumberFeatureMeasurableValueTiered)).toEqual([
-      { cost: 0, limit: 10, suffix: 'hour' },
-      { cost: 90, limit: 100, suffix: 'hour' },
-      { cost: 60, limit: 200, suffix: 'hour' },
-      { cost: 50, limit: 300, suffix: 'hour' },
-      { cost: 30, limit: 400, suffix: 'hour' },
-      { cost: 25, limit: -1, suffix: 'hour' },
+      { cost: 0, from: 0, per: 1, suffix: 'hour', to: 10 },
+      { cost: 900000000, from: 11, per: 1, suffix: 'hour', to: 100 },
+      { cost: 600000000, from: 101, per: 1, suffix: 'hour', to: 200 },
+      { cost: 500000000, from: 201, per: 1, suffix: 'hour', to: 300 },
+      { cost: 300000000, from: 301, per: 1, suffix: 'hour', to: 400 },
+      { cost: 250000000, from: 401, per: 1, suffix: 'hour', to: Infinity },
     ]));
+
+  it('pricingTiers converts seconds for display', () => {
+    const ziggeo = {
+      label: 'pro-seconds',
+      name: 'Pro Seconds',
+      numeric_details: {
+        cost_ranges: [{ limit: 210000 }, { cost_multiple: 200000, limit: -1 }],
+        increment: 1,
+        suffix: 'Seconds',
+      },
+    };
+
+    expect(pricingTiers(ziggeo)).toEqual([
+      { cost: 0, from: 0, per: 1, suffix: 'hour', to: 58 },
+      { cost: 720000000, from: 58, per: 1, suffix: 'hour', to: Infinity },
+    ]);
+  });
 });
 
 describe('other plan methods', () => {

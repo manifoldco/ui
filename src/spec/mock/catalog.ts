@@ -18,7 +18,11 @@ interface TNumberFeature extends Catalog.ExpandedFeature {
 }
 
 interface TNumberFeatureDetails extends Catalog.FeatureValueDetails {
-  numeric_details: Catalog.FeatureNumericDetails;
+  numeric_details: TNumberNumericDetails;
+}
+
+interface TNumberNumericDetails extends Catalog.FeatureNumericDetails {
+  cost_ranges: Catalog.FeatureNumericRange[];
 }
 
 export const StringFeatureStatic: TExpandedFeature = {
@@ -122,7 +126,7 @@ export const NumberFeatureMeasurableValuePaid: TNumberFeatureDetails = {
 export const NumberFeatureMeasurableValueUnavailable: TNumberFeatureDetails = {
   label: 'too-expensive-4u',
   name: 'No GPU',
-  numeric_details: { increment: 1, suffix: 'hour' },
+  numeric_details: { cost_ranges: [], increment: 1, suffix: 'hour' },
 };
 
 export const NumberFeatureMeasurableValueTiered: TNumberFeatureDetails = {
@@ -743,3 +747,500 @@ export const Regions: Catalog.Region[] = [
     version: 1,
   },
 ];
+
+export const ZiggeoPlan: Catalog.ExpandedPlan = {
+  body: {
+    cost: 99900,
+    features: [
+      { feature: 'recording_sd', value: 'enterprise-seconds' },
+      { feature: 'recording_hd', value: 'enterprise-seconds' },
+      { feature: 'playing_sd', value: 'enterprise-seconds' },
+      { feature: 'playing_hd', value: 'enterprise-seconds' },
+      { feature: 'storage_sd', value: 'enterprise-seconds' },
+      { feature: 'storage_hd', value: 'enterprise-seconds' },
+      { feature: 'effects_sd', value: 'enterprise-seconds' },
+      { feature: 'effects_hd', value: 'enterprise-seconds' },
+      { feature: 'analysis', value: 'enterprise-seconds' },
+      { feature: 'secure-video-access', value: 'true' },
+      { feature: 'screen-capture', value: 'true' },
+      { feature: 'video-profiles', value: 'true' },
+      { feature: 'nsfw-detection', value: 'true' },
+      { feature: 'sub-accounts', value: 'unlimited' },
+      { feature: 'on-the-fly-transcoding', value: 'true' },
+      { feature: 'webhooks', value: 'true' },
+      { feature: '3rd-party-integrations', value: 'true' },
+      { feature: 'easy-share', value: 'true' },
+    ],
+    label: 'enterprise',
+    name: 'Enterprise',
+    product_id: '234yycr3mf5f2hrw045vuxeatnd50',
+    provider_id: '234a33rd2pxfzq9qfk0v5qdrykhcp',
+    regions: ['235n4f9pxf8eyraj3y159x89z6jer'],
+    state: 'available',
+    trial_days: 0,
+    defaultCost: 99900,
+    expanded_features: [
+      {
+        label: 'recording_sd',
+        measurable: true,
+        name: 'Video Recorder - SD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-seconds',
+            name: 'Standard Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 202680 }, { cost_multiple: 300000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 210000 }, { cost_multiple: 200000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 666660 }, { cost_multiple: 150000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 666660 }, { cost_multiple: 150000, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'recording_hd',
+        measurable: true,
+        name: 'Video Recorder - HD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-no-recording',
+            name: 'No Recording',
+            numeric_details: { cost_ranges: [], suffix: 'Seconds' },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 125640 }, { cost_multiple: 400000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 422520 }, { cost_multiple: 300000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 422520 }, { cost_multiple: 300000, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'playing_sd',
+        measurable: true,
+        name: 'Video Player - SD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-seconds',
+            name: 'Standard Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 1014000 }, { cost_multiple: 11667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 807000 }, { cost_multiple: 6667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 3000000 }, { cost_multiple: 6667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 3000000 }, { cost_multiple: 6667, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'playing_hd',
+        measurable: true,
+        name: 'Video Player - HD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-no-playing',
+            name: 'No Playing',
+            numeric_details: { cost_ranges: [], suffix: 'Seconds' },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 750000 }, { cost_multiple: 13334, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 2064840 }, { cost_multiple: 11667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 2064840 }, { cost_multiple: 11667, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'storage_sd',
+        measurable: true,
+        name: 'Video Storage - SD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-seconds',
+            name: 'Standard Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 1216560 }, { cost_multiple: 21667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 1333320 }, { cost_multiple: 15000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 3000000 }, { cost_multiple: 10000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 3000000 }, { cost_multiple: 10000, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'storage_hd',
+        measurable: true,
+        name: 'Video Storage - HD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-no-storage',
+            name: 'No Storage',
+            numeric_details: { cost_ranges: [], suffix: 'Seconds' },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 717300 }, { cost_multiple: 30000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 3150420 }, { cost_multiple: 21667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 3150420 }, { cost_multiple: 21667, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'effects_sd',
+        measurable: true,
+        name: 'Video Effects - SD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-no-effects',
+            name: 'No Effects',
+            numeric_details: { cost_ranges: [], suffix: 'Seconds' },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 191280 }, { cost_multiple: 333334, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 511740 }, { cost_multiple: 250000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 511740 }, { cost_multiple: 250000, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'effects_hd',
+        measurable: true,
+        name: 'Video Effects - HD',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-no-effects',
+            name: 'No Effects',
+            numeric_details: { cost_ranges: [], suffix: 'Seconds' },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 135000 }, { cost_multiple: 666667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 499980 }, { cost_multiple: 500000, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 499980 }, { cost_multiple: 500000, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'analysis',
+        measurable: true,
+        name: 'A.I. Video Analysis',
+        type: 'number',
+        values: [
+          {
+            label: 'standard-no-analysis',
+            name: 'No Analysis',
+            numeric_details: { cost_ranges: [], suffix: 'Seconds' },
+          },
+          {
+            label: 'pro-seconds',
+            name: 'Pro Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 230640 }, { cost_multiple: 416667, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+          {
+            label: 'enterprise-seconds',
+            name: 'Enterprise Seconds',
+            numeric_details: {
+              cost_ranges: [{ limit: 755880 }, { cost_multiple: 333334, limit: -1 }],
+              increment: 1,
+              suffix: 'Seconds',
+            },
+          },
+        ],
+        value: {
+          label: 'enterprise-seconds',
+          name: 'Enterprise Seconds',
+          numeric_details: {
+            cost_ranges: [{ limit: 755880 }, { cost_multiple: 333334, limit: -1 }],
+            increment: 1,
+            suffix: 'Seconds',
+          },
+        },
+        value_string: 'Enterprise Seconds',
+      },
+      {
+        label: 'secure-video-access',
+        name: 'Secure Video Access',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: 'screen-capture',
+        name: 'Screen Capture',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: 'video-profiles',
+        name: 'Video Profiles',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: 'nsfw-detection',
+        name: 'Not - Safe for Work Detection',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: 'sub-accounts',
+        name: 'Sub Accounts',
+        type: 'string',
+        values: [
+          { label: 'none', name: 'None' },
+          { label: 'five-shared-apps', name: 'Up to 5 shared apps only' },
+          { label: 'unlimited', name: 'Unlimited' },
+        ],
+        value: { label: 'unlimited', name: 'Unlimited' },
+        value_string: 'Unlimited',
+      },
+      {
+        label: 'on-the-fly-transcoding',
+        name: 'On Fly Transcoding',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: 'webhooks',
+        name: 'Webhooks',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: '3rd-party-integrations',
+        name: '3rd Party Integrations',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+      {
+        label: 'easy-share',
+        name: 'Easy Share',
+        type: 'boolean',
+        values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+      },
+    ],
+    free: false,
+  },
+  id: '235f9mmmc7qg4h5zzg8mrqxer5acp',
+  type: 'plan',
+  version: 1,
+};

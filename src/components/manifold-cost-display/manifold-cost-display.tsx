@@ -1,5 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { $ } from '../../utils/currency';
+import { numberFeatureMeasurableDisplayValue } from '../../utils/plan';
 
 @Component({ tag: 'manifold-cost-display', styleUrl: 'manifold-cost-display.css', shadow: true })
 export class ManifoldCostDisplay {
@@ -7,11 +8,7 @@ export class ManifoldCostDisplay {
   @Prop() baseCost?: number;
   @Prop() compact?: boolean = false;
   @Prop() isCustomizable?: boolean = false;
-  @Prop() measuredCosts: [number, string][] = [];
-
-  get isMeasurable() {
-    return this.measuredCosts.length > 0;
-  }
+  @Prop() measuredFeatures: Catalog.ExpandedFeature[] = [];
 
   get isFreeMonthly() {
     return this.baseCost === 0;
@@ -20,36 +17,45 @@ export class ManifoldCostDisplay {
   renderBaseCost(): JSX.Element | null {
     if (typeof this.baseCost !== 'number') return null;
     // If there are measurable costs but no monthly cost, only show measurable
-    if (this.isFreeMonthly && this.measuredCosts.length > 0) return null;
+    if (this.isFreeMonthly && this.measuredFeatures.length > 0) return null;
 
     if (this.isFreeMonthly) {
       // Show the badge for compact, large text otherwise
       return this.compact ? <manifold-badge>Free</manifold-badge> : 'Free';
     }
-    // $5.00 / mo
+    // $5 / mo
     return this.compact ? $(this.baseCost) : [$(this.baseCost), <small>&nbsp;/&nbsp;mo</small>];
   }
 
   renderMeasurableCosts() {
-    return this.measuredCosts.map(([cost, suffix], index) => {
-      const shouldShowPlus = (index === 0 && !this.isFreeMonthly) || index > 0;
-      return [
-        shouldShowPlus ? <span>&nbsp;+&nbsp;</span> : '',
-        $(cost),
-        <small>&nbsp;/&nbsp;{suffix}</small>,
-      ];
-    });
+    if (this.measuredFeatures.length !== 1) return null;
+
+    const [{ value }] = this.measuredFeatures;
+    if (!value) return null;
+    const displayString = numberFeatureMeasurableDisplayValue(value) || '';
+    const output: (JSX.Element)[] = this.isFreeMonthly ? [] : [' + '];
+    if (displayString.indexOf('per') > 0) {
+      const [cost, suffix] = displayString.split(' per ');
+      output.push(cost);
+      output.push(<small>&nbsp;per&nbsp;{suffix}</small>);
+    } else {
+      const [cost, suffix] = displayString.split(' / ');
+      output.push(cost);
+      output.push(<small>&nbsp;/&nbsp;{suffix}</small>);
+    }
+    return output;
   }
 
   render() {
     if (typeof this.baseCost !== 'number') return <div class="cost" />;
 
+    // Show “starting at” either if customizable, or too many metered features to display
+    const startingAt = (this.compact && this.isCustomizable) || this.measuredFeatures.length > 1;
+
     return (
       <div class="cost" data-compact={this.compact}>
         <span itemprop="price">
-          {this.compact && this.isCustomizable && !this.isMeasurable && (
-            <span class="starting">Starting at</span>
-          )}
+          {startingAt && <span class="starting">Starting at</span>}
           {this.renderBaseCost()}
           {this.renderMeasurableCosts()}
         </span>

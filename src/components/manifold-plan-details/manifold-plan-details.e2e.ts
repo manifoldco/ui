@@ -9,6 +9,8 @@ import {
   Product,
   StringFeatureCustom,
   StringFeatureStatic,
+  Regions,
+  ZiggeoPlan,
 } from '../../spec/mock/catalog';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
@@ -168,7 +170,75 @@ describe(`<manifold-plan-details>`, () => {
       const toggle = await page.find('manifold-plan-details >>> manifold-toggle');
       expect(toggle).not.toBeNull();
     });
+  });
 
+  describe('measurable features', () => {
+    it('shows table if too many pricing tiers', async () => {
+      const page = await newE2EPage({
+        html: '<manifold-plan-details />',
+      });
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.plan = props.plan;
+        },
+        { product: Product, plan: ZiggeoPlan }
+      );
+      await page.waitForChanges();
+      expect(await page.find('manifold-plan-details >>> table')).not.toBeNull();
+    });
+  });
+
+  describe('regions', () => {
+    it('shows the region selector when there are regions', async () => {
+      const page = await newE2EPage({
+        html: '<manifold-plan-details />',
+      });
+      const plan: Catalog.ExpandedPlan = {
+        ...ExpandedPlan,
+        body: { ...ExpandedPlan.body, regions: [Regions[0].id, Regions[1].id] },
+      };
+
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.plan = props.plan;
+        },
+        { product: Product, plan }
+      );
+      await page.waitForChanges();
+
+      expect(await page.find('manifold-plan-details >>> manifold-region-selector')).not.toBeNull();
+    });
+
+    it('hides the region selector when the only region is global', async () => {
+      const page = await newE2EPage({
+        html: '<manifold-plan-details />',
+      });
+      const global = Regions.find(({ body: { location } }) => location === 'global') || { id: '' };
+
+      const plan: Catalog.ExpandedPlan = {
+        ...ExpandedPlan,
+        body: { ...ExpandedPlan.body, regions: [global.id] },
+      };
+
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.plan = props.plan;
+        },
+        { product: Product, plan }
+      );
+      await page.waitForChanges();
+
+      expect(await page.find('manifold-plan-details >>> manifold-region-selector')).toBeNull();
+    });
+  });
+
+  describe('other props', () => {
     it('cta is shown by default', async () => {
       const page = await newE2EPage({ html: `<manifold-plan-details />` });
 
@@ -189,19 +259,15 @@ describe(`<manifold-plan-details>`, () => {
     });
 
     it('cta button hides with prop', async () => {
-      const page = await newE2EPage({
-        html: `<manifold-plan-details />`,
-      });
-
-      const props = { plan: booleanPlanCustom, product: Product };
+      const page = await newE2EPage({ html: `<manifold-plan-details />` });
       await page.$eval(
         'manifold-plan-details',
-        (elm: any, { plan, product }: any) => {
-          elm.plan = plan;
-          elm.product = product;
+        (elm: any, props: any) => {
+          elm.plan = props.plan;
+          elm.product = props.product;
           elm.hideCta = true;
         },
-        props
+        { plan: booleanPlanCustom, product: Product }
       );
 
       await page.waitForChanges();
@@ -211,28 +277,21 @@ describe(`<manifold-plan-details>`, () => {
     });
 
     it('formats links correctly', async () => {
-      // Set properties and wait
-      const page = await newE2EPage({
-        html: '<manifold-plan-details />',
-      });
-      await page.$eval('manifold-plan-details', (elm: any) => {
-        elm.product = { body: { label: 'cloudcube' } };
-        elm.plan = {
-          body: {
-            label: 'venture',
-            expanded_features: [
-              { type: 'number', label: 'storage', value: { numeric_details: { min: 500 } } },
-              { type: 'boolean', label: 'highAvailability', value: { label: 'true' } },
-            ],
-          },
-        };
-        elm.linkFormat = '/create/:product/?plan=:plan&:features';
-      });
+      const page = await newE2EPage({ html: '<manifold-plan-details />' });
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.plan = props.plan;
+          elm.linkFormat = '/create/:product/?plan=:plan&:features';
+        },
+        { product: Product, plan: ExpandedPlan }
+      );
       await page.waitForChanges();
 
       const el = await page.find('manifold-plan-details >>> manifold-link-button');
       expect(await el.getProperty('href')).toBe(
-        '/create/cloudcube/?plan=venture&storage=500&highAvailability=true'
+        '/create/jawsdb-mysql/?plan=kitefin&region=us-east-1&storage=5&redundancy=false'
       );
     });
   });

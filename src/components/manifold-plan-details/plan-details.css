@@ -98,9 +98,21 @@
   font-size: var(--mf-font-d1);
 }
 
-.feature-value {
-  display: grid;
-  justify-content: start;
+.feature-table {
+  width: 100%;
+  min-width: 100%;
+  line-height: 1;
+  border-collapse: collapse;
+
+  & td {
+    width: 50%;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  & tr:nth-of-type(odd) td {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
 }
 
 .icon {
