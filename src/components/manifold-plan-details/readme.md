@@ -10,7 +10,7 @@
 | Property             | Attribute              | Description | Type                        | Default     |
 | -------------------- | ---------------------- | ----------- | --------------------------- | ----------- |
 | `hideCta`            | `hide-cta`             |             | `boolean \| undefined`      | `false`     |
-| `isExistingResource` | `is-existing-resource` |             | `boolean \| undefined`      | `undefined` |
+| `isExistingResource` | `is-existing-resource` |             | `boolean \| undefined`      | `false`     |
 | `linkFormat`         | `link-format`          |             | `string \| undefined`       | `undefined` |
 | `plan`               | --                     |             | `ExpandedPlan \| undefined` | `undefined` |
 | `product`            | --                     |             | `Product \| undefined`      | `undefined` |

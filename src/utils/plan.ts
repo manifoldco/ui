@@ -2,11 +2,20 @@ import { Option } from 'types/Select';
 import { withAuth } from './auth';
 import { Connection } from './connections';
 import { $ } from './currency';
+import { pluralize } from './string';
 
 interface PlanCostOptions {
   planID: string;
   features: UserFeatures;
   init: RequestInit;
+}
+
+export interface PricingTier {
+  cost: number;
+  from: number;
+  to: number;
+  per: number;
+  suffix: string;
 }
 
 export const NO = 'No';
@@ -18,6 +27,18 @@ export const NUMBER_FEATURE_COIN = 10000000; // Numeric features are a ten-milli
  */
 export function featureCost(number: number) {
   return number / NUMBER_FEATURE_COIN;
+}
+
+/**
+ * For really, really, really cheap features that would normally display something awful like
+ * “$0.000002345 / unit”, this figures out a sane number to display something like “$0.02 per 4,000 units”.
+ */
+export function oneCent(number: number) {
+  const min = Math.ceil(NUMBER_FEATURE_COIN / number);
+  // If sorta tiny round to nearest thousand
+  if (min < 1000) return Math.ceil(min / 1000) * 1000;
+  // Otherwise, round to nearest hundred
+  return Math.ceil(min / 100) * 100;
 }
 
 /**
@@ -102,24 +123,59 @@ export function numberFeatureDefaultValue(value: Catalog.FeatureValueDetails): n
 /**
  * Calculate pricing tiers for metered features
  */
-export function pricingTiers({
-  numeric_details,
-}: Catalog.FeatureValueDetails): { cost: number; limit: number; suffix: string }[] {
+export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): PricingTier[] {
   if (!numeric_details) return [];
-  const suffix = numeric_details.suffix || '';
-  if (!Array.isArray(numeric_details.cost_ranges)) return [{ limit: -1, cost: 0, suffix }];
 
-  return numeric_details.cost_ranges
-    .sort((a, b) => {
-      if (a.limit === -1) return 1;
-      if (b.limit === -1) return -1;
-      return (a.limit || 0) - (b.limit || 0);
-    })
-    .map(({ cost_multiple, limit }) => ({
-      cost: featureCost(cost_multiple || 0),
-      limit: limit || -1,
+  // Features can be really, really (really) cheap. Let’s make things easier.
+  let per = 1;
+  const suffix = numeric_details.suffix || '';
+  if (!Array.isArray(numeric_details.cost_ranges))
+    return [{ from: 0, to: Infinity, cost: 0, suffix, per }];
+
+  const cheapestNonZeroCost = numeric_details.cost_ranges.reduce((cost, tier) => {
+    if (!tier.cost_multiple || tier.cost_multiple === 0) return cost;
+    return tier.cost_multiple < cost ? tier.cost_multiple : cost;
+  }, Infinity);
+
+  if (cheapestNonZeroCost < NUMBER_FEATURE_COIN) per = oneCent(cheapestNonZeroCost);
+
+  // Sort tiers, with -1 (Infinity) at the end
+  const sorted = numeric_details.cost_ranges.sort((a, b) => {
+    if (a.limit === -1) return 1;
+    if (b.limit === -1) return -1;
+    return (a.limit || 0) - (b.limit || 0);
+  });
+
+  return sorted.map(({ cost_multiple, limit }, i) => {
+    // Each tier starts at previous + 1 (not other way around)
+    let from = 0;
+    const lastTier = sorted[i - 1];
+    if (lastTier && typeof lastTier.limit === 'number') from = lastTier.limit + 1;
+
+    // Use Infinity rather than -1
+    let to = typeof limit === 'number' ? limit : Infinity;
+    if (to === -1) to = Infinity;
+
+    // Special case: convert seconds for users
+    if (suffix.toLowerCase() === 'seconds') {
+      const hours = 60 * 60;
+      return {
+        cost: (cost_multiple || 0) * hours,
+        from: Math.round(from / hours),
+        to: to === Infinity ? Infinity : Math.round(to / hours),
+        suffix: 'hour',
+        per: 1,
+      };
+    }
+
+    return {
+      cost: cost_multiple || 0,
+      from,
+      to,
       suffix,
-    }));
+      per,
+    };
+  });
 }
 
 /**
@@ -131,37 +187,27 @@ export function numberFeatureMeasurableDisplayValue(
   const { name, numeric_details } = value;
   if (!numeric_details) return undefined;
 
+  const withCommas = new Intl.NumberFormat().format;
+
   // Feature unavailable
   if (!Array.isArray(numeric_details.cost_ranges) || numeric_details.cost_ranges.length === 0)
     return name.replace(/^No .*/, NO).replace(/^Yes/, YES);
 
-  const suffix = numeric_details.suffix || '';
+  const tiers = pricingTiers(value);
 
   // Flat cost
-  if (numeric_details.cost_ranges.length === 1) {
-    const [first] = numeric_details.cost_ranges;
-    if (first.cost_multiple) {
-      return `${$(featureCost(first.cost_multiple))} / ${suffix}`;
-    }
-    return 'Free';
+  if (tiers.length === 1) {
+    const [{ cost, suffix, per }] = tiers;
+
+    if (cost === 0) return 'Free';
+
+    // If features are really really cheap, let’s make it more readable
+    if (per > 1) return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(suffix)}`;
+
+    return `${$(featureCost(cost))} / ${suffix}`;
   }
 
-  // Multiple tiers
-  // Sort in ascending limit order, but place -1 at the end
-  const sortedTiers = pricingTiers(value);
-
-  const withCommas = new Intl.NumberFormat().format;
-  return sortedTiers
-    .map(({ cost, limit }, index) => {
-      const lowEnd = index === 0 ? numeric_details.min : sortedTiers[index - 1].limit;
-      let highEnd = (limit && limit > 0 && limit) || '+';
-      if (typeof highEnd === 'number') highEnd = `–${withCommas(highEnd - 1)}`;
-      const spacedSuffix = suffix ? ` ${suffix}` : '';
-      return `${withCommas(lowEnd || 0)}${highEnd}${spacedSuffix}: ${
-        cost === 0 ? 'free' : $(cost)
-      }`;
-    })
-    .join(' / ');
+  return undefined;
 }
 
 /**

@@ -1,13 +1,7 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { Connection, connections } from '../../utils/connections';
-import {
-  planCost,
-  hasMeasurableFeatures,
-  hasCustomizableFeatures,
-  pricingTiers,
-  initialFeatures,
-} from '../../utils/plan';
+import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
@@ -20,7 +14,6 @@ export class ManifoldPlanCost {
   @Prop() selectedFeatures: UserFeatures = {};
   @State() controller?: AbortController;
   @State() baseCost?: number;
-  @State() measuredCosts: [number, string][] = [];
   @Watch('allFeatures') featuresChanged() {
     this.calculateCost();
   }
@@ -35,33 +28,26 @@ export class ManifoldPlanCost {
     return this.calculateCost();
   }
 
-  // Note: isCustomizable & isMeasurable are not mutually exclusive; a plan may be both
   get isCustomizable() {
     if (!Array.isArray(this.allFeatures)) return false;
     return hasCustomizableFeatures(this.allFeatures);
   }
 
-  get isMeasurable() {
-    if (!Array.isArray(this.allFeatures)) return false;
-    return hasMeasurableFeatures(this.allFeatures);
+  measuredFeatures(features: Catalog.ExpandedFeature[]): Catalog.ExpandedFeature[] {
+    return features
+      .filter(({ measurable }) => measurable === true)
+      .filter(({ value }) => {
+        if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) return false;
+        return value.numeric_details.cost_ranges.find(
+          ({ cost_multiple }) => typeof cost_multiple === 'number' && cost_multiple > 0
+        );
+      });
   }
 
   calculateCost() {
     const allFeatures = { ...initialFeatures(this.allFeatures), ...this.selectedFeatures };
 
-    // 1. Calculate metered pricing, if any
-    if (this.isMeasurable) {
-      const measurableFeatures = this.allFeatures.filter(({ measurable }) => !!measurable);
-      this.measuredCosts = measurableFeatures.reduce((allCosts, { value }): [number, string][] => {
-        if (!value || !value.numeric_details) return allCosts;
-        return [
-          ...allCosts,
-          [pricingTiers(value)[0].cost || 0, value.numeric_details.suffix || ''],
-        ];
-      }, []);
-    }
-
-    // 2. Fetch base cost from cost API (and cancel in-flight reqs)
+    // Fetch base cost from cost API (and cancel in-flight reqs)
     if (!this.planId) return Promise.resolve();
     // Hide display while calculating
     this.baseCost = undefined;
@@ -85,7 +71,7 @@ export class ManifoldPlanCost {
         baseCost={this.baseCost}
         compact={this.compact}
         isCustomizable={this.isCustomizable}
-        measuredCosts={this.measuredCosts}
+        measuredFeatures={this.measuredFeatures(this.allFeatures)}
       />
     );
   }

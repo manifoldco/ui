@@ -9,4 +9,5 @@ describe('singularize', () => {
 describe('pluralize', () => {
   it('pluralizes normal words with an “s”', () => expect(pluralize('moose')).toBe('mooses'));
   it('pluralizes words ending in “s” with “es“', () => expect(pluralize('class')).toBe('classes'));
+  it('pluralizes words ending in “y” with “ies“', () => expect(pluralize('piggy')).toBe('piggies'));
 });

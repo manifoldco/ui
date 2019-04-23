@@ -1,9 +1,14 @@
 import { FunctionalComponent } from '@stencil/core';
+import { check } from '@manifoldco/icons';
 import {
+  featureCost,
+  numberFeatureDefaultValue,
   numberFeatureDisplayValue,
   numberFeatureMeasurableDisplayValue,
-  numberFeatureDefaultValue,
+  pricingTiers,
 } from '../../../utils/plan';
+import { $ } from '../../../utils/currency';
+import { pluralize } from '../../../utils/string';
 import { LockedFeature } from './LockedFeature';
 
 interface NumberFeatureProps {
@@ -21,13 +26,48 @@ export const NumberFeature: FunctionalComponent<NumberFeatureProps> = ({
 }) => {
   if (!feature.value) return '';
 
+  const withCommas = new Intl.NumberFormat().format;
+
+  // measurable features
+  if (feature.measurable) {
+    const tiers = pricingTiers(feature.value);
+    if (tiers.length > 1) {
+      const [{ suffix, per }] = tiers;
+      return (
+        <table class="feature-table">
+          <tbody>
+            {tiers.map(({ from, to, cost }) => {
+              const unitDisplay = per === 1 ? ` / ${suffix}` : ` per ${withCommas(per)}`;
+
+              return (
+                <tr>
+                  <td>
+                    {withCommas(from)}
+                    {to === Infinity ? '+' : ` – ${withCommas(to)}`}
+                    {` ${pluralize(suffix)}`}
+                  </td>
+                  <td>{cost === 0 ? 'Free' : `${$(featureCost(cost * per))}${unitDisplay}`}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      );
+    }
+  }
+
   const displayValue = feature.measurable
     ? numberFeatureMeasurableDisplayValue(feature.value)
     : numberFeatureDisplayValue(feature.value);
 
   // standard feature
   if (!feature.customizable) {
-    return displayValue || '';
+    return (
+      <span class="value" data-value={displayValue}>
+        <manifold-icon class="icon" icon={check} marginRight />
+        {displayValue || ''}
+      </span>
+    );
   }
 
   // locked feature
