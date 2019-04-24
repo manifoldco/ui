@@ -14,6 +14,7 @@
 | `linkFormat`         | `link-format`          |             | `string \| undefined`       | `undefined` |
 | `plan`               | --                     |             | `ExpandedPlan \| undefined` | `undefined` |
 | `product`            | --                     |             | `Product \| undefined`      | `undefined` |
+| `regions`            | --                     |             | `string[] \| undefined`     | `undefined` |
 
 
 ## Events

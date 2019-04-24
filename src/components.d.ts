@@ -24,6 +24,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plans': Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
+    'regions'?: string[];
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -31,6 +32,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
+    'regions'?: string[];
   }
 
   interface ManifoldBadge {}
@@ -233,34 +235,34 @@ export namespace Components {
   }
 
   interface ManifoldMarketplaceGrid {
-    'blacklist'?: string[];
+    'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
     'linkFormat'?: string;
+    'products'?: string[];
     'services'?: Catalog.Product[];
-    'whitelist'?: string[];
   }
   interface ManifoldMarketplaceGridAttributes extends StencilHTMLAttributes {
-    'blacklist'?: string[];
+    'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
     'linkFormat'?: string;
+    'products'?: string[];
     'services'?: Catalog.Product[];
-    'whitelist'?: string[];
   }
 
   interface ManifoldMarketplace {
-    /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'blacklist'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
     /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'excludes'?: string;
+    /**
     * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
@@ -277,20 +279,20 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * Comma-separated list of allowed products (labels)
+    * Comma-separated list of shown products (labels)
     */
-    'whitelist'?: string;
+    'products'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
-    /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'blacklist'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
     /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'excludes'?: string;
+    /**
     * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
@@ -307,9 +309,9 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * Comma-separated list of allowed products (labels)
+    * Comma-separated list of shown products (labels)
     */
-    'whitelist'?: string;
+    'products'?: string;
   }
 
   interface ManifoldNumberInput {
@@ -359,6 +361,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
+    'regions'?: string[];
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -369,6 +372,7 @@ export namespace Components {
     'onManifold-planSelector-load'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
+    'regions'?: string[];
   }
 
   interface ManifoldPlanMenu {
@@ -400,6 +404,10 @@ export namespace Components {
     */
     'productLabel': string;
     /**
+    * Specify region order
+    */
+    'regions'?: string;
+    /**
     * _(optional)_ Is this modifying an existing resource?
     */
     'resourceId'?: string;
@@ -421,6 +429,10 @@ export namespace Components {
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Specify region order
+    */
+    'regions'?: string;
     /**
     * _(optional)_ Is this modifying an existing resource?
     */
@@ -490,6 +502,7 @@ export namespace Components {
     'ariaLabel': string;
     'connection': Connection;
     'name': string;
+    'preferredRegions'?: string[];
     'value'?: string;
   }
   interface ManifoldRegionSelectorAttributes extends StencilHTMLAttributes {
@@ -498,6 +511,7 @@ export namespace Components {
     'connection'?: Connection;
     'name'?: string;
     'onChange'?: (event: CustomEvent) => void;
+    'preferredRegions'?: string[];
     'value'?: string;
   }
 

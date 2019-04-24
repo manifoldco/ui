@@ -51,6 +51,8 @@ success:
 
 You can style or hide these as desired.
 
+_Note: the error message for the input hides/shows on input blur_
+
 ## Styling
 
 Whereas other components in this system take advantage of [Shadow

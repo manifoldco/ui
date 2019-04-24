@@ -74,56 +74,56 @@ describe('manifold-marketplace-grid', () => {
     );
   });
 
-  it('accepts blacklist of products', async () => {
-    const blacklist = ['service-messaging', 'service-optimization'];
+  it('accepts exclusion list of products', async () => {
+    const excludes = ['service-messaging', 'service-optimization'];
 
     const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
     await page.$eval(
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
-        elm.blacklist = props.blacklist;
+        elm.excludes = props.excludes;
       },
-      { services, blacklist }
+      { services, excludes }
     );
     await page.waitForChanges();
 
-    const notBlacklisted = testCategories
+    const notExcluded = testCategories
       .map(category => `service-${category}`)
-      .filter(category => !blacklist.includes(category));
-    notBlacklisted.forEach(async service =>
+      .filter(category => !excludes.includes(category));
+    notExcluded.forEach(async product =>
       expect(
-        await page.find(`manifold-marketplace-grid >>> [data-label="${service}"]`)
+        await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)
       ).not.toBeNull()
     );
-    blacklist.forEach(async service =>
-      expect(await page.find(`manifold-marketplace-grid >>> [data-label="${service}"]`)).toBeNull()
+    excludes.forEach(async product =>
+      expect(await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)).toBeNull()
     );
   });
 
-  it('accepts whitelist of products', async () => {
-    const whitelist = ['service-ai-ml', 'service-utility'];
+  it('accepts manual product list', async () => {
+    const products = ['service-ai-ml', 'service-utility'];
 
     const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
     await page.$eval(
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
-        elm.whitelist = props.whitelist;
+        elm.products = props.products;
       },
-      { services, whitelist }
+      { services, products }
     );
     await page.waitForChanges();
 
-    const notWhitelisted = testCategories
+    const notIncluded = testCategories
       .map(category => `service-${category}`)
-      .filter(category => !whitelist.includes(category));
-    notWhitelisted.forEach(async service =>
-      expect(await page.find(`manifold-marketplace-grid >>> [data-label="${service}"]`)).toBeNull()
+      .filter(category => !products.includes(category));
+    notIncluded.forEach(async product =>
+      expect(await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)).toBeNull()
     );
-    whitelist.forEach(async service =>
+    products.forEach(async product =>
       expect(
-        await page.find(`manifold-marketplace-grid >>> [data-label="${service}"]`)
+        await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)
       ).not.toBeNull()
     );
   });

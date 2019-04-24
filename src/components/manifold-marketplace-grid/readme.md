@@ -9,13 +9,13 @@
 
 | Property         | Attribute         | Description | Type                     | Default     |
 | ---------------- | ----------------- | ----------- | ------------------------ | ----------- |
-| `blacklist`      | --                |             | `string[] \| undefined`  | `[]`        |
+| `excludes`       | --                |             | `string[] \| undefined`  | `[]`        |
 | `featured`       | --                |             | `string[] \| undefined`  | `[]`        |
 | `hideCategories` | `hide-categories` |             | `boolean \| undefined`   | `false`     |
 | `hideTemplates`  | `hide-templates`  |             | `boolean \| undefined`   | `false`     |
 | `linkFormat`     | `link-format`     |             | `string \| undefined`    | `undefined` |
+| `products`       | --                |             | `string[] \| undefined`  | `[]`        |
 | `services`       | --                |             | `Product[] \| undefined` | `[]`        |
-| `whitelist`      | --                |             | `string[] \| undefined`  | `[]`        |
 
 
 ----------------------------------------------

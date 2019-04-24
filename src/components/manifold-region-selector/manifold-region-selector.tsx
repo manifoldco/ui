@@ -13,21 +13,20 @@ export class ManifoldRegionSelector {
   @Prop() ariaLabel: string;
   @Prop() connection: Connection = connections.prod;
   @Prop() name: string;
+  @Prop() preferredRegions?: string[];
   @Prop() value?: string;
   @State() globalRegion: Catalog.Region = globalRegion;
   @State() regions?: Catalog.Region[];
   @Event() change: EventEmitter;
 
-  componentWillLoad() {
-    return fetch(`${this.connection.catalog}/regions`, withAuth())
-      .then(response => response.json())
-      .then((regions: Catalog.Region[]) => {
-        // Sorting is important
-        this.regions = [...regions].sort((a, b) => a.body.name.localeCompare(b.body.name));
-        // Set global region (the one in src/data is just a fallback; we should always grab live)
-        const global = this.regions.find(({ body: { location } }) => location === 'global');
-        if (global) this.globalRegion = global;
-      });
+  async componentWillLoad() {
+    const response = await fetch(`${this.connection.catalog}/regions`, withAuth());
+    const regions: Catalog.Region[] = await response.json();
+    // Sorting is important, otherwise the region selector is in a different order every plan
+    this.regions = this.sortRegions(regions, this.preferredRegions);
+    // Set global region (the one in src/data is just a fallback; we should always grab live)
+    const global = this.regions.find(({ body: { location } }) => location === 'global');
+    if (global) this.globalRegion = global;
   }
 
   handleChange = ({ detail }: CustomEvent) => {
@@ -45,6 +44,31 @@ export class ManifoldRegionSelector {
       label: name,
       value: id,
     }));
+  }
+
+  sortRegions(regions: Catalog.Region[], preferredRegions?: string[]): Catalog.Region[] {
+    return [...regions].sort((a, b) => {
+      // If user specified preferred regions first
+      const regionA = this.regionCode(a);
+      const regionB = this.regionCode(b);
+      if (
+        Array.isArray(preferredRegions) &&
+        (preferredRegions.includes(regionA) || preferredRegions.includes(regionB))
+      ) {
+        // Get preferred region index and compare; otherwise move to end
+        let indexA = preferredRegions.indexOf(regionA);
+        if (indexA === -1) indexA = preferredRegions.length;
+        let indexB = preferredRegions.indexOf(regionB);
+        if (indexB === -1) indexB = preferredRegions.length;
+        return indexA - indexB;
+      }
+      // For all unspecified regions, sort alphabetically
+      return a.body.name.localeCompare(b.body.name);
+    });
+  }
+
+  regionCode({ body: { location, platform } }: Catalog.Region) {
+    return `${platform.replace('digital-ocean', 'do')}-${location}`;
   }
 
   render() {
