@@ -1,7 +1,3 @@
-import { defineCustomElements } from '../../../dist/loader';
-
-defineCustomElements(window);
-
 export const primary = render => {
   const defaultValue = 'foo';
   const options = [
