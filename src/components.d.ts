@@ -465,6 +465,7 @@ export namespace Components {
     'ariaLabel': string;
     'connection': Connection;
     'name': string;
+    'value'?: string;
   }
   interface ManifoldRegionSelectorAttributes extends StencilHTMLAttributes {
     'allowedRegions'?: string[];
@@ -472,6 +473,7 @@ export namespace Components {
     'connection'?: Connection;
     'name'?: string;
     'onChange'?: (event: CustomEvent) => void;
+    'value'?: string;
   }
 
   interface ManifoldResourceDetails {

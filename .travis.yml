@@ -10,7 +10,7 @@ stages:
 jobs:
   include:
     - stage: test
-      name: "📐 Profile bundle"
+      name: '📐 Profile bundle'
       script: npm run profile
     - stage: test
       name: '🧹 Run linters'
@@ -24,4 +24,3 @@ jobs:
       if: tag IS present
 after_success:
   - npx codecov
-cache: npm

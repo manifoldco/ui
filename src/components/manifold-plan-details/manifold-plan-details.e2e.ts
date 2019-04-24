@@ -192,9 +192,7 @@ describe(`<manifold-plan-details>`, () => {
 
   describe('regions', () => {
     it('shows the region selector when there are regions', async () => {
-      const page = await newE2EPage({
-        html: '<manifold-plan-details />',
-      });
+      const page = await newE2EPage({ html: '<manifold-plan-details />' });
       const plan: Catalog.ExpandedPlan = {
         ...ExpandedPlan,
         body: { ...ExpandedPlan.body, regions: [Regions[0].id, Regions[1].id] },
@@ -214,9 +212,7 @@ describe(`<manifold-plan-details>`, () => {
     });
 
     it('hides the region selector when the only region is global', async () => {
-      const page = await newE2EPage({
-        html: '<manifold-plan-details />',
-      });
+      const page = await newE2EPage({ html: '<manifold-plan-details />' });
       const global = Regions.find(({ body: { location } }) => location === 'global') || { id: '' };
 
       const plan: Catalog.ExpandedPlan = {
@@ -235,6 +231,28 @@ describe(`<manifold-plan-details>`, () => {
       await page.waitForChanges();
 
       expect(await page.find('manifold-plan-details >>> manifold-region-selector')).toBeNull();
+    });
+
+    it('passes first region down to selector', async () => {
+      const page = await newE2EPage({ html: '<manifold-plan-details />' });
+
+      const plan: Catalog.ExpandedPlan = {
+        ...ExpandedPlan,
+        body: { ...ExpandedPlan.body, regions: ['abc'] },
+      };
+
+      await page.$eval(
+        'manifold-plan-details',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.plan = props.plan;
+        },
+        { product: Product, plan }
+      );
+      await page.waitForChanges();
+
+      const regionSelector = await page.find('manifold-plan-details >>> manifold-region-selector');
+      expect(await regionSelector.getProperty('value')).toBe('abc');
     });
   });
 

@@ -39,7 +39,7 @@ export class ManifoldPlanDetails {
       planId: newPlan.id,
       planLabel: newPlan.body.label,
       productLabel: this.product && this.product.body.label,
-      features,
+      features: this.customFeatures(features), // We need all features for plan cost, but only need to expose the custom ones
       regionId: this.regionId,
     };
     this.planUpdate.emit(detail);
@@ -55,7 +55,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
-        features,
+        features: this.customFeatures(features),
         regionId: this.regionId,
       };
       this.planLoad.emit(detail);
@@ -71,7 +71,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
-        features,
+        features: this.customFeatures(features),
         regionId: this.regionId,
       };
       this.planUpdate.emit(detail);
@@ -86,7 +86,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         productLabel: this.product.body.label,
-        features: this.features,
+        features: this.customFeatures(this.features),
         regionId: e.detail.value,
       };
       this.planUpdate.emit(detail);
@@ -96,6 +96,17 @@ export class ManifoldPlanDetails {
   initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
     if (!plan || !plan.body.expanded_features) return {};
     return { ...initialFeatures(plan.body.expanded_features) };
+  }
+
+  customFeatures(features: UserFeatures): UserFeatures {
+    if (!this.plan || !this.plan.body.expanded_features) return features;
+    const { expanded_features } = this.plan.body;
+    const customFeatures = { ...features };
+    Object.entries(customFeatures).forEach(([label]) => {
+      const feature = expanded_features.find(f => f.label === label);
+      if (!feature || !feature.customizable) delete customFeatures[label];
+    });
+    return customFeatures;
   }
 
   get ctaLink() {
@@ -198,6 +209,7 @@ export class ManifoldPlanDetails {
           ariaLabel={name}
           name={name}
           onChange={e => this.handleChangeRegion(e)}
+          value={this.regionId}
         />
       </div>
     );
