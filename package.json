@@ -45,6 +45,7 @@
     "prepublish": "npm run build",
     "publish": "node scripts/publish",
     "start": "NODE_ENV=production npx serve -l \"tcp://0.0.0.0:$PORT\" -s www",
+    "vrt:dev": "npm run build && cp .manifold-ci.yml .manifold.yml && manifold run -- happo run",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",
     "test:spec": "stencil test --spec",
@@ -71,6 +72,8 @@
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
     "bundlesize": "^0.17.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
@@ -79,6 +82,7 @@
     "eslint-plugin-manifoldco-ui": "file:eslint",
     "eslint-plugin-prettier": "^3.0.1",
     "fs-extra": "^7.0.1",
+    "happo.io": "^3.14.0-rc.4",
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
     "postcss-preset-env": "^6.5.0",
@@ -87,6 +91,7 @@
     "showdown": "^1.9.0",
     "stylelint": "^9.10.1",
     "stylelint-config-rational-order": "0.0.4",
-    "stylelint-config-standard": "^18.2.0"
+    "stylelint-config-standard": "^18.2.0",
+    "webpack": "^4.30.0"
   }
 }
