@@ -118,6 +118,12 @@ export namespace Components {
     */
     'connection': Connection;
     'features': UserFeatures;
+    /**
+    * Name of `<label>` for input
+    */
+    'formLabel': string;
+    'inputId': string;
+    'ownerId': string;
     'planId': string;
     'productId': string;
     /**
@@ -125,10 +131,6 @@ export namespace Components {
     */
     'productLabel': string;
     'regionId'?: string;
-    /**
-    * Name of new resource
-    */
-    'resourceName': string;
   }
   interface ManifoldDataProvisionButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -136,6 +138,12 @@ export namespace Components {
     */
     'connection'?: Connection;
     'features'?: UserFeatures;
+    /**
+    * Name of `<label>` for input
+    */
+    'formLabel'?: string;
+    'inputId'?: string;
+    'ownerId'?: string;
     'planId'?: string;
     'productId'?: string;
     /**
@@ -143,10 +151,6 @@ export namespace Components {
     */
     'productLabel'?: string;
     'regionId'?: string;
-    /**
-    * Name of new resource
-    */
-    'resourceName'?: string;
   }
 
   interface ManifoldFeaturedService {

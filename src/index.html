@@ -466,8 +466,8 @@ defineCustomElements(window);</code></pre>
               </p>
               <h2 id="navigation">Navigation</h2>
               <p>
-                Similar to <code>&lt;manifold-marketplace&gt;</code>, the large CTA button below the
-                logo is configurable. By default, this component emits a
+                Similar to the <a href="#manifold-marketplace">marketplace</a> component, the large
+                CTA button below the logo is configurable. By default, this component emits a
                 <code>manifold-productCTA-click</code> custom event whenever the main CTA is
                 clicked. Listen for it like so:
               </p>
@@ -874,8 +874,7 @@ defineCustomElements(window);</code></pre>
               <h1 id="dataproductlogo">Data Product Logo</h1>
               <p>
                 Retrieve an unstyled <code>&lt;img&gt;</code> tag with the product’s logo from a
-                <code>:productLabel</code>. Similar to
-                <code>&lt;manifold-data-product-name&gt;</code>.
+                <code>:productLabel</code>.
               </p>
               <h2 id="usage">Usage</h2>
               <pre><code class="html language-html">&lt;manifold-data-product-logo product-label="scout" /&gt;
@@ -950,47 +949,62 @@ defineCustomElements(window);</code></pre>
               <!-- Any changes here will be blown away. Edit the README instead. -->
 
               <h1 id="provisionbutton">Provision Button</h1>
+              <p>An unstyled text input + button combination for provisioning resources.</p>
+              <h2 id="usingwithplanselector">Using with Plan Selector</h2>
               <p>
-                An unstyled <code>&lt;button&gt;</code> tag that can make a call to our provisioning
-                API. It takes quite a few options.
+                This component needs a lot of information to do its job. For that reason, we
+                recommend relying on listening from events from the
+                <a href="#manifold-plan-selector">plan selector</a> component. You could do that
+                like so:
               </p>
-              <p>
-                Although this is an unstyled data component, it needs a lot of information to do its
-                job. For that reason, this currently depends on both the
-                <code>&lt;manifold-plan-selector /&gt;</code> and
-                <code>&lt;manifold-regions /&gt;</code> components. It listens for updates from
-                those.
-              </p>
-              <h2 id="specifyproductnameandplan">Specify product, name, and plan</h2>
-              <p>Specify the URL-friendly product slug you’d like to provision:</p>
-              <pre><code class="js language-js">const productLabel = 'prefab';
-const resourceName = 'prefab-stage';
-const planId = '23556zydkr0vgh04bne0c2q9ww5kj';
-const provisionButton = document.querySelector('manifold-data-provision-button');
-provisionButton.productLabel = productLabel;
-provisionButton.resourceName = resourceName;
-provisionButton.planId = planId;
+              <pre><code class="js language-js">const userId = ''; // Note: must be set
+
+function updateButton({ detail: { features, planId, productLabel, regionId } }) {
+  const provisionButton = document.querySelector('manifold-data-provision-button');
+  provisionButton.features = features;
+  provisionButton.planId = planId;
+  provisionButton.productLabel = productLabel;
+  provisionButton.regionId = regionId;
+
+  provisionButton.userId = userId;
+}
+
+document.addEventListener('manifold-planSelector-load', updateButton);
+document.addEventListener('manifold-planSelector-change', updateButton);
 </code></pre>
               <p>
-                The easiest way to find a Plan ID is to listen to the
-                <code>manifold-planUpdated</code> custom event on
-                <code>&lt;manifold-plan-selector /&gt;</code>, which provides the ID.
+                Note that <code>userId</code> is the only piece of information required from the
+                identity.
               </p>
-              <h2 id="regions">Regions</h2>
-              <p>
-                Many products are regionless, meaning either that service migrates your data for
-                you, or regions don’t apply. By default, the provision button will try and provision
-                on our “regionless” region.
-              </p>
-              <p>
-                Some products, however, require users to specify their desired region. A list of
-                currently supported region IDs may be found
-                <a href="https://api.catalog.manifold.co/v1/regions">here</a>. Once located, specify
-                the region label like so:
-              </p>
-              <pre><code class="js language-js">const regionId = '235mhkk15ky7ha9qpu4gazrqjt2gr';
-document.querySelector('manifold-data-provision-button').regionId = regionId;
+              <h2 id="ctatext">CTA text</h2>
+              <p>Set the CTA text by adding anything between the opening and closing tags:</p>
+              <pre><code class="html language-html">&lt;manifold-data-provision-button&gt;
+  🚀 Provision My Resource
+&lt;/manifold-data-provision-button&gt;
 </code></pre>
+              <p>
+                <code>slot</code> can be attached to any HTML or JSX element. To read more about
+                slots, see
+                <a href="https://stenciljs.com/docs/templating-jsx/">Stencil’s Documentation</a>
+              </p>
+              <h2 id="errorsuccessmessages">Error &amp; success messages</h2>
+              <p>
+                An error or status message will display below the component, indicating success:
+              </p>
+              <pre><code class="html language-html">&lt;div role="alert" data-error&gt;This is an error message&lt;/div&gt;
+&lt;div role="alert" data-success&gt;This is success message&lt;/div&gt;
+</code></pre>
+              <p>You can style or hide these as desired.</p>
+              <h2 id="styling">Styling</h2>
+              <p>
+                Whereas other components in this system take advantage of
+                <a href="https://developers.google.com/web/fundamentals/web-components/shadowdom"
+                  >Shadow DOM</a
+                >
+                encapsulation for ease of use, we figured this component should be customizable. As
+                such, style it however you’d like! We recommend attaching styles to a parent element
+                using any CSS-in-JS framework of your choice, or plain ol’ CSS.
+              </p>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -1012,6 +1026,48 @@ document.querySelector('manifold-data-provision-button').regionId = regionId;
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
+                    <td><code>features</code></td>
+                    <td>--</td>
+                    <td></td>
+                    <td><code>UserFeatures</code></td>
+                    <td><code>{}</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>formLabel</code></td>
+                    <td><code>form-label</code></td>
+                    <td>Name of <code>&lt;label&gt;</code> for input</td>
+                    <td><code>string</code></td>
+                    <td><code>'Resource name'</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>inputId</code></td>
+                    <td><code>input-id</code></td>
+                    <td></td>
+                    <td><code>string</code></td>
+                    <td><code>'manifold-provision-resource'</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>ownerId</code></td>
+                    <td><code>owner-id</code></td>
+                    <td></td>
+                    <td><code>string</code></td>
+                    <td><code>''</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>planId</code></td>
+                    <td><code>plan-id</code></td>
+                    <td></td>
+                    <td><code>string</code></td>
+                    <td><code>''</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>productId</code></td>
+                    <td><code>product-id</code></td>
+                    <td></td>
+                    <td><code>string</code></td>
+                    <td><code>''</code></td>
+                  </tr>
+                  <tr>
                     <td><code>productLabel</code></td>
                     <td><code>product-label</code></td>
                     <td>Product to provision (slug)</td>
@@ -1019,11 +1075,11 @@ document.querySelector('manifold-data-provision-button').regionId = regionId;
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
-                    <td><code>resourceName</code></td>
-                    <td><code>resource-name</code></td>
-                    <td>Name of new resource</td>
-                    <td><code>string</code></td>
-                    <td><code>undefined</code></td>
+                    <td><code>regionId</code></td>
+                    <td><code>region-id</code></td>
+                    <td></td>
+                    <td><code>string | undefined</code></td>
+                    <td><code>globalRegion.id</code></td>
                   </tr>
                 </tbody>
               </table>
@@ -1033,11 +1089,8 @@ document.querySelector('manifold-data-provision-button').regionId = regionId;
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-data-provision-button
-                  product-label="prefab"
-                  plan-label="business-1"
-                  region="global"
-                >
+                <label for="my-provision-button">Resource Name</label>
+                <manifold-data-provision-button input-id="my-provision-button">
                   🚀 Provision Business plan on Prefab.cloud
                 </manifold-data-provision-button>
               </div>
@@ -1055,7 +1108,7 @@ document.querySelector('manifold-data-provision-button').regionId = regionId;
           const btn = document.querySelector('manifold-data-provision-button');
           btn.productLabel = detail.productLabel;
           btn.planId = detail.planId;
-          btn.resourceName = detail.planLabel;
+          btn.ownerId = '';
           if (btn.features && Object.keys(btn.features)) btn.features = detail.features;
           if (detail.regionId) btn.regionId = detail.regionId;
         }
