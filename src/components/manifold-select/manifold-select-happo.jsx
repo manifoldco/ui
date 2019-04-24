@@ -9,6 +9,10 @@ export const primary = render => {
       label: 'Bar',
       value: 'bar',
     },
+    {
+      label: 'Baz',
+      value: 'baz',
+    },
   ];
 
   const name = 'Fubar';
