@@ -1,6 +1,7 @@
 # Data Product Logo
 
-Retrieve an unstyled `<img>` tag with the product’s logo from a `:productLabel`. Similar to `<manifold-data-product-name>`.
+Retrieve an unstyled `<img>` tag with the product’s logo from a
+`:productLabel`.
 
 ## Usage
 

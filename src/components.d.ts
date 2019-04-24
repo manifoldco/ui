@@ -112,6 +112,47 @@ export namespace Components {
     'productLabel'?: string;
   }
 
+  interface ManifoldDataProvisionButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    'features': UserFeatures;
+    /**
+    * Name of `<label>` for input
+    */
+    'formLabel': string;
+    'inputId': string;
+    'ownerId': string;
+    'planId': string;
+    'productId': string;
+    /**
+    * Product to provision (slug)
+    */
+    'productLabel': string;
+    'regionId'?: string;
+  }
+  interface ManifoldDataProvisionButtonAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'features'?: UserFeatures;
+    /**
+    * Name of `<label>` for input
+    */
+    'formLabel'?: string;
+    'inputId'?: string;
+    'ownerId'?: string;
+    'planId'?: string;
+    'productId'?: string;
+    /**
+    * Product to provision (slug)
+    */
+    'productLabel'?: string;
+    'regionId'?: string;
+  }
+
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
@@ -449,6 +490,7 @@ export namespace Components {
     'ariaLabel': string;
     'connection': Connection;
     'name': string;
+    'value'?: string;
   }
   interface ManifoldRegionSelectorAttributes extends StencilHTMLAttributes {
     'allowedRegions'?: string[];
@@ -456,6 +498,7 @@ export namespace Components {
     'connection'?: Connection;
     'name'?: string;
     'onChange'?: (event: CustomEvent) => void;
+    'value'?: string;
   }
 
   interface ManifoldResourceDetails {
@@ -586,6 +629,7 @@ declare global {
     'ManifoldCostDisplay': Components.ManifoldCostDisplay;
     'ManifoldDataProductLogo': Components.ManifoldDataProductLogo;
     'ManifoldDataProductName': Components.ManifoldDataProductName;
+    'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
@@ -618,6 +662,7 @@ declare global {
     'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
     'manifold-data-product-logo': Components.ManifoldDataProductLogoAttributes;
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
+    'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
@@ -678,6 +723,12 @@ declare global {
   var HTMLManifoldDataProductNameElement: {
     prototype: HTMLManifoldDataProductNameElement;
     new (): HTMLManifoldDataProductNameElement;
+  };
+
+  interface HTMLManifoldDataProvisionButtonElement extends Components.ManifoldDataProvisionButton, HTMLStencilElement {}
+  var HTMLManifoldDataProvisionButtonElement: {
+    prototype: HTMLManifoldDataProvisionButtonElement;
+    new (): HTMLManifoldDataProvisionButtonElement;
   };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
@@ -825,6 +876,7 @@ declare global {
     'manifold-cost-display': HTMLManifoldCostDisplayElement
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
+    'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
@@ -857,6 +909,7 @@ declare global {
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
+    'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;

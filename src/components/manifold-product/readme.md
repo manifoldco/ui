@@ -12,8 +12,8 @@ You can find the `:product` label for each at `https://manifold.co/services/:pro
 
 ## Navigation
 
-Similar to `<manifold-marketplace>`, the large CTA button below the logo
-is configurable. By default, this component emits a
+Similar to the [marketplace](#manifold-marketplace) component, the large CTA
+button below the logo is configurable. By default, this component emits a
 `manifold-productCTA-click` custom event whenever the main CTA is clicked.
 Listen for it like so:
 

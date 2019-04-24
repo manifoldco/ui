@@ -65,7 +65,7 @@ comma-separated list:
 This component emits [custom
 events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
 when it updates. To listen to those events, add an event listener either on
-the component itself, or `document`.
+the component itself, or `document`:
 
 ```js
 document.addEventListener('manifold-marketplace-click', { detail: { productLabel } } => {
