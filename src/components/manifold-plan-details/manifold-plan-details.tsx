@@ -25,7 +25,7 @@ export class ManifoldPlanDetails {
   @Prop() plan?: Catalog.ExpandedPlan;
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
-  @State() regionId: string = globalRegion.id;
+  @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
   @State() features: UserFeatures = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-click', bubbles: true }) planClick: EventEmitter;
@@ -232,9 +232,13 @@ export class ManifoldPlanDetails {
   };
 
   updateRegionId = (newPlan: Catalog.ExpandedPlan) => {
-    // Only change regionID if it doesn’t exist on the new plan
+    // If region already set and changing plans, keep it
     if (!newPlan.body.regions.includes(this.regionId)) {
-      const [firstRegion] = newPlan.body.regions;
+      // If user has specified regions, try and find the first
+      let firstRegion =
+        this.regions && this.regions.find(region => newPlan.body.regions.includes(region));
+      // Otherwise pick the first region from the plan
+      if (!firstRegion) [firstRegion] = newPlan.body.regions;
       if (firstRegion) this.regionId = firstRegion;
     }
   };

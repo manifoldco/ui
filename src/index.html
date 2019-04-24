@@ -359,7 +359,8 @@ defineCustomElements(window);</code></pre>
                   <tr>
                     <td style="text-align:left;"><code>manifold-template-click</code></td>
                     <td style="text-align:left;">
-                      Fires whenever a user has clicked on a custom template.
+                      Fires whenever a user has clicked on a custom template (assuming it’s not
+                      hidden with <code>hide-templates</code>).
                     </td>
                     <td style="text-align:left;"><code>category</code></td>
                   </tr>
@@ -872,7 +873,10 @@ defineCustomElements(window);</code></pre>
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-plan-selector product-label="aiven-cassandra" regions="aws-us-east-2,gcp-us-east-1"/>
+                <manifold-plan-selector
+                  product-label="aiven-cassandra"
+                  regions="gcp-us-east-1,gcp-us-east-4,gcp-us-central-1,gcp-us-west-1,gcp-us-west-2,gcp-eu-west-1,gcp-eu-west-2,gcp-eu-west-3"
+                />
               </div>
             </div>
           </section>
