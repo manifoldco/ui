@@ -14,6 +14,7 @@ Hello
 | `linkFormat`         | `link-format`          |             | `string \| undefined`          | `undefined` |
 | `plans`              | --                     |             | `ExpandedPlan[]`               | `[]`        |
 | `product`            | --                     |             | `ExpandedProduct \| undefined` | `undefined` |
+| `regions`            | --                     |             | `string[] \| undefined`        | `undefined` |
 
 
 ----------------------------------------------

@@ -19,11 +19,12 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldPlanDetails {
-  @Prop() isExistingResource?: boolean = false;
   @Prop() hideCta?: boolean = false;
+  @Prop() isExistingResource?: boolean = false;
   @Prop() linkFormat?: string;
   @Prop() plan?: Catalog.ExpandedPlan;
   @Prop() product?: Catalog.Product;
+  @Prop() regions?: string[];
   @State() regionId: string = globalRegion.id;
   @State() features: UserFeatures = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
@@ -209,6 +210,7 @@ export class ManifoldPlanDetails {
           ariaLabel={name}
           name={name}
           onChange={e => this.handleChangeRegion(e)}
+          preferredRegions={this.regions}
           value={this.regionId}
         />
       </div>

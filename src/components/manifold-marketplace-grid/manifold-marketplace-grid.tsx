@@ -14,13 +14,13 @@ import {
 })
 export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
-  @Prop() blacklist?: string[] = [];
+  @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];
   @Prop() hideCategories?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
   @Prop() linkFormat?: string;
+  @Prop() products?: string[] = [];
   @Prop() services?: Catalog.Product[] = [];
-  @Prop() whitelist?: string[] = [];
   @State() filter: string | null;
   @State() activeCategory?: string;
   @State() observer: IntersectionObserver;
@@ -70,21 +70,21 @@ export class ManifoldMarketplaceGrid {
 
   get filteredServices(): Catalog.Product[] {
     let services: Catalog.Product[] = [];
-    // If not whitelisting, start out with all services
-    if (this.whitelist && !this.whitelist.length && this.services) services = this.services; // eslint-disable-line prefer-destructuring
+    // If not including, start out with all services
+    if (this.products && !this.products.length && this.services) services = this.services; // eslint-disable-line prefer-destructuring
 
-    // Handle whitelist
-    if (Array.isArray(this.whitelist))
-      this.whitelist.forEach(whitelisted => {
+    // Handle includes
+    if (Array.isArray(this.products))
+      this.products.forEach(product => {
         const service =
-          this.services && this.services.find(({ body: { label } }) => label === whitelisted);
+          this.services && this.services.find(({ body: { label } }) => label === product);
         if (service) services.push(service);
       });
 
-    // Handle blacklist
-    if (Array.isArray(this.blacklist))
+    // Handle excludes
+    if (Array.isArray(this.excludes))
       services = services.filter(
-        ({ body: { label } }) => this.blacklist && !this.blacklist.includes(label)
+        ({ body: { label } }) => this.excludes && !this.excludes.includes(label)
       );
 
     // Handle search
