@@ -1,4 +1,10 @@
-# manifold-resource-details
+# Resource Details
+
+The resource details component displays a table of features belonging to a resource. 
+
+```html
+<manifold-resource-details resource-id="268ak39rn9czavv1qd9m93t482gmm"></manifold-resource-details>
+```
 
 
 
