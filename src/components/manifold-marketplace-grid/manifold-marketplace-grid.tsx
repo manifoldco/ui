@@ -19,6 +19,7 @@ export class ManifoldMarketplaceGrid {
   @Prop() hideCategories?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
   @Prop() linkFormat?: string;
+  @Prop() preserveEvent: boolean = false;
   @Prop() products?: string[] = [];
   @Prop() services?: Catalog.Product[] = [];
   @State() filter: string | null;
@@ -150,6 +151,7 @@ export class ManifoldMarketplaceGrid {
       linkFormat={this.linkFormat}
       logo={logo_url}
       name={name}
+      preserveEvent={this.preserveEvent}
       productId={id}
     />
   );
@@ -189,7 +191,11 @@ export class ManifoldMarketplaceGrid {
                 </h1>,
                 this.categorizedServices(category).map(service => this.renderServiceCard(service)),
                 !this.hideTemplates && (
-                  <manifold-template-card category={category} linkFormat={this.linkFormat} />
+                  <manifold-template-card
+                    category={category}
+                    preserveEvent={this.preserveEvent}
+                    linkFormat={this.linkFormat}
+                  />
                 ),
               ])
             : this.filteredServices.map(service => this.renderServiceCard(service))}

@@ -1,0 +1,1980 @@
+swagger: '2.0'
+info:
+  title: Billing API
+  description: |
+    # Introduction
+    The Billing API allows the Provisioning worker to construct
+    customer profiles, associate credit card information
+  version: '1.0.0'
+
+# the domain of the service
+host: api.billing.manifold.co
+schemes: [https]
+produces: [application/json]
+consumes: [application/json]
+
+basePath: /v1
+securityDefinitions:
+  tokenRequired:
+    type: apiKey
+    description: Authentication mechanism for dashboard users
+    name: Authorization
+    in: header
+  anonymous:
+    type: apiKey
+    name: Manifold-Anonymous
+    in: header
+  xInternalAuthRequired:
+    x-manifold-audience: internal
+    type: apiKey
+    name: X-Internal-Auth
+    in: header
+
+responses:
+  BadRequest:
+    description: Request denied due to invalid request body, path, or headers.
+    schema: { $ref: '#/definitions/Error' }
+    examples:
+      application/json:
+        type: bad_request
+        message: ['Invalid Profile ID Provided']
+
+  Conflict:
+    description: Request denied due to conflict with existing data.
+    schema: { $ref: '#/definitions/Error' }
+
+  Unauthorized:
+    description: Request denied as the provided credentials are no longer valid.
+    schema: { $ref: '#/definitions/Error' }
+    examples:
+      application/json:
+        type: unauthorized
+        message: ['']
+
+  Forbidden:
+    description: Request denied as the credentials do not have access
+    schema: { $ref: '#/definitions/Error' }
+    examples:
+      application/json:
+        type: forbidden
+        message: ['']
+
+  NotFound:
+    description: Request denied as the requested profile does not exist.
+    schema: { $ref: '#/definitions/Error' }
+    examples:
+      application/json:
+        type: not_found
+        message: ['Cannot modify billing for another user']
+
+  Internal:
+    description: Request failed due to an internal server error.
+    schema: { $ref: '#/definitions/Error' }
+    examples:
+      application/json:
+        type: internal
+        message: ['Internal Server Error']
+
+security:
+  - tokenRequired: []
+
+paths:
+  /payout-profiles:
+    post:
+      summary: Create Payout Profile
+      description: |
+        Create a new payout profile for the supplied provider, under which their
+        bank information is associated
+      tags:
+        - Payout
+      security:
+        - { xInternalAuthRequired: [] }
+        - { tokenRequired: [] }
+      parameters:
+        - name: body
+          in: body
+          description: Payout Profile Create Request Body
+          required: true
+          schema: { $ref: '#/definitions/PayoutProfileCreateRequest' }
+      responses:
+        201:
+          description: A payout profile
+          schema: { $ref: '#/definitions/PayoutProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        403: { $ref: '#/responses/Forbidden' }
+        500: { $ref: '#/responses/Internal' }
+
+  /payout-profiles/{id}:
+    get:
+      summary: Retrieve Payout Profile
+      description: |
+        Retrieves the payout and associated detail of any user
+      tags:
+        - Payout
+      security:
+        - { xInternalAuthRequired: [] }
+        - { tokenRequired: [] }
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the provider to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+      responses:
+        200:
+          description: A payout profile
+          schema: { $ref: '#/definitions/PayoutProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        403: { $ref: '#/responses/Forbidden' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+    patch:
+      summary: Update Payout Profile
+      description: |
+        Replaces the payout profile's bank account information
+      tags:
+        - Payout
+      security:
+        - { xInternalAuthRequired: [] }
+        - { tokenRequired: [] }
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the provider to update, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Payout Profile Update Request Body
+          required: true
+          schema: { $ref: '#/definitions/PayoutProfileCreateRequest' }
+      responses:
+        200:
+          description: Payout profile which has been updated
+          schema: { $ref: '#/definitions/PayoutProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        403: { $ref: '#/responses/Forbidden' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /invoices:
+    x-manifold-audience: browser
+    get:
+      summary: Return an invoice for a given time period
+      description: Returns an invoice for a given time period
+      tags:
+        - Invoice
+      parameters:
+        - name: year
+          in: query
+          description: |
+            Year to get invoice for
+          type: integer
+          required: false
+        - name: month
+          in: query
+          description: |
+            Month to get invoice for
+          type: integer
+          required: false
+        - name: team_id
+          in: query
+          description: |
+            ID of the Team to find Invoice for  by, stored as a
+            base32encoded 18 byte identifier. Falls back to current user.
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+          required: false
+      responses:
+        200:
+          description: Return an invoice for date range
+          schema: { $ref: '#/definitions/Invoice' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /invoices/resend:
+    x-manifold-audience: browser
+    post:
+      summary: Resend a previous invoice
+      tags:
+        - Invoice
+      security:
+        - { xInternalAuthRequired: [] }
+        - { tokenRequired: [] }
+      parameters:
+        - name: body
+          in: body
+          description: Resend invoice request body
+          required: true
+          schema: { $ref: '#/definitions/InvoiceResendRequest' }
+      responses:
+        201:
+          description: Invoice was sent by email
+        204:
+          description: Invoice has no actvitiy, email not sent
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/invoices/{id}/events:
+    x-manifold-audience: internal
+    post:
+      summary: Create a manual event for an invoice
+      tags:
+        - Invoice
+      security:
+        - { xInternalAuthRequired: [] }
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the provider to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Resend invoice request body
+          required: true
+          schema: { $ref: '#/definitions/InvoiceEventCreate' }
+      responses:
+        204:
+          description: Event created
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /payouts:
+    x-manifold-audience: browser
+    get:
+      summary: Returns a payout for a provider for the given time period
+      description: Returns a Payout for a provider given a time period
+      security:
+        - { xInternalAuthRequired: [] }
+        - { tokenRequired: [] }
+      tags:
+        - Payout
+      parameters:
+        - name: year
+          in: query
+          description: |
+            Year to get payout for
+          type: integer
+          required: false
+        - name: month
+          in: query
+          description: |
+            Month to get payout for
+          type: integer
+          required: false
+        - name: all
+          in: query
+          type: boolean
+          required: false
+        - name: provider_id
+          in: query
+          description: |
+            ID of the provider to find Payouts for, stored as a
+            bas32encoded 18 byte identifier.
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32id
+          required: false
+        - name: product_id
+          in: query
+          description: |
+            ID of the product to find Payouts for, stored as a
+            base32encoded 18 byte identifier.
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32id
+          required: false
+        - name: plan_id
+          in: query
+          description: |
+            ID of the plan to find Payouts for, stored as a
+            base32encoded 18 byte identifier.
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32id
+          required: false
+      responses:
+        200:
+          description: |
+            Returns a Payout for the given date range
+          schema: { $ref: '#/definitions/Payout' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        403: { $ref: '#/responses/Forbidden' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /payouts/resend:
+    x-manifold-audience: browser
+    post:
+      summary: Resend a previous payout
+      tags:
+        - Payout
+      security:
+        - { xInternalAuthRequired: [] }
+        - { tokenRequired: [] }
+      parameters:
+        - name: body
+          in: body
+          description: Resend payout request body
+          required: true
+          schema: { $ref: '#/definitions/PayoutResendRequest' }
+      responses:
+        200:
+          description: Payout was sent by email
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /profiles:
+    x-manifold-audience: browser
+    post:
+      summary: Create Billing Profile
+      description: |
+        Creates a new billing profile for the authenticated user, under which
+        their credit card is associated.
+      tags:
+        - Profile
+      parameters:
+        - name: body
+          in: body
+          description: Billing Profile Create Request Body
+          required: true
+          schema: { $ref: '#/definitions/ProfileCreateRequest' }
+      responses:
+        201:
+          description: A billing profile
+          schema: { $ref: '#/definitions/BillingProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/profiles/{id}:
+    x-manifold-audience: internal
+    delete:
+      summary: Delete Billing Profile
+      description: |
+        Deletes the billing profile and associated detail of any user/team
+      tags:
+        - Profile
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the owner to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+      responses:
+        204:
+          description: Delete completed
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+    get:
+      summary: Retrieve Billing Profile
+      description: |
+        Retrieves the billing profile and associated detail of any user
+      tags:
+        - Profile
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the user to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+      responses:
+        200:
+          description: A billing profile
+          schema: { $ref: '#/definitions/BillingProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /profiles/{id}:
+    x-manifold-audience: browser
+    get:
+      summary: Retrieve Billing Profile
+      description: |
+        Retrieves the billing profile and associated detail of the authenticated user
+      tags:
+        - Profile
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the user to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+      responses:
+        200:
+          description: A billing profile
+          schema: { $ref: '#/definitions/BillingProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+    patch:
+      summary: Update Billing Profile
+      description: |
+        Replaces the billing profile's source of funds with the credit card supplied
+      tags:
+        - Profile
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the user to update, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Billing Profile Update Request Body
+          required: true
+          schema: { $ref: '#/definitions/ProfileUpdateRequest' }
+      responses:
+        200:
+          description: Billing profile which has been updated
+          schema: { $ref: '#/definitions/BillingProfile' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/payouts/{provider_id}/adjustment:
+    x-manifold-audience: internal
+    post:
+      summary: Create a Payout adjustment
+      tags:
+        - Payout
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: provider_id
+          in: path
+          description: |
+            ID of provider, stored as a base32 encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Provider adjustment request
+          required: true
+          schema: { $ref: '#/definitions/PayoutAdjustmentRequest' }
+      responses:
+        204:
+          description: Adjustment complete
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+  /internal/subscriptions/{id}/credits/{operation_id}/:
+    x-manifold-audience: internal
+    put:
+      summary: Create credit for a user
+      tags:
+        - Credit
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: operation_id
+          in: path
+          description: |
+            ID of the operation, stored as a base32 encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: id
+          in: path
+          description: |
+            ID of the user, stored as a base32 encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Credit create request
+          required: true
+          schema: { $ref: '#/definitions/BillingCreditCreate' }
+      responses:
+        204:
+          description: Credit was successfully created
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/subscriptions/{id}/adjustment:
+    x-manifold-audience: internal
+    post:
+      summary: Add an Adjustment
+      description: |
+        Add an adjustment SubscriptionEvent for a User
+      tags:
+        - Subscription
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the user to adjust, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Subscription adjustment request
+          required: true
+          schema: { $ref: '#/definitions/BillingSubAdjustment' }
+      responses:
+        204:
+          description: Adjustment complete
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/provider_subscriptions/{id}/adjustment:
+    x-manifold-audience: internal
+    post:
+      summary: Add an Adjustment
+      description: |
+        Add an adjustment ProviderSubscriptionEvent for a Provider
+      tags:
+        - ProviderSubscription
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the provider to adjust, stored as a base32 encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Subscription adjustment request
+          required: true
+          schema: { $ref: '#/definitions/ProviderSubAdjustment' }
+      responses:
+        204:
+          description: Adjustment complete
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/subscriptions/{id}/resources/{resource_id}:
+    x-manifold-audience: internal
+    delete:
+      summary: Cancel subscription
+      description: |
+        Cancels the subscription with the billing service
+      tags:
+        - Subscription
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the user to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: resource_id
+          in: path
+          description: |
+            ID of the resource to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Subscription create request
+          required: true
+          schema: { $ref: '#/definitions/BillingSubDelete' }
+      responses:
+        204:
+          description: Delete complete
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+    put:
+      summary: Create subscription, or update existing
+      description: |
+        Creates a new subscription for a user, which is required
+        before any plans can be subscribed to
+
+        Data returned is not stored locally, but proxied from Stripe
+      tags:
+        - Subscription
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the user to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: resource_id
+          in: path
+          description: |
+            ID of the resource to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Subscription create request
+          required: true
+          schema: { $ref: '#/definitions/BillingSubCreate' }
+      responses:
+        204:
+          description: Subscription was successfully created or modified
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+    patch:
+      summary: Update the resource subscriber, transfering ownership
+      description: |
+        Updates the subscription of an event to transfer the subscription from
+        one owner to a new owner.
+      tags:
+        - Subscription
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the owner of the subscription to update, stored as a base32
+            encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: resource_id
+          in: path
+          description: |
+            ID of the resource to updated, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Subscription patch request
+          required: true
+          schema: { $ref: '#/definitions/BillingSubTransfer' }
+      responses:
+        204:
+          description: Subscription was successfully transferred
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/coupons/{id}:
+    x-manifold-audience: internal
+    patch:
+      summary: Update single coupon
+      tags:
+        - Coupon
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the coupon to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          description: Resource update request
+          required: true
+          schema: { $ref: '#/definitions/UpdateCoupon' }
+      responses:
+        200:
+          description: Coupon object
+          schema: { $ref: '#/definitions/Coupon' }
+        400: { $ref: '#/responses/BadRequest' }
+        404: { $ref: '#/responses/NotFound' }
+        401: { $ref: '#/responses/Unauthorized' }
+        409: { $ref: '#/responses/Conflict' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/coupons/:
+    x-manifold-audience: internal
+    get:
+      summary: List all coupons
+      tags:
+        - Coupon
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: code
+          in: query
+          description: |
+            Coupon code to filter by
+          type: string
+          required: false
+      responses:
+        200:
+          description: List of coupon objects
+          schema: { type: array, items: { $ref: '#/definitions/Coupon' } }
+        401: { $ref: '#/responses/Unauthorized' }
+        409: { $ref: '#/responses/Conflict' }
+        500: { $ref: '#/responses/Internal' }
+    post:
+      summary: Create a new coupon
+      tags:
+        - Coupon
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: body
+          in: body
+          description: Coupon create request
+          required: true
+          schema: { $ref: '#/definitions/BillingCouponCreate' }
+      responses:
+        204:
+          description: Coupon was successfully created
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        409: { $ref: '#/responses/Conflict' }
+        500: { $ref: '#/responses/Internal' }
+
+  /discounts:
+    x-manifold-audience: browser
+    post:
+      summary: Apply a coupon code to a user's account
+      description: |
+        Applies the provided coupon code to a user's account, converting it to
+        a discount/credit.
+      tags:
+        - Discount
+      parameters:
+        - name: body
+          in: body
+          description: Coupon details
+          required: true
+          schema: { $ref: '#/definitions/DiscountCreateRequest' }
+      responses:
+        201:
+          description: The created subscription event for this discount
+          schema: { $ref: '#/definitions/SubscriptionEvent' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        409: { $ref: '#/responses/Conflict' }
+        500: { $ref: '#/responses/Internal' }
+
+  /subscription-events:
+    x-manifold-audience: browser
+    get:
+      summary: List subscription events
+      description: |
+        List the historical subscription events for a user. Events are sorted by
+        `body.event_number`, in increasing order.
+
+        Subscription events are the authoratative log of all actions for an
+        account that affect billing. Each event references the event that
+        preceeded it, and all events are cryptographically signed by Manifold,
+        so that any tampering can be detected.
+
+        ## Calculating Coupon and Credit Balance
+
+        Subscription events with `body.event_type` of `credit` can be coupon
+        applications, or general credits applied by Manifold to an account.
+        Credits that came from a coupon will have both `body.coupon_id` and
+        `body.code` set. As coupon codes may be reused by Manifold,
+        `body.coupon_id` must be used for determining the remaining balance on
+        a coupon application in subsequent billing periods (see below).
+
+        When a coupon is first applied, `body.amount` holds the full value of
+        the coupon in cents. As subsequent billing periods occur, new
+        subscription events are added to the list with the updated remaining
+        credit balance. These events will have `body.rollover_id` set to the id
+        of the previous `credit` subscription event in the list that  maps to
+        the same coupon application.
+
+        If a credit balance is zero at the end of a billing period, no new
+        rollover subscription event is added. If the current time in UTC is the
+        second of the month (to allow for some processing delay), and there is
+        no new rollover subscription event in the list, a coupon application can
+        be considered to have a zero balance, and be fully used in the previous
+        billing period.
+
+      tags:
+        - Subscription
+      parameters:
+        - name: event_type
+          in: query
+          description: Filter returned events by type. Only `credit` is supported.
+          required: true
+          type: string
+          enum: [credit]
+        - name: team_id
+          in: query
+          description: |
+            ID of the Team to filter Events by, stored as a
+            base32encoded 18 byte identifier. Falls back to current user.
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+          required: false
+      responses:
+        200:
+          description: The list of subscription events, ordered by event number.
+          schema: { type: array, items: { $ref: '#/definitions/SubscriptionEvent' } }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        500: { $ref: '#/responses/Internal' }
+
+  /resources/{id}/measures:
+    x-manifold-audience: browser
+    get:
+      description: |
+        Return all measure data available for a resource in the time frame
+        selected.
+      tags:
+        - Resource
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the owner to retrieve, stored as a base32 encoded 18 byte
+            identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: period_start
+          in: query
+          type: string
+          format: datetime
+          description: The start of a billing period, must be the start of a month.
+        - name: period_end
+          in: query
+          type: string
+          format: datetime
+          description: The end of a billing period, must be the end of a month inclusive.
+      responses:
+        200:
+          description: An array of resource measures per billing period as queried
+          schema:
+            type: array
+            items: { $ref: '#/definitions/ResourceMeasuresUsage' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/resources/{id}/measures:
+    x-manifold-audience: internal
+    get:
+      description: |
+        Get the latest measures of a resource. Intended for provider testing.
+      tags:
+        - Resource
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the resource, stored as a base32 encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+      responses:
+        200:
+          description: Return the latest measures of a resource.
+          schema: { $ref: '#/definitions/ResourceMeasures' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+    put:
+      tags:
+        - Resource
+      security: [xInternalAuthRequired: []]
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the resource, stored as a base32 encoded 18 byte identifier.
+          required: true
+          type: string
+          pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+          format: base32ID
+        - name: body
+          in: body
+          required: true
+          schema: { $ref: '#/definitions/ResourceMeasures' }
+      responses:
+        204:
+          description: Empty response
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+  /pricing:
+    x-manifold-audience: internal
+    post:
+      description: Get how much a plan would cost when using a set of features
+      security:
+        - tokenRequired: []
+        - anonymous: []
+      tags:
+        - Pricing
+      parameters:
+        - name: body
+          in: body
+          description: Plan cost calculation request
+          required: true
+          schema:
+            $ref: '#/definitions/PricingRequest'
+      responses:
+        200:
+          description: Cost calculation response
+          schema:
+            $ref: '#/definitions/PricingResponse'
+        400:
+          description: Invalid parameters
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Resource not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /internal/jobs:
+    x-manifold-audience: internal
+    get:
+      description: |
+        Get the jobs currently in the queue.
+      tags:
+        - Job
+      security: [xInternalAuthRequired: []]
+      responses:
+        200:
+          description: Return a list of jobs in the queue.
+          schema:
+            type: array
+            items: { $ref: '#/definitions/QueJob' }
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        500: { $ref: '#/responses/Internal' }
+
+  /internal/jobs/{id}/retry:
+    x-manifold-audience: internal
+    post:
+      description: |
+        Retry the specified job
+      tags:
+        - Job
+      parameters:
+        - name: id
+          in: path
+          description: |
+            ID of the job to retry
+          required: true
+          type: integer
+      security: [xInternalAuthRequired: []]
+      responses:
+        200:
+          description: Return the retried job
+          schema:
+            $ref: '#/definitions/QueJob'
+        400: { $ref: '#/responses/BadRequest' }
+        401: { $ref: '#/responses/Unauthorized' }
+        404: { $ref: '#/responses/NotFound' }
+        500: { $ref: '#/responses/Internal' }
+
+definitions:
+  ID:
+    type: string
+    description: A base32 encoded 18 byte identifier.
+    pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+    format: base32ID
+    x-go-type:
+      type: ID
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  OptionalID:
+    type: string
+    description: A base32 encoded 18 byte identifier.
+    pattern: '^[0-9abcdefghjkmnpqrtuvwxyz]{29}$'
+    format: base32ID
+    x-nullable: true
+    x-go-type:
+      type: ID
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  Name:
+    type: string
+    description: A name of an entity which is displayed to a human.
+    pattern: '^[a-zA-Z0-9][a-z0-9A-Z\. \-_]{2,128}$'
+    x-go-type:
+      type: Name
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  Label:
+    type: string
+    description: A machine readable unique label, which is url safe.
+    pattern: '^[a-z0-9][a-z0-9\-\_]{1,128}$'
+    x-go-type:
+      type: Label
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  FeatureValueLabel:
+    type: string
+    description: A machine readable unique label, which is url safe.
+    pattern: '^[a-z0-9][a-z0-9-_\.]{1,128}$'
+    x-go-type:
+      type: FeatureValueLabel
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  Base64:
+    type: string
+    description: A base64 encoded binary value.
+    pattern: '^[a-zA-Z0-9_-]*$'
+    format: base64
+
+  Error:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - bad_request
+          - forbidden
+          - unauthorized
+          - not_found
+          - internal
+        description: The error type
+      message:
+        type: array
+        description: Explanation of the errors
+        items: { type: string }
+    x-go-type:
+      type: Error
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  BillingSubDelete:
+    description: |
+      Infomation necessary to cancel a subscription item
+    type: object
+    properties:
+      operation_id: { $ref: '#/definitions/ID' }
+      occurred_at: { type: string, format: date-time }
+    additionalProperties: false
+    required:
+      - operation_id
+      - occurred_at
+
+  BillingCreditCreate:
+    description: |
+      Information necessary to create a new credit
+    type: object
+    properties:
+      provider_id: { $ref: '#/definitions/ID' }
+      resource_id: { $ref: '#/definitions/ID' }
+      operation_id: { $ref: '#/definitions/ID' }
+      occurred_at: { type: string, format: date-time }
+      reason:
+        type: string
+        maxLength: 64
+      amount:
+        type: integer
+        minimum: 0
+        description: Dollar value in cents
+    additionalProperties: false
+    required:
+      - operation_id
+      - occurred_at
+
+  CouponCode:
+    description: Alphanumeric coupon code
+    type: string
+    minLength: 1
+    maxLength: 128
+    pattern: '^[0-9A-Z]{1,128}$'
+
+  Coupon:
+    description: Coupon details
+    type: object
+    required:
+      - id
+      - type
+      - version
+      - body
+    x-go-type:
+      type: Coupon
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+    additionalProperties: false
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [payout_profile] }
+      body:
+        type: object
+        required:
+          - type
+          - code
+          - active
+          - claimed
+          - currency
+        additionalProperties: false
+        properties:
+          type: { type: string, enum: [standard, signup] }
+          code: { $ref: '#/definitions/CouponCode' }
+          active: { type: boolean }
+          amount:
+            description: Dollar value in cents
+            type: integer
+            minimum: 0
+          claimed:
+            description: |
+              Total claimed codes for this coupon.
+            type: integer
+          expires_at:
+            description: |
+              Expiry datetime for this coupon. If omitted, the coupon does not
+              expire.
+            type: string
+            format: date-time
+          total:
+            description: |
+              Total claimable codes for this coupon. If omitted, there are infinite
+              coupons.
+            type: integer
+            minimum: 1
+
+  UpdateCoupon:
+    type: object
+    description: Shape of request used to update a coupon
+    properties:
+      body:
+        type: object
+        properties:
+          code: { $ref: '#/definitions/CouponCode' }
+          active: { type: boolean }
+          amount:
+            description: Dollar value in cents
+            type: integer
+            minimum: 0
+          expires_at:
+            description: |
+              Expiry datetime for this coupon. If omitted, the coupon does not
+              expire.
+            type: string
+            format: date-time
+        additionalProperties: false
+    additionalProperties: false
+    required:
+      - body
+
+  BillingCouponCreate:
+    description: Information necessary to create a new coupon
+    type: object
+    properties:
+      type: { type: string, enum: [standard, signup] }
+      provider_id: { $ref: '#/definitions/ID' }
+      expires_at:
+        description: |
+          Expiry datetime for this coupon. If omitted, the coupon does not
+          expire.
+        type: string
+        format: date-time
+      total:
+        description: |
+          Total claimable codes for this coupon. If omitted, there are infinite
+          coupons.
+        type: integer
+        minimum: 1
+      code: { $ref: '#/definitions/CouponCode' }
+      amount:
+        description: Dollar value in cents
+        type: integer
+        minimum: 0
+    additionalProperties: false
+    required:
+      - type
+      - code
+      - amount
+
+  BillingSubCreate:
+    description: |
+      Information necessary to create a new subscription item
+    type: object
+    properties:
+      source:
+        type: string
+        default: catalog
+        enum:
+          - catalog
+          - partner
+      plan_id:
+        $ref: '#/definitions/OptionalID'
+        description: plan_id is required if source is catalog
+      details:
+        $ref: '#/definitions/BillingDetails'
+        description: details is required if source isn't catalog
+      operation_id: { $ref: '#/definitions/ID' }
+      occurred_at: { type: string, format: date-time }
+      features: { $ref: '#/definitions/FeatureMap' }
+    additionalProperties: false
+    required:
+      - source
+      - operation_id
+      - occurred_at
+
+  BillingDetails:
+    type: object
+    properties:
+      partner_id: { $ref: '#/definitions/ID' }
+      plan:
+        type: object
+        properties:
+          id: { $ref: '#/definitions/ID' }
+          label: { $ref: '#/definitions/Label' }
+          name: { $ref: '#/definitions/Name' }
+          cost:
+            type: integer
+            minimum: 0
+        required:
+          - id
+          - label
+          - name
+          - cost
+        additionalProperties: false
+      product:
+        type: object
+        properties:
+          id: { $ref: '#/definitions/ID' }
+          label: { $ref: '#/definitions/Label' }
+          name: { $ref: '#/definitions/Name' }
+          currency:
+            type: string
+          billing_type:
+            type: string
+        required:
+          - id
+          - label
+          - name
+          - currency
+          - billing_type
+        additionalProperties: false
+      feature_values:
+        type: array
+        items: { $ref: '#/definitions/FeatureValue' }
+    required:
+      - partner_id
+      - plan
+      - product
+    additionalProperties: false
+
+  FeatureValue:
+    description: |
+      FeatureValue is a simplified version of catalog features. It describes the possible
+      values/costs a feature can have.
+    type: object
+    properties:
+      feature:
+        $ref: '#/definitions/Label'
+        description: Feature is equivalent to a product feature label
+      type:
+        type: string
+        enum:
+          - number
+      value:
+        type: string
+        description: Value is equivalent to a plan feature value label
+      min:
+        type: integer
+        minimum: 0
+        default: 0
+      default:
+        type: boolean
+        description: |
+          If a product has multiple possible value of a feature, one can be defined as
+          default for the plan.
+      cost_ranges:
+        type: object
+        description: |
+          Cost ranges must have valid integers as keys and values.
+          Each key indicates the max of the range for which the value cost is in effect.
+          -1 as a key is equivalent to no upper limit for the range.
+          Values are in 10,000,000 ths of cents.
+        additionalProperties:
+          type: integer
+
+  BillingSubTransfer:
+    description: |
+      Information necessary to transfer a subscription
+    type: object
+    properties:
+      new_owner_id: { $ref: '#/definitions/ID' }
+      operation_id: { $ref: '#/definitions/ID' }
+      occurred_at: { type: string, format: date-time }
+      features: { $ref: '#/definitions/FeatureMap' }
+    additionalProperties: false
+    required:
+      - operation_id
+      - new_owner_id
+      - occurred_at
+
+  BillingSubAdjustment:
+    description: |
+      Information necessary to adjust a subscription
+    type: object
+    properties:
+      amount:
+        type: integer
+        minimum: 0
+        description: Dollar value of credit in cents
+      currency:
+        type: string
+      reason:
+        type: string
+      resource_id: { $ref: '#/definitions/OptionalID' }
+      provider_id: { $ref: '#/definitions/OptionalID' }
+    required:
+      - reason
+
+  ProviderSubAdjustment:
+    description: |
+      Information necessary to associate a ProviderSubscriptionEvent with SubscriptionEvent for a
+      user or resource
+    type: object
+    properties:
+      month:
+        type: integer
+        description: Month for which the Payout to adjust is for
+        minimum: 1
+        maximum: 12
+      year:
+        type: integer
+        minimum: 2017
+        description: Year for which they payout to adjust is for
+      user_id: { $ref: '#/definitions/OptionalID' }
+      resource_id: { $ref: '#/definitions/OptionalID' }
+
+  PayoutProfile:
+    description: |
+      Association of a provider with a billing account
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [payout_profile] }
+      body:
+        type: object
+        properties:
+          provider_id: { $ref: '#/definitions/ID' }
+          account_id:
+            type: string
+          account: { $ref: '#/definitions/StripeAccount' }
+          legal_entity: { $ref: '#/definitions/StripeLegalEntity' }
+        additionalProperties: false
+        required:
+          - provider_id
+          - account_id
+          - account
+          - legal_entity
+    additionalProperties: false
+    required:
+      - id
+      - type
+      - version
+      - body
+
+  PayoutProfileCreateRequest:
+    type: object
+    properties:
+      token:
+        type: string
+        minLength: 3
+        maxLength: 64
+        description: |
+          Tokenized destination of funds
+      provider_id: { $ref: '#/definitions/ID' }
+      account: { $ref: '#/definitions/StripeAccount' }
+      legal_entity: { $ref: '#/definitions/StripeLegalEntity' }
+    required: [provider_id, account, legal_entity, token]
+    additionalProperties: false
+
+  PayoutAdjustmentRequest:
+    type: object
+    properties:
+      amount:
+        type: integer
+        minimum: 0
+        description: Dollar value of credit in cents
+      month:
+        type: integer
+        description: Month for which the Payout to adjust is for
+        minimum: 1
+        maximum: 12
+      year:
+        type: integer
+        minimum: 2017
+        description: Year for which they payout to adjust is for
+      currency:
+        type: string
+      reason:
+        type: string
+    required:
+      - reason
+
+  StripeLegalEntity:
+    type: object
+
+  StripeAccount:
+    type: object
+    properties:
+      email: { $ref: '#/definitions/Email' }
+      business_name:
+        type: string
+        minLength: 1
+      country:
+        type: string
+        minLength: 2
+        maxLength: 2
+    required: [email, business_name, country]
+
+  PreauthStatus:
+    type: string
+    enum:
+      - unverified
+      - verified
+      - unknown
+    x-nullable: true
+    x-go-type:
+      type: PreauthStatus
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  BillingProfile:
+    description: |
+      Details of a billing profile
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [billing_profile] }
+      body:
+        type: object
+        properties:
+          user_id: { $ref: '#/definitions/OptionalID' }
+          team_id: { $ref: '#/definitions/OptionalID' }
+          owner_id: { $ref: '#/definitions/OptionalID' }
+          sources:
+            type: array
+            items: { $ref: '#/definitions/Source' }
+          status: { $ref: '#/definitions/PreauthStatus' }
+        required:
+          - sources
+    additionalProperties: false
+    required:
+      - id
+      - type
+      - version
+      - body
+
+  ProfileCreateRequest:
+    type: object
+    properties:
+      user_id: { $ref: '#/definitions/OptionalID' }
+      team_id: { $ref: '#/definitions/OptionalID' }
+      token:
+        type: string
+        minLength: 3
+        maxLength: 64
+        description: |
+          Tokenized source of funds
+    required: [token]
+    additionalProperties: false
+
+  ProfileUpdateRequest:
+    type: object
+    properties:
+      token:
+        type: string
+        minLength: 3
+        maxLength: 64
+        description: |
+          Tokenized source of funds
+    required: [token]
+    additionalProperties: false
+
+  Source:
+    type: object
+    properties:
+      name: { type: string }
+      country: { type: string }
+      zip: { type: string }
+      last_four: { type: string }
+      exp_month: { type: integer }
+      exp_year: { type: integer }
+      brand:
+        type: string
+        enum:
+          - Unknown
+          - Visa
+          - American Express
+          - MasterCard
+          - Discover
+          - JCB
+          - Diners Club
+    additionalProperties: false
+    required:
+      - name
+      - country
+      - last_four
+      - exp_month
+      - exp_year
+
+  Email:
+    type: string
+    format: email
+    x-nullable: true
+    x-go-type:
+      type: Email
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  Invoice:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/OptionalID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [invoice] }
+      body: { $ref: '#/definitions/InvoiceBody' }
+      signature:
+        type: object
+        properties:
+          alg: { type: string, enum: [eddsa] }
+          value: { $ref: '#/definitions/Base64' }
+          public_key: { $ref: '#/definitions/Base64' }
+          endorsement: { $ref: '#/definitions/Base64' }
+
+  InvoiceBody:
+    type: object
+    properties:
+      start_event: { $ref: '#/definitions/SubscriptionEvent' }
+      end_event: { $ref: '#/definitions/SubscriptionEvent' }
+      user_id: { $ref: '#/definitions/OptionalID' }
+      team_id: { $ref: '#/definitions/OptionalID' }
+      line_items: { type: array, items: { $ref: '#/definitions/InvoiceLineItem' } }
+
+  InvoiceLineItem:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [invoice] }
+      body: { $ref: '#/definitions/InvoiceLineItemBody' }
+    x-go-type:
+      type: InvoiceLineItem
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  InvoiceLineItemBody:
+    type: object
+    properties:
+      resource_id: { $ref: '#/definitions/ID' }
+      period_start: { type: string, format: date-time }
+      period_end: { type: string, format: date-time }
+      due: { type: integer }
+      currency: { type: string }
+      plan: { $ref: '#/definitions/PlanDetails' }
+      start_at: { type: string, format: date-time }
+      start_event: { $ref: '#/definitions/SubscriptionEvent' }
+      end_at: { type: string, format: date-time }
+      end_event: { $ref: '#/definitions/SubscriptionEvent' }
+    x-go-type:
+      type: InvoiceLineItemBody
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  Payout:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/OptionalID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [payout] }
+      body: { $ref: '#/definitions/PayoutBody' }
+      signature:
+        type: object
+        properties:
+          alg: { type: string, enum: [eddsa] }
+          value: { $ref: '#/definitions/Base64' }
+          public_key: { $ref: '#/definitions/Base64' }
+          endorsement: { $ref: '#/definitions/Base64' }
+
+  PayoutBody:
+    type: object
+    properties:
+      provider_id: { $ref: '#/definitions/OptionalID' }
+      product_id: { $ref: '#/definitions/OptionalID' }
+      plan_id: { $ref: '#/definitions/OptionalID' }
+      line_items: { type: array, items: { $ref: '#/definitions/PayoutLineItem' } }
+
+  PayoutLineItem:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [invoice] }
+      body: { $ref: '#/definitions/PayoutLineItemBody' }
+    x-go-type:
+      type: PayoutLineItem
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  PayoutLineItemBody:
+    type: object
+    properties:
+      provider_id: { $ref: '#/definitions/OptionalID' }
+      product_id: { $ref: '#/definitions/OptionalID' }
+      plan_id: { $ref: '#/definitions/OptionalID' }
+      gross: { type: integer }
+      payout: { type: integer }
+      estimate_payout: { type: integer }
+      fee: { type: integer }
+      estimate_fee: { type: integer }
+      currency: { type: string }
+      plan: { $ref: '#/definitions/PlanDetails' }
+      start_at: { type: string, format: date-time }
+      end_at: { type: string, format: date-time }
+
+  PayoutResendRequest:
+    type: object
+    properties:
+      payout_id: { $ref: '#/definitions/ID' }
+      emails:
+        type: array
+        items: { $ref: '#/definitions/Email' }
+    required:
+      - payout_id
+    additionalProperties: false
+
+  PlanDetails:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      billing_type: { $ref: '#/definitions/BillingType' }
+      cost: { type: integer }
+      currency: { type: string }
+      label: { type: string }
+      name: { type: string }
+      product_id: { $ref: '#/definitions/OptionalID' }
+      product_label: { type: string }
+      trial_seconds: { type: integer }
+
+  BillingType:
+    type: string
+
+  DiscountCreateRequest:
+    type: object
+    properties:
+      code: { $ref: '#/definitions/CouponCode' }
+      team_id: { $ref: '#/definitions/OptionalID' }
+    required: [code]
+    additionalProperties: false
+
+  SubscriptionEvent:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [subscription_event] }
+      body: { $ref: '#/definitions/SubscriptionEventBody' }
+      signature:
+        type: object
+        properties:
+          alg: { type: string, enum: [eddsa] }
+          value: { $ref: '#/definitions/Base64' }
+          public_key: { $ref: '#/definitions/Base64' }
+          endorsement: { $ref: '#/definitions/Base64' }
+    x-go-type:
+      type: SubscriptionEvent
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  SubscriptionEventBody:
+    type: object
+    discriminator: event_type
+    properties:
+      event_type: { type: string }
+      event_number: { type: integer, minimum: 0 }
+      parent_event: { $ref: '#/definitions/ID' }
+      operation_id: { $ref: '#/definitions/ID' }
+      occurred_at: { type: string, format: date-time }
+      user_id: { $ref: '#/definitions/OptionalID' }
+      team_id: { $ref: '#/definitions/OptionalID' }
+      provider_id: { $ref: '#/definitions/OptionalID' }
+      resource_id: { $ref: '#/definitions/OptionalID' }
+      rollover_id: { $ref: '#/definitions/OptionalID' }
+    additionalProperties: false
+    required:
+      - event_type
+      - event_number
+      - operation_id
+      - occurred_at
+
+  credit:
+    type: object
+    allOf:
+      - { $ref: '#/definitions/SubscriptionEventBody' }
+      - type: object
+        properties:
+          amount:
+            type: integer
+            minimum: 0
+            description: Dollar value of credit in cents
+          currency: { type: string, enum: [usd] }
+          reason: { type: string }
+          coupon_id: { $ref: '#/definitions/ID' }
+          code: { $ref: '#/definitions/CouponCode' }
+        required:
+          - amount
+          - currency
+          - reason
+
+  ResourceMeasures:
+    type: object
+    properties:
+      id: { $ref: '#/definitions/ID' }
+      version: { type: integer, enum: [1] }
+      type: { type: string, enum: [resource_measures] }
+      body: { $ref: '#/definitions/ResourceMeasuresBody' }
+      signature:
+        type: object
+        properties:
+          alg: { type: string, enum: [eddsa] }
+          value: { $ref: '#/definitions/Base64' }
+          public_key: { $ref: '#/definitions/Base64' }
+          endorsement: { $ref: '#/definitions/Base64' }
+        additionalProperties: false
+    additionalProperties: false
+    x-go-type:
+      type: ResourceMeasures
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  ResourceMeasuresBody:
+    type: object
+    properties:
+      resource_id: { $ref: '#/definitions/ID' }
+      updated_at: { type: string, format: datetime }
+      period_start: { type: string, format: datetime }
+      period_end: { type: string, format: datetime }
+      measures:
+        type: object
+        additionalProperties:
+          type: integer
+    additionalProperties: false
+    required:
+      - resource_id
+      - updated_at
+      - period_start
+      - period_end
+      - measures
+    x-go-type:
+      type: ResourceMeasuresBody
+      import: { package: 'github.com/manifoldco/marketplace/billing/primitives' }
+
+  ResourceMeasuresUsage:
+    type: object
+    properties:
+      updated_at: { type: string, format: datetime }
+      period_start: { type: string, format: datetime }
+      period_end: { type: string, format: datetime }
+      measures:
+        type: array
+        items: { $ref: '#/definitions/ResourceMeasure' }
+
+  ResourceMeasure:
+    type: object
+    properties:
+      feature:
+        type: object
+        properties:
+          label: { $ref: '#/definitions/Label' }
+          name: { $ref: '#/definitions/Name' }
+        additionalProperties: false
+      feature_value:
+        type: object
+        properties:
+          label: { $ref: '#/definitions/FeatureValueLabel' }
+          name: { $ref: '#/definitions/Name' }
+        additionalProperties: false
+      usage: { type: integer, x-nullable: false }
+      max: { type: integer, x-nullable: true }
+      suffix: { type: string, x-nullable: true }
+    additionalProperties: false
+    required:
+      - usage
+      - feature
+      - feature_value
+
+  FeatureMap:
+    type: object
+    description: A map of feature labels to selected values for customizable features
+    additionalProperties: true
+    example:
+      size: 40 GB
+      e-mails: 1000
+      read-replica: true
+    x-go-type:
+      type: FeatureMap
+      import:
+        package: 'github.com/manifoldco/go-manifold'
+        alias: manifold
+
+  PricingRequest:
+    type: object
+    properties:
+      plan_id: { $ref: '#/definitions/ID' }
+      features:
+        $ref: '#/definitions/FeatureMap'
+    additionalProperties: false
+    required:
+      - plan_id
+      - features
+  PricingResponse:
+    $ref: '#/definitions/Price'
+  Price:
+    type: object
+    properties:
+      cost:
+        type: integer
+      currency:
+        type: string
+    required:
+      - cost
+      - currency
+    additionalProperties: false
+
+  InvoiceResendRequest:
+    type: object
+    properties:
+      invoice_id: { $ref: '#/definitions/ID' }
+      team_id: { $ref: '#/definitions/ID' }
+    additionalProperties: false
+
+  InvoiceEventCreate:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - waive
+        description: The event type
+      reason:
+        type: string
+    required:
+      - type
+      - reason
+    additionalProperties: false
+
+  QueJob:
+    type: object
+    properties:
+      priority:
+        type: integer
+      run_at:
+        type: string
+        format: datetime
+      job_id:
+        type: integer
+      job_class:
+        type: string
+      args:
+        type: object
+      error_count:
+        type: integer
+      last_error:
+        type: string
+      queue:
+        type: string
+    additionalProperties: false
+    required:
+      - priority
+      - run_at
+      - job_id
+      - job_class
