@@ -55,6 +55,7 @@ export class ManifoldDataProvisionButton {
   }
 
   async provision() {
+    // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
     this.clickEvent.emit({ resourceName: this.resourceName });
 
     const req: Gateway.ResourceCreateRequest = {

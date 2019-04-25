@@ -10,6 +10,7 @@ export class ManifoldActivePlan {
   @Prop() isExistingResource?: boolean;
   @Prop() linkFormat?: string;
   @Prop() plans: Catalog.ExpandedPlan[] = [];
+  @Prop() preserveEvent: boolean = false;
   @Prop() product?: Catalog.ExpandedProduct;
   @Prop() regions?: string[];
   @State() selectedPlanId: string;
@@ -37,6 +38,7 @@ export class ManifoldActivePlan {
           isExistingResource={this.isExistingResource}
           linkFormat={this.linkFormat}
           plan={this.plans.find(plan => plan.id === this.selectedPlanId)}
+          preserveEvent={this.preserveEvent}
           product={this.product}
           regions={this.regions}
         />

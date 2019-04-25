@@ -21,9 +21,10 @@ export class ManifoldServiceCard {
   @Prop() description?: string;
   @Prop() isFeatured?: boolean;
   @Prop() label?: string;
-  @Prop() logo?: string;
-  @Prop() productId?: string;
   @Prop() linkFormat?: string;
+  @Prop() logo?: string;
+  @Prop() preserveEvent: boolean = false;
+  @Prop() productId?: string;
   @State() isFree: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
   @Watch('productId')
@@ -53,7 +54,7 @@ export class ManifoldServiceCard {
   }
 
   onClick = (e: Event): void => {
-    if (!this.linkFormat) {
+    if (!this.linkFormat || this.preserveEvent) {
       e.preventDefault();
       const detail: EventDetail = {
         productId: this.productId,

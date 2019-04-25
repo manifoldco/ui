@@ -13,6 +13,7 @@
 | `isExistingResource` | `is-existing-resource` |             | `boolean \| undefined`      | `false`     |
 | `linkFormat`         | `link-format`          |             | `string \| undefined`       | `undefined` |
 | `plan`               | --                     |             | `ExpandedPlan \| undefined` | `undefined` |
+| `preserveEvent`      | `preserve-event`       |             | `boolean`                   | `false`     |
 | `product`            | --                     |             | `Product \| undefined`      | `undefined` |
 | `regions`            | --                     |             | `string[] \| undefined`     | `undefined` |
 

@@ -14,6 +14,7 @@
 | `hideCategories` | `hide-categories` |             | `boolean \| undefined`   | `false`     |
 | `hideTemplates`  | `hide-templates`  |             | `boolean \| undefined`   | `false`     |
 | `linkFormat`     | `link-format`     |             | `string \| undefined`    | `undefined` |
+| `preserveEvent`  | `preserve-event`  |             | `boolean`                | `false`     |
 | `products`       | --                |             | `string[] \| undefined`  | `[]`        |
 | `services`       | --                |             | `Product[] \| undefined` | `[]`        |
 

@@ -49,6 +49,9 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 replaced with url-friendly slugs for each. In most cases, these are all
 passable to [**data components**](#data-components).
 
+Note that this will disable the custom events unless `preserve-event` is
+passed as well.
+
 ## Hiding CTA
 
 If you would like to hide the CTA altogether, specify `hide-cta`:
@@ -115,17 +118,20 @@ same order).
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
-| Property       | Attribute       | Description                                                                                | Type                   | Default            |
-| -------------- | --------------- | ------------------------------------------------------------------------------------------ | ---------------------- | ------------------ |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                                               | `Connection`           | `connections.prod` |
-| `hideCta`      | `hide-cta`      | _(optional)_ Hide CTA?                                                                     | `boolean \| undefined` | `undefined`        |
-| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`        |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`        |
-| `regions`      | `regions`       | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
-| `resourceId`   | `resource-id`   | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`        |
+| Property        | Attribute        | Description                                                                                | Type                   | Default            |
+| --------------- | ---------------- | ------------------------------------------------------------------------------------------ | ---------------------- | ------------------ |
+| `connection`    | --               | _(hidden)_ Passed by `<manifold-connection>`                                               | `Connection`           | `connections.prod` |
+| `hideCta`       | `hide-cta`       | _(optional)_ Hide CTA?                                                                     | `boolean \| undefined` | `undefined`        |
+| `linkFormat`    | `link-format`    | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`        |
+| `preserveEvent` | `preserve-event` | Should the JS event still fire, even if link-format is passed?                             | `boolean`              | `false`            |
+| `productLabel`  | `product-label`  | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`        |
+| `regions`       | `regions`        | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
+| `resourceId`    | `resource-id`    | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`        |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
