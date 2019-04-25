@@ -23,6 +23,7 @@ export namespace Components {
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'plans': Catalog.ExpandedPlan[];
+    'preserveEvent': boolean;
     'product'?: Catalog.ExpandedProduct;
     'regions'?: string[];
   }
@@ -31,6 +32,7 @@ export namespace Components {
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
+    'preserveEvent'?: boolean;
     'product'?: Catalog.ExpandedProduct;
     'regions'?: string[];
   }
@@ -175,6 +177,36 @@ export namespace Components {
     'regionId'?: string;
   }
 
+  interface ManifoldDataResourceList {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'linkFormat'?: string;
+    /**
+    * Should the JS event still fire, even if link-format is passed?
+    */
+    'preserveEvent': boolean;
+  }
+  interface ManifoldDataResourceListAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'linkFormat'?: string;
+    'onManifold-resourceList-click'?: (event: CustomEvent) => void;
+    /**
+    * Should the JS event still fire, even if link-format is passed?
+    */
+    'preserveEvent'?: boolean;
+  }
+
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
@@ -260,6 +292,7 @@ export namespace Components {
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
     'linkFormat'?: string;
+    'preserveEvent': boolean;
     'products'?: string[];
     'services'?: Catalog.Product[];
   }
@@ -269,6 +302,7 @@ export namespace Components {
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
     'linkFormat'?: string;
+    'preserveEvent'?: boolean;
     'products'?: string[];
     'services'?: Catalog.Product[];
   }
@@ -299,6 +333,10 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
+    * Should the JS event still fire, even if link-format is passed?
+    */
+    'preserveEvent': boolean;
+    /**
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
@@ -328,6 +366,10 @@ export namespace Components {
     * Link format structure, with `:product` placeholder
     */
     'linkFormat'?: string;
+    /**
+    * Should the JS event still fire, even if link-format is passed?
+    */
+    'preserveEvent'?: boolean;
     /**
     * Comma-separated list of shown products (labels)
     */
@@ -380,6 +422,7 @@ export namespace Components {
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
     'plan'?: Catalog.ExpandedPlan;
+    'preserveEvent': boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
   }
@@ -391,6 +434,7 @@ export namespace Components {
     'onManifold-planSelector-click'?: (event: CustomEvent) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
+    'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
   }
@@ -420,6 +464,10 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
+    * Should the JS event still fire, even if link-format is passed?
+    */
+    'preserveEvent': boolean;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel': string;
@@ -445,6 +493,10 @@ export namespace Components {
     * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
     */
     'linkFormat'?: string;
+    /**
+    * Should the JS event still fire, even if link-format is passed?
+    */
+    'preserveEvent'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -578,6 +630,7 @@ export namespace Components {
     'linkFormat'?: string;
     'logo'?: string;
     'name'?: string;
+    'preserveEvent': boolean;
     'productId'?: string;
   }
   interface ManifoldServiceCardAttributes extends StencilHTMLAttributes {
@@ -589,17 +642,20 @@ export namespace Components {
     'logo'?: string;
     'name'?: string;
     'onManifold-marketplace-click'?: (event: CustomEvent) => void;
+    'preserveEvent'?: boolean;
     'productId'?: string;
   }
 
   interface ManifoldTemplateCard {
     'category': string;
     'linkFormat'?: string;
+    'preserveEvent': boolean;
   }
   interface ManifoldTemplateCardAttributes extends StencilHTMLAttributes {
     'category'?: string;
     'linkFormat'?: string;
     'onManifold-template-click'?: (event: CustomEvent) => void;
+    'preserveEvent'?: boolean;
   }
 
   interface ManifoldToast {
@@ -664,6 +720,7 @@ declare global {
     'ManifoldDataProductLogo': Components.ManifoldDataProductLogo;
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
+    'ManifoldDataResourceList': Components.ManifoldDataResourceList;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
@@ -697,6 +754,7 @@ declare global {
     'manifold-data-product-logo': Components.ManifoldDataProductLogoAttributes;
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
+    'manifold-data-resource-list': Components.ManifoldDataResourceListAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
@@ -763,6 +821,12 @@ declare global {
   var HTMLManifoldDataProvisionButtonElement: {
     prototype: HTMLManifoldDataProvisionButtonElement;
     new (): HTMLManifoldDataProvisionButtonElement;
+  };
+
+  interface HTMLManifoldDataResourceListElement extends Components.ManifoldDataResourceList, HTMLStencilElement {}
+  var HTMLManifoldDataResourceListElement: {
+    prototype: HTMLManifoldDataResourceListElement;
+    new (): HTMLManifoldDataResourceListElement;
   };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
@@ -911,6 +975,7 @@ declare global {
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
+    'manifold-data-resource-list': HTMLManifoldDataResourceListElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
@@ -944,6 +1009,7 @@ declare global {
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
+    'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;

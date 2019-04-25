@@ -19,6 +19,8 @@ export class ManifoldMarketplace {
   @Prop() hideCategories?: boolean = false;
   /** Link format structure, with `:product` placeholder */
   @Prop() linkFormat?: string;
+  /** Should the JS event still fire, even if link-format is passed?  */
+  @Prop() preserveEvent: boolean = false;
   /** Comma-separated list of shown products (labels) */
   @Prop() products?: string;
   @State() parsedExcludes: string[] = [];
@@ -53,6 +55,7 @@ export class ManifoldMarketplace {
         hideCategories={this.hideCategories}
         hideTemplates={this.hideTemplates}
         linkFormat={this.linkFormat}
+        preserveEvent={this.preserveEvent}
         products={this.parsedProducts}
         services={this.services}
       />

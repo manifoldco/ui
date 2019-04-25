@@ -24,6 +24,7 @@ export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean = false;
   @Prop() linkFormat?: string;
   @Prop() plan?: Catalog.ExpandedPlan;
+  @Prop() preserveEvent: boolean = false;
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
@@ -117,7 +118,7 @@ export class ManifoldPlanDetails {
 
   get ctaLink() {
     if (!this.product || !this.plan) return undefined;
-    if (typeof this.linkFormat !== 'string') return undefined;
+    if (!this.linkFormat || this.preserveEvent) return undefined;
     const params = new URLSearchParams();
     if (Object.keys(this.features)) {
       Object.entries(this.features).forEach(([key, value]) => {
@@ -223,7 +224,8 @@ export class ManifoldPlanDetails {
   }
 
   onClick = (e: Event): void => {
-    if (!this.linkFormat && this.plan && this.product) {
+    if (!this.plan || !this.product) return;
+    if (!this.linkFormat || this.preserveEvent) {
       e.preventDefault();
       const detail: EventDetail = {
         productLabel: this.product.body.label,

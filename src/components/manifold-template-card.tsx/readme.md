@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property     | Attribute     | Description | Type                  | Default     |
-| ------------ | ------------- | ----------- | --------------------- | ----------- |
-| `category`   | `category`    |             | `string`              | `undefined` |
-| `linkFormat` | `link-format` |             | `string \| undefined` | `undefined` |
+| Property        | Attribute        | Description | Type                  | Default     |
+| --------------- | ---------------- | ----------- | --------------------- | ----------- |
+| `category`      | `category`       |             | `string`              | `undefined` |
+| `linkFormat`    | `link-format`    |             | `string \| undefined` | `undefined` |
+| `preserveEvent` | `preserve-event` |             | `boolean`             | `false`     |
 
 
 ## Events

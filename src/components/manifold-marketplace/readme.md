@@ -95,20 +95,24 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 
 `:product` will be replaced with the url-friendly slug for the product.
 
+Note that this will disable the custom events unless `preserve-event` is
+passed as well.
+
 <!-- Auto Generated Below -->
 
 
 ## Properties
 
-| Property         | Attribute         | Description                                        | Type                   | Default            |
-| ---------------- | ----------------- | -------------------------------------------------- | ---------------------- | ------------------ |
-| `connection`     | --                | _(hidden)_ Passed by `<manifold-connection>`       | `Connection`           | `connections.prod` |
-| `excludes`       | `excludes`        | Comma-separated list of hidden products (labels)   | `string \| undefined`  | `undefined`        |
-| `featured`       | `featured`        | Comma-separated list of featured products (labels) | `string \| undefined`  | `undefined`        |
-| `hideCategories` | `hide-categories` | Hide categories & side menu?                       | `boolean \| undefined` | `false`            |
-| `hideTemplates`  | `hide-templates`  | Hide template cards?                               | `boolean \| undefined` | `false`            |
-| `linkFormat`     | `link-format`     | Link format structure, with `:product` placeholder | `string \| undefined`  | `undefined`        |
-| `products`       | `products`        | Comma-separated list of shown products (labels)    | `string \| undefined`  | `undefined`        |
+| Property         | Attribute         | Description                                                    | Type                   | Default            |
+| ---------------- | ----------------- | -------------------------------------------------------------- | ---------------------- | ------------------ |
+| `connection`     | --                | _(hidden)_ Passed by `<manifold-connection>`                   | `Connection`           | `connections.prod` |
+| `excludes`       | `excludes`        | Comma-separated list of hidden products (labels)               | `string \| undefined`  | `undefined`        |
+| `featured`       | `featured`        | Comma-separated list of featured products (labels)             | `string \| undefined`  | `undefined`        |
+| `hideCategories` | `hide-categories` | Hide categories & side menu?                                   | `boolean \| undefined` | `false`            |
+| `hideTemplates`  | `hide-templates`  | Hide template cards?                                           | `boolean \| undefined` | `false`            |
+| `linkFormat`     | `link-format`     | Link format structure, with `:product` placeholder             | `string \| undefined`  | `undefined`        |
+| `preserveEvent`  | `preserve-event`  | Should the JS event still fire, even if link-format is passed? | `boolean`              | `false`            |
+| `products`       | `products`        | Comma-separated list of shown products (labels)                | `string \| undefined`  | `undefined`        |
 
 
 ----------------------------------------------
