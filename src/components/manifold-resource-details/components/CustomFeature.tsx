@@ -14,7 +14,10 @@ interface CustomFeatureProps {
 }
 
 export const CustomFeature: FunctionalComponent<CustomFeatureProps> = ({ feature, value }) => {
-  if (!feature.upgradable && !feature.downgradable) {
+  const numberLocked = feature.type === 'number' && !feature.upgradable && !feature.downgradable;
+  const locked = !feature.upgradable || !feature.downgradable;
+
+  if (numberLocked || locked) {
     return <LockedFeature>{getCustomValue(feature, value)}</LockedFeature>;
   }
 
