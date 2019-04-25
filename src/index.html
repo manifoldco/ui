@@ -575,7 +575,7 @@ defineCustomElements(window);</code></pre>
               <pre><code class="js language-js">document.addEventListener('manifold-planSelector-change', ({ detail }) =&gt; {
   console.log(detail);
 });
-// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", productLabel: "zerosix", features: { … } } }
+// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", planName: "NVIDIA 1080TI", productLabel: "zerosix", features: { … } } }
 </code></pre>
               <p>The following events are emitted:</p>
               <table>
@@ -591,8 +591,8 @@ defineCustomElements(window);</code></pre>
                     <td style="text-align:left;"><code>manifold-planSelector-change</code></td>
                     <td style="text-align:left;">Fires whenever a user makes a change.</td>
                     <td style="text-align:left;">
-                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
-                      <code>features</code>
+                      <code>planID</code>, <code>planLabel</code>, <code>planName</code>,
+                      <code>productLabel</code>, <code>features</code>
                     </td>
                   </tr>
                   <tr>
@@ -602,8 +602,8 @@ defineCustomElements(window);</code></pre>
                       set the initial state (i.e. user hasn’t interacted yet).
                     </td>
                     <td style="text-align:left;">
-                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
-                      <code>features</code>
+                      <code>planID</code>, <code>planLabel</code>, <code>planName</code>,
+                      <code>productLabel</code>, <code>features</code>
                     </td>
                   </tr>
                   <tr>
@@ -613,8 +613,8 @@ defineCustomElements(window);</code></pre>
                       clicked.
                     </td>
                     <td style="text-align:left;">
-                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
-                      <code>features</code>
+                      <code>planID</code>, <code>planLabel</code>, <code>planName</code>,
+                      <code>productLabel</code>, <code>features</code>
                     </td>
                   </tr>
                 </tbody>
@@ -1179,7 +1179,7 @@ document.addEventListener(
 document.addEventListener('manifold-provisionButton-error', ({ detail }) =&gt; console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
 document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt; console.log(detail));
-// { value: 'MyResourceName', message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.' }
+// {resourceName: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
 </code></pre>
               <table>
                 <thead>
