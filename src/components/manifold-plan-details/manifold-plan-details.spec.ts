@@ -53,6 +53,7 @@ describe(`<manifold-plan-details>`, () => {
       features: { instance_class: 'db.t2.micro', redundancy: false, storage: 5 },
       planId: '235exy25wvzpxj52p87bh87gbnj4y',
       planLabel: 'custom',
+      planName: 'Custom',
       productLabel: 'jawsdb-mysql',
       regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
@@ -75,6 +76,7 @@ describe(`<manifold-plan-details>`, () => {
       features: { redundancy: true, instance_class: 'db.t2.micro', storage: 5 },
       planId: '235exy25wvzpxj52p87bh87gbnj4y',
       planLabel: 'custom',
+      planName: 'Custom',
       productLabel: 'jawsdb-mysql',
       regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
@@ -95,6 +97,7 @@ describe(`<manifold-plan-details>`, () => {
       features: { instance_class: 'db.t2.micro', redundancy: false, storage: 5 },
       planId: '235exy25wvzpxj52p87bh87gbnj4y',
       planLabel: 'custom',
+      planName: 'Custom',
       productLabel: 'jawsdb-mysql',
       regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
