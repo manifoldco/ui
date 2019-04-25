@@ -17,6 +17,10 @@
   font-weight: 600;
 }
 
+.feature-value {
+  display: flex;
+}
+
 .description {
   margin: 0.5em 0;
   color: var(--mf-c-gray);
@@ -83,5 +87,9 @@
 
   &[data-locked] {
     opacity: 0.5;
+
+    & .icon {
+      display: inline-block;
+    }
   }
 }

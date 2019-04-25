@@ -5,7 +5,7 @@ import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
 import { FeatureName } from './components/FeatureName';
-import { FeatureValueDisplay } from './components/FeatureValueDisplay';
+import { FeatureValue } from './components/FeatureValue';
 
 @Component({
   tag: 'manifold-resource-details',
@@ -54,7 +54,7 @@ export class ManifoldResourceDetails {
             <FeatureName feature={feature} />
           </dt>,
           <dd class="feature-value">
-            <FeatureValueDisplay feature={feature} value={customFeatures[feature.label]} />
+            <FeatureValue feature={feature} value={customFeatures[feature.label]} />
           </dd>,
         ])}
       </dl>
