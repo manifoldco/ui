@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property         | Attribute    | Description | Type                  | Default            |
-| ---------------- | ------------ | ----------- | --------------------- | ------------------ |
-| `allowedRegions` | --           |             | `string[]`            | `[]`               |
-| `ariaLabel`      | `aria-label` |             | `string`              | `undefined`        |
-| `connection`     | --           |             | `Connection`          | `connections.prod` |
-| `name`           | `name`       |             | `string`              | `undefined`        |
-| `value`          | `value`      |             | `string \| undefined` | `undefined`        |
+| Property           | Attribute    | Description | Type                    | Default            |
+| ------------------ | ------------ | ----------- | ----------------------- | ------------------ |
+| `allowedRegions`   | --           |             | `string[]`              | `[]`               |
+| `ariaLabel`        | `aria-label` |             | `string`                | `undefined`        |
+| `connection`       | --           |             | `Connection`            | `connections.prod` |
+| `name`             | `name`       |             | `string`                | `undefined`        |
+| `preferredRegions` | --           |             | `string[] \| undefined` | `undefined`        |
+| `value`            | `value`      |             | `string \| undefined`   | `undefined`        |
 
 
 ## Events

@@ -1,4 +1,4 @@
-import { Component, State, Prop, Element } from '@stencil/core';
+import { Component, State, Prop, Element, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
@@ -18,23 +18,35 @@ export class ManifoldPlanSelector {
   @Prop() linkFormat?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel: string;
+  /** Specify region order */
+  @Prop() regions?: string;
   /** _(optional)_ Is this modifying an existing resource? */
   @Prop() resourceId?: string;
   @State() product: Catalog.ExpandedProduct;
   @State() plans: Catalog.Plan[];
+  @State() parsedRegions: string[];
+  @Watch('regions') regionsChange(newRegions: string) {
+    if (newRegions) this.parsedRegions = this.parseRegions(newRegions);
+  }
 
   async componentWillLoad() {
-    await fetch(`${this.connection.catalog}/products/?label=${this.productLabel}`, withAuth())
-      .then(response => response.json())
-      .then((products: Catalog.ExpandedProduct[]) => {
-        const [product] = products;
-        this.product = product;
-        fetch(`${this.connection.catalog}/plans/?product_id=${product.id}`)
-          .then(response => response.json())
-          .then((plans: Catalog.ExpandedPlan[]) => {
-            this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)];
-          });
-      });
+    if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
+
+    const productsRaw = await fetch(
+      `${this.connection.catalog}/products/?label=${this.productLabel}`,
+      withAuth()
+    );
+    const products: Catalog.ExpandedProduct[] = await productsRaw.json();
+    const [product] = products;
+    this.product = product;
+
+    const plansRaw = await fetch(`${this.connection.catalog}/plans/?product_id=${product.id}`);
+    const plans: Catalog.ExpandedPlan[] = await plansRaw.json();
+    this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)];
+  }
+
+  parseRegions(regions: string) {
+    return regions.split(',').map(region => region.trim().toLowerCase());
   }
 
   render() {
@@ -46,6 +58,7 @@ export class ManifoldPlanSelector {
         linkFormat={this.linkFormat}
         plans={this.plans}
         product={this.product}
+        regions={this.parsedRegions}
       />
     );
   }

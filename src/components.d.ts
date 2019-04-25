@@ -24,6 +24,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plans': Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
+    'regions'?: string[];
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -31,6 +32,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Catalog.ExpandedProduct;
+    'regions'?: string[];
   }
 
   interface ManifoldBadge {}
@@ -128,6 +130,51 @@ export namespace Components {
     'productLabel'?: string;
   }
 
+  interface ManifoldDataProvisionButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    'features': UserFeatures;
+    /**
+    * Name of `<label>` for input
+    */
+    'formLabel': string;
+    'inputId': string;
+    'ownerId': string;
+    'planId': string;
+    'productId': string;
+    /**
+    * Product to provision (slug)
+    */
+    'productLabel': string;
+    'regionId'?: string;
+  }
+  interface ManifoldDataProvisionButtonAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'features'?: UserFeatures;
+    /**
+    * Name of `<label>` for input
+    */
+    'formLabel'?: string;
+    'inputId'?: string;
+    'onManifold-provisionButton-click'?: (event: CustomEvent) => void;
+    'onManifold-provisionButton-error'?: (event: CustomEvent) => void;
+    'onManifold-provisionButton-invalid'?: (event: CustomEvent) => void;
+    'onManifold-provisionButton-success'?: (event: CustomEvent) => void;
+    'ownerId'?: string;
+    'planId'?: string;
+    'productId'?: string;
+    /**
+    * Product to provision (slug)
+    */
+    'productLabel'?: string;
+    'regionId'?: string;
+  }
+
   interface ManifoldFeaturedService {
     'logo': string;
     'name': string;
@@ -208,34 +255,34 @@ export namespace Components {
   }
 
   interface ManifoldMarketplaceGrid {
-    'blacklist'?: string[];
+    'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
     'linkFormat'?: string;
+    'products'?: string[];
     'services'?: Catalog.Product[];
-    'whitelist'?: string[];
   }
   interface ManifoldMarketplaceGridAttributes extends StencilHTMLAttributes {
-    'blacklist'?: string[];
+    'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
     'linkFormat'?: string;
+    'products'?: string[];
     'services'?: Catalog.Product[];
-    'whitelist'?: string[];
   }
 
   interface ManifoldMarketplace {
-    /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'blacklist'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
     /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'excludes'?: string;
+    /**
     * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
@@ -252,20 +299,20 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * Comma-separated list of allowed products (labels)
+    * Comma-separated list of shown products (labels)
     */
-    'whitelist'?: string;
+    'products'?: string;
   }
   interface ManifoldMarketplaceAttributes extends StencilHTMLAttributes {
-    /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'blacklist'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
     /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'excludes'?: string;
+    /**
     * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
@@ -282,9 +329,9 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * Comma-separated list of allowed products (labels)
+    * Comma-separated list of shown products (labels)
     */
-    'whitelist'?: string;
+    'products'?: string;
   }
 
   interface ManifoldNumberInput {
@@ -334,6 +381,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
+    'regions'?: string[];
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -344,6 +392,7 @@ export namespace Components {
     'onManifold-planSelector-load'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
     'product'?: Catalog.Product;
+    'regions'?: string[];
   }
 
   interface ManifoldPlanMenu {
@@ -375,6 +424,10 @@ export namespace Components {
     */
     'productLabel': string;
     /**
+    * Specify region order
+    */
+    'regions'?: string;
+    /**
     * _(optional)_ Is this modifying an existing resource?
     */
     'resourceId'?: string;
@@ -396,6 +449,10 @@ export namespace Components {
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Specify region order
+    */
+    'regions'?: string;
     /**
     * _(optional)_ Is this modifying an existing resource?
     */
@@ -465,6 +522,7 @@ export namespace Components {
     'ariaLabel': string;
     'connection': Connection;
     'name': string;
+    'preferredRegions'?: string[];
     'value'?: string;
   }
   interface ManifoldRegionSelectorAttributes extends StencilHTMLAttributes {
@@ -473,6 +531,7 @@ export namespace Components {
     'connection'?: Connection;
     'name'?: string;
     'onChange'?: (event: CustomEvent) => void;
+    'preferredRegions'?: string[];
     'value'?: string;
   }
 
@@ -604,6 +663,7 @@ declare global {
     'ManifoldCostDisplay': Components.ManifoldCostDisplay;
     'ManifoldDataProductLogo': Components.ManifoldDataProductLogo;
     'ManifoldDataProductName': Components.ManifoldDataProductName;
+    'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
     'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
@@ -636,6 +696,7 @@ declare global {
     'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
     'manifold-data-product-logo': Components.ManifoldDataProductLogoAttributes;
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
+    'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
     'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
@@ -696,6 +757,12 @@ declare global {
   var HTMLManifoldDataProductNameElement: {
     prototype: HTMLManifoldDataProductNameElement;
     new (): HTMLManifoldDataProductNameElement;
+  };
+
+  interface HTMLManifoldDataProvisionButtonElement extends Components.ManifoldDataProvisionButton, HTMLStencilElement {}
+  var HTMLManifoldDataProvisionButtonElement: {
+    prototype: HTMLManifoldDataProvisionButtonElement;
+    new (): HTMLManifoldDataProvisionButtonElement;
   };
 
   interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
@@ -843,6 +910,7 @@ declare global {
     'manifold-cost-display': HTMLManifoldCostDisplayElement
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
+    'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
@@ -875,6 +943,7 @@ declare global {
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
+    'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;

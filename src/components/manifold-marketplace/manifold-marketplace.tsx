@@ -7,10 +7,10 @@ import { Connection, connections } from '../../utils/connections';
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
-  /** Comma-separated list of hidden products (labels) */
-  @Prop() blacklist?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** Comma-separated list of hidden products (labels) */
+  @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   /** Hide template cards? */
@@ -19,22 +19,20 @@ export class ManifoldMarketplace {
   @Prop() hideCategories?: boolean = false;
   /** Link format structure, with `:product` placeholder */
   @Prop() linkFormat?: string;
-  /** Comma-separated list of allowed products (labels) */
-  @Prop() whitelist?: string;
-  @State() parsedBlacklist: string[] = [];
+  /** Comma-separated list of shown products (labels) */
+  @Prop() products?: string;
+  @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
-  @State() parsedWhitelist: string[] = [];
+  @State() parsedProducts: string[] = [];
   @State() services: Catalog.Product[] = [];
 
-  componentWillLoad() {
+  async componentWillLoad() {
     this.parseProps();
 
-    return fetch(`${this.connection.catalog}/products`, withAuth())
-      .then(response => response.json())
-      .then((products: Catalog.Product[]) => {
-        // Alphabetize once, then don’t worry about it
-        this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
-      });
+    const response = await fetch(`${this.connection.catalog}/products`, withAuth());
+    const products: Catalog.Product[] = await response.json();
+    // Alphabetize once, then don’t worry about it
+    this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
   }
 
   private parse(list: string): string[] {
@@ -43,20 +41,20 @@ export class ManifoldMarketplace {
 
   private parseProps() {
     if (typeof this.featured === 'string') this.parsedFeatured = this.parse(this.featured);
-    if (typeof this.blacklist === 'string') this.parsedBlacklist = this.parse(this.blacklist);
-    if (typeof this.whitelist === 'string') this.parsedWhitelist = this.parse(this.whitelist);
+    if (typeof this.excludes === 'string') this.parsedExcludes = this.parse(this.excludes);
+    if (typeof this.products === 'string') this.parsedProducts = this.parse(this.products);
   }
 
   render() {
     return (
       <manifold-marketplace-grid
-        blacklist={this.parsedBlacklist}
+        excludes={this.parsedExcludes}
         featured={this.parsedFeatured}
         hideCategories={this.hideCategories}
         hideTemplates={this.hideTemplates}
         linkFormat={this.linkFormat}
+        products={this.parsedProducts}
         services={this.services}
-        whitelist={this.parsedWhitelist}
       />
     );
   }

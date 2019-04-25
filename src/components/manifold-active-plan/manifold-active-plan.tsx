@@ -6,11 +6,12 @@ import { Component, State, Prop } from '@stencil/core';
   shadow: true,
 })
 export class ManifoldActivePlan {
+  @Prop() hideCta?: boolean;
   @Prop() isExistingResource?: boolean;
   @Prop() linkFormat?: string;
-  @Prop() product?: Catalog.ExpandedProduct;
   @Prop() plans: Catalog.ExpandedPlan[] = [];
-  @Prop() hideCta?: boolean;
+  @Prop() product?: Catalog.ExpandedProduct;
+  @Prop() regions?: string[];
   @State() selectedPlanId: string;
 
   componentWillLoad() {
@@ -37,6 +38,7 @@ export class ManifoldActivePlan {
           linkFormat={this.linkFormat}
           plan={this.plans.find(plan => plan.id === this.selectedPlanId)}
           product={this.product}
+          regions={this.regions}
         />
       </div>,
     ];
