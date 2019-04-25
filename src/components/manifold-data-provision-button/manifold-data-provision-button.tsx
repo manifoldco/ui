@@ -13,6 +13,11 @@ interface SuccessMessage {
   message: string;
 }
 
+interface InvalidMessage {
+  message: string;
+  resourceName: string;
+}
+
 interface ErrorMessage {
   message: string;
   resourceName: string;
@@ -34,6 +39,8 @@ export class ManifoldDataProvisionButton {
   @Prop({ mutable: true }) productId: string = '';
   @Prop() regionId?: string = globalRegion.id;
   @State() resourceName: string = '';
+  @Event({ eventName: 'manifold-provisionButton-click', bubbles: true })
+  clickEvent: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true })
   invalidEvent: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) errorEvent: EventEmitter;
@@ -48,6 +55,8 @@ export class ManifoldDataProvisionButton {
   }
 
   async provision() {
+    this.clickEvent.emit({ resourceName: this.resourceName });
+
     const req: Gateway.ResourceCreateRequest = {
       label: this.resourceName,
       owner: {
@@ -111,12 +120,17 @@ export class ManifoldDataProvisionButton {
     const { value } = e.target as HTMLInputElement;
     this.resourceName = value;
 
-    if (value.length && !this.validate(value))
-      this.invalidEvent.emit({
-        value: this.resourceName,
-        message:
-          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-      });
+    if (!value.length) return;
+
+    let message;
+    if (value.length < 3) message = 'Must be at least 3 characters.';
+    else if (!this.validate(value))
+      message = 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.';
+
+    if (message) {
+      const invalid: InvalidMessage = { message, resourceName: value };
+      this.invalidEvent.emit(invalid);
+    }
   }
 
   validate(input: string) {
@@ -130,7 +144,7 @@ export class ManifoldDataProvisionButton {
         id={this.inputId}
         name="resource-name"
         onChange={e => this.handleInput(e)}
-        pattern="^[a-z][a-z0-9-]*"
+        pattern="^[a-z][a-z0-9-]{3,64}"
         required
         type="text"
         value={this.resourceName}

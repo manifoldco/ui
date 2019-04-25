@@ -1168,8 +1168,13 @@ document.addEventListener('manifold-planSelector-change', updateButton);
               </p>
               <h2 id="events">Events</h2>
               <p>For validation, error, and success messages, it will emit custom events.</p>
-              <pre><code class="js language-js">document.addEventListener('manifold-provisionButton-success', ({ detail: { resourceName } }) =&gt;
-  alert(`${resourceName} provisioned successfully! 🎉`)
+              <pre><code class="js language-js">document.addEventListener('manifold-provisionButton-click', ({ detail: { resourceName } }) =&gt;
+  console.info(`⌛ Provisioning ${resourceName} …`)
+);
+document.addEventListener(
+  'manifold-provisionButton-success',
+  ({ detail: { createdAt, resourceName } }) =&gt;
+    alert(`🚀 ${resourceName} provisioned successfully on ${createdAt}!`)
 );
 document.addEventListener('manifold-provisionButton-error', ({ detail }) =&gt; console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
@@ -1185,6 +1190,14 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-click</code></td>
+                    <td style="text-align:center;"><code>resourceName</code></td>
+                    <td style="text-align:left;">
+                      Fires immediately when button is clicked. May be used to trigger a loading
+                      state, until <code>-success</code> or <code>-error</code> is received.
+                    </td>
+                  </tr>
                   <tr>
                     <td style="text-align:left;"><code>manifold-provisionButton-success</code></td>
                     <td style="text-align:center;">
@@ -1206,7 +1219,9 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                   </tr>
                   <tr>
                     <td style="text-align:left;"><code>manifold-provisionButton-invalid</code></td>
-                    <td style="text-align:center;"><code>value</code>, <code>message</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>resourceName</code>
+                    </td>
                     <td style="text-align:left;">
                       Fires if the resource name isn’t named properly.
                     </td>
@@ -1311,6 +1326,11 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <td><code>manifold-provisionButton-click</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
                   <tr>
                     <td><code>manifold-provisionButton-error</code></td>
                     <td></td>
