@@ -108,7 +108,6 @@
                 <li role="menuitem"><a href="#manifold-product">Product</a></li>
                 <li role="menuitem"><a href="#manifold-plan-selector">Plan Selector</a></li>
                 <li role="menuitem"><a href="#manifold-toast">Toast</a></li>
-                <li role="menuitem"><a href="#manifold-resource-details">Resource Details</a></li>
               </ul>
               <h3>Data Components</h3>
               <ul role="menu">
@@ -277,42 +276,45 @@ defineCustomElements(window);</code></pre>
               <p>A list of all Manifold services.</p>
               <pre><code class="html language-html">&lt;manifold-marketplace /&gt;
 </code></pre>
-              <h2 id="blacklistwhitelist">Blacklist/whitelist</h2>
+              <h2 id="catalogcuration">Catalog curation</h2>
               <p>
-                Blacklists (hidden products) and whitelists (allowed services) are two ways to
-                filter the services you’d like to display to users. Use either
-                <code>blacklist</code> or <code>whitelist</code>; <strong>don’t use both</strong>.
+                Our marketplace offers 2 options, either to show all services excluding a few, or
+                manually specifying the products that should be shown. For either option there is
+                either the <code>excludes</code> or <code>products</code> options—use either, but
+                not both in the same instance.
               </p>
-              <h4 id="blacklist">Blacklist</h4>
+              <h4 id="excludes">Excludes</h4>
               <p>
-                Blacklist will start with <strong>all products</strong>, but let you specify which
+                Excludes will start with <strong>all products</strong>, but let you specify which
                 ones you’d like to hide:
               </p>
-              <pre><code class="html language-html">&lt;manifold-marketplace blacklist="manifold-provider" /&gt;
+              <pre><code class="html language-html">&lt;manifold-marketplace excludes="manifold-provider" /&gt;
 </code></pre>
-              <h4 id="whitelist">Whitelist</h4>
+              <h4 id="products">Products</h4>
               <p>
-                Conversely, whitelisting will start with <strong>no products</strong>, and let you
-                manually specify every product that should be shown.
+                Conversely, manually specifying products will start with
+                <strong>no products</strong>, and let you manually specify every product that should
+                be shown.
               </p>
               <p>
-                A common usecase is using <code>whitelist</code> in conjuction with
+                A common usecase is using <code>products</code> in conjuction with
                 <code>hide-categories</code> (below).
               </p>
-              <pre><code class="html language-html">&lt;manifold-marketplace whitelist="aiven-redis,cloudamqp,iron_cache,iron_mq,memcachier-cache" /&gt;
+              <pre><code class="html language-html">&lt;manifold-marketplace products="aiven-redis,cloudamqp,iron_cache,iron_mq,memcachier-cache" /&gt;
 </code></pre>
               <h2 id="hidecategories">Hide categories</h2>
               <p>
                 Hiding the categories is a great way to have a more compact display. It’s
                 recommended to use this if you’re only displaying a few products via
-                <code>whitelist</code> (above):
+                <code>products</code> (above):
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace hide-categories /&gt;
 </code></pre>
               <h2 id="hidetemplatecards">Hide template cards</h2>
               <p>
                 Add the <code>hide-templates</code> attribute to hide external service template
-                cards (GitHub, Stripe, etc.):
+                cards (GitHub, Stripe, etc.). This will also hide their respective categories if no
+                other products are using them.
               </p>
               <pre><code class="html language-html">&lt;manifold-marketplace hide-templates /&gt;
 </code></pre>
@@ -357,7 +359,8 @@ defineCustomElements(window);</code></pre>
                   <tr>
                     <td style="text-align:left;"><code>manifold-template-click</code></td>
                     <td style="text-align:left;">
-                      Fires whenever a user has clicked on a custom template.
+                      Fires whenever a user has clicked on a custom template (assuming it’s not
+                      hidden with <code>hide-templates</code>).
                     </td>
                     <td style="text-align:left;"><code>category</code></td>
                   </tr>
@@ -389,18 +392,18 @@ defineCustomElements(window);</code></pre>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><code>blacklist</code></td>
-                    <td><code>blacklist</code></td>
-                    <td>Comma-separated list of hidden products (labels)</td>
-                    <td><code>string | undefined</code></td>
-                    <td><code>undefined</code></td>
-                  </tr>
-                  <tr>
                     <td><code>connection</code></td>
                     <td>--</td>
                     <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
                     <td><code>Connection</code></td>
                     <td><code>connections.prod</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>excludes</code></td>
+                    <td><code>excludes</code></td>
+                    <td>Comma-separated list of hidden products (labels)</td>
+                    <td><code>string | undefined</code></td>
+                    <td><code>undefined</code></td>
                   </tr>
                   <tr>
                     <td><code>featured</code></td>
@@ -431,9 +434,9 @@ defineCustomElements(window);</code></pre>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
-                    <td><code>whitelist</code></td>
-                    <td><code>whitelist</code></td>
-                    <td>Comma-separated list of allowed products (labels)</td>
+                    <td><code>products</code></td>
+                    <td><code>products</code></td>
+                    <td>Comma-separated list of shown products (labels)</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -572,7 +575,7 @@ defineCustomElements(window);</code></pre>
               <pre><code class="js language-js">document.addEventListener('manifold-planSelector-change', ({ detail }) =&gt; {
   console.log(detail);
 });
-// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", productLabel: "zerosix", features: { … } } }
+// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", planName: "NVIDIA 1080TI", productLabel: "zerosix", features: { … } } }
 </code></pre>
               <p>The following events are emitted:</p>
               <table>
@@ -588,8 +591,8 @@ defineCustomElements(window);</code></pre>
                     <td style="text-align:left;"><code>manifold-planSelector-change</code></td>
                     <td style="text-align:left;">Fires whenever a user makes a change.</td>
                     <td style="text-align:left;">
-                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
-                      <code>features</code>
+                      <code>planID</code>, <code>planLabel</code>, <code>planName</code>,
+                      <code>productLabel</code>, <code>features</code>
                     </td>
                   </tr>
                   <tr>
@@ -599,8 +602,8 @@ defineCustomElements(window);</code></pre>
                       set the initial state (i.e. user hasn’t interacted yet).
                     </td>
                     <td style="text-align:left;">
-                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
-                      <code>features</code>
+                      <code>planID</code>, <code>planLabel</code>, <code>planName</code>,
+                      <code>productLabel</code>, <code>features</code>
                     </td>
                   </tr>
                   <tr>
@@ -610,8 +613,8 @@ defineCustomElements(window);</code></pre>
                       clicked.
                     </td>
                     <td style="text-align:left;">
-                      <code>planID</code>, <code>planLabel</code>, <code>productLabel</code>,
-                      <code>features</code>
+                      <code>planID</code>, <code>planLabel</code>, <code>planName</code>,
+                      <code>productLabel</code>, <code>features</code>
                     </td>
                   </tr>
                 </tbody>
@@ -622,7 +625,7 @@ defineCustomElements(window);</code></pre>
                 <code>manifold-planSelector-click</code> event (above). But it can also be turned
                 into an <code>&lt;a&gt;</code> tag by specifying <code>link-format</code>:
               </p>
-              <pre><code class="html language-html">&lt;manifold-product
+              <pre><code class="html language-html">&lt;manifold-plan-selector
   product-label="aiven-redis"
   link-format="/create/:product/?plan=:plan&amp;:features"
 /&gt;
@@ -635,10 +638,175 @@ defineCustomElements(window);</code></pre>
                 <a href="#data-components"><strong>data components</strong></a
                 >.
               </p>
-              <h3 id="hidingcta">Hiding CTA</h3>
+              <h2 id="hidingcta">Hiding CTA</h2>
               <p>If you would like to hide the CTA altogether, specify <code>hide-cta</code>:</p>
-              <pre><code class="html language-html">&lt;manifold-product product-label="till" hide-cta /&gt;
+              <pre><code class="html language-html">&lt;manifold-plan-selector product-label="till" hide-cta /&gt;
 </code></pre>
+              <h2 id="regions">Regions</h2>
+              <p>
+                Most of our products are regionless, but some plans let users specify the region. In
+                this case, you may optionally want to order the regions with the
+                <code>regions</code> attribute:
+              </p>
+              <pre><code class="html language-html">&lt;manifold-plan-selector regions="aws-eu-west-1,aws-eu-west-2,aws-us-east-1,aws-us-east-2" /&gt;
+</code></pre>
+              <p>
+                Regions will be ordered in the order specified. Any regions not mentioned will come
+                at the end, alphabetically. Any regions not supported by the plan will simply be
+                ignored (in this sense, you could even pass the same ordered list to all plans
+                regardless, if you’d like them always to display in the same order).
+              </p>
+              <h3 id="supportedregions">Supported regions</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Label</th>
+                    <th style="text-align:left;">Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-ap-northeast-1</code></td>
+                    <td style="text-align:left;">AWS - Asia Pacific Northeast 1 (Tokyo)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-ap-northeast-2</code></td>
+                    <td style="text-align:left;">AWS - Asia Pacific Northeast 2 (Seoul)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-ap-south-1</code></td>
+                    <td style="text-align:left;">AWS - Asia South 1 (Mumbai)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-ap-southeast-1</code></td>
+                    <td style="text-align:left;">AWS - Asia Pacific Southeast 1 (Singapore)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-ap-southeast-2</code></td>
+                    <td style="text-align:left;">AWS - Asia Pacific Southeast 2 (Sydney)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-ca-central-1</code></td>
+                    <td style="text-align:left;">AWS - CA Central 1 (Canada Central)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-eu-central-1</code></td>
+                    <td style="text-align:left;">AWS - EU Central 1 (Frankfurt)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-eu-west-1</code></td>
+                    <td style="text-align:left;">AWS - EU West 1 (Ireland)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-eu-west-2</code></td>
+                    <td style="text-align:left;">AWS - EU West 2 (London)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-sa-east-1</code></td>
+                    <td style="text-align:left;">AWS - South America East 1 (Sao Paulo)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-us-east-1</code></td>
+                    <td style="text-align:left;">AWS - US East 1 (N. Virginia)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-us-east-2</code></td>
+                    <td style="text-align:left;">AWS - US East 2 (Ohio)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-us-west-1</code></td>
+                    <td style="text-align:left;">AWS - US West 1 (N. California)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>aws-us-west-2</code></td>
+                    <td style="text-align:left;">AWS - US West 2 (Oregon)</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-ams2</code></td>
+                    <td style="text-align:left;">Digital Ocean - Amsterdam 2</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-ams3</code></td>
+                    <td style="text-align:left;">Digital Ocean - Amsterdam 3</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-blr1</code></td>
+                    <td style="text-align:left;">Digital Ocean - Bangalore 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-fra1</code></td>
+                    <td style="text-align:left;">Digital Ocean - Frankfurt 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-lon1</code></td>
+                    <td style="text-align:left;">Digital Ocean - London 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-nyc1</code></td>
+                    <td style="text-align:left;">Digital Ocean - New York 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-nyc2</code></td>
+                    <td style="text-align:left;">Digital Ocean - New York 2</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-nyc3</code></td>
+                    <td style="text-align:left;">Digital Ocean - New York 3</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-sfo1</code></td>
+                    <td style="text-align:left;">Digital Ocean - San Francisco 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-sfo2</code></td>
+                    <td style="text-align:left;">Digital Ocean - San Francisco 2</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-sgp1</code></td>
+                    <td style="text-align:left;">Digital Ocean - Singapore 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>do-tor1</code></td>
+                    <td style="text-align:left;">Digital Ocean - Toronto 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-eu-west-1</code></td>
+                    <td style="text-align:left;">Google Cloud - Europe West 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-eu-west-2</code></td>
+                    <td style="text-align:left;">Google Cloud - Europe West 2</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-eu-west-3</code></td>
+                    <td style="text-align:left;">Google Cloud - Europe West 3</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-us-central-1</code></td>
+                    <td style="text-align:left;">Google Cloud - US Central 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-us-east-1</code></td>
+                    <td style="text-align:left;">Google Cloud - US East 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-us-east-4</code></td>
+                    <td style="text-align:left;">Google Cloud - US East 4</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-us-west-1</code></td>
+                    <td style="text-align:left;">Google Cloud - US West 1</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>gcp-us-west-2</code></td>
+                    <td style="text-align:left;">Google Cloud - US West 2</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>rs-dallas-1</code></td>
+                    <td style="text-align:left;">Rackspace - Dallas 1</td>
+                  </tr>
+                </tbody>
+              </table>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -684,6 +852,13 @@ defineCustomElements(window);</code></pre>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
+                    <td><code>regions</code></td>
+                    <td><code>regions</code></td>
+                    <td>Specify region order</td>
+                    <td><code>string | undefined</code></td>
+                    <td><code>undefined</code></td>
+                  </tr>
+                  <tr>
                     <td><code>resourceId</code></td>
                     <td><code>resource-id</code></td>
                     <td><em>(optional)</em> Is this modifying an existing resource?</td>
@@ -698,7 +873,10 @@ defineCustomElements(window);</code></pre>
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-plan-selector product-label="logdna" />
+                <manifold-plan-selector
+                  product-label="aiven-cassandra"
+                  regions="gcp-us-east-1,gcp-us-east-4,gcp-us-central-1,gcp-us-west-1,gcp-us-west-2,gcp-eu-west-1,gcp-eu-west-2,gcp-eu-west-3"
+                />
               </div>
             </div>
           </section>
@@ -780,61 +958,6 @@ defineCustomElements(window);</code></pre>
               </div>
             </div>
           </section>
-          <section class="docs-section" id="manifold-resource-details">
-            <div class="markdown-body">
-              <!-- BEGIN README manifold-resource-details -->
-
-              <!-- DO NOT EDIT! This is autogenerated from a README. -->
-              <!-- Any changes here will be blown away. Edit the README instead. -->
-
-              <h1 id="resourcedetails">Resource Details</h1>
-              <p>
-                The resource details component displays a table of features belonging to a resource.
-              </p>
-              <pre><code class="html language-html">&lt;manifold-resource-details resource-id="268ak39rn9czavv1qd9m93t482gmm"&gt;&lt;/manifold-resource-details&gt;
-</code></pre>
-              <!-- Auto Generated Below -->
-              <h2 id="properties">Properties</h2>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Property</th>
-                    <th>Attribute</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>connection</code></td>
-                    <td>--</td>
-                    <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
-                    <td><code>Connection</code></td>
-                    <td><code>connections.prod</code></td>
-                  </tr>
-                  <tr>
-                    <td><code>resourceId</code></td>
-                    <td><code>resource-id</code></td>
-                    <td>ID of resource</td>
-                    <td><code>string</code></td>
-                    <td><code>undefined</code></td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <!-- END README -->
-            </div>
-            <h2>Example</h2>
-            <div class="docs-example">
-              <div class="docs-example-inner">
-                <manifold-resource-details
-                  resource-id="268ak39rn9czavv1qd9m93t482gmm"
-                ></manifold-resource-details>
-              </div>
-            </div>
-          </section>
-
           <section class="docs-section" id="data-components">
             <div class="markdown-body">
               <h1>Data Components</h1>
@@ -902,17 +1025,10 @@ defineCustomElements(window);</code></pre>
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>productId</code></td>
-                    <td><code>product-id</code></td>
-                    <td>Product ID (e.g. <code>"jawsdb-mysql"</code>)</td>
-                    <td><code>string | undefined</code></td>
-                    <td><code>undefined</code></td>
-                  </tr>
-                  <tr>
                     <td><code>productLabel</code></td>
                     <td><code>product-label</code></td>
                     <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
-                    <td><code>string | undefined</code></td>
+                    <td><code>string</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                 </tbody>
@@ -986,17 +1102,10 @@ defineCustomElements(window);</code></pre>
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>productId</code></td>
-                    <td><code>product-id</code></td>
-                    <td>Product ID</td>
-                    <td><code>string | undefined</code></td>
-                    <td><code>undefined</code></td>
-                  </tr>
-                  <tr>
                     <td><code>productLabel</code></td>
                     <td><code>product-label</code></td>
                     <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
-                    <td><code>string | undefined</code></td>
+                    <td><code>string</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                 </tbody>
@@ -1057,14 +1166,68 @@ document.addEventListener('manifold-planSelector-change', updateButton);
                 slots, see
                 <a href="https://stenciljs.com/docs/templating-jsx/">Stencil’s Documentation</a>
               </p>
-              <h2 id="errorsuccessmessages">Error &amp; success messages</h2>
-              <p>
-                An error or status message will display below the component, indicating success:
-              </p>
-              <pre><code class="html language-html">&lt;div role="alert" data-error&gt;This is an error message&lt;/div&gt;
-&lt;div role="alert" data-success&gt;This is success message&lt;/div&gt;
+              <h2 id="events">Events</h2>
+              <p>For validation, error, and success messages, it will emit custom events.</p>
+              <pre><code class="js language-js">document.addEventListener('manifold-provisionButton-click', ({ detail: { resourceName } }) =&gt;
+  console.info(`⌛ Provisioning ${resourceName} …`)
+);
+document.addEventListener(
+  'manifold-provisionButton-success',
+  ({ detail: { createdAt, resourceName } }) =&gt;
+    alert(`🚀 ${resourceName} provisioned successfully on ${createdAt}!`)
+);
+document.addEventListener('manifold-provisionButton-error', ({ detail }) =&gt; console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
+document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt; console.log(detail));
+// {resourceName: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
 </code></pre>
-              <p>You can style or hide these as desired.</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Name</th>
+                    <th style="text-align:center;">Returns</th>
+                    <th style="text-align:left;">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-click</code></td>
+                    <td style="text-align:center;"><code>resourceName</code></td>
+                    <td style="text-align:left;">
+                      Fires immediately when button is clicked. May be used to trigger a loading
+                      state, until <code>-success</code> or <code>-error</code> is received.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-success</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>resourceName</code>, <code>resourceId</code>,
+                      <code>createdAt</code>
+                    </td>
+                    <td style="text-align:left;">
+                      Successful provision. Returns name, along with a resource ID
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-error</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>resourceName</code>
+                    </td>
+                    <td style="text-align:left;">
+                      Erred provision, along with information on what went wrong.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-invalid</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>resourceName</code>
+                    </td>
+                    <td style="text-align:left;">
+                      Fires if the resource name isn’t named properly.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <h2 id="styling">Styling</h2>
               <p>
                 Whereas other components in this system take advantage of
@@ -1150,6 +1313,38 @@ document.addEventListener('manifold-planSelector-change', updateButton);
                     <td></td>
                     <td><code>string | undefined</code></td>
                     <td><code>globalRegion.id</code></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h2 id="events-1">Events</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>manifold-provisionButton-click</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-provisionButton-error</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-provisionButton-invalid</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-provisionButton-success</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
                   </tr>
                 </tbody>
               </table>
