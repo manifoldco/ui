@@ -18,7 +18,8 @@
     "strictNullChecks": true,
     "paths": {
       "*": ["../node_modules/*", "*"]
-    }
+    },
+    "sourceMap": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
