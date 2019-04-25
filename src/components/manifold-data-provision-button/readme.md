@@ -39,19 +39,25 @@ Set the CTA text by adding anything between the opening and closing tags:
 
 `slot` can be attached to any HTML or JSX element. To read more about slots, see [Stencil’s Documentation][stencil-slot]
 
-## Error & success messages
+## Events
 
-An error or status message will display below the component, indicating
-success:
+For validation, error, and success messages, it will emit custom events.
 
-```html
-<div role="alert" data-error>This is an error message</div>
-<div role="alert" data-success>This is success message</div>
+```js
+document.addEventListener('manifold-provisionButton-success', ({ detail: { resourceName } }) =>
+  alert(`${resourceName} provisioned successfully! 🎉`)
+);
+document.addEventListener('manifold-provisionButton-error', ({ detail }) => console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
+document.addEventListener('manifold-provisionButton-invalid', ({ detail }) => console.log(detail));
+// { value: 'MyResourceName', message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.' }
 ```
 
-You can style or hide these as desired.
-
-_Note: the error message for the input hides/shows on input blur_
+| Name                               |                       Returns                        | Description                                                  |
+| :--------------------------------- | :--------------------------------------------------: | :----------------------------------------------------------- |
+| `manifold-provisionButton-success` | `message`, `resourceName`, `resourceId`, `createdAt` | Successful provision. Returns name, along with a resource ID |
+| `manifold-provisionButton-error`   |              `message`, `resourceName`               | Erred provision, along with information on what went wrong.  |
+| `manifold-provisionButton-invalid` |                  `value`, `message`                  | Fires if the resource name isn’t named properly.             |
 
 ## Styling
 
@@ -80,6 +86,15 @@ choice, or plain ol’ CSS.
 | `productId`    | `product-id`    |                                              | `string`              | `''`                            |
 | `productLabel` | `product-label` | Product to provision (slug)                  | `string`              | `undefined`                     |
 | `regionId`     | `region-id`     |                                              | `string \| undefined` | `globalRegion.id`               |
+
+
+## Events
+
+| Event                              | Description | Type                |
+| ---------------------------------- | ----------- | ------------------- |
+| `manifold-provisionButton-error`   |             | `CustomEvent<void>` |
+| `manifold-provisionButton-invalid` |             | `CustomEvent<void>` |
+| `manifold-provisionButton-success` |             | `CustomEvent<void>` |
 
 
 ----------------------------------------------

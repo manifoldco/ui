@@ -145,6 +145,9 @@ export namespace Components {
     */
     'formLabel'?: string;
     'inputId'?: string;
+    'onManifold-provisionButton-error'?: (event: CustomEvent) => void;
+    'onManifold-provisionButton-invalid'?: (event: CustomEvent) => void;
+    'onManifold-provisionButton-success'?: (event: CustomEvent) => void;
     'ownerId'?: string;
     'planId'?: string;
     'productId'?: string;

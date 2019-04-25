@@ -1166,15 +1166,53 @@ document.addEventListener('manifold-planSelector-change', updateButton);
                 slots, see
                 <a href="https://stenciljs.com/docs/templating-jsx/">Stencil’s Documentation</a>
               </p>
-              <h2 id="errorsuccessmessages">Error &amp; success messages</h2>
-              <p>
-                An error or status message will display below the component, indicating success:
-              </p>
-              <pre><code class="html language-html">&lt;div role="alert" data-error&gt;This is an error message&lt;/div&gt;
-&lt;div role="alert" data-success&gt;This is success message&lt;/div&gt;
+              <h2 id="events">Events</h2>
+              <p>For validation, error, and success messages, it will emit custom events.</p>
+              <pre><code class="js language-js">document.addEventListener('manifold-provisionButton-success', ({ detail: { resourceName } }) =&gt;
+  alert(`${resourceName} provisioned successfully! 🎉`)
+);
+document.addEventListener('manifold-provisionButton-error', ({ detail }) =&gt; console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
+document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt; console.log(detail));
+// { value: 'MyResourceName', message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.' }
 </code></pre>
-              <p>You can style or hide these as desired.</p>
-              <p><em>Note: the error message for the input hides/shows on input blur</em></p>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Name</th>
+                    <th style="text-align:center;">Returns</th>
+                    <th style="text-align:left;">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-success</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>resourceName</code>, <code>resourceId</code>,
+                      <code>createdAt</code>
+                    </td>
+                    <td style="text-align:left;">
+                      Successful provision. Returns name, along with a resource ID
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-error</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>resourceName</code>
+                    </td>
+                    <td style="text-align:left;">
+                      Erred provision, along with information on what went wrong.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-provisionButton-invalid</code></td>
+                    <td style="text-align:center;"><code>value</code>, <code>message</code></td>
+                    <td style="text-align:left;">
+                      Fires if the resource name isn’t named properly.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
               <h2 id="styling">Styling</h2>
               <p>
                 Whereas other components in this system take advantage of
@@ -1260,6 +1298,33 @@ document.addEventListener('manifold-planSelector-change', updateButton);
                     <td></td>
                     <td><code>string | undefined</code></td>
                     <td><code>globalRegion.id</code></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h2 id="events-1">Events</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>manifold-provisionButton-error</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-provisionButton-invalid</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-provisionButton-success</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
                   </tr>
                 </tbody>
               </table>

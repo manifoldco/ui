@@ -1,4 +1,4 @@
-import { Component, Prop, Element, State, Watch } from '@stencil/core';
+import { Component, Prop, Element, State, Watch, Event, EventEmitter } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
@@ -21,9 +21,12 @@ export class ManifoldDataProvisionButton {
   @Prop() planId: string = '';
   @Prop({ mutable: true }) productId: string = '';
   @Prop() regionId?: string = globalRegion.id;
-  @State() errorMsg?: string | undefined;
-  @State() successMsg?: string | undefined;
   @State() resourceName: string = '';
+  @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true })
+  invalidEvent: EventEmitter;
+  @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) errorEvent: EventEmitter;
+  @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
+  successEvent: EventEmitter;
   @Watch('productLabel') productLabelChanged(newLabel: string) {
     this.fetchProductId(newLabel);
   }
@@ -32,10 +35,7 @@ export class ManifoldDataProvisionButton {
     this.fetchProductId();
   }
 
-  provision() {
-    this.errorMsg = undefined;
-    this.successMsg = undefined;
-
+  async provision() {
     const req: Gateway.ResourceCreateRequest = {
       label: this.resourceName,
       owner: {
@@ -50,30 +50,36 @@ export class ManifoldDataProvisionButton {
 
     if (Object.keys(this.features).length) req.features = this.features;
 
-    fetch(
+    const response = await fetch(
       `${this.connection.gateway}/resource/`,
       withAuth({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(req),
       })
-    )
-      .then(response => {
-        if (response.status >= 200 && response.status < 300) {
-          this.successMsg = `${this.resourceName} successfully provisioned`;
-        }
-        return response.json();
-      })
-      .then(([message]) => {
-        if (message.type === 'error') {
-          this.errorMsg = message.message;
-        } else {
-          this.successMsg = message.message;
-        }
-      })
-      .catch(e => {
-        this.errorMsg = e;
+    );
+
+    const body = await response.json();
+
+    // If successful, this will return 200 and stop here
+    if (response.status >= 200 && response.status < 300) {
+      this.successEvent.emit({
+        createdAt: body.created_at,
+        message: `${this.resourceName} successfully provisioned`,
+        resourceId: body.id,
+        resourceName: body.label,
       });
+    } else if (Array.isArray(body)) {
+      this.errorEvent.emit({
+        message: body[0].message,
+        resourceName: this.resourceName,
+      });
+    } else {
+      this.errorEvent.emit({
+        message: body.message,
+        resourceName: this.resourceName,
+      });
+    }
   }
 
   fetchProductId(productLabel: string = this.productLabel) {
@@ -91,13 +97,15 @@ export class ManifoldDataProvisionButton {
 
   handleInput(e: Event) {
     if (!e.target) return;
-    this.errorMsg = undefined;
     const { value } = e.target as HTMLInputElement;
     this.resourceName = value;
 
     if (value.length && !this.validate(value))
-      this.errorMsg =
-        'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.';
+      this.invalidEvent.emit({
+        value: this.resourceName,
+        message:
+          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
+      });
   }
 
   validate(input: string) {
@@ -108,7 +116,6 @@ export class ManifoldDataProvisionButton {
     return [
       <input
         autocapitalize="off"
-        data-error={typeof this.errorMsg === 'string'}
         id={this.inputId}
         name="resource-name"
         onChange={e => this.handleInput(e)}
@@ -120,16 +127,6 @@ export class ManifoldDataProvisionButton {
       <button type="button" onClick={() => this.provision()}>
         <slot />
       </button>,
-      typeof this.errorMsg === 'string' && (
-        <div role="alert" data-type="error">
-          {this.errorMsg}
-        </div>
-      ),
-      typeof this.successMsg === 'string' && (
-        <div role="alert" data-type="success">
-          {this.successMsg}
-        </div>
-      ),
     ];
   }
 }
