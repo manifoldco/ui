@@ -93,6 +93,7 @@
     "stylelint": "^9.10.1",
     "stylelint-config-rational-order": "0.0.4",
     "stylelint-config-standard": "^18.2.0",
+    "ts-loader": "^5.4.3",
     "webpack": "^4.30.0"
   }
 }
