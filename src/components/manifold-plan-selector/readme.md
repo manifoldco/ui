@@ -20,16 +20,16 @@ the component itself, or `document`.
 document.addEventListener('manifold-planSelector-change', ({ detail }) => {
   console.log(detail);
 });
-// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", productLabel: "zerosix", features: { … } } }
+// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", planName: "NVIDIA 1080TI", productLabel: "zerosix", features: { … } } }
 ```
 
 The following events are emitted:
 
-| Event Name                     | Description                                                                                                                | Data                                              |
-| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------ |
-| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `productLabel`, `features` |
-| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `productLabel`, `features` |
-| `manifold-planSelector-click`  | If the CTA is showing (see `hide-cta` below), this will fire when clicked.                                                 | `planID`, `planLabel`, `productLabel`, `features` |
+| Event Name                     | Description                                                                                                                | Data                                                          |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
+| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
+| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
+| `manifold-planSelector-click`  | If the CTA is showing (see `hide-cta` below), this will fire when clicked.                                                 | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
 
 ## Navigation
 
@@ -115,7 +115,6 @@ same order).
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property       | Attribute       | Description                                                                                | Type                   | Default            |
@@ -127,7 +126,6 @@ same order).
 | `regions`      | `regions`       | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
 | `resourceId`   | `resource-id`   | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`        |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
