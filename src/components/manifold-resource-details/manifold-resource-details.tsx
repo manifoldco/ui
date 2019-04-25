@@ -3,10 +3,9 @@ import { Component, Prop, Element, State } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
-import { initialFeatures } from '../../utils/plan';
 
-import { FeatureValue } from '../manifold-plan-details/components/FeatureValue';
-import { FeatureLabel } from '../manifold-plan-details/components/FeatureLabel';
+import { FeatureName } from './components/FeatureName';
+import { FeatureValueDisplay } from './components/FeatureValueDisplay';
 
 @Component({
   tag: 'manifold-resource-details',
@@ -29,7 +28,7 @@ export class ManifoldResourceDetails {
       withAuth()
     );
     const resource = await resourceResponse.json();
-    this.resource = { ...resource };
+    this.resource = resource;
 
     // get plan data
     if (this.resource) {
@@ -38,10 +37,7 @@ export class ManifoldResourceDetails {
         withAuth()
       );
       const plan = await planResponse.json();
-      this.plan = { ...plan };
-      // console.log(plan.body.expanded_features.map((feature: Catalog.ExpandedFeature) => {
-
-      // }));
+      this.plan = plan;
     }
   }
 
@@ -54,13 +50,12 @@ export class ManifoldResourceDetails {
     return (
       <dl class="features">
         {expanded_features.map(feature => [
-          <FeatureLabel feature={feature} />,
-          <FeatureValue
-            features={customFeatures || initialFeatures(expanded_features)}
-            feature={feature}
-            isExistingResource
-            onChange={() => {}}
-          />,
+          <dt class="feature-name">
+            <FeatureName feature={feature} />
+          </dt>,
+          <dd class="feature-value">
+            <FeatureValueDisplay feature={feature} value={customFeatures[feature.label]} />
+          </dd>,
         ])}
       </dl>
     );

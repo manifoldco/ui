@@ -19,19 +19,23 @@ export class ManifoldDataProductLogo {
   componentWillLoad() {
     if (this.productLabel) {
       // Don’t return this promise to invoke the loading state
-      fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
+      return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
         .then(response => response.json())
         .then(data => {
           this.product = { ...data[0] };
         });
-    } else if (this.productId) {
+    }
+
+    if (this.productId) {
       // Don’t return this promise to invoke the loading state
-      fetch(`${this.connection.catalog}/products/${this.productId}`, withAuth())
+      return fetch(`${this.connection.catalog}/products/${this.productId}`, withAuth())
         .then(response => response.json())
         .then(data => {
           this.product = { ...data };
         });
     }
+
+    return null;
   }
 
   render() {
