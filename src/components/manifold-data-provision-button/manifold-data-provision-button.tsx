@@ -6,6 +6,18 @@ import { Connection, connections } from '../../utils/connections';
 
 /* eslint-disable no-console */
 
+interface SuccessMessage {
+  createdAt: string;
+  resourceName: string;
+  resourceId: string;
+  message: string;
+}
+
+interface ErrorMessage {
+  message: string;
+  resourceName: string;
+}
+
 @Component({ tag: 'manifold-data-provision-button' })
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
@@ -63,22 +75,21 @@ export class ManifoldDataProvisionButton {
 
     // If successful, this will return 200 and stop here
     if (response.status >= 200 && response.status < 300) {
-      this.successEvent.emit({
+      const success: SuccessMessage = {
         createdAt: body.created_at,
         message: `${this.resourceName} successfully provisioned`,
         resourceId: body.id,
         resourceName: body.label,
-      });
-    } else if (Array.isArray(body)) {
-      this.errorEvent.emit({
-        message: body[0].message,
-        resourceName: this.resourceName,
-      });
+      };
+      this.successEvent.emit(success);
     } else {
-      this.errorEvent.emit({
-        message: body.message,
+      // Sometimes messages are an array, sometimes they aren’t. Different strokes!
+      const message = Array.isArray(body) ? body[0].message : body.message;
+      const error: ErrorMessage = {
+        message,
         resourceName: this.resourceName,
-      });
+      };
+      this.errorEvent.emit(error);
     }
   }
 
