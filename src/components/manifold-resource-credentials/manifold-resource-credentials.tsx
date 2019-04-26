@@ -26,6 +26,16 @@ export class ManifoldResourceCredentials {
     this.fetchResource();
   }
 
+  get lines() {
+    // Returns # of lines for creds.
+    if (!this.credentials) return 0;
+    const linesPerResource = 3;
+    return this.credentials.reduce(
+      (lines, creds) => lines + linesPerResource + Object.keys(creds.body.values).length,
+      0
+    );
+  }
+
   hideCredentials = () => {
     this.credentials = undefined;
   };
@@ -60,8 +70,8 @@ export class ManifoldResourceCredentials {
         <div class="screen-left" />
         <div class="screen-right" />
 
-        {this.credentials ? (
-          <div class="secrets">
+        {Array.isArray(this.credentials) && (
+          <div class="secrets" style={{ '--cred-height': `${this.lines}` }}>
             <pre class="env">
               <code>
                 {this.credentials.map(({ body }) => [
@@ -77,13 +87,12 @@ export class ManifoldResourceCredentials {
               </code>
             </pre>
           </div>
-        ) : (
-          <div class="hidden">
-            <manifold-link-button color="black" onClick={this.fetchCredentials}>
-              <manifold-icon marginRight icon={eye} /> Show credentials
-            </manifold-link-button>
-          </div>
         )}
+        <div class="hidden">
+          <manifold-link-button color="black" onClick={this.fetchCredentials}>
+            <manifold-icon marginRight icon={eye} /> Show credentials
+          </manifold-link-button>
+        </div>
       </div>,
     ];
   }
