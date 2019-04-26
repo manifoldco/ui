@@ -94,18 +94,18 @@ same order).
 | `aws-us-east-2`      | AWS - US East 2 (Ohio)                     |
 | `aws-us-west-1`      | AWS - US West 1 (N. California)            |
 | `aws-us-west-2`      | AWS - US West 2 (Oregon)                   |
-| `do-ams2`            | Digital Ocean - Amsterdam 2                |
-| `do-ams3`            | Digital Ocean - Amsterdam 3                |
-| `do-blr1`            | Digital Ocean - Bangalore 1                |
-| `do-fra1`            | Digital Ocean - Frankfurt 1                |
-| `do-lon1`            | Digital Ocean - London 1                   |
-| `do-nyc1`            | Digital Ocean - New York 1                 |
-| `do-nyc2`            | Digital Ocean - New York 2                 |
-| `do-nyc3`            | Digital Ocean - New York 3                 |
-| `do-sfo1`            | Digital Ocean - San Francisco 1            |
-| `do-sfo2`            | Digital Ocean - San Francisco 2            |
-| `do-sgp1`            | Digital Ocean - Singapore 1                |
-| `do-tor1`            | Digital Ocean - Toronto 1                  |
+| `do-ams2`            | DigitalOcean - Amsterdam 2                 |
+| `do-ams3`            | DigitalOcean - Amsterdam 3                 |
+| `do-blr1`            | DigitalOcean - Bangalore 1                 |
+| `do-fra1`            | DigitalOcean - Frankfurt 1                 |
+| `do-lon1`            | DigitalOcean - London 1                    |
+| `do-nyc1`            | DigitalOcean - New York 1                  |
+| `do-nyc2`            | DigitalOcean - New York 2                  |
+| `do-nyc3`            | DigitalOcean - New York 3                  |
+| `do-sfo1`            | DigitalOcean - San Francisco 1             |
+| `do-sfo2`            | DigitalOcean - San Francisco 2             |
+| `do-sgp1`            | DigitalOcean - Singapore 1                 |
+| `do-tor1`            | DigitalOcean - Toronto 1                   |
 | `gcp-eu-west-1`      | Google Cloud - Europe West 1               |
 | `gcp-eu-west-2`      | Google Cloud - Europe West 2               |
 | `gcp-eu-west-3`      | Google Cloud - Europe West 3               |
@@ -117,7 +117,6 @@ same order).
 | `rs-dallas-1`        | Rackspace - Dallas 1                       |
 
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -131,7 +130,6 @@ same order).
 | `regions`       | `regions`        | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
 | `resourceName`  | `resource-name`  | Is this tied to an existing resource?                                                      | `string \| undefined`  | `undefined`        |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

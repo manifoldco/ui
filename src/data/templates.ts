@@ -298,7 +298,7 @@ const templates: ServiceTemplate[] = [
   {
     id: 'template-27',
     category: 'runtime',
-    name: 'Digital Ocean',
+    name: 'DigitalOcean',
     description:
       'DigitalOcean is a cloud computing vendor that offers an Infrastructure as a Service (IaaS) platform for software developers.',
     url: 'https://www.digitalocean.com/',

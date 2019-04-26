@@ -18,7 +18,7 @@ describe('manifold-region-selector', () => {
     const nyc1: Catalog.Region = {
       body: {
         location: 'nyc1',
-        name: 'Digital Ocean - New York 1',
+        name: 'DigitalOcean - New York 1',
         platform: 'digital-ocean',
         priority: 95,
       },
