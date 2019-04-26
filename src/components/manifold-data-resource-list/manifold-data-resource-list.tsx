@@ -6,7 +6,7 @@ import { Connection, connections } from '../../utils/connections';
 interface EventDetail {
   ownerId?: string;
   resourceId: string;
-  resourceLabel: string;
+  resourceName: string;
 }
 
 interface RealResource extends Marketplace.Resource {
@@ -31,6 +31,7 @@ export class ManifoldDataResourceList {
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
+    // Don’t return this promise to invoke the loading state
     fetch(`${this.connection.marketplace}/resources/?me`, withAuth())
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {
@@ -45,7 +46,7 @@ export class ManifoldDataResourceList {
       e.preventDefault();
       const detail: EventDetail = {
         resourceId: resource.id,
-        resourceLabel: resource.body.label,
+        resourceName: resource.body.label,
         ownerId: resource.body.owner_id,
       };
       this.clickEvent.emit(detail);
@@ -54,7 +55,6 @@ export class ManifoldDataResourceList {
 
   formatLink(resource: Marketplace.Resource) {
     if (!this.linkFormat) return undefined;
-
     return this.linkFormat.replace(/:resource/gi, resource.body.label);
   }
 
