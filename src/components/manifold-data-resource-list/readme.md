@@ -10,9 +10,9 @@ Creates an unstyled, unordered list with `<a>` tags.
 
 Navigating client-side happens via the `manifold-resourceList-click` custom event.
 
-| Name                          | Details                    | Data            |
-| :---------------------------- | :------------------------- | :-------------- |
-| `manifold-resourceList-click` | User has clicked on a link | `resourceLabel` |
+| Name                          | Details                    | Data                         |
+| :---------------------------- | :------------------------- | :--------------------------- |
+| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName` |
 
 ## Link format
 
@@ -37,7 +37,6 @@ slot:
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
 | Property        | Attribute        | Description                                                    | Type                  | Default            |
@@ -46,14 +45,12 @@ slot:
 | `linkFormat`    | `link-format`    | Link format structure, with `:resource` placeholder            | `string \| undefined` | `undefined`        |
 | `preserveEvent` | `preserve-event` | Should the JS event still fire, even if link-format is passed? | `boolean`             | `false`            |
 
-
 ## Events
 
 | Event                         | Description | Type                |
 | ----------------------------- | ----------- | ------------------- |
 | `manifold-resourceList-click` |             | `CustomEvent<void>` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
