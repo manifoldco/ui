@@ -26,6 +26,7 @@ export namespace Components {
     'preserveEvent': boolean;
     'product'?: Catalog.ExpandedProduct;
     'regions'?: string[];
+    'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -35,6 +36,7 @@ export namespace Components {
     'preserveEvent'?: boolean;
     'product'?: Catalog.ExpandedProduct;
     'regions'?: string[];
+    'selectedResource'?: Gateway.Resource;
   }
 
   interface ManifoldBadge {}
@@ -174,6 +176,10 @@ export namespace Components {
     * Should the JS event still fire, even if link-format is passed?
     */
     'preserveEvent': boolean;
+    /**
+    * Specify any new string here to trigger a refresh
+    */
+    'tick': string;
   }
   interface ManifoldDataResourceListAttributes extends StencilHTMLAttributes {
     /**
@@ -189,6 +195,10 @@ export namespace Components {
     * Should the JS event still fire, even if link-format is passed?
     */
     'preserveEvent'?: boolean;
+    /**
+    * Specify any new string here to trigger a refresh
+    */
+    'tick'?: string;
   }
 
   interface ManifoldFeaturedService {
@@ -409,6 +419,7 @@ export namespace Components {
     'preserveEvent': boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
+    'resourceFeatures'?: Gateway.ResolvedFeature[];
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -421,6 +432,7 @@ export namespace Components {
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
+    'resourceFeatures'?: Gateway.ResolvedFeature[];
   }
 
   interface ManifoldPlanMenu {
@@ -460,9 +472,9 @@ export namespace Components {
     */
     'regions'?: string;
     /**
-    * _(optional)_ Is this modifying an existing resource?
+    * Is this tied to an existing resource?
     */
-    'resourceId'?: string;
+    'resourceName'?: string;
   }
   interface ManifoldPlanSelectorAttributes extends StencilHTMLAttributes {
     /**
@@ -490,9 +502,9 @@ export namespace Components {
     */
     'regions'?: string;
     /**
-    * _(optional)_ Is this modifying an existing resource?
+    * Is this tied to an existing resource?
     */
-    'resourceId'?: string;
+    'resourceName'?: string;
   }
 
   interface ManifoldProductDetails {

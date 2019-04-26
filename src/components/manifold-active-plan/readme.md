@@ -16,6 +16,7 @@ Hello
 | `preserveEvent`      | `preserve-event`       |             | `boolean`                      | `false`     |
 | `product`            | --                     |             | `ExpandedProduct \| undefined` | `undefined` |
 | `regions`            | --                     |             | `string[] \| undefined`        | `undefined` |
+| `selectedResource`   | --                     |             | `Resource \| undefined`        | `undefined` |
 
 
 ----------------------------------------------

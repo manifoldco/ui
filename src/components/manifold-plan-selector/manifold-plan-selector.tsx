@@ -22,17 +22,22 @@ export class ManifoldPlanSelector {
   @Prop() productLabel: string;
   /** Specify region order */
   @Prop() regions?: string;
-  /** _(optional)_ Is this modifying an existing resource? */
-  @Prop() resourceId?: string;
+  /** Is this tied to an existing resource? */
+  @Prop() resourceName?: string;
   @State() product: Catalog.ExpandedProduct;
   @State() plans: Catalog.Plan[];
+  @State() resource: Gateway.Resource;
   @State() parsedRegions: string[];
+  @Watch('resourceName') resourceChange(newResource: string) {
+    this.fetchResource(newResource);
+  }
   @Watch('regions') regionsChange(newRegions: string) {
     if (newRegions) this.parsedRegions = this.parseRegions(newRegions);
   }
 
   async componentWillLoad() {
     if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
+    if (this.resourceName) this.fetchResource();
 
     const productsRaw = await fetch(
       `${this.connection.catalog}/products/?label=${this.productLabel}`,
@@ -42,9 +47,20 @@ export class ManifoldPlanSelector {
     const [product] = products;
     this.product = product;
 
-    const plansRaw = await fetch(`${this.connection.catalog}/plans/?product_id=${product.id}`);
+    const plansRaw = await fetch(
+      `${this.connection.catalog}/plans/?product_id=${product.id}`,
+      withAuth()
+    );
     const plans: Catalog.ExpandedPlan[] = await plansRaw.json();
     this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)];
+  }
+
+  async fetchResource(resourceName = this.resourceName) {
+    fetch(`${this.connection.gateway}/resources/me/${resourceName}`, withAuth())
+      .then(response => response.json())
+      .then((resource: Gateway.Resource) => {
+        this.resource = resource;
+      });
   }
 
   parseRegions(regions: string) {
@@ -56,12 +72,12 @@ export class ManifoldPlanSelector {
     return (
       <manifold-active-plan
         hideCta={this.hideCta}
-        isExistingResource={!!this.resourceId}
         linkFormat={this.linkFormat}
         plans={this.plans}
         preserveEvent={this.preserveEvent}
         product={this.product}
         regions={this.parsedRegions}
+        selectedResource={this.resource || undefined}
       />
     );
   }

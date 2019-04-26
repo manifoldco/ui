@@ -107,7 +107,7 @@ namespace Gateway {
     value: ResolvedFeatureValue;
   }
   export interface ResolvedFeatureValue {
-    value?: object;
+    value?: boolean | string | number;
     displayValue?: string;
     // Applied to the end of the number for display, for example the ‘GB’ in ‘20 GB’.
     suffix?: string;

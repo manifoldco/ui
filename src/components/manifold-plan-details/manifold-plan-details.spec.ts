@@ -24,6 +24,43 @@ describe(`<manifold-plan-details>`, () => {
     });
   });
 
+  it('initializes features if given resource features', () => {
+    const planDetails = new PlanDetails();
+
+    planDetails.resourceFeatures = [
+      {
+        label: 'sandwich',
+        name: 'Choice Sandwich',
+        type: 'string',
+        value: { displayValue: 'Mint Sandwich', value: 'mint' },
+      },
+      {
+        label: 'juice',
+        name: 'Jus Ensache',
+        type: 'number',
+        value: { displayValue: '1410 Litres', suffix: 'Litres', value: 1410 },
+      },
+      {
+        label: 'crackers',
+        name: 'Smashed Crackers',
+        type: 'boolean',
+        value: { displayValue: 'Yes', value: true },
+      },
+      {
+        label: 'cheese',
+        name: 'Cheese',
+        type: 'string',
+        value: { displayValue: 'Premium Surprise Cheese', value: 'nochoice' },
+      },
+    ];
+    expect(planDetails.initialFeatures()).toEqual({
+      sandwich: 'mint',
+      juice: 1410,
+      crackers: true,
+      cheese: 'nochoice',
+    });
+  });
+
   it('filters out non-custom features', () => {
     const planDetails = new PlanDetails();
     planDetails.plan = ExpandedPlanCustom;
