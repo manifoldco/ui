@@ -11,10 +11,9 @@ export const MeasurableFeatureUsageDisplay: FunctionalComponent<
   MeasurableFeatureUsageDisplayProps
 > = ({ feature }) => {
   // TODO add usage from billing api
-  console.log(feature);
   const { numeric_details = {} } = feature.value || {};
-  const { cost_ranges = [], suffix } = numeric_details as Catalog.FeatureNumericDetails;
-  console.log({ cost_ranges });
+  const { cost_ranges = [], suffix } = numeric_details;
+
   return (
     <ul>
       {cost_ranges.map(range => (
