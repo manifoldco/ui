@@ -1,6 +1,6 @@
-# Resource Status
+# 🔒 Resource Status
 
-Displays the current availability of the resource
+Displays the current availability of the resource. 🔒 Requires authentication.
 
 <!-- Auto Generated Below -->
 

@@ -1,4 +1,6 @@
-# Credentials
+# 🔒 Credentials
+
+Display credentials for a resource. 🔒 Requires authentication.
 
 <!-- Auto Generated Below -->
 
