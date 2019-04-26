@@ -38,7 +38,8 @@ This data component supports an optional loading state by specifying a child slo
 | -------------- | --------------- | -------------------------------------------- | --------------------- | ------------------ |
 | `alt`          | `alt`           | _(optional)_ `alt` attribute                 | `string \| undefined` | `undefined`        |
 | `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection`          | `connections.prod` |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string`              | `undefined`        |
+| `productId`    | `product-id`    | Product ID                                   | `string \| undefined` | `undefined`        |
+| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string \| undefined` | `undefined`        |
 
 
 ----------------------------------------------

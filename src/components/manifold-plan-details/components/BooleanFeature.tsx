@@ -6,7 +6,7 @@ import { LockedFeature } from './LockedFeature';
 interface BooleanFeatureProps {
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
-  onChange: (e: CustomEvent) => void;
+  onChange?: (e: CustomEvent) => void;
 }
 
 export const BooleanFeature: FunctionalComponent<BooleanFeatureProps> = ({
@@ -40,7 +40,7 @@ export const BooleanFeature: FunctionalComponent<BooleanFeatureProps> = ({
       aria-label={feature.name}
       defaultValue={feature.value && booleanFeatureDefaultValue(feature.value)}
       name={feature.label}
-      onUpdateValue={(e: CustomEvent) => onChange(e)}
+      onUpdateValue={(e: CustomEvent) => onChange && onChange(e)}
     />
   );
 };
