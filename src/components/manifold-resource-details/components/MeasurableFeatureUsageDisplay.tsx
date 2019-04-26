@@ -1,14 +1,27 @@
 import { FunctionalComponent } from '@stencil/core';
+import { $ } from '../../../utils/currency';
+
+const COST_COEFFICIENT = 10000;
 
 interface MeasurableFeatureUsageDisplayProps {
-  // features: UserFeatures;
   feature: Catalog.ExpandedFeature;
-  value?: string | number | boolean;
 }
 
 export const MeasurableFeatureUsageDisplay: FunctionalComponent<
   MeasurableFeatureUsageDisplayProps
-> = ({ feature, value = feature.value_string }) => {
-  // TODO build usage UI
-  return <span>{value}</span>;
+> = ({ feature }) => {
+  // TODO add usage from billing api
+  console.log(feature);
+  const { numeric_details = {} } = feature.value || {};
+  const { cost_ranges = [], suffix } = numeric_details as Catalog.FeatureNumericDetails;
+  console.log({ cost_ranges });
+  return (
+    <ul>
+      {cost_ranges.map(range => (
+        <li>
+          {$((range.cost_multiple || 0) / COST_COEFFICIENT)} / {suffix} up to {range.limit} {suffix}
+        </li>
+      ))}
+    </ul>
+  );
 };

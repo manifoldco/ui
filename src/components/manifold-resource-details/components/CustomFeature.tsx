@@ -6,9 +6,8 @@ const getCustomValue = (feature: Catalog.ExpandedFeature, value: number | string
   if (!feature.values) return value;
   switch (feature.type) {
     case 'boolean': {
-      // must use weak equality because labels are strings
-      // eslint-disable-next-line eqeqeq
-      const valueObj = feature.values.find(val => val.label == value, '');
+      // labels are strings of booleans
+      const valueObj = feature.values.find(val => (val.label === 'true') === value, '');
       return valueObj && valueObj.name;
     }
     case 'number': {
