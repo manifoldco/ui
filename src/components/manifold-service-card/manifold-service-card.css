@@ -21,7 +21,7 @@
   padding: var(--padding);
   color: inherit;
   font-size: 1em;
-  font-family: var(--mf-font-family);
+  font-family: var(--mf-font-default);
   text-decoration: none;
   background-color: var(--mf-c-white);
   border: 1px solid #d3d3d4;
@@ -186,7 +186,7 @@
   color: var(--mf-c-white);
   font-weight: 400;
   font-size: var(--mf-font-d3);
-  font-family: var(--mf-font-family);
+  font-family: var(--mf-font-default);
   line-height: 1;
   letter-spacing: 0.0625em;
   text-transform: uppercase;

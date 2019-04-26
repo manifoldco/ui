@@ -23,22 +23,22 @@ export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  /** Disable interval? */
+  @Prop() disableUpdate: boolean = false;
   /** Link format structure, with `:resource` placeholder */
   @Prop() linkFormat?: string;
   /** Should the JS event still fire, even if link-format is passed?  */
   @Prop() preserveEvent: boolean = false;
-  /** Specify any new string here to trigger a refresh */
-  @Prop() tick: string;
-  @State() interval: number;
+  @State() interval?: number;
   @State() resources?: Marketplace.Resource[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
-    this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    if (!this.disableUpdate) this.interval = window.setInterval(() => this.fetchResources(), 3000);
   }
 
   componentDidUnload() {
-    window.clearInterval(this.interval);
+    if (this.interval) window.clearInterval(this.interval);
   }
 
   fetchResources() {

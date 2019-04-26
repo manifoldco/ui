@@ -29,7 +29,7 @@ export class ManifoldResourceStatus {
 
   componentWillLoad() {
     this.loading = true;
-    fetch(`/${this.connection.gateway}/resources/me/${this.resourceName}`, withAuth())
+    fetch(`${this.connection.gateway}/resources/me/${this.resourceName}`, withAuth())
       .then(response => response.json())
       .then((resource: Gateway.Resource) => {
         this.loading = false;
