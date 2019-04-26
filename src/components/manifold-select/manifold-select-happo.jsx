@@ -2,7 +2,7 @@ export const primary = render => {
   const defaultValue = 'foo';
   const options = [
     {
-      label: 'Foo',
+      label: 'This is freaking incredible',
       value: 'foo',
     },
     {
