@@ -3,9 +3,25 @@ import { LockedFeature } from './LockedFeature';
 import { stringFeatureOptions } from '../../../utils/plan';
 
 const getCustomValue = (feature: Catalog.ExpandedFeature, value: number | string | boolean) => {
-  // TODO get actual value
-  console.log({ feature, value });
-  return value;
+  if (!feature.values) return value;
+  switch (feature.type) {
+    case 'boolean': {
+      // must use weak equality because labels are strings
+      // eslint-disable-next-line eqeqeq
+      const valueObj = feature.values.find(val => val.label == value, '');
+      return valueObj && valueObj.name;
+    }
+    case 'number': {
+      const { value: { numeric_details: { suffix = '' } = {} } = {} } = feature;
+      return `${value} ${suffix}`;
+    }
+    case 'string': {
+      const valueObj = feature.values.find(val => val.label === value, '');
+      return valueObj && valueObj.name;
+    }
+    default:
+      return value;
+  }
 };
 
 interface CustomFeatureProps {
