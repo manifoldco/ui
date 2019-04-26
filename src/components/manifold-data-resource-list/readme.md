@@ -48,6 +48,7 @@ slot:
 | `tick`          | `tick`           | Specify any new string here to trigger a refresh               | `string`              | `undefined`        |
 
 
+
 ## Events
 
 | Event                         | Description | Type                |

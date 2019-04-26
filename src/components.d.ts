@@ -604,6 +604,27 @@ export namespace Components {
     'resourceId'?: string;
   }
 
+  interface ManifoldResourceStatus {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * Resource name for this status
+    */
+    'resourceName'?: string;
+  }
+  interface ManifoldResourceStatusAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Resource name for this status
+    */
+    'resourceName'?: string;
+  }
+
   interface ManifoldSelect {
     'defaultValue'?: string;
     'name': string;
@@ -734,6 +755,7 @@ declare global {
     'ManifoldProduct': Components.ManifoldProduct;
     'ManifoldRegionSelector': Components.ManifoldRegionSelector;
     'ManifoldResourceDetails': Components.ManifoldResourceDetails;
+    'ManifoldResourceStatus': Components.ManifoldResourceStatus;
     'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
     'ManifoldTemplateCard': Components.ManifoldTemplateCard;
@@ -768,6 +790,7 @@ declare global {
     'manifold-product': Components.ManifoldProductAttributes;
     'manifold-region-selector': Components.ManifoldRegionSelectorAttributes;
     'manifold-resource-details': Components.ManifoldResourceDetailsAttributes;
+    'manifold-resource-status': Components.ManifoldResourceStatusAttributes;
     'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
     'manifold-template-card': Components.ManifoldTemplateCardAttributes;
@@ -927,6 +950,12 @@ declare global {
     new (): HTMLManifoldResourceDetailsElement;
   };
 
+  interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
+  var HTMLManifoldResourceStatusElement: {
+    prototype: HTMLManifoldResourceStatusElement;
+    new (): HTMLManifoldResourceStatusElement;
+  };
+
   interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
   var HTMLManifoldSelectElement: {
     prototype: HTMLManifoldSelectElement;
@@ -989,6 +1018,7 @@ declare global {
     'manifold-product': HTMLManifoldProductElement
     'manifold-region-selector': HTMLManifoldRegionSelectorElement
     'manifold-resource-details': HTMLManifoldResourceDetailsElement
+    'manifold-resource-status': HTMLManifoldResourceStatusElement
     'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
     'manifold-template-card': HTMLManifoldTemplateCardElement
@@ -1023,6 +1053,7 @@ declare global {
     'manifold-product': HTMLManifoldProductElement;
     'manifold-region-selector': HTMLManifoldRegionSelectorElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
+    'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;

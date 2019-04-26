@@ -48,7 +48,7 @@
   --mf-g-blueFaded: linear-gradient(to top right, #c5c6ff, #b1e5ff);
   --mf-g-cta: linear-gradient(63deg, #f56d41, #b54a84);
   --mf-g-gray: linear-gradient(45deg, var(--mf-c-gray-t3), var(--mf-c-gray-t5));
-  --mf-g-green: linear-gradient(to top right, #329dd1, #4cbc88);
+  --mf-g-green: linear-gradient(to top right, #329dd1, #55f0a8);
   --mf-g-greenFaded: linear-gradient(to top right, #d5f1ff, #d2f5e4);
   --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
   --mf-g-orangeFaded: linear-gradient(to top right, #f5bca5, #fff1d7);
