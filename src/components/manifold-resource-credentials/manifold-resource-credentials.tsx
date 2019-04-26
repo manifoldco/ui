@@ -66,12 +66,16 @@ export class ManifoldResourceCredentials {
           Hide credentials
         </manifold-link-button>
       </menu>,
-      <div class="credential" data-showing={!!this.credentials}>
+      <div
+        class="credential"
+        data-showing={!!this.credentials}
+        style={{ height: `${this.lines * 1.75}em` }}
+      >
         <div class="screen-left" />
         <div class="screen-right" />
 
         {Array.isArray(this.credentials) && (
-          <div class="secrets" style={{ '--cred-height': `${this.lines}` }}>
+          <div class="secrets">
             <pre class="env">
               <code>
                 {this.credentials.map(({ body }) => [
