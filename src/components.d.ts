@@ -169,6 +169,10 @@ export namespace Components {
     */
     'connection': Connection;
     /**
+    * Disable interval?
+    */
+    'disableUpdate': boolean;
+    /**
     * Link format structure, with `:resource` placeholder
     */
     'linkFormat'?: string;
@@ -176,16 +180,16 @@ export namespace Components {
     * Should the JS event still fire, even if link-format is passed?
     */
     'preserveEvent': boolean;
-    /**
-    * Specify any new string here to trigger a refresh
-    */
-    'tick': string;
   }
   interface ManifoldDataResourceListAttributes extends StencilHTMLAttributes {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * Disable interval?
+    */
+    'disableUpdate'?: boolean;
     /**
     * Link format structure, with `:resource` placeholder
     */
@@ -195,10 +199,6 @@ export namespace Components {
     * Should the JS event still fire, even if link-format is passed?
     */
     'preserveEvent'?: boolean;
-    /**
-    * Specify any new string here to trigger a refresh
-    */
-    'tick'?: string;
   }
 
   interface ManifoldFeaturedService {
@@ -268,15 +268,19 @@ export namespace Components {
   }
 
   interface ManifoldLinkButton {
+    'color'?: 'black' | 'white';
     'href'?: string;
     'onClick'?: (e: Event) => void;
     'rel'?: string;
+    'size'?: 'small';
     'target'?: string;
   }
   interface ManifoldLinkButtonAttributes extends StencilHTMLAttributes {
+    'color'?: 'black' | 'white';
     'href'?: string;
     'onClick'?: (e: Event) => void;
     'rel'?: string;
+    'size'?: 'small';
     'target'?: string;
   }
 
@@ -583,6 +587,27 @@ export namespace Components {
     'value'?: string;
   }
 
+  interface ManifoldResourceCredentials {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * Which resource does this belong to?
+    */
+    'resourceName': string;
+  }
+  interface ManifoldResourceCredentialsAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Which resource does this belong to?
+    */
+    'resourceName'?: string;
+  }
+
   interface ManifoldResourceDetails {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -602,6 +627,27 @@ export namespace Components {
     * ID of resource
     */
     'resourceId'?: string;
+  }
+
+  interface ManifoldResourceStatus {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * Resource name for this status
+    */
+    'resourceName'?: string;
+  }
+  interface ManifoldResourceStatusAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Resource name for this status
+    */
+    'resourceName'?: string;
   }
 
   interface ManifoldSelect {
@@ -733,7 +779,9 @@ declare global {
     'ManifoldProductPage': Components.ManifoldProductPage;
     'ManifoldProduct': Components.ManifoldProduct;
     'ManifoldRegionSelector': Components.ManifoldRegionSelector;
+    'ManifoldResourceCredentials': Components.ManifoldResourceCredentials;
     'ManifoldResourceDetails': Components.ManifoldResourceDetails;
+    'ManifoldResourceStatus': Components.ManifoldResourceStatus;
     'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
     'ManifoldTemplateCard': Components.ManifoldTemplateCard;
@@ -767,7 +815,9 @@ declare global {
     'manifold-product-page': Components.ManifoldProductPageAttributes;
     'manifold-product': Components.ManifoldProductAttributes;
     'manifold-region-selector': Components.ManifoldRegionSelectorAttributes;
+    'manifold-resource-credentials': Components.ManifoldResourceCredentialsAttributes;
     'manifold-resource-details': Components.ManifoldResourceDetailsAttributes;
+    'manifold-resource-status': Components.ManifoldResourceStatusAttributes;
     'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
     'manifold-template-card': Components.ManifoldTemplateCardAttributes;
@@ -921,10 +971,22 @@ declare global {
     new (): HTMLManifoldRegionSelectorElement;
   };
 
+  interface HTMLManifoldResourceCredentialsElement extends Components.ManifoldResourceCredentials, HTMLStencilElement {}
+  var HTMLManifoldResourceCredentialsElement: {
+    prototype: HTMLManifoldResourceCredentialsElement;
+    new (): HTMLManifoldResourceCredentialsElement;
+  };
+
   interface HTMLManifoldResourceDetailsElement extends Components.ManifoldResourceDetails, HTMLStencilElement {}
   var HTMLManifoldResourceDetailsElement: {
     prototype: HTMLManifoldResourceDetailsElement;
     new (): HTMLManifoldResourceDetailsElement;
+  };
+
+  interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
+  var HTMLManifoldResourceStatusElement: {
+    prototype: HTMLManifoldResourceStatusElement;
+    new (): HTMLManifoldResourceStatusElement;
   };
 
   interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
@@ -988,7 +1050,9 @@ declare global {
     'manifold-product-page': HTMLManifoldProductPageElement
     'manifold-product': HTMLManifoldProductElement
     'manifold-region-selector': HTMLManifoldRegionSelectorElement
+    'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement
     'manifold-resource-details': HTMLManifoldResourceDetailsElement
+    'manifold-resource-status': HTMLManifoldResourceStatusElement
     'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
     'manifold-template-card': HTMLManifoldTemplateCardElement
@@ -1022,7 +1086,9 @@ declare global {
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-product': HTMLManifoldProductElement;
     'manifold-region-selector': HTMLManifoldRegionSelectorElement;
+    'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
+    'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;

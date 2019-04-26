@@ -224,7 +224,7 @@ code,
   margin-top: 3rem;
   font-weight: 800;
   font-size: 48px;
-  font-family: var(--mf-font-family);
+  font-family: var(--mf-font-default);
 }
 
 .docs-section h2 {

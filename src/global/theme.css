@@ -48,7 +48,7 @@
   --mf-g-blueFaded: linear-gradient(to top right, #c5c6ff, #b1e5ff);
   --mf-g-cta: linear-gradient(63deg, #f56d41, #b54a84);
   --mf-g-gray: linear-gradient(45deg, var(--mf-c-gray-t3), var(--mf-c-gray-t5));
-  --mf-g-green: linear-gradient(to top right, #329dd1, #4cbc88);
+  --mf-g-green: linear-gradient(to top right, #329dd1, #55f0a8);
   --mf-g-greenFaded: linear-gradient(to top right, #d5f1ff, #d2f5e4);
   --mf-g-orange: linear-gradient(to top right, #fe3a57, #fdc836);
   --mf-g-orangeFaded: linear-gradient(to top right, #f5bca5, #fff1d7);
@@ -132,9 +132,11 @@
   --mf-c-backgroundSubdue: var(--mf-c-offWhite);
 
   /* font */
-  --mf-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+  --mf-font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif,
     'Apple Color Emoji';
+  --mf-font-monospace: 'IBM Plex Mono', SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier,
+    monospace;
   --mf-font-u12: 5.0625em;
   --mf-font-u11: 4.4225011027em;
   --mf-font-u10: 3.8634105686em;
@@ -183,10 +185,17 @@
 
   /* easing */
 
-  --mf-ease-in-out: 'cubic-bezier(0.4, 0, 0.2, 1)'; /* This is the most common easing curve. */
-  --mf-ease-out: 'cubic-bezier(0.0, 0, 0.2, 1)'; /* Objects enter the screen at full velocity from off-screen and slowly decelerate to a resting point. */
-  --mf-ease-in: 'cubic-bezier(0.4, 0, 1, 1)'; /* Objects leave the screen at full velocity. They do not decelerate when off-screen. */
-  --mf-ease-sharp: 'cubic-bezier(0.4, 0, 0.6, 1)'; /* The sharp curve is used by objects that may return to the screen at any time. */
+  /* Objects accelerate slowly, reach full velocity, then decelerate. Useful for large interactions or objects of high mass. */
+  --mf-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Objects start at full velocity, then decelerate. Useful for small interactions that feel snappy and not sluggish. */
+  --mf-ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Objects leave the screen at full velocity. They do not decelerate when off-screen. */
+  --mf-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* The sharp curve is used by objects that may return to the screen at any time. */
+  --mf-ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);
 
   /* layer */
   --mf-layer-base: 10;

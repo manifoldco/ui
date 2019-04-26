@@ -69,7 +69,7 @@
   padding-left: 1rem;
   overflow: hidden;
   color: var(--mf-c-black);
-  font-family: var(--mf-font-family);
+  font-family: var(--mf-font-default);
   white-space: nowrap;
   text-align: left;
   background-color: transparent;

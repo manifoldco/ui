@@ -18,7 +18,7 @@ a {
   border-radius: var(--mf-radius-m);
   box-shadow: var(--mf-shadow-default);
   cursor: pointer;
-  transition: filter 200ms linear;
+  transition: filter 200ms linear, border-color 200ms linear, color 200ms linear;
 
   &:focus,
   &:hover {
@@ -34,5 +34,34 @@ a {
   &:focus,
   &:active {
     outline: 0;
+  }
+
+  &[data-color='white'] {
+    color: var(--mf-c-black70);
+    background: white;
+    border: 1px solid var(--mf-c-black-20);
+
+    &:focus,
+    &:hover {
+      border-color: var(--mf-c-black-40);
+    }
+  }
+
+  &[data-color='black'] {
+    color: var(--mf-c-offWhite);
+    background: var(--mf-c-black);
+    border-color: var(--mf-c-black);
+
+    &:focus,
+    &:hover {
+      filter: brightness(150%);
+    }
+  }
+
+  &[data-size='small'] {
+    height: 2.25rem;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+    font-size: var(--mf-font-d1);
   }
 }

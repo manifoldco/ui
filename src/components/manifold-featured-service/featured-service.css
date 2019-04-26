@@ -20,7 +20,7 @@
   color: var(--mf-c-white);
   font-weight: 300;
   font-size: 1em;
-  font-family: var(--mf-font-family);
+  font-family: var(--mf-font-default);
   text-align: center;
   text-decoration: none;
   background-color: var(--mf-c-black);
