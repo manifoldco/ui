@@ -129,7 +129,7 @@ same order).
 | `preserveEvent` | `preserve-event` | Should the JS event still fire, even if link-format is passed?                             | `boolean`              | `false`            |
 | `productLabel`  | `product-label`  | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`        |
 | `regions`       | `regions`        | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
-| `resourceId`    | `resource-id`    | _(optional)_ Is this modifying an existing resource?                                       | `string \| undefined`  | `undefined`        |
+| `resourceName`  | `resource-name`  | Is this tied to an existing resource?                                                      | `string \| undefined`  | `undefined`        |
 
 
 ----------------------------------------------

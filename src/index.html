@@ -884,9 +884,9 @@ defineCustomElements(window);</code></pre>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
-                    <td><code>resourceId</code></td>
-                    <td><code>resource-id</code></td>
-                    <td><em>(optional)</em> Is this modifying an existing resource?</td>
+                    <td><code>resourceName</code></td>
+                    <td><code>resource-name</code></td>
+                    <td>Is this tied to an existing resource?</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -1470,6 +1470,13 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                     <td>Should the JS event still fire, even if link-format is passed?</td>
                     <td><code>boolean</code></td>
                     <td><code>false</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>tick</code></td>
+                    <td><code>tick</code></td>
+                    <td>Specify any new string here to trigger a refresh</td>
+                    <td><code>string</code></td>
+                    <td><code>undefined</code></td>
                   </tr>
                 </tbody>
               </table>

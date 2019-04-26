@@ -27,17 +27,28 @@ export class ManifoldDataResourceList {
   @Prop() linkFormat?: string;
   /** Should the JS event still fire, even if link-format is passed?  */
   @Prop() preserveEvent: boolean = false;
+  /** Specify any new string here to trigger a refresh */
+  @Prop() tick: string;
+  @State() interval: number;
   @State() resources?: Marketplace.Resource[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
-    // Don’t return this promise to invoke the loading state
+    this.interval = window.setInterval(() => this.fetchResources(), 3000);
+  }
+
+  componentDidUnload() {
+    window.clearInterval(this.interval);
+  }
+
+  fetchResources() {
     fetch(`${this.connection.marketplace}/resources/?me`, withAuth())
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {
-        this.resources = this.userResources(
-          [...resources].sort((a, b) => a.body.label.localeCompare(b.body.label))
-        );
+        if (Array.isArray(resources))
+          this.resources = this.userResources(
+            [...resources].sort((a, b) => a.body.label.localeCompare(b.body.label))
+          );
       });
   }
 

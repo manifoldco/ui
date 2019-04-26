@@ -27,6 +27,7 @@ export class ManifoldPlanDetails {
   @Prop() preserveEvent: boolean = false;
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
+  @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
   @State() features: UserFeatures = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
@@ -48,11 +49,14 @@ export class ManifoldPlanDetails {
     };
     this.planUpdate.emit(detail);
   }
+  @Watch('resourceFeatures') onUpdateResource() {
+    this.features = this.initialFeatures();
+  }
 
   componentWillLoad() {
     const features = this.initialFeatures();
-    this.features = features; // Set default features the first time
-    // This conditional should always fire on component load
+    this.features = features;
+
     if (this.plan && this.product) {
       this.updateRegionId(this.plan);
 
@@ -101,7 +105,18 @@ export class ManifoldPlanDetails {
   }
 
   initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
-    if (!plan || !plan.body.expanded_features) return {};
+    if (Array.isArray(this.resourceFeatures)) {
+      return this.resourceFeatures.reduce(
+        (features, { label, value }) => ({
+          ...features,
+          [label]: value.value,
+        }),
+        {}
+      );
+    }
+    if (!plan || !plan.body.expanded_features) {
+      return {};
+    }
     return { ...initialFeatures(plan.body.expanded_features) };
   }
 

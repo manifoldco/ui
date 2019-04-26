@@ -1,4 +1,4 @@
-import { Component, State, Prop } from '@stencil/core';
+import { Component, State, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'manifold-active-plan',
@@ -13,10 +13,18 @@ export class ManifoldActivePlan {
   @Prop() preserveEvent: boolean = false;
   @Prop() product?: Catalog.ExpandedProduct;
   @Prop() regions?: string[];
+  @Prop() selectedResource?: Gateway.Resource;
   @State() selectedPlanId: string;
+  @Watch('selectedResource') resourceChange(newResource: Gateway.Resource) {
+    if (newResource && newResource.plan && newResource.plan.id) {
+      this.selectPlan(newResource.plan.id);
+    }
+  }
 
   componentWillLoad() {
-    if (this.plans.length) {
+    if (this.selectedResource && this.selectedResource.plan && this.selectedResource.plan.id) {
+      this.selectPlan(this.selectedResource.plan.id);
+    } else if (this.plans.length) {
       this.selectPlan(this.plans[0].id);
     }
   }
@@ -41,6 +49,7 @@ export class ManifoldActivePlan {
           preserveEvent={this.preserveEvent}
           product={this.product}
           regions={this.regions}
+          resourceFeatures={this.selectedResource && this.selectedResource.features}
         />
       </div>,
     ];
