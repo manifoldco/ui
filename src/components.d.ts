@@ -78,13 +78,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Product ID
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
   interface ManifoldDataProductLogoAttributes extends StencilHTMLAttributes {
     /**
@@ -96,13 +96,13 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Product ID
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
 
   interface ManifoldDataProductName {
@@ -111,13 +111,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Product ID (e.g. `"jawsdb-mysql"`)
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
   interface ManifoldDataProductNameAttributes extends StencilHTMLAttributes {
     /**
@@ -125,13 +125,13 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Product ID (e.g. `"jawsdb-mysql"`)
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
 
   interface ManifoldDataProvisionButton {

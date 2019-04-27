@@ -150,7 +150,7 @@ export class ManifoldDataProvisionButton {
         type="text"
         value={this.resourceName}
       />,
-      <button type="button" onClick={() => this.provision()}>
+      <button type="submit" onClick={() => this.provision()}>
         <slot />
       </button>,
     ];

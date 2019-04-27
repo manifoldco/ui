@@ -20,7 +20,7 @@ To navigate using a traditional `<a>` tag, specify a `link-format` attribute, us
 `:resource` as a placeholder:
 
 ```html
-<manifold-data-resource-list link-format="/resource/:resourceLabel" />
+<manifold-data-resource-list link-format="/resource/:resource" />
 ```
 
 Note that this will disable the custom events unless `preserve-event` is
