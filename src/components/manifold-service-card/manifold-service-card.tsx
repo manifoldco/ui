@@ -28,9 +28,11 @@ export class ManifoldServiceCard {
   @Prop() skeleton: boolean = false;
   @State() isFree: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
-  @Watch('productId')
-  watchHandler(newProductId: string) {
-    if (!this.skeleton) this.fetchIsFree(newProductId);
+  @Watch('skeleton') skeletonChange(skeleton: boolean) {
+    if (!skeleton && this.productId) this.fetchIsFree(this.productId);
+  }
+  @Watch('productId') productChange(newProductId: string) {
+    if (this.skeleton !== true) this.fetchIsFree(newProductId);
   }
 
   get href() {
@@ -38,10 +40,9 @@ export class ManifoldServiceCard {
     return this.linkFormat.replace(/:product/gi, this.label);
   }
 
-  async fetchIsFree(productId = this.productId) {
-    if (typeof productId !== 'string') return;
+  async fetchIsFree(productId: string) {
     const { catalog } = this.connection;
-    const response = await fetch(`${catalog}/plans/?product_id=${this.productId}`, withAuth());
+    const response = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
     const plans: Catalog.ExpandedPlan[] = await response.json();
     if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
       this.isFree = true;
