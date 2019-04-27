@@ -166,14 +166,12 @@ export class ManifoldPlanDetails {
 
   get regionSelector() {
     if (!this.plan) return null;
+    const { regions } = this.plan.body;
 
     // Don’t show the non-region
-    if (this.plan.body.regions.length === 1 && this.plan.body.regions[0] === globalRegion.id) {
-      return null;
-    }
+    if (regions.length === 1) return null;
 
     const name = `${this.plan.body.label}-region`;
-
     return (
       <div class="region">
         <label class="region-label" id={name}>

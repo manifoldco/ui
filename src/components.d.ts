@@ -447,7 +447,7 @@ export namespace Components {
   interface ManifoldPlanMenu {
     'plans'?: Catalog.ExpandedPlan[];
     'selectPlan': Function;
-    'selectedPlanId': string;
+    'selectedPlanId'?: string;
   }
   interface ManifoldPlanMenuAttributes extends StencilHTMLAttributes {
     'plans'?: Catalog.ExpandedPlan[];

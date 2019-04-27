@@ -28,7 +28,7 @@ const PlanButton: FunctionalComponent<{
 })
 export class ManifoldPlanMenu {
   @Prop() plans?: Catalog.ExpandedPlan[];
-  @Prop() selectedPlanId: string;
+  @Prop() selectedPlanId?: string;
   @Prop() selectPlan: Function = () => {};
 
   sortPlans(plans: Catalog.ExpandedPlan[]) {
@@ -51,7 +51,7 @@ export class ManifoldPlanMenu {
               body: { name, customizable, expanded_features = [] },
             }: Catalog.ExpandedPlan) => (
               <PlanButton
-                checked={id === this.selectedPlanId}
+                checked={this.selectedPlanId === id}
                 value={id}
                 onChange={() => this.selectPlan(id)}
                 customizable={customizable}

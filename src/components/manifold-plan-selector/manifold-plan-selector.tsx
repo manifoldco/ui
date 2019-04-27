@@ -36,7 +36,7 @@ export class ManifoldPlanSelector {
   }
 
   componentWillLoad() {
-    setTimeout(() => this.fetchPlans(), 5000);
+    this.fetchPlans();
   }
 
   async fetchPlans(productLabel: string = this.productLabel) {

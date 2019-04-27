@@ -11,7 +11,7 @@
 | ---------------- | ------------------ | ----------- | ----------------------------- | ----------- |
 | `plans`          | --                 |             | `ExpandedPlan[] \| undefined` | `undefined` |
 | `selectPlan`     | --                 |             | `Function`                    | `() => {}`  |
-| `selectedPlanId` | `selected-plan-id` |             | `string`                      | `undefined` |
+| `selectedPlanId` | `selected-plan-id` |             | `string \| undefined`         | `undefined` |
 
 
 ----------------------------------------------

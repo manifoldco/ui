@@ -15,17 +15,15 @@ export class ManifoldActivePlan {
   @Prop() regions?: string[];
   @Prop() selectedResource?: Gateway.Resource;
   @State() selectedPlanId: string;
+  @Watch('plans') plansChange(newPlans: Catalog.ExpandedPlan[]) {
+    if (this.selectedResource && this.selectedResource.plan && this.selectedResource.plan.id) {
+      this.selectPlan(this.selectedResource.plan.id);
+    }
+    this.selectPlan(newPlans[0].id);
+  }
   @Watch('selectedResource') resourceChange(newResource: Gateway.Resource) {
     if (newResource && newResource.plan && newResource.plan.id) {
       this.selectPlan(newResource.plan.id);
-    }
-  }
-
-  componentWillLoad() {
-    if (this.selectedResource && this.selectedResource.plan && this.selectedResource.plan.id) {
-      this.selectPlan(this.selectedResource.plan.id);
-    } else if (Array.isArray(this.plans)) {
-      this.selectPlan(this.plans[0].id);
     }
   }
 
