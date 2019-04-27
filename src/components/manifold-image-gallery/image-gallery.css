@@ -115,3 +115,7 @@ img {
     transform: translateY(-2px);
   }
 }
+
+.skeleton-img {
+  min-width: 5rem;
+}

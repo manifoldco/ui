@@ -1,32 +1,60 @@
 import { Component, Prop } from '@stencil/core';
+import skeletonProduct from '../../data/product';
 
 @Component({
   tag: 'manifold-product-details',
-  styleUrl: 'product-details.css',
+  styleUrl: 'manifold-product-details.css',
   shadow: true,
 })
 export class ManifoldProductDetails {
-  @Prop() product?: Catalog.ExpandedProduct;
+  @Prop() product?: Catalog.Product;
 
   render() {
-    if (!this.product) return null;
+    const {
+      body: { tagline, value_props, images = [] },
+    } = this.product || skeletonProduct;
 
-    const { tagline, value_props, images = [] } = this.product.body;
+    if (this.product) {
+      return (
+        <div>
+          <h1 class="title" itemprop="tagline">
+            <span class="tagline">{tagline}</span>
+          </h1>
+          <ul class="value-prop-list" itemprop="description">
+            {value_props.map(({ body, header }) => (
+              <li class="value-prop" key={header}>
+                <h3>{header}</h3>
+                <p>{body}</p>
+              </li>
+            ))}
+          </ul>
+          {images.length > 0 && <manifold-image-gallery title="Screenshots" images={images} />}
+        </div>
+      );
+    }
+
+    // 💀
 
     return (
       <div>
         <h1 class="title" itemprop="tagline">
-          <span class="tagline">{tagline}</span>
+          <span class="tagline">
+            <manifold-skeleton-text>{tagline}</manifold-skeleton-text>
+          </span>
         </h1>
         <ul class="value-prop-list" itemprop="description">
           {value_props.map(({ body, header }) => (
             <li class="value-prop" key={header}>
-              <h3>{header}</h3>
-              <p>{body}</p>
+              <h3>
+                <manifold-skeleton-text>{header}</manifold-skeleton-text>
+              </h3>
+              <p>
+                <manifold-skeleton-text>{body}</manifold-skeleton-text>
+              </p>
             </li>
           ))}
         </ul>
-        {images.length > 0 && <manifold-image-gallery title="Screenshots" images={images} />}
+        <manifold-image-gallery title="Screenshots" />
       </div>
     );
   }

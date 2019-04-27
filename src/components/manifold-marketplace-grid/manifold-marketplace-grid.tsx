@@ -1,5 +1,5 @@
 import { Component, Prop, State, Element, Watch } from '@stencil/core';
-import SkeletonProducts from '../../data/marketplace';
+import skeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
 import {
   categories,
@@ -76,7 +76,7 @@ export class ManifoldMarketplaceGrid {
 
   get filteredServices(): Catalog.Product[] {
     // While services are loading, display skeleton cards
-    if (!this.services || !this.services.length) return SkeletonProducts;
+    if (!this.services || !this.services.length) return skeletonProducts;
 
     let services: Catalog.Product[] = [];
 

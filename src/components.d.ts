@@ -185,13 +185,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Disable interval?
-    */
-    'disableUpdate': boolean;
-    /**
     * Link format structure, with `:resource` placeholder
     */
     'linkFormat'?: string;
+    /**
+    * Disable auto-updates?
+    */
+    'paused': boolean;
     /**
     * Should the JS event still fire, even if link-format is passed?
     */
@@ -203,29 +203,18 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Disable interval?
-    */
-    'disableUpdate'?: boolean;
-    /**
     * Link format structure, with `:resource` placeholder
     */
     'linkFormat'?: string;
     'onManifold-resourceList-click'?: (event: CustomEvent) => void;
     /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
+    /**
     * Should the JS event still fire, even if link-format is passed?
     */
     'preserveEvent'?: boolean;
-  }
-
-  interface ManifoldFeaturedService {
-    'logo': string;
-    'name': string;
-    'productGradient': string;
-  }
-  interface ManifoldFeaturedServiceAttributes extends StencilHTMLAttributes {
-    'logo'?: string;
-    'name'?: string;
-    'productGradient'?: string;
   }
 
   interface ManifoldIcon {
@@ -264,7 +253,7 @@ export namespace Components {
   }
 
   interface ManifoldImageGallery {
-    'images': string[];
+    'images'?: string[];
     'title': string;
   }
   interface ManifoldImageGalleryAttributes extends StencilHTMLAttributes {
@@ -528,23 +517,25 @@ export namespace Components {
   }
 
   interface ManifoldProductDetails {
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
   }
   interface ManifoldProductDetailsAttributes extends StencilHTMLAttributes {
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
   }
 
   interface ManifoldProductPage {
     'hideCta'?: boolean;
     'linkFormat'?: string;
-    'product'?: Catalog.ExpandedProduct;
+    'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'provider'?: Catalog.Provider;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
     'linkFormat'?: string;
     'onManifold-productCTA-click'?: (event: CustomEvent) => void;
-    'product'?: Catalog.ExpandedProduct;
+    'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'provider'?: Catalog.Provider;
   }
 
@@ -562,8 +553,9 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    * Should the JS event still fire, even if link-format is passed?
     */
+    'preserveEvent': boolean;
     'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
@@ -580,8 +572,9 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    * Should the JS event still fire, even if link-format is passed?
     */
+    'preserveEvent'?: boolean;
     'productLabel'?: string;
   }
 
@@ -787,7 +780,6 @@ declare global {
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
     'ManifoldDataResourceList': Components.ManifoldDataResourceList;
-    'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
     'ManifoldLazyImage': Components.ManifoldLazyImage;
@@ -825,7 +817,6 @@ declare global {
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
     'manifold-data-resource-list': Components.ManifoldDataResourceListAttributes;
-    'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
     'manifold-lazy-image': Components.ManifoldLazyImageAttributes;
@@ -901,12 +892,6 @@ declare global {
   var HTMLManifoldDataResourceListElement: {
     prototype: HTMLManifoldDataResourceListElement;
     new (): HTMLManifoldDataResourceListElement;
-  };
-
-  interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
-  var HTMLManifoldFeaturedServiceElement: {
-    prototype: HTMLManifoldFeaturedServiceElement;
-    new (): HTMLManifoldFeaturedServiceElement;
   };
 
   interface HTMLManifoldIconElement extends Components.ManifoldIcon, HTMLStencilElement {}
@@ -1074,7 +1059,6 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement
-    'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
     'manifold-lazy-image': HTMLManifoldLazyImageElement
@@ -1112,7 +1096,6 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
-    'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-lazy-image': HTMLManifoldLazyImageElement;

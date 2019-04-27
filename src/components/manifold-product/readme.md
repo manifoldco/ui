@@ -44,12 +44,13 @@ You can alternately hide the CTA on the left altogether with `hide-cta`:
 
 ## Properties
 
-| Property       | Attribute       | Description                                                     | Type                   | Default            |
-| -------------- | --------------- | --------------------------------------------------------------- | ---------------------- | ------------------ |
-| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`           | `connections.prod` |
-| `hideCta`      | `hide-cta`      | _(optional)_ Hide the CTA on the left?                          | `boolean \| undefined` | `false`            |
-| `linkFormat`   | `link-format`   | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined`  | `undefined`        |
-| `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)                       | `string`               | `undefined`        |
+| Property        | Attribute        | Description                                                     | Type                   | Default            |
+| --------------- | ---------------- | --------------------------------------------------------------- | ---------------------- | ------------------ |
+| `connection`    | --               | _(hidden)_ Passed by `<manifold-connection>`                    | `Connection`           | `connections.prod` |
+| `hideCta`       | `hide-cta`       | _(optional)_ Hide the CTA on the left?                          | `boolean \| undefined` | `false`            |
+| `linkFormat`    | `link-format`    | _(optional)_ Link format structure, with `:product` placeholder | `string \| undefined`  | `undefined`        |
+| `preserveEvent` | `preserve-event` | Should the JS event still fire, even if link-format is passed?  | `boolean`              | `false`            |
+| `productLabel`  | `product-label`  |                                                                 | `string`               | `undefined`        |
 
 
 ----------------------------------------------

@@ -14,22 +14,18 @@ const body: Catalog.ProductBody = {
   },
   label: '',
   name: '',
-  listing: {
-    listed: true,
-    marketing: { beta: false, featured: false, new: false },
-    public: true,
-  },
+  listing: { listed: true, marketing: { beta: false, featured: false, new: false }, public: true },
   logo_url: '',
   provider_id: '',
-  state: 'available',
-  support_email: 'support@jawsdb.com',
-  tagline: 'Fast, reliable, no-bullshark MySQL as a Service',
+  state: '',
+  support_email: '',
+  tagline: '',
   tags: [],
   terms: { provided: false },
   value_props: [],
 };
 
-const SkeletonProducts: Catalog.Product[] = [
+const skeletonProducts: Catalog.Product[] = [
   {
     id,
     body: {
@@ -106,4 +102,4 @@ const SkeletonProducts: Catalog.Product[] = [
   },
 ];
 
-export default SkeletonProducts;
+export default skeletonProducts;
