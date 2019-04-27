@@ -146,28 +146,6 @@ export class ManifoldPlanDetails {
       .replace(/:features/gi, params.toString());
   }
 
-  get header() {
-    if (!this.product || !this.plan) return null;
-
-    const { name: productName, logo_url: productLogo } = this.product.body;
-
-    return (
-      <header class="header">
-        <div class="logo">
-          <img src={productLogo} alt={productName} itemprop="logo" />
-        </div>
-        <div>
-          <h1 class="plan-name" itemprop="name">
-            {this.plan.body.name}
-          </h1>
-          <h2 class="product-name" itemprop="brand">
-            {productName}
-          </h2>
-        </div>
-      </header>
-    );
-  }
-
   get featureList() {
     if (!this.plan) return null;
 
@@ -183,31 +161,6 @@ export class ManifoldPlanDetails {
           />,
         ])}
       </dl>
-    );
-  }
-
-  get footer() {
-    if (!this.product || !this.plan) return null;
-    const { name, expanded_features = [] } = this.plan.body;
-    return (
-      <footer class="footer">
-        <manifold-plan-cost
-          planId={this.plan.id}
-          allFeatures={expanded_features}
-          selectedFeatures={this.features}
-        />
-        {this.hideCta !== true && (
-          <manifold-link-button
-            onClick={this.onClick}
-            href={this.ctaLink}
-            rel={this.ctaLink && 'noopener noreferrer'}
-            target={this.ctaLink && '_blank'}
-          >
-            Get {name}
-            <manifold-icon icon={arrow_right} marginLeft />
-          </manifold-link-button>
-        )}
-      </footer>
     );
   }
 
@@ -267,16 +220,74 @@ export class ManifoldPlanDetails {
   };
 
   render() {
-    if (!this.product || !this.plan) return null;
+    if (this.plan && this.product) {
+      const { logo_url, name: productName } = this.product.body;
+      const { expanded_features, name: planName } = this.plan.body;
 
+      return (
+        <section class="scroll" itemscope itemtype="https://schema.org/IndividualProduct">
+          <div class="wrapper">
+            <header class="header">
+              <div class="logo">
+                <img src={logo_url} alt={productName} itemprop="logo" />
+              </div>
+              <div>
+                <h1 class="plan-name" itemprop="name">
+                  {planName}
+                </h1>
+                <h2 class="product-name" itemprop="brand">
+                  {productName}
+                </h2>
+              </div>
+            </header>
+            {this.featureList}
+            {this.regionSelector}
+            <footer class="footer">
+              <manifold-plan-cost
+                planId={this.plan.id}
+                allFeatures={expanded_features}
+                selectedFeatures={this.features}
+              />
+              {this.hideCta !== true && (
+                <manifold-link-button
+                  onClick={this.onClick}
+                  href={this.ctaLink}
+                  rel={this.ctaLink && 'noopener noreferrer'}
+                  target={this.ctaLink && '_blank'}
+                >
+                  Get {planName}
+                  <manifold-icon icon={arrow_right} marginLeft />
+                </manifold-link-button>
+              )}
+            </footer>
+          </div>
+        </section>
+      );
+    }
+    // 💀
     return (
-      <section itemscope itemtype="https://schema.org/IndividualProduct">
-        <div class="plan-details">
-          {this.header}
-          {this.featureList}
+      <section class="scroll">
+        <div class="wrapper">
+          <header class="header">
+            <div class="logo">
+              <manifold-skeleton-img />
+            </div>
+            <div>
+              <h1 class="plan-name" itemprop="name">
+                <manifold-skeleton-text>Plan name</manifold-skeleton-text>
+              </h1>
+              <h2 class="product-name" itemprop="brand">
+                <manifold-skeleton-text>Product name</manifold-skeleton-text>
+              </h2>
+            </div>
+          </header>
+          <br />
+          <manifold-skeleton-text>Features features features features</manifold-skeleton-text>
           {this.regionSelector}
+          <footer class="footer">
+            <manifold-skeleton-text>Free</manifold-skeleton-text>
+          </footer>
         </div>
-        {this.footer}
       </section>
     );
   }

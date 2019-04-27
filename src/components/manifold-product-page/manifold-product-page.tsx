@@ -42,10 +42,7 @@ export class ManifoldProductPage {
 
   render() {
     if (this.product) {
-      const {
-        body: { documentation_url, support_email, name, label, logo_url, tags },
-      } = this.product;
-
+      const { documentation_url, support_email, name, label, logo_url, tags } = this.product.body;
       const gradient = `var(--mf-g-${label})`;
 
       return (
@@ -60,7 +57,9 @@ export class ManifoldProductPage {
                   <h2 class="product-name" itemprop="name">
                     {name}
                   </h2>
-                  <p class="provider-name">{this.providerName && `from ${this.providerName}`}</p>
+                  <p class="provider-name">
+                    {this.providerName && <span itemprop="brand">from {this.providerName}</span>}
+                  </p>
                 </div>
 
                 {this.hideCta !== true && (

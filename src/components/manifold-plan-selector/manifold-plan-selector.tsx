@@ -4,10 +4,7 @@ import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
-@Component({
-  tag: 'manifold-plan-selector',
-  shadow: true,
-})
+@Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -24,10 +21,13 @@ export class ManifoldPlanSelector {
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceName?: string;
-  @State() product: Catalog.ExpandedProduct;
+  @State() product: Catalog.Product;
   @State() plans: Catalog.Plan[];
-  @State() resource: Gateway.Resource;
+  @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
+  @Watch('productLabel') productChange(newProduct: string) {
+    this.fetchPlans(newProduct);
+  }
   @Watch('resourceName') resourceChange(newResource: string) {
     this.fetchResource(newResource);
   }
@@ -35,32 +35,29 @@ export class ManifoldPlanSelector {
     if (newRegions) this.parsedRegions = this.parseRegions(newRegions);
   }
 
-  async componentWillLoad() {
-    if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
-    if (this.resourceName) this.fetchResource();
-
-    const productsRaw = await fetch(
-      `${this.connection.catalog}/products/?label=${this.productLabel}`,
-      withAuth()
-    );
-    const products: Catalog.ExpandedProduct[] = await productsRaw.json();
-    const [product] = products;
-    this.product = product;
-
-    const plansRaw = await fetch(
-      `${this.connection.catalog}/plans/?product_id=${product.id}`,
-      withAuth()
-    );
-    const plans: Catalog.ExpandedPlan[] = await plansRaw.json();
-    this.plans = [...plans.sort((a, b) => a.body.cost - b.body.cost)];
+  componentWillLoad() {
+    setTimeout(() => this.fetchPlans(), 5000);
   }
 
-  async fetchResource(resourceName = this.resourceName) {
-    fetch(`${this.connection.gateway}/resources/me/${resourceName}`, withAuth())
-      .then(response => response.json())
-      .then((resource: Gateway.Resource) => {
-        this.resource = resource;
-      });
+  async fetchPlans(productLabel: string = this.productLabel) {
+    if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
+    if (this.resourceName) this.fetchResource(this.resourceName);
+
+    const { catalog } = this.connection;
+
+    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth());
+    const products: Catalog.ExpandedProduct[] = await productsResp.json();
+    this.product = products[0]; // eslint-disable-line prefer-destructuring
+
+    const plansResp = await fetch(`${catalog}/plans/?product_id=${products[0].id}`, withAuth());
+    const plans: Catalog.ExpandedPlan[] = await plansResp.json();
+    this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
+  }
+
+  async fetchResource(resourceName: string) {
+    const { gateway } = this.connection;
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
+    this.resource = await response.json();
   }
 
   parseRegions(regions: string) {
@@ -68,7 +65,6 @@ export class ManifoldPlanSelector {
   }
 
   render() {
-    if (!this.product || !this.plans) return null;
     return (
       <manifold-active-plan
         hideCta={this.hideCta}
@@ -77,7 +73,7 @@ export class ManifoldPlanSelector {
         preserveEvent={this.preserveEvent}
         product={this.product}
         regions={this.parsedRegions}
-        selectedResource={this.resource || undefined}
+        selectedResource={this.resource}
       />
     );
   }

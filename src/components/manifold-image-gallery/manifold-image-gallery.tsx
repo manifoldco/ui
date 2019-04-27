@@ -47,7 +47,7 @@ export class ImageGallery {
                   <Thumbnail
                     src={image}
                     alt={`Screenshot ${i + 1}`}
-                    isSelected={this.selectedImage === image}
+                    isSelected={this.selectedImage ? this.selectedImage === image : i === 0}
                     onClick={this.selectImage}
                   />
                 ))}

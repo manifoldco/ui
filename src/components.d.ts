@@ -22,9 +22,9 @@ export namespace Components {
     'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
-    'plans': Catalog.ExpandedPlan[];
+    'plans'?: Catalog.ExpandedPlan[];
     'preserveEvent': boolean;
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
@@ -34,7 +34,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
     'preserveEvent'?: boolean;
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
@@ -445,7 +445,7 @@ export namespace Components {
   }
 
   interface ManifoldPlanMenu {
-    'plans': Catalog.ExpandedPlan[];
+    'plans'?: Catalog.ExpandedPlan[];
     'selectPlan': Function;
     'selectedPlanId': string;
   }

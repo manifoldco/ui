@@ -42,16 +42,14 @@ export class ManifoldServiceCard {
     return this.linkFormat.replace(/:product/gi, this.label);
   }
 
-  fetchIsFree(productId = this.productId) {
+  async fetchIsFree(productId = this.productId) {
     if (typeof productId !== 'string') return;
-
-    fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`, withAuth())
-      .then(response => response.json())
-      .then((data: Catalog.ExpandedPlan[]) => {
-        if (data.find(plan => plan.body.free === true)) {
-          this.isFree = true;
-        }
-      });
+    const { catalog } = this.connection;
+    const response = await fetch(`${catalog}/plans/?product_id=${this.productId}`, withAuth());
+    const plans: Catalog.ExpandedPlan[] = await response.json();
+    if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
+      this.isFree = true;
+    }
   }
 
   onClick = (e: Event): void => {

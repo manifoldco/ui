@@ -53,7 +53,6 @@ describe('<manifold-product-page>', () => {
       'manifold-product-page',
       (elm: any, props: any) => {
         elm.product = props.product;
-        elm.hideCta = true;
       },
       { product: Product }
     );
@@ -69,7 +68,6 @@ describe('<manifold-product-page>', () => {
       'manifold-product-page',
       (elm: any, props: any) => {
         elm.product = props.product;
-        elm.hideCta = true;
       },
       { product: Product }
     );
@@ -77,21 +75,5 @@ describe('<manifold-product-page>', () => {
 
     const el = await page.find('manifold-product-page >>> [itemprop="logo"]');
     expect(el.getAttribute('src')).toBe(Product.body.logo_url);
-  });
-
-  it('displays the product/service provider as a child of manifold-featured-service', async () => {
-    const page = await newE2EPage({ html: `<manifold-product-page />` });
-    await page.$eval(
-      'manifold-product-page',
-      (elm: any, props: any) => {
-        elm.product = props.product;
-        elm.hideCta = true;
-      },
-      { product: Product }
-    );
-    await page.waitForChanges();
-
-    const el = await page.find('manifold-product-page >>> [itemprop="brand"]');
-    expect(el.innerText).toBe(Provider.body.name);
   });
 });

@@ -4,8 +4,8 @@ import { check, sliders } from '@manifoldco/icons';
 const PlanButton: FunctionalComponent<{
   checked?: boolean;
   customizable?: boolean;
-  value: string;
-  onChange: (e: Event) => void;
+  value?: string;
+  onChange?: (e: Event) => void;
 }> = (props, children) => (
   <li class="plan-button">
     <label>
@@ -27,44 +27,58 @@ const PlanButton: FunctionalComponent<{
   shadow: true,
 })
 export class ManifoldPlanMenu {
-  @Prop() plans: Catalog.ExpandedPlan[] = [];
+  @Prop() plans?: Catalog.ExpandedPlan[];
   @Prop() selectedPlanId: string;
   @Prop() selectPlan: Function = () => {};
 
-  get customPlans() {
-    return Array.isArray(this.plans)
-      ? this.plans.filter(({ body: { customizable } }) => customizable === true)
-      : [];
-  }
-
-  get fixedPlans() {
-    return Array.isArray(this.plans)
-      ? this.plans.filter(({ body: { customizable } }) => customizable !== true)
-      : [];
-  }
-
-  get allPlans() {
-    return [...this.fixedPlans, ...this.customPlans];
+  sortPlans(plans: Catalog.ExpandedPlan[]) {
+    return [...plans].sort((a, b) => {
+      const aIndex = a.body.customizable ? plans.length : 0;
+      const bIndex = b.body.customizable ? plans.length : 0;
+      return aIndex - bIndex;
+    });
   }
 
   render() {
+    if (this.plans) {
+      const plans = this.sortPlans(this.plans);
+
+      return (
+        <ul class="plan-list">
+          {plans.map(
+            ({
+              id,
+              body: { name, customizable, expanded_features = [] },
+            }: Catalog.ExpandedPlan) => (
+              <PlanButton
+                checked={id === this.selectedPlanId}
+                value={id}
+                onChange={() => this.selectPlan(id)}
+                customizable={customizable}
+              >
+                {name}
+                <div class="cost">
+                  <manifold-plan-cost allFeatures={expanded_features} planId={id} compact={true} />
+                </div>
+              </PlanButton>
+            )
+          )}
+        </ul>
+      );
+    }
+
+    // 💀
+
     return (
       <ul class="plan-list">
-        {this.allPlans.map(
-          ({ id, body: { name, customizable, expanded_features = [] } }: Catalog.ExpandedPlan) => (
-            <PlanButton
-              checked={id === this.selectedPlanId}
-              value={id}
-              onChange={() => this.selectPlan(id)}
-              customizable={customizable}
-            >
-              {name}
-              <div class="cost">
-                <manifold-plan-cost allFeatures={expanded_features} planId={id} compact={true} />
-              </div>
-            </PlanButton>
-          )
-        )}
+        {[1, 2, 3, 4].map((_, i) => (
+          <PlanButton checked={i === 0}>
+            <manifold-skeleton-text>Plan placeholder</manifold-skeleton-text>
+            <div class="cost">
+              <manifold-skeleton-text>Free</manifold-skeleton-text>
+            </div>
+          </PlanButton>
+        ))}
       </ul>
     );
   }

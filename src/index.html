@@ -548,9 +548,16 @@ defineCustomElements(window);</code></pre>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
+                    <td><code>preserveEvent</code></td>
+                    <td><code>preserve-event</code></td>
+                    <td>Should the JS event still fire, even if link-format is passed?</td>
+                    <td><code>boolean</code></td>
+                    <td><code>false</code></td>
+                  </tr>
+                  <tr>
                     <td><code>productLabel</code></td>
                     <td><code>product-label</code></td>
-                    <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
+                    <td></td>
                     <td><code>string</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -562,7 +569,7 @@ defineCustomElements(window);</code></pre>
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-product product-label="iron_worker" />
+                <manifold-product product-label="jawsdb-mysql" />
               </div>
             </div>
           </section>
@@ -1551,12 +1558,12 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
               </p>
               <pre><code class="html language-html">&lt;manifold-data-resource-list&gt;Loading…&lt;/manifold-data-product-name&gt;
 </code></pre>
-              <h2 id="disablingupdates">Disabling Updates</h2>
+              <h2 id="pausingupdates">Pausing updates</h2>
               <p>
                 By default, this component will subscribe to updates from the server. To disable
-                that, pass the <code>disable-update</code> attribute:
+                that, pass the <code>paused</code> attribute:
               </p>
-              <pre><code class="html language-html">&lt;manifold-data-resource-list disable-update&gt;Loading…&lt;/manifold-data-product-name&gt;
+              <pre><code class="html language-html">&lt;manifold-data-resource-list paused /&gt;
 </code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
@@ -1579,18 +1586,18 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>disableUpdate</code></td>
-                    <td><code>disable-update</code></td>
-                    <td>Disable interval?</td>
-                    <td><code>boolean</code></td>
-                    <td><code>false</code></td>
-                  </tr>
-                  <tr>
                     <td><code>linkFormat</code></td>
                     <td><code>link-format</code></td>
                     <td>Link format structure, with <code>:resource</code> placeholder</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>paused</code></td>
+                    <td><code>paused</code></td>
+                    <td>Disable auto-updates?</td>
+                    <td><code>boolean</code></td>
+                    <td><code>false</code></td>
                   </tr>
                   <tr>
                     <td><code>preserveEvent</code></td>
