@@ -18,6 +18,7 @@ Clickable service cards.
 | `name`          | `name`           |             | `string \| undefined`  | `undefined`        |
 | `preserveEvent` | `preserve-event` |             | `boolean`              | `false`            |
 | `productId`     | `product-id`     |             | `string \| undefined`  | `undefined`        |
+| `skeleton`      | `skeleton`       |             | `boolean`              | `false`            |
 
 
 ## Events

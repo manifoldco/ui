@@ -25,6 +25,7 @@ export class ManifoldServiceCard {
   @Prop() logo?: string;
   @Prop() preserveEvent: boolean = false;
   @Prop() productId?: string;
+  @Prop() skeleton: boolean = false;
   @State() isFree: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
   @Watch('productId')
@@ -65,7 +66,7 @@ export class ManifoldServiceCard {
   };
 
   render() {
-    return (
+    return !this.skeleton ? (
       <a
         class="wrapper"
         role="button"
@@ -95,6 +96,21 @@ export class ManifoldServiceCard {
           )}
         </div>
       </a>
+    ) : (
+      // ☠
+      <div class="wrapper">
+        <div class="logo">
+          <manifold-skeleton-img />
+        </div>
+        <h3 class="name">
+          <manifold-skeleton-text>{this.name}</manifold-skeleton-text>
+        </h3>
+        <div class="info">
+          <p class="description">
+            <manifold-skeleton-text>{this.description}</manifold-skeleton-text>
+          </p>
+        </div>
+      </div>
     );
   }
 }

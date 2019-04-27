@@ -1,4 +1,5 @@
-import { Component, Prop, State, Element } from '@stencil/core';
+import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import SkeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
 import {
   categories,
@@ -21,12 +22,16 @@ export class ManifoldMarketplaceGrid {
   @Prop() linkFormat?: string;
   @Prop() preserveEvent: boolean = false;
   @Prop() products?: string[] = [];
-  @Prop() services?: Catalog.Product[] = [];
+  @Prop() services?: Catalog.Product[];
   @State() filter: string | null;
   @State() activeCategory?: string;
   @State() observer: IntersectionObserver;
   @State() scrollToCategory: string | null;
+  @State() skeleton: boolean = true;
   @State() search: string = '';
+  @Watch('services') servicesLoaded(services: Catalog.Product[]) {
+    if (services.length) this.skeleton = false;
+  }
 
   componentWillLoad() {
     if (!this.hideCategories)
@@ -70,9 +75,13 @@ export class ManifoldMarketplaceGrid {
   }
 
   get filteredServices(): Catalog.Product[] {
+    // While services are loading, display skeleton cards
+    if (!this.services || !this.services.length) return SkeletonProducts;
+
     let services: Catalog.Product[] = [];
+
     // If not including, start out with all services
-    if (this.products && !this.products.length && this.services) services = this.services; // eslint-disable-line prefer-destructuring
+    if (this.products && !this.products.length) services = this.services; // eslint-disable-line prefer-destructuring
 
     // Handle includes
     if (Array.isArray(this.products))
@@ -153,6 +162,7 @@ export class ManifoldMarketplaceGrid {
       name={name}
       preserveEvent={this.preserveEvent}
       productId={id}
+      skeleton={this.skeleton}
     />
   );
 

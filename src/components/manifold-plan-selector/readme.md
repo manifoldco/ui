@@ -118,6 +118,7 @@ same order).
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property        | Attribute        | Description                                                                                | Type                   | Default            |
@@ -130,6 +131,7 @@ same order).
 | `regions`       | `regions`        | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
 | `resourceName`  | `resource-name`  | Is this tied to an existing resource?                                                      | `string \| undefined`  | `undefined`        |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

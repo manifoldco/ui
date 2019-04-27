@@ -690,6 +690,7 @@ export namespace Components {
     'name'?: string;
     'preserveEvent': boolean;
     'productId'?: string;
+    'skeleton': boolean;
   }
   interface ManifoldServiceCardAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
@@ -702,7 +703,14 @@ export namespace Components {
     'onManifold-marketplace-click'?: (event: CustomEvent) => void;
     'preserveEvent'?: boolean;
     'productId'?: string;
+    'skeleton'?: boolean;
   }
+
+  interface ManifoldSkeletonImg {}
+  interface ManifoldSkeletonImgAttributes extends StencilHTMLAttributes {}
+
+  interface ManifoldSkeletonText {}
+  interface ManifoldSkeletonTextAttributes extends StencilHTMLAttributes {}
 
   interface ManifoldTemplateCard {
     'category': string;
@@ -800,6 +808,8 @@ declare global {
     'ManifoldResourceStatus': Components.ManifoldResourceStatus;
     'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
+    'ManifoldSkeletonImg': Components.ManifoldSkeletonImg;
+    'ManifoldSkeletonText': Components.ManifoldSkeletonText;
     'ManifoldTemplateCard': Components.ManifoldTemplateCard;
     'ManifoldToast': Components.ManifoldToast;
     'ManifoldToggle': Components.ManifoldToggle;
@@ -836,6 +846,8 @@ declare global {
     'manifold-resource-status': Components.ManifoldResourceStatusAttributes;
     'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
+    'manifold-skeleton-img': Components.ManifoldSkeletonImgAttributes;
+    'manifold-skeleton-text': Components.ManifoldSkeletonTextAttributes;
     'manifold-template-card': Components.ManifoldTemplateCardAttributes;
     'manifold-toast': Components.ManifoldToastAttributes;
     'manifold-toggle': Components.ManifoldToggleAttributes;
@@ -1017,6 +1029,18 @@ declare global {
     new (): HTMLManifoldServiceCardElement;
   };
 
+  interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
+  var HTMLManifoldSkeletonImgElement: {
+    prototype: HTMLManifoldSkeletonImgElement;
+    new (): HTMLManifoldSkeletonImgElement;
+  };
+
+  interface HTMLManifoldSkeletonTextElement extends Components.ManifoldSkeletonText, HTMLStencilElement {}
+  var HTMLManifoldSkeletonTextElement: {
+    prototype: HTMLManifoldSkeletonTextElement;
+    new (): HTMLManifoldSkeletonTextElement;
+  };
+
   interface HTMLManifoldTemplateCardElement extends Components.ManifoldTemplateCard, HTMLStencilElement {}
   var HTMLManifoldTemplateCardElement: {
     prototype: HTMLManifoldTemplateCardElement;
@@ -1071,6 +1095,8 @@ declare global {
     'manifold-resource-status': HTMLManifoldResourceStatusElement
     'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
+    'manifold-skeleton-img': HTMLManifoldSkeletonImgElement
+    'manifold-skeleton-text': HTMLManifoldSkeletonTextElement
     'manifold-template-card': HTMLManifoldTemplateCardElement
     'manifold-toast': HTMLManifoldToastElement
     'manifold-toggle': HTMLManifoldToggleElement
@@ -1107,6 +1133,8 @@ declare global {
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
+    'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
+    'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
     'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;

@@ -1,0 +1,50 @@
+@keyframes flash {
+  to {
+    transform: translateX(60em); /* line width shouldn’t be more than this */
+  }
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: 0.125em;
+  overflow: hidden;
+  color: transparent;
+  font-size: 1em;
+  line-height: 1.4em;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1) 1em,
+      rgba(0, 0, 0, 0) 1em,
+      rgba(0, 0, 0, 0) 1.4em
+    );
+    background-repeat: repeat-y;
+    background-size: 100% 1.4em;
+    border-radius: 0.25em;
+    content: '';
+    pointer-events: none;
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 20em; /* derived from font size */
+    height: 100%;
+    background-image: linear-gradient(45deg, transparent 25%, white, transparent 75%);
+    opacity: 0.4;
+    animation-name: flash;
+    animation-duration: 1.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    content: '';
+    pointer-events: none;
+  }
+}
