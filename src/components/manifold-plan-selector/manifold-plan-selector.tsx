@@ -56,7 +56,14 @@ export class ManifoldPlanSelector {
   }
 
   async fetchResource(resourceName = this.resourceName) {
-    fetch(`${this.connection.gateway}/resources/me/${resourceName}`, withAuth())
+    fetch(
+      `${this.connection.gateway}/resources/me/${resourceName}`,
+      withAuth({
+        headers: {
+          origin: 'anonymous',
+        },
+      })
+    )
       .then(response => response.json())
       .then((resource: Gateway.Resource) => {
         this.resource = resource;
