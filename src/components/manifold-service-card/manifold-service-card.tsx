@@ -30,11 +30,7 @@ export class ManifoldServiceCard {
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
   @Watch('productId')
   watchHandler(newProductId: string) {
-    this.fetchIsFree(newProductId);
-  }
-
-  componentWillLoad() {
-    this.fetchIsFree();
+    if (!this.skeleton) this.fetchIsFree(newProductId);
   }
 
   get href() {
