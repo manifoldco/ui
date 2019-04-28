@@ -18,8 +18,9 @@ export class ManifoldActivePlan {
   @Watch('plans') plansChange(newPlans: Catalog.ExpandedPlan[]) {
     if (this.selectedResource && this.selectedResource.plan && this.selectedResource.plan.id) {
       this.selectPlan(this.selectedResource.plan.id);
+    } else {
+      this.selectPlan(newPlans[0].id);
     }
-    this.selectPlan(newPlans[0].id);
   }
   @Watch('selectedResource') resourceChange(newResource: Gateway.Resource) {
     if (newResource && newResource.plan && newResource.plan.id) {

@@ -1,5 +1,10 @@
-import { FunctionalComponent, HTMLStencilElement } from '@stencil/core';
-import { SubscribeCallback, ConsumerRenderer, PropList } from '../declarations';
+// -> https://github.com/ionic-team/stencil-state-tunnel/blob/master/packages/state-tunnel/src/utils/state-tunnel.tsx
+
+import { FunctionalComponent } from '@stencil/core';
+
+type PropList<T> = Extract<keyof T, string>[] | string;
+type SubscribeCallback<T> = (el: HTMLStencilElement, props: PropList<T>) => () => void;
+type ConsumerRenderer<T> = (subscribe: SubscribeCallback<T>, renderer: Function) => any;
 
 export const createProviderConsumer = <T extends { [key: string]: any }>(
   defaultState: T,
@@ -9,6 +14,8 @@ export const createProviderConsumer = <T extends { [key: string]: any }>(
   let currentState: T = defaultState;
 
   const updateListener = (fields: PropList<T>, listener: HTMLStencilElement) => {
+    if (!listener) return;
+
     if (Array.isArray(fields)) {
       [...fields].forEach(fieldName => {
         (listener as any)[fieldName] = currentState[fieldName];

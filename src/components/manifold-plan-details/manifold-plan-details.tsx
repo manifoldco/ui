@@ -169,7 +169,7 @@ export class ManifoldPlanDetails {
     const { regions } = this.plan.body;
 
     // Don’t show the non-region
-    if (regions.length === 1) return null;
+    if (regions.length === 1 && regions[0] === globalRegion.id) return null;
 
     const name = `${this.plan.body.label}-region`;
     return (

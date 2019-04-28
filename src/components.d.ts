@@ -475,7 +475,7 @@ export namespace Components {
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
-    'productLabel': string;
+    'productLabel'?: string;
     /**
     * Specify region order
     */

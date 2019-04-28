@@ -16,7 +16,7 @@ export class ManifoldPlanSelector {
   /** Should the JS event still fire, even if link-format is passed?  */
   @Prop() preserveEvent: boolean = false;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
-  @Prop() productLabel: string;
+  @Prop() productLabel?: string;
   /** Specify region order */
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
@@ -36,28 +36,39 @@ export class ManifoldPlanSelector {
   }
 
   componentWillLoad() {
-    this.fetchPlans();
+    if (this.productLabel) {
+      this.fetchProductByLabel(this.productLabel);
+    } else if (this.resourceName) {
+      this.fetchResource(this.resourceName);
+    }
   }
 
-  async fetchPlans(productLabel: string = this.productLabel) {
+  async fetchProductByLabel(productLabel: string) {
     if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
-    if (this.resourceName) this.fetchResource(this.resourceName);
-
     const { catalog } = this.connection;
-
     const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth());
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
     this.product = products[0]; // eslint-disable-line prefer-destructuring
+    this.fetchPlans(products[0].id);
+  }
 
-    const plansResp = await fetch(`${catalog}/plans/?product_id=${products[0].id}`, withAuth());
+  async fetchPlans(productId: string) {
+    const { catalog } = this.connection;
+    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
     const plans: Catalog.ExpandedPlan[] = await plansResp.json();
     this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
   }
 
   async fetchResource(resourceName: string) {
-    const { gateway } = this.connection;
+    const { catalog, gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
-    this.resource = await response.json();
+    const resource: Gateway.Resource = await response.json();
+    this.resource = resource;
+    if (!resource.product) return;
+    const productResp = await fetch(`${catalog}/products/${resource.product.id}`, withAuth());
+    const product: Catalog.Product = await productResp.json();
+    this.product = product;
+    this.fetchPlans(product.id);
   }
 
   parseRegions(regions: string) {
