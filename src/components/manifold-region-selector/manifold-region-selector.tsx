@@ -1,4 +1,4 @@
-import { Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
+import { Component, Prop, State, Event, Element, EventEmitter, Watch } from '@stencil/core';
 import { Option } from 'types/Select';
 
 import Tunnel from '../../data/connection';
@@ -18,6 +18,10 @@ export class ManifoldRegionSelector {
   @State() globalRegion: Catalog.Region = globalRegion;
   @State() regions?: Catalog.Region[];
   @Event() change: EventEmitter;
+  @Watch('allowedRegions') regionChange() {
+    // Trigger update if allowed regions changes
+    if (this.regions) this.regions = this.sortRegions(this.regions, this.preferredRegions);
+  }
 
   async componentWillLoad() {
     const response = await fetch(`${this.connection.catalog}/regions`, withAuth());

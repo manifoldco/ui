@@ -225,7 +225,7 @@ export class ManifoldPlanDetails {
 
       return (
         <section class="scroll" itemscope itemtype="https://schema.org/IndividualProduct">
-          <div class="wrapper">
+          <div class="card">
             <header class="header">
               <div class="logo">
                 <img src={logo_url} alt={productName} itemprop="logo" />
@@ -266,7 +266,7 @@ export class ManifoldPlanDetails {
     // 💀
     return (
       <section class="scroll">
-        <div class="wrapper">
+        <div class="card">
           <header class="header">
             <div class="logo">
               <manifold-skeleton-img />
