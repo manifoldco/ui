@@ -39,6 +39,10 @@ export class ManifoldActivePlan {
   }
 
   render() {
+    const resourceRegion =
+      (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
+      undefined;
+
     return [
       <manifold-plan-menu
         plans={this.plans}
@@ -46,6 +50,7 @@ export class ManifoldActivePlan {
         selectPlan={this.selectPlan}
       />,
       <manifold-plan-details
+        resourceRegion={resourceRegion}
         hideCta={this.hideCta}
         isExistingResource={this.isExistingResource}
         linkFormat={this.linkFormat}

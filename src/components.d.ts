@@ -459,6 +459,7 @@ export namespace Components {
     'product'?: Catalog.Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
+    'resourceRegion'?: string;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
@@ -472,6 +473,7 @@ export namespace Components {
     'product'?: Catalog.Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
+    'resourceRegion'?: string;
   }
 
   interface ManifoldPlanMenu {

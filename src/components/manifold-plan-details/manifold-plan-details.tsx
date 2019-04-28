@@ -28,6 +28,7 @@ export class ManifoldPlanDetails {
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
   @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
+  @Prop() resourceRegion?: string;
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
   @State() features: Gateway.FeatureMap = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
@@ -178,7 +179,7 @@ export class ManifoldPlanDetails {
           Region
         </label>
         <manifold-region-selector
-          allowedRegions={this.plan.body.regions}
+          allowedRegions={this.resourceRegion ? [this.resourceRegion] : this.plan.body.regions}
           ariaLabel={name}
           name={name}
           onChange={e => this.handleChangeRegion(e)}
