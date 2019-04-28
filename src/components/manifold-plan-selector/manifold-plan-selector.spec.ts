@@ -1,6 +1,6 @@
 import { ManifoldPlanSelector } from './manifold-plan-selector';
 
-describe('manifold-plan-selector', () => {
+describe('<manifold-plan-selector>', () => {
   it('fetches product by label on load, if given', () => {
     const productLabel = 'test-label';
 

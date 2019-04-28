@@ -1,6 +1,6 @@
 import { ManifoldResourceStatus } from './manifold-resource-status';
 
-describe('manifold-resource-status', () => {
+describe('<manifold-resource-status>', () => {
   it('fetches resource by name on load', () => {
     const resourceName = 'my-resource';
 

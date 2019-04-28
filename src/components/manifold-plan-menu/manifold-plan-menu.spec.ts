@@ -1,7 +1,7 @@
 import { ManifoldPlanMenu } from './manifold-plan-menu';
 import { ExpandedPlan } from '../../spec/mock/catalog';
 
-describe('manifold-plan-menu', () => {
+describe('<manifold-plan-menu>', () => {
   it('sorts customizable plans to the end', () => {
     const planMenu = new ManifoldPlanMenu();
 

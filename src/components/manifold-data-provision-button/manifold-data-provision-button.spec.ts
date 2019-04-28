@@ -1,6 +1,6 @@
 import { ManifoldDataProvisionButton } from './manifold-data-provision-button';
 
-describe('manifold-resource-status', () => {
+describe('<manifold-data-provision-button>', () => {
   it('fetches product id on load', () => {
     const productLabel = 'test-product';
 
@@ -16,7 +16,7 @@ describe('manifold-resource-status', () => {
 
     const provisionButton = new ManifoldDataProvisionButton();
     provisionButton.fetchProductId = jest.fn();
-    provisionButton.resourceName = 'old-product';
+    provisionButton.productLabel = 'old-product';
     provisionButton.productChange(newProduct);
     expect(provisionButton.fetchProductId).toHaveBeenCalledWith(newProduct);
   });

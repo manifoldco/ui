@@ -1,6 +1,6 @@
 import { ManifoldDataManageButton } from './manifold-data-manage-button';
 
-describe('manifold-data-manage-button', () => {
+describe('<manifold-data-manage-button>', () => {
   it('fetches resource by name on load', () => {
     const resourceName = 'my-resource';
 

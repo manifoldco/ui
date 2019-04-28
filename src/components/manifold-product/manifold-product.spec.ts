@@ -1,6 +1,6 @@
 import { ManifoldProduct } from './manifold-product';
 
-describe('manifold-product', () => {
+describe('<manifold-product>', () => {
   it('fetches product by label on load', () => {
     const productLabel = 'product-label';
 

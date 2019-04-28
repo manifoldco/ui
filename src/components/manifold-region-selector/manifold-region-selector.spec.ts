@@ -1,7 +1,7 @@
 import { ManifoldRegionSelector } from './manifold-region-selector';
 import { Regions } from '../../spec/mock/catalog';
 
-describe('manifold-region-selector', () => {
+describe('<manifold-region-selector>', () => {
   it('filters regions and returns them in region order', () => {
     const regionSelector = new ManifoldRegionSelector();
     regionSelector.regions = Regions;

@@ -40,7 +40,7 @@ const categoriesWithTemplates: string[] = testCategories.concat(
   templateCategories.filter(category => !testCategories.includes(category))
 );
 
-describe('manifold-marketplace-grid', () => {
+describe('<manifold-marketplace-grid>', () => {
   it('renders all services', async () => {
     const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
     await page.$eval(
