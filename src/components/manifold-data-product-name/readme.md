@@ -13,16 +13,6 @@ component.
 <!-- Piio -->
 ```
 
-## Loading State
-
-This data component supports an optional loading state by specifying a child slot:
-
-```html
-<manifold-data-product-name product-label="logdna">
-  Loading…
-</manifold-data-product-name>
-```
-
 The loading slot supports text as well as HTML elements.
 
 ## Resource Name

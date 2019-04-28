@@ -78,7 +78,7 @@ export class ManifoldDataResourceList {
 
   render() {
     if (!Array.isArray(this.resources)) {
-      return <slot />;
+      return null;
     }
 
     return (

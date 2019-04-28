@@ -21,12 +21,12 @@ export class ManifoldPlanSelector {
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceName?: string;
-  @State() product: Catalog.Product;
-  @State() plans: Catalog.Plan[];
+  @State() product?: Catalog.Product;
+  @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
   @Watch('productLabel') productChange(newProduct: string) {
-    this.fetchPlans(newProduct);
+    this.fetchProductByLabel(newProduct);
   }
   @Watch('resourceName') resourceChange(newResource: string) {
     this.fetchResource(newResource);
@@ -44,6 +44,7 @@ export class ManifoldPlanSelector {
   }
 
   async fetchProductByLabel(productLabel: string) {
+    this.product = undefined;
     if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
     const { catalog } = this.connection;
     const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth());
@@ -53,6 +54,7 @@ export class ManifoldPlanSelector {
   }
 
   async fetchPlans(productId: string) {
+    this.plans = undefined;
     const { catalog } = this.connection;
     const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
     const plans: Catalog.ExpandedPlan[] = await plansResp.json();
@@ -60,6 +62,8 @@ export class ManifoldPlanSelector {
   }
 
   async fetchResource(resourceName: string) {
+    this.resource = undefined;
+    this.product = undefined;
     const { catalog, gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
     const resource: Gateway.Resource = await response.json();

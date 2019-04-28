@@ -17,6 +17,7 @@
 | `product`            | --                     |             | `Product \| undefined`           | `undefined` |
 | `regions`            | --                     |             | `string[] \| undefined`          | `undefined` |
 | `resourceFeatures`   | --                     |             | `ResolvedFeature[] \| undefined` | `undefined` |
+| `resourceRegion`     | `resource-region`      |             | `string \| undefined`            | `undefined` |
 
 
 ## Events

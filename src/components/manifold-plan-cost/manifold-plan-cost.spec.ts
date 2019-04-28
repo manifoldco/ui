@@ -22,7 +22,7 @@ const measuredPaid = {
   value: NumberFeatureMeasurableValueTiered,
 };
 
-describe('manifold-plan-cost', () => {
+describe('<manifold-plan-cost>', () => {
   it('measuredFeatures filters out non-measurable features', () => {
     const planCost = new ManifoldPlanCost();
 

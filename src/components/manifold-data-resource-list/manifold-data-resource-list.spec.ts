@@ -1,7 +1,7 @@
 import { Resource } from '../../spec/mock/marketplace';
 import { ManifoldDataResourceList } from './manifold-data-resource-list';
 
-describe('manifold-data-resource-list', () => {
+describe('<manifold-data-resource-list>', () => {
   it('filters user-only resources', () => {
     const resourceList = new ManifoldDataResourceList();
 

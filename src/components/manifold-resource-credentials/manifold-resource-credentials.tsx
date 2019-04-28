@@ -20,10 +20,11 @@ export class ManifoldResourceCredentials {
   @State() resource: Gateway.Resource;
   @Watch('resourceName') resourceChange(newName: string) {
     this.fetchResource(newName);
+    this.credentials = undefined;
   }
 
   componentWillLoad() {
-    this.fetchResource();
+    if (this.resourceName) this.fetchResource(this.resourceName);
   }
 
   get lines() {
@@ -40,22 +41,23 @@ export class ManifoldResourceCredentials {
     this.credentials = undefined;
   };
 
-  fetchCredentials = () => {
+  fetchCredentials = async () => {
     if (!this.resource) return;
 
-    fetch(`${this.connection.marketplace}/credentials/?resource_id=${this.resource.id}`, withAuth())
-      .then(response => response.json())
-      .then((credentials: Marketplace.Credential[]) => {
-        this.credentials = credentials;
-      });
+    const { marketplace } = this.connection;
+    const response = await fetch(
+      `${marketplace}/credentials/?resource_id=${this.resource.id}`,
+      withAuth()
+    );
+    const credentials: Marketplace.Credential[] = await response.json();
+    this.credentials = credentials;
   };
 
-  fetchResource = (resourceName: string = this.resourceName) => {
-    fetch(`${this.connection.gateway}/resources/me/${resourceName}`, withAuth())
-      .then(response => response.json())
-      .then((resource: Gateway.Resource) => {
-        this.resource = resource;
-      });
+  fetchResource = async (resourceName: string) => {
+    const { gateway } = this.connection;
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
+    const resource: Gateway.Resource = await response.json();
+    this.resource = resource;
   };
 
   render() {

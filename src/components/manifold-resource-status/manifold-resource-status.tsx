@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element } from '@stencil/core';
+import { Component, Prop, State, Element, Watch } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
 
 import Tunnel from '../../data/connection';
@@ -26,10 +26,17 @@ export class ManifoldResourceStatus {
   @Prop() resourceName?: string;
   @State() loading: boolean = false;
   @State() resource: Gateway.Resource;
+  @Watch('resourceName') resourceChange(newResource: string) {
+    this.fetchResourceByName(newResource);
+  }
 
   componentWillLoad() {
+    if (this.resourceName) this.fetchResourceByName(this.resourceName);
+  }
+
+  fetchResourceByName(resourceName: string) {
     this.loading = true;
-    fetch(`${this.connection.gateway}/resources/me/${this.resourceName}`, withAuth())
+    fetch(`${this.connection.gateway}/resources/me/${resourceName}`, withAuth())
       .then(response => response.json())
       .then((resource: Gateway.Resource) => {
         this.loading = false;

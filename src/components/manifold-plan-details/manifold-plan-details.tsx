@@ -10,7 +10,7 @@ interface EventDetail {
   planLabel: string;
   planName: string;
   productLabel: string | undefined;
-  features: UserFeatures;
+  features: Gateway.FeatureMap;
   regionId: string;
 }
 
@@ -28,16 +28,24 @@ export class ManifoldPlanDetails {
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
   @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
+  @Prop() resourceRegion?: string;
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
-  @State() features: UserFeatures = {};
+  @State() features: Gateway.FeatureMap = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-click', bubbles: true }) planClick: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-load', bubbles: true }) planLoad: EventEmitter;
-  @Watch('plan') onUpdate(newPlan: Catalog.ExpandedPlan) {
-    const features = this.initialFeatures(newPlan);
-    this.features = features; // If plan changed, we want to reset all user-selected values
+  @Watch('plan') planChange(
+    newPlan: Catalog.ExpandedPlan,
+    oldPlan: Catalog.ExpandedPlan | undefined
+  ) {
+    let features = this.features; // eslint-disable-line prefer-destructuring
 
-    this.updateRegionId(newPlan);
+    // If plan changed, only reset features & region if user changed it (i.e there would be an oldPlan)
+    if (!this.resourceFeatures || oldPlan) {
+      features = this.setFeaturesFromPlan(newPlan);
+      this.features = features;
+      this.updateRegionFromPlan(newPlan);
+    }
 
     const detail: EventDetail = {
       planId: newPlan.id,
@@ -47,28 +55,33 @@ export class ManifoldPlanDetails {
       features: this.customFeatures(features), // We need all features for plan cost, but only need to expose the custom ones
       regionId: this.regionId,
     };
-    this.planUpdate.emit(detail);
+
+    if (!oldPlan) {
+      this.planLoad.emit(detail);
+    } else {
+      this.planUpdate.emit(detail);
+    }
   }
-  @Watch('resourceFeatures') onUpdateResource() {
-    this.features = this.initialFeatures();
+  @Watch('resourceFeatures') resourceFeaturesChange(newFeatures: Gateway.ResolvedFeature[]) {
+    this.features = this.setFeaturesFromResource(newFeatures);
+  }
+  @Watch('resourceRegion') resourceRegionChange(newRegion: string) {
+    this.regionId = newRegion;
   }
 
   componentWillLoad() {
-    const features = this.initialFeatures();
-    this.features = features;
+    if (this.resourceRegion) {
+      this.regionId = this.resourceRegion;
+    }
 
-    if (this.plan && this.product) {
-      this.updateRegionId(this.plan);
+    if (this.resourceFeatures) {
+      this.features = this.setFeaturesFromResource(this.resourceFeatures);
+    } else if (this.plan) {
+      this.features = this.setFeaturesFromPlan(this.plan);
+    }
 
-      const detail: EventDetail = {
-        planId: this.plan.id,
-        planLabel: this.plan.body.label,
-        planName: this.plan.body.name,
-        productLabel: this.product.body.label,
-        features: this.customFeatures(features),
-        regionId: this.regionId,
-      };
-      this.planLoad.emit(detail);
+    if (this.plan) {
+      this.updateRegionFromPlan(this.plan);
     }
   }
 
@@ -104,23 +117,24 @@ export class ManifoldPlanDetails {
     }
   }
 
-  initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
-    if (Array.isArray(this.resourceFeatures)) {
-      return this.resourceFeatures.reduce(
-        (features, { label, value }) => ({
-          ...features,
-          [label]: value.value,
-        }),
-        {}
-      );
+  setFeaturesFromPlan(plan: Catalog.ExpandedPlan) {
+    if (plan.body.expanded_features) {
+      return { ...initialFeatures(plan.body.expanded_features) };
     }
-    if (!plan || !plan.body.expanded_features) {
-      return {};
-    }
-    return { ...initialFeatures(plan.body.expanded_features) };
+    return {};
   }
 
-  customFeatures(features: UserFeatures): UserFeatures {
+  setFeaturesFromResource(features: Gateway.ResolvedFeature[]) {
+    return features.reduce(
+      (map, { label, value }) => ({
+        ...map,
+        [label]: value.value,
+      }),
+      {}
+    );
+  }
+
+  customFeatures(features: Gateway.FeatureMap): Gateway.FeatureMap {
     if (!this.plan || !this.plan.body.expanded_features) return features;
     const { expanded_features } = this.plan.body;
     const customFeatures = { ...features };
@@ -149,7 +163,23 @@ export class ManifoldPlanDetails {
   get featureList() {
     if (!this.plan) return null;
 
-    const { expanded_features = [] } = this.plan.body;
+    let { expanded_features = [] } = this.plan.body;
+
+    // TODO: refactor this.
+    // these children rely on plan data, and it’s near-impossible to provide them with default values.
+    // expose default values higher up so that the resource can overwrite them.
+    expanded_features = expanded_features.map(feature => {
+      if (!this.resourceFeatures) return feature;
+      const resourceFeature = this.resourceFeatures.find(rf => rf.label === feature.label);
+      if (!resourceFeature) return feature;
+      const value: Catalog.FeatureValueDetails = {
+        ...feature.value,
+        name: `${resourceFeature.value.displayValue}`,
+        label: `${resourceFeature.value.value}`,
+      };
+      return { ...feature, value };
+    });
+
     return (
       <dl class="features">
         {expanded_features.map(feature => [
@@ -165,20 +195,26 @@ export class ManifoldPlanDetails {
   }
 
   get regionSelector() {
-    if (!this.plan) return null;
-    const { regions } = this.plan.body;
+    let regions: string[] = [];
 
-    // Don’t show the non-region
+    if (this.resourceRegion) {
+      regions = [this.resourceRegion];
+    } else if (this.plan) {
+      regions = this.plan.body.regions; // eslint-disable-line prefer-destructuring
+    }
+
+    // Hide the non-region
     if (regions.length === 1 && regions[0] === globalRegion.id) return null;
 
-    const name = `${this.plan.body.label}-region`;
+    const name = 'manifold-region-selector';
+
     return (
       <div class="region">
         <label class="region-label" id={name}>
           Region
         </label>
         <manifold-region-selector
-          allowedRegions={this.plan.body.regions}
+          allowedRegions={regions}
           ariaLabel={name}
           name={name}
           onChange={e => this.handleChangeRegion(e)}
@@ -205,7 +241,7 @@ export class ManifoldPlanDetails {
     }
   };
 
-  updateRegionId = (newPlan: Catalog.ExpandedPlan) => {
+  updateRegionFromPlan = (newPlan: Catalog.ExpandedPlan) => {
     // If region already set and changing plans, keep it
     if (!newPlan.body.regions.includes(this.regionId)) {
       // If user has specified regions, try and find the first
@@ -224,7 +260,7 @@ export class ManifoldPlanDetails {
 
       return (
         <section class="scroll" itemscope itemtype="https://schema.org/IndividualProduct">
-          <div class="wrapper">
+          <div class="card">
             <header class="header">
               <div class="logo">
                 <img src={logo_url} alt={productName} itemprop="logo" />
@@ -265,7 +301,7 @@ export class ManifoldPlanDetails {
     // 💀
     return (
       <section class="scroll">
-        <div class="wrapper">
+        <div class="card">
           <header class="header">
             <div class="logo">
               <manifold-skeleton-img />
