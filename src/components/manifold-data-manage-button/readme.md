@@ -24,8 +24,8 @@ document.addEventListener('manifold-manageButton-invalid', ({ detail }) => conso
 | Name                            |             Returns             | Description                                                                                                                 |
 | :------------------------------ | :-----------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
 | `manifold-manageButton-click`   |            `planId`             | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-manageButton-success` | `message`, `planId`, `features` | Successful provision. Returns name, along with a resource ID                                                                |
-| `manifold-manageButton-error`   | `message`, `planId`, `features` | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-manageButton-success` | `message`, `planId`, `features` | Successful change. Returns plan name.                                                                                       |
+| `manifold-manageButton-error`   | `message`, `planId`, `features` | Erred change, along with information on what went wrong.                                                                    |
 
 <!-- Auto Generated Below -->
 

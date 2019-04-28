@@ -26,15 +26,6 @@ To navigate using a traditional `<a>` tag, specify a `link-format` attribute, us
 Note that this will disable the custom events unless `preserve-event` is
 passed as well.
 
-## Loading State
-
-This data component supports an optional loading state by specifying a child
-slot:
-
-```html
-<manifold-data-resource-list>Loading…</manifold-data-product-name>
-```
-
 ## Pausing updates
 
 By default, this component will subscribe to updates from the server. To

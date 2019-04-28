@@ -19,16 +19,6 @@ can override this by specifying one of your own:
 <manifold-data-product-logo product-label="iron_cache" alt="My alternate text" />
 ```
 
-## Loading State
-
-This data component supports an optional loading state by specifying a child slot:
-
-```html
-<manifold-data-product-logo product-label="scout">
-  <img src="placeholder.svg" alt="Loading…" />
-</manifold-data-product-logo>
-```
-
 ## Resource Name
 
 You can look up a logo by resource name by passing `resource-name`:

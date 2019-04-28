@@ -28,7 +28,7 @@ export class ManifoldDataProductLogo {
   }
 
   fetchProduct = async (productLabel: string) => {
-    this.product = undefined; // Enable loading state on change
+    this.product = undefined;
     const { catalog } = this.connection;
     const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth());
     const products: Catalog.Product[] = await response.json();
@@ -36,7 +36,7 @@ export class ManifoldDataProductLogo {
   };
 
   fetchResource = async (resourceName: string) => {
-    this.product = undefined; // Enable loading state on change
+    this.product = undefined;
     const { catalog, gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
     const resource: Gateway.Resource = await response.json();
@@ -49,9 +49,7 @@ export class ManifoldDataProductLogo {
   render() {
     return this.product ? (
       <img src={this.product.body.logo_url} alt={this.alt || this.product.body.name} />
-    ) : (
-      <slot />
-    );
+    ) : null;
   }
 }
 

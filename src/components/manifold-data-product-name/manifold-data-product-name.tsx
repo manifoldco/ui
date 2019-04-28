@@ -26,7 +26,7 @@ export class ManifoldDataProductName {
   }
 
   fetchProduct = async (productLabel: string) => {
-    this.productName = undefined; // Enable loading state on change
+    this.productName = undefined;
     const { catalog } = this.connection;
     const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth());
     const products: Catalog.Product[] = await response.json();
@@ -34,7 +34,7 @@ export class ManifoldDataProductName {
   };
 
   fetchResource = async (resourceName: string) => {
-    this.productName = undefined; // Enable loading state on change
+    this.productName = undefined;
     const { gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
     const resource: Gateway.Resource = await response.json();
@@ -42,7 +42,7 @@ export class ManifoldDataProductName {
   };
 
   render() {
-    return this.productName || <slot />;
+    return this.productName || null;
   }
 }
 

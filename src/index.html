@@ -1130,14 +1130,6 @@ defineCustomElements(window);</code></pre>
               <pre><code class="html language-html">&lt;manifold-data-product-name product-label="piio" /&gt;
 &lt;!-- Piio --&gt;
 </code></pre>
-              <h2 id="loadingstate">Loading State</h2>
-              <p>
-                This data component supports an optional loading state by specifying a child slot:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-data-product-name product-label="logdna"&gt;
-  Loading…
-&lt;/manifold-data-product-name&gt;
-</code></pre>
               <p>The loading slot supports text as well as HTML elements.</p>
               <h2 id="resourcename">Resource Name</h2>
               <p>You can look up a logo by resource name by passing <code>resource-name</code>:</p>
@@ -1211,14 +1203,6 @@ defineCustomElements(window);</code></pre>
                 product name. But you can override this by specifying one of your own:
               </p>
               <pre><code class="html language-html">&lt;manifold-data-product-logo product-label="iron_cache" alt="My alternate text" /&gt;
-</code></pre>
-              <h2 id="loadingstate">Loading State</h2>
-              <p>
-                This data component supports an optional loading state by specifying a child slot:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-data-product-logo product-label="scout"&gt;
-  &lt;img src="placeholder.svg" alt="Loading…" /&gt;
-&lt;/manifold-data-product-logo&gt;
 </code></pre>
               <h2 id="resourcename">Resource Name</h2>
               <p>You can look up a logo by resource name by passing <code>resource-name</code>:</p>
@@ -1556,12 +1540,6 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                 Note that this will disable the custom events unless <code>preserve-event</code> is
                 passed as well.
               </p>
-              <h2 id="loadingstate">Loading State</h2>
-              <p>
-                This data component supports an optional loading state by specifying a child slot:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-data-resource-list&gt;Loading…&lt;/manifold-data-product-name&gt;
-</code></pre>
               <h2 id="pausingupdates">Pausing updates</h2>
               <p>
                 By default, this component will subscribe to updates from the server. To disable
@@ -1685,9 +1663,7 @@ document.addEventListener('manifold-manageButton-invalid', ({ detail }) =&gt; co
                     <td style="text-align:center;">
                       <code>message</code>, <code>planId</code>, <code>features</code>
                     </td>
-                    <td style="text-align:left;">
-                      Successful provision. Returns name, along with a resource ID
-                    </td>
+                    <td style="text-align:left;">Successful change. Returns plan name.</td>
                   </tr>
                   <tr>
                     <td style="text-align:left;"><code>manifold-manageButton-error</code></td>
@@ -1695,7 +1671,7 @@ document.addEventListener('manifold-manageButton-invalid', ({ detail }) =&gt; co
                       <code>message</code>, <code>planId</code>, <code>features</code>
                     </td>
                     <td style="text-align:left;">
-                      Erred provision, along with information on what went wrong.
+                      Erred change, along with information on what went wrong.
                     </td>
                   </tr>
                 </tbody>
