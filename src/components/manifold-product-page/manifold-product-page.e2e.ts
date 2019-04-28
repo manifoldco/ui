@@ -1,14 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Product } from '../../spec/mock/catalog';
+import { Product, Provider } from '../../spec/mock/catalog';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
 describe('<manifold-product-page>', () => {
   it('formats links correctly', async () => {
-    // Set properties and wait
-    const page = await newE2EPage({
-      html: '<manifold-product-page />',
-    });
+    const page = await newE2EPage({ html: '<manifold-product-page />' });
     await page.$eval('manifold-product-page', (elm: any) => {
       elm.product = { body: { label: 'iron_cache' } };
       elm.linkFormat = '/product/:product';
@@ -21,16 +18,13 @@ describe('<manifold-product-page>', () => {
 
   it('CTA is shown by default', async () => {
     const page = await newE2EPage({ html: `<manifold-product-page />` });
-
-    const props = { product: Product };
     await page.$eval(
       'manifold-product-page',
-      (elm: any, { product }: any) => {
-        elm.product = product;
+      (elm: any, props: any) => {
+        elm.product = props.product;
       },
-      props
+      { product: Product }
     );
-
     await page.waitForChanges();
 
     const button = await page.find('manifold-product-page >>> manifold-link-button');
@@ -38,23 +32,48 @@ describe('<manifold-product-page>', () => {
   });
 
   it('CTA button hides with prop', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-product-page />`,
-    });
-
-    const props = { product: Product };
+    const page = await newE2EPage({ html: `<manifold-product-page />` });
     await page.$eval(
       'manifold-product-page',
-      (elm: any, { product }: any) => {
-        elm.product = product;
+      (elm: any, props: any) => {
+        elm.product = props.product;
         elm.hideCta = true;
       },
-      props
+      { product: Product }
     );
-
     await page.waitForChanges();
 
     const button = await page.find('manifold-product-page >>> manifold-link-button');
     expect(button).toBeNull();
+  });
+
+  it('displays the product/service name', async () => {
+    const page = await newE2EPage({ html: `<manifold-product-page />` });
+    await page.$eval(
+      'manifold-product-page',
+      (elm: any, props: any) => {
+        elm.product = props.product;
+      },
+      { product: Product }
+    );
+    await page.waitForChanges();
+
+    const el = await page.find('manifold-product-page >>> [itemprop="name"]');
+    expect(el.innerText).toBe(Product.body.name);
+  });
+
+  it('displays the product/service logo', async () => {
+    const page = await newE2EPage({ html: `<manifold-product-page />` });
+    await page.$eval(
+      'manifold-product-page',
+      (elm: any, props: any) => {
+        elm.product = props.product;
+      },
+      { product: Product }
+    );
+    await page.waitForChanges();
+
+    const el = await page.find('manifold-product-page >>> [itemprop="logo"]');
+    expect(el.getAttribute('src')).toBe(Product.body.logo_url);
   });
 });

@@ -22,9 +22,9 @@ export namespace Components {
     'hideCta'?: boolean;
     'isExistingResource'?: boolean;
     'linkFormat'?: string;
-    'plans': Catalog.ExpandedPlan[];
+    'plans'?: Catalog.ExpandedPlan[];
     'preserveEvent': boolean;
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
@@ -34,7 +34,7 @@ export namespace Components {
     'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
     'preserveEvent'?: boolean;
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
@@ -78,13 +78,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Product ID
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
   interface ManifoldDataProductLogoAttributes extends StencilHTMLAttributes {
     /**
@@ -96,13 +96,13 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Product ID
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
 
   interface ManifoldDataProductName {
@@ -111,13 +111,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Product ID (e.g. `"jawsdb-mysql"`)
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
   interface ManifoldDataProductNameAttributes extends StencilHTMLAttributes {
     /**
@@ -125,13 +125,13 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Product ID (e.g. `"jawsdb-mysql"`)
-    */
-    'productId'?: string;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
   }
 
   interface ManifoldDataProvisionButton {
@@ -185,13 +185,13 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Disable interval?
-    */
-    'disableUpdate': boolean;
-    /**
     * Link format structure, with `:resource` placeholder
     */
     'linkFormat'?: string;
+    /**
+    * Disable auto-updates?
+    */
+    'paused': boolean;
     /**
     * Should the JS event still fire, even if link-format is passed?
     */
@@ -203,29 +203,18 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Disable interval?
-    */
-    'disableUpdate'?: boolean;
-    /**
     * Link format structure, with `:resource` placeholder
     */
     'linkFormat'?: string;
     'onManifold-resourceList-click'?: (event: CustomEvent) => void;
     /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
+    /**
     * Should the JS event still fire, even if link-format is passed?
     */
     'preserveEvent'?: boolean;
-  }
-
-  interface ManifoldFeaturedService {
-    'logo': string;
-    'name': string;
-    'productGradient': string;
-  }
-  interface ManifoldFeaturedServiceAttributes extends StencilHTMLAttributes {
-    'logo'?: string;
-    'name'?: string;
-    'productGradient'?: string;
   }
 
   interface ManifoldIcon {
@@ -264,7 +253,7 @@ export namespace Components {
   }
 
   interface ManifoldImageGallery {
-    'images': string[];
+    'images'?: string[];
     'title': string;
   }
   interface ManifoldImageGalleryAttributes extends StencilHTMLAttributes {
@@ -456,9 +445,9 @@ export namespace Components {
   }
 
   interface ManifoldPlanMenu {
-    'plans': Catalog.ExpandedPlan[];
+    'plans'?: Catalog.ExpandedPlan[];
     'selectPlan': Function;
-    'selectedPlanId': string;
+    'selectedPlanId'?: string;
   }
   interface ManifoldPlanMenuAttributes extends StencilHTMLAttributes {
     'plans'?: Catalog.ExpandedPlan[];
@@ -486,7 +475,7 @@ export namespace Components {
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
-    'productLabel': string;
+    'productLabel'?: string;
     /**
     * Specify region order
     */
@@ -528,23 +517,25 @@ export namespace Components {
   }
 
   interface ManifoldProductDetails {
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
   }
   interface ManifoldProductDetailsAttributes extends StencilHTMLAttributes {
-    'product'?: Catalog.ExpandedProduct;
+    'product'?: Catalog.Product;
   }
 
   interface ManifoldProductPage {
     'hideCta'?: boolean;
     'linkFormat'?: string;
-    'product'?: Catalog.ExpandedProduct;
+    'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'provider'?: Catalog.Provider;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
     'hideCta'?: boolean;
     'linkFormat'?: string;
     'onManifold-productCTA-click'?: (event: CustomEvent) => void;
-    'product'?: Catalog.ExpandedProduct;
+    'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'provider'?: Catalog.Provider;
   }
 
@@ -562,8 +553,9 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    * Should the JS event still fire, even if link-format is passed?
     */
+    'preserveEvent': boolean;
     'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
@@ -580,8 +572,9 @@ export namespace Components {
     */
     'linkFormat'?: string;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    * Should the JS event still fire, even if link-format is passed?
     */
+    'preserveEvent'?: boolean;
     'productLabel'?: string;
   }
 
@@ -690,6 +683,7 @@ export namespace Components {
     'name'?: string;
     'preserveEvent': boolean;
     'productId'?: string;
+    'skeleton': boolean;
   }
   interface ManifoldServiceCardAttributes extends StencilHTMLAttributes {
     'connection'?: Connection;
@@ -702,7 +696,14 @@ export namespace Components {
     'onManifold-marketplace-click'?: (event: CustomEvent) => void;
     'preserveEvent'?: boolean;
     'productId'?: string;
+    'skeleton'?: boolean;
   }
+
+  interface ManifoldSkeletonImg {}
+  interface ManifoldSkeletonImgAttributes extends StencilHTMLAttributes {}
+
+  interface ManifoldSkeletonText {}
+  interface ManifoldSkeletonTextAttributes extends StencilHTMLAttributes {}
 
   interface ManifoldTemplateCard {
     'category': string;
@@ -779,7 +780,6 @@ declare global {
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
     'ManifoldDataResourceList': Components.ManifoldDataResourceList;
-    'ManifoldFeaturedService': Components.ManifoldFeaturedService;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
     'ManifoldLazyImage': Components.ManifoldLazyImage;
@@ -800,6 +800,8 @@ declare global {
     'ManifoldResourceStatus': Components.ManifoldResourceStatus;
     'ManifoldSelect': Components.ManifoldSelect;
     'ManifoldServiceCard': Components.ManifoldServiceCard;
+    'ManifoldSkeletonImg': Components.ManifoldSkeletonImg;
+    'ManifoldSkeletonText': Components.ManifoldSkeletonText;
     'ManifoldTemplateCard': Components.ManifoldTemplateCard;
     'ManifoldToast': Components.ManifoldToast;
     'ManifoldToggle': Components.ManifoldToggle;
@@ -815,7 +817,6 @@ declare global {
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
     'manifold-data-resource-list': Components.ManifoldDataResourceListAttributes;
-    'manifold-featured-service': Components.ManifoldFeaturedServiceAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
     'manifold-lazy-image': Components.ManifoldLazyImageAttributes;
@@ -836,6 +837,8 @@ declare global {
     'manifold-resource-status': Components.ManifoldResourceStatusAttributes;
     'manifold-select': Components.ManifoldSelectAttributes;
     'manifold-service-card': Components.ManifoldServiceCardAttributes;
+    'manifold-skeleton-img': Components.ManifoldSkeletonImgAttributes;
+    'manifold-skeleton-text': Components.ManifoldSkeletonTextAttributes;
     'manifold-template-card': Components.ManifoldTemplateCardAttributes;
     'manifold-toast': Components.ManifoldToastAttributes;
     'manifold-toggle': Components.ManifoldToggleAttributes;
@@ -889,12 +892,6 @@ declare global {
   var HTMLManifoldDataResourceListElement: {
     prototype: HTMLManifoldDataResourceListElement;
     new (): HTMLManifoldDataResourceListElement;
-  };
-
-  interface HTMLManifoldFeaturedServiceElement extends Components.ManifoldFeaturedService, HTMLStencilElement {}
-  var HTMLManifoldFeaturedServiceElement: {
-    prototype: HTMLManifoldFeaturedServiceElement;
-    new (): HTMLManifoldFeaturedServiceElement;
   };
 
   interface HTMLManifoldIconElement extends Components.ManifoldIcon, HTMLStencilElement {}
@@ -1017,6 +1014,18 @@ declare global {
     new (): HTMLManifoldServiceCardElement;
   };
 
+  interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
+  var HTMLManifoldSkeletonImgElement: {
+    prototype: HTMLManifoldSkeletonImgElement;
+    new (): HTMLManifoldSkeletonImgElement;
+  };
+
+  interface HTMLManifoldSkeletonTextElement extends Components.ManifoldSkeletonText, HTMLStencilElement {}
+  var HTMLManifoldSkeletonTextElement: {
+    prototype: HTMLManifoldSkeletonTextElement;
+    new (): HTMLManifoldSkeletonTextElement;
+  };
+
   interface HTMLManifoldTemplateCardElement extends Components.ManifoldTemplateCard, HTMLStencilElement {}
   var HTMLManifoldTemplateCardElement: {
     prototype: HTMLManifoldTemplateCardElement;
@@ -1050,7 +1059,6 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement
-    'manifold-featured-service': HTMLManifoldFeaturedServiceElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
     'manifold-lazy-image': HTMLManifoldLazyImageElement
@@ -1071,6 +1079,8 @@ declare global {
     'manifold-resource-status': HTMLManifoldResourceStatusElement
     'manifold-select': HTMLManifoldSelectElement
     'manifold-service-card': HTMLManifoldServiceCardElement
+    'manifold-skeleton-img': HTMLManifoldSkeletonImgElement
+    'manifold-skeleton-text': HTMLManifoldSkeletonTextElement
     'manifold-template-card': HTMLManifoldTemplateCardElement
     'manifold-toast': HTMLManifoldToastElement
     'manifold-toggle': HTMLManifoldToggleElement
@@ -1086,7 +1096,6 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
-    'manifold-featured-service': HTMLManifoldFeaturedServiceElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-lazy-image': HTMLManifoldLazyImageElement;
@@ -1107,6 +1116,8 @@ declare global {
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
+    'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
+    'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
     'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;

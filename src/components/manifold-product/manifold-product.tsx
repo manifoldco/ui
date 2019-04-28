@@ -1,5 +1,4 @@
-import { Component, Prop, State, Element } from '@stencil/core';
-
+import { Component, Prop, State, Element, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
@@ -13,36 +12,43 @@ export class ManifoldProduct {
   @Prop() hideCta?: boolean = false;
   /** _(optional)_ Link format structure, with `:product` placeholder */
   @Prop() linkFormat?: string;
-  /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
+  /** Should the JS event still fire, even if link-format is passed?  */
+  @Prop() preserveEvent: boolean = false;
   @Prop() productLabel: string;
-  @State() product?: Catalog.ExpandedProduct;
+  @State() product?: Catalog.Product;
   @State() provider?: Catalog.Provider;
+  @Watch('productLabel') productChanged(newLabel: string) {
+    this.fetchProduct(newLabel);
+  }
 
   componentWillLoad() {
-    return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
-      .then(response => response.json())
-      .then(products => {
-        const [product] = products;
-        this.product = { ...product };
-        // We’re not returning so this 2nd fetch will happen async
-        fetch(`${this.connection.catalog}/providers/${product.body.provider_id}`, withAuth())
-          .then(response => response.json())
-          .then(provider => {
-            this.provider = provider;
-          });
-      });
+    this.fetchProduct();
   }
+
+  fetchProduct = async (productLabel: string = this.productLabel) => {
+    const productResp = await fetch(
+      `${this.connection.catalog}/products?label=${productLabel}`,
+      withAuth()
+    );
+    const products: Catalog.Product[] = await productResp.json();
+    this.product = products[0]; // eslint-disable-line prefer-destructuring
+    const providerResp = await fetch(
+      `${this.connection.catalog}/providers/${products[0].body.provider_id}`,
+      withAuth()
+    );
+    const provider = await providerResp.json();
+    this.provider = provider;
+  };
 
   render() {
     return (
-      this.product && (
-        <manifold-product-page
-          product={this.product}
-          hideCta={this.hideCta}
-          linkFormat={this.linkFormat}
-          provider={this.provider}
-        />
-      )
+      <manifold-product-page
+        hideCta={this.hideCta}
+        linkFormat={this.linkFormat}
+        preserveEvent={this.preserveEvent}
+        product={this.product}
+        provider={this.provider}
+      />
     );
   }
 }

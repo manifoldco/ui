@@ -21,7 +21,7 @@ const Thumbnail: FunctionalComponent<ThumbnailProps> = ({ isSelected, onClick, .
 })
 export class ImageGallery {
   @Prop() title: string;
-  @Prop() images: string[] = [];
+  @Prop() images?: string[];
   @State() selectedImage?: string;
 
   selectImage = (image: string) => {
@@ -29,28 +29,55 @@ export class ImageGallery {
   };
 
   render() {
+    if (Array.isArray(this.images)) {
+      if (this.images.length === 0) return null;
+
+      return (
+        <div class="container">
+          <p class="heading">{this.title}</p>
+          <div class="image-large">
+            <div class="large-inner">
+              <img src={this.selectedImage || this.images[0]} alt="" data-test="display-image" />
+            </div>
+          </div>
+          {this.images.length > 1 && (
+            <div class="menu-scroll">
+              <ul class="menu" style={{ '--item-count': `${this.images.length}` }}>
+                {this.images.map((image, i) => (
+                  <Thumbnail
+                    src={image}
+                    alt={`Screenshot ${i + 1}`}
+                    isSelected={this.selectedImage ? this.selectedImage === image : i === 0}
+                    onClick={this.selectImage}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // 💀
+
     return (
       <div class="container">
-        <p class="heading">{this.title}</p>
         <div class="image-large">
           <div class="large-inner">
-            <img src={this.selectedImage || this.images[0]} alt="" data-test="display-image" />
+            <manifold-skeleton-img />
           </div>
         </div>
-        {this.images.length > 1 && (
-          <div class="menu-scroll">
-            <ul class="menu" style={{ '--item-count': `${this.images.length}` }}>
-              {this.images.map((image, i) => (
-                <Thumbnail
-                  src={image}
-                  alt={`Screenshot ${i + 1}`}
-                  isSelected={this.selectedImage === image}
-                  onClick={this.selectImage}
-                />
-              ))}
-            </ul>
-          </div>
-        )}
+        <div class="menu-scroll">
+          <ul class="menu" style={{ '--item-count': `4` }}>
+            {[1, 2, 3, 4].map(() => (
+              <li class="menu-item">
+                <div class="skeleton-img">
+                  <manifold-skeleton-img />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }

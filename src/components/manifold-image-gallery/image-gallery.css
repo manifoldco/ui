@@ -23,8 +23,8 @@
 img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
   object-position: center center;
+  object-fit: cover;
 }
 
 .image-large {
@@ -46,8 +46,8 @@ img {
 }
 
 .image-button {
-  object-position: center center;
-  object-fit: cover;
+  overflow: hidden;
+  border-radius: var(--mf-radius-default);
 }
 
 .menu-scroll {
@@ -96,22 +96,21 @@ img {
   overflow: hidden;
   border: none;
   border-radius: var(--mf-radius-default);
-  box-shadow: 0 0 0 1px #8f8f9500, var(--focusStart);
   transition: box-shadow 200ms, transform 200ms ease-out;
   appearance: none;
 
-  &[data-selected] {
-    box-shadow: var(--selectedBorder);
-
-    &:focus {
-      outline: none;
-      box-shadow: var(--selectedBorder), var(--focusStart);
-    }
-  }
-
   &:hover,
   &:focus {
-    box-shadow: 0 0 0 1px var(--mf-c-gray-t3), var(--focusEnd);
+    box-shadow: 0 0 0 1px var(--mf-c-gray-t3);
     transform: translateY(-2px);
   }
+
+  &[data-selected] {
+    border: 1px solid var(--mf-c-gray);
+    box-shadow: var(--selectedBorder);
+  }
+}
+
+.skeleton-img {
+  min-width: 5rem;
 }

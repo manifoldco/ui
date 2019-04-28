@@ -32,7 +32,7 @@ export class ManifoldMarketplace {
     this.parseProps();
 
     const response = await fetch(`${this.connection.catalog}/products`, withAuth());
-    const products: Catalog.Product[] = await response.json();
+    const products: Catalog.ExpandedProduct[] = await response.json();
     // Alphabetize once, then don’t worry about it
     this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
   }
