@@ -46,7 +46,6 @@ export class ManifoldDataManageButton {
     const { gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
     const resource: Gateway.Resource = await response.json();
-    console.log(resource);
     if (resource.id) this.resourceId = resource.id;
   }
 
