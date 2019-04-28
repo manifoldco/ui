@@ -26,7 +26,7 @@ export class ManifoldPlanSelector {
   @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
   @Watch('productLabel') productChange(newProduct: string) {
-    this.fetchPlans(newProduct);
+    this.fetchProductByLabel(newProduct);
   }
   @Watch('resourceName') resourceChange(newResource: string) {
     this.fetchResource(newResource);

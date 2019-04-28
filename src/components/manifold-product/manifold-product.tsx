@@ -17,15 +17,15 @@ export class ManifoldProduct {
   @Prop() productLabel: string;
   @State() product?: Catalog.Product;
   @State() provider?: Catalog.Provider;
-  @Watch('productLabel') productChanged(newLabel: string) {
+  @Watch('productLabel') productChange(newLabel: string) {
     this.fetchProduct(newLabel);
   }
 
   componentWillLoad() {
-    this.fetchProduct();
+    this.fetchProduct(this.productLabel);
   }
 
-  fetchProduct = async (productLabel: string = this.productLabel) => {
+  fetchProduct = async (productLabel: string) => {
     const productResp = await fetch(
       `${this.connection.catalog}/products?label=${productLabel}`,
       withAuth()
