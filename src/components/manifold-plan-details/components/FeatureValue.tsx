@@ -4,7 +4,7 @@ import { StringFeature } from './StringFeature';
 import { NumberFeature } from './NumberFeature';
 
 interface FeatureValueProps {
-  features: UserFeatures;
+  features: Gateway.FeatureMap;
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
   onChange: (e: CustomEvent) => void;

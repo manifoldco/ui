@@ -68,6 +68,38 @@ export namespace Components {
     'measuredFeatures'?: Catalog.ExpandedFeature[];
   }
 
+  interface ManifoldDataManageButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    'features': Gateway.FeatureMap;
+    'planId': string;
+    'productId': string;
+    'regionId'?: string;
+    /**
+    * Name of resource
+    */
+    'resourceName': string;
+  }
+  interface ManifoldDataManageButtonAttributes extends StencilHTMLAttributes {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'features'?: Gateway.FeatureMap;
+    'onManifold-manageButton-click'?: (event: CustomEvent) => void;
+    'onManifold-manageButton-error'?: (event: CustomEvent) => void;
+    'onManifold-manageButton-success'?: (event: CustomEvent) => void;
+    'planId'?: string;
+    'productId'?: string;
+    'regionId'?: string;
+    /**
+    * Name of resource
+    */
+    'resourceName'?: string;
+  }
+
   interface ManifoldDataProductLogo {
     /**
     * _(optional)_ `alt` attribute
@@ -139,11 +171,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
-    'features': UserFeatures;
+    'features': Gateway.FeatureMap;
     /**
-    * Name of `<label>` for input
+    * ID of input (useful for `<label>`)
     */
-    'formLabel': string;
     'inputId': string;
     'ownerId': string;
     'planId': string;
@@ -159,11 +190,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
-    'features'?: UserFeatures;
+    'features'?: Gateway.FeatureMap;
     /**
-    * Name of `<label>` for input
+    * ID of input (useful for `<label>`)
     */
-    'formLabel'?: string;
     'inputId'?: string;
     'onManifold-provisionButton-click'?: (event: CustomEvent) => void;
     'onManifold-provisionButton-error'?: (event: CustomEvent) => void;
@@ -409,7 +439,7 @@ export namespace Components {
     'connection': Connection;
     'customizable'?: boolean;
     'planId': string;
-    'selectedFeatures': UserFeatures;
+    'selectedFeatures': Gateway.FeatureMap;
   }
   interface ManifoldPlanCostAttributes extends StencilHTMLAttributes {
     'allFeatures'?: Catalog.ExpandedFeature[];
@@ -417,7 +447,7 @@ export namespace Components {
     'connection'?: Connection;
     'customizable'?: boolean;
     'planId'?: string;
-    'selectedFeatures'?: UserFeatures;
+    'selectedFeatures'?: Gateway.FeatureMap;
   }
 
   interface ManifoldPlanDetails {
@@ -776,6 +806,7 @@ declare global {
     'ManifoldBadge': Components.ManifoldBadge;
     'ManifoldConnection': Components.ManifoldConnection;
     'ManifoldCostDisplay': Components.ManifoldCostDisplay;
+    'ManifoldDataManageButton': Components.ManifoldDataManageButton;
     'ManifoldDataProductLogo': Components.ManifoldDataProductLogo;
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
@@ -813,6 +844,7 @@ declare global {
     'manifold-badge': Components.ManifoldBadgeAttributes;
     'manifold-connection': Components.ManifoldConnectionAttributes;
     'manifold-cost-display': Components.ManifoldCostDisplayAttributes;
+    'manifold-data-manage-button': Components.ManifoldDataManageButtonAttributes;
     'manifold-data-product-logo': Components.ManifoldDataProductLogoAttributes;
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
@@ -868,6 +900,12 @@ declare global {
   var HTMLManifoldCostDisplayElement: {
     prototype: HTMLManifoldCostDisplayElement;
     new (): HTMLManifoldCostDisplayElement;
+  };
+
+  interface HTMLManifoldDataManageButtonElement extends Components.ManifoldDataManageButton, HTMLStencilElement {}
+  var HTMLManifoldDataManageButtonElement: {
+    prototype: HTMLManifoldDataManageButtonElement;
+    new (): HTMLManifoldDataManageButtonElement;
   };
 
   interface HTMLManifoldDataProductLogoElement extends Components.ManifoldDataProductLogo, HTMLStencilElement {}
@@ -1055,6 +1093,7 @@ declare global {
     'manifold-badge': HTMLManifoldBadgeElement
     'manifold-connection': HTMLManifoldConnectionElement
     'manifold-cost-display': HTMLManifoldCostDisplayElement
+    'manifold-data-manage-button': HTMLManifoldDataManageButtonElement
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
@@ -1092,6 +1131,7 @@ declare global {
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
+    'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;

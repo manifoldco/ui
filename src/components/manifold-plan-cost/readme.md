@@ -29,7 +29,7 @@ one additional prop:
 | `connection`       | --             |             | `Connection`           | `connections.prod` |
 | `customizable`     | `customizable` |             | `boolean \| undefined` | `false`            |
 | `planId`           | `plan-id`      |             | `string`               | `undefined`        |
-| `selectedFeatures` | --             |             | `UserFeatures`         | `{}`               |
+| `selectedFeatures` | --             |             | `FeatureMap`           | `{}`               |
 
 
 ----------------------------------------------

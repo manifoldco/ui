@@ -1,0 +1,56 @@
+# Manage Button
+
+Unstyled button for updating an already-provisioned resource.
+
+## Events
+
+For loading, error and success messages, it will emit custom events.
+
+```js
+document.addEventListener('manifold-manageButton-click', ({ detail: { resourceName } }) =>
+  console.info(`⌛ Provisioning ${resourceName} …`)
+);
+document.addEventListener(
+  'manifold-manageButton-success',
+  ({ detail: { createdAt, resourceName } }) =>
+    alert(`🚀 ${resourceName} provisioned successfully on ${createdAt}!`)
+);
+document.addEventListener('manifold-manageButton-error', ({ detail }) => console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
+document.addEventListener('manifold-manageButton-invalid', ({ detail }) => console.log(detail));
+// {resourceName: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
+```
+
+| Name                            |             Returns             | Description                                                                                                                 |
+| :------------------------------ | :-----------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-manageButton-click`   |            `planId`             | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-manageButton-success` | `message`, `planId`, `features` | Successful provision. Returns name, along with a resource ID                                                                |
+| `manifold-manageButton-error`   | `message`, `planId`, `features` | Erred provision, along with information on what went wrong.                                                                 |
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+| Property       | Attribute       | Description                                  | Type                  | Default            |
+| -------------- | --------------- | -------------------------------------------- | --------------------- | ------------------ |
+| `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection`          | `connections.prod` |
+| `features`     | --              |                                              | `FeatureMap`          | `{}`               |
+| `planId`       | `plan-id`       |                                              | `string`              | `''`               |
+| `productId`    | `product-id`    |                                              | `string`              | `''`               |
+| `regionId`     | `region-id`     |                                              | `string \| undefined` | `globalRegion.id`  |
+| `resourceName` | `resource-name` | Name of resource                             | `string`              | `undefined`        |
+
+
+## Events
+
+| Event                           | Description | Type                |
+| ------------------------------- | ----------- | ------------------- |
+| `manifold-manageButton-click`   |             | `CustomEvent<void>` |
+| `manifold-manageButton-error`   |             | `CustomEvent<void>` |
+| `manifold-manageButton-success` |             | `CustomEvent<void>` |
+
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

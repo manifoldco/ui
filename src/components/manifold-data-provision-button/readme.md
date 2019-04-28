@@ -84,9 +84,8 @@ choice, or plain ol’ CSS.
 | Property       | Attribute       | Description                                  | Type                  | Default                         |
 | -------------- | --------------- | -------------------------------------------- | --------------------- | ------------------------------- |
 | `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection`          | `connections.prod`              |
-| `features`     | --              |                                              | `UserFeatures`        | `{}`                            |
-| `formLabel`    | `form-label`    | Name of `<label>` for input                  | `string`              | `'Resource name'`               |
-| `inputId`      | `input-id`      |                                              | `string`              | `'manifold-provision-resource'` |
+| `features`     | --              |                                              | `FeatureMap`          | `{}`                            |
+| `inputId`      | `input-id`      | ID of input (useful for `<label>`)           | `string`              | `'manifold-provision-resource'` |
 | `ownerId`      | `owner-id`      |                                              | `string`              | `''`                            |
 | `planId`       | `plan-id`       |                                              | `string`              | `''`                            |
 | `productId`    | `product-id`    |                                              | `string`              | `''`                            |

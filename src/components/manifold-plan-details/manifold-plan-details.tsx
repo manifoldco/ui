@@ -10,7 +10,7 @@ interface EventDetail {
   planLabel: string;
   planName: string;
   productLabel: string | undefined;
-  features: UserFeatures;
+  features: Gateway.FeatureMap;
   regionId: string;
 }
 
@@ -29,7 +29,7 @@ export class ManifoldPlanDetails {
   @Prop() regions?: string[];
   @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
-  @State() features: UserFeatures = {};
+  @State() features: Gateway.FeatureMap = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-click', bubbles: true }) planClick: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-load', bubbles: true }) planLoad: EventEmitter;
@@ -104,7 +104,7 @@ export class ManifoldPlanDetails {
     }
   }
 
-  initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): UserFeatures {
+  initialFeatures(plan: Catalog.ExpandedPlan | undefined = this.plan): Gateway.FeatureMap {
     if (Array.isArray(this.resourceFeatures)) {
       return this.resourceFeatures.reduce(
         (features, { label, value }) => ({
@@ -120,7 +120,7 @@ export class ManifoldPlanDetails {
     return { ...initialFeatures(plan.body.expanded_features) };
   }
 
-  customFeatures(features: UserFeatures): UserFeatures {
+  customFeatures(features: Gateway.FeatureMap): Gateway.FeatureMap {
     if (!this.plan || !this.plan.body.expanded_features) return features;
     const { expanded_features } = this.plan.body;
     const customFeatures = { ...features };

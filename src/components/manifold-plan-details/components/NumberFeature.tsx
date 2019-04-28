@@ -12,7 +12,7 @@ import { pluralize } from '../../../utils/string';
 import { LockedFeature } from './LockedFeature';
 
 interface NumberFeatureProps {
-  features: UserFeatures;
+  features: Gateway.FeatureMap;
   feature: Catalog.ExpandedFeature;
   isExistingResource?: boolean;
   onChange: (e: CustomEvent) => void;
