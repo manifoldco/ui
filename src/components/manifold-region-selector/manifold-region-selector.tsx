@@ -1,4 +1,4 @@
-import { Component, Prop, State, Event, Element, EventEmitter, Watch } from '@stencil/core';
+import { Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
 import { Option } from 'types/Select';
 
 import Tunnel from '../../data/connection';
@@ -18,10 +18,6 @@ export class ManifoldRegionSelector {
   @State() globalRegion: Catalog.Region = globalRegion;
   @State() regions?: Catalog.Region[];
   @Event() change: EventEmitter;
-  @Watch('allowedRegions') regionChange() {
-    // Trigger update if allowed regions changes
-    if (this.regions) this.regions = this.sortRegions(this.regions, this.preferredRegions);
-  }
 
   async componentWillLoad() {
     const response = await fetch(`${this.connection.catalog}/regions`, withAuth());
@@ -38,9 +34,7 @@ export class ManifoldRegionSelector {
   };
 
   filterRegions(regions: Catalog.Region[]): Catalog.Region[] {
-    if (!this.regions) return [this.globalRegion];
-    const filtered = regions.filter(({ id }) => this.allowedRegions.includes(id));
-    return filtered.length > 1 ? filtered : [this.globalRegion];
+    return regions.filter(({ id }) => this.allowedRegions.includes(id));
   }
 
   regionOptions(regions: Catalog.Region[]): Option[] {
@@ -78,7 +72,13 @@ export class ManifoldRegionSelector {
   render() {
     const regions = this.filterRegions(this.regions || []);
 
-    return regions.length > 1 ? (
+    if (!regions) return null;
+
+    if (regions.length === 1) {
+      return <div class="region-name">{regions[0].body.name}</div>;
+    }
+
+    return (
       <manifold-select
         aria-label={this.ariaLabel}
         name={this.name}
@@ -86,8 +86,6 @@ export class ManifoldRegionSelector {
         defaultValue={this.value}
         options={this.regionOptions(regions)}
       />
-    ) : (
-      <div class="region-name">{this.globalRegion.body.name}</div>
     );
   }
 }

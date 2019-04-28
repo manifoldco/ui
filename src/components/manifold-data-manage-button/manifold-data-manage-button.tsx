@@ -8,14 +8,13 @@ import { Connection, connections } from '../../utils/connections';
 
 interface SuccessMessage {
   features: Gateway.FeatureMap;
-  planId: string;
+  planName: string;
   message: string;
 }
 
 interface ErrorMessage {
   features: Gateway.FeatureMap;
   message: string;
-  planId: string;
 }
 
 @Component({ tag: 'manifold-data-manage-button' })
@@ -45,8 +44,9 @@ export class ManifoldDataManageButton {
 
   async fetchResourceId(resourceName: string) {
     const { gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`);
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
     const resource: Gateway.Resource = await response.json();
+    console.log(resource);
     if (resource.id) this.resourceId = resource.id;
   }
 
@@ -57,7 +57,7 @@ export class ManifoldDataManageButton {
     if (Object.keys(this.features).length) req.features = this.features;
 
     const response = await fetch(
-      `${this.connection.gateway}/resource/`,
+      `${this.connection.gateway}/id/resource/${this.resourceId}`,
       withAuth({
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -69,9 +69,10 @@ export class ManifoldDataManageButton {
 
     // If successful, this will return 200 and stop here
     if (response.status >= 200 && response.status < 300) {
+      const planName = body.plan && body.plan.name;
       const success: SuccessMessage = {
-        message: `${this.resourceName} successfully updated`,
-        planId: body.plan_id,
+        message: `${this.resourceName} successfully updated to ${planName}`,
+        planName,
         features: body.features,
       };
       this.successEvent.emit(success);
@@ -80,7 +81,6 @@ export class ManifoldDataManageButton {
       const message = Array.isArray(body) ? body[0].message : body.message;
       const error: ErrorMessage = {
         message,
-        planId: this.planId,
         features: this.features,
       };
       this.errorEvent.emit(error);

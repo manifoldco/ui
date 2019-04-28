@@ -50,7 +50,6 @@ export class ManifoldActivePlan {
         selectPlan={this.selectPlan}
       />,
       <manifold-plan-details
-        resourceRegion={resourceRegion}
         hideCta={this.hideCta}
         isExistingResource={this.isExistingResource}
         linkFormat={this.linkFormat}
@@ -59,6 +58,7 @@ export class ManifoldActivePlan {
         product={this.product}
         regions={this.regions}
         resourceFeatures={this.selectedResource && this.selectedResource.features}
+        resourceRegion={resourceRegion}
       />,
     ];
   }

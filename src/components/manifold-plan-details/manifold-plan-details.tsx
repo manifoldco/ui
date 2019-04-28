@@ -166,20 +166,26 @@ export class ManifoldPlanDetails {
   }
 
   get regionSelector() {
-    if (!this.plan) return null;
-    const { regions } = this.plan.body;
+    let regions: string[] = [];
 
-    // Don’t show the non-region
+    if (this.resourceRegion) {
+      regions = [this.resourceRegion];
+    } else if (this.plan) {
+      regions = this.plan.body.regions; // eslint-disable-line prefer-destructuring
+    }
+
+    // Hide the non-region
     if (regions.length === 1 && regions[0] === globalRegion.id) return null;
 
-    const name = `${this.plan.body.label}-region`;
+    const name = 'manifold-region-selector';
+
     return (
       <div class="region">
         <label class="region-label" id={name}>
           Region
         </label>
         <manifold-region-selector
-          allowedRegions={this.resourceRegion ? [this.resourceRegion] : this.plan.body.regions}
+          allowedRegions={regions}
           ariaLabel={name}
           name={name}
           onChange={e => this.handleChangeRegion(e)}
