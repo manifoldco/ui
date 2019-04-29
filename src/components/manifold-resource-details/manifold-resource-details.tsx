@@ -38,7 +38,6 @@ export class ManifoldResourceDetails {
 
   render() {
     if (!this.resource) return null;
-    console.log(this.resource);
 
     const { expanded_features, name } = this.resource.plan as Gateway.ResolvedPlan;
     const { estimated_cost, features: customFeatures = [] } = this.resource;
