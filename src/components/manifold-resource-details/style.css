@@ -1,8 +1,43 @@
+.container {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-areas:
+    'heading features'
+    'details features';
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+}
+
+.heading {
+  grid-area: heading;
+  margin: 0;
+  color: var(--mf-c-gray);
+  font-size: var(--mf-font-d2);
+  text-transform: uppercase;
+}
+
+.details {
+  margin-right: 10vw;
+}
+
+.amount {
+  font-size: var(--mf-font-u2);
+}
+
+.suffix {
+  color: var(--mf-c-gray);
+}
+
+.plan-name {
+  font-size: var(--mf-font-d1);
+}
+
 .features {
   display: grid;
+  grid-area: features;
   grid-template-columns: 1fr 1fr;
-  margin-top: 1rem;
-  margin-bottom: 0;
+  align-self: start;
+  margin: 0;
   font-size: var(--mf-font-d1);
 }
 
@@ -17,6 +52,7 @@
   font-weight: 600;
 }
 
+/* TODO refactor to use feature table */
 .feature-value {
   display: flex;
 

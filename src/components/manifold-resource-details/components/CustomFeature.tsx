@@ -38,7 +38,7 @@ export const CustomFeature: FunctionalComponent<CustomFeatureProps> = ({
   const locked = !feature.upgradable || !feature.downgradable;
 
   if (numberLocked || locked) {
-    return <LockedFeature>{getCustomValue(feature, value)}</LockedFeature>;
+    return <LockedFeature value={getCustomValue(feature, value)} />;
   }
 
   switch (feature.type) {
