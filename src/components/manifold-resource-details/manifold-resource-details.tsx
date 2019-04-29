@@ -6,6 +6,7 @@ import { Connection, connections } from '../../utils/connections';
 
 import { FeatureName } from './components/FeatureName';
 import { FeatureValue } from './components/FeatureValue';
+import { $ } from '../../utils/currency';
 
 @Component({
   tag: 'manifold-resource-details',
@@ -37,26 +38,36 @@ export class ManifoldResourceDetails {
 
   render() {
     if (!this.resource) return null;
+    console.log(this.resource);
 
     const { expanded_features } = this.resource.plan as Gateway.ResolvedPlan;
-    const { features: customFeatures = [] } = this.resource;
-
+    const { estimated_cost, features: customFeatures = [] } = this.resource;
     return (
-      <dl class="features">
-        {expanded_features.map(feature => {
-          const customFeature = customFeatures.find(({ label }) => label === feature.label);
-          const customValue = customFeature && customFeature.value.value;
+      <div class="container">
+        <h3 class="heading">Plan Features</h3>
+        <div class="details">
+          {estimated_cost && [
+            <span class="amount">{$(estimated_cost.cost)}</span>,
+            <span class="suffix">/mo</span>,
+          ]}
+          <p class="plan-name">{PannerNode.name}</p>
+        </div>
+        <dl class="features">
+          {expanded_features.map(feature => {
+            const customFeature = customFeatures.find(({ label }) => label === feature.label);
+            const customValue = customFeature && customFeature.value.value;
 
-          return [
-            <dt class="feature-name">
-              <FeatureName feature={feature} />
-            </dt>,
-            <dd class="feature-value">
-              <FeatureValue feature={feature} value={customValue} />
-            </dd>,
-          ];
-        })}
-      </dl>
+            return [
+              <dt class="feature-name">
+                <FeatureName feature={feature} />
+              </dt>,
+              <dd class="feature-value">
+                <FeatureValue feature={feature} value={customValue} />
+              </dd>,
+            ];
+          })}
+        </dl>
+      </div>
     );
   }
 }
