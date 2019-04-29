@@ -21,5 +21,22 @@ export const FeatureValue: FunctionalComponent<FeatureValueProps> = ({
   if (feature.measurable) {
     return <MeasurableFeatureUsageDisplay feature={feature} />;
   }
-  return <FeatureDisplay>{feature.value_string}</FeatureDisplay>;
+
+  let displayValue;
+
+  switch (feature.type) {
+    case 'boolean':
+      // HACK: The display values doesn't exist in this version of the feature object.
+      displayValue = feature.value_string === 'true' ? 'Yes' : 'No';
+      break;
+    case 'number':
+      displayValue = feature.value_string && parseFloat(feature.value_string).toLocaleString();
+      break;
+    default:
+    case 'string':
+      displayValue = feature.value_string;
+      break;
+  }
+  console.log({ displayValue });
+  return <FeatureDisplay value={displayValue} />;
 };

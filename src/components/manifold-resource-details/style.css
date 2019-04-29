@@ -36,6 +36,7 @@
   display: grid;
   grid-area: features;
   grid-template-columns: 1fr 1fr;
+  align-self: start;
   margin: 0;
   font-size: var(--mf-font-d1);
 }
