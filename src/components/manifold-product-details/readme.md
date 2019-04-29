@@ -5,9 +5,9 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type                           | Default     |
-| --------- | --------- | ----------- | ------------------------------ | ----------- |
-| `product` | --        |             | `ExpandedProduct \| undefined` | `undefined` |
+| Property  | Attribute | Description | Type                   | Default     |
+| --------- | --------- | ----------- | ---------------------- | ----------- |
+| `product` | --        |             | `Product \| undefined` | `undefined` |
 
 
 ----------------------------------------------

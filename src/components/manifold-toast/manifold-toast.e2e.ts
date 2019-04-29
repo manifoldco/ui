@@ -2,7 +2,7 @@ import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
-describe('manifold-toast', () => {
+describe('<manifold-toast>', () => {
   it('has a success style', async () => {
     const page = await newE2EPage({
       html: `<manifold-toast />`,

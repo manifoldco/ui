@@ -6,7 +6,7 @@ import { pluralize } from './string';
 
 interface PlanCostOptions {
   planID: string;
-  features: UserFeatures;
+  features: Gateway.FeatureMap;
   init: RequestInit;
 }
 
@@ -225,7 +225,7 @@ export function numberFeatureDisplayValue(value: Catalog.FeatureValueDetails): s
 /**
  * Collect all default data values for a feature set
  */
-export function initialFeatures(features: Catalog.ExpandedFeature[]): UserFeatures {
+export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.FeatureMap {
   // We want to set _all_ features, not just customizable ones, to calculate cost
   return features.reduce((obj, feature) => {
     if (!feature.value) return obj;

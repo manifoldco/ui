@@ -11,7 +11,7 @@ export class ManifoldPlanCost {
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;
   @Prop() planId: string;
-  @Prop() selectedFeatures: UserFeatures = {};
+  @Prop() selectedFeatures: Gateway.FeatureMap = {};
   @State() controller?: AbortController;
   @State() baseCost?: number;
   @Watch('allFeatures') featuresChanged() {

@@ -25,15 +25,14 @@ export class ManifoldServiceCard {
   @Prop() logo?: string;
   @Prop() preserveEvent: boolean = false;
   @Prop() productId?: string;
+  @Prop() skeleton: boolean = false;
   @State() isFree: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
-  @Watch('productId')
-  watchHandler(newProductId: string) {
-    this.fetchIsFree(newProductId);
+  @Watch('skeleton') skeletonChange(skeleton: boolean) {
+    if (!skeleton && this.productId) this.fetchIsFree(this.productId);
   }
-
-  componentWillLoad() {
-    this.fetchIsFree();
+  @Watch('productId') productChange(newProductId: string) {
+    if (this.skeleton !== true) this.fetchIsFree(newProductId);
   }
 
   get href() {
@@ -41,16 +40,13 @@ export class ManifoldServiceCard {
     return this.linkFormat.replace(/:product/gi, this.label);
   }
 
-  fetchIsFree(productId = this.productId) {
-    if (typeof productId !== 'string') return;
-
-    fetch(`${this.connection.catalog}/plans/?product_id=${this.productId}`, withAuth())
-      .then(response => response.json())
-      .then((data: Catalog.ExpandedPlan[]) => {
-        if (data.find(plan => plan.body.free === true)) {
-          this.isFree = true;
-        }
-      });
+  async fetchIsFree(productId: string) {
+    const { catalog } = this.connection;
+    const response = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
+    const plans: Catalog.ExpandedPlan[] = await response.json();
+    if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
+      this.isFree = true;
+    }
   }
 
   onClick = (e: Event): void => {
@@ -65,7 +61,7 @@ export class ManifoldServiceCard {
   };
 
   render() {
-    return (
+    return !this.skeleton ? (
       <a
         class="wrapper"
         role="button"
@@ -95,6 +91,21 @@ export class ManifoldServiceCard {
           )}
         </div>
       </a>
+    ) : (
+      // ☠
+      <div class="wrapper">
+        <div class="logo">
+          <manifold-skeleton-img />
+        </div>
+        <h3 class="name">
+          <manifold-skeleton-text>{this.name}</manifold-skeleton-text>
+        </h3>
+        <div class="info">
+          <p class="description">
+            <manifold-skeleton-text>{this.description}</manifold-skeleton-text>
+          </p>
+        </div>
+      </div>
     );
   }
 }

@@ -30,10 +30,9 @@ export class ManifoldDataProvisionButton {
   @Prop() connection: Connection = connections.prod;
   /** Product to provision (slug) */
   @Prop() productLabel: string;
-  /** Name of `<label>` for input */
-  @Prop() formLabel: string = 'Resource name';
-  @Prop() features: UserFeatures = {};
+  /** ID of input (useful for `<label>`) */
   @Prop() inputId: string = 'manifold-provision-resource';
+  @Prop() features: Gateway.FeatureMap = {};
   @Prop() ownerId: string = '';
   @Prop() planId: string = '';
   @Prop({ mutable: true }) productId: string = '';
@@ -46,12 +45,12 @@ export class ManifoldDataProvisionButton {
   @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) errorEvent: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
   successEvent: EventEmitter;
-  @Watch('productLabel') productLabelChanged(newLabel: string) {
-    this.fetchProductId(newLabel);
+  @Watch('productLabel') productChange(newProduct: string) {
+    this.fetchProductId(newProduct);
   }
 
   componentWillLoad() {
-    this.fetchProductId();
+    this.fetchProductId(this.productLabel);
   }
 
   async provision() {
@@ -103,7 +102,7 @@ export class ManifoldDataProvisionButton {
     }
   }
 
-  fetchProductId(productLabel: string = this.productLabel) {
+  fetchProductId(productLabel: string) {
     if (!productLabel) return;
     fetch(`${this.connection.catalog}/products/?label=${productLabel}`, withAuth())
       .then(response => response.json())
@@ -150,7 +149,7 @@ export class ManifoldDataProvisionButton {
         type="text"
         value={this.resourceName}
       />,
-      <button type="button" onClick={() => this.provision()}>
+      <button type="submit" onClick={() => this.provision()}>
         <slot />
       </button>,
     ];

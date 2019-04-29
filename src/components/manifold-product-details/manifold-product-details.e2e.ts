@@ -15,16 +15,13 @@ describe(`<manifold-product-details>`, () => {
   describe('static features', () => {
     it('displays product tagline', async () => {
       const page = await newE2EPage({ html: `<manifold-product-details />` });
-
-      const props = { product: Product };
       await page.$eval(
         'manifold-product-details',
-        (elm: any, { product }: any) => {
-          elm.product = product;
+        (elm: any, props: any) => {
+          elm.product = props.product;
         },
-        props
+        { product: Product }
       );
-
       await page.waitForChanges();
 
       const element = await page.find('manifold-product-details >>> .tagline');
@@ -34,39 +31,31 @@ describe(`<manifold-product-details>`, () => {
 
     it('display screenshots section when there are no images', async () => {
       const page = await newE2EPage({ html: `<manifold-product-details />` });
-
-      const props = { product: Product };
       await page.$eval(
         'manifold-product-details',
-        (elm: any, { product }: any) => {
-          elm.product = product;
+        (elm: any, props: any) => {
+          elm.product = props.product;
         },
-        props
+        { product: Product }
       );
-
       await page.waitForChanges();
 
       const element = await page.findAll('manifold-product-details >>> manifold-image-gallery');
-
       expect(element.length).toBe(1);
     });
 
     it('does NOT display screenshots section when there are no images', async () => {
       const page = await newE2EPage({ html: `<manifold-product-details />` });
-
-      const props = { product: productWithoutScreenshots };
       await page.$eval(
         'manifold-product-details',
-        (elm: any, { product }: any) => {
-          elm.product = product;
+        (elm: any, props: any) => {
+          elm.product = props.product;
         },
-        props
+        { product: productWithoutScreenshots }
       );
-
       await page.waitForChanges();
 
       const element = await page.findAll('manifold-product-details >>> manifold-image-gallery');
-
       expect(element.length).toBe(0);
     });
   });

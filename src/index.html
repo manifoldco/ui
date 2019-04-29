@@ -123,6 +123,9 @@
                 <li role="menuitem">
                   <a href="#manifold-data-resource-list">Resource List</a>
                 </li>
+                <li role="menuitem">
+                  <a href="#manifold-data-manage-button">Manage Resource Button</a>
+                </li>
               </ul>
             </div>
             <div class="docs-nav-underlay" onClick="docs.closeMenu()"></div>
@@ -548,9 +551,16 @@ defineCustomElements(window);</code></pre>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
+                    <td><code>preserveEvent</code></td>
+                    <td><code>preserve-event</code></td>
+                    <td>Should the JS event still fire, even if link-format is passed?</td>
+                    <td><code>boolean</code></td>
+                    <td><code>false</code></td>
+                  </tr>
+                  <tr>
                     <td><code>productLabel</code></td>
                     <td><code>product-label</code></td>
-                    <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
+                    <td></td>
                     <td><code>string</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -562,7 +572,7 @@ defineCustomElements(window);</code></pre>
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-product product-label="iron_worker" />
+                <manifold-product product-label="jawsdb-mysql" />
               </div>
             </div>
           </section>
@@ -877,7 +887,7 @@ defineCustomElements(window);</code></pre>
                     <td><code>productLabel</code></td>
                     <td><code>product-label</code></td>
                     <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
-                    <td><code>string</code></td>
+                    <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
@@ -903,7 +913,7 @@ defineCustomElements(window);</code></pre>
             <div class="docs-example">
               <div class="docs-example-inner">
                 <manifold-plan-selector
-                  product-label="aiven-cassandra"
+                  product-label="jawsdb-mysql"
                   regions="gcp-us-east-1,gcp-us-east-4,gcp-us-central-1,gcp-us-west-1,gcp-us-west-2,gcp-eu-west-1,gcp-eu-west-2,gcp-eu-west-3"
                 />
               </div>
@@ -1120,15 +1130,11 @@ defineCustomElements(window);</code></pre>
               <pre><code class="html language-html">&lt;manifold-data-product-name product-label="piio" /&gt;
 &lt;!-- Piio --&gt;
 </code></pre>
-              <h2 id="loadingstate">Loading State</h2>
-              <p>
-                This data component supports an optional loading state by specifying a child slot:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-data-product-name product-label="logdna"&gt;
-  Loading…
-&lt;/manifold-data-product-name&gt;
-</code></pre>
               <p>The loading slot supports text as well as HTML elements.</p>
+              <h2 id="resourcename">Resource Name</h2>
+              <p>You can look up a logo by resource name by passing <code>resource-name</code>:</p>
+              <pre><code class="html language-html">&lt;manifold-data-product-logo resource-name="my-resource" /&gt;
+</code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
               <table>
@@ -1150,16 +1156,16 @@ defineCustomElements(window);</code></pre>
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>productId</code></td>
-                    <td><code>product-id</code></td>
-                    <td>Product ID (e.g. <code>"jawsdb-mysql"</code>)</td>
+                    <td><code>productLabel</code></td>
+                    <td><code>product-label</code></td>
+                    <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
-                    <td><code>productLabel</code></td>
-                    <td><code>product-label</code></td>
-                    <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
+                    <td><code>resourceName</code></td>
+                    <td><code>resource-name</code></td>
+                    <td>Look up product name from resource</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -1198,13 +1204,9 @@ defineCustomElements(window);</code></pre>
               </p>
               <pre><code class="html language-html">&lt;manifold-data-product-logo product-label="iron_cache" alt="My alternate text" /&gt;
 </code></pre>
-              <h2 id="loadingstate">Loading State</h2>
-              <p>
-                This data component supports an optional loading state by specifying a child slot:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-data-product-logo product-label="scout"&gt;
-  &lt;img src="placeholder.svg" alt="Loading…" /&gt;
-&lt;/manifold-data-product-logo&gt;
+              <h2 id="resourcename">Resource Name</h2>
+              <p>You can look up a logo by resource name by passing <code>resource-name</code>:</p>
+              <pre><code class="html language-html">&lt;manifold-data-product-logo resource-name="my-resource" /&gt;
 </code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
@@ -1234,16 +1236,16 @@ defineCustomElements(window);</code></pre>
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>productId</code></td>
-                    <td><code>product-id</code></td>
-                    <td>Product ID</td>
+                    <td><code>productLabel</code></td>
+                    <td><code>product-label</code></td>
+                    <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
                   <tr>
-                    <td><code>productLabel</code></td>
-                    <td><code>product-label</code></td>
-                    <td>URL-friendly slug (e.g. <code>"jawsdb-mysql"</code>)</td>
+                    <td><code>resourceName</code></td>
+                    <td><code>resource-name</code></td>
+                    <td>Look up product name from resource</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
                   </tr>
@@ -1401,20 +1403,13 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                     <td><code>features</code></td>
                     <td>--</td>
                     <td></td>
-                    <td><code>UserFeatures</code></td>
+                    <td><code>FeatureMap</code></td>
                     <td><code>{}</code></td>
-                  </tr>
-                  <tr>
-                    <td><code>formLabel</code></td>
-                    <td><code>form-label</code></td>
-                    <td>Name of <code>&lt;label&gt;</code> for input</td>
-                    <td><code>string</code></td>
-                    <td><code>'Resource name'</code></td>
                   </tr>
                   <tr>
                     <td><code>inputId</code></td>
                     <td><code>input-id</code></td>
-                    <td></td>
+                    <td>ID of input (useful for <code>&lt;label&gt;</code>)</td>
                     <td><code>string</code></td>
                     <td><code>'manifold-provision-resource'</code></td>
                   </tr>
@@ -1539,24 +1534,18 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                 To navigate using a traditional <code>&lt;a&gt;</code> tag, specify a
                 <code>link-format</code> attribute, using <code>:resource</code> as a placeholder:
               </p>
-              <pre><code class="html language-html">&lt;manifold-data-resource-list link-format="/resource/:resourceLabel" /&gt;
+              <pre><code class="html language-html">&lt;manifold-data-resource-list link-format="/resource/:resource" /&gt;
 </code></pre>
               <p>
                 Note that this will disable the custom events unless <code>preserve-event</code> is
                 passed as well.
               </p>
-              <h2 id="loadingstate">Loading State</h2>
-              <p>
-                This data component supports an optional loading state by specifying a child slot:
-              </p>
-              <pre><code class="html language-html">&lt;manifold-data-resource-list&gt;Loading…&lt;/manifold-data-product-name&gt;
-</code></pre>
-              <h2 id="disablingupdates">Disabling Updates</h2>
+              <h2 id="pausingupdates">Pausing updates</h2>
               <p>
                 By default, this component will subscribe to updates from the server. To disable
-                that, pass the <code>disable-update</code> attribute:
+                that, pass the <code>paused</code> attribute:
               </p>
-              <pre><code class="html language-html">&lt;manifold-data-resource-list disable-update&gt;Loading…&lt;/manifold-data-product-name&gt;
+              <pre><code class="html language-html">&lt;manifold-data-resource-list paused /&gt;
 </code></pre>
               <!-- Auto Generated Below -->
               <h2 id="properties">Properties</h2>
@@ -1579,18 +1568,18 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
                     <td><code>connections.prod</code></td>
                   </tr>
                   <tr>
-                    <td><code>disableUpdate</code></td>
-                    <td><code>disable-update</code></td>
-                    <td>Disable interval?</td>
-                    <td><code>boolean</code></td>
-                    <td><code>false</code></td>
-                  </tr>
-                  <tr>
                     <td><code>linkFormat</code></td>
                     <td><code>link-format</code></td>
                     <td>Link format structure, with <code>:resource</code> placeholder</td>
                     <td><code>string | undefined</code></td>
                     <td><code>undefined</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>paused</code></td>
+                    <td><code>paused</code></td>
+                    <td>Disable auto-updates?</td>
+                    <td><code>boolean</code></td>
+                    <td><code>false</code></td>
                   </tr>
                   <tr>
                     <td><code>preserveEvent</code></td>
@@ -1624,11 +1613,162 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-data-resource-list
-                  link-format="/resource/:resource"
-                  disable-update
-                  preserve-event
-                ></manifold-data-resource-list>
+                <manifold-data-resource-list paused></manifold-data-resource-list>
+              </div>
+            </div>
+          </section>
+          <section class="docs-section" id="manifold-data-manage-button">
+            <div class="markdown-body">
+              <!-- BEGIN README manifold-data-manage-button -->
+
+              <!-- DO NOT EDIT! This is autogenerated from a README. -->
+              <!-- Any changes here will be blown away. Edit the README instead. -->
+
+              <h1 id="managebutton">Manage Button</h1>
+              <p>Unstyled button for updating an already-provisioned resource.</p>
+              <h2 id="events">Events</h2>
+              <p>For loading, error and success messages, it will emit custom events.</p>
+              <pre><code class="js language-js">document.addEventListener('manifold-manageButton-click', ({ detail: { resourceName } }) =&gt;
+  console.info(`⌛ Provisioning ${resourceName} …`)
+);
+document.addEventListener(
+  'manifold-manageButton-success',
+  ({ detail: { createdAt, resourceName } }) =&gt;
+    alert(`🚀 ${resourceName} provisioned successfully on ${createdAt}!`)
+);
+document.addEventListener('manifold-manageButton-error', ({ detail }) =&gt; console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
+document.addEventListener('manifold-manageButton-invalid', ({ detail }) =&gt; console.log(detail));
+// {resourceName: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
+</code></pre>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="text-align:left;">Name</th>
+                    <th style="text-align:center;">Returns</th>
+                    <th style="text-align:left;">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-manageButton-click</code></td>
+                    <td style="text-align:center;"><code>planId</code></td>
+                    <td style="text-align:left;">
+                      Fires immediately when button is clicked. May be used to trigger a loading
+                      state, until <code>-success</code> or <code>-error</code> is received.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-manageButton-success</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>planId</code>, <code>features</code>
+                    </td>
+                    <td style="text-align:left;">Successful change. Returns plan name.</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align:left;"><code>manifold-manageButton-error</code></td>
+                    <td style="text-align:center;">
+                      <code>message</code>, <code>planId</code>, <code>features</code>
+                    </td>
+                    <td style="text-align:left;">
+                      Erred change, along with information on what went wrong.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- Auto Generated Below -->
+              <h2 id="properties">Properties</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Property</th>
+                    <th>Attribute</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>connection</code></td>
+                    <td>--</td>
+                    <td><em>(hidden)</em> Passed by <code>&lt;manifold-connection&gt;</code></td>
+                    <td><code>Connection</code></td>
+                    <td><code>connections.prod</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>features</code></td>
+                    <td>--</td>
+                    <td></td>
+                    <td><code>FeatureMap</code></td>
+                    <td><code>{}</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>planId</code></td>
+                    <td><code>plan-id</code></td>
+                    <td></td>
+                    <td><code>string</code></td>
+                    <td><code>''</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>productId</code></td>
+                    <td><code>product-id</code></td>
+                    <td></td>
+                    <td><code>string</code></td>
+                    <td><code>''</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>regionId</code></td>
+                    <td><code>region-id</code></td>
+                    <td></td>
+                    <td><code>string | undefined</code></td>
+                    <td><code>globalRegion.id</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>resourceName</code></td>
+                    <td><code>resource-name</code></td>
+                    <td>Name of resource</td>
+                    <td><code>string</code></td>
+                    <td><code>undefined</code></td>
+                  </tr>
+                </tbody>
+              </table>
+              <h2 id="events-1">Events</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>manifold-manageButton-click</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-manageButton-error</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><code>manifold-manageButton-success</code></td>
+                    <td></td>
+                    <td><code>CustomEvent&lt;void&gt;</code></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- END README -->
+            </div>
+            <h2>Example</h2>
+            <div class="docs-example">
+              <div class="docs-example-inner">
+                <manifold-data-manage-button resource-name="my-resource"
+                  >💾 Save</manifold-data-manage-button
+                >
               </div>
             </div>
           </section>

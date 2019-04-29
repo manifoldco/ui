@@ -13,17 +13,15 @@ component.
 <!-- Piio -->
 ```
 
-## Loading State
+The loading slot supports text as well as HTML elements.
 
-This data component supports an optional loading state by specifying a child slot:
+## Resource Name
+
+You can look up a logo by resource name by passing `resource-name`:
 
 ```html
-<manifold-data-product-name product-label="logdna">
-  Loading…
-</manifold-data-product-name>
+<manifold-data-product-logo resource-name="my-resource" />
 ```
-
-The loading slot supports text as well as HTML elements.
 
 <!-- Auto Generated Below -->
 
@@ -33,8 +31,8 @@ The loading slot supports text as well as HTML elements.
 | Property       | Attribute       | Description                                  | Type                  | Default            |
 | -------------- | --------------- | -------------------------------------------- | --------------------- | ------------------ |
 | `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection`          | `connections.prod` |
-| `productId`    | `product-id`    | Product ID (e.g. `"jawsdb-mysql"`)           | `string \| undefined` | `undefined`        |
 | `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string \| undefined` | `undefined`        |
+| `resourceName` | `resource-name` | Look up product name from resource           | `string \| undefined` | `undefined`        |
 
 
 ----------------------------------------------

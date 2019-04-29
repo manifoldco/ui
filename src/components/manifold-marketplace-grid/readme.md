@@ -16,7 +16,7 @@
 | `linkFormat`     | `link-format`     |             | `string \| undefined`    | `undefined` |
 | `preserveEvent`  | `preserve-event`  |             | `boolean`                | `false`     |
 | `products`       | --                |             | `string[] \| undefined`  | `[]`        |
-| `services`       | --                |             | `Product[] \| undefined` | `[]`        |
+| `services`       | --                |             | `Product[] \| undefined` | `undefined` |
 
 
 ----------------------------------------------

@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element } from '@stencil/core';
+import { Component, Prop, State, Element, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
@@ -10,33 +10,39 @@ export class ManifoldDataProductName {
   @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
-  /** Product ID (e.g. `"jawsdb-mysql"`) */
-  @Prop() productId?: string;
-  @State() product?: Catalog.ExpandedProduct;
-
-  componentWillLoad() {
-    if (this.productLabel) {
-      // Don’t return this promise to invoke the loading state
-      return fetch(`${this.connection.catalog}/products?label=${this.productLabel}`, withAuth())
-        .then(response => response.json())
-        .then(data => {
-          this.product = { ...data[0] };
-        });
-    }
-    if (this.productId) {
-      // Don’t return this promise to invoke the loading state
-      return fetch(`${this.connection.catalog}/products/${this.productId}`, withAuth())
-        .then(response => response.json())
-        .then(data => {
-          this.product = data;
-        });
-    }
-
-    return null;
+  /** Look up product name from resource */
+  @Prop() resourceName?: string;
+  @State() productName?: string;
+  @Watch('productLabel') productChange(newProduct: string) {
+    this.fetchProduct(newProduct);
+  }
+  @Watch('resourceName') resourceChange(newResource: string) {
+    this.fetchResource(newResource);
   }
 
+  componentWillLoad() {
+    if (this.productLabel) this.fetchProduct(this.productLabel);
+    if (this.resourceName) this.fetchResource(this.resourceName);
+  }
+
+  fetchProduct = async (productLabel: string) => {
+    this.productName = undefined;
+    const { catalog } = this.connection;
+    const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth());
+    const products: Catalog.Product[] = await response.json();
+    this.productName = products[0].body.name; // eslint-disable-line prefer-destructuring
+  };
+
+  fetchResource = async (resourceName: string) => {
+    this.productName = undefined;
+    const { gateway } = this.connection;
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
+    const resource: Gateway.Resource = await response.json();
+    this.productName = resource.product && resource.product.name;
+  };
+
   render() {
-    return this.product ? this.product.body.name : <slot />;
+    return this.productName || null;
   }
 }
 

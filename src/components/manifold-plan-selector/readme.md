@@ -118,6 +118,7 @@ same order).
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 | Property        | Attribute        | Description                                                                                | Type                   | Default            |
@@ -126,10 +127,11 @@ same order).
 | `hideCta`       | `hide-cta`       | _(optional)_ Hide CTA?                                                                     | `boolean \| undefined` | `undefined`        |
 | `linkFormat`    | `link-format`    | _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders | `string \| undefined`  | `undefined`        |
 | `preserveEvent` | `preserve-event` | Should the JS event still fire, even if link-format is passed?                             | `boolean`              | `false`            |
-| `productLabel`  | `product-label`  | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string`               | `undefined`        |
+| `productLabel`  | `product-label`  | URL-friendly slug (e.g. `"jawsdb-mysql"`)                                                  | `string \| undefined`  | `undefined`        |
 | `regions`       | `regions`        | Specify region order                                                                       | `string \| undefined`  | `undefined`        |
 | `resourceName`  | `resource-name`  | Is this tied to an existing resource?                                                      | `string \| undefined`  | `undefined`        |
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -23,8 +23,8 @@ export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
-  /** Disable interval? */
-  @Prop() disableUpdate: boolean = false;
+  /** Disable auto-updates? */
+  @Prop() paused: boolean = false;
   /** Link format structure, with `:resource` placeholder */
   @Prop() linkFormat?: string;
   /** Should the JS event still fire, even if link-format is passed?  */
@@ -34,7 +34,7 @@ export class ManifoldDataResourceList {
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
-    if (!this.disableUpdate) this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    if (!this.paused) this.interval = window.setInterval(() => this.fetchResources(), 3000);
   }
 
   componentDidUnload() {
@@ -78,7 +78,7 @@ export class ManifoldDataResourceList {
 
   render() {
     if (!Array.isArray(this.resources)) {
-      return <slot />;
+      return null;
     }
 
     return (

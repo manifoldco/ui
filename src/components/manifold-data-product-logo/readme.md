@@ -19,14 +19,12 @@ can override this by specifying one of your own:
 <manifold-data-product-logo product-label="iron_cache" alt="My alternate text" />
 ```
 
-## Loading State
+## Resource Name
 
-This data component supports an optional loading state by specifying a child slot:
+You can look up a logo by resource name by passing `resource-name`:
 
 ```html
-<manifold-data-product-logo product-label="scout">
-  <img src="placeholder.svg" alt="Loading…" />
-</manifold-data-product-logo>
+<manifold-data-product-logo resource-name="my-resource" />
 ```
 
 <!-- Auto Generated Below -->
@@ -38,8 +36,8 @@ This data component supports an optional loading state by specifying a child slo
 | -------------- | --------------- | -------------------------------------------- | --------------------- | ------------------ |
 | `alt`          | `alt`           | _(optional)_ `alt` attribute                 | `string \| undefined` | `undefined`        |
 | `connection`   | --              | _(hidden)_ Passed by `<manifold-connection>` | `Connection`          | `connections.prod` |
-| `productId`    | `product-id`    | Product ID                                   | `string \| undefined` | `undefined`        |
 | `productLabel` | `product-label` | URL-friendly slug (e.g. `"jawsdb-mysql"`)    | `string \| undefined` | `undefined`        |
+| `resourceName` | `resource-name` | Look up product name from resource           | `string \| undefined` | `undefined`        |
 
 
 ----------------------------------------------

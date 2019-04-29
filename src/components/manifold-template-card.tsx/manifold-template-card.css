@@ -5,6 +5,7 @@
 .wrapper {
   display: grid;
   grid-template-rows: min-content auto;
+  box-sizing: border-box;
   height: 100%;
   text-decoration: none;
   background-color: var(--mf-c-white);

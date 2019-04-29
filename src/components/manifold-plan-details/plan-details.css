@@ -4,19 +4,21 @@
 :host {
   --padding: 1rem;
 
-  display: grid;
-  background-color: var(--mf-c-white);
-  border: 1px solid var(--mf-c-gray-t3);
-  border-radius: var(--mf-radius-default);
-  box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.2);
+  position: relative;
 
   @media (--viewport-m) {
     --padding: 2rem;
   }
 }
 
-.plan-details {
-  padding: var(--padding);
+.card {
+  padding-top: var(--padding);
+  padding-right: var(--padding);
+  padding-left: var(--padding);
+  background-color: var(--mf-c-white);
+  border: 1px solid var(--mf-c-gray-t3);
+  border-radius: var(--mf-radius-default);
+  box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.2);
 }
 
 .header {
@@ -72,6 +74,11 @@
   text-transform: uppercase;
 }
 
+.scroll {
+  position: sticky;
+  top: 1.5rem;
+}
+
 .features {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -122,7 +129,7 @@
 .region {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--padding);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: var(--mf-font-d1);
@@ -165,6 +172,8 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  margin-right: calc(var(--padding) * -1);
+  margin-left: calc(var(--padding) * -1);
   padding: calc(var(--padding) * 0.75) var(--padding);
   box-shadow: 0 -1px var(--mf-c-gray-t3);
 }
