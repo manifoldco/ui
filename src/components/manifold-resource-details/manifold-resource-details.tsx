@@ -1,4 +1,4 @@
-import { Component, Prop, Element, State } from '@stencil/core';
+import { Component, Prop, Element, State, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
@@ -16,47 +16,46 @@ export class ManifoldResourceDetails {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
-  /** ID of resource */
-  @Prop() resourceId: string;
-  @State() resource?: Marketplace.Resource;
-  @State() plan?: Catalog.ExpandedPlan;
+  /** Which resource does this belong to? */
+  @Prop() resourceName: string;
+  @State() resource?: Gateway.Resource;
+  @Watch('resourceName') resourceChange(newName: string) {
+    this.fetchResource(newName);
+  }
+
+  fetchResource(resourceName: string) {
+    return fetch(`${this.connection.gateway}/resources/me/${resourceName}`, withAuth())
+      .then(response => response.json())
+      .then((resource: Gateway.Resource) => {
+        this.resource = resource;
+      });
+  }
 
   async componentWillLoad() {
-    // get resource data
-    const resourceResponse = await fetch(
-      `${this.connection.marketplace}/resources/${this.resourceId}`,
-      withAuth()
-    );
-    const resource = await resourceResponse.json();
-    this.resource = resource;
-
-    // get plan data
-    if (this.resource) {
-      const planResponse = await fetch(
-        `${this.connection.catalog}/plans/${this.resource.body.plan_id}`,
-        withAuth()
-      );
-      const plan = await planResponse.json();
-      this.plan = plan;
-    }
+    return this.fetchResource(this.resourceName);
   }
 
   render() {
-    if (!this.resource || !this.plan) return null;
+    if (!this.resource) return null;
 
-    const { expanded_features = [] } = this.plan.body;
-    const { features: customFeatures } = this.resource.body;
+    const { expanded_features } = this.resource.plan as Gateway.ResolvedPlan;
+    const { features: customFeatures = [] } = this.resource;
 
     return (
       <dl class="features">
-        {expanded_features.map(feature => [
-          <dt class="feature-name">
-            <FeatureName feature={feature} />
-          </dt>,
-          <dd class="feature-value">
-            <FeatureValue feature={feature} value={customFeatures[feature.label]} />
-          </dd>,
-        ])}
+        {expanded_features.map(feature => {
+          const customFeature = customFeatures.find(({ label }) => label === feature.label);
+          const customValue = customFeature && customFeature.value.value;
+
+          return [
+            <dt class="feature-name">
+              <FeatureName feature={feature} />
+            </dt>,
+            <dd class="feature-value">
+              <FeatureValue feature={feature} value={customValue} />
+            </dd>,
+          ];
+        })}
       </dl>
     );
   }

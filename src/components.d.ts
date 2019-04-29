@@ -630,9 +630,9 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * ID of resource
+    * Which resource does this belong to?
     */
-    'resourceId': string;
+    'resourceName': string;
   }
   interface ManifoldResourceDetailsAttributes extends StencilHTMLAttributes {
     /**
@@ -640,9 +640,9 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * ID of resource
+    * Which resource does this belong to?
     */
-    'resourceId'?: string;
+    'resourceName'?: string;
   }
 
   interface ManifoldResourceStatus {
