@@ -1613,7 +1613,14 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) =&gt;
             <h2>Example</h2>
             <div class="docs-example">
               <div class="docs-example-inner">
-                <manifold-data-resource-list paused></manifold-data-resource-list>
+                <manifold-data-resource-list link-format="/resources/:resource" paused>
+                  <ul>
+                    <li><a href="/resources/db-prod">db-prod</a></li>
+                    <li><a href="/resources/db-stage">db-stage</a></li>
+                    <li><a href="/resources/logging-prod">logging-prod</a></li>
+                    <li><a href="/resources/logging-test">logging-test</a></li>
+                  </ul>
+                </manifold-data-resource-list>
               </div>
             </div>
           </section>
