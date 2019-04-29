@@ -40,7 +40,7 @@ export class ManifoldResourceDetails {
     if (!this.resource) return null;
     console.log(this.resource);
 
-    const { expanded_features } = this.resource.plan as Gateway.ResolvedPlan;
+    const { expanded_features, name } = this.resource.plan as Gateway.ResolvedPlan;
     const { estimated_cost, features: customFeatures = [] } = this.resource;
     return (
       <div class="container">
@@ -50,7 +50,7 @@ export class ManifoldResourceDetails {
             <span class="amount">{$(estimated_cost.cost)}</span>,
             <span class="suffix">/mo</span>,
           ]}
-          <p class="plan-name">{PannerNode.name}</p>
+          <p class="plan-name">{name}</p>
         </div>
         <dl class="features">
           {expanded_features.map(feature => {
