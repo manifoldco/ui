@@ -21,6 +21,7 @@ export class ManifoldResourceDetails {
   @Prop() resourceName: string;
   @State() resource?: Gateway.Resource;
   @Watch('resourceName') resourceChange(newName: string) {
+    this.resource = undefined;
     this.fetchResource(newName);
   }
 

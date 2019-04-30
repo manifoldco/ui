@@ -65,7 +65,7 @@ export class ManifoldProductPage {
                 {this.hideCta !== true && (
                   <div class="sidebar-cta">
                     <manifold-link-button href={this.ctaLink} onClick={this.onClick}>
-                      Get {name}
+                      <span class="link-text">Get {name} Duis mollis, est non commodo luctus</span>
                       <manifold-icon icon={arrow_right} marginLeft />
                     </manifold-link-button>
                   </div>
