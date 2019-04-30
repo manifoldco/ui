@@ -1,4 +1,5 @@
 const { RemoteBrowserTarget } = require('happo.io');
+const happoPluginTypeScript = require('happo-plugin-typescript');
 const path = require('path');
 
 module.exports = {
@@ -13,4 +14,5 @@ module.exports = {
   type: 'plain',
   prerender: false,
   setupScript: path.resolve(__dirname, 'happoSetup.js'),
+  plugins: [happoPluginTypeScript()],
 };

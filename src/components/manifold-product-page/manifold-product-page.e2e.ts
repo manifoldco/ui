@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Product, Provider } from '../../spec/mock/catalog';
+import { Product } from '../../spec/mock/catalog';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 

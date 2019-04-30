@@ -1,4 +1,4 @@
-export const primary = render => {
+export const primary = () => {
   const defaultValue = 'foo';
   const options = [
     {
