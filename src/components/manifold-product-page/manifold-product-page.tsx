@@ -40,6 +40,22 @@ export class ManifoldProductPage {
     }
   };
 
+  get imageOutlineFilter() {
+    return (
+      <svg height="0" xmlns="http://www.w3.org/2000/svg">
+        <filter id="drop-shadow">
+          <feMorphology operator="dilate" radius="1" in="SourceAlpha" result="dilated" />
+          <feFlood flood-color="rgba(255,255,255,1)" flood-opacity="1" result="flood" />
+          <feComposite in2="dilated" in="flood" operator="in" />
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </svg>
+    );
+  }
+
   render() {
     if (this.product) {
       const { documentation_url, support_email, name, label, logo_url, tags } = this.product.body;
@@ -52,6 +68,7 @@ export class ManifoldProductPage {
               <div class="sidebar-inner">
                 <div class="sidebar-card" style={{ '--background-gradient': gradient }}>
                   <div class="product-logo">
+                    {this.imageOutlineFilter}
                     <img src={logo_url} alt={name} itemprop="logo" />
                   </div>
                   <h2 class="product-name" itemprop="name">
