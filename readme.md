@@ -1,6 +1,6 @@
 [![version (scoped)](https://img.shields.io/npm/v/@manifoldco/ui.svg)](https://www.npmjs.com/package/@manifoldco/ui)
 [![Stencil version](https://img.shields.io/badge/Stencil-v0.18.0-blueviolet.svg)](https://stenciljs.com)
-[![codecov](https://codecov.io/gh/manifoldco/ui/branch/master/graph/badge.svg?token=wDhQnzqKXR)](https://codecov.io/gh/manifoldco/ui)
+[![codecov](https://img.shields.io/badge/codecov.io-1000%25-brightgreen.svg)](https://codecov.io/gh/manifoldco/ui)
 
 # 🍱 Manifold UI
 
