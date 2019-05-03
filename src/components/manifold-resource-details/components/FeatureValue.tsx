@@ -37,6 +37,5 @@ export const FeatureValue: FunctionalComponent<FeatureValueProps> = ({
       displayValue = feature.value_string;
       break;
   }
-  console.log({ displayValue });
   return <FeatureDisplay value={displayValue} />;
 };

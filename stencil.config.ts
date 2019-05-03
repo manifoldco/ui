@@ -15,10 +15,6 @@ export const config: Config = {
         postCSSPresetEnv({
           features: {
             'custom-media-queries': true,
-            'custom-properties': {
-              importFrom: ['./src/global/theme.css'],
-              preserve: false,
-            },
             'nesting-rules': true,
           },
         }),
