@@ -8,7 +8,7 @@ export const config: Config = {
   namespace: 'manifold',
   globalStyle: 'src/global/theme.css',
   globalScript: 'src/global/app.ts',
-  outputTargets: [{ type: 'dist' }, { type: 'www', serviceWorker: null }],
+  outputTargets: [{ type: 'dist' }],
   plugins: [
     postcss({
       plugins: [
