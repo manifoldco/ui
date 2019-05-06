@@ -1,6 +1,8 @@
 import { storiesOf } from '@storybook/html';
+import markdown from '../src/components/manifold-plan-selector/readme.md';
 
 storiesOf('Plan Selector', module)
+  .addParameters({ readme: { sidebar: markdown } })
   .add(
     'JawsDB',
     () => '<manifold-plan-selector product-label="jawsdb-mysql"></manifold-plan-selector>'

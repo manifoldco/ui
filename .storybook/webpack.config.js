@@ -1,9 +1,11 @@
+// Based on https://github.com/MadnessLabs/enjin-components
+
 const { existsSync, readdirSync } = require('fs');
 const { resolve } = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = ({ config }) => {
-  // 1. Allow webpack to import Stencil
+  // 1. Transpile @stencil modules with Babel
   const babelLoader = config.module.rules.find(
     ({ use }) => use && use[0].loader === 'babel-loader'
   );

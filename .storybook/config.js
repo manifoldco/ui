@@ -1,11 +1,8 @@
-import { addParameters, configure } from '@storybook/html';
+import { addDecorator, configure } from '@storybook/html';
+import { addReadme } from 'storybook-readme/html';
 
-// Options
-addParameters({
-  options: {
-    showPanel: false,
-  },
-});
+// storybook-readme
+addDecorator(addReadme);
 
 // Load stories (import all files ending in *.stories.js)
 const req = require.context('../stories', true, /\.stories\.js$/);

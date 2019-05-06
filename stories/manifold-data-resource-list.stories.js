@@ -1,8 +1,11 @@
 import { storiesOf } from '@storybook/html';
+import markdown from '../src/components/manifold-data-resource-list/readme.md';
 
-storiesOf('Resource List 🔒 [Data]', module).add(
-  'default',
-  () => `
+storiesOf('Resource List 🔒 [Data]', module)
+  .addParameters({ readme: { sidebar: markdown } })
+  .add(
+    'default',
+    () => `
   <manifold-data-resource-list link-format="/resources/:resource" paused>
   <ul>
     <li><a href="/resources/db-prod">db-prod</a></li>
@@ -11,4 +14,4 @@ storiesOf('Resource List 🔒 [Data]', module).add(
     <li><a href="/resources/logging-test">logging-test</a></li>
   </ul>
 </manifold-data-resource-list>`
-);
+  );
