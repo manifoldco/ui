@@ -21,10 +21,10 @@
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build",
-    "build:dev": "stencil build --dev --docs --watch",
+    "build:dev": "stencil build --dev --watch",
     "build-storybook": "build-storybook",
-    "dev": "concurrently 'npm run build:dev' 'npm run storybook'",
     "postbuild": "npm run generate:docs",
+    "dev": "concurrently 'npm run build:dev' 'wait-on dist/index.js && npm run storybook'",
     "format": "npm run format:ts && npm run format:css",
     "format:html": "prettier src/index.html --write",
     "format:css": "stylelint 'src/**/*.css' --fix",
@@ -101,6 +101,7 @@
     "stylelint-config-rational-order": "0.0.4",
     "stylelint-config-standard": "^18.2.0",
     "ts-loader": "^6.0.0",
+    "wait-on": "^3.2.0",
     "webpack": "^4.28.4"
   }
 }
