@@ -73,8 +73,11 @@ const CSS_BEFORE = `
   <!-- Any changes here will be blown away. Edit the CSS instead. -->
 
   <style>
+    /* stylelint-disable */
 `;
-const CSS_AFTER = `</style>`;
+const CSS_AFTER = `
+    /* stylelint-enable */
+  </style>`;
 
 function getStylesheetName(contents) {
   const match = contents.match(/BEGIN CSS [a-z.]+(?=\s)/);
