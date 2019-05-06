@@ -37,8 +37,10 @@ body {
   margin: 0;
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.9);
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-nav {
     top: 0;
     left: 0;
     width: 15rem;
@@ -53,23 +55,27 @@ body {
   background: none;
   border: none;
   appearance: none;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-nav-button {
     display: none;
   }
+}
 
-  & svg {
-    display: block;
-    width: 1rem;
-    height: 1rem;
-  }
+.docs-nav-button svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
 }
 
 .docs-nav-header {
   display: flex;
   margin-left: -0.5rem;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-nav-header {
     margin-left: -0.125rem;
   }
 }
@@ -79,8 +85,10 @@ body {
   width: 96px;
   height: 32px;
   margin-left: -0.25rem;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-nav-logo {
     width: 128px;
     height: 43px;
   }
@@ -98,22 +106,24 @@ body {
 
 .docs-nav-expanded {
   display: none;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-nav-expanded {
     display: block;
   }
+}
 
-  &.is-expanded {
-    position: relative;
-    z-index: var(--mf-layer-nav);
-    display: block;
-    overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.95);
+.docs-nav-expanded.is-expanded {
+  position: relative;
+  z-index: var(--mf-layer-nav);
+  display: block;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.95);
+}
 
-    & ~ .docs-nav-underlay {
-      display: block;
-    }
-  }
+.docs-nav-expanded.is-expanded ~ .docs-nav-underlay {
+  display: block;
 }
 
 .docs-nav ul {
@@ -144,8 +154,10 @@ body {
   margin-top: 4rem;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-main {
     height: 100vh;
     margin-top: 0;
     padding-left: 15rem;
@@ -170,8 +182,10 @@ body {
   margin-left: -1.5rem;
   padding: 1rem;
   font-size: 16px;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-example {
     width: calc(100% + 3rem);
     margin-right: 0;
     margin-left: -1.5rem;
@@ -182,8 +196,10 @@ body {
 
 .docs-example-inner {
   background-color: white;
+}
 
-  @media (min-width: 750px) {
+@media (min-width: 750px) {
+  .docs-example-inner {
     padding: 1.5rem;
     border-radius: 1rem;
     box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.1);

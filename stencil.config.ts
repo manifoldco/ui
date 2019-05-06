@@ -6,7 +6,7 @@ import postCSSPresetEnv from 'postcss-preset-env';
 
 export const config: Config = {
   namespace: 'manifold',
-  globalStyle: 'src/global/app.css',
+  globalStyle: 'src/global/theme.css',
   globalScript: 'src/global/app.ts',
   outputTargets: [{ type: 'dist' }, { type: 'www', serviceWorker: null }],
   plugins: [
@@ -15,10 +15,6 @@ export const config: Config = {
         postCSSPresetEnv({
           features: {
             'custom-media-queries': true,
-            'custom-properties': {
-              importFrom: ['./src/global/theme.css'],
-              preserve: false,
-            },
             'nesting-rules': true,
           },
         }),
