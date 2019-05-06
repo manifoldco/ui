@@ -21,7 +21,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build",
-    "build:dev": "stencil build --dev --watch",
+    "build:dev": "stencil build --dev --docs --watch",
     "build-storybook": "build-storybook",
     "dev": "concurrently 'npm run build:dev' 'npm run storybook'",
     "postbuild": "npm run generate:docs",
