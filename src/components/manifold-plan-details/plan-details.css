@@ -9,14 +9,20 @@
   @media (--viewport-m) {
     --padding: 2rem;
   }
+
+  /* theme vars */
+  --card-background: var(--manifold-grayscale-100i);
+  --card-text-color: var(--manifold-text-color);
+  --card-border: var(--manifold-card-border, 1px solid var(--manifold-grayscale-30));
 }
 
 .card {
   padding-top: var(--padding);
   padding-right: var(--padding);
   padding-left: var(--padding);
-  background-color: var(--mf-c-white);
-  border: 1px solid var(--mf-c-gray-t3);
+  color: var(--card-text-color);
+  background-color: var(--card-background);
+  border: var(--card-border);
   border-radius: var(--mf-radius-default);
   box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.2);
 }
@@ -91,7 +97,9 @@
 .feature-value {
   margin: 0;
   padding: 0.5rem 0;
-  border-top: 1px dotted var(--mf-c-gray-t3);
+  border-top: var(--card-border);
+  /* stylelint-disable-next-line */
+  border-top-style: dotted;
 }
 
 .feature-name {
@@ -133,8 +141,11 @@
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: var(--mf-font-d1);
-  border-top: 1px dotted var(--mf-c-gray-t3);
-  border-bottom: 1px dotted var(--mf-c-gray-t3);
+  border-top: var(--card-border);
+  border-bottom: var(--card-border);
+  /* stylelint-disable-next-line */
+  border-top-style: dotted;
+  border-bottom-style: dotted;
 }
 
 .region-label {
@@ -175,7 +186,7 @@
   margin-right: calc(var(--padding) * -1);
   margin-left: calc(var(--padding) * -1);
   padding: calc(var(--padding) * 0.75) var(--padding);
-  box-shadow: 0 -1px var(--mf-c-gray-t3);
+  border-top: var(--card-border);
 }
 
 .cost {

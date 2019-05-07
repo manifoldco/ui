@@ -1,4 +1,88 @@
+@import './theme.css';
+
 :root {
+  /* DO brand */
+  --do-blue: #0069ff;
+  --do-blue-faded: #f5f9ff;
+  --do-blue-dark: #031b4d;
+  --do-teal: #1fc3e9;
+  --do-green: #15cd72;
+  --do-red: #ed4f32;
+  --do-lightest-gray: #f1f1f1;
+  --do-light-gray: #dfdfdf;
+  --do-dark-gray: #cbcbcb;
+  --do-text: #676767;
+  --do-radius: 3px;
+  --do-font-family: 'proxima-nova', sans-serif;
+  --do-black-rgb: 0, 0, 20;
+  --do-white-rgb: 255, 255, 255;
+
+  /* high-level theme */
+  --manifold-color-1: var(--do-blue);
+  --manifold-color-2: var(--do-dark-blue);
+  --manifold-color-3: var(--do-teal);
+  --manifold-color-4: var(--do-text);
+  --manifold-color-5: var(--do-black);
+
+  /* usually black or white; grays will be derived from this using opacity */
+  --manifold-grayscale-base: var(--do-white-rgb);
+  --manifold-grayscale-base-inverted: var(--do-black-rgb);
+
+  /* semantic theme */
+  --manifold-text-color: var(--manifold-grayscale-100);
+  --manifold-text-color-alt: var(--manifold-grayscale-100i);
+  --manifold-background: var(--do-white);
+  --manifold-color-primary: var(--do-blue);
+  --manifold-color-success: var(--do-green);
+  --manifold-color-warn: var(--do-red);
+  --manifold-color-error: var(--do-red);
+  --manifold-radius: var(--do-radius);
+
+  /* WC theme */
+  --manifold-font-default: var(--do-font-family);
+  --manifold-border: 1px solid var(--manifold-grayscale-20);
+
+  /* card vars */
+  /* --manifold-card-border: 1px solid var(--do-light-gray); */
+  --manifold-card-radius: var(--do-radius);
+
+  /* card hover */
+  /*--manifold-card-background-hover: var(--do-lightest-gray); 
+  --manifold-card-border-hover: 1px solid #cbcbcb; */
+  --mf-card-shadow-hover: none;
+
+  /* card active */
+  /*
+  --manifold-card-background-active: var(--do-blue-faded);
+  --manifold-card-border-active: 1px solid var(--do-blue);
+  --manifold-card-color-active: var(--do-blue);
+  --manifold-card-shadow-active: none;
+*/
+  /* tag vars */
+  --mf-tag-font-weight: 900;
+  --mf-tag-background: var(--do-blue);
+  --mf-tag-radius: var(--do-radius);
+  --mf-tag-free-background: var(--do-teal);
+
+  /* categories */
+  --mf-link-color: var(--do-gray);
+  --mf-link-color-active: var(--do-blue);
+
+  /* text */
+  --mf-c-text: var(--mf-c-gray-s2);
+  --mf-c-textSubdue: var(--mf-c-gray);
+
+  /* button */
+  --mf-button-background: var(--do-blue);
+  --mf-button-radius: var(--do-radius);
+  --mf-button-font-size: 0.9rem;
+  --mf-button-padding: 1.3em 1.6em;
+
+  /* plan list */
+
+  --mf-card-gap: 1rem;
+
+  /*
   --mf-c-black: rgb(34, 34, 34);
   --mf-c-offWhite: rgb(247, 247, 248);
   --mf-c-gray-t5: rgb(245, 247, 249);
@@ -18,15 +102,21 @@
   --mf-c-gold: rgb(245, 139, 35);
   --mf-c-green: rgb(49, 186, 162);
   --mf-c-yellow: rgb(255, 222, 82);
+*/
 
   /* rgb colors */
+
+  /*
   --mf-c-blue-rgb: 30, 80, 218;
   --mf-c-gray-rgb: 143, 143, 149;
   --mf-c-red-rgb: 213, 15, 73;
   --mf-c-gold-rgb: 245, 139, 35;
   --mf-c-green-rgb: 49, 186, 162;
+*/
 
   /* grays */
+
+  /*
   --mf-c-black-0: rgba(0, 0, 0, 0);
   --mf-c-black-03: rgba(0, 0, 0, 0.03);
   --mf-c-black-05: rgba(0, 0, 0, 0.05);
@@ -42,53 +132,11 @@
   --mf-c-black-75: rgba(0, 0, 0, 0.75);
   --mf-c-black-80: rgba(0, 0, 0, 0.8);
   --mf-c-black-90: rgba(0, 0, 0, 0.9);
-
-  /* grayscale base */
-  --manifold-grayscale-base: 0, 0, 0;
-  --manifold-grayscale-base-inverted: 255, 255, 255;
-
-  /* grayscale */
-  --manifold-grayscale-0: rgba(var(--manifold-grayscale-base), 0);
-  --manifold-grayscale-03: rgba(var(--manifold-grayscale-base), 0.03);
-  --manifold-grayscale-05: rgba(var(--manifold-grayscale-base), 0.05);
-  --manifold-grayscale-07: rgba(var(--manifold-grayscale-base), 0.07);
-  --manifold-grayscale-10: rgba(var(--manifold-grayscale-base), 0.1);
-  --manifold-grayscale-15: rgba(var(--manifold-grayscale-base), 0.15);
-  --manifold-grayscale-20: rgba(var(--manifold-grayscale-base), 0.2);
-  --manifold-grayscale-25: rgba(var(--manifold-grayscale-base), 0.25);
-  --manifold-grayscale-30: rgba(var(--manifold-grayscale-base), 0.3);
-  --manifold-grayscale-40: rgba(var(--manifold-grayscale-base), 0.4);
-  --manifold-grayscale-50: rgba(var(--manifold-grayscale-base), 0.5);
-  --manifold-grayscale-60: rgba(var(--manifold-grayscale-base), 0.6);
-  --manifold-grayscale-70: rgba(var(--manifold-grayscale-base), 0.6);
-  --manifold-grayscale-75: rgba(var(--manifold-grayscale-base), 0.75);
-  --manifold-grayscale-80: rgba(var(--manifold-grayscale-base), 0.8);
-  --manifold-grayscale-90: rgba(var(--manifold-grayscale-base), 0.9);
-  --manifold-grayscale-100: rgba(var(--manifold-grayscale-base), 1);
-
-  /* grayscale */
-  --manifold-grayscale-0i: rgba(var(--manifold-grayscale-base-inverted), 0);
-  --manifold-grayscale-03i: rgba(var(--manifold-grayscale-base-inverted), 0.03);
-  --manifold-grayscale-05i: rgba(var(--manifold-grayscale-base-inverted), 0.05);
-  --manifold-grayscale-07i: rgba(var(--manifold-grayscale-base-inverted), 0.07);
-  --manifold-grayscale-10i: rgba(var(--manifold-grayscale-base-inverted), 0.1);
-  --manifold-grayscale-15i: rgba(var(--manifold-grayscale-base-inverted), 0.15);
-  --manifold-grayscale-20i: rgba(var(--manifold-grayscale-base-inverted), 0.2);
-  --manifold-grayscale-25i: rgba(var(--manifold-grayscale-base-inverted), 0.25);
-  --manifold-grayscale-30i: rgba(var(--manifold-grayscale-base-inverted), 0.3);
-  --manifold-grayscale-40i: rgba(var(--manifold-grayscale-base-inverted), 0.4);
-  --manifold-grayscale-50i: rgba(var(--manifold-grayscale-base-inverted), 0.5);
-  --manifold-grayscale-60i: rgba(var(--manifold-grayscale-base-inverted), 0.6);
-  --manifold-grayscale-70i: rgba(var(--manifold-grayscale-base-inverted), 0.6);
-  --manifold-grayscale-75i: rgba(var(--manifold-grayscale-base-inverted), 0.75);
-  --manifold-grayscale-80i: rgba(var(--manifold-grayscale-base-inverted), 0.8);
-  --manifold-grayscale-90i: rgba(var(--manifold-grayscale-base-inverted), 0.9);
-  --manifold-grayscale-100i: rgba(var(--manifold-grayscale-base-inverted), 1);
-
-  /* border */
-  --manifold-border: 1px solid var(--manifold-grayscale-15);
+*/
 
   /* gradients */
+
+  /*
   --mf-g-blue: linear-gradient(to top right, #329dd1, #4f50a4);
   --mf-g-blueFaded: linear-gradient(to top right, #c5c6ff, #b1e5ff);
   --mf-g-cta: linear-gradient(63deg, #f56d41, #b54a84);
@@ -109,8 +157,11 @@
   --mf-g-dumper: linear-gradient(to top right, #9b0000, #d2202f);
   --mf-g-blitline: linear-gradient(to top right, #00648c, #00a4e6);
   --mf-g-elegant-cm: linear-gradient(to top right, #0e517e, #218ab5);
+*/
 
   /* context colors */
+
+  /*
   --mf-c-authentication: var(--mf-c-blue-s1);
   --mf-c-CMS: var(--mf-c-yellow);
   --mf-c-cms: var(--mf-c-yellow);
@@ -122,8 +173,11 @@
   --mf-c-optimization: var(--mf-c-teal);
   --mf-c-search: var(--mf-c-teal);
   --mf-c-worker: var(--mf-c-green);
+*/
 
   /* product gradients */
+
+  /*
   --mf-g-aiven-cassandra: linear-gradient(to right top, #0e517e, #218ab5);
   --mf-g-aiven-elasticsearch: linear-gradient(to right top, #097cab, #2c9ecf);
   --mf-g-aiven-grafana: linear-gradient(to right top, #c3862d, #faa43b);
@@ -164,19 +218,28 @@
   --mf-g-websolr: linear-gradient(to right top, #0e517e, #218ab5);
   --mf-g-zerosix: linear-gradient(to right top, #252a2e, #344068);
   --mf-g-ziggeo: linear-gradient(to right top, #743252, #ba445e);
+*/
 
   /* product logo sizes */
+
+  /*
   --mf-product-logo-s: 2rem;
   --mf-product-logo-m: 2.75rem;
   --mf-product-logo-l: 3rem;
+*/
 
   /* text-colors */
+
+  /*
   --mf-c-text: var(--mf-c-gray-s2);
   --mf-c-textSubdue: var(--mf-c-gray);
   --mf-c-background: var(--mf-c-white);
   --mf-c-backgroundSubdue: var(--mf-c-offWhite);
+*/
 
   /* font */
+
+  /*
   --mf-font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif,
     'Apple Color Emoji';
@@ -208,25 +271,33 @@
   --mf-font-d10: 0.2588386562em;
   --mf-font-d11: 0.2261163936em;
   --mf-font-d12: 0.1975308642em;
+*/
 
   /* font weight */
+
+  /*
   --mf-font-semibold: 500;
   --mf-font-bold: 600;
+*/
 
   /* border */
-  --mf-radius-m: 4px; /* TODO replace instances with default */
-  --mf-radius-l: 6px; /* TODO replace instances with large */
+
+  /*
   --mf-radius-small: 3px;
   --mf-radius-default: 4px;
   --mf-radius-large: 6px;
   --mf-radius-xlarge: 8px;
   --mf-radius-circle: 50%;
+*/
 
   /* shadow */
+
+  /*
   --mf-shadow-default: 0 2px 6px rgba(31, 31, 38, 0.1);
   --mf-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
   --mf-text-color: var(--mf-c-black);
   --mf-background-color: var(--mf-c-white);
+*/
 
   /* easing */
 

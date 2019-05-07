@@ -20,10 +20,10 @@
     bottom: 0;
     left: 0;
     background-image: linear-gradient(
-      rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0.1) 1em,
-      rgba(0, 0, 0, 0) 1em,
-      rgba(0, 0, 0, 0) 1.4em
+      var(--manifold-grayscale-0),
+      var(--manifold-grayscale-10) 1em,
+      var(--manifold-grayscale-0) 1em,
+      var(--manifold-grayscale-0) 1.4em
     );
     background-repeat: repeat-y;
     background-size: 100% 1.4em;
@@ -38,7 +38,12 @@
     right: 100%;
     width: 20em; /* derived from font size */
     height: 100%;
-    background-image: linear-gradient(45deg, transparent 25%, white, transparent 75%);
+    background-image: linear-gradient(
+      45deg,
+      transparent 25%,
+      var(--manifold-grayscale-100i),
+      transparent 75%
+    );
     opacity: 0.4;
     animation-name: flash;
     animation-duration: 1.5s;

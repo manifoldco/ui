@@ -4,6 +4,38 @@
   --padding-small: 1rem;
   --padding-medium: 2rem;
   --padding-xsmall: 0.5rem;
+
+  /* plan button */
+  --plan-button-spacing: var(--manifold-card-gap, 0.75rem);
+  --plan-button-border: var(
+    --manifold-card-border,
+    var(--manifold-border, 1px solid var(--manifold-grayscale-20))
+  );
+  --plan-button-radius: var(--manifold-card-radius, var(--manifold-radius, 4px));
+  --plan-button-background: var(--manifold-grayscale-100i);
+  --plan-button-color: var(--manifold-text-color, inherit);
+  --plan-button-shadow: var(--manifold-card-shadow, none);
+
+  /* hover/focus */
+  --plan-button-border-hover: var(--manifold-card-border-hover, var(--plan-button-border));
+  --plan-button-background-hover: var(
+    --manifold-card-background-hover,
+    var(--plan-button-background)
+  );
+  --plan-button-color-hover: var(--manifold-card-color-hover, var(--plan-button-color));
+  --plan-button-shadow-hover: var(--manifold-card-shadow-hover, none);
+
+  /* active */
+  --plan-button-background-active: var(
+    --manifold-card-background-active,
+    var(--manifold-grayscale-100i)
+  );
+  --plan-button-border-active: var(
+    --manifold-card-border-active,
+    1px solid var(--manifold-color-primary)
+  );
+  --plan-button-color-active: var(--manifold-card-color-active, var(--manifold-color-primary));
+  --plan-button-shadow-active: var(--manifold-card-shadow-active, none);
 }
 
 .plan-list {
@@ -17,7 +49,7 @@
 
   @media (--viewport-m) {
     grid-auto-flow: row;
-    grid-gap: 0;
+    grid-gap: var(--plan-button-spacing, 0);
     padding: 1px 0.25rem; /* border offset */
     overflow: visible;
     white-space: nowrap;
@@ -68,13 +100,13 @@
   padding-bottom: 0.75rem;
   padding-left: 1rem;
   overflow: hidden;
-  color: var(--mf-c-black);
+  color: var(--plan-button-color);
   font-family: var(--mf-font-default);
   white-space: nowrap;
   text-align: left;
   background-color: transparent;
-  border: 1px solid var(--mf-c-gray-t3);
-  border-radius: var(--mf-radius-large);
+  border: var(--plan-button-border);
+  border-radius: var(--plan-button-radius);
   box-shadow: 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0);
   transition: background-color 200ms linear, border-color 200ms linear, box-shadow 200ms linear;
   appearance: none;
@@ -82,7 +114,7 @@
   @media (--viewport-m) {
     min-width: 0;
     margin-left: 0;
-    border-color: transparent;
+    border: var(--plan-button-border, 1px solid transparent);
   }
 
   &::after {
@@ -92,8 +124,8 @@
     z-index: 1;
     width: 1.5rem;
     height: 1.5rem;
-    background-color: var(--mf-c-blue);
-    border-bottom-left-radius: var(--mf-radius-large);
+    background: var(--manifold-card-icon-background, var(--manifold-color-primary));
+    border-bottom-left-radius: var(--plan-button-radius, var(--mf-radius-large));
     transform: scale(0.5);
     transform-origin: 100% 0;
     opacity: 0;
@@ -103,8 +135,12 @@
 
   &:focus,
   &:hover {
-    border-color: var(--mf-c-gray-t3);
-    box-shadow: 0 0 0.5rem rgba(var(--mf-c-gray-rgb), 0.5);
+    background: var(--plan-button-background-hover);
+    border: var(
+      --plan-button-border-hover,
+      var(--plan-button-border, 1px solid var(--mf-c-gray-t3))
+    );
+    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--mf-c-gray-rgb), 0.5));
   }
 }
 
@@ -115,7 +151,7 @@
   z-index: 5;
   width: 1rem;
   height: 1rem;
-  color: var(--mf-c-white);
+  color: var(--manifold-text-color-alt);
   transform: translateY(1rem);
   opacity: 0;
   transition: opacity 100ms linear, transform 200ms ease-in-out;
@@ -124,10 +160,10 @@
 
 [type='radio']:checked ~ .plan-button-inner {
   z-index: 5;
-  color: var(--mf-c-blue);
-  background-color: var(--mf-c-white);
-  border-color: var(--mf-c-blue);
-  box-shadow: 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0.15);
+  color: var(--plan-button-color-active);
+  background: var(--plan-button-background-active);
+  border: var(--plan-button-border-active);
+  box-shadow: var(--plan-button-shadow-active, 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0.15));
 
   &::after {
     transform: scale(1);
@@ -135,8 +171,7 @@
   }
 
   &:hover {
-    border-color: var(--mf-c-blue);
-    box-shadow: 0 0 0.5rem rgba(var(--mf-c-blue-rgb), 0.5);
+    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--mf-c-blue-rgb), 0.5));
   }
 
   & .check-icon {

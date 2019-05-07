@@ -7,6 +7,7 @@ module.exports = {
   rules: {
     'declaration-colon-newline-after': null, // let Prettier decide (when to put values on a new line new line)
     'property-no-vendor-prefix': null, // some properties need vendor prefixes
+    'max-line-length': 140,
     'value-list-comma-newline-after': null, // let Prettier decide (when to put comma separated values on new lines)
     'selector-type-no-unknown': [
       true,

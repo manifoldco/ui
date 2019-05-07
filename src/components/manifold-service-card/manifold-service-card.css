@@ -4,6 +4,19 @@
 
 :host {
   --padding: 0.75rem;
+
+  /* theme vars */
+  --card-background: var(--manifold-grayscale-100i);
+  --card-text-color: var(--manifold-text-color);
+  --card-border: var(--manifold-card-border, 1px solid var(--manifold-grayscale-30));
+  --card-radius: var(--manifold-card-radius, 4px);
+  --card-shadow: var(--manifold-card-shadow, none);
+
+  /* card:hover */
+  --card-background-hover: var(--manifold-card-background-hover, var(--manifold-grayscale-80i));
+  --card-text-color-hover: var(--manifold-card-color-hover, var(--card-text-color));
+  --card-border-hover: var(--manifold-card-border-hover, var(--card-border));
+  --card-shadow-hover: var(--manifold-card-shadow-hover, var(--card-shadow));
 }
 
 .wrapper {
@@ -19,14 +32,14 @@
   box-sizing: border-box;
   height: 100%;
   padding: var(--padding);
-  color: inherit;
+  color: var(--card-text-color);
   font-size: 1em;
   font-family: var(--mf-font-default);
   text-decoration: none;
-  background-color: var(--mf-c-white);
-  border: 1px solid #d3d3d4;
-  border-radius: var(--mf-radius-l);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
+  background: var(--card-background, var(--mf-c-white));
+  border: var(--card-border, 1px solid #d3d3d4);
+  border-radius: var(--card-radius, --mf-radius-l);
+  box-shadow: var(--card-shadow, 0 2px 6px rgba(0, 0, 0, 0));
   cursor: pointer;
   transition: border-color 150ms linear, box-shadow 150ms linear;
 
@@ -45,7 +58,9 @@
 
   &:focus,
   &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    background: var(--card-background-hover);
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover, 0 2px 6px rgba(0, 0, 0, 0.15));
   }
 }
 
@@ -183,18 +198,18 @@
   margin-left: 0.5em;
   padding-right: 0.75em;
   padding-left: 0.75em;
-  color: var(--mf-c-white);
-  font-weight: 400;
+  color: var(--mf-tag-color, var(--mf-c-white));
+  font-weight: var(--mf-tag-font-weight);
   font-size: var(--mf-font-d3);
   font-family: var(--mf-font-default);
   line-height: 1;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
-  background-image: var(--mf-g-blue);
-  border-radius: 3rem;
+  background: var(--mf-tag-background, var(--mf-g-blue));
+  border-radius: var(--mf-tag-radius, 3rem);
 
   &[data-tag='free'] {
-    background-image: var(--mf-g-green);
+    background: var(--mf-tag-free-background, var(--mf-g-green));
   }
 }
 
