@@ -14,6 +14,11 @@
   --card-background: var(--manifold-grayscale-100i);
   --card-text-color: var(--manifold-text-color);
   --card-border: var(--manifold-card-border, 1px solid var(--manifold-grayscale-30));
+
+  /* boolean values */
+  --yes-color: var(--manifold-color-primary);
+  --no-color: var(--manifold-grayscale-50);
+  --locked-color: var(--manifold-grayscale-50);
 }
 
 .card {
@@ -108,9 +113,9 @@
 
 .description {
   margin: 0.5em 0;
-  color: var(--mf-c-gray);
   font-weight: normal;
   font-size: var(--mf-font-d1);
+  opacity: 0.6;
 }
 
 .feature-table {
@@ -162,11 +167,11 @@
   }
 
   &[data-value='No'] {
-    color: var(--mf-c-gray);
+    color: var(--no-color);
   }
 
   &[data-value='Yes'] {
-    color: var(--mf-c-blue);
+    color: var(--yes-color);
 
     & .icon {
       display: inline-block;
@@ -174,7 +179,7 @@
   }
 
   &[data-locked] {
-    opacity: 0.5;
+    color: var(--locked-color);
   }
 }
 
@@ -198,10 +203,9 @@
   }
 
   & small {
-    color: var(--mf-c-gray);
-    font-weight: 500;
     font-size: var(--mf-font-d4);
     letter-spacing: 0.0625em;
     text-transform: uppercase;
+    opacity: 0.5;
   }
 }

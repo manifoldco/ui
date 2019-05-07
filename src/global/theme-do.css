@@ -17,19 +17,13 @@
   --do-black-rgb: 0, 0, 20;
   --do-white-rgb: 255, 255, 255;
 
-  /* high-level theme */
-  --manifold-color-1: var(--do-blue);
-  --manifold-color-2: var(--do-dark-blue);
-  --manifold-color-3: var(--do-teal);
-  --manifold-color-4: var(--do-text);
-  --manifold-color-5: var(--do-black);
-
   /* usually black or white; grays will be derived from this using opacity */
   --manifold-grayscale-base: var(--do-white-rgb);
   --manifold-grayscale-base-inverted: var(--do-black-rgb);
 
   /* semantic theme */
   --manifold-text-color: var(--manifold-grayscale-100);
+  --manifold-text-color-secondary: var(--manifold-grayscale-70);
   --manifold-text-color-alt: var(--manifold-grayscale-100i);
   --manifold-background: var(--do-white);
   --manifold-color-primary: var(--do-blue);
@@ -43,21 +37,25 @@
   --manifold-border: 1px solid var(--manifold-grayscale-20);
 
   /* card vars */
+
   /* --manifold-card-border: 1px solid var(--do-light-gray); */
   --manifold-card-radius: var(--do-radius);
 
   /* card hover */
-  /*--manifold-card-background-hover: var(--do-lightest-gray); 
+
+  /* --manifold-card-background-hover: var(--do-lightest-gray);
   --manifold-card-border-hover: 1px solid #cbcbcb; */
   --mf-card-shadow-hover: none;
 
   /* card active */
+
   /*
   --manifold-card-background-active: var(--do-blue-faded);
   --manifold-card-border-active: 1px solid var(--do-blue);
   --manifold-card-color-active: var(--do-blue);
   --manifold-card-shadow-active: none;
 */
+
   /* tag vars */
   --mf-tag-font-weight: 900;
   --mf-tag-background: var(--do-blue);

@@ -58,6 +58,14 @@
 
   /* Settings */
   --overlap: 2rem;
+
+  /* Theme */
+  --text-color-heading: var(--manifold-grayscale-50);
+  --radius: var(--manifold-radius);
+  --card-radius: var(--radius);
+  --logo-radius: var(--radius);
+
+  color: var(--manifold-text-color);
 }
 
 .category {
@@ -110,18 +118,18 @@
 
 .sidebar-inner {
   position: sticky;
-  top: 1rem;
+  top: 3rem;
 }
 
 .sidebar-section {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  box-shadow: 0 -1px var(--mf-c-gray-t3);
+  box-shadow: 0 -1px var(--manifold-grayscale-10);
 
   & h4 {
     margin-top: 0;
     margin-bottom: 1rem;
-    color: var(--mf-c-gray);
+    color: var(--text-color-heading);
     font-weight: 500;
     font-size: var(--mf-font-d2);
     letter-spacing: 0.125em;
@@ -140,16 +148,15 @@
   padding-right: 1.5rem;
   padding-bottom: 1.5rem;
   padding-left: 1.5rem;
-  color: var(--mf-c-white);
+  color: white;
   font-weight: 300;
   font-size: 1em;
-  font-family: var(--mf-font-default);
   text-align: center;
   text-decoration: none;
-  background-color: var(--mf-c-black);
+  background-color: var(--manifold-grayscale-50);
   background-image: var(--background-gradient);
-  border-radius: var(--mf-radius-m);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.17);
+  border-radius: var(--card-radius);
+  box-shadow: 0 2px 8px 0 var(--manifold-grayscale-20);
 }
 
 .product-logo {
@@ -163,7 +170,7 @@
     min-width: 3rem;
     height: auto;
     min-height: 3rem;
-    border-radius: var(--mf-radius-m);
+    border-radius: var(--logo-radius);
     object-fit: contain;
   }
 }
@@ -204,10 +211,11 @@
     padding-bottom: 0.25rem;
     color: inherit;
     text-decoration: none;
+    opacity: 0.75;
     transition: color 200ms;
 
     &:hover {
-      color: var(--mf-c-gray-s2);
+      opacity: 1;
 
       & manifold-icon {
         opacity: 1;

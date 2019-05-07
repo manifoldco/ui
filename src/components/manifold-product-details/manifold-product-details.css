@@ -1,3 +1,12 @@
+:host {
+  /* Theme */
+  --text-color: var(--manifold-text-color);
+  --text-color-heading: var(--text-color);
+  --text-color-body: var(--manifold-text-color-secondary);
+
+  color: var(--manifold-text-color);
+}
+
 .title {
   margin: 0;
   font-weight: 400;
@@ -34,7 +43,7 @@
   & p {
     max-width: 38em;
     margin: 0;
-    color: var(--mf-c-gray-s1);
+    color: var(--text-color-body);
     font-size: var(--mf-font-d1);
     line-height: 1.5;
   }
