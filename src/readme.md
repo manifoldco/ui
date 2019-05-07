@@ -1,43 +1,35 @@
 # 🔨 Development
 
-To run this project locally, clone this repo, navigate to the project root, and run:
-
 ```bash
 npm install
-```
-
-and run:
-
-```bash
 npm run dev
 ```
 
-_Note: you may also want to run `npm run format:css:watch` in a separate
-process, to automatically format CSS as you save._
+This will start Storybook at `localhost:6060`.
 
-Lastly, copy these specs from [our specs][specs] into here:
+Copy these specs from [our specs][specs] into here:
 
 - `src/spec/catalog/v1.yaml`
 - `src/spec/gateway/v1.yaml`
 - `src/spec/marketplace/v1.yaml`
 - `src/spec/provisioning/v1.yaml`
 
-This is a public repo, but our API specs aren’t public for now (the types are
-OK though).
+And run `npm run generate:specs`. This is a public repo, but our API specs
+aren’t public for now (the types are OK though).
+
+## 📖 Writing stories
+
+Create a new story in `stories/`, or modify an existing one to add it to
+Storybook. Testing every version of a component is recommended.
 
 ## 📋 Testing
 
-To run the unit tests once, run:
-
-```
-npm run test
-```
-
-To run the unit tests and watch for file changes during development, run:
-
-```bash
-npm run test.watch
-```
+| Command                        | Effect                                                        |
+| :----------------------------- | :------------------------------------------------------------ |
+| `npm run test [pattern]`       | (slow) Run all unit & E2E tests matching `[pattern]`          |
+| `npm run test:e2e [pattern]`   | (slow) Run all E2E tests matching `[pattern]`                 |
+| `npm run test:spec [pattern]`  | (fast) Run all unit tests matching `[pattern]`                |
+| `npm run test:watch [pattern]` | (fast) Run all unit tests while working, matching `[pattern]` |
 
 ## 🖋️ Editing documentation
 

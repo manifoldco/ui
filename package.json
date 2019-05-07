@@ -21,8 +21,10 @@
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build",
-    "dev": "stencil build --dev --docs --watch --serve",
+    "build:dev": "stencil build --dev --watch",
+    "build-storybook": "build-storybook",
     "postbuild": "npm run generate:docs",
+    "dev": "concurrently 'npm run build:dev' 'wait-on dist/index.js && npm run storybook'",
     "format": "npm run format:ts && npm run format:css",
     "format:html": "prettier src/index.html --write",
     "format:css": "stylelint 'src/**/*.css' --fix",
@@ -37,6 +39,8 @@
     "generate:specs:marketplace": "npx @manifoldco/swagger-to-ts src/spec/marketplace/v1.yaml -o src/types/marketplace.ts -n Marketplace",
     "postgenerate:docs": "npm run format:html",
     "generate:docs:watch": "npx onchange 'src/**/readme.md' -- npm run generate:docs",
+    "happo": "npm run build && cp .manifold-ci.yml .manifold.yml && manifold run -- happo run",
+    "happo-ci-travis": "npm run build && happo-ci-travis",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "lint:css": "stylelint 'src/**/*.css'",
@@ -45,16 +49,14 @@
     "prepublish": "npm run build",
     "publish": "node scripts/publish",
     "start": "NODE_ENV=production npx serve -l \"tcp://0.0.0.0:$PORT\" -s www",
-    "happo": "npm run build && cp .manifold-ci.yml .manifold.yml && manifold run -- happo run",
-    "happo-ci-travis": "npm run build && happo-ci-travis",
+    "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",
     "test:spec": "stencil test --spec",
     "test:coverage": "stencil test --spec --e2e --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
-    "test.watch": "stencil test --spec --e2e --watchAll"
+    "test:watch": "stencil test --spec --e2e --watchAll"
   },
-  "dependencies": {},
   "bundlesize": [
     {
       "path": "./dist/esm/es2017/manifold.*.js",
@@ -62,19 +64,22 @@
       "maxSize": "17 KB"
     }
   ],
+  "dependencies": {},
   "devDependencies": {
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
     "@stencil/core": "^0.18.0",
     "@stencil/postcss": "^0.1.0",
     "@stencil/state-tunnel": "0.0.8",
+    "@storybook/html": "^5.0.11",
     "@types/jest": "^23.3.13",
     "@types/puppeteer": "1.11.2",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.5",
     "bundlesize": "^0.17.1",
+    "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^5.0.3",
     "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.0.0",
@@ -91,10 +96,12 @@
     "prettier": "^1.16.4",
     "puppeteer": "1.11.0",
     "showdown": "^1.9.0",
+    "storybook-readme": "^5.0.4-alpha.2",
     "stylelint": "^9.10.1",
     "stylelint-config-rational-order": "0.0.4",
     "stylelint-config-standard": "^18.2.0",
-    "ts-loader": "^5.4.4",
-    "webpack": "^4.30.0"
+    "ts-loader": "^6.0.0",
+    "wait-on": "^3.2.0",
+    "webpack": "^4.28.4"
   }
 }
