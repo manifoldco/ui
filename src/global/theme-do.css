@@ -1,5 +1,3 @@
-@import './theme.css';
-
 :root {
   /* DigitalOcean Brand */
   --do-blue: #0069ff;
@@ -25,7 +23,6 @@
   --manifold-color-success: var(--do-green);
   --manifold-color-warn: var(--do-red);
   --manifold-color-error: var(--do-red);
-  --manifold-radius: var(--do-radius);
 
   /* Text Colors */
   --manifold-text-color: var(--do-text);
@@ -36,7 +33,7 @@
   /* Font */
   --manifold-font-family: var(--do-font-family);
 
-  /* Cards */
+  /* Borders */
   --manifold-radius: 3px;
   --manifold-border: 1px solid var(--do-light-gray);
 
