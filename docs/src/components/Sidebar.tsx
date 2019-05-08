@@ -60,6 +60,7 @@ function Sidebar({ pages }: SidebarProps) {
 }
 
 const Aside = styled.aside`
+  font-family: ${({ theme }) => theme.font.default};
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 
   & h3 {
@@ -79,8 +80,8 @@ const Button = styled.button`
   padding: 0.5rem;
   background: none;
   border: none;
-  appearance: none;
   outline: none;
+  appearance: none;
 
   & svg {
     display: block;
@@ -122,40 +123,10 @@ const Expanded = styled.div`
     display: block;
   }
 
-  &[aria-expanded] {
-    position: relative;
-    z-index: var(--mf-layer-nav);
-    display: block;
-    overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.95);
-
-    & ~ ${Underlay} {
-      display: block;
-    }
-  }
-`;
-
-const Header = styled.header`
-  display: flex;
-  margin-left: -0.5rem;
-`;
-
-const Nav = styled.nav`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: var(--mf-layer-nav);
-  box-sizing: border-box;
-  width: 100%;
-  height: 4rem;
-  margin: 0;
-  padding: 1rem;
-  background-color: rgba(255, 255, 255, 0.9);
-
   & a {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    height: 2rem;
     color: rgba(0, 0, 0, 0.8);
     font-weight: 300;
     font-size: 14px;
@@ -171,6 +142,41 @@ const Nav = styled.nav`
       color: ${({ theme }) => theme.color.blue};
     }
   }
+
+  &[aria-expanded] {
+    position: relative;
+    z-index: var(--mf-layer-nav);
+    display: block;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.95);
+
+    & ~ ${Underlay} {
+      display: block;
+    }
+  }
+`;
+
+const Header = styled.header`
+  display: flex;
+  margin-bottom: 1rem;
+  margin-left: -0.5rem;
+
+  & a {
+    display: block;
+  }
+`;
+
+const Nav = styled.nav`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: var(--mf-layer-nav);
+  box-sizing: border-box;
+  width: 100%;
+  height: 4rem;
+  margin: 0;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
 
   & ul {
     margin: 0;

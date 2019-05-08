@@ -8,12 +8,12 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint 'src/**/*.{ts,tsx}'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
-    "serve": "gatsby serve",
+    "serve": "gatsby serve -p $PORT",
     "start": "npm run develop",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "dependencies": {
-    "@manifoldco/ui": "0.0.17",
+    "@manifoldco/ui": "file:../",
     "gatsby": "^2.4.2",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-manifest": "^2.1.1",

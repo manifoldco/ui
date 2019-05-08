@@ -1,15 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { graphql } from 'gatsby';
-import { defineCustomElements as initProd } from '@manifoldco/ui/dist/loader';
-import { defineCustomElements as initDev } from '../../../dist/loader';
+import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 import Page from '../components/Page';
 import theme from '../lib/theme';
 
-if (process.env.NODE_ENV === 'production') {
-  initProd(window);
-} else {
-  initDev(window);
+if (typeof window !== 'undefined') {
+  defineCustomElements(window);
 }
 
 interface HomePageProps {
@@ -56,7 +53,7 @@ export const query = graphql`
         title
       }
     }
-    toc: allMarkdownRemark(sort: { fields: [frontmatter___title], order: ASC }) {
+    toc: allMarkdownRemark(sort: { fields: [frontmatter___title], order: ASC }, limit: 1000) {
       edges {
         node {
           frontmatter {

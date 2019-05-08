@@ -33,7 +33,7 @@ Storybook. Testing every version of a component is recommended.
 
 ## 🖋️ Editing documentation
 
-The docs are powered by gatsby. To see what they look like locally, run:
+The docs are powered by Gatsby. To preview them locally, run:
 
 ```bash
 npm run docs
@@ -41,6 +41,10 @@ npm run docs
 
 That will spin up the docs server locally at `localhost:8000`. Changes will
 be hotloaded.
+
+_Note: when adding a new `*.md` file in `/docs/docs`, it will automatically
+hot reload, however it will break if you don’t add a `path` in
+[frontmatter][frontmatter]._
 
 ## 🚀 Publishing to npm
 
@@ -126,9 +130,10 @@ supported (this means only strings!):
 
 In this example, `userInfo` is actually converted to `userinfo` (HTML is
 case-insensitive), so it’s a different prop. Also, if you want to set
-non-strings, you’ll have to do so [via
-JS](https://stenciljs.com/docs/properties).
+non-strings, you’ll have to do so [via JS][stencil-properties].
 
 **TL;DR use `camelCase` in JSX; `kebab-case` in HTML.**
 
+[frontmatter]: https://jekyllrb.com/docs/front-matter/
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
+[stencil-properties]: https://stenciljs.com/docs/properties

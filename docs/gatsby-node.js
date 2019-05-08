@@ -1,12 +1,12 @@
-const path = require('path');
+const { resolve } = require('path');
 
 exports.createPages = ({ actions, graphql }) => {
   const { createPage } = actions;
-  const component = path.resolve('src/pages/index.tsx');
+  const component = resolve('src/pages/index.tsx');
 
   return graphql(`
     {
-      allMarkdownRemark(sort: { order: ASC, fields: [frontmatter___path] }, limit: 1000) {
+      allMarkdownRemark(sort: { fields: [frontmatter___title], order: ASC }, limit: 1000) {
         edges {
           node {
             frontmatter {
@@ -21,11 +21,8 @@ exports.createPages = ({ actions, graphql }) => {
       return Promise.reject(result.errors);
     }
 
-    return result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-      createPage({
-        path: node.frontmatter.path,
-        component,
-      });
+    return result.data.allMarkdownRemark.edges.forEach(({ node: { frontmatter: { path } } }) => {
+      createPage({ path, component });
     });
   });
 };
