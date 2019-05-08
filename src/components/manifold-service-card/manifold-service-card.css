@@ -3,7 +3,30 @@
 @custom-media --viewport-l (min-width: 1080px);
 
 :host {
+  --manifold-product-logo-s: 2rem;
+  --manifold-product-logo-m: 2.75rem;
+  --manifold-product-logo-l: 3rem;
   --padding: 0.75rem;
+
+  /* theme vars */
+  --card-background: var(--manifold-grayscale-100i);
+  --card-text-color: var(--manifold-text-color);
+  --card-border: var(--manifold-card-border, var(--manifold-border));
+  --card-radius: var(--manifold-card-radius, var(--manifold-radius));
+  --card-shadow: var(--manifold-card-shadow, none);
+
+  /* card:hover */
+  --card-background-hover: var(--manifold-card-background-hover, var(--manifold-grayscale-80i));
+  --card-text-color-hover: var(--manifold-card-color-hover, var(--card-text-color));
+  --card-border-hover: var(--manifold-card-border-hover, var(--card-border));
+  --card-shadow-hover: var(--manifold-card-shadow-hover, var(--card-shadow));
+
+  /* tag */
+  --tag-background: var(--manifold-tag-background, var(--manifold-color-primary));
+  --tag-text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
+  --tag-font-weight: var(--manifold-tag-font-weight, 600);
+  --tag-radius: var(--manifold-tag-radius, 3rem);
+  --tag-padding: var(--manifold-tag-padding, 0.25em 0.75em);
 }
 
 .wrapper {
@@ -14,19 +37,17 @@
     'logo name'
     'info info'
     'tags tags';
-  grid-template-columns: var(--mf-product-logo-s) auto;
+  grid-template-columns: var(--manifold-product-logo-s) auto;
   grid-template-rows: min-content auto min-content;
   box-sizing: border-box;
   height: 100%;
   padding: var(--padding);
-  color: inherit;
-  font-size: 1em;
-  font-family: var(--mf-font-default);
+  color: var(--card-text-color);
   text-decoration: none;
-  background-color: var(--mf-c-white);
-  border: 1px solid #d3d3d4;
-  border-radius: var(--mf-radius-l);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0);
+  background: var(--card-background);
+  border: var(--card-border, 1px solid #d3d3d4);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow, 0 2px 6px rgba(0, 0, 0, 0));
   cursor: pointer;
   transition: border-color 150ms linear, box-shadow 150ms linear;
 
@@ -35,17 +56,19 @@
       'logo name'
       'logo info'
       'tags tags';
-    grid-template-columns: var(--mf-product-logo-m) auto;
+    grid-template-columns: var(--manifold-product-logo-m) auto;
   }
 
   @media (--viewport-m) {
-    grid-template-columns: var(--mf-product-logo-l) auto;
+    grid-template-columns: var(--manifold-product-logo-l) auto;
     padding: 0.875rem;
   }
 
   &:focus,
   &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    background: var(--card-background-hover);
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover, 0 2px 6px rgba(0, 0, 0, 0.15));
   }
 }
 
@@ -63,14 +86,14 @@
   z-index: 10;
   width: 1rem;
   height: 1rem;
-  color: var(--mf-c-purple);
+  color: var(--manifold-c-purple);
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
   pointer-events: none;
 }
 
 .is-custom {
   &:hover {
-    border-color: var(--mf-c-purple);
+    border-color: var(--manifold-c-purple);
     box-shadow: 0 2px 6px rgba(119, 72, 209, 0.15);
   }
 
@@ -87,7 +110,7 @@
   margin-top: 0;
   margin-bottom: 0;
   font-weight: 400;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
   line-height: 1.4;
   opacity: 0.6;
 
@@ -116,22 +139,22 @@
   align-content: start;
 
   & img {
-    width: var(--mf-product-logo-s);
-    height: var(--mf-product-logo-s);
+    width: var(--manifold-product-logo-s);
+    height: var(--manifold-product-logo-s);
     overflow: hidden;
     color: transparent;
-    border-radius: var(--mf-radius-m);
+    border-radius: var(--manifold-radius);
     opacity: 0.1;
     transition: opacity 150ms linear 100ms;
 
     @media (--viewport-s) {
-      width: var(--mf-product-logo-m);
-      height: var(--mf-product-logo-m);
+      width: var(--manifold-product-logo-m);
+      height: var(--manifold-product-logo-m);
     }
 
     @media (--viewport-m) {
-      width: var(--mf-product-logo-l);
-      height: var(--mf-product-logo-l);
+      width: var(--manifold-product-logo-l);
+      height: var(--manifold-product-logo-l);
     }
 
     &[data-loaded] {
@@ -141,17 +164,7 @@
 }
 
 .is-custom .logo {
-  color: var(--mf-c-purple);
-}
-
-.icon-border {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 2.4rem;
-  padding: 5px 0 3px 0;
-  border: 1px solid var(--mf-c-purple);
-  border-radius: var(--mf-radius-l);
+  color: var(--manifold-c-purple);
 }
 
 .name {
@@ -171,30 +184,27 @@
 }
 
 .is-custom .name {
-  color: var(--mf-c-purple);
+  color: var(--manifold-c-purple);
 }
 
 .tag {
   display: inline-flex;
   align-items: center;
-  height: 1.75em;
   margin-top: 0.125rem;
   margin-bottom: 0.125rem; /* top & bottom help when tags stack */
   margin-left: 0.5em;
-  padding-right: 0.75em;
-  padding-left: 0.75em;
-  color: var(--mf-c-white);
-  font-weight: 400;
-  font-size: var(--mf-font-d3);
-  font-family: var(--mf-font-default);
-  line-height: 1;
+  padding: var(--tag-padding);
+  color: var(--tag-text-color);
+  font-weight: var(--tag-font-weight);
+  font-size: var(--manifold-font-d3);
+  line-height: 1.2;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
-  background-image: var(--mf-g-blue);
-  border-radius: 3rem;
+  background: var(--tag-background);
+  border-radius: var(--tag-radius);
 
   &[data-tag='free'] {
-    background-image: var(--mf-g-green);
+    background: var(--manifold-tag-free-background, var(--manifold-color-secondary));
   }
 }
 

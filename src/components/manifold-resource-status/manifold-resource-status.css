@@ -20,7 +20,7 @@
   padding-right: 1.5rem;
   padding-left: 1rem;
   overflow: hidden;
-  color: var(--mf-c-black-60);
+  color: var(--manifold-c-black-60);
   border-radius: 4rem;
 
   &::before {
@@ -64,8 +64,8 @@
   height: 2.75rem;
   padding-right: 1.5rem;
   padding-left: 1rem;
-  color: var(--mf-c-black-60);
-  background-color: var(--mf-c-black-10);
+  color: var(--manifold-c-black-60);
+  background-color: var(--manifold-c-black-10);
   border-radius: 4rem;
 
   & manifold-icon {

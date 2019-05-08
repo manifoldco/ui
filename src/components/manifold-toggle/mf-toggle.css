@@ -1,3 +1,13 @@
+:host {
+  /* theme */
+  --background: var(--manifold-grayscale-15);
+  --border: 1px solid var(--manifold-grayscale-05);
+  --knob-background: var(--manifold-grayscale-100i);
+
+  /* on */
+  --background-on: var(--manifold-color-primary);
+}
+
 .wrapper {
   display: inline-grid;
   grid-gap: 1em;
@@ -30,8 +40,8 @@ input {
   width: calc(var(--size) * 2.5);
   height: var(--size);
   padding: var(--spacing);
-  background-image: var(--mf-g-gray);
-  border: 1px solid var(--mf-c-gray-t3);
+  background: var(--background);
+  border: var(--border);
   border-radius: 2.5em;
   transition: opacity 200ms;
   pointer-events: none;
@@ -40,7 +50,7 @@ input {
   &::before {
     grid-area: off;
     box-sizing: border-box;
-    background: white;
+    background: var(--knob-background);
     border-radius: 50%;
     box-shadow: 0 0 0.1em 0.05em rgba(0, 0, 0, 0.1);
     transition: transform 100ms ease-in-out;
@@ -49,7 +59,7 @@ input {
 }
 
 input:checked + .toggle {
-  background-image: var(--mf-g-blue);
+  background: var(--background-on);
 
   &::before {
     transform: translateX(calc(var(--size) + var(--gap)));
@@ -58,8 +68,8 @@ input:checked + .toggle {
 
 input:focus + .toggle,
 input:active + .toggle {
-  border-color: var(--mf-c-blue);
-  box-shadow: 0 0 1em 0.1em rgba(var(--mf-c-blue-rgb), 0.3);
+  border-color: var(--background-on);
+  box-shadow: 0 0 1em 0.1em rgba(var(--manifold-c-blue-rgb), 0.3);
 }
 
 input:disabled {

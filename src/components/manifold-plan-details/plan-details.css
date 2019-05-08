@@ -9,16 +9,32 @@
   @media (--viewport-m) {
     --padding: 2rem;
   }
+
+  /* theme vars */
+  --card-background: var(--manifold-grayscale-100i);
+  --card-text-color: var(--manifold-text-color);
+  --card-border: var(--manifold-card-border, var(--manifold-border));
+  --card-radius: var(--manifold-radius);
+  --logo-radius: var(--manifold-radius);
+
+  /* boolean values */
+  --yes-color: var(--manifold-color-primary);
+  --no-color: var(--manifold-grayscale-50);
+  --locked-color: var(--manifold-grayscale-50);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .card {
   padding-top: var(--padding);
   padding-right: var(--padding);
   padding-left: var(--padding);
-  background-color: var(--mf-c-white);
-  border: 1px solid var(--mf-c-gray-t3);
-  border-radius: var(--mf-radius-default);
-  box-shadow: 0 0.25rem 0.75rem rgba(var(--mf-c-gray-rgb), 0.2);
+  color: var(--card-text-color);
+  background-color: var(--card-background);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: 0 0.25rem 0.75rem var(--manifold-grayscale-10);
 }
 
 .header {
@@ -35,7 +51,8 @@
   height: var(--logo-size);
   margin-right: 1rem;
   overflow: hidden;
-  border-radius: var(--mf-radius-default);
+  background: var(--manifold-grayscale-100i);
+  border-radius: var(--logo-radius);
 
   @media (--viewport-s) {
     --logo-size: 3rem;
@@ -57,19 +74,19 @@
   margin-top: 0;
   margin-bottom: 0;
   font-weight: 400;
-  font-size: var(--mf-font-u3);
+  font-size: var(--manifold-font-u3);
   line-height: 1;
 
   @media (--viewport-m) {
-    font-size: var(--mf-font-u4);
+    font-size: var(--manifold-font-u4);
   }
 }
 
 .product-name {
   margin: 0;
-  color: var(--mf-c-gray);
+  color: var(--manifold-grayscale-50);
   font-weight: 600;
-  font-size: var(--mf-font-d2);
+  font-size: var(--manifold-font-d2);
   letter-spacing: 0.0625em;
   text-transform: uppercase;
 }
@@ -84,14 +101,16 @@
   grid-template-columns: 1fr 1fr;
   margin-top: 1rem;
   margin-bottom: 0;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
 }
 
 .feature-name,
 .feature-value {
   margin: 0;
   padding: 0.5rem 0;
-  border-top: 1px dotted var(--mf-c-gray-t3);
+  border-top: var(--card-border);
+  /* stylelint-disable-next-line */
+  border-top-style: dotted;
 }
 
 .feature-name {
@@ -100,9 +119,9 @@
 
 .description {
   margin: 0.5em 0;
-  color: var(--mf-c-gray);
   font-weight: normal;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
+  opacity: 0.6;
 }
 
 .feature-table {
@@ -118,7 +137,7 @@
   }
 
   & tr:nth-of-type(odd) td {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: var(--manifold-grayscale-03);
   }
 }
 
@@ -132,9 +151,12 @@
   margin-bottom: var(--padding);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-size: var(--mf-font-d1);
-  border-top: 1px dotted var(--mf-c-gray-t3);
-  border-bottom: 1px dotted var(--mf-c-gray-t3);
+  font-size: var(--manifold-font-d1);
+  border-top: var(--card-border);
+  border-bottom: var(--card-border);
+  /* stylelint-disable-next-line */
+  border-top-style: dotted;
+  border-bottom-style: dotted;
 }
 
 .region-label {
@@ -151,11 +173,11 @@
   }
 
   &[data-value='No'] {
-    color: var(--mf-c-gray);
+    color: var(--no-color);
   }
 
   &[data-value='Yes'] {
-    color: var(--mf-c-blue);
+    color: var(--yes-color);
 
     & .icon {
       display: inline-block;
@@ -163,7 +185,7 @@
   }
 
   &[data-locked] {
-    opacity: 0.5;
+    color: var(--locked-color);
   }
 }
 
@@ -175,22 +197,5 @@
   margin-right: calc(var(--padding) * -1);
   margin-left: calc(var(--padding) * -1);
   padding: calc(var(--padding) * 0.75) var(--padding);
-  box-shadow: 0 -1px var(--mf-c-gray-t3);
-}
-
-.cost {
-  flex-grow: 1;
-  font-size: var(--mf-font-u1);
-
-  @media (--breakpoint-m) {
-    font-size: var(--mf-font-u2);
-  }
-
-  & small {
-    color: var(--mf-c-gray);
-    font-weight: 500;
-    font-size: var(--mf-font-d4);
-    letter-spacing: 0.0625em;
-    text-transform: uppercase;
-  }
+  border-top: var(--card-border);
 }

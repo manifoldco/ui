@@ -1,63 +1,72 @@
 :host {
-  --mf-g-default: linear-gradient(to top right, #329dd1, #55f0a8);
+  --manifold-g-default: linear-gradient(to top right, #329dd1, #55f0a8);
 
   /* Products */
-  --mf-g-aiven-cassandra: linear-gradient(to right top, #0e517e, #218ab5);
-  --mf-g-aiven-elasticsearch: linear-gradient(to right top, #097cab, #2c9ecf);
-  --mf-g-aiven-grafana: linear-gradient(to right top, #c3862d, #faa43b);
-  --mf-g-aiven-kafka: linear-gradient(to right top, #ab1a63, #ce1b75);
-  --mf-g-aiven-pg: linear-gradient(to right top, #0e517e, #218ab5);
-  --mf-g-aiven-redis: linear-gradient(to right top, #c21e2c, #731b1b);
-  --mf-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
-  --mf-g-bonsai-elasticsearch: linear-gradient(to right top, #0091ff, #41a040);
-  --mf-g-cloudamqp: linear-gradient(to right top, #ca6227, #077288);
-  --mf-g-cloudcube: linear-gradient(to right top, #b94e45, #1c7293);
-  --mf-g-custom-recognition: linear-gradient(to right top, #22457d, #2a93af);
-  --mf-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
-  --mf-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
-  --mf-g-generic-tagging: linear-gradient(to right top, #556919, #899f3c);
-  --mf-g-hostedmetrics-influxdb: linear-gradient(to right top, #0e517e, #6b42b3);
-  --mf-g-hostedmetrics-prometheus: linear-gradient(to right top, #0e517e, #6b42b3);
-  --mf-g-hypdf: linear-gradient(to right top, #9b0d0a, #4b0808);
-  --mf-g-informant: linear-gradient(to right top, #3d658d, #c58d1a);
-  --mf-g-iron_cache: linear-gradient(to right top, #099542, #2bd15a);
-  --mf-g-iron_mq: linear-gradient(to right top, #de6500, #e8b600);
-  --mf-g-iron_worker: linear-gradient(to right top, #2977be, #57aee4);
-  --mf-g-jawsdb-maria: linear-gradient(to right top, #252525, #5b6895);
-  --mf-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
-  --mf-g-jawsdb-postgres: linear-gradient(to right top, #1f1b5d, #6b58ae);
-  --mf-g-logdna: linear-gradient(to right top, #435286, #dc235b);
-  --mf-g-mailgun: linear-gradient(to right top, #731429, #c12126);
-  --mf-g-memcachier-cache: linear-gradient(to right top, #0e6a1e, #5ebc30);
-  --mf-g-oauth-io: linear-gradient(to right top, #44d7b6, #2b7aa4);
-  --mf-g-pdfshift: linear-gradient(to right top, #291242, #693eae);
-  --mf-g-piio: linear-gradient(to right top, #1f33c2, #d85d1e);
-  --mf-g-posthook: linear-gradient(to right top, #0e517e, #218ab5);
-  --mf-g-prefab: linear-gradient(to right top, #1255cf, #5186e4);
-  --mf-g-provider-dashboard: linear-gradient(to right top, #222, #444);
-  --mf-g-scoutapp: linear-gradient(to right top, #f0592b, #8c214f);
-  --mf-g-statushub: linear-gradient(to right top, #26ad8f, #1090b8);
-  --mf-g-till: linear-gradient(to right top, #4b3f03, #218ab5);
-  --mf-g-timber-logging: linear-gradient(to right top, #292156, #796adc);
-  --mf-g-websolr: linear-gradient(to right top, #0e517e, #218ab5);
-  --mf-g-zerosix: linear-gradient(to right top, #252a2e, #344068);
-  --mf-g-ziggeo: linear-gradient(to right top, #743252, #ba445e);
+  --manifold-g-aiven-cassandra: linear-gradient(to right top, #0e517e, #218ab5);
+  --manifold-g-aiven-elasticsearch: linear-gradient(to right top, #097cab, #2c9ecf);
+  --manifold-g-aiven-grafana: linear-gradient(to right top, #c3862d, #faa43b);
+  --manifold-g-aiven-kafka: linear-gradient(to right top, #ab1a63, #ce1b75);
+  --manifold-g-aiven-pg: linear-gradient(to right top, #0e517e, #218ab5);
+  --manifold-g-aiven-redis: linear-gradient(to right top, #c21e2c, #731b1b);
+  --manifold-g-blitline: linear-gradient(to right top, rgb(0, 100, 140), rgb(0, 164, 230));
+  --manifold-g-bonsai-elasticsearch: linear-gradient(to right top, #0091ff, #41a040);
+  --manifold-g-cloudamqp: linear-gradient(to right top, #ca6227, #077288);
+  --manifold-g-cloudcube: linear-gradient(to right top, #b94e45, #1c7293);
+  --manifold-g-custom-recognition: linear-gradient(to right top, #22457d, #2a93af);
+  --manifold-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
+  --manifold-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --manifold-g-generic-tagging: linear-gradient(to right top, #556919, #899f3c);
+  --manifold-g-hostedmetrics-influxdb: linear-gradient(to right top, #0e517e, #6b42b3);
+  --manifold-g-hostedmetrics-prometheus: linear-gradient(to right top, #0e517e, #6b42b3);
+  --manifold-g-hypdf: linear-gradient(to right top, #9b0d0a, #4b0808);
+  --manifold-g-informant: linear-gradient(to right top, #3d658d, #c58d1a);
+  --manifold-g-iron_cache: linear-gradient(to right top, #099542, #2bd15a);
+  --manifold-g-iron_mq: linear-gradient(to right top, #de6500, #e8b600);
+  --manifold-g-iron_worker: linear-gradient(to right top, #2977be, #57aee4);
+  --manifold-g-jawsdb-maria: linear-gradient(to right top, #252525, #5b6895);
+  --manifold-g-jawsdb-mysql: linear-gradient(to right top, #0e517e, #218ab5);
+  --manifold-g-jawsdb-postgres: linear-gradient(to right top, #1f1b5d, #6b58ae);
+  --manifold-g-logdna: linear-gradient(to right top, #435286, #dc235b);
+  --manifold-g-mailgun: linear-gradient(to right top, #731429, #c12126);
+  --manifold-g-memcachier-cache: linear-gradient(to right top, #0e6a1e, #5ebc30);
+  --manifold-g-oauth-io: linear-gradient(to right top, #44d7b6, #2b7aa4);
+  --manifold-g-pdfshift: linear-gradient(to right top, #291242, #693eae);
+  --manifold-g-piio: linear-gradient(to right top, #1f33c2, #d85d1e);
+  --manifold-g-posthook: linear-gradient(to right top, #0e517e, #218ab5);
+  --manifold-g-prefab: linear-gradient(to right top, #1255cf, #5186e4);
+  --manifold-g-provider-dashboard: linear-gradient(to right top, #222, #444);
+  --manifold-g-scoutapp: linear-gradient(to right top, #f0592b, #8c214f);
+  --manifold-g-statushub: linear-gradient(to right top, #26ad8f, #1090b8);
+  --manifold-g-till: linear-gradient(to right top, #4b3f03, #218ab5);
+  --manifold-g-timber-logging: linear-gradient(to right top, #292156, #796adc);
+  --manifold-g-websolr: linear-gradient(to right top, #0e517e, #218ab5);
+  --manifold-g-zerosix: linear-gradient(to right top, #252a2e, #344068);
+  --manifold-g-ziggeo: linear-gradient(to right top, #743252, #ba445e);
 
   /* Categories */
-  --mf-c-authentication: #1a4898;
-  --mf-c-CMS: #ffde52;
-  --mf-c-cms: #ffde52;
-  --mf-c-database: #fe714b;
-  --mf-c-logging: #222;
-  --mf-c-memory-store: #1e50da;
-  --mf-c-messaging: #d50f49;
-  --mf-c-monitoring: #7748d1;
-  --mf-c-optimization: #0fb5d0;
-  --mf-c-search: #0fb5d0;
-  --mf-c-worker: #31baa2;
+  --manifold-c-authentication: #1a4898;
+  --manifold-c-CMS: #ffde52;
+  --manifold-c-cms: #ffde52;
+  --manifold-c-database: #fe714b;
+  --manifold-c-logging: #222;
+  --manifold-c-memory-store: #1e50da;
+  --manifold-c-messaging: #d50f49;
+  --manifold-c-monitoring: #7748d1;
+  --manifold-c-optimization: #0fb5d0;
+  --manifold-c-search: #0fb5d0;
+  --manifold-c-worker: #31baa2;
 
   /* Settings */
   --overlap: 2rem;
+
+  /* Theme */
+  --text-color-heading: var(--manifold-grayscale-50);
+  --radius: var(--manifold-radius);
+  --card-radius: var(--radius);
+  --logo-radius: var(--radius);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .category {
@@ -66,7 +75,7 @@
   margin-top: 0.5rem;
   color: var(--categoryColor);
   font-weight: 600;
-  font-size: var(--mf-font-d2);
+  font-size: var(--manifold-font-d2);
   letter-spacing: 0.0625em;
   text-transform: uppercase;
 
@@ -110,20 +119,20 @@
 
 .sidebar-inner {
   position: sticky;
-  top: 1rem;
+  top: 3rem;
 }
 
 .sidebar-section {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  box-shadow: 0 -1px var(--mf-c-gray-t3);
+  box-shadow: 0 -1px var(--manifold-grayscale-10);
 
   & h4 {
     margin-top: 0;
     margin-bottom: 1rem;
-    color: var(--mf-c-gray);
+    color: var(--text-color-heading);
     font-weight: 500;
-    font-size: var(--mf-font-d2);
+    font-size: var(--manifold-font-d2);
     letter-spacing: 0.125em;
     text-transform: uppercase;
   }
@@ -140,16 +149,15 @@
   padding-right: 1.5rem;
   padding-bottom: 1.5rem;
   padding-left: 1.5rem;
-  color: var(--mf-c-white);
+  color: white;
   font-weight: 300;
   font-size: 1em;
-  font-family: var(--mf-font-default);
   text-align: center;
   text-decoration: none;
-  background-color: var(--mf-c-black);
+  background-color: var(--manifold-grayscale-50);
   background-image: var(--background-gradient);
-  border-radius: var(--mf-radius-m);
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.17);
+  border-radius: var(--card-radius);
+  box-shadow: 0 2px 8px 0 var(--manifold-grayscale-20);
 }
 
 .product-logo {
@@ -163,7 +171,7 @@
     min-width: 3rem;
     height: auto;
     min-height: 3rem;
-    border-radius: var(--mf-radius-m);
+    border-radius: var(--logo-radius);
     object-fit: contain;
   }
 }
@@ -172,7 +180,7 @@
   margin-top: 1rem;
   margin-bottom: 0.5rem;
   font-weight: inherit;
-  font-size: var(--mf-font-u2);
+  font-size: var(--manifold-font-u2);
   line-height: 1.2;
   text-align: center;
 }
@@ -186,7 +194,7 @@
 .provider-link {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
 
   & manifold-icon {
     display: block;
@@ -204,10 +212,11 @@
     padding-bottom: 0.25rem;
     color: inherit;
     text-decoration: none;
+    opacity: 0.75;
     transition: color 200ms;
 
     &:hover {
-      color: var(--mf-c-gray-s2);
+      opacity: 1;
 
       & manifold-icon {
         opacity: 1;

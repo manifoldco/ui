@@ -3,6 +3,26 @@
 :host {
   --grid-s: 1rem;
   --grid-m: 1.5rem;
+
+  /* theme */
+  --link-color: var(--manifold-grayscale-50);
+  --link-color-active: var(--manifold-color-primary);
+  --link-color-hover: var(--manifold-color-primary);
+  --heading-color: var(--manifold-grayscale-60);
+  --heading-border: 1px solid var(--manifold-grayscale-10);
+
+  /* search */
+  --search-text-color: var(--manifold-grayscale-100);
+  --search-background: var(--manifold-grayscale-05);
+  --search-border: 1px solid var(--manifold-grayscale-05);
+  --search-radius: var(--manifold-radius);
+  --search-placeholder-color: var(--manifold-grayscale-50);
+
+  /* search:focus */
+  --search-background-focus: var(--manifold-grayscale-100i);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .wrapper {
@@ -34,8 +54,8 @@
 .category-list-button {
   margin: 0.25rem 0;
   padding: 0.25em 0;
-  color: var(--mf-c-gray);
-  font-size: var(--mf-font-d1);
+  color: var(--link-color);
+  font-size: var(--manifold-font-d1);
   text-align: left;
   text-transform: capitalize;
   text-decoration: none;
@@ -45,11 +65,12 @@
   transition: color 150ms linear;
 
   &[data-active] {
-    color: var(--mf-c-gray-s2);
+    color: var(--link-color-active);
   }
 
+  &:hover,
   &:focus {
-    color: var(--mf-c-blue);
+    color: var(--link-color-hover);
     outline: 0;
   }
 }
@@ -66,7 +87,7 @@
   position: sticky;
   top: 0;
   left: 0;
-  z-index: var(--mf-layer-hover);
+  z-index: var(--manifold-layer-hover);
   grid-column: 1 / -1; /* always start new row, and span full row */
   box-sizing: border-box;
   width: 100%;
@@ -74,19 +95,18 @@
   margin-bottom: var(--grid-s);
   padding-top: var(--grid-s);
   padding-bottom: var(--grid-s);
-  color: var(--mf-c-black-60);
+  color: var(--heading-color);
   font-weight: 400;
   font-size: 1em;
-  font-family: var(--mf-font-default);
+  font-family: var(--manifold-font-family);
   text-transform: capitalize;
-  background-color: var(--mf-c-white);
-  border-bottom: 1px solid var(--mf-c-black-10);
+  border-bottom: var(--heading-border);
 
   @media (--viewport-s) {
     position: static;
     margin-bottom: 0;
     padding-bottom: 0;
-    font-size: var(--mf-font-u1);
+    font-size: var(--manifold-font-u1);
     background: transparent;
     border-bottom: none;
   }
@@ -107,21 +127,22 @@
   grid-area: search;
   padding: 0.75rem;
   padding-right: 0;
+  color: var(--search-text-color);
   font-size: 1em;
-  background-color: var(--mf-c-gray-t5);
-  border: 1px solid var(--mf-c-gray-t5);
-  border-radius: 0.25rem;
+  background: var(--search-background);
+  border: var(--search-border);
+  border-radius: var(--search-radius);
   box-shadow: rgba(0, 0, 0, 0) 0 2px 8px;
   transition: background-color 100ms linear;
   -webkit-appearance: none;
 
   &:focus {
-    background-color: var(--mf-c-white);
+    background-color: var(--search-background-focus);
     outline: 0;
     box-shadow: rgba(0, 0, 0, 0.1) 0 2px 8px;
   }
 
   &::placeholder {
-    color: var(--mf-c-gray);
+    color: var(--search-placeholder-color);
   }
 }

@@ -249,11 +249,11 @@ export namespace Components {
 
   interface ManifoldIcon {
     /**
-    * a CSS variable starting with `--mf-c-*`
+    * a CSS variable starting with `--manifold-c-*`
     */
     'color': string;
     /**
-    * a CSS variable starting with `--mf-g-*`
+    * a CSS variable starting with `--manifold-g-*`
     */
     'gradient'?: string;
     /**
@@ -266,11 +266,11 @@ export namespace Components {
   }
   interface ManifoldIconAttributes extends StencilHTMLAttributes {
     /**
-    * a CSS variable starting with `--mf-c-*`
+    * a CSS variable starting with `--manifold-c-*`
     */
     'color'?: string;
     /**
-    * a CSS variable starting with `--mf-g-*`
+    * a CSS variable starting with `--manifold-g-*`
     */
     'gradient'?: string;
     /**

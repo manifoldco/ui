@@ -19,47 +19,75 @@
 }
 
 .toast {
+  display: grid;
   box-sizing: border-box;
   margin-top: 0;
   margin-bottom: 0;
-  color: var(--mf-c-blue);
+  color: var(--manifold-color-primary);
   line-height: 1;
-  background-color: rgba(var(--mf-c-blue-rgb), 0.05);
-  border-radius: var(--mf-radius-default);
-  box-shadow: inset 0 0 0 1px rgba(var(--mf-c-blue-rgb), 0.375);
+  background-color: rgba(var(--manifold-c-blue-rgb), 0.05);
+  box-shadow: inset 0 0 0 1px rgba(var(--manifold-c-blue-rgb), 0.375);
   will-change: height;
 
+  /* hackiness below to vary the opacity of hex colors */
+
+  &::before,
+  &::after {
+    grid-column: 1;
+    grid-row: 1;
+    content: '';
+    border-radius: var(--manifold-radius);
+    pointer-events: none;
+  }
+
+  &::before {
+    background: var(--manifold-color-primary);
+    opacity: 0.05;
+  }
+
+  &::after {
+    box-shadow: inset 0 0 0 1px var(--manifold-color-primary);
+    opacity: 0.375;
+  }
+
   & a {
-    color: var(--mf-c-blue);
+    color: inherit;
   }
 
   &[data-alert-type='error'] {
-    color: var(--mf-c-red);
-    background-color: rgba(var(--mf-c-red-rgb), 0.05);
-    box-shadow: inset 0 0 0 1px rgba(var(--mf-c-red-rgb), 0.375);
+    color: var(--manifold-color-error);
 
-    & a {
-      color: var(--mf-c-red);
+    &::before {
+      background: var(--manifold-color-error);
+    }
+
+    &::after {
+      box-shadow: inset 0 0 0 1px var(--manifold-color-error);
     }
   }
 
   &[data-alert-type='success'] {
-    color: var(--mf-c-green);
-    background-color: rgba(var(--mf-c-green-rgb), 0.05);
-    box-shadow: inset 0 0 0 1px rgba(var(--mf-c-green-rgb), 0.5);
+    color: var(--manifold-color-success);
 
-    & a {
-      color: var(--mf-c-green);
+    &::before {
+      background: var(--manifold-color-success);
+    }
+
+    &::after {
+      box-shadow: inset 0 0 0 1px var(--manifold-color-success);
     }
   }
 
   &[data-alert-type='warning'] {
-    color: var(--mf-c-gold);
-    background-color: rgba(var(--mf-c-gold-rgb), 0.05);
-    box-shadow: inset 0 0 0 1px rgba(var(--mf-c-gold-rgb), 0.6);
+    color: var(--manifold-color-warn);
 
-    & a {
-      color: var(--mf-c-gold);
+    &::before {
+      background: var(--manifold-color-warn);
+    }
+
+    &::after {
+      box-shadow: inset 0 0 0 1px var(--manifold-color-warn);
+      opacity: 0.6;
     }
   }
 
@@ -69,7 +97,7 @@
     transition: visibility 0ms var(--animation-duration);
     animation-name: collapse;
     animation-duration: var(--animation-duration);
-    animation-timing-function: var(--mf-ease-out);
+    animation-timing-function: var(--manifold-ease-out);
     animation-fill-mode: forwards;
     pointer-events: none;
   }
@@ -77,7 +105,9 @@
 
 .grid {
   display: grid;
+  grid-column: 1;
   grid-column-gap: calc(var(--padding) - 0.125rem);
+  grid-row: 1;
   grid-template-columns: min-content auto;
   padding-top: var(--padding);
   padding-right: var(--padding);
@@ -106,13 +136,13 @@
   line-height: 1;
   background: none;
   border: none;
-  border-top-right-radius: var(--mf-radius-default);
-  border-bottom-right-radius: var(--mf-radius-default);
+  border-top-right-radius: var(--manifold-radius);
+  border-bottom-right-radius: var(--manifold-radius);
   transition: background-color 150ms linear, filter 150ms linear;
   appearance: none;
 
   &:focus {
-    background-color: rgba(var(--mf-c-blue-rgb), 0.2);
+    background-color: var(--manifold-grayscale-05);
     outline: none;
     filter: saturate(150%);
   }
