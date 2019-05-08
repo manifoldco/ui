@@ -69,7 +69,7 @@ input:checked + .toggle {
 input:focus + .toggle,
 input:active + .toggle {
   border-color: var(--background-on);
-  box-shadow: 0 0 1em 0.1em rgba(var(--mf-c-blue-rgb), 0.3);
+  box-shadow: 0 0 1em 0.1em rgba(var(--manifold-c-blue-rgb), 0.3);
 }
 
 input:disabled {

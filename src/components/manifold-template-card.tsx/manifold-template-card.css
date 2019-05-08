@@ -4,8 +4,8 @@
   /* theme vars */
   --card-background: var(--manifold-grayscale-100i);
   --card-text-color: var(--manifold-grayscale-70);
-  --card-border: var(--manifold-card-border, 1px solid var(--manifold-grayscale-30));
-  --card-radius: var(--manifold-card-radius, 4px);
+  --card-border: var(--manifold-card-border, var(--manifold-border));
+  --card-radius: var(--manifold-card-radius, var(--manifold-radius));
   --card-shadow: var(--manifold-card-shadow, none);
   --card-body-text-color: var(--manifold-grayscale-50);
   --card-body-background: var(--manifold-grayscale-03);
@@ -16,8 +16,6 @@
   --card-text-color-hover: var(--manifold-card-color-hover, var(--card-text-color));
   --card-border-hover: var(--manifold-card-border-hover, var(--card-border));
   --card-shadow-hover: var(--manifold-card-shadow-hover, var(--card-shadow));
-
-  font-family: var(--mf-font-default);
 }
 
 .wrapper {
@@ -28,7 +26,7 @@
   text-decoration: none;
   background-color: var(--card-background);
   border: var(--card-border, 1px solid #d3d3d4);
-  border-radius: var(--card-radius, --mf-radius-l);
+  border-radius: var(--card-radius);
   box-shadow: var(--card-shadow, 0 2px 6px rgba(0, 0, 0, 0));
   cursor: pointer;
   transition: border-color 150ms linear, box-shadow 150ms linear;
@@ -36,7 +34,7 @@
   &:focus,
   &:hover {
     background-color: var(--card-background-hover);
-    border: var(--card-border-hover, var(--mf-card-border));
+    border: var(--card-border-hover, var(--manifold-card-border));
     box-shadow: var(--card-shadow-hover, 0 2px 6px rgba(0, 0, 0, 0.15));
   }
 }
@@ -47,7 +45,7 @@
   padding: var(--padding);
   color: var(--card-text-color);
   font-weight: 400;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
   line-height: 1;
 
   & manifold-icon {
@@ -61,13 +59,13 @@
   overflow: hidden;
   color: var(--card-body-text-color);
   font-weight: 500;
-  font-size: var(--mf-font-d2);
+  font-size: var(--manifold-font-d2);
   letter-spacing: 0.0625em;
   text-transform: uppercase;
   background: var(--card-body-background);
   border-top: var(--card-inner-border);
-  border-bottom-right-radius: var(--mf-radius-default);
-  border-bottom-left-radius: var(--mf-radius-default);
+  border-bottom-right-radius: var(--card-radius);
+  border-bottom-left-radius: var(--card-radius);
 
   & span {
     padding-right: var(--padding);
@@ -111,7 +109,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border-radius: var(--mf-radius-default);
+    border-radius: var(--manifold-radius);
     object-fit: cover;
 
     & + li {

@@ -30,7 +30,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: var(--mf-layer-nav);
+  z-index: var(--manifold-layer-nav);
   box-sizing: border-box;
   width: 100%;
   height: 4rem;
@@ -116,7 +116,7 @@ body {
 
 .docs-nav-expanded.is-expanded {
   position: relative;
-  z-index: var(--mf-layer-nav);
+  z-index: var(--manifold-layer-nav);
   display: block;
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.95);
@@ -144,7 +144,7 @@ body {
 }
 
 .docs-nav a:hover {
-  color: var(--mf-c-blue);
+  color: var(--manifold-c-blue);
 }
 
 .docs-main {
@@ -240,7 +240,7 @@ code,
   margin-top: 3rem;
   font-weight: 800;
   font-size: 48px;
-  font-family: var(--mf-font-default);
+  font-family: var(--manifold-font-default);
 }
 
 .docs-section h2 {
@@ -280,11 +280,11 @@ code,
 }
 
 .hljs-attr {
-  color: var(--mf-c-teal);
+  color: var(--manifold-c-teal);
 }
 
 .hljs-built_in {
-  color: var(--mf-c-teal);
+  color: var(--manifold-c-teal);
 }
 
 .hljs-comment {
@@ -292,25 +292,25 @@ code,
 }
 
 .hljs-function {
-  color: var(--mf-c-yellow);
+  color: var(--manifold-c-yellow);
 }
 
 .hljs-keyword {
-  color: var(--mf-c-purple);
+  color: var(--manifold-c-purple);
   filter: saturate(120%) brightness(125%);
 }
 
 .hljs-params {
-  color: var(--mf-c-blue);
+  color: var(--manifold-c-blue);
   filter: saturate(120%) brightness(150%);
 }
 
 .hljs-string {
-  color: var(--mf-c-green);
+  color: var(--manifold-c-green);
 }
 
 .hljs-subst {
-  color: var(--mf-c-orange);
+  color: var(--manifold-c-orange);
 }
 
 .hljs-tag {

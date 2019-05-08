@@ -20,6 +20,9 @@
 
   /* search:focus */
   --search-background-focus: var(--manifold-grayscale-100i);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .wrapper {
@@ -52,7 +55,7 @@
   margin: 0.25rem 0;
   padding: 0.25em 0;
   color: var(--link-color);
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
   text-align: left;
   text-transform: capitalize;
   text-decoration: none;
@@ -84,7 +87,7 @@
   position: sticky;
   top: 0;
   left: 0;
-  z-index: var(--mf-layer-hover);
+  z-index: var(--manifold-layer-hover);
   grid-column: 1 / -1; /* always start new row, and span full row */
   box-sizing: border-box;
   width: 100%;
@@ -103,7 +106,7 @@
     position: static;
     margin-bottom: 0;
     padding-bottom: 0;
-    font-size: var(--mf-font-u1);
+    font-size: var(--manifold-font-u1);
     background: transparent;
     border-bottom: none;
   }

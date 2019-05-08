@@ -1,7 +1,7 @@
 :host {
   --input-background: var(--manifold-grayscale-100i);
   --input-placeholder-color: var(--manifold-grayscale-50);
-  --input-border: 1px solid var(--manifold-grayscale-30);
+  --input-border: var(--manfold-input-border, var(--manifold-border));
   --input-border-focus: 1px solid var(--manifold-color-primary);
   --button-background: var(--manifold-grayscale-05);
   --text-color: var(--manifold-grayscale-100);
@@ -74,7 +74,7 @@
   grid-row: 2;
   margin-top: 0.25em;
   color: var(--range-text-color);
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
   text-align: center;
 }
 

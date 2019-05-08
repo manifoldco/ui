@@ -11,8 +11,8 @@
 .heading {
   grid-area: heading;
   margin: 0;
-  color: var(--mf-c-gray);
-  font-size: var(--mf-font-d2);
+  color: var(--manifold-c-gray);
+  font-size: var(--manifold-font-d2);
   text-transform: uppercase;
 }
 
@@ -21,15 +21,15 @@
 }
 
 .amount {
-  font-size: var(--mf-font-u2);
+  font-size: var(--manifold-font-u2);
 }
 
 .suffix {
-  color: var(--mf-c-gray);
+  color: var(--manifold-c-gray);
 }
 
 .plan-name {
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
 }
 
 .features {
@@ -38,14 +38,14 @@
   grid-template-columns: 1fr 1fr;
   align-self: start;
   margin: 0;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
 }
 
 .feature-name,
 .feature-value {
   margin: 0;
   padding: 0.5rem 0;
-  border-top: 1px dotted var(--mf-c-gray-t3);
+  border-top: 1px dotted var(--manifold-c-gray-t3);
 }
 
 .feature-name {
@@ -65,9 +65,9 @@
 
 .description {
   margin: 0.5em 0;
-  color: var(--mf-c-gray);
+  color: var(--manifold-c-gray);
   font-weight: normal;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
 }
 
 .feature-table {
@@ -97,9 +97,9 @@
   margin-bottom: 0.5rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  font-size: var(--mf-font-d1);
-  border-top: 1px dotted var(--mf-c-gray-t3);
-  border-bottom: 1px dotted var(--mf-c-gray-t3);
+  font-size: var(--manifold-font-d1);
+  border-top: 1px dotted var(--manifold-c-gray-t3);
+  border-bottom: 1px dotted var(--manifold-c-gray-t3);
 }
 
 .region-label {
@@ -116,11 +116,11 @@
   }
 
   &[data-value='No'] {
-    color: var(--mf-c-gray);
+    color: var(--manifold-c-gray);
   }
 
   &[data-value='Yes'] {
-    color: var(--mf-c-blue);
+    color: var(--manifold-c-blue);
 
     & .icon {
       display: inline-block;

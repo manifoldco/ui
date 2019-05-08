@@ -43,7 +43,7 @@ export class ManifoldProductPage {
   render() {
     if (this.product) {
       const { documentation_url, support_email, name, label, logo_url, tags } = this.product.body;
-      const gradient = `var(--mf-g-${label})`;
+      const gradient = `var(--manifold-g-${label})`;
 
       return (
         <div class="wrapper" itemscope itemtype="http://schema.org/Product">
@@ -74,7 +74,10 @@ export class ManifoldProductPage {
                   <div class="sidebar-section">
                     <h4>Category</h4>
                     {tags.map(tag => (
-                      <div class="category" style={{ '--categoryColor': `var(--mf-c-${tag})` }}>
+                      <div
+                        class="category"
+                        style={{ '--categoryColor': `var(--manifold-c-${tag})` }}
+                      >
                         <manifold-icon
                           icon={categoryIcon[tag] || categoryIcon.uncategorized}
                           margin-right
@@ -88,24 +91,24 @@ export class ManifoldProductPage {
                   <h4>Links</h4>
                   <div class="provider-link">
                     <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                      <manifold-icon icon={book} color="--mf-c-gray" margin-right />
+                      <manifold-icon icon={book} color="--manifold-c-gray" margin-right />
                       Docs
                       <manifold-icon
                         class="external-link-icon"
                         icon={arrow_up_right}
-                        color="--mf-c-gray-t3"
+                        color="--manifold-c-gray-t3"
                         margin-left
                       />
                     </a>
                   </div>
                   <div class="provider-link">
                     <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                      <manifold-icon icon={life_buoy} color="--mf-c-gray" margin-right />
+                      <manifold-icon icon={life_buoy} color="--manifold-c-gray" margin-right />
                       Support
                       <manifold-icon
                         class="external-link-icon"
                         icon={arrow_up_right}
-                        color="--mf-c-gray-t3"
+                        color="--manifold-c-gray-t3"
                         margin-left
                       />
                     </a>
@@ -129,7 +132,10 @@ export class ManifoldProductPage {
         <section class="grid">
           <aside class="sidebar">
             <div class="sidebar-inner">
-              <div class="sidebar-card" style={{ '--background-gradient': 'var(--mf-g-default)' }}>
+              <div
+                class="sidebar-card"
+                style={{ '--background-gradient': 'var(--manifold-g-default)' }}
+              >
                 <div class="product-logo">
                   <manifold-skeleton-img />
                 </div>

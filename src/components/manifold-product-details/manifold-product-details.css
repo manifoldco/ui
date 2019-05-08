@@ -2,7 +2,7 @@
   /* Theme */
   --text-color: var(--manifold-text-color);
   --text-color-heading: var(--text-color);
-  --text-color-body: var(--manifold-text-color-secondary);
+  --text-color-body: var(--manifold-text-color-body);
 
   color: var(--manifold-text-color);
 }
@@ -10,7 +10,7 @@
 .title {
   margin: 0;
   font-weight: 400;
-  font-size: var(--mf-font-u3);
+  font-size: var(--manifold-font-u3);
   line-height: 1.25;
 }
 
@@ -44,7 +44,7 @@
     max-width: 38em;
     margin: 0;
     color: var(--text-color-body);
-    font-size: var(--mf-font-d1);
+    font-size: var(--manifold-font-d1);
     line-height: 1.5;
   }
 }

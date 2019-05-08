@@ -25,7 +25,7 @@
   margin-bottom: 1rem;
   color: var(--text-color);
   font-weight: 500;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
   letter-spacing: 0.0625em;
   text-transform: uppercase;
 }
@@ -103,7 +103,7 @@ img {
   padding: 0;
   overflow: hidden;
   border: none;
-  border-radius: var(--mf-radius-default);
+  border-radius: var(--radius);
   transition: box-shadow 200ms, transform 200ms ease-out;
   appearance: none;
 

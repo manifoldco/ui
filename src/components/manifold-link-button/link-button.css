@@ -1,20 +1,31 @@
+:host {
+  --radius: var(--manifold-radius);
+  --background: var(--manifold-color-primary);
+  --color: var(--manifold-text-color-accent);
+  --padding: var(--manifold-button-padding);
+  --border: 0;
+  --font-size: var(--manifold-button-font-size, inherit);
+  --manifold-shadow-default: 0 2px 6px rgba(31, 31, 38, 0.1);
+  --manifold-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
+}
+
 a {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   width: 100%;
-  padding: var(--mf-button-padding, 1em 1.5em);
-  color: var(--mf-button-color, var(--mf-c-white));
-  font-size: var(--mf-button-font-size, inherit);
+  padding: var(--padding, 1em 1.5em);
+  color: var(--color);
+  font-size: var(--font-size);
   line-height: 1;
   white-space: nowrap;
   text-align: center;
   text-decoration: none;
-  background: var(--mf-button-background, var(--mf-g-cta));
-  border: 0;
-  border-radius: var(--mf-button-radius, var(--mf-radius-default));
-  box-shadow: var(--mf-shadow-default);
+  background: var(--background);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--manifold-shadow-default);
   cursor: pointer;
   transition: filter 200ms linear, border-color 200ms linear, color 200ms linear;
 
@@ -24,7 +35,7 @@ a {
   }
 
   &:active {
-    box-shadow: var(--mf-shadow-transparent);
+    box-shadow: var(--manifold-shadow-transparent);
     transform: translateY(1px);
     filter: brightness(90%);
   }
@@ -35,20 +46,20 @@ a {
   }
 
   &[data-color='white'] {
-    color: var(--mf-c-black70);
-    background: white;
-    border: 1px solid var(--mf-c-black-20);
+    color: var(--manifold-grayscale-70i);
+    background: var(--manifold-grayscale-100i);
+    border: 1px solid var(--manifold-grayscale-20);
 
     &:focus,
     &:hover {
-      border-color: var(--mf-c-black-40);
+      border-color: var(--manifold-grayscale-40);
     }
   }
 
   &[data-color='black'] {
-    color: var(--mf-c-offWhite);
-    background: var(--mf-c-black);
-    border-color: var(--mf-c-black);
+    color: var(--manifold-grayscale-90i);
+    background: var(--manifold-grayscale-100);
+    border-color: var(--manifold-grayscale-100);
 
     &:focus,
     &:hover {
@@ -60,6 +71,6 @@ a {
     height: 2.25rem;
     padding-right: 1.25rem;
     padding-left: 1.25rem;
-    font-size: var(--mf-font-d1);
+    font-size: var(--manifold-font-d1);
   }
 }

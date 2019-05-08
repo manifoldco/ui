@@ -11,9 +11,9 @@ export class ManifoldIcon {
   @Prop() title: string;
   /** The icon ID */
   @Prop() icon: string;
-  /** a CSS variable starting with `--mf-g-*` */
+  /** a CSS variable starting with `--manifold-g-*` */
   @Prop() gradient?: string;
-  /** a CSS variable starting with `--mf-c-*` */
+  /** a CSS variable starting with `--manifold-c-*` */
   @Prop() color: string = 'currentColor';
   @Element() element: HTMLElement;
 

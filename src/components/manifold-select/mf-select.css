@@ -1,13 +1,13 @@
 :host {
   /* redefining theme variables here so they'll work properly */
-  --mf-c-gray: #8f8f95;
-  --mf-c-blue: #1e50da;
+  --manifold-c-gray: #8f8f95;
+  --manifold-c-blue: #1e50da;
   --default-color: var(--manifold-grayscale-40);
   --focus-color: var(--manifold-color-primary);
 
   /* theme */
   --radius: var(--manifold-radius, 4px);
-  --border: var(--manfold-border, 1px solid var(--manifold-grayscale-40));
+  --border: var(--manfold-input-border, var(--manifold-border));
   --border-focus: var(--manfold-border-active, 1px solid var(--manifold-color-primary));
   --background: var(--manifold-grayscale-100i);
   --text-color: var(--manifold-text-color);

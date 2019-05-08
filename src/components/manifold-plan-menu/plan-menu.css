@@ -36,6 +36,9 @@
   );
   --plan-button-color-active: var(--manifold-card-color-active, var(--manifold-color-primary));
   --plan-button-shadow-active: var(--manifold-card-shadow-active, none);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .plan-list {
@@ -64,7 +67,7 @@
   @media (--viewport-m) {
     min-width: max-content;
     margin: 0;
-    border-top: 1px solid rgba(var(--mf-c-gray-rgb), 0.25);
+    border-top: 1px solid rgba(var(--manifold-c-gray-rgb), 0.25);
   }
 }
 
@@ -101,13 +104,12 @@
   padding-left: 1rem;
   overflow: hidden;
   color: var(--plan-button-color);
-  font-family: var(--mf-font-default);
   white-space: nowrap;
   text-align: left;
   background-color: transparent;
   border: var(--plan-button-border);
   border-radius: var(--plan-button-radius);
-  box-shadow: 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0);
+  box-shadow: 0 0 0.5rem 0.25rem rgba(var(--manifold-c-blue-rgb), 0);
   transition: background-color 200ms linear, border-color 200ms linear, box-shadow 200ms linear;
   appearance: none;
 
@@ -125,7 +127,7 @@
     width: 1.5rem;
     height: 1.5rem;
     background: var(--manifold-card-icon-background, var(--manifold-color-primary));
-    border-bottom-left-radius: var(--plan-button-radius, var(--mf-radius-large));
+    border-bottom-left-radius: var(--plan-button-radius);
     transform: scale(0.5);
     transform-origin: 100% 0;
     opacity: 0;
@@ -138,9 +140,9 @@
     background: var(--plan-button-background-hover);
     border: var(
       --plan-button-border-hover,
-      var(--plan-button-border, 1px solid var(--mf-c-gray-t3))
+      var(--plan-button-border, 1px solid var(--manifold-c-gray-t3))
     );
-    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--mf-c-gray-rgb), 0.5));
+    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--manifold-c-gray-rgb), 0.5));
   }
 }
 
@@ -151,7 +153,7 @@
   z-index: 5;
   width: 1rem;
   height: 1rem;
-  color: var(--manifold-text-color-alt);
+  color: var(--manifold-text-color-accent);
   transform: translateY(1rem);
   opacity: 0;
   transition: opacity 100ms linear, transform 200ms ease-in-out;
@@ -163,7 +165,10 @@
   color: var(--plan-button-color-active);
   background: var(--plan-button-background-active);
   border: var(--plan-button-border-active);
-  box-shadow: var(--plan-button-shadow-active, 0 0 0.5rem 0.25rem rgba(var(--mf-c-blue-rgb), 0.15));
+  box-shadow: var(
+    --plan-button-shadow-active,
+    0 0 0.5rem 0.25rem rgba(var(--manifold-c-blue-rgb), 0.15)
+  );
 
   &::after {
     transform: scale(1);
@@ -171,7 +176,7 @@
   }
 
   &:hover {
-    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--mf-c-blue-rgb), 0.5));
+    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--manifold-c-blue-rgb), 0.5));
   }
 
   & .check-icon {
@@ -184,7 +189,7 @@
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
-  font-size: var(--mf-font-d1);
+  font-size: var(--manifold-font-d1);
   opacity: 0.7;
   transition: opacity 100ms linear;
 
@@ -195,14 +200,14 @@
 
 manifold-badge {
   margin-top: 0.5em;
-  font-size: var(--mf-font-d4);
+  font-size: var(--manifold-font-d4);
 }
 
 .custom-icon {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
-  color: var(--mf-c-gray);
+  color: var(--manifold-c-gray);
   transition: opacity 100ms linear;
 
   &[data-hidden] {
