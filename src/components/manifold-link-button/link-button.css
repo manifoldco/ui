@@ -46,7 +46,7 @@ a {
   }
 
   &[data-color='white'] {
-    color: var(--manifold-grayscale-70i);
+    color: var(--manifold-grayscale-70);
     background: var(--manifold-grayscale-100i);
     border: 1px solid var(--manifold-grayscale-20);
 

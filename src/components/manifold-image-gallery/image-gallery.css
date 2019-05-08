@@ -95,7 +95,7 @@ img {
 }
 
 .image-wrapper {
-  --selectedShadow: 0 0 0 2px var(--manifold-grayscale-40);
+  --selected-shadow: 0 0 0 2px var(--manifold-grayscale-40);
 
   min-width: 4rem;
   max-width: 10rem;
@@ -115,7 +115,7 @@ img {
 
   &[data-selected] {
     border: var(--selected-border);
-    box-shadow: var(--selectedShadow);
+    box-shadow: var(--selected-shadow);
   }
 }
 
