@@ -1,13 +1,4 @@
-dist/
-pkg/
-src/spec/billing
-src/spec/catalog
-src/spec/gateway
-src/spec/marketplace
-src/spec/provisioning
-!www/favicon.ico
-www/
-
+# System
 *~
 *.sw[mnpcod]
 *.log
@@ -17,18 +8,31 @@ www/
 log.txt
 *.sublime-project
 *.sublime-workspace
-
-.stencil/
-.idea/
-.vscode/
-.sass-cache/
-.versions/
-coverage/
-node_modules/
-$RECYCLE.BIN/
-
 .DS_Store
 .manifold.yml
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
+
+# Stencil
+!www/favicon.ico
+.idea/
+.sass-cache/
+.stencil/
+.versions/
+.vscode/
+coverage/
+dist/
+node_modules/
+pkg/
+src/spec/billing
+src/spec/catalog
+src/spec/gateway
+src/spec/marketplace
+src/spec/provisioning
+www/
+$RECYCLE.BIN/
+
+# Gatsby
+.cache
+docs/public

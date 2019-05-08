@@ -33,62 +33,14 @@ Storybook. Testing every version of a component is recommended.
 
 ## 🖋️ Editing documentation
 
-Documentation for each component lives in its corresponding `readme.md` file.
-All pertinent info should go in there.
-
-To update the site with the newest changes from the `readme.md` files, run:
+The docs are powered by gatsby. To see what they look like locally, run:
 
 ```bash
-npm run generate:docs
+npm run docs
 ```
 
-This will replace
-
-```html
-<!-- BEGIN README my-component -->
-<!-- END README -->
-```
-
-…with the contents of `src/components/my-component/readme.md` (or warn you if
-it couldn’t locate that file). If there’s already HTML between those
-comments, it will still update it to the newest version of the README.
-
-### Adding a new component to the docs
-
-Adding the appropriate `<!-- BEGIN README my-component --><!-- END README -->`
-comment will link the `src/index.html` file with the corresponding README
-whenever `npm run generate:docs` is run.
-
-##### ⚠️ Warning
-
-Editing anything between `BEGIN README …` and `END README` will be blown away
-by `generate:docs`.
-
-### Watch for README changes
-
-To watch for changes in the background to all README files, run:
-
-```bash
-npm run generate:docs:watch
-```
-
-## Generating TypeScript defs from Swagger specs
-
-The canonical specs for our APIs [live here][specs]. In this repo, those YAML
-files **should be manually** copied to `specs/`, in case of any changes.
-
-To update the TypeScript defs, run:
-
-```bash
-npm run generate:specs
-```
-
-This will generate new definitions to `types/`. This is done using our own
-library, [@manifoldco/swagger-to-ts][swagger-to-ts], to generate Types. If
-that breaks (very likely), bug @dangodev.
-
-Currently we’re only using `spec/catalog/v1.yaml`, but we may need other
-endpoint specs as this grows.
+That will spin up the docs server locally at `localhost:8000`. Changes will
+be hotloaded.
 
 ## 🚀 Publishing to npm
 
