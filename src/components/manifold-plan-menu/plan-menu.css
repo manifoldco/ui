@@ -6,7 +6,7 @@
   --padding-xsmall: 0.5rem;
 
   /* plan button */
-  --plan-button-spacing: var(--manifold-card-gap, 0.75rem);
+  --plan-button-spacing: var(--manifold-card-gap, 1rem);
   --plan-button-border: var(
     --manifold-card-border,
     var(--manifold-border, 1px solid var(--manifold-grayscale-20))

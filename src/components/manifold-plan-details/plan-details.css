@@ -39,8 +39,10 @@
 
 .header {
   display: grid;
+  grid-gap: 1rem;
   grid-template-columns: auto 1fr;
   align-content: center;
+  align-items: center;
 }
 
 .logo {
@@ -49,7 +51,6 @@
   width: var(--logo-size);
   min-width: var(--logo-size);
   height: var(--logo-size);
-  margin-right: 1rem;
   overflow: hidden;
   background: var(--manifold-grayscale-100i);
   border-radius: var(--logo-radius);
@@ -75,7 +76,6 @@
   margin-bottom: 0;
   font-weight: 400;
   font-size: var(--manifold-font-u3);
-  line-height: 1;
 
   @media (--viewport-m) {
     font-size: var(--manifold-font-u4);
@@ -102,6 +102,8 @@
   margin-top: 1rem;
   margin-bottom: 0;
   font-size: var(--manifold-font-d1);
+  border-bottom: var(--card-border);
+  border-bottom-style: dotted;
 }
 
 .feature-name,
@@ -109,7 +111,6 @@
   margin: 0;
   padding: 0.5rem 0;
   border-top: var(--card-border);
-  /* stylelint-disable-next-line */
   border-top-style: dotted;
 }
 
@@ -148,14 +149,10 @@
 .region {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-bottom: var(--padding);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: var(--manifold-font-d1);
-  border-top: var(--card-border);
   border-bottom: var(--card-border);
-  /* stylelint-disable-next-line */
-  border-top-style: dotted;
   border-bottom-style: dotted;
 }
 
@@ -194,6 +191,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  margin-top: var(--padding);
   margin-right: calc(var(--padding) * -1);
   margin-left: calc(var(--padding) * -1);
   padding: calc(var(--padding) * 0.75) var(--padding);
