@@ -69,6 +69,7 @@
   --manifold-color-error: var(--manifold-red);
   --manifold-radius: 4px;
   --manifold-border: 1px solid var(--manifold-grayscale-10);
+  --manifold-border-focus: 1px solid var(--manifold-color-primary);
 
   /* text */
   --manifold-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

@@ -3,9 +3,9 @@
   align-items: center;
   padding: var(--manifold-tag-padding, 0.25em 1em);
   color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
-  font-weight: var(--manifold-tag-font-weight, 600);
+  font-weight: var(--manifold-tag-font-weight, 900);
   font-size: var(--manifold-font-d2);
-  line-height: 1.2;
+  line-height: 1.5;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
   background: var(--manifold-color-secondary);

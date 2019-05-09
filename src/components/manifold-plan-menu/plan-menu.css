@@ -6,7 +6,7 @@
   --padding-xsmall: 0.5rem;
 
   /* plan button */
-  --plan-button-spacing: var(--manifold-card-gap, 0.75rem);
+  --plan-button-spacing: var(--manifold-card-gap, 1rem);
   --plan-button-border: var(
     --manifold-card-border,
     var(--manifold-border, 1px solid var(--manifold-grayscale-20))
@@ -67,6 +67,8 @@
   @media (--viewport-m) {
     min-width: max-content;
     margin: 0;
+
+    /* TODO move to Manifold theme */
     border-top: 1px solid rgba(var(--manifold-c-gray-rgb), 0.25);
   }
 }
@@ -106,10 +108,9 @@
   color: var(--plan-button-color);
   white-space: nowrap;
   text-align: left;
-  background-color: transparent;
+  background-color: var(--plan-button-background);
   border: var(--plan-button-border);
   border-radius: var(--plan-button-radius);
-  box-shadow: 0 0 0.5rem 0.25rem rgba(var(--manifold-c-blue-rgb), 0);
   transition: background-color 200ms linear, border-color 200ms linear, box-shadow 200ms linear;
   appearance: none;
 
@@ -138,11 +139,8 @@
   &:focus,
   &:hover {
     background: var(--plan-button-background-hover);
-    border: var(
-      --plan-button-border-hover,
-      var(--plan-button-border, 1px solid var(--manifold-c-gray-t3))
-    );
-    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--manifold-c-gray-rgb), 0.5));
+    border: var(--plan-button-border-hover, var(--plan-button-border));
+    box-shadow: var(--plan-button-shadow-hover);
   }
 }
 
@@ -207,7 +205,7 @@ manifold-badge {
   position: absolute;
   top: 0.75rem;
   right: 0.75rem;
-  color: var(--manifold-c-gray);
+  color: var(--manifold-grayscale-40);
   transition: opacity 100ms linear;
 
   &[data-hidden] {

@@ -7,6 +7,14 @@
   --font-size: var(--manifold-button-font-size, inherit);
   --manifold-shadow-default: 0 2px 6px rgba(31, 31, 38, 0.1);
   --manifold-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
+
+  /* Theme */
+  --background: var(--manifold-button-background, var(--manifold-color-primary));
+  --background-hover: var(--manifold-button-background-hover, var(--background));
+  --border: var(--manifold-button-border, 0);
+  --border-hover: var(--manifold-button-border-hover, var(--border));
+  --shadow: var(--manifold-button-shadow, none);
+  --shadow-hover: var(--manifold-button-shadow-hover, var(--shadow));
 }
 
 a {
@@ -25,17 +33,20 @@ a {
   background: var(--background);
   border: var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--manifold-shadow-default);
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: filter 200ms linear, border-color 200ms linear, color 200ms linear;
+  transition: filter 200ms linear, border-color 200ms linear, color 200ms linear,
+    box-shadow 100ms linear;
 
   &:focus,
   &:hover {
+    background: var(--background-hover);
+    border: var(--border-hover);
+    box-shadow: var(--shadow-hover);
     filter: saturate(130%);
   }
 
   &:active {
-    box-shadow: var(--manifold-shadow-transparent);
     transform: translateY(1px);
     filter: brightness(90%);
   }

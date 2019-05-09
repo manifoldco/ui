@@ -14,7 +14,7 @@
   color: transparent;
   font-size: 1em;
   line-height: 0.875;
-  border-radius: var(--manifold-radius);
+  border-radius: 4px;
 
   &::before {
     position: absolute;
@@ -23,7 +23,7 @@
     bottom: 0;
     left: 0;
     background: var(--manifold-grayscale-10);
-    border-radius: var(--manifold-radius);
+    border-radius: 4px;
     content: '';
     pointer-events: none;
   }

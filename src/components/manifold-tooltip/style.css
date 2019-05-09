@@ -10,9 +10,9 @@
   width: max-content;
   max-width: 10em;
   padding: 0.5em;
-  color: var(--manifold-c-white);
+  color: var(--manifold-grayscale-100i);
   text-align: center;
-  background: var(--manifold-c-black);
+  background: var(--manifold-grayscale-100);
   border-radius: var(--manifold-radius);
   transform: translate(-50%, calc(-100% - 0.25em));
 
