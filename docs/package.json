@@ -4,13 +4,11 @@
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint 'src/**/*.{ts,tsx}'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "serve": "gatsby serve -p $PORT",
-    "start": "npm run develop",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "start": "npm run develop"
   },
   "dependencies": {
     "@manifoldco/ui": "file:../",
