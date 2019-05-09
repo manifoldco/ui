@@ -43,7 +43,7 @@ export class ManifoldProductPage {
   render() {
     if (this.product) {
       const { documentation_url, support_email, name, label, logo_url, tags } = this.product.body;
-      const gradient = `var(--manifold-g-${label})`;
+      const gradient = `var(--manifold-g-${label}, var(--manifold-g-default))`;
 
       return (
         <div class="wrapper" itemscope itemtype="http://schema.org/Product">
