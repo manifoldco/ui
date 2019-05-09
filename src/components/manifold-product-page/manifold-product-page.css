@@ -1,5 +1,9 @@
 :host {
-  --manifold-g-default: linear-gradient(to top right, #329dd1, #55f0a8);
+  --manifold-g-default: linear-gradient(
+    to top right,
+    var(--manifold-grayscale-60),
+    var(--manifold-grayscale-40)
+  );
 
   /* Products */
   --manifold-g-aiven-cassandra: linear-gradient(to right top, #0e517e, #218ab5);
@@ -60,6 +64,7 @@
   --overlap: 2rem;
 
   /* Theme */
+  --background-gradient: var(--manifold-g-default);
   --text-color-heading: var(--manifold-grayscale-50);
   --radius: var(--manifold-radius);
   --card-radius: var(--radius);
@@ -154,7 +159,6 @@
   font-size: 1em;
   text-align: center;
   text-decoration: none;
-  background-color: var(--manifold-grayscale-50);
   background-image: var(--background-gradient);
   border-radius: var(--card-radius);
   box-shadow: 0 2px 8px 0 var(--manifold-grayscale-20);

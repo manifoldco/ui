@@ -24,7 +24,7 @@
   /* tag */
   --tag-background: var(--manifold-tag-background, var(--manifold-color-primary));
   --tag-text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
-  --tag-font-weight: var(--manifold-tag-font-weight, 600);
+  --tag-font-weight: var(--manifold-tag-font-weight, 900);
   --tag-radius: var(--manifold-tag-radius, 3rem);
   --tag-padding: var(--manifold-tag-padding, 0.25em 0.75em);
 }
@@ -69,40 +69,6 @@
     background: var(--card-background-hover);
     border: var(--card-border-hover);
     box-shadow: var(--card-shadow-hover, 0 2px 6px rgba(0, 0, 0, 0.15));
-  }
-}
-
-.is-custom .icon {
-  transition: transform 500ms cubic-bezier(0, 0, 0.2, 1) 0s;
-
-  --icon-width: 1.5em;
-  --icon-height: 1.5em;
-}
-
-.is-custom .gear {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
-  width: 1rem;
-  height: 1rem;
-  color: var(--manifold-c-purple);
-  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-.is-custom {
-  &:hover {
-    border-color: var(--manifold-c-purple);
-    box-shadow: 0 2px 6px rgba(119, 72, 209, 0.15);
-  }
-
-  &:hover .icon {
-    transform: scale(1.15);
-  }
-
-  &:hover .gear {
-    transform: rotate(360deg);
   }
 }
 
@@ -163,10 +129,6 @@
   }
 }
 
-.is-custom .logo {
-  color: var(--manifold-c-purple);
-}
-
 .name {
   grid-area: name;
   align-self: start;
@@ -183,10 +145,6 @@
   }
 }
 
-.is-custom .name {
-  color: var(--manifold-c-purple);
-}
-
 .tag {
   display: inline-flex;
   align-items: center;
@@ -197,7 +155,7 @@
   color: var(--tag-text-color);
   font-weight: var(--tag-font-weight);
   font-size: var(--manifold-font-d3);
-  line-height: 1.2;
+  line-height: 1.5;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
   background: var(--tag-background);

@@ -69,6 +69,7 @@
   --manifold-color-error: var(--manifold-red);
   --manifold-radius: 4px;
   --manifold-border: 1px solid var(--manifold-grayscale-10);
+  --manifold-border-focus: 1px solid var(--manifold-color-primary);
 
   /* text */
   --manifold-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -141,3 +142,6 @@
   --manifold-layer-hover: 20;
   --manifold-layer-nav: 30;
 }
+
+/* @import 'https://use.typekit.net/gbl5mjr.css'; */
+@import './theme-do.css';

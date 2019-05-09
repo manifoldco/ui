@@ -12,6 +12,7 @@
   color: transparent;
   font-size: 1em;
   line-height: 1.4em;
+  border-radius: 0.25em;
 
   &::before {
     position: absolute;
@@ -27,7 +28,6 @@
     );
     background-repeat: repeat-y;
     background-size: 100% 1.4em;
-    border-radius: 0.25em;
     content: '';
     pointer-events: none;
   }

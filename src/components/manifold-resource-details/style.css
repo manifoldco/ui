@@ -11,7 +11,7 @@
 .heading {
   grid-area: heading;
   margin: 0;
-  color: var(--manifold-c-gray);
+  color: var(--manifold-grayscale-50);
   font-size: var(--manifold-font-d2);
   text-transform: uppercase;
 }
@@ -25,7 +25,7 @@
 }
 
 .suffix {
-  color: var(--manifold-c-gray);
+  color: var(--manifold-text-color-alt);
 }
 
 .plan-name {
@@ -45,7 +45,8 @@
 .feature-value {
   margin: 0;
   padding: 0.5rem 0;
-  border-top: 1px dotted var(--manifold-c-gray-t3);
+  border-top: var(--manifold-border);
+  border-top-style: dotted;
 }
 
 .feature-name {
@@ -65,7 +66,7 @@
 
 .description {
   margin: 0.5em 0;
-  color: var(--manifold-c-gray);
+  color: var(--manifold-text-color-alt);
   font-weight: normal;
   font-size: var(--manifold-font-d1);
 }
@@ -98,8 +99,10 @@
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: var(--manifold-font-d1);
-  border-top: 1px dotted var(--manifold-c-gray-t3);
-  border-bottom: 1px dotted var(--manifold-c-gray-t3);
+  border-top: var(--manifold-border);
+  border-top-style: dotted;
+  border-bottom: var(--manifold-border);
+  border-bottom-style: dotted;
 }
 
 .region-label {
@@ -116,11 +119,11 @@
   }
 
   &[data-value='No'] {
-    color: var(--manifold-c-gray);
+    color: var(--manifold-text-color-alt);
   }
 
   &[data-value='Yes'] {
-    color: var(--manifold-c-blue);
+    color: var(--manifold-color-primary);
 
     & .icon {
       display: inline-block;

@@ -1,7 +1,5 @@
 :host {
   /* redefining theme variables here so they'll work properly */
-  --manifold-c-gray: #8f8f95;
-  --manifold-c-blue: #1e50da;
   --default-color: var(--manifold-grayscale-40);
   --focus-color: var(--manifold-color-primary);
 

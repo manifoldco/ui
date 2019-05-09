@@ -13,8 +13,9 @@
 
   /* search */
   --search-text-color: var(--manifold-grayscale-100);
-  --search-background: var(--manifold-grayscale-05);
-  --search-border: 1px solid var(--manifold-grayscale-05);
+  --search-background: var(--manifold-input-background, var(--manifold-grayscale-05));
+  --search-border: var(--manifold-input-border, var(--manifold-border));
+  --search-border-focus: var(--manifold-input-border-focus, var(--manifold-border-focus));
   --search-radius: var(--manifold-radius);
   --search-placeholder-color: var(--manifold-grayscale-50);
 
@@ -138,6 +139,7 @@
 
   &:focus {
     background-color: var(--search-background-focus);
+    border: var(--search-border-focus);
     outline: 0;
     box-shadow: rgba(0, 0, 0, 0.1) 0 2px 8px;
   }

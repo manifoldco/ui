@@ -91,26 +91,16 @@ export class ManifoldProductPage {
                   <h4>Links</h4>
                   <div class="provider-link">
                     <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                      <manifold-icon icon={book} color="--manifold-c-gray" margin-right />
+                      <manifold-icon icon={book} margin-right />
                       Docs
-                      <manifold-icon
-                        class="external-link-icon"
-                        icon={arrow_up_right}
-                        color="--manifold-c-gray-t3"
-                        margin-left
-                      />
+                      <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
                     </a>
                   </div>
                   <div class="provider-link">
                     <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                      <manifold-icon icon={life_buoy} color="--manifold-c-gray" margin-right />
+                      <manifold-icon icon={life_buoy} margin-right />
                       Support
-                      <manifold-icon
-                        class="external-link-icon"
-                        icon={arrow_up_right}
-                        color="--manifold-c-gray-t3"
-                        margin-left
-                      />
+                      <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
                     </a>
                   </div>
                 </div>

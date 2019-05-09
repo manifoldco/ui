@@ -68,3 +68,21 @@
 
   /* Web Components Theme */
 }
+
+/* TODO: theme for resource status */
+
+/*
+  --gradient: linear-gradient(to top right, #329dd1, #55f0a8);
+
+  &[data-status='PROVISIONING'] {
+    --gradient: linear-gradient(to top right, #3189ba, #73cdff);
+  }
+
+  &[data-status='DEGRADED'] {
+    --gradient: linear-gradient(to top right, #da710b, #ffa853);
+  }
+
+  &[data-status='OFFLINE'] {
+    --gradient: linear-gradient(to top right, #a34141, #ff3737);
+  }
+*/
