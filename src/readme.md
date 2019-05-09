@@ -5,7 +5,8 @@ npm install
 npm run dev
 ```
 
-This will start Storybook at `localhost:6060`.
+This will start Storybook at `localhost:6060`. Storybook is the preferred way
+to work on styles and testing.
 
 Copy these specs from [our specs][specs] into here:
 
@@ -40,7 +41,7 @@ npm run docs
 ```
 
 That will spin up the docs server locally at `localhost:8000`. Changes will
-be hotloaded.
+**not** be hot-loaded from Stencil (it’ll act like a production build).
 
 _Note: when adding a new `*.md` file in `/docs/docs`, it will automatically
 hot reload, however it will break if you don’t add a `path` in
