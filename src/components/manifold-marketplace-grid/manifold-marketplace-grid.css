@@ -14,13 +14,13 @@
   /* search */
   --search-text-color: var(--manifold-grayscale-100);
   --search-background: var(--manifold-input-background, var(--manifold-grayscale-05));
+  --search-shadow: var(--manifold-input-shadow, none);
+  --search-shadow-focus: var(--manifold-input-shadow-focus, --search-shadow);
+  --search-background-focus: var(--manifold-input-background-focus, var(--search-background));
   --search-border: var(--manifold-input-border, var(--manifold-border));
   --search-border-focus: var(--manifold-input-border-focus, var(--manifold-border-focus));
   --search-radius: var(--manifold-radius);
   --search-placeholder-color: var(--manifold-grayscale-50);
-
-  /* search:focus */
-  --search-background-focus: var(--manifold-grayscale-100i);
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);
@@ -133,7 +133,7 @@
   background: var(--search-background);
   border: var(--search-border);
   border-radius: var(--search-radius);
-  box-shadow: rgba(0, 0, 0, 0) 0 2px 8px;
+  box-shadow: var(--search-shadow);
   transition: background-color 100ms linear;
   -webkit-appearance: none;
 
@@ -141,7 +141,7 @@
     background-color: var(--search-background-focus);
     border: var(--search-border-focus);
     outline: 0;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 8px;
+    box-shadow: var(--search-shadow-focus);
   }
 
   &::placeholder {
