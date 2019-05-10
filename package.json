@@ -39,7 +39,6 @@
     "postinstall": "cd docs && npm i",
     "prepublish": "stencil build",
     "publish": "node scripts/publish",
-    "start": "cd docs && npm run serve",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",

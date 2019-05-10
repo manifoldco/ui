@@ -7,7 +7,6 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint 'src/**/*.{ts,tsx}'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
-    "serve": "gatsby serve -p $PORT",
     "start": "npm run develop"
   },
   "dependencies": {
