@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../src/components/manifold-toast/readme.md';
+import markdown from '../docs/docs/components/manifold-toast.md';
 
 storiesOf('Toast', module)
   .addParameters({ readme: { sidebar: markdown } })

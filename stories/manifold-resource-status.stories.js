@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../src/components/manifold-resource-status/readme.md';
+import markdown from '../docs/docs/components/manifold-resource-status.md';
 
 storiesOf('Resource Status 🔒', module)
   .addParameters({ readme: { sidebar: markdown } })

@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../src/components/manifold-data-resource-list/readme.md';
+import markdown from '../docs/docs/data/manifold-data-resource-list.md';
 
 storiesOf('Resource List 🔒 [Data]', module)
   .addParameters({ readme: { sidebar: markdown } })

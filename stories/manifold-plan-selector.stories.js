@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../src/components/manifold-plan-selector/readme.md';
+import markdown from '../docs/docs/components/manifold-plan-selector.md';
 
 storiesOf('Plan Selector', module)
   .addParameters({ readme: { sidebar: markdown } })

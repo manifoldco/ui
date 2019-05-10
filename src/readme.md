@@ -5,7 +5,8 @@ npm install
 npm run dev
 ```
 
-This will start Storybook at `localhost:6060`.
+This will start Storybook at `localhost:6060`. Storybook is the preferred way
+to work on styles and testing.
 
 Copy these specs from [our specs][specs] into here:
 
@@ -33,62 +34,18 @@ Storybook. Testing every version of a component is recommended.
 
 ## 🖋️ Editing documentation
 
-Documentation for each component lives in its corresponding `readme.md` file.
-All pertinent info should go in there.
-
-To update the site with the newest changes from the `readme.md` files, run:
+The docs are powered by Gatsby. To preview them locally, run:
 
 ```bash
-npm run generate:docs
+npm run docs
 ```
 
-This will replace
+That will spin up the docs server locally at `localhost:8000`. Changes will
+**not** be hot-loaded from Stencil (it’ll act like a production build).
 
-```html
-<!-- BEGIN README my-component -->
-<!-- END README -->
-```
-
-…with the contents of `src/components/my-component/readme.md` (or warn you if
-it couldn’t locate that file). If there’s already HTML between those
-comments, it will still update it to the newest version of the README.
-
-### Adding a new component to the docs
-
-Adding the appropriate `<!-- BEGIN README my-component --><!-- END README -->`
-comment will link the `src/index.html` file with the corresponding README
-whenever `npm run generate:docs` is run.
-
-##### ⚠️ Warning
-
-Editing anything between `BEGIN README …` and `END README` will be blown away
-by `generate:docs`.
-
-### Watch for README changes
-
-To watch for changes in the background to all README files, run:
-
-```bash
-npm run generate:docs:watch
-```
-
-## Generating TypeScript defs from Swagger specs
-
-The canonical specs for our APIs [live here][specs]. In this repo, those YAML
-files **should be manually** copied to `specs/`, in case of any changes.
-
-To update the TypeScript defs, run:
-
-```bash
-npm run generate:specs
-```
-
-This will generate new definitions to `types/`. This is done using our own
-library, [@manifoldco/swagger-to-ts][swagger-to-ts], to generate Types. If
-that breaks (very likely), bug @dangodev.
-
-Currently we’re only using `spec/catalog/v1.yaml`, but we may need other
-endpoint specs as this grows.
+_Note: when adding a new `*.md` file in `/docs/docs`, it will automatically
+hot reload, however it will break if you don’t add a `path` in
+[frontmatter][frontmatter]._
 
 ## 🚀 Publishing to npm
 
@@ -174,9 +131,10 @@ supported (this means only strings!):
 
 In this example, `userInfo` is actually converted to `userinfo` (HTML is
 case-insensitive), so it’s a different prop. Also, if you want to set
-non-strings, you’ll have to do so [via
-JS](https://stenciljs.com/docs/properties).
+non-strings, you’ll have to do so [via JS][stencil-properties].
 
 **TL;DR use `camelCase` in JSX; `kebab-case` in HTML.**
 
+[frontmatter]: https://jekyllrb.com/docs/front-matter/
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
+[stencil-properties]: https://stenciljs.com/docs/properties

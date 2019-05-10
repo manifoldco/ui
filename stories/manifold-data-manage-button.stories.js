@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../src/components/manifold-data-manage-button/readme.md';
+import markdown from '../docs/docs/data/manifold-data-manage-button.md';
 
 storiesOf('Manage Button 🔒 [Data]', module)
   .addParameters({ readme: { sidebar: markdown } })
