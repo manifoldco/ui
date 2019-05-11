@@ -10,6 +10,7 @@
     "start": "npm run develop"
   },
   "dependencies": {
+    "@manifoldco/icons": "0.0.3",
     "@manifoldco/ui": "file:../",
     "gatsby": "^2.4.2",
     "gatsby-image": "^2.0.41",
@@ -22,10 +23,12 @@
     "gatsby-transformer-remark": "^2.3.12",
     "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.6",
+    "mini-svg-data-uri": "^1.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "styled-tools": "^1.7.1"
   },
   "devDependencies": {
     "@types/highlight.js": "^9.12.3",
