@@ -6,7 +6,7 @@ import postCSSPresetEnv from 'postcss-preset-env';
 
 export const config: Config = {
   namespace: 'manifold',
-  globalStyle: 'src/global/theme.css',
+  globalStyle: 'src/global/app.css',
   globalScript: 'src/global/app.ts',
   outputTargets: [{ type: 'dist' }],
   plugins: [

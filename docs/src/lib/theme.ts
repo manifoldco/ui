@@ -49,8 +49,9 @@ const theme: DefaultTheme = {
     sharp: 'cubic-bezier(0.4, 0, 0.6, 1)',
   },
   font: {
-    default:
+    text:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;',
+    monospace: 'IBM Plex Mono,monospace',
     base: '16px',
 
     // Manifold Type Scale by ntassone
@@ -87,6 +88,10 @@ const theme: DefaultTheme = {
     xlarge: '8px',
     small: '3px',
     circle: '50%',
+  },
+  layer: {
+    base: 10,
+    nav: 20,
   },
 };
 

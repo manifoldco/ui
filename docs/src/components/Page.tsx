@@ -4,7 +4,6 @@ import Entry from './Entry';
 import Example from './Example';
 import SEO from './SEO';
 import Sidebar from './Sidebar';
-import '@manifoldco/ui/dist/manifold.css';
 
 interface PageProps {
   currentPage: MarkdownRemark.Data;
