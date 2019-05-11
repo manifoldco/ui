@@ -30,13 +30,13 @@
 
   &::before {
     position: absolute;
-    content: '';
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     background: var(--status-color);
     opacity: 0.1;
+    content: '';
   }
 }
 
@@ -47,13 +47,13 @@
   align-items: center;
 
   &::before {
-    content: '';
     display: block;
     width: 1rem;
     height: 1rem;
     margin-right: 0.5rem;
     background: var(--status-color);
     border-radius: 50%;
+    content: '';
   }
 }
 

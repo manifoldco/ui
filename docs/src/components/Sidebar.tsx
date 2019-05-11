@@ -174,6 +174,16 @@ const Underlay = styled.div`
   display: none;
 `;
 
+const Header = styled.header`
+  display: flex;
+  margin-bottom: 1rem;
+  margin-left: -0.5rem;
+
+  & a {
+    display: block;
+  }
+`;
+
 const Expanded = styled.div`
   display: none;
 
@@ -211,16 +221,6 @@ const Expanded = styled.div`
     & ~ ${Underlay} {
       display: block;
     }
-  }
-`;
-
-const Header = styled.header`
-  display: flex;
-  margin-bottom: 1rem;
-  margin-left: -0.5rem;
-
-  & a {
-    display: block;
   }
 `;
 

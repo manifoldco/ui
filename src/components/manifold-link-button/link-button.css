@@ -19,8 +19,8 @@
 
 a {
   display: inline-flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   width: 100%;
   padding: var(--padding, 1em 1.5em);

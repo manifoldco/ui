@@ -47,8 +47,8 @@ const Readme = styled.div`
   @media (min-width: 1106px) {
     width: 100%;
     max-width: 50rem;
-    padding-left: 0;
     padding-right: 0;
+    padding-left: 0;
   }
 
   & pre,

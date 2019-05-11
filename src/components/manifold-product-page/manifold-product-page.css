@@ -174,8 +174,8 @@
     min-width: 3rem;
     height: auto;
     min-height: 3rem;
-    border-radius: var(--logo-radius);
     object-fit: contain;
+    border-radius: var(--logo-radius);
   }
 }
 

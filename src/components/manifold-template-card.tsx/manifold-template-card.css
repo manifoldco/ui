@@ -87,12 +87,12 @@
     z-index: 2;
     width: 5rem;
     height: 100%;
-    content: '';
     background-image: linear-gradient(
       to right,
       var(--manifold-grayscale-0i),
       var(--card-background)
     );
+    content: '';
   }
 }
 
@@ -108,9 +108,9 @@
     height: 2rem;
     margin: 0;
     padding: 0;
+    object-fit: cover;
     overflow: hidden;
     border-radius: var(--manifold-radius);
-    object-fit: cover;
 
     & + li {
       margin-left: calc(var(--padding) / 2);

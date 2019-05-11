@@ -189,8 +189,8 @@
 .footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-top: var(--padding);
   margin-right: calc(var(--padding) * -1);
   margin-left: calc(var(--padding) * -1);
