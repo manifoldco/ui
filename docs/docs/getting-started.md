@@ -6,7 +6,7 @@ title: Getting Started
 # Getting Started
 
 Manifold’s [web component][web-components] UI library, powered by
-[Stencil][stencil] `v0.18.0`
+[Stencil][stencil].
 
 ## Installation
 
@@ -22,18 +22,36 @@ modern framework like React, Vue, or Angular.
 ### HTML (ES Modules)
 
 ```html
-<manifold-marketplace></manifold-marketplace>
-<script type="module">
-  import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
-  defineCustomElements(window);
-</script>
+<head>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
+  />
+</head>
+<body>
+  <manifold-marketplace></manifold-marketplace>
+  <script type="module">
+    import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
+    defineCustomElements(window);
+  </script>
+</body>
 ```
 
 ### HTML (No ESM Support)
 
 ```html
-<manifold-marketplace></manifold-marketplace>
-<script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"></script>
+<head>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
+  />
+</head>
+<body>
+  <manifold-marketplace></manifold-marketplace>
+  <script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"></script>
+</body>
 ```
 
 ### React
@@ -41,6 +59,7 @@ modern framework like React, Vue, or Angular.
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '@manifoldco/ui/dist/manifold.css';
 import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 
 const App = () => <manifold-marketplace />;

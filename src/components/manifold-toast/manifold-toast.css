@@ -34,10 +34,10 @@
 
   &::before,
   &::after {
-    grid-column: 1;
     grid-row: 1;
-    content: '';
+    grid-column: 1;
     border-radius: var(--manifold-radius);
+    content: '';
     pointer-events: none;
   }
 
@@ -106,9 +106,9 @@
 
 .grid {
   display: grid;
+  grid-row: 1;
   grid-column: 1;
   grid-column-gap: calc(var(--padding) - 0.125rem);
-  grid-row: 1;
   grid-template-columns: min-content auto;
   padding-top: var(--padding);
   padding-right: var(--padding);
@@ -126,8 +126,8 @@
   top: 1px; /* 1px border */
   right: 1px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   box-sizing: border-box;
   width: calc(1rem + var(--padding) + var(--padding));
   height: calc(1rem + var(--padding) + var(--padding));

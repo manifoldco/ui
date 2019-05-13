@@ -4,7 +4,8 @@
 
 # 🍱 Manifold UI
 
-Manifold’s reusable web components, built with [Stencil][stencil].
+Manifold’s [web component][web-components] UI library, powered by
+[Stencil][stencil].
 
 ## Installation
 
@@ -22,30 +23,47 @@ npm i @manifoldco/ui
 | Vue                       |     ✅     |
 | Ember                     |     ✅     |
 
-#### HTML (ES Modules)
+### HTML (ES Modules)
 
 ```html
-<manifold-marketplace />
-
-<script type="module">
-  import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
-  defineCustomElements(window);
-</script>
+<head>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
+  />
+</head>
+<body>
+  <manifold-marketplace></manifold-marketplace>
+  <script type="module">
+    import { defineCustomElements } from 'https://unpkg.com/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
+    defineCustomElements(window);
+  </script>
+</body>
 ```
 
-#### HTML (No ESM Support)
+### HTML (No ESM Support)
 
 ```html
-<manifold-marketplace />
-<script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"></script>
+<head>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
+  />
+</head>
+<body>
+  <manifold-marketplace></manifold-marketplace>
+  <script src="https://unpkg.com/@manifoldco/ui/dist/manifold.js"></script>
+</body>
 ```
 
-#### React
+### React
 
 ```ts
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import '@manifoldco/ui/dist/manifold.css';
 import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 
 const App = () => <manifold-marketplace />;
@@ -53,12 +71,6 @@ const App = () => <manifold-marketplace />;
 ReactDOM.render(<App />, document.getElementById('root'));
 defineCustomElements(window);
 ```
-
-#### Ember, Angular, Vue, and others
-
-Initializing Manifold UI works the exact same as any other Stencil project. For more
-advanced instructions on integrating with your specific stack, please refer
-to Stencil’s [docs on integration][stencil-framework].
 
 ### TypeScript + JSX setup
 
@@ -69,7 +81,8 @@ When using inside TypeScript, you’ll likely see this error (
 Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'
 ```
 
-To solve that, add the following to `tsconfig.json`:
+To solve that, add the `@manifoldco/ui` directory to `typeRoots` in
+`tsconfig.json`:
 
 ```json
 "compilerOptions": {
@@ -79,17 +92,38 @@ To solve that, add the following to `tsconfig.json`:
 ```
 
 Next, create a `custom-elements.d.ts` file somewhere inside your project
-(must be inside the [include][ts-include] option in `tsconfig.json`):
+(must be inside the [include][tsconfig] option in `tsconfig.json`):
 
 ```ts
 declare module JSX {
-  interface IntrinsicElements extends StencilIntrinsicElements {}
+  export interface IntrinsicElements {
+    'manifold-connection': StencilIntrinsicElements['manifold-connection'] & {
+      children?: ReactElement;
+    };
+    'manifold-product': StencilIntrinsicElements['manifold-product'] & {
+      children?: ReactElement;
+    };
+    'manifold-plan-selector': StencilIntrinsicElements['manifold-plan-selector'] & {
+      children?: ReactElement;
+    };
+  }
 }
 ```
 
-This will do more than fix the error—now you’ll be able to typecheck the web
-components as you write! 🎉
+This will expose the types from Stencil to JSX, and you’ll be able to get
+typechecking as you write.
+
+*Note: every element will have to be declared manually, at least until [this
+PR][ts-fix] is merged in TypeScript core.*🎉
+
+### Ember, Angular, Vue, and others
+
+Initializing Manifold UI works the exact same as any other Stencil project.
+For more advanced instructions on integrating with your specific stack,
+please refer to Stencil’s [docs on integration][stencil-framework].
 
 [stencil]: https://stenciljs.com/
 [stencil-framework]: https://stenciljs.com/docs/overview
 [ts-include]: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
+[ts-fix]: https://github.com/Microsoft/TypeScript/pull/26797
+[web-components]: https://www.webcomponents.org/introduction

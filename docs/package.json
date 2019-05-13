@@ -10,7 +10,9 @@
     "start": "npm run develop"
   },
   "dependencies": {
+    "@manifoldco/icons": "0.0.3",
     "@manifoldco/ui": "file:../",
+    "@reach/router": "^1.2.1",
     "gatsby": "^2.4.2",
     "gatsby-image": "^2.0.41",
     "gatsby-plugin-manifest": "^2.1.1",
@@ -22,13 +24,16 @@
     "gatsby-transformer-remark": "^2.3.12",
     "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.6",
+    "mini-svg-data-uri": "^1.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "styled-tools": "^1.7.1"
   },
   "devDependencies": {
     "@types/highlight.js": "^9.12.3",
+    "@types/reach__router": "^1.2.4",
     "@types/react": "^16.8.16",
     "@types/react-dom": "^16.8.4",
     "@types/react-helmet": "^5.0.8",
@@ -46,7 +51,7 @@
     "stylelint": "^10.0.1",
     "stylelint-config-prettier": "^5.1.0",
     "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-config-recommended": "^2.2.0",
+    "stylelint-config-standard": "^18.3.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-order": "^3.0.0",
     "stylelint-processor-styled-components": "^1.6.0"

@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import 'github-markdown-css';
 import hljs from 'highlight.js/lib/highlight';
+import css from 'highlight.js/lib/languages/css';
 import javascript from 'highlight.js/lib/languages/javascript';
 import json from 'highlight.js/lib/languages/json';
 import typescript from 'highlight.js/lib/languages/typescript';
 import xml from 'highlight.js/lib/languages/xml';
 
+hljs.registerLanguage('css', css);
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('json', json);
 hljs.registerLanguage('ts', typescript);
@@ -29,29 +31,29 @@ class Entry extends React.Component<MarkdownProps> {
 
 const Readme = styled.div`
   box-sizing: border-box;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  margin-right: auto;
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-  margin-left: auto;
   width: 100%;
   max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 2.5rem;
+  padding-right: 2rem;
+  padding-bottom: 2.5rem;
+  padding-left: 2rem;
 
   @media (min-width: 750px) {
     max-width: calc(100vw - 15rem);
   }
 
   @media (min-width: 1106px) {
-    padding-left: 0;
-    padding-right: 0;
-    max-width: 50rem;
     width: 100%;
+    max-width: 50rem;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   & pre,
   & code {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: ${({ theme }) => theme.font.monospace};
   }
 
   & pre {
@@ -71,7 +73,7 @@ const Readme = styled.div`
     margin-right: auto;
     margin-left: auto;
     font-weight: 400;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: ${({ theme }) => theme.font.monospace};
     border-bottom: 0;
   }
 
@@ -79,7 +81,7 @@ const Readme = styled.div`
     margin-top: 3rem;
     font-weight: 800;
     font-size: 48px;
-    font-family: var(--mf-font-default);
+    font-family: ${({ theme }) => theme.font.text};
   }
 
   & h2 {

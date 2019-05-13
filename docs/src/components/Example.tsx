@@ -7,12 +7,13 @@ const Wrapper = styled.div`
   max-width: 100%;
   padding: 1rem;
   font-size: 16px;
+  font-family: var(--manifold-font-family);
 
   & h3 {
     margin-top: 0;
     margin-bottom: 2rem;
-    font-family: ${({ theme }) => theme.font.code};
     font-size: ${({ theme }) => theme.font.u2};
+    font-family: ${({ theme }) => theme.font.monospace};
   }
 
   @media (min-width: 750px) {

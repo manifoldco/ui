@@ -1,12 +1,35 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'gatsby';
+import { LinkGetProps } from '@reach/router';
+import { switchProp } from 'styled-tools';
+import { chevron_down } from '@manifoldco/icons';
+import '@manifoldco/ui/dist/manifold.css';
+import { base64 } from './Icon';
+import manifoldTheme from '../lib/theme-manifold';
+import sammyTheme from '../lib/theme-sammy';
+import wombatTheme from '../lib/theme-wombat';
 
 interface SidebarProps {
   pages: ([string, string])[];
 }
 
-const topPages = ['/getting-started', '/connection'];
+const topPages = ['/getting-started', '/connection', '/theming'];
+
+const DEFAULT = 'default';
+const MANIFOLD = 'manifold';
+const SAMMY = 'sammy';
+const WOMBAT = 'wombat';
+
+const themes = [[DEFAULT, 'Default'], [MANIFOLD, 'Manifold'], [SAMMY, 'Sammy'], [WOMBAT, 'Wombat']];
+
+const linkStyling = ({ location, href }: LinkGetProps): any | null => {
+  if (typeof window === 'undefined') return null;
+  if (location.href.includes(href)) {
+    return { 'aria-current': true };
+  }
+  return null;
+};
 
 function Sidebar({ pages }: SidebarProps) {
   const uiMenu = pages.filter(([path]) => path.indexOf('components/') !== -1);
@@ -15,8 +38,33 @@ function Sidebar({ pages }: SidebarProps) {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  let windowTheme;
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const searchTheme = params.get('theme');
+    if (searchTheme) windowTheme = searchTheme;
+  }
+  const [theme, setTheme] = useState(windowTheme || DEFAULT);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      params.set('theme', theme);
+      window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+    }
+  });
+
+  // Note: ThemeSwitcher and nav links have to be same component, because Gatsby <Link /> doesn’t inherit search params
+  function withSearch(path: string) {
+    if (typeof window === 'undefined') return path;
+    const params = new URLSearchParams(window.location.search);
+    params.set('theme', theme);
+    return `${path}/?${params.toString()}`;
+  }
+
   return (
     <Aside>
+      <GlobalStyle userTheme={theme} />
       <Nav>
         <Header>
           <Button id="nav-button" type="button" onClick={() => setIsOpen(!isOpen)}>
@@ -24,15 +72,27 @@ function Sidebar({ pages }: SidebarProps) {
               <path d="M128 554.667c-23.564 0-42.667-19.103-42.667-42.667s19.103-42.667 42.667-42.667h768c23.564 0 42.667 19.103 42.667 42.667s-19.103 42.667-42.667 42.667h-768zM128 298.667c-23.564 0-42.667-19.103-42.667-42.667s19.103-42.667 42.667-42.667h768c23.564 0 42.667 19.103 42.667 42.667s-19.103 42.667-42.667 42.667h-768zM128 810.667c-23.564 0-42.667-19.103-42.667-42.667s19.103-42.667 42.667-42.667h768c23.564 0 42.667 19.103 42.667 42.667s-19.103 42.667-42.667 42.667h-768z" />
             </svg>
           </Button>
-          <Link to="/">
+          <Link to={withSearch('/')}>
             <Logo src="/ui-logo.svg" alt="Manifold UI" />
           </Link>
         </Header>
         <Expanded aria-expanded={isOpen || undefined} aria-controls="nav-button" id="nav-expanded">
+          <ThemeSwitcher>
+            <Label htmlFor="ui-theme">Theme</Label>
+            <Select id="ui-theme" onChange={e => setTheme(e.target.value)} defaultValue={theme}>
+              {themes.map(([value, display]) => (
+                <option key={value} value={value}>
+                  {display}
+                </option>
+              ))}
+            </Select>
+          </ThemeSwitcher>
           <ul role="menu">
             {topMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
-                <Link to={path}>{title}</Link>
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -40,7 +100,9 @@ function Sidebar({ pages }: SidebarProps) {
           <ul role="menu">
             {uiMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
-                <Link to={path}>{title}</Link>
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -48,7 +110,9 @@ function Sidebar({ pages }: SidebarProps) {
           <ul role="menu">
             {dataMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
-                <Link to={path}>{title}</Link>
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -59,8 +123,20 @@ function Sidebar({ pages }: SidebarProps) {
   );
 }
 
+const GlobalStyle = createGlobalStyle<{ userTheme: string }>`
+body {
+  margin: 0;
+}
+
+${switchProp('userTheme', {
+  [MANIFOLD]: manifoldTheme,
+  [SAMMY]: sammyTheme,
+  [WOMBAT]: wombatTheme,
+})}
+`;
+
 const Aside = styled.aside`
-  font-family: ${({ theme }) => theme.font.default};
+  font-family: ${({ theme }) => theme.font.text};
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 
   & h3 {
@@ -69,7 +145,7 @@ const Aside = styled.aside`
     color: rgba(0, 0, 0, 0.5);
     font-weight: 400;
     font-size: 12px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: ${({ theme }) => theme.font.monospace};
     letter-spacing: 0.125em;
     text-transform: uppercase;
   }
@@ -116,6 +192,16 @@ const Underlay = styled.div`
   display: none;
 `;
 
+const Header = styled.header`
+  display: flex;
+  margin-bottom: 1rem;
+  margin-left: -0.5rem;
+
+  & a {
+    display: block;
+  }
+`;
+
 const Expanded = styled.div`
   display: none;
 
@@ -126,12 +212,16 @@ const Expanded = styled.div`
   & a {
     display: flex;
     align-items: center;
-    height: 2rem;
+    height: 1.5rem;
     color: rgba(0, 0, 0, 0.8);
     font-weight: 300;
     font-size: 14px;
     text-decoration: none;
     transition: color 150ms linear;
+
+    @media (min-width: 750px) {
+      height: 1.875rem;
+    }
 
     &[aria-current] {
       color: ${({ theme }) => theme.color.blue};
@@ -145,8 +235,9 @@ const Expanded = styled.div`
 
   &[aria-expanded] {
     position: relative;
-    z-index: var(--mf-layer-nav);
+    z-index: ${({ theme }) => theme.layer.nav};
     display: block;
+    padding-bottom: 1.25rem;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.95);
 
@@ -156,21 +247,19 @@ const Expanded = styled.div`
   }
 `;
 
-const Header = styled.header`
-  display: flex;
-  margin-bottom: 1rem;
-  margin-left: -0.5rem;
-
-  & a {
-    display: block;
-  }
+const Label = styled.label`
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: ${({ theme }) => theme.font.d3};
+  letter-spacing: 0.0625em;
+  text-transform: uppercase;
 `;
 
 const Nav = styled.nav`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: var(--mf-layer-nav);
+  z-index: ${({ theme }) => theme.layer.nav};
   box-sizing: border-box;
   width: 100%;
   height: 4rem;
@@ -190,6 +279,37 @@ const Nav = styled.nav`
     width: 15rem;
     height: 100vh;
     padding: 1.5rem;
+  }
+`;
+
+const Select = styled.select`
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: white;
+  background-image: url("${base64(chevron_down)}");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem top 50%;
+  background-size: auto 1rem;
+  border: 1px solid ${({ theme }) => theme.color.black10};
+  border-radius: ${({ theme }) => theme.radius.default};
+  outline: none;
+  transition: border-color 150ms linear;
+  appearance: none;
+
+  &:hover,
+  &:focus {
+    border-color: ${({ theme }) => theme.color.blue};
+  }
+`;
+
+const ThemeSwitcher = styled.div`
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid ${({ theme }) => theme.color.black10};
+
+  @media (min-width: 750px) {
+    margin-top: 1rem;
   }
 `;
 
