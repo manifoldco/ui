@@ -6,6 +6,7 @@ import { switchProp } from 'styled-tools';
 import { chevron_down } from '@manifoldco/icons';
 import '@manifoldco/ui/dist/manifold.css';
 import { base64 } from './Icon';
+import manifoldTheme from '../lib/theme-manifold';
 import sammyTheme from '../lib/theme-sammy';
 import wombatTheme from '../lib/theme-wombat';
 
@@ -16,12 +17,14 @@ interface SidebarProps {
 const topPages = ['/getting-started', '/connection', '/theming'];
 
 const DEFAULT = 'default';
+const MANIFOLD = 'manifold';
 const SAMMY = 'sammy';
 const WOMBAT = 'wombat';
 
-const themes = [[DEFAULT, 'Default'], [SAMMY, 'Sammy'], [WOMBAT, 'Wombat']];
+const themes = [[DEFAULT, 'Default'], [MANIFOLD, 'Manifold'], [SAMMY, 'Sammy'], [WOMBAT, 'Wombat']];
 
 const linkStyling = ({ location, href }: LinkGetProps): any | null => {
+  if (typeof window === 'undefined') return null;
   if (location.href.includes(href)) {
     return { 'aria-current': true };
   }
@@ -126,6 +129,7 @@ body {
 }
 
 ${switchProp('userTheme', {
+  [MANIFOLD]: manifoldTheme,
   [SAMMY]: sammyTheme,
   [WOMBAT]: wombatTheme,
 })}

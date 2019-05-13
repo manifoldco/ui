@@ -206,9 +206,6 @@
   --manifold-g-yellow: linear-gradient(to top right, #ffb83a, #ffe268);
   --manifold-g-yellowFaded: linear-gradient(to top right, #ffd995, #fff7d3);
   --manifold-g-custom: linear-gradient(to top right, #eadeff, #f9f5ff);
-  --manifold-g-dumper: linear-gradient(to top right, #9b0000, #d2202f);
-  --manifold-g-blitline: linear-gradient(to top right, #00648c, #00a4e6);
-  --manifold-g-elegant-cm: linear-gradient(to top right, #0e517e, #218ab5);
 
   /* Web Components Theme */
 }
