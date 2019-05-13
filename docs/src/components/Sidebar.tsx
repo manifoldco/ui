@@ -65,17 +65,17 @@ function Sidebar({ pages }: SidebarProps) {
             <Logo src="/ui-logo.svg" alt="Manifold UI" />
           </Link>
         </Header>
-        <ThemeSwitcher>
-          <Label htmlFor="ui-theme">Theme</Label>
-          <Select id="ui-theme" onChange={e => setTheme(e.target.value)} defaultValue={theme}>
-            {themes.map(([value, display]) => (
-              <option key={value} value={value}>
-                {display}
-              </option>
-            ))}
-          </Select>
-        </ThemeSwitcher>
         <Expanded aria-expanded={isOpen || undefined} aria-controls="nav-button" id="nav-expanded">
+          <ThemeSwitcher>
+            <Label htmlFor="ui-theme">Theme</Label>
+            <Select id="ui-theme" onChange={e => setTheme(e.target.value)} defaultValue={theme}>
+              {themes.map(([value, display]) => (
+                <option key={value} value={value}>
+                  {display}
+                </option>
+              ))}
+            </Select>
+          </ThemeSwitcher>
           <ul role="menu">
             {topMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
@@ -194,12 +194,16 @@ const Expanded = styled.div`
   & a {
     display: flex;
     align-items: center;
-    height: 2rem;
+    height: 1.5rem;
     color: rgba(0, 0, 0, 0.8);
     font-weight: 300;
     font-size: 14px;
     text-decoration: none;
     transition: color 150ms linear;
+
+    @media (min-width: 750px) {
+      height: 1.875rem;
+    }
 
     &[aria-current] {
       color: ${({ theme }) => theme.color.blue};
@@ -215,6 +219,7 @@ const Expanded = styled.div`
     position: relative;
     z-index: ${({ theme }) => theme.layer.nav};
     display: block;
+    padding-bottom: 1.25rem;
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.95);
 
@@ -281,10 +286,13 @@ const Select = styled.select`
 `;
 
 const ThemeSwitcher = styled.div`
-  margin-top: 1rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid ${({ theme }) => theme.color.black10};
+
+  @media (min-width: 750px) {
+    margin-top: 1rem;
+  }
 `;
 
 export default Sidebar;
