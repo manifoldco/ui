@@ -23,10 +23,18 @@ const WOMBAT = 'wombat';
 
 const themes = [[DEFAULT, 'Default'], [MANIFOLD, 'Manifold'], [SAMMY, 'Sammy'], [WOMBAT, 'Wombat']];
 
+// Handle link styling (needed because this doesn’t work with search params)
 const linkStyling = ({ location, href }: LinkGetProps): any | null => {
   if (typeof window === 'undefined') return null;
-  if (location.href.includes(href)) {
-    return { 'aria-current': true };
+  const pathname = href.replace(/\?.*$/, '');
+  const active = { 'aria-current': true };
+  // If this page is active, highlight this link
+  if (location.pathname.includes(pathname)) {
+    return active;
+  }
+  // Otherwise if this is the homepage, highlight Getting Started
+  if (pathname.includes('/getting-started') && location.pathname === '/') {
+    return active;
   }
   return null;
 };
