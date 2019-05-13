@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'gatsby';
+import { LinkGetProps } from '@reach/router';
 import { switchProp } from 'styled-tools';
 import { chevron_down } from '@manifoldco/icons';
 import '@manifoldco/ui/dist/manifold.css';
@@ -19,6 +20,13 @@ const SAMMY = 'sammy';
 const WOMBAT = 'wombat';
 
 const themes = [[DEFAULT, 'Default'], [SAMMY, 'Sammy'], [WOMBAT, 'Wombat']];
+
+const linkStyling = ({ location, href }: LinkGetProps): any | null => {
+  if (location.href.includes(href)) {
+    return { 'aria-current': true };
+  }
+  return null;
+};
 
 function Sidebar({ pages }: SidebarProps) {
   const uiMenu = pages.filter(([path]) => path.indexOf('components/') !== -1);
@@ -48,7 +56,7 @@ function Sidebar({ pages }: SidebarProps) {
     if (typeof window === 'undefined') return path;
     const params = new URLSearchParams(window.location.search);
     params.set('theme', theme);
-    return `${path}?${params.toString()}`;
+    return `${path}/?${params.toString()}`;
   }
 
   return (
@@ -79,7 +87,9 @@ function Sidebar({ pages }: SidebarProps) {
           <ul role="menu">
             {topMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
-                <Link to={withSearch(path)}>{title}</Link>
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -87,7 +97,9 @@ function Sidebar({ pages }: SidebarProps) {
           <ul role="menu">
             {uiMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
-                <Link to={withSearch(path)}>{title}</Link>
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
               </li>
             ))}
           </ul>
@@ -95,7 +107,9 @@ function Sidebar({ pages }: SidebarProps) {
           <ul role="menu">
             {dataMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
-                <Link to={withSearch(path)}>{title}</Link>
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
               </li>
             ))}
           </ul>
