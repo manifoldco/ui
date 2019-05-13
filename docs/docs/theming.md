@@ -14,7 +14,7 @@ However, there are times when it’s advantageous to overwrite some variables.
 In that usecase, CSS variables are recommended.
 
 We recommend setting variables on `body`, which will override
-`@manifoldco/ui/dist/manifold.css` which are scoped to `:host`:
+`@manifoldco/ui/dist/manifold.css` which are scoped to `:root`:
 
 ```css
 body {
