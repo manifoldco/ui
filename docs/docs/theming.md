@@ -91,8 +91,13 @@ _\* Examples: **Toast** and **Resource Status**_
 | `--manifold-text-color-body`       | `black`                             | Body text color                      |
 | `--manifold-text-color-accent`     | `white`                             | Accent text color                    |
 
-[css-part]: https://meowni.ca/posts/part-theme-explainer/
-[shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
+### Common Styles
+
+| Name                      | Default                                   | Description                                         |
+|---------------------------|-------------------------------------------|-----------------------------------------------------|
+| `--manifold-radius`       | `4px`                                     | Default radius for buttons, tags, cards, textfields |
+| `--manifold-border`       | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
+| `--manifold-border-focus` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 
 ### Cards
 
@@ -105,3 +110,8 @@ Card components include the **Service Card** and the left-hand side of **Plan Se
 | `--manifold-card-border-active`     | `1px solid rgb(30, 80, 218)`   | Active border     |
 | `--manifold-card-border-hover`      | `1px solid rgba(0, 0, 0, 0.1)` | Hover border      |
 | `--manifold-card-color-active`      | `rgb(30, 80, 218)`             | Active text color |
+
+Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements, `*-focus` styles will only be applied to focusable elements.
+
+[css-part]: https://meowni.ca/posts/part-theme-explainer/
+[shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
