@@ -12,7 +12,7 @@ CSS selectors can't penetrate the shadow DOM, but more importantly styles
 declared in the components won’t leak out. This has the benefit of not
 conflicting with any of your existing styles. 
 
-However, for the purposes of theming, we need to be able to apply styles within the shadow DOM. Although selectors can't penetrate the shadow DOM, properties can still be inherited from ancestor elements. This includes [CSS Custom Properites](). The use of custom properties within Manifold UI components means that components will inherit theme values defined outside of their shadow DOM. This preserves style encapsulation and allows certain style properties within components to be customizable.
+However, for the purposes of theming, we need to be able to apply styles within the shadow DOM. Although selectors can't penetrate the shadow DOM, properties can still be inherited from ancestor elements. This includes [CSS Custom Properites][custom-properties]. The use of custom properties within Manifold UI components means that components will inherit theme values defined outside of their shadow DOM. This preserves style encapsulation and allows certain style properties within components to be customizable.
 
 ## Concepts
 
@@ -64,8 +64,24 @@ manifold-marketplace {
 ``` -->
 
 
+### Grayscales & Dark Theming
 
-## API Reference
+| Name                                 | Default         | Description                                        |
+|--------------------------------------|-----------------|----------------------------------------------------|
+| `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
+| `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
+
+These grayscale bases provide the foundation for your theme. These two values, define a grayscale range. Intermediate values are then derived by varying the opacity of each base and used throughout Manifold UI components.
+
+By default, `--manifold-grayscale-[opacity]` values range from solid black down to transparent, and `--manifold-grayscale-[opacity]i` (notice the `i` for _inverted_) values range from solid white down to transparent. The main advantage to using these two contrasting grascales, is that a dark theme can be created simply by swapping these base values:
+
+```css
+:root {
+  --manifold-grayscale-base: 255, 255, 255;
+  --manifold-grayscale-base-inverted: 0, 0, 0;
+}
+```
+
 
 ### Global Colors
 
@@ -80,6 +96,7 @@ manifold-marketplace {
 | `--manifold-color-error`     | `rgb(213, 15, 73)`  | Error color<sup>\*</sup>                |
 
 _\* Examples: **Toast** and **Resource Status**_
+
 
 ### Typography
 
@@ -99,6 +116,8 @@ _\* Examples: **Toast** and **Resource Status**_
 | `--manifold-border`       | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
 | `--manifold-border-focus` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 
+
+
 ### Cards
 
 Card components include the **Service Card** and the left-hand side of **Plan Selector**.
@@ -115,3 +134,4 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 [css-part]: https://meowni.ca/posts/part-theme-explainer/
 [shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
+[custom-properties]: https://developer.mozilla.org/en-US/docs/Web/CSS/--*
