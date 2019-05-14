@@ -7,8 +7,8 @@ import { chevron_down } from '@manifoldco/icons';
 import '@manifoldco/ui/dist/manifold.css';
 import { base64 } from './Icon';
 import manifoldTheme from '../lib/theme-manifold';
-import sammyTheme from '../lib/theme-sammy';
-import wombatTheme from '../lib/theme-wombat';
+import sapphireTheme from '../lib/theme-sapphire';
+import rubyTheme from '../lib/theme-ruby';
 
 interface SidebarProps {
   pages: ([string, string])[];
@@ -18,10 +18,15 @@ const topPages = ['/getting-started', '/connection', '/theming'];
 
 const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
-const SAMMY = 'sammy';
-const WOMBAT = 'wombat';
+const SAPPHIRE = 'sapphire';
+const RUBY = 'ruby';
 
-const themes = [[DEFAULT, 'Default'], [MANIFOLD, 'Manifold'], [SAMMY, 'Sammy'], [WOMBAT, 'Wombat']];
+const themes = [
+  [DEFAULT, 'Default'],
+  [MANIFOLD, 'Manifold'],
+  [SAPPHIRE, 'Sapphire'],
+  [RUBY, 'Ruby'],
+];
 
 // Handle link styling (needed because this doesn’t work with search params)
 const linkStyling = ({ location, href }: LinkGetProps): any | null => {
@@ -138,8 +143,8 @@ body {
 
 ${switchProp('userTheme', {
   [MANIFOLD]: manifoldTheme,
-  [SAMMY]: sammyTheme,
-  [WOMBAT]: wombatTheme,
+  [SAPPHIRE]: sapphireTheme,
+  [RUBY]: rubyTheme,
 })}
 `;
 
