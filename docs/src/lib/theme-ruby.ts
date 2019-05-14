@@ -16,7 +16,7 @@ export default css`
     --theme-text-alt: #999;
     --theme-text-body: #676767;
 
-    /* Wombat */
+    /* Ruby */
     --theme-red: #fb3e44;
     --theme-shadow-red: 8px 8px 0 rgba(251, 59, 73, 0.2);
     --theme-red-faded: rgba(251, 59, 73, 0.2);
