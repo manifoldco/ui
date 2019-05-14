@@ -6,8 +6,8 @@ import { switchProp } from 'styled-tools';
 import { chevron_down } from '@manifoldco/icons';
 import { base64 } from './Icon';
 import manifoldTheme from '../lib/theme-manifold';
-import sammyTheme from '../lib/theme-sammy';
-import wombatTheme from '../lib/theme-wombat';
+import sapphireTheme from '../lib/theme-sapphire';
+import rubyTheme from '../lib/theme-ruby';
 import darkTheme from '../lib/theme-dark';
 
 interface SidebarProps {
@@ -18,15 +18,15 @@ const topPages = ['/getting-started', '/connection', '/theming'];
 
 const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
-const SAMMY = 'sammy';
-const WOMBAT = 'wombat';
+const SAPPHIRE = 'sapphire';
+const RUBY = 'ruby';
 const DARK = 'dark';
 
 const themes = [
   [DEFAULT, 'Default'],
   [MANIFOLD, 'Manifold'],
-  [SAMMY, 'Sammy'],
-  [WOMBAT, 'Wombat'],
+  [SAPPHIRE, 'Sapphire'],
+  [RUBY, 'Ruby'],
   [DARK, 'Dark'],
 ];
 
@@ -145,8 +145,8 @@ body {
 
 ${switchProp('userTheme', {
   [MANIFOLD]: manifoldTheme,
-  [SAMMY]: sammyTheme,
-  [WOMBAT]: wombatTheme,
+  [SAPPHIRE]: sapphireTheme,
+  [RUBY]: rubyTheme,
   [DARK]: darkTheme,
 })}
 `;
