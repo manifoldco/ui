@@ -8,7 +8,7 @@ import { base64 } from './Icon';
 import manifoldTheme from '../lib/theme-manifold';
 import sapphireTheme from '../lib/theme-sapphire';
 import rubyTheme from '../lib/theme-ruby';
-import darkTheme from '../lib/theme-dark';
+import moonTheme from '../lib/theme-moon';
 
 interface SidebarProps {
   pages: ([string, string])[];
@@ -20,14 +20,14 @@ const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
 const SAPPHIRE = 'sapphire';
 const RUBY = 'ruby';
-const DARK = 'dark';
+const MOON = 'moon';
 
 const themes = [
   [DEFAULT, 'Default'],
   [MANIFOLD, 'Manifold'],
   [SAPPHIRE, 'Sapphire'],
   [RUBY, 'Ruby'],
-  [DARK, 'Dark'],
+  [MOON, 'Moon'],
 ];
 
 // Handle link styling (needed because this doesn’t work with search params)
@@ -147,7 +147,7 @@ ${switchProp('userTheme', {
   [MANIFOLD]: manifoldTheme,
   [SAPPHIRE]: sapphireTheme,
   [RUBY]: rubyTheme,
-  [DARK]: darkTheme,
+  [MOON]: moonTheme,
 })}
 `;
 
