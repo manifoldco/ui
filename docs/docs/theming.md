@@ -7,6 +7,9 @@ path: /theming
 
 Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of components. 
 
+<manifold-toast alert-type="warning">
+  Theming is still a work-in-progress. This documentation may not be entirely accurate.
+</manifold-toast>
 
 ## Concepts
 
@@ -106,69 +109,26 @@ Each level recieves it's default value from the level above. Redefining a lower 
 
 ```css
 :root {
-  /* Base: the default primary color is applied and the button is blue (along with other elements that use the primary color). */
+  /* Base: the default primary color is applied and the button is blue 
+  (along with other elements that use the primary color). */
   --manifold-color-primary: blue; /* imported from Manifold UI */
 
-  /* Top-level: overrides primary color from the Base and turns the button red (along with other elements that use the primary color). */
+  /* Top-level: overrides primary color from the Base and turns the button 
+  red (along with other elements that use the primary color). */
   --manifold-color-primary: red;
 
-  /* Common Component: overrides the primary color from the Top-Level and turns the button green (along with all other buttons). */
+  /* Common Component: overrides the primary color from the Top-Level and 
+  turns the button green (along with all other buttons). */
   --manifold-button-background: green;
 
-  /* Unique Component: overrides the button background from the Common Component and turns the button orange (no other elements are affected) */
+  /* Unique Component: overrides the button background from the Common 
+  Component and turns the button orange (no other elements are affected) */
   --manifold-plan-selector-cta-background: orange;
 }
 ```
+### State
 
-<!-- 
-### Global Colors
-
-| Name                         | Default             | Description                             |
-|------------------------------|---------------------|-----------------------------------------|
-| `--manifold-background`      | `white`             | Default background color                |
-| `--manifold-color-primary`   | `rgb(30, 80, 218)`  | Primary color                           |
-| `--manifold-color-secondary` | `rgb(15, 181, 208)` | Secondary color                         |
-| `--manifold-color-info`      | `rgb(30, 80, 218)`  | General info message color<sup>\*</sup> |
-| `--manifold-color-success`   | `rgb(49, 186, 162)` | Success color<sup>\*</sup>              |
-| `--manifold-color-warn`      | `rgb(254, 113, 75)` | Warning color<sup>\*</sup>              |
-| `--manifold-color-error`     | `rgb(213, 15, 73)`  | Error color<sup>\*</sup>                |
-
-_\* Examples: **Toast** and **Resource Status**_
-
-
-### Typography
-
-| Name                               | Default                             | Description                          |
-|------------------------------------|-------------------------------------|--------------------------------------|
-| `--manifold-font-family`           | (System)                            | Default text family                  |
-| `--manifold-font-family-monospace` | `IBM Plex Sans Monospace,monospace` | Code font family (credentials, etc.) |
-| `--manifold-text-color`            | `black`                             | Base text color                      |
-| `--manifold-text-color-body`       | `black`                             | Body text color                      |
-| `--manifold-text-color-accent`     | `white`                             | Accent text color                    |
-
-### Common Styles
-
-| Name                      | Default                                   | Description                                         |
-|---------------------------|-------------------------------------------|-----------------------------------------------------|
-| `--manifold-radius`       | `4px`                                     | Default radius for buttons, tags, cards, textfields |
-| `--manifold-border`       | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
-| `--manifold-border-focus` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
-
-
-
-### Cards
-
-Card components include the **Service Card** and the left-hand side of **Plan Selector**.
-
-| Name                                | Default                        | Description       |
-|-------------------------------------|--------------------------------|-------------------|
-| `--manifold-card-background-hover`  | `transparent`                  | Hover background  |
-| `--manifold-card-background-active` | `transparent`                  | Active background |
-| `--manifold-card-border-active`     | `1px solid rgb(30, 80, 218)`   | Active border     |
-| `--manifold-card-border-hover`      | `1px solid rgba(0, 0, 0, 0.1)` | Hover border      |
-| `--manifold-card-color-active`      | `rgb(30, 80, 218)`             | Active text color |
-
-Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements, `*-focus` styles will only be applied to focusable elements. -->
+Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements, `*-focus` styles will only be applied to focusable elements.
 
 ## API Reference
 
