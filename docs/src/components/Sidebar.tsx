@@ -4,11 +4,11 @@ import { Link } from 'gatsby';
 import { LinkGetProps } from '@reach/router';
 import { switchProp } from 'styled-tools';
 import { chevron_down } from '@manifoldco/icons';
-import '@manifoldco/ui/dist/manifold.css';
 import { base64 } from './Icon';
 import manifoldTheme from '../lib/theme-manifold';
 import sapphireTheme from '../lib/theme-sapphire';
 import rubyTheme from '../lib/theme-ruby';
+import moonTheme from '../lib/theme-moon';
 
 interface SidebarProps {
   pages: ([string, string])[];
@@ -20,12 +20,14 @@ const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
 const SAPPHIRE = 'sapphire';
 const RUBY = 'ruby';
+const MOON = 'moon';
 
 const themes = [
   [DEFAULT, 'Default'],
   [MANIFOLD, 'Manifold'],
   [SAPPHIRE, 'Sapphire'],
   [RUBY, 'Ruby'],
+  [MOON, 'Moon'],
 ];
 
 // Handle link styling (needed because this doesn’t work with search params)
@@ -145,6 +147,7 @@ ${switchProp('userTheme', {
   [MANIFOLD]: manifoldTheme,
   [SAPPHIRE]: sapphireTheme,
   [RUBY]: rubyTheme,
+  [MOON]: moonTheme,
 })}
 `;
 

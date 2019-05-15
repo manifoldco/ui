@@ -39,7 +39,7 @@ interface ExampleProps {
 const Example: React.FunctionComponent<ExampleProps> = ({ html }) => (
   <Wrapper>
     <h3>Example</h3>
-    <Inner dangerouslySetInnerHTML={{ __html: html }} />
+    <Inner className="example-inner" dangerouslySetInnerHTML={{ __html: html }} />
   </Wrapper>
 );
 

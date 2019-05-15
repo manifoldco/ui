@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 
 export default css`
-  body {
+  :root {
     /* Button */
     --manifold-button-background: var(--manifold-g-cta);
 

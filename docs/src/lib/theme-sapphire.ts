@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 export default css`
   @import url('https://use.typekit.net/gbl5mjr.css');
 
-  body {
+  :root {
     /* Brand */
     --theme-white: #fff;
     --theme-blue: #0069ff;
