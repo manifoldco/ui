@@ -192,7 +192,7 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 | Name                              | Default                          | Description                                                |
 |-----------------------------------|----------------------------------|------------------------------------------------------------|
-| `--manifold-text-color-secondary` | `var(--manifold-text-color)`     | Base text color                                            |
+| `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color                                       |
 | `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color                                            |
 | `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color (overlays on `--manifold-color-primary`) |
 
