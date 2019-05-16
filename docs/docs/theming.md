@@ -105,7 +105,9 @@ There are four theming levels:
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
 | 4 (lowest)  | Unique Components | Specific use components like Marketplace, Plan Selector, and Product |
 
-Each level recieves it's default value from the level above. Redefining a lower level value will override the value from the higher level. For example, the button in the Plan selector:
+Each level recieves it's default values from the level above. Redefining a lower level value will override the value from the higher level. 
+
+For example, the CTA button background in the Plan Selector component is customizable with one the following properties:
 
 ```css
 :root {
@@ -126,6 +128,27 @@ Each level recieves it's default value from the level above. Redefining a lower 
   --manifold-plan-selector-cta-background: orange;
 }
 ```
+<!-- 
+Text styles follow a similar hierarchy:
+
+```css
+:root {
+  /* Base: default color applied to all generic text. */
+  --manifold-text-color: var(--manifold-grayscale-100); /* black */
+
+  /* Top-level: your theme's text color applied to all generic text. */
+  --manifold-text-color: #444;
+
+  /* Common Text: Text color applied to all level 1 headings (overrides 
+  top-level text color). */
+  --manifold-heading-1-text-color: #666;
+
+  /* Unique Text: Text color applied to category headings in the 
+  Marketplace component (overrides common text text color). */
+  --manifold-marketplace-category-heading-text-color: #888;
+}
+``` -->
+
 ### State
 
 Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements, `*-focus` styles will only be applied to focusable elements.

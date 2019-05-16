@@ -12,6 +12,7 @@
 
   /* theme vars */
   --card-background: var(--manifold-grayscale-100i);
+  --card-shadow: none;
   --card-text-color: var(--manifold-text-color);
   --card-border: var(--manifold-card-border, var(--manifold-border));
   --card-radius: var(--manifold-radius);
@@ -34,7 +35,7 @@
   background-color: var(--card-background);
   border: var(--card-border);
   border-radius: var(--card-radius);
-  box-shadow: 0 0.25rem 0.75rem var(--manifold-grayscale-10);
+  box-shadow: var(--card-shadow);
 }
 
 .header {
@@ -189,8 +190,8 @@
 .footer {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin-top: var(--padding);
   margin-right: calc(var(--padding) * -1);
   margin-left: calc(var(--padding) * -1);

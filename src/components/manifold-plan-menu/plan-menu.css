@@ -6,36 +6,27 @@
   --padding-xsmall: 0.5rem;
 
   /* plan button */
-  --plan-button-spacing: var(--manifold-card-gap, 1rem);
-  --plan-button-border: var(
+  --card-spacing: var(--manifold-card-gap, 1rem);
+  --card-border: var(
     --manifold-card-border,
     var(--manifold-border, 1px solid var(--manifold-grayscale-20))
   );
-  --plan-button-radius: var(--manifold-card-radius, var(--manifold-radius, 4px));
-  --plan-button-background: var(--manifold-grayscale-100i);
-  --plan-button-color: var(--manifold-text-color, inherit);
-  --plan-button-shadow: var(--manifold-card-shadow, none);
+  --card-radius: var(--manifold-card-radius, var(--manifold-radius, 4px));
+  --card-background: var(--manifold-grayscale-100i);
+  --card-color: var(--manifold-text-color, inherit);
+  --card-shadow: var(--manifold-card-shadow, none);
 
   /* hover/focus */
-  --plan-button-border-hover: var(--manifold-card-border-hover, var(--plan-button-border));
-  --plan-button-background-hover: var(
-    --manifold-card-background-hover,
-    var(--plan-button-background)
-  );
-  --plan-button-color-hover: var(--manifold-card-color-hover, var(--plan-button-color));
-  --plan-button-shadow-hover: var(--manifold-card-shadow-hover, none);
+  --card-border-hover: var(--manifold-card-border-hover, var(--card-border));
+  --card-background-hover: var(--manifold-card-background-hover, var(--card-background));
+  --card-color-hover: var(--manifold-card-color-hover, var(--card-color));
+  --card-shadow-hover: var(--manifold-card-shadow-hover, none);
 
   /* active */
-  --plan-button-background-active: var(
-    --manifold-card-background-active,
-    var(--manifold-grayscale-100i)
-  );
-  --plan-button-border-active: var(
-    --manifold-card-border-active,
-    1px solid var(--manifold-color-primary)
-  );
-  --plan-button-color-active: var(--manifold-card-color-active, var(--manifold-color-primary));
-  --plan-button-shadow-active: var(--manifold-card-shadow-active, none);
+  --card-background-active: var(--manifold-card-background-active, var(--manifold-grayscale-100i));
+  --card-border-active: var(--manifold-card-border-active, 1px solid var(--manifold-color-primary));
+  --card-color-active: var(--manifold-card-color-active, var(--manifold-color-primary));
+  --card-shadow-active: var(--manifold-card-shadow-active, none);
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);
@@ -52,7 +43,7 @@
 
   @media (--viewport-m) {
     grid-auto-flow: row;
-    grid-gap: var(--plan-button-spacing, 0);
+    grid-gap: var(--card-spacing, 0);
     padding: 1px 0.25rem; /* border offset */
     overflow: visible;
     white-space: nowrap;
@@ -105,19 +96,19 @@
   padding-bottom: 0.75rem;
   padding-left: 1rem;
   overflow: hidden;
-  color: var(--plan-button-color);
+  color: var(--card-color);
   white-space: nowrap;
   text-align: left;
-  background-color: var(--plan-button-background);
-  border: var(--plan-button-border);
-  border-radius: var(--plan-button-radius);
+  background: var(--card-background);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
   transition: background-color 200ms linear, border-color 200ms linear, box-shadow 200ms linear;
   appearance: none;
 
   @media (--viewport-m) {
     min-width: 0;
     margin-left: 0;
-    border: var(--plan-button-border, 1px solid transparent);
+    border: var(--card-border, 1px solid transparent);
   }
 
   &::after {
@@ -128,7 +119,7 @@
     width: 1.5rem;
     height: 1.5rem;
     background: var(--manifold-card-icon-background, var(--manifold-color-primary));
-    border-bottom-left-radius: var(--plan-button-radius);
+    border-bottom-left-radius: var(--card-radius);
     transform: scale(0.5);
     transform-origin: 100% 0;
     opacity: 0;
@@ -138,9 +129,9 @@
 
   &:focus,
   &:hover {
-    background: var(--plan-button-background-hover);
-    border: var(--plan-button-border-hover, var(--plan-button-border));
-    box-shadow: var(--plan-button-shadow-hover);
+    background: var(--card-background-hover);
+    border: var(--card-border-hover, var(--card-border));
+    box-shadow: var(--card-shadow-hover);
   }
 }
 
@@ -154,19 +145,16 @@
   color: var(--manifold-text-color-accent);
   transform: translateY(1rem);
   opacity: 0;
-  transition: opacity 100ms linear, transform 200ms ease-in-out;
+  transition: opacity 100ms linear 50ms, transform 200ms ease-in-out;
   pointer-events: none;
 }
 
 [type='radio']:checked ~ .plan-button-inner {
   z-index: 5;
-  color: var(--plan-button-color-active);
-  background: var(--plan-button-background-active);
-  border: var(--plan-button-border-active);
-  box-shadow: var(
-    --plan-button-shadow-active,
-    0 0 0.5rem 0.25rem rgba(var(--manifold-c-blue-rgb), 0.15)
-  );
+  color: var(--card-color-active);
+  background: var(--card-background-active);
+  border: var(--card-border-active);
+  box-shadow: var(--card-shadow-active, 0 0 0.5rem 0.25rem rgba(var(--manifold-c-blue-rgb), 0.15));
 
   &::after {
     transform: scale(1);
@@ -174,7 +162,7 @@
   }
 
   &:hover {
-    box-shadow: var(--plan-button-shadow-hover, 0 0 0.5rem rgba(var(--manifold-c-blue-rgb), 0.5));
+    box-shadow: var(--card-shadow-hover, 0 0 0.5rem rgba(var(--manifold-c-blue-rgb), 0.5));
   }
 
   & .check-icon {
