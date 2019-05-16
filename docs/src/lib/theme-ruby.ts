@@ -4,7 +4,7 @@ export default css`
   @import url('https://fonts.googleapis.com/css?family=Poppins');
 
   :root {
-    /* Brand */
+    /* TODO update to use proper colors */
     --theme-white: #fff;
     --theme-blue: #0069ff;
     --theme-blue-faded: #f5f9ff;
@@ -24,8 +24,8 @@ export default css`
     --theme-text: #333;
 
     /********************************************************************************
-   * Manifold UI Theme
-   ********************************************************************************/
+     * Manifold UI Theme
+     ********************************************************************************/
 
     /* UI Colors */
     --manifold-background: var(--theme-white);
@@ -38,7 +38,7 @@ export default css`
 
     /* Text Colors */
     --manifold-text-color: var(--theme-text);
-    --manifold-text-color-alt: var(--theme-text-alt);
+    --manifold-text-color-secondary: var(--theme-text-alt);
     --manifold-text-color-body: var(--theme-text-body);
     --manifold-text-color-accent: var(--theme-white);
 

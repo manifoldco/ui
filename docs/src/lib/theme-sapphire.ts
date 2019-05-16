@@ -4,7 +4,7 @@ export default css`
   @import url('https://use.typekit.net/gbl5mjr.css');
 
   :root {
-    /* Brand */
+    /* Sapphire */
     --theme-white: #fff;
     --theme-blue: #0069ff;
     --theme-blue-faded: #f5f9ff;
@@ -21,7 +21,7 @@ export default css`
 
     /********************************************************************************
      * Manifold UI Theme
-      ********************************************************************************/
+     ********************************************************************************/
 
     /* UI Colors */
     --manifold-background: var(--theme-white);
@@ -33,7 +33,7 @@ export default css`
 
     /* Text Colors */
     --manifold-text-color: var(--theme-text);
-    --manifold-text-color-alt: var(--theme-text-alt);
+    --manifold-text-color-secondary: var(--theme-text-alt);
     --manifold-text-color-body: var(--theme-text-body);
     --manifold-text-color-accent: var(--theme-white);
 
