@@ -105,7 +105,7 @@ There are four theming levels:
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
 | 4 (lowest)  | Unique Components | Specific use components like Marketplace, Plan Selector, and Product |
 
-Each level recieves it's default values from the level above. Redefining a lower level value will override the value from the higher level. 
+Each level recieves its default values from the level above. Redefining a lower level value will override the value from the higher level. 
 
 For example, the CTA button background in the Plan Selector component is customizable with one the following properties:
 
