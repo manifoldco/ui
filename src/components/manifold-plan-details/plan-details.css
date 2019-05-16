@@ -11,16 +11,17 @@
   }
 
   /* theme vars */
-  --card-background: var(--manifold-grayscale-100i);
-  --card-text-color: var(--manifold-text-color);
+  --card-background: var(--manifold-card-background, var(--manifold-grayscale-100i));
   --card-border: var(--manifold-card-border, var(--manifold-border));
-  --card-radius: var(--manifold-radius);
-  --logo-radius: var(--manifold-radius);
+  --card-shadow: var(--manifold-card-shadow, none);
+  --card-radius: var(--manifold-card-radius, var(--manifold-radius));
+  --card-text-color: var(--manifold-card-text-color, var(--manifold-text-color));
+  --logo-radius: var(--manifold-product-logo-radius, var(--manifold-radius));
 
   /* boolean values */
   --yes-color: var(--manifold-color-primary);
-  --no-color: var(--manifold-grayscale-50);
-  --locked-color: var(--manifold-grayscale-50);
+  --no-color: var(--manifold-text-color-secondary);
+  --locked-color: var(--manifold-text-color-secondary);
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);
@@ -34,7 +35,7 @@
   background-color: var(--card-background);
   border: var(--card-border);
   border-radius: var(--card-radius);
-  box-shadow: 0 0.25rem 0.75rem var(--manifold-grayscale-10);
+  box-shadow: var(--card-shadow);
 }
 
 .header {
@@ -84,7 +85,7 @@
 
 .product-name {
   margin: 0;
-  color: var(--manifold-grayscale-50);
+  color: var(--manifold-text-color-secondary);
   font-weight: 600;
   font-size: var(--manifold-font-d2);
   letter-spacing: 0.0625em;

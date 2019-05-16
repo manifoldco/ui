@@ -5,7 +5,7 @@
   --grid-m: 1.5rem;
 
   /* theme */
-  --link-color: var(--manifold-grayscale-50);
+  --link-color: var(--manifold-text-color-secondary);
   --link-color-active: var(--manifold-color-primary);
   --link-color-hover: var(--manifold-color-primary);
   --heading-color: var(--manifold-grayscale-60);
@@ -20,7 +20,7 @@
   --search-border: var(--manifold-input-border, var(--manifold-border));
   --search-border-focus: var(--manifold-input-border-focus, var(--manifold-border-focus));
   --search-radius: var(--manifold-radius);
-  --search-placeholder-color: var(--manifold-grayscale-50);
+  --search-placeholder-color: var(--manifold-text-color-secondary);
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);

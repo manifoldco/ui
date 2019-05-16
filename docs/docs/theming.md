@@ -105,7 +105,9 @@ There are four theming levels:
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
 | 4 (lowest)  | Unique Components | Specific use components like Marketplace, Plan Selector, and Product |
 
-Each level recieves it's default value from the level above. Redefining a lower level value will override the value from the higher level. For example, the button in the Plan selector:
+Each level recieves its default values from the level above. Redefining a lower level value will override the value from the higher level. 
+
+For example, the CTA button background in the Plan Selector component is customizable with one the following properties:
 
 ```css
 :root {
@@ -126,11 +128,43 @@ Each level recieves it's default value from the level above. Redefining a lower 
   --manifold-plan-selector-cta-background: orange;
 }
 ```
+<!-- 
+Text styles follow a similar hierarchy:
+
+```css
+:root {
+  /* Base: default color applied to all generic text. */
+  --manifold-text-color: var(--manifold-grayscale-100); /* black */
+
+  /* Top-level: your theme's text color applied to all generic text. */
+  --manifold-text-color: #444;
+
+  /* Common Text: Text color applied to all level 1 headings (overrides 
+  top-level text color). */
+  --manifold-heading-1-text-color: #666;
+
+  /* Unique Text: Text color applied to category headings in the 
+  Marketplace component (overrides common text text color). */
+  --manifold-marketplace-category-heading-text-color: #888;
+}
+``` -->
+
+#### Missing Properties?
+
+Even at the lowest level, some properties are not exposed in the theming API. If there are additional styles that you would like to customize for your theme, please let us know and we can work to make them available.
+
 ### State
 
 Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements, `*-focus` styles will only be applied to focusable elements.
 
 ## API Reference
+
+### Grayscale
+
+| Name                                 | Default         | Description                                        |
+|--------------------------------------|-----------------|----------------------------------------------------|
+| `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
+| `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
 ### Top Level Properties
 
@@ -145,26 +179,45 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 | `--manifold-color-error`           | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
 | `--manifold-font-family`           | (System)                                  | Default text family                                 |
 | `--manifold-font-family-monospace` | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
-| `--manifold-text-color`            | `black`                                   | Base text color                                     |
-| `--manifold-text-color-body`       | `black`                                   | Body text color                                     |
-| `--manifold-text-color-accent`     | `white`                                   | Accent text color                                   |
+| `--manifold-text-color`            | `var(--manifold-grayscale-100)`           | Base text color                                     |
 | `--manifold-radius`                | `4px`                                     | Default radius for buttons, tags, cards, textfields |
 | `--manifold-border`                | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
+| `--manifold-border-active`         | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 | `--manifold-border-focus`          | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+
 
 ### Common Component Properties
 
+#### Text
+
+| Name                              | Default                          | Description                                                |
+|-----------------------------------|----------------------------------|------------------------------------------------------------|
+| `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color                                       |
+| `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color                                            |
+| `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color (overlays on `--manifold-color-primary`) |
+
 #### Cards
 
-| Name                                | Default                        | Description       |
-|-------------------------------------|--------------------------------|-------------------|
-| `--manifold-card-background-hover`  | `transparent`                  | Hover background  |
-| `--manifold-card-background-active` | `transparent`                  | Active background |
-| `--manifold-card-border-active`     | `1px solid rgb(30, 80, 218)`   | Active border     |
-| `--manifold-card-border-hover`      | `1px solid rgba(0, 0, 0, 0.1)` | Hover border      |
-| `--manifold-card-color-active`      | `rgb(30, 80, 218)`             | Active text color |
+| Name                                | Default                           | Description       |
+|-------------------------------------|-----------------------------------|-------------------|
+| `--manifold-card-background`        | `var(--manifold-grayscale-100i)`  | Background        |
+| `--manifold-card-border`            | `var(--manifold-border)`          | Border            |
+| `--manifold-card-radius`            | `var(--manifold-radius)`          | Corner radius     |
+| `--manifold-card-shadow`            | `none`                            | Box shadow        |
+|                                     |                                   |                   |
+| `--manifold-card-background-hover`  | `var(--manifold-card-background)` | Hover background  |
+| `--manifold-card-border-hover`      | `var(--manifold-card-border)`     | Hover border      |
+| `--manifold-card-shadow-hover`      | `var(--manifold-card-shadow)`     | Box shadow        |
+|                                     |                                   |                   |
+| `--manifold-card-background-active` | `var(--manifold-card-background)` | Active background |
+| `--manifold-card-border-active`     | `var(--manifold-border-active)`   | Active border     |
+| `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
 
 #### Buttons
+
+TODO
+
+#### Input Fields
 
 TODO
 

@@ -1,12 +1,12 @@
 :host {
   --input-background: var(--manifold-grayscale-100i);
-  --input-placeholder-color: var(--manifold-grayscale-50);
+  --input-placeholder-color: var(--manifold-text-color-secondary);
   --input-border: var(--manfold-input-border, var(--manifold-border));
   --input-border-focus: 1px solid var(--manifold-color-primary);
   --button-background: var(--manifold-grayscale-05);
   --text-color: var(--manifold-grayscale-100);
   --radius: var(--manifold-radius);
-  --range-text-color: var(--manifold-grayscale-50);
+  --range-text-color: var(--manifold-text-color-secondary);
 }
 
 .container {
