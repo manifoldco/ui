@@ -64,7 +64,7 @@
   --overlap: 2rem;
 
   /* Theme */
-  --text-color-heading: var(--manifold-grayscale-50);
+  --text-color-heading: var(--manifold-text-color-secondary);
   --radius: var(--manifold-radius);
   --card-radius: var(--radius);
   --logo-radius: var(--radius);

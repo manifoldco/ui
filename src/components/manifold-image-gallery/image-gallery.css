@@ -1,7 +1,7 @@
 :host {
   --background: var(--manifold-grayscale-05);
   --shadow: var(--manifold-grayscale-10);
-  --text-color: var(--manifold-grayscale-50);
+  --text-color: var(--manifold-text-color-secondary);
   --radius: var(--manifold-radius);
 
   /* image selection */

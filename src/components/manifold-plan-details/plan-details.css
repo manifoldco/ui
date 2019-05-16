@@ -11,17 +11,17 @@
   }
 
   /* theme vars */
-  --card-background: var(--manifold-grayscale-100i);
-  --card-shadow: none;
-  --card-text-color: var(--manifold-text-color);
+  --card-background: var(--manifold-card-background, var(--manifold-grayscale-100i));
   --card-border: var(--manifold-card-border, var(--manifold-border));
-  --card-radius: var(--manifold-radius);
-  --logo-radius: var(--manifold-radius);
+  --card-shadow: var(--manifold-card-shadow, none);
+  --card-radius: var(--manifold-card-radius, var(--manifold-radius));
+  --card-text-color: var(--manifold-card-text-color, var(--manifold-text-color));
+  --logo-radius: var(--manifold-product-logo-radius, var(--manifold-radius));
 
   /* boolean values */
   --yes-color: var(--manifold-color-primary);
-  --no-color: var(--manifold-grayscale-50);
-  --locked-color: var(--manifold-grayscale-50);
+  --no-color: var(--manifold-text-color-secondary);
+  --locked-color: var(--manifold-text-color-secondary);
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);
@@ -85,7 +85,7 @@
 
 .product-name {
   margin: 0;
-  color: var(--manifold-grayscale-50);
+  color: var(--manifold-text-color-secondary);
   font-weight: 600;
   font-size: var(--manifold-font-d2);
   letter-spacing: 0.0625em;
@@ -190,8 +190,8 @@
 .footer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-top: var(--padding);
   margin-right: calc(var(--padding) * -1);
   margin-left: calc(var(--padding) * -1);

@@ -7,7 +7,7 @@
   --card-border: var(--manifold-card-border, var(--manifold-border));
   --card-radius: var(--manifold-card-radius, var(--manifold-radius));
   --card-shadow: var(--manifold-card-shadow, none);
-  --card-body-text-color: var(--manifold-grayscale-50);
+  --card-body-text-color: var(--manifold-text-color-secondary);
   --card-body-background: var(--manifold-grayscale-03);
   --card-inner-border: 1px solid var(--manifold-grayscale-07);
 
@@ -25,7 +25,7 @@
   height: 100%;
   text-decoration: none;
   background-color: var(--card-background);
-  border: var(--card-border, 1px solid #d3d3d4);
+  border: var(--card-border);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow, 0 2px 6px rgba(0, 0, 0, 0));
   cursor: pointer;
@@ -34,8 +34,8 @@
   &:focus,
   &:hover {
     background-color: var(--card-background-hover);
-    border: var(--card-border-hover, var(--manifold-card-border));
-    box-shadow: var(--card-shadow-hover, 0 2px 6px rgba(0, 0, 0, 0.15));
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover);
   }
 }
 
@@ -75,25 +75,10 @@
 
 .service-list-container {
   position: relative;
-  padding-top: calc(var(--padding));
-  padding-bottom: calc(var(--padding));
-  padding-left: calc(var(--padding));
+  padding-top: var(--padding);
+  padding-bottom: var(--padding);
+  padding-left: var(--padding);
   overflow: hidden;
-
-  &::after {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 2;
-    width: 5rem;
-    height: 100%;
-    background-image: linear-gradient(
-      to right,
-      var(--manifold-grayscale-0i),
-      var(--card-background)
-    );
-    content: '';
-  }
 }
 
 .service-list {

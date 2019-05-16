@@ -59,6 +59,7 @@
 
   /* Colors */
   --manifold-text-color: var(--manifold-grayscale-100);
+  --manifold-text-color-secondary: var(--manifold-grayscale-50);
   --manifold-text-color-body: var(--manifold-grayscale-70);
   --manifold-text-color-accent: var(--manifold-white);
   --manifold-background: var(--manifold-grayscale-100i);
@@ -206,24 +207,4 @@
   --manifold-g-yellow: linear-gradient(to top right, #ffb83a, #ffe268);
   --manifold-g-yellowFaded: linear-gradient(to top right, #ffd995, #fff7d3);
   --manifold-g-custom: linear-gradient(to top right, #eadeff, #f9f5ff);
-
-  /* Web Components Theme */
 }
-
-/* TODO: theme for resource status */
-
-/*
- --gradient: linear-gradient(to top right, #329dd1, #55f0a8);
-
- &[data-status='PROVISIONING'] {
-   --gradient: linear-gradient(to top right, #3189ba, #73cdff);
- }
-
- &[data-status='DEGRADED'] {
-   --gradient: linear-gradient(to top right, #da710b, #ffa853);
- }
-
- &[data-status='OFFLINE'] {
-   --gradient: linear-gradient(to top right, #a34141, #ff3737);
- }
-*/
