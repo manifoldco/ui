@@ -95,25 +95,4 @@ describe(`<manifold-plan-details>`, () => {
       regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
     });
   });
-
-  it('dispatches click event', () => {
-    const planDetails = new PlanDetails();
-    planDetails.plan = ExpandedPlanCustom;
-    planDetails.product = Product;
-    planDetails.planLoad = { emit: jest.fn() };
-    planDetails.componentWillLoad(); // Set initial features
-
-    const mock = { emit: jest.fn() };
-    planDetails.planClick = mock;
-
-    planDetails.onClick(new Event('click'));
-    expect(mock.emit).toHaveBeenCalledWith({
-      features: { instance_class: 'db.t2.micro', redundancy: false, storage: 5 },
-      planId: '235exy25wvzpxj52p87bh87gbnj4y',
-      planLabel: 'custom',
-      planName: 'Custom',
-      productLabel: 'jawsdb-mysql',
-      regionId: '235mhkk15ky7ha9qpu4gazrqjt2gr',
-    });
-  });
 });

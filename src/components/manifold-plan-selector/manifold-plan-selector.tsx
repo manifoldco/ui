@@ -9,12 +9,6 @@ export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
-  /** _(optional)_ Hide CTA? */
-  @Prop() hideCta?: boolean;
-  /** _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders */
-  @Prop() linkFormat?: string;
-  /** Should the JS event still fire, even if link-format is passed?  */
-  @Prop() preserveEvent: boolean = false;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
@@ -82,14 +76,13 @@ export class ManifoldPlanSelector {
   render() {
     return (
       <manifold-active-plan
-        hideCta={this.hideCta}
-        linkFormat={this.linkFormat}
         plans={this.plans}
-        preserveEvent={this.preserveEvent}
         product={this.product}
         regions={this.parsedRegions}
         selectedResource={this.resource}
-      />
+      >
+        <slot />
+      </manifold-active-plan>
     );
   }
 }

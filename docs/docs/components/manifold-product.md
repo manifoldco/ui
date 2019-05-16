@@ -3,6 +3,7 @@ title: Product
 path: /components/product
 example: |
   <manifold-product product-label="jawsdb-mysql">
+    <manifold-link-button>Get JawsDB MySQL</manifold-link-button>
   </manifold-product>
 ---
 
@@ -18,31 +19,15 @@ Display the details for an individual product.
 
 You can find the `:product` label for each at `https://manifold.co/services/:product`.
 
-## Navigation
+## CTA
 
-Similar to the [marketplace](#manifold-marketplace) component, the large CTA
-button below the logo is configurable. By default, this component emits a
-`manifold-productCTA-click` custom event whenever the main CTA is clicked.
-Listen for it like so:
-
-```js
-document.addEventListener('manifold-productCTA-click', ({ detail: { label } }) => {
-  alert(`You clicked the CTA for ${label}`);
-});
-```
-
-To turn the CTA into an `<a>` tag, specify a `link-format` attribute, using
-`:product` as a placeholder:
+You can pass in your own button or link in the bottom-right of the component
+by passing in a [slot][slot] (child component):
 
 ```html
-<manifold-product product-label="aiven-redis" link-format="/product/:product" />
-<!-- <a href="/product/aiven-redis"> -->
+<manifold-plan-selector product-label="jawsdb-mysql">
+  <a href="/services/jawsdb-mysql">Get JawsDB MySQL</a>
+</manifold-plan-selector>
 ```
 
-## Hide CTA
-
-You can alternately hide the CTA on the left altogether with `hide-cta`:
-
-```html
-<manifold-product product-label="aiven-cassandra" hide-cta />
-```
+[slot]: https://stenciljs.com/docs/templating-jsx/

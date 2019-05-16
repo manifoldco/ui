@@ -1,5 +1,5 @@
-import { Component, Prop, Event, EventEmitter } from '@stencil/core';
-import { arrow_right, arrow_up_right, book, life_buoy } from '@manifoldco/icons';
+import { Component, Prop } from '@stencil/core';
+import { arrow_up_right, book, life_buoy } from '@manifoldco/icons';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
 
@@ -9,21 +9,8 @@ import { categoryIcon } from '../../utils/marketplace';
   shadow: true,
 })
 export class ManifoldProductPage {
-  @Prop() hideCta?: boolean = false;
-  @Prop() linkFormat?: string;
-  @Prop() preserveEvent?: boolean = false;
   @Prop() product?: Catalog.Product;
   @Prop() provider?: Catalog.Provider;
-  @Event({
-    eventName: 'manifold-productCTA-click',
-    bubbles: true,
-  })
-  ctaClicked: EventEmitter;
-
-  get ctaLink() {
-    if (!this.product || !this.linkFormat) return undefined;
-    return this.linkFormat.replace(/:product/gi, this.product.body.label);
-  }
 
   get providerName() {
     if (!this.product || !this.provider) return undefined;
@@ -31,14 +18,6 @@ export class ManifoldProductPage {
       (this.provider.body.name !== this.product.body.name && this.provider.body.name) || undefined
     );
   }
-
-  onClick = (e: Event): void => {
-    if (!this.linkFormat || this.preserveEvent) {
-      e.preventDefault();
-      const label = this.product && this.product.body.label;
-      this.ctaClicked.emit({ label });
-    }
-  };
 
   render() {
     if (this.product) {
@@ -61,15 +40,9 @@ export class ManifoldProductPage {
                     {this.providerName && <span itemprop="brand">from {this.providerName}</span>}
                   </p>
                 </div>
-
-                {this.hideCta !== true && (
-                  <div class="sidebar-cta">
-                    <manifold-link-button href={this.ctaLink} onClick={this.onClick}>
-                      <span class="link-text">Get {name}</span>
-                      <manifold-icon icon={arrow_right} marginLeft />
-                    </manifold-link-button>
-                  </div>
-                )}
+                <div class="sidebar-cta">
+                  <slot />
+                </div>
                 {tags && (
                   <div class="sidebar-section">
                     <h4>Category</h4>
