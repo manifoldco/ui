@@ -38,9 +38,9 @@ export class ManifoldProduct {
   render() {
     return (
       <manifold-product-page product={this.product} provider={this.provider}>
-        <span slot="cta">
+        <manifold-forward-slot slot="cta">
           <slot name="cta" />
-        </span>
+        </manifold-forward-slot>
       </manifold-product-page>
     );
   }

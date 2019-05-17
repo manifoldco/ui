@@ -241,6 +241,9 @@ export namespace Components {
     'preserveEvent'?: boolean;
   }
 
+  interface ManifoldForwardSlot {}
+  interface ManifoldForwardSlotAttributes extends StencilHTMLAttributes {}
+
   interface ManifoldIcon {
     /**
     * a CSS variable starting with `--manifold-c-*`
@@ -751,6 +754,7 @@ declare global {
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
     'ManifoldDataResourceList': Components.ManifoldDataResourceList;
+    'ManifoldForwardSlot': Components.ManifoldForwardSlot;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
     'ManifoldLazyImage': Components.ManifoldLazyImage;
@@ -789,6 +793,7 @@ declare global {
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
     'manifold-data-resource-list': Components.ManifoldDataResourceListAttributes;
+    'manifold-forward-slot': Components.ManifoldForwardSlotAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
     'manifold-lazy-image': Components.ManifoldLazyImageAttributes;
@@ -870,6 +875,12 @@ declare global {
   var HTMLManifoldDataResourceListElement: {
     prototype: HTMLManifoldDataResourceListElement;
     new (): HTMLManifoldDataResourceListElement;
+  };
+
+  interface HTMLManifoldForwardSlotElement extends Components.ManifoldForwardSlot, HTMLStencilElement {}
+  var HTMLManifoldForwardSlotElement: {
+    prototype: HTMLManifoldForwardSlotElement;
+    new (): HTMLManifoldForwardSlotElement;
   };
 
   interface HTMLManifoldIconElement extends Components.ManifoldIcon, HTMLStencilElement {}
@@ -1038,6 +1049,7 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement
+    'manifold-forward-slot': HTMLManifoldForwardSlotElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
     'manifold-lazy-image': HTMLManifoldLazyImageElement
@@ -1076,6 +1088,7 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
+    'manifold-forward-slot': HTMLManifoldForwardSlotElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-lazy-image': HTMLManifoldLazyImageElement;
