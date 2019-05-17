@@ -9,11 +9,6 @@ export class ManifoldProduct {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
   /** _(optional)_ Hide the CTA on the left? */
-  @Prop() hideCta?: boolean = false;
-  /** _(optional)_ Link format structure, with `:product` placeholder */
-  @Prop() linkFormat?: string;
-  /** Should the JS event still fire, even if link-format is passed?  */
-  @Prop() preserveEvent: boolean = false;
   @Prop() productLabel: string;
   @State() product?: Catalog.Product;
   @State() provider?: Catalog.Provider;
@@ -42,13 +37,11 @@ export class ManifoldProduct {
 
   render() {
     return (
-      <manifold-product-page
-        hideCta={this.hideCta}
-        linkFormat={this.linkFormat}
-        preserveEvent={this.preserveEvent}
-        product={this.product}
-        provider={this.provider}
-      />
+      <manifold-product-page product={this.product} provider={this.provider}>
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
+      </manifold-product-page>
     );
   }
 }

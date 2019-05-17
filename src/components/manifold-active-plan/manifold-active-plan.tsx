@@ -6,11 +6,8 @@ import { Component, State, Prop, Watch } from '@stencil/core';
   shadow: true,
 })
 export class ManifoldActivePlan {
-  @Prop() hideCta?: boolean;
   @Prop() isExistingResource?: boolean;
-  @Prop() linkFormat?: string;
   @Prop() plans?: Catalog.ExpandedPlan[];
-  @Prop() preserveEvent: boolean = false;
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
   @Prop() selectedResource?: Gateway.Resource;
@@ -50,16 +47,17 @@ export class ManifoldActivePlan {
         selectPlan={this.selectPlan}
       />,
       <manifold-plan-details
-        hideCta={this.hideCta}
         isExistingResource={this.isExistingResource}
-        linkFormat={this.linkFormat}
         plan={this.selectedPlan}
-        preserveEvent={this.preserveEvent}
         product={this.product}
         regions={this.regions}
         resourceFeatures={this.selectedResource && this.selectedResource.features}
         resourceRegion={resourceRegion}
-      />,
+      >
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
+      </manifold-plan-details>,
     ];
   }
 }

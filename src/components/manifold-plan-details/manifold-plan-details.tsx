@@ -1,5 +1,4 @@
 import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
-import { arrow_right } from '@manifoldco/icons';
 import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
@@ -20,11 +19,8 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldPlanDetails {
-  @Prop() hideCta?: boolean = false;
   @Prop() isExistingResource?: boolean = false;
-  @Prop() linkFormat?: string;
   @Prop() plan?: Catalog.ExpandedPlan;
-  @Prop() preserveEvent: boolean = false;
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
   @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
@@ -32,7 +28,6 @@ export class ManifoldPlanDetails {
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
   @State() features: Gateway.FeatureMap = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
-  @Event({ eventName: 'manifold-planSelector-click', bubbles: true }) planClick: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-load', bubbles: true }) planLoad: EventEmitter;
   @Watch('plan') planChange(
     newPlan: Catalog.ExpandedPlan,
@@ -145,21 +140,6 @@ export class ManifoldPlanDetails {
     return customFeatures;
   }
 
-  get ctaLink() {
-    if (!this.product || !this.plan) return undefined;
-    if (!this.linkFormat || this.preserveEvent) return undefined;
-    const params = new URLSearchParams();
-    if (Object.keys(this.features)) {
-      Object.entries(this.features).forEach(([key, value]) => {
-        params.append(key, value.toString());
-      });
-    }
-    return this.linkFormat
-      .replace(/:product/gi, this.product.body.label)
-      .replace(/:plan/gi, this.plan.body.label)
-      .replace(/:features/gi, params.toString());
-  }
-
   get featureList() {
     if (!this.plan) return null;
 
@@ -225,22 +205,6 @@ export class ManifoldPlanDetails {
     );
   }
 
-  onClick = (e: Event): void => {
-    if (!this.plan || !this.product) return;
-    if (!this.linkFormat || this.preserveEvent) {
-      e.preventDefault();
-      const detail: EventDetail = {
-        productLabel: this.product.body.label,
-        planId: this.plan.id,
-        planLabel: this.plan.body.label,
-        planName: this.plan.body.name,
-        features: this.features,
-        regionId: this.regionId,
-      };
-      this.planClick.emit(detail);
-    }
-  };
-
   updateRegionFromPlan = (newPlan: Catalog.ExpandedPlan) => {
     // If region already set and changing plans, keep it
     if (!newPlan.body.regions.includes(this.regionId)) {
@@ -282,17 +246,7 @@ export class ManifoldPlanDetails {
                 allFeatures={expanded_features}
                 selectedFeatures={this.features}
               />
-              {this.hideCta !== true && (
-                <manifold-link-button
-                  onClick={this.onClick}
-                  href={this.ctaLink}
-                  rel={this.ctaLink && 'noopener noreferrer'}
-                  target={this.ctaLink && '_blank'}
-                >
-                  Get {planName}
-                  <manifold-icon icon={arrow_right} marginLeft />
-                </manifold-link-button>
-              )}
+              <slot name="cta" />
             </footer>
           </div>
         </section>

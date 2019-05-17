@@ -12,51 +12,49 @@ const productWithoutScreenshots: Catalog.Product = {
 };
 
 describe(`<manifold-product-details>`, () => {
-  describe('static features', () => {
-    it('displays product tagline', async () => {
-      const page = await newE2EPage({ html: `<manifold-product-details />` });
-      await page.$eval(
-        'manifold-product-details',
-        (elm: any, props: any) => {
-          elm.product = props.product;
-        },
-        { product: Product }
-      );
-      await page.waitForChanges();
+  it('displays product tagline', async () => {
+    const page = await newE2EPage({ html: `<manifold-product-details />` });
+    await page.$eval(
+      'manifold-product-details',
+      (elm: any, props: any) => {
+        elm.product = props.product;
+      },
+      { product: Product }
+    );
+    await page.waitForChanges();
 
-      const element = await page.find('manifold-product-details >>> .tagline');
-      const value = await element.innerText;
-      expect(value).toBe(Product.body.tagline);
-    });
+    const element = await page.find('manifold-product-details >>> .tagline');
+    const value = await element.innerText;
+    expect(value).toBe(Product.body.tagline);
+  });
 
-    it('display screenshots section when there are no images', async () => {
-      const page = await newE2EPage({ html: `<manifold-product-details />` });
-      await page.$eval(
-        'manifold-product-details',
-        (elm: any, props: any) => {
-          elm.product = props.product;
-        },
-        { product: Product }
-      );
-      await page.waitForChanges();
+  it('display screenshots section when there are no images', async () => {
+    const page = await newE2EPage({ html: `<manifold-product-details />` });
+    await page.$eval(
+      'manifold-product-details',
+      (elm: any, props: any) => {
+        elm.product = props.product;
+      },
+      { product: Product }
+    );
+    await page.waitForChanges();
 
-      const element = await page.findAll('manifold-product-details >>> manifold-image-gallery');
-      expect(element.length).toBe(1);
-    });
+    const element = await page.findAll('manifold-product-details >>> manifold-image-gallery');
+    expect(element.length).toBe(1);
+  });
 
-    it('does NOT display screenshots section when there are no images', async () => {
-      const page = await newE2EPage({ html: `<manifold-product-details />` });
-      await page.$eval(
-        'manifold-product-details',
-        (elm: any, props: any) => {
-          elm.product = props.product;
-        },
-        { product: productWithoutScreenshots }
-      );
-      await page.waitForChanges();
+  it('does NOT display screenshots section when there are no images', async () => {
+    const page = await newE2EPage({ html: `<manifold-product-details />` });
+    await page.$eval(
+      'manifold-product-details',
+      (elm: any, props: any) => {
+        elm.product = props.product;
+      },
+      { product: productWithoutScreenshots }
+    );
+    await page.waitForChanges();
 
-      const element = await page.findAll('manifold-product-details >>> manifold-image-gallery');
-      expect(element.length).toBe(0);
-    });
+    const element = await page.findAll('manifold-product-details >>> manifold-image-gallery');
+    expect(element.length).toBe(0);
   });
 });

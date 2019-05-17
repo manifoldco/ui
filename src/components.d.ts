@@ -19,21 +19,15 @@ import {
 export namespace Components {
 
   interface ManifoldActivePlan {
-    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
-    'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
-    'preserveEvent': boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldActivePlanAttributes extends StencilHTMLAttributes {
-    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
-    'linkFormat'?: string;
     'plans'?: Catalog.ExpandedPlan[];
-    'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
@@ -247,6 +241,9 @@ export namespace Components {
     'preserveEvent'?: boolean;
   }
 
+  interface ManifoldForwardSlot {}
+  interface ManifoldForwardSlotAttributes extends StencilHTMLAttributes {}
+
   interface ManifoldIcon {
     /**
     * a CSS variable starting with `--manifold-c-*`
@@ -451,25 +448,18 @@ export namespace Components {
   }
 
   interface ManifoldPlanDetails {
-    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
-    'linkFormat'?: string;
     'plan'?: Catalog.ExpandedPlan;
-    'preserveEvent': boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
   }
   interface ManifoldPlanDetailsAttributes extends StencilHTMLAttributes {
-    'hideCta'?: boolean;
     'isExistingResource'?: boolean;
-    'linkFormat'?: string;
     'onManifold-planSelector-change'?: (event: CustomEvent) => void;
-    'onManifold-planSelector-click'?: (event: CustomEvent) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent) => void;
     'plan'?: Catalog.ExpandedPlan;
-    'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
@@ -493,18 +483,6 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * _(optional)_ Hide CTA?
-    */
-    'hideCta'?: boolean;
-    /**
-    * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
-    */
-    'linkFormat'?: string;
-    /**
-    * Should the JS event still fire, even if link-format is passed?
-    */
-    'preserveEvent': boolean;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -522,18 +500,6 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
-    /**
-    * _(optional)_ Hide CTA?
-    */
-    'hideCta'?: boolean;
-    /**
-    * _(optional)_ Link format structure, with `:product`, `:plan`, and `:features` placeholders
-    */
-    'linkFormat'?: string;
-    /**
-    * Should the JS event still fire, even if link-format is passed?
-    */
-    'preserveEvent'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -556,17 +522,10 @@ export namespace Components {
   }
 
   interface ManifoldProductPage {
-    'hideCta'?: boolean;
-    'linkFormat'?: string;
-    'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'provider'?: Catalog.Provider;
   }
   interface ManifoldProductPageAttributes extends StencilHTMLAttributes {
-    'hideCta'?: boolean;
-    'linkFormat'?: string;
-    'onManifold-productCTA-click'?: (event: CustomEvent) => void;
-    'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'provider'?: Catalog.Provider;
   }
@@ -579,15 +538,6 @@ export namespace Components {
     /**
     * _(optional)_ Hide the CTA on the left?
     */
-    'hideCta'?: boolean;
-    /**
-    * _(optional)_ Link format structure, with `:product` placeholder
-    */
-    'linkFormat'?: string;
-    /**
-    * Should the JS event still fire, even if link-format is passed?
-    */
-    'preserveEvent': boolean;
     'productLabel': string;
   }
   interface ManifoldProductAttributes extends StencilHTMLAttributes {
@@ -598,15 +548,6 @@ export namespace Components {
     /**
     * _(optional)_ Hide the CTA on the left?
     */
-    'hideCta'?: boolean;
-    /**
-    * _(optional)_ Link format structure, with `:product` placeholder
-    */
-    'linkFormat'?: string;
-    /**
-    * Should the JS event still fire, even if link-format is passed?
-    */
-    'preserveEvent'?: boolean;
     'productLabel'?: string;
   }
 
@@ -813,6 +754,7 @@ declare global {
     'ManifoldDataProductName': Components.ManifoldDataProductName;
     'ManifoldDataProvisionButton': Components.ManifoldDataProvisionButton;
     'ManifoldDataResourceList': Components.ManifoldDataResourceList;
+    'ManifoldForwardSlot': Components.ManifoldForwardSlot;
     'ManifoldIcon': Components.ManifoldIcon;
     'ManifoldImageGallery': Components.ManifoldImageGallery;
     'ManifoldLazyImage': Components.ManifoldLazyImage;
@@ -851,6 +793,7 @@ declare global {
     'manifold-data-product-name': Components.ManifoldDataProductNameAttributes;
     'manifold-data-provision-button': Components.ManifoldDataProvisionButtonAttributes;
     'manifold-data-resource-list': Components.ManifoldDataResourceListAttributes;
+    'manifold-forward-slot': Components.ManifoldForwardSlotAttributes;
     'manifold-icon': Components.ManifoldIconAttributes;
     'manifold-image-gallery': Components.ManifoldImageGalleryAttributes;
     'manifold-lazy-image': Components.ManifoldLazyImageAttributes;
@@ -932,6 +875,12 @@ declare global {
   var HTMLManifoldDataResourceListElement: {
     prototype: HTMLManifoldDataResourceListElement;
     new (): HTMLManifoldDataResourceListElement;
+  };
+
+  interface HTMLManifoldForwardSlotElement extends Components.ManifoldForwardSlot, HTMLStencilElement {}
+  var HTMLManifoldForwardSlotElement: {
+    prototype: HTMLManifoldForwardSlotElement;
+    new (): HTMLManifoldForwardSlotElement;
   };
 
   interface HTMLManifoldIconElement extends Components.ManifoldIcon, HTMLStencilElement {}
@@ -1100,6 +1049,7 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement
+    'manifold-forward-slot': HTMLManifoldForwardSlotElement
     'manifold-icon': HTMLManifoldIconElement
     'manifold-image-gallery': HTMLManifoldImageGalleryElement
     'manifold-lazy-image': HTMLManifoldLazyImageElement
@@ -1138,6 +1088,7 @@ declare global {
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
+    'manifold-forward-slot': HTMLManifoldForwardSlotElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-lazy-image': HTMLManifoldLazyImageElement;

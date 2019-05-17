@@ -3,6 +3,7 @@ title: Plan Selector
 path: /components/plan-selector
 example: |
   <manifold-plan-selector product-label="jawsdb-mysql">
+    <manifold-link-button slot="cta">Get JawsDB MySQL</manifold-link-button>
   </manifold-plan-selector>
 ---
 
@@ -16,6 +17,20 @@ Display the plans for a product.
 
 You can find the `:product` label for each at
 `https://manifold.co/services/:product`.
+
+## CTA
+
+You can pass in your own button or link in the bottom-right of the component
+by passing in any element with `slot="cta"` as an attribute. [Read more about
+slots][slot].
+
+```jsx
+<manifold-plan-selector product-label="jawsdb-mysql">
+  <MyButton onClick={() => myAction()} slot="cta">
+    Get JawsDB MySQL
+  </MyButton>
+</manifold-plan-selector>
+```
 
 ## Events
 
@@ -37,36 +52,6 @@ The following events are emitted:
 | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
 | `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
 | `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
-| `manifold-planSelector-click`  | If the CTA is showing (see `hide-cta` below), this will fire when clicked.                                                 | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
-
-## Navigation
-
-By default, the CTA bottom-right will fire the `manifold-planSelector-click`
-event (above). But it can also be turned into an `<a>` tag by specifying
-`link-format`:
-
-```html
-<manifold-plan-selector
-  product-label="aiven-redis"
-  link-format="/create/:product/?plan=:plan&:features"
-/>
-<!-- <a href="/product/aiven-redis?plan=startup-4&cpus=1"> -->
-```
-
-`:plan`, `:product`, and `:features` (for customizable plans) will all be
-replaced with url-friendly slugs for each. In most cases, these are all
-passable to [**data components**](#data-components).
-
-Note that this will disable the custom events unless `preserve-event` is
-passed as well.
-
-## Hiding CTA
-
-If you would like to hide the CTA altogether, specify `hide-cta`:
-
-```html
-<manifold-plan-selector product-label="till" hide-cta />
-```
 
 ## Regions
 
@@ -123,3 +108,5 @@ same order).
 | `gcp-us-west-1`      | Google Cloud - US West 1                   |
 | `gcp-us-west-2`      | Google Cloud - US West 2                   |
 | `rs-dallas-1`        | Rackspace - Dallas 1                       |
+
+[slot]: https://stenciljs.com/docs/templating-jsx/
