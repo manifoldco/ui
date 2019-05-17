@@ -3,6 +3,10 @@ import markdown from '../docs/docs/components/manifold-plan-selector.md';
 
 storiesOf('Plan Selector', module)
   .addParameters({ readme: { sidebar: markdown } })
+  .add(
+    'Blitline',
+    () => '<manifold-plan-selector product-label="blitline"></manifold-plan-selector>'
+  )
   .add('LogDNA', () => '<manifold-plan-selector product-label="logdna"></manifold-plan-selector>')
   .add('Mailgun', () => '<manifold-plan-selector product-label="mailgun"></manifold-plan-selector>')
   .add(
