@@ -15,7 +15,7 @@ module.exports = ({ config }) => {
   }
 
   // 2. Load JS & CSS from our components
-  config.entry.push(resolve(__dirname, '..', 'dist', 'manifold', 'manifold.js'));
+  config.entry.push(resolve(__dirname, '..', 'dist', 'manifold', 'manifold.esm.js'));
   config.entry.push(resolve(__dirname, '..', 'dist', 'manifold', 'manifold.css'));
 
   const components = resolve(__dirname, '..', 'dist', 'collection', 'components');
