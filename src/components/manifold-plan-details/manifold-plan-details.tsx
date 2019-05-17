@@ -246,7 +246,7 @@ export class ManifoldPlanDetails {
                 allFeatures={expanded_features}
                 selectedFeatures={this.features}
               />
-              <slot />
+              <slot name="cta" />
             </footer>
           </div>
         </section>

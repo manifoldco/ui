@@ -54,7 +54,9 @@ export class ManifoldActivePlan {
         resourceFeatures={this.selectedResource && this.selectedResource.features}
         resourceRegion={resourceRegion}
       >
-        <slot />
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
       </manifold-plan-details>,
     ];
   }

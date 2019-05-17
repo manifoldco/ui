@@ -81,7 +81,9 @@ export class ManifoldPlanSelector {
         regions={this.parsedRegions}
         selectedResource={this.resource}
       >
-        <slot />
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
       </manifold-active-plan>
     );
   }

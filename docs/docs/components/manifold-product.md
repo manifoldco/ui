@@ -3,7 +3,7 @@ title: Product
 path: /components/product
 example: |
   <manifold-product product-label="jawsdb-mysql">
-    <manifold-link-button>Get JawsDB MySQL</manifold-link-button>
+    <manifold-link-button slot="cta">Get JawsDB MySQL</manifold-link-button>
   </manifold-product>
 ---
 
@@ -22,11 +22,12 @@ You can find the `:product` label for each at `https://manifold.co/services/:pro
 ## CTA
 
 You can pass in your own button or link in the bottom-right of the component
-by passing in a [slot][slot] (child component):
+by passing in any element with `slot="cta"` as an attribute. [Read more about
+slots][slot].
 
 ```html
 <manifold-plan-selector product-label="jawsdb-mysql">
-  <a href="/services/jawsdb-mysql">Get JawsDB MySQL</a>
+  <a href="/services/jawsdb-mysql" slot="cta">Get JawsDB MySQL</a>
 </manifold-plan-selector>
 ```
 

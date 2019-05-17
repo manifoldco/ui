@@ -3,7 +3,7 @@ title: Plan Selector
 path: /components/plan-selector
 example: |
   <manifold-plan-selector product-label="jawsdb-mysql">
-    <manifold-link-button>Get JawsDB MySQL</manifold-link-button>
+    <manifold-link-button slot="cta">Get JawsDB MySQL</manifold-link-button>
   </manifold-plan-selector>
 ---
 
@@ -21,11 +21,14 @@ You can find the `:product` label for each at
 ## CTA
 
 You can pass in your own button or link in the bottom-right of the component
-by passing in a [slot][slot] (child component):
+by passing in any element with `slot="cta"` as an attribute. [Read more about
+slots][slot].
 
 ```jsx
 <manifold-plan-selector product-label="jawsdb-mysql">
-  <MyButton onClick={() => myAction()}>Get JawsDB MySQL</MyButton>
+  <MyButton onClick={() => myAction()} slot="cta">
+    Get JawsDB MySQL
+  </MyButton>
 </manifold-plan-selector>
 ```
 
