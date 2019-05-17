@@ -3,6 +3,7 @@ node_js:
   - 11.9.0
 cache: npm
 before_install:
+  - cd docs && npm i && cd ..
   - echo "//registry.npmjs.org/:_authToken=$(npx @manifoldco/cli export -t manifold
     -p manifold-ui-ci | grep NPM_TOKEN | cut -f2 -d "=")" >> ~/.npmrc
 stages:
