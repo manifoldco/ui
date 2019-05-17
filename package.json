@@ -29,7 +29,7 @@
     "build": "npm run build:docs && cd docs && npm run build",
     "build:docs": "rm -rf docs/node_modules/@manifoldco/ui && mkdir docs/node_modules/@manifoldco/ui && cp package.json docs/node_modules/@manifoldco/ui && stencil build && cp -r dist docs/node_modules/@manifoldco/ui",
     "build-storybook": "build-storybook && cp -r dist/manifold storybook-static",
-    "dev": "concurrently 'stencil build --dev --watch' 'wait-on dist/manifold/manifold.esm.js && npm run storybook'",
+    "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && npm run storybook'",
     "docs": "npm run build:docs && cd docs && npm start",
     "generate:specs": "npm run generate:specs:billing && npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace",
     "generate:specs:billing": "npx @manifoldco/swagger-to-ts src/spec/billing/v1.yaml -o src/types/billing.ts -n Billing",
@@ -66,7 +66,6 @@
     "@typescript-eslint/parser": "^1.8.0",
     "babel-loader": "^8.0.5",
     "concurrently": "^4.1.0",
-    "copy-webpack-plugin": "^5.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.2.0",
@@ -89,6 +88,6 @@
     "stylelint-config-standard": "^18.3.0",
     "ts-loader": "^6.0.0",
     "wait-on": "^3.2.0",
-    "webpack": "^4.28.4"
+    "webpack": "^4.31.0"
   }
 }

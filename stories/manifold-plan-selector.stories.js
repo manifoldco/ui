@@ -22,10 +22,6 @@ storiesOf('Plan Selector', module)
     () => '<manifold-plan-selector product-label="prefab"></manifold-plan-selector>'
   )
   .add(
-    'Ximilar Image Recognition',
-    () => '<manifold-plan-selector product-label="custom-recognition"></manifold-plan-selector>'
-  )
-  .add(
     'Ximilar Tagging',
     () => '<manifold-plan-selector product-label="generic-tagging"></manifold-plan-selector>'
   )
