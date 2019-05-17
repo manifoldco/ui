@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { h, Component, Element, Prop } from '@stencil/core';
 
 @Component({
   tag: 'manifold-icon',
@@ -8,7 +8,6 @@ import { Component, Element, Prop } from '@stencil/core';
 export class ManifoldIcon {
   @Prop() marginRight: boolean = false;
   @Prop() marginLeft: boolean = false;
-  @Prop() title: string;
   /** The icon ID */
   @Prop() icon: string;
   /** a CSS variable starting with `--manifold-g-*` */
@@ -45,15 +44,17 @@ export class ManifoldIcon {
         margin-left={this.marginLeft}
         viewBox="0 0 1024 1024"
         xmlns="http://www.w3.org/2000/svg"
-        xmlnsX="http://www.w3.org/1999/xlink"
+        xmlns-x="http://www.w3.org/1999/xlink"
       >
-        {this.title && <title>{this.title}</title>}
+        <title>
+          <slot />
+        </title>
         {this.gradient ? (
           [
             <defs>
               <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id={this.gradientID}>
                 {this.stopColors.map(({ color, offset }) => (
-                  <stop key={offset} style={{ stopColor: color, stopOpacity: 1 }} offset={offset} />
+                  <stop style={{ stopColor: color, stopOpacity: '1' }} offset={offset} />
                 ))}
               </linearGradient>
             </defs>,

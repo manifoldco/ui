@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import skeletonProduct from '../../data/product';
 
 @Component({
@@ -28,7 +28,9 @@ export class ManifoldProductDetails {
               </li>
             ))}
           </ul>
-          {images.length > 0 && <manifold-image-gallery title="Screenshots" images={images} />}
+          {images.length > 0 && (
+            <manifold-image-gallery images={images}>Screenshots</manifold-image-gallery>
+          )}
         </div>
       );
     }

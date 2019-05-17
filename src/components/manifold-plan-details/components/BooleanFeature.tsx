@@ -1,4 +1,4 @@
-import { FunctionalComponent } from '@stencil/core';
+import { h, FunctionalComponent } from '@stencil/core';
 import { check } from '@manifoldco/icons';
 import { booleanFeatureDisplayValue, booleanFeatureDefaultValue } from '../../../utils/plan';
 import { LockedFeature } from './LockedFeature';

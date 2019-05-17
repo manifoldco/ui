@@ -5,7 +5,7 @@ path: /theming
 
 # Theming
 
-Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of components. 
+Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of components.
 
 <manifold-toast alert-type="warning">
   Theming is still a work-in-progress. This documentation may not be entirely accurate.
@@ -24,7 +24,7 @@ Manifold UI comes with a base theme that provides various levels of abstraction.
 We reccomend that you use this base theme as a starting point for building your own custom theme. To add the base theme to your project:
 
 ```js
-import '@manifoldco/ui/dist/manifold.css';
+import '@manifoldco/ui/dist/manifold/manifold.css';
 ```
 
 ### Global Theming
@@ -49,7 +49,7 @@ These variables should also be set after the base theme import, because overridi
 
 ### Component Theming [Coming Soon]
 
-Component theming allows fine-tuning of theme values on a component level. Each component has its own set of variables that inherit from the global theme. Overriding a component's theme variables can be done by defining variables on the component's element selector. 
+Component theming allows fine-tuning of theme values on a component level. Each component has its own set of variables that inherit from the global theme. Overriding a component's theme variables can be done by defining variables on the component's element selector.
 
 <!--
 Global theme variables are prefixed with `--manifold-*` to avoid potential name collisions, while internal component variables are not prefixed.
@@ -64,11 +64,10 @@ manifold-marketplace {
 }
 ``` -->
 
-
 ### Grayscales & Dark Theming
 
 | Name                                 | Default         | Description                                        |
-|--------------------------------------|-----------------|----------------------------------------------------|
+| ------------------------------------ | --------------- | -------------------------------------------------- |
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
@@ -99,36 +98,37 @@ By default, `--manifold-grayscale-[opacity]` values range from solid black down 
 There are four theming levels:
 
 | Level       | Name              | Description                                                          |
-|-------------|-------------------|----------------------------------------------------------------------|
+| ----------- | ----------------- | -------------------------------------------------------------------- |
 | 1 (highest) | Base              | The base theme provided by Manifold UI                               |
 | 2           | Top-level         | Your custom theme and branding                                       |
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
 | 4 (lowest)  | Unique Components | Specific use components like Marketplace, Plan Selector, and Product |
 
-Each level recieves its default values from the level above. Redefining a lower level value will override the value from the higher level. 
+Each level recieves its default values from the level above. Redefining a lower level value will override the value from the higher level.
 
 For example, the CTA button background in the Plan Selector component is customizable with one the following properties:
 
 ```css
 :root {
-  /* Base: the default primary color is applied and the button is blue 
+  /* Base: the default primary color is applied and the button is blue
   (along with other elements that use the primary color). */
   --manifold-color-primary: blue; /* imported from Manifold UI */
 
-  /* Top-level: overrides primary color from the Base and turns the button 
+  /* Top-level: overrides primary color from the Base and turns the button
   red (along with other elements that use the primary color). */
   --manifold-color-primary: red;
 
-  /* Common Component: overrides the primary color from the Top-Level and 
+  /* Common Component: overrides the primary color from the Top-Level and
   turns the button green (along with all other buttons). */
   --manifold-button-background: green;
 
-  /* Unique Component: overrides the button background from the Common 
+  /* Unique Component: overrides the button background from the Common
   Component and turns the button orange (no other elements are affected) */
   --manifold-plan-selector-cta-background: orange;
 }
 ```
-<!-- 
+
+<!--
 Text styles follow a similar hierarchy:
 
 ```css
@@ -139,11 +139,11 @@ Text styles follow a similar hierarchy:
   /* Top-level: your theme's text color applied to all generic text. */
   --manifold-text-color: #444;
 
-  /* Common Text: Text color applied to all level 1 headings (overrides 
+  /* Common Text: Text color applied to all level 1 headings (overrides
   top-level text color). */
   --manifold-heading-1-text-color: #666;
 
-  /* Unique Text: Text color applied to category headings in the 
+  /* Unique Text: Text color applied to category headings in the
   Marketplace component (overrides common text text color). */
   --manifold-marketplace-category-heading-text-color: #888;
 }
@@ -162,14 +162,14 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 ### Grayscale
 
 | Name                                 | Default         | Description                                        |
-|--------------------------------------|-----------------|----------------------------------------------------|
+| ------------------------------------ | --------------- | -------------------------------------------------- |
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
 ### Top Level Properties
 
 | Name                               | Default                                   | Description                                         |
-|------------------------------------|-------------------------------------------|-----------------------------------------------------|
+| ---------------------------------- | ----------------------------------------- | --------------------------------------------------- |
 | `--manifold-background`            | `white`                                   | Default background color                            |
 | `--manifold-color-primary`         | `rgb(30, 80, 218)`                        | Primary color                                       |
 | `--manifold-color-secondary`       | `rgb(15, 181, 208)`                       | Secondary color                                     |
@@ -185,13 +185,12 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 | `--manifold-border-active`         | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 | `--manifold-border-focus`          | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 
-
 ### Common Component Properties
 
 #### Text
 
 | Name                              | Default                          | Description                                                |
-|-----------------------------------|----------------------------------|------------------------------------------------------------|
+| --------------------------------- | -------------------------------- | ---------------------------------------------------------- |
 | `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color                                       |
 | `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color                                            |
 | `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color (overlays on `--manifold-color-primary`) |
@@ -199,7 +198,7 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 #### Cards
 
 | Name                                | Default                           | Description       |
-|-------------------------------------|-----------------------------------|-------------------|
+| ----------------------------------- | --------------------------------- | ----------------- |
 | `--manifold-card-background`        | `var(--manifold-grayscale-100i)`  | Background        |
 | `--manifold-card-border`            | `var(--manifold-border)`          | Border            |
 | `--manifold-card-radius`            | `var(--manifold-radius)`          | Corner radius     |

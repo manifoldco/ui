@@ -1,4 +1,4 @@
-import { Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';

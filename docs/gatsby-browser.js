@@ -5,4 +5,4 @@
  */
 
 // Loads base theme before styled-components tag in head.
-import '@manifoldco/ui/dist/manifold.css';
+import '@manifoldco/ui/dist/manifold/manifold.css';

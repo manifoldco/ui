@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { h, JSX, Component, Element, Prop } from '@stencil/core';
 import { $ } from '../../utils/currency';
 import { numberFeatureMeasurableDisplayValue } from '../../utils/plan';
 

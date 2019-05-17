@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State } from '@stencil/core';
+import { h, Component, Element, Prop, State, Host } from '@stencil/core';
 import { alert_triangle, check_circle, bell, slash, x } from '@manifoldco/icons';
 import observeRect, { Observer } from '@reach/observe-rect';
 
@@ -50,14 +50,6 @@ export class ManifoldToast {
     if (this.lastHeight !== px) this.lastHeight = px;
   }
 
-  hostData() {
-    // Set CSS variable on host, accessible to the entire stylesheet
-    if (!this.dismissable) return {};
-    return {
-      style: { '--height': this.lastHeight },
-    };
-  }
-
   get alertTypeIcon() {
     switch (this.alertType) {
       case 'success':
@@ -73,27 +65,29 @@ export class ManifoldToast {
 
   render() {
     return (
-      <p
-        role="alert"
-        class="toast"
-        data-alert-type={this.alertType}
-        data-dismissed={this.status === DISMISSED}
-      >
-        <div class="grid" data-dismissable={this.dismissable}>
-          {this.dismissable && (
-            <button
-              class="close"
-              type="button"
-              title="Dismiss"
-              onClick={() => this.handleDismiss()}
-            >
-              <manifold-icon icon={x} />
-            </button>
-          )}
-          <manifold-icon icon={this.icon || this.alertTypeIcon} />
-          <slot />
-        </div>
-      </p>
+      <Host style={{ '--height': this.dismissable ? this.lastHeight : undefined }}>
+        <p
+          role="alert"
+          class="toast"
+          data-alert-type={this.alertType}
+          data-dismissed={this.status === DISMISSED}
+        >
+          <div class="grid" data-dismissable={this.dismissable}>
+            {this.dismissable && (
+              <button
+                class="close"
+                type="button"
+                title="Dismiss"
+                onClick={() => this.handleDismiss()}
+              >
+                <manifold-icon icon={x} />
+              </button>
+            )}
+            <manifold-icon icon={this.icon || this.alertTypeIcon} />
+            <slot />
+          </div>
+        </p>
+      </Host>
     );
   }
 }

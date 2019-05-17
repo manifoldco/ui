@@ -15,18 +15,11 @@ module.exports = ({ config }) => {
   }
 
   // 2. Load JS & CSS from our components
-  config.entry.push(resolve(__dirname, '..', 'dist', 'manifold.js'));
-  config.entry.push(resolve(__dirname, '..', 'dist', 'manifold.css'));
+  config.entry.push(resolve(__dirname, '..', 'dist', 'manifold', 'manifold.js'));
+  config.entry.push(resolve(__dirname, '..', 'dist', 'manifold', 'manifold.css'));
 
   const components = resolve(__dirname, '..', 'dist', 'collection', 'components');
   readdirSync(components).map(file => {
-    jsFilePath = resolve(components, file, `${file}.js`);
-    try {
-      if (existsSync(jsFilePath)) config.entry.push(jsFilePath);
-    } catch (err) {
-      console.error(err);
-    }
-
     cssFilePath = resolve(components, file, `${file}.css`);
     try {
       if (existsSync(cssFilePath)) config.entry.push(cssFilePath);

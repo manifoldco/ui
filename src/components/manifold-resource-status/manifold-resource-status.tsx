@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
 
 import Tunnel from '../../data/connection';

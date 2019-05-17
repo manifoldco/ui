@@ -1,4 +1,4 @@
-import { Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
 import { Option } from 'types/Select';
 
 import Tunnel from '../../data/connection';

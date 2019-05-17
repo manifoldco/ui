@@ -26,7 +26,7 @@ modern framework like React, Vue, or Angular.
   <link
     rel="stylesheet"
     type="text/css"
-    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold/manifold.css"
   />
 </head>
 <body>
@@ -45,7 +45,7 @@ modern framework like React, Vue, or Angular.
   <link
     rel="stylesheet"
     type="text/css"
-    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold/manifold.css"
   />
 </head>
 <body>
@@ -59,7 +59,7 @@ modern framework like React, Vue, or Angular.
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import '@manifoldco/ui/dist/manifold.css';
+import '@manifoldco/ui/dist/manifold/manifold.css';
 import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 
 const App = () => <manifold-marketplace />;

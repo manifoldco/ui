@@ -1,4 +1,4 @@
-import { Component, State, Prop, Watch } from '@stencil/core';
+import { h, Component, State, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'manifold-active-plan',
