@@ -41,7 +41,7 @@ export class ManifoldProductPage {
                   </p>
                 </div>
                 <div class="sidebar-cta">
-                  <slot />
+                  <slot name="cta" />
                 </div>
                 {tags && (
                   <div class="sidebar-section">
