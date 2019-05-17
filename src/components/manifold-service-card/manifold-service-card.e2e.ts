@@ -25,8 +25,8 @@ describe('<manifold-service-card>', () => {
 
   it('displays logo', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card logo="${logo}" />` });
-    const el = await page.find('manifold-service-card >>> [itemprop="image"]');
-    const src = await el.getAttribute('src');
+    const el = await page.find('manifold-service-card >>> manifold-lazy-image');
+    const src = await el.getProperty('src');
     expect(src).toBe(logo);
   });
 
