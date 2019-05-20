@@ -9,10 +9,17 @@ log.txt
 *.sublime-project
 *.sublime-workspace
 .DS_Store
-.manifold.yml
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
+
+# Manifold
+.manifold.yml
+src/spec/billing
+src/spec/catalog
+src/spec/gateway
+src/spec/marketplace
+src/spec/provisioning
 
 # Stencil
 !www/favicon.ico
@@ -25,11 +32,6 @@ coverage/
 dist/
 node_modules/
 pkg/
-src/spec/billing
-src/spec/catalog
-src/spec/gateway
-src/spec/marketplace
-src/spec/provisioning
 www/
 $RECYCLE.BIN/
 
