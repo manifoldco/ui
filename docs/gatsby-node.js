@@ -26,3 +26,19 @@ exports.createPages = ({ actions, graphql }) => {
     });
   });
 };
+
+// Shim Stencil.js for export
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === 'build-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /@manifoldco\/ui/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    });
+  }
+};
