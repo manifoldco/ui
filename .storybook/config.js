@@ -1,5 +1,10 @@
 import { addDecorator, configure } from '@storybook/html';
+import { defineCustomElements } from '../dist/loader';
+import '../dist/manifold/manifold.css';
 import { addReadme } from 'storybook-readme/html';
+
+// Init web components
+defineCustomElements();
 
 // storybook-readme
 addDecorator(addReadme);

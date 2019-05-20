@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { eye, lock } from '@manifoldco/icons';
 
 import Tunnel from '../../data/connection';
@@ -63,7 +63,7 @@ export class ManifoldResourceCredentials {
   render() {
     return [
       <menu class="secrets-menu" data-showing={!!this.credentials}>
-        <manifold-link-button color="white" size="small" onClick={this.hideCredentials}>
+        <manifold-link-button color="white" size="small" onClickEvent={this.hideCredentials}>
           <manifold-icon marginRight icon={lock} />
           Hide credentials
         </manifold-link-button>

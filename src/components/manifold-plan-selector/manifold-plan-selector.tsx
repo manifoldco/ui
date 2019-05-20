@@ -1,4 +1,4 @@
-import { Component, State, Prop, Element, Watch } from '@stencil/core';
+import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';

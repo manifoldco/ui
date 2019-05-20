@@ -1,4 +1,4 @@
-import { Component, Prop, State, FunctionalComponent } from '@stencil/core';
+import { h, Component, Prop, State, FunctionalComponent } from '@stencil/core';
 
 interface ThumbnailProps {
   src: string;
@@ -20,7 +20,6 @@ const Thumbnail: FunctionalComponent<ThumbnailProps> = ({ isSelected, onClick, .
   shadow: true,
 })
 export class ImageGallery {
-  @Prop() title: string;
   @Prop() images?: string[];
   @State() selectedImage?: string;
 
@@ -34,7 +33,9 @@ export class ImageGallery {
 
       return (
         <div class="container">
-          <p class="heading">{this.title}</p>
+          <p class="heading">
+            <slot />
+          </p>
           <div class="image-large">
             <div class="large-inner">
               <img src={this.selectedImage || this.images[0]} alt="" data-test="display-image" />

@@ -1,18 +1,14 @@
 language: node_js
 node_js:
-  - 11.9.0
+  - 12.2.0
 cache: npm
 before_install:
-  - echo "//registry.npmjs.org/:_authToken=$(npx @manifoldco/cli export -t manifold
-    -p manifold-ui-ci | grep NPM_TOKEN | cut -f2 -d "=")" >> ~/.npmrc
+  - echo "//registry.npmjs.org/:_authToken=$(npx @manifoldco/cli export -t manifold -p manifold-ui-ci | grep NPM_TOKEN | cut -f2 -d "=")" >> ~/.npmrc
 stages:
   - test
   - publish
 jobs:
   include:
-    - stage: test
-      name: "\U0001F4D0 Profile bundle"
-      script: npm run profile
     - stage: test
       name: "\U0001F9F9 Run linters"
       script: npm run lint

@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element } from '@stencil/core';
+import { h, Component, Prop, State, Element } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
@@ -28,14 +28,17 @@ export class ManifoldMarketplace {
   @State() parsedProducts: string[] = [];
   @State() services: Catalog.Product[] = [];
 
-  async componentWillLoad() {
+  componentWillLoad() {
     this.parseProps();
+    this.fetchProducts();
+  }
 
+  fetchProducts = async () => {
     const response = await fetch(`${this.connection.catalog}/products`, withAuth());
     const products: Catalog.ExpandedProduct[] = await response.json();
     // Alphabetize once, then don’t worry about it
     this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
-  }
+  };
 
   private parse(list: string): string[] {
     return list.split(',').map(item => item.trim());

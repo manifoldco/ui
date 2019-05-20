@@ -12,7 +12,6 @@
   color: transparent;
   font-size: 1em;
   line-height: 1.4em;
-  border-radius: 0.25em;
 
   &::before {
     position: absolute;
@@ -21,7 +20,7 @@
     bottom: 0;
     left: 0;
     background-image: linear-gradient(
-      var(--manifold-grayscale-0),
+      var(--manifold-grayscale-10),
       var(--manifold-grayscale-10) 1em,
       var(--manifold-grayscale-0) 1em,
       var(--manifold-grayscale-0) 1.4em

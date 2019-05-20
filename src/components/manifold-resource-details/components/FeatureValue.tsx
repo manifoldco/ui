@@ -1,4 +1,4 @@
-import { FunctionalComponent } from '@stencil/core';
+import { h, FunctionalComponent } from '@stencil/core';
 
 import { CustomFeature } from './CustomFeature';
 import { MeasurableFeatureUsageDisplay } from './MeasurableFeatureUsageDisplay';

@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State, Watch } from '@stencil/core';
+import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { Connection, connections } from '../../utils/connections';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';

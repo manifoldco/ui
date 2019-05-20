@@ -1,4 +1,4 @@
-import { FunctionalComponent } from '@stencil/core';
+import { h, FunctionalComponent } from '@stencil/core';
 import { BooleanFeature } from './BooleanFeature';
 import { StringFeature } from './StringFeature';
 import { NumberFeature } from './NumberFeature';

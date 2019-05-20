@@ -1,4 +1,4 @@
-import { Component, Prop, FunctionalComponent } from '@stencil/core';
+import { h, Component, Prop, FunctionalComponent } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 
 const PlanButton: FunctionalComponent<{

@@ -19,14 +19,17 @@
   ],
   "main": "dist/index.js",
   "esnext": "dist/esm",
-  "module": "dist/esm/es5/index.js",
+  "module": "dist/index.mjs",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "jsnext:main": "dist/esm/index.mjs",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "npm run build:docs && cd docs && npm run build",
     "build:docs": "rm -rf docs/node_modules/@manifoldco/ui && mkdir docs/node_modules/@manifoldco/ui && cp package.json docs/node_modules/@manifoldco/ui && stencil build && cp -r dist docs/node_modules/@manifoldco/ui",
     "build-storybook": "build-storybook && cp -r dist/manifold storybook-static",
-    "dev": "concurrently 'stencil build --dev --watch' 'wait-on dist/index.js && npm run storybook'",
+    "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && npm run storybook'",
     "docs": "npm run build:docs && cd docs && npm start",
     "generate:specs": "npm run generate:specs:billing && npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace",
     "generate:specs:billing": "npx @manifoldco/swagger-to-ts src/spec/billing/v1.yaml -o src/types/billing.ts -n Billing",
@@ -38,7 +41,6 @@
     "lint": "npm run lint:js && npm run lint:css && cd docs && npm run lint",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
-    "profile": "stencil build && npx bundlesize",
     "postinstall": "cd docs && npm i",
     "prepare": "stencil build",
     "publish": "node scripts/publish",
@@ -50,28 +52,20 @@
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll"
   },
-  "bundlesize": [
-    {
-      "path": "./dist/esm/es2017/manifold.*.js",
-      "compression": "none",
-      "maxSize": "17 KB"
-    }
-  ],
   "dependencies": {},
   "devDependencies": {
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
-    "@stencil/core": "^0.18.0",
+    "@stencil/core": "^1.0.0-beta.0",
     "@stencil/postcss": "^0.1.0",
-    "@stencil/state-tunnel": "0.0.8",
+    "@stencil/state-tunnel": "^1.0.0-1",
     "@storybook/html": "^5.0.11",
     "@types/jest": "^23.3.14",
-    "@types/puppeteer": "^1.11.2",
+    "@types/puppeteer": "1.12.4",
     "@typescript-eslint/eslint-plugin": "^1.8.0",
     "@typescript-eslint/parser": "^1.8.0",
     "babel-loader": "^8.0.5",
     "concurrently": "^4.1.0",
-    "copy-webpack-plugin": "^5.0.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.2.0",
@@ -86,7 +80,7 @@
     "jest-cli": "23.6.0",
     "postcss-preset-env": "^6.6.0",
     "prettier": "^1.17.0",
-    "puppeteer": "1.11.0",
+    "puppeteer": "1.14.0",
     "storybook-readme": "^5.0.4-alpha.2",
     "stylelint": "^10.0.1",
     "stylelint-config-prettier": "^5.1.0",
@@ -94,6 +88,6 @@
     "stylelint-config-standard": "^18.3.0",
     "ts-loader": "^6.0.0",
     "wait-on": "^3.2.0",
-    "webpack": "^4.28.4"
+    "webpack": "^4.31.0"
   }
 }

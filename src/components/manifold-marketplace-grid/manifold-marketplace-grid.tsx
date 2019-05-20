@@ -1,4 +1,4 @@
-import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import skeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
 import {

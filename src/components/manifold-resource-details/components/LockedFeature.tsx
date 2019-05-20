@@ -1,4 +1,4 @@
-import { FunctionalComponent } from '@stencil/core';
+import { h, FunctionalComponent } from '@stencil/core';
 import { lock } from '@manifoldco/icons';
 
 interface LockedFeatureProps {

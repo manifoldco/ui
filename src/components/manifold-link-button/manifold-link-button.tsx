@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'manifold-link-button',
@@ -8,7 +8,7 @@ import { Component, Prop } from '@stencil/core';
 export class LinkButton {
   @Prop() color?: 'black' | 'white';
   @Prop() href?: string;
-  @Prop() onClick?: (e: Event) => void;
+  @Prop() onClickEvent?: (e: Event) => void;
   @Prop() rel?: string;
   @Prop() size?: 'small';
   @Prop() target?: string;
@@ -18,7 +18,7 @@ export class LinkButton {
       <a
         href={this.href}
         rel={this.rel}
-        onClick={this.onClick}
+        onClick={this.onClickEvent}
         target={this.target}
         data-color={this.color}
         data-size={this.size}

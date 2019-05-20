@@ -1,4 +1,4 @@
-import { FunctionalComponent } from '@stencil/core';
+import { h, FunctionalComponent } from '@stencil/core';
 import { LockedFeature } from './LockedFeature';
 import { stringFeatureOptions } from '../../../utils/plan';
 
