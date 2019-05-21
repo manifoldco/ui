@@ -3,6 +3,33 @@ title: Theming
 path: /theming
 ---
 
+<style>
+  .tag::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: 700;
+    height: 1.5em;
+    width: 1.5em;
+    border-radius: 50%;
+    text-transform: uppercase;
+  }
+
+  .part-implemented::before {
+    background: var(--manifold-g-yellow);
+    content: 'P'
+  }
+
+  .not-implemented::before {
+    background: var(--manifold-g-red);
+    color: white;
+    content: 'N'
+  }
+
+  
+</style>
+
 # Theming
 
 Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of components.
@@ -10,6 +37,9 @@ Manifold UI offers a simple, yet versitle, theming API for customizing the look 
 <manifold-toast alert-type="warning">
   Theming is still a work-in-progress. This documentation may not be entirely accurate.
 </manifold-toast>
+
+<span class="tag part-implemented" /> = Partially Implemented <br />
+<span class="tag not-implemented" /> = Not Implemented
 
 ## Concepts
 
@@ -168,21 +198,21 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 ### Top Level Properties
 
-| Name                                         | Default                                   | Description                                         |
-| -------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
-| `--manifold-color-primary`                   | `rgb(30, 80, 218)`                        | Primary color                                       |
-| `--manifold-color-secondary`                 | `rgb(15, 181, 208)`                       | Secondary color                                     |
-| `--manifold-color-info`                      | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
-| `--manifold-color-success`                   | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
-| `--manifold-color-warn`                      | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
-| `--manifold-color-error`                     | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
-| `--manifold-font-family`                     | (System)                                  | Default text family                                 |
-| `--manifold-font-family-monospace`           | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
-| `--manifold-text-color`                      | `var(--manifold-grayscale-100)`           | Base text color                                     |
-| `--manifold-radius`                          | `4px`                                     | Default radius for buttons, tags, cards, textfields |
-| `--manifold-border`                          | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
-| [NOT IMPLEMENTED] `--manifold-border-active` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
-| [NOT IMPLEMENTED] `--manifold-border-focus`  | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| Name                                                            | Default                                   | Description                                         |
+| --------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| `--manifold-color-primary`                                      | `rgb(30, 80, 218)`                        | Primary color                                       |
+| `--manifold-color-secondary`                                    | `rgb(15, 181, 208)`                       | Secondary color                                     |
+| `--manifold-color-info`                                         | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
+| `--manifold-color-success`                                      | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
+| `--manifold-color-warn`                                         | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
+| `--manifold-color-error`                                        | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
+| `--manifold-font-family`                                        | (System)                                  | Default text family                                 |
+| `--manifold-font-family-monospace`                              | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
+| `--manifold-text-color`                                         | `var(--manifold-grayscale-100)`           | Base text color                                     |
+| `--manifold-radius`                                             | `4px`                                     | Default radius for buttons, tags, cards, textfields |
+| `--manifold-border`                                             | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
+| <span class="tag not-implemented" /> `--manifold-border-active` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| <span class="tag not-implemented" /> `--manifold-border-focus`  | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 
 ### Common Component Properties
 
@@ -190,87 +220,83 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 Text components are used thoughout most components.
 
-| Name                                               | Default                          | Description                                                                                              |
-| -------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `--manifold-text-color-secondary`                  | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
-| `--manifold-text-color-accent`                     | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
-| `--manifold-text-color-body`                       | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
-| [NOT IMPLEMENTED] `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
-| [NOT IMPLEMENTED] `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
-| [NOT IMPLEMENTED] `--manifold-text-weight-heading` | `700`                            | Weight for all headings                                                                                  |
-| [NOT IMPLEMENTED] `--manifold-font-size-h1`        | `--`                             | Level 1 heading font size.                                                                               |
-| [NOT IMPLEMENTED] `--manifold-font-size-h2`        | `--`                             | Level 2 heading font size.                                                                               |
-| [NOT IMPLEMENTED] `--manifold-font-size-h3`        | `--`                             | Level 3 heading font size.                                                                               |
-| [NOT IMPLEMENTED] `--manifold-font-size-h4`        | `--`                             | Level 4 heading font size.                                                                               |
+| Name                                                                  | Default                          | Description                                                                                              |
+| --------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `--manifold-text-color-secondary`                                     | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
+| `--manifold-text-color-accent`                                        | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
+| `--manifold-text-color-body`                                          | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
+| <span class="tag not-implemented" /> `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
+| <span class="tag not-implemented" /> `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
+| <span class="tag not-implemented" /> `--manifold-text-weight-heading` | `700`                            | Weight for all headings                                                                                  |
+| <span class="tag not-implemented" /> `--manifold-font-size-h1`        | `--`                             | Level 1 heading font size.                                                                               |
+| <span class="tag not-implemented" /> `--manifold-font-size-h2`        | `--`                             | Level 2 heading font size.                                                                               |
+| <span class="tag not-implemented" /> `--manifold-font-size-h3`        | `--`                             | Level 3 heading font size.                                                                               |
+| <span class="tag not-implemented" /> `--manifold-font-size-h4`        | `--`                             | Level 4 heading font size.                                                                               |
 
 #### Cards
 
 Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, plan details panel).
 
-| Name                                                  | Default                           | Description       |
-| ----------------------------------------------------- | --------------------------------- | ----------------- |
-| `--manifold-card-background`                          | `var(--manifold-grayscale-100i)`  | Background        |
-| `--manifold-card-border`                              | `var(--manifold-border)`          | Border            |
-| `--manifold-card-radius`                              | `var(--manifold-radius)`          | Corner radius     |
-| `--manifold-card-shadow`                              | `none`                            | Box shadow        |
-|                                                       |                                   |                   |
-| `--manifold-card-background-hover`                    | `var(--manifold-card-background)` | Hover background  |
-| `--manifold-card-border-hover`                        | `var(--manifold-card-border)`     | Hover border      |
-| `--manifold-card-shadow-hover`                        | `var(--manifold-card-shadow)`     | Box shadow        |
-|                                                       |                                   |                   |
-| `--manifold-card-background-active`                   | `var(--manifold-card-background)` | Active background |
-| `--manifold-card-border-active`                       | `var(--manifold-border-active)`   | Active border     |
-| [NOT IMPLEMENTED] `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
-
-#### Buttons
-
-TODO
+| Name                                                                     | Default                           | Description       |
+| ------------------------------------------------------------------------ | --------------------------------- | ----------------- |
+| `--manifold-card-background`                                             | `var(--manifold-grayscale-100i)`  | Background        |
+| `--manifold-card-border`                                                 | `var(--manifold-border)`          | Border            |
+| `--manifold-card-radius`                                                 | `var(--manifold-radius)`          | Corner radius     |
+| `--manifold-card-shadow`                                                 | `none`                            | Box shadow        |
+|                                                                          |                                   |                   |
+| `--manifold-card-background-hover`                                       | `var(--manifold-card-background)` | Hover background  |
+| `--manifold-card-border-hover`                                           | `var(--manifold-card-border)`     | Hover border      |
+| `--manifold-card-shadow-hover`                                           | `var(--manifold-card-shadow)`     | Box shadow        |
+|                                                                          |                                   |                   |
+| `--manifold-card-background-active`                                      | `var(--manifold-card-background)` | Active background |
+| `--manifold-card-border-active`                                          | `var(--manifold-border-active)`   | Active border     |
+| <span class="tag not-implemented" /> `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
 
 #### Input Fields
 
-| Name                                                   | Default                                  | Description      |
-| ------------------------------------------------------ | ---------------------------------------- | ---------------- |
-| [PART IMPLEMENTED] `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
-| [PART IMPLEMENTED] `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
-| [NOT IMPLEMENTED] `--manifold-input-radius`            | `var(--manifold-radius)`                 | Radius           |
-| [PART IMPLEMENTED] `--manifold-input-shadow`           | `none`                                   | Shadow           |
-|                                                        |                                          |                  |
-| [NOT IMPLEMENTED] `--manifold-input-background-hover`  | `var(--manifold-input-background)`       | Background:hover |
-| [NOT IMPLEMENTED] `--manifold-input-border-hover`      | `var(--manifold-input-border)`           | Background:hover |
-| [NOT IMPLEMENTED] `--manifold-input-shadow-hover`      | `var(--manifold-input-shadow)`           | Shadow:hover     |
-|                                                        |                                          |                  |
-| [PART IMPLEMENTED] `--manifold-input-background-focus` | `var(--manifold-input-background-hover)` | Background:focus |
-| [PART IMPLEMENTED] `--manifold-input-border-focus`     | `var(--manifold-input-border-hover)`     | Border:focus     |
-| [PART IMPLEMENTED] `--manifold-input-shadow-focus`     | `var(--manifold-input-shadow-hover)`     | Shadow:focus     |
+| Name                                                                      | Default                                  | Description      |
+| ------------------------------------------------------------------------- | ---------------------------------------- | ---------------- |
+| <span class="tag part-implemented" /> `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
+| <span class="tag part-implemented" /> `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
+| <span class="tag not-implemented" /> `--manifold-input-radius`            | `var(--manifold-radius)`                 | Radius           |
+| <span class="tag part-implemented" /> `--manifold-input-shadow`           | `none`                                   | Shadow           |
+|                                                                           |                                          |                  |
+| <span class="tag not-implemented" /> `--manifold-input-background-hover`  | `var(--manifold-input-background)`       | Background:hover |
+| <span class="tag not-implemented" /> `--manifold-input-border-hover`      | `var(--manifold-input-border)`           | Background:hover |
+| <span class="tag not-implemented" /> `--manifold-input-shadow-hover`      | `var(--manifold-input-shadow)`           | Shadow:hover     |
+|                                                                           |                                          |                  |
+| <span class="tag part-implemented" /> `--manifold-input-background-focus` | `var(--manifold-input-background-hover)` | Background:focus |
+| <span class="tag part-implemented" /> `--manifold-input-border-focus`     | `var(--manifold-input-border-hover)`     | Border:focus     |
+| <span class="tag part-implemented" /> `--manifold-input-shadow-focus`     | `var(--manifold-input-shadow-hover)`     | Shadow:focus     |
 
 #### Tags
 
-| Name                                               | Default                             | Description                |
-| -------------------------------------------------- | ----------------------------------- | -------------------------- |
-| `--manifold-tag-background`                        | `var(--manifold-color-primary)`     | Background                 |
-| `--manifold-tag-text-color`                        | `var(--manifold-text-color-accent)` | Text color                 |
-| [NOT IMPLEMENTED] `--manifold-tag-font-size`       | `1rem`                              | Font size                  |
-| `--manifold-tag-font-weight`                       | `900`                               | Font Weight                |
-| [NOT IMPLEMENTED] `--manifold-tag-text-transform`  | `uppercase`                         | Text transform             |
-| `--manifold-tag-radius`                            | `3em` (round)                       | Border radius              |
-| `--manifold-tag-padding`                           | `0.25em 1em`                        | Padding                    |
-|                                                    |                                     |                            |
-| `--manifold-tag-free-background`                   | `var(--manifold-color-secondary)`   | Background for "Free" tags |
-| [NOT IMPLEMENTED] `--manifold-tag-free-text-color` | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
+| Name                                                                  | Default                             | Description                |
+| --------------------------------------------------------------------- | ----------------------------------- | -------------------------- |
+| `--manifold-tag-background`                                           | `var(--manifold-color-primary)`     | Background                 |
+| `--manifold-tag-text-color`                                           | `var(--manifold-text-color-accent)` | Text color                 |
+| <span class="tag not-implemented" /> `--manifold-tag-font-size`       | `1rem`                              | Font size                  |
+| `--manifold-tag-font-weight`                                          | `900`                               | Font Weight                |
+| <span class="tag not-implemented" /> `--manifold-tag-text-transform`  | `uppercase`                         | Text transform             |
+| `--manifold-tag-radius`                                               | `3em` (round)                       | Border radius              |
+| `--manifold-tag-padding`                                              | `0.25em 1em`                        | Padding                    |
+|                                                                       |                                     |                            |
+| `--manifold-tag-free-background`                                      | `var(--manifold-color-secondary)`   | Background for "Free" tags |
+| <span class="tag not-implemented" /> `--manifold-tag-free-text-color` | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
 
 ### Unique Component Properties
 
 #### Marketplace
 
-TODO
+Coming Soon!
 
 #### Plan Selector
 
-TODO
+Coming Soon!
 
 #### Product
 
-TODO
+Coming Soon!
 
 [css-part]: https://meowni.ca/posts/part-theme-explainer/
 [shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
