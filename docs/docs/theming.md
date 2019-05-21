@@ -67,7 +67,7 @@ manifold-marketplace {
 ### Grayscales & Dark Theming
 
 | Name                                 | Default         | Description                                        |
-| ------------------------------------ | --------------- | -------------------------------------------------- |
+|--------------------------------------|-----------------|----------------------------------------------------|
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
@@ -98,7 +98,7 @@ By default, `--manifold-grayscale-[opacity]` values range from solid black down 
 There are four theming levels:
 
 | Level       | Name              | Description                                                          |
-| ----------- | ----------------- | -------------------------------------------------------------------- |
+|-------------|-------------------|----------------------------------------------------------------------|
 | 1 (highest) | Base              | The base theme provided by Manifold UI                               |
 | 2           | Top-level         | Your custom theme and branding                                       |
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
@@ -162,55 +162,66 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 ### Grayscale
 
 | Name                                 | Default         | Description                                        |
-| ------------------------------------ | --------------- | -------------------------------------------------- |
+|--------------------------------------|-----------------|----------------------------------------------------|
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
 ### Top Level Properties
 
-| Name                               | Default                                   | Description                                         |
-| ---------------------------------- | ----------------------------------------- | --------------------------------------------------- |
-| `--manifold-background`            | `white`                                   | Default background color                            |
-| `--manifold-color-primary`         | `rgb(30, 80, 218)`                        | Primary color                                       |
-| `--manifold-color-secondary`       | `rgb(15, 181, 208)`                       | Secondary color                                     |
-| `--manifold-color-info`            | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
-| `--manifold-color-success`         | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
-| `--manifold-color-warn`            | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
-| `--manifold-color-error`           | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
-| `--manifold-font-family`           | (System)                                  | Default text family                                 |
-| `--manifold-font-family-monospace` | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
-| `--manifold-text-color`            | `var(--manifold-grayscale-100)`           | Base text color                                     |
-| `--manifold-radius`                | `4px`                                     | Default radius for buttons, tags, cards, textfields |
-| `--manifold-border`                | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
-| `--manifold-border-active`         | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
-| `--manifold-border-focus`          | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| Name                                         | Default                                   | Description                                         |
+|----------------------------------------------|-------------------------------------------|-----------------------------------------------------|
+| `--manifold-color-primary`                   | `rgb(30, 80, 218)`                        | Primary color                                       |
+| `--manifold-color-secondary`                 | `rgb(15, 181, 208)`                       | Secondary color                                     |
+| `--manifold-color-info`                      | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
+| `--manifold-color-success`                   | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
+| `--manifold-color-warn`                      | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
+| `--manifold-color-error`                     | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
+| `--manifold-font-family`                     | (System)                                  | Default text family                                 |
+| `--manifold-font-family-monospace`           | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
+| `--manifold-text-color`                      | `var(--manifold-grayscale-100)`           | Base text color                                     |
+| `--manifold-radius`                          | `4px`                                     | Default radius for buttons, tags, cards, textfields |
+| `--manifold-border`                          | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
+| [NOT IMPLEMENTED] `--manifold-border-active` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| [NOT IMPLEMENTED] `--manifold-border-focus`  | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 
 ### Common Component Properties
 
 #### Text
 
-| Name                              | Default                          | Description                                                |
-| --------------------------------- | -------------------------------- | ---------------------------------------------------------- |
-| `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color                                       |
-| `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color                                            |
-| `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color (overlays on `--manifold-color-primary`) |
+Text components are used thoughout most components. 
+
+| Name                                               | Default                          | Description                                                                                              |
+|----------------------------------------------------|----------------------------------|----------------------------------------------------------------------------------------------------------|
+| `--manifold-text-color-secondary`                  | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
+| `--manifold-text-color-accent`                     | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
+| `--manifold-text-color-body`                       | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
+| [NOT IMPLEMENTED] `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
+| [NOT IMPLEMENTED] `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
+| [NOT IMPLEMENTED] `--manifold-text-weight-heading` | `700`                            | Weight for all headings                                                                                  |
+| [NOT IMPLEMENTED] `--manifold-font-size-h1`        | `--`                             | Level 1 heading font size.                                                                               |
+| [NOT IMPLEMENTED] `--manifold-font-size-h2`        | `--`                             | Level 2 heading font size.                                                                               |
+| [NOT IMPLEMENTED] `--manifold-font-size-h3`        | `--`                             | Level 3 heading font size.                                                                               |
+| [NOT IMPLEMENTED] `--manifold-font-size-h4`        | `--`                             | Level 4 heading font size.                                                                               |
+
 
 #### Cards
 
-| Name                                | Default                           | Description       |
-| ----------------------------------- | --------------------------------- | ----------------- |
-| `--manifold-card-background`        | `var(--manifold-grayscale-100i)`  | Background        |
-| `--manifold-card-border`            | `var(--manifold-border)`          | Border            |
-| `--manifold-card-radius`            | `var(--manifold-radius)`          | Corner radius     |
-| `--manifold-card-shadow`            | `none`                            | Box shadow        |
-|                                     |                                   |                   |
-| `--manifold-card-background-hover`  | `var(--manifold-card-background)` | Hover background  |
-| `--manifold-card-border-hover`      | `var(--manifold-card-border)`     | Hover border      |
-| `--manifold-card-shadow-hover`      | `var(--manifold-card-shadow)`     | Box shadow        |
-|                                     |                                   |                   |
-| `--manifold-card-background-active` | `var(--manifold-card-background)` | Active background |
-| `--manifold-card-border-active`     | `var(--manifold-border-active)`   | Active border     |
-| `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
+Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, plan details panel).
+
+| Name                                                  | Default                           | Description       |
+|-------------------------------------------------------|-----------------------------------|-------------------|
+| `--manifold-card-background`                          | `var(--manifold-grayscale-100i)`  | Background        |
+| `--manifold-card-border`                              | `var(--manifold-border)`          | Border            |
+| `--manifold-card-radius`                              | `var(--manifold-radius)`          | Corner radius     |
+| `--manifold-card-shadow`                              | `none`                            | Box shadow        |
+|                                                       |                                   |                   |
+| `--manifold-card-background-hover`                    | `var(--manifold-card-background)` | Hover background  |
+| `--manifold-card-border-hover`                        | `var(--manifold-card-border)`     | Hover border      |
+| `--manifold-card-shadow-hover`                        | `var(--manifold-card-shadow)`     | Box shadow        |
+|                                                       |                                   |                   |
+| `--manifold-card-background-active`                   | `var(--manifold-card-background)` | Active background |
+| `--manifold-card-border-active`                       | `var(--manifold-border-active)`   | Active border     |
+| [NOT IMPLEMENTED] `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
 
 #### Buttons
 
@@ -222,7 +233,18 @@ TODO
 
 #### Tags
 
-TODO
+| Name                                              | Default                             | Description                |
+|---------------------------------------------------|-------------------------------------|----------------------------|
+| `--manifold-tag-background`                       | `var(--manifold-color-primary)`     | Background                 |
+| `--manifold-tag-text-color`                       | `var(--manifold-text-color-accent)` | Text color                 |
+| `--manifold-tag-font-size`                        | `1rem`                              | Font size                  |
+| `--manifold-tag-font-weight`                      | `900`                               | Font Weight                |
+| [NOT IMPLEMENTED] `--manifold-tag-text-transform` | `uppercase`                         | Text transform             |
+| `--manifold-tag-radius`                           | `3em` (round)                       | Border radius              |
+| `--manifold-tag-padding`                          | `--`                                | Padding                    |
+|                                                   |                                     |                            |
+| `--manifold-tag-background-free`                  | `var(--manifold-color-secondary)`   | Background for "Free" tags |
+| `--manifold-tag-text-color-free`                  | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
 
 ### Unique Component Properties
 
