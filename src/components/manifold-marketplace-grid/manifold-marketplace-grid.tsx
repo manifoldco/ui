@@ -27,7 +27,7 @@ export class ManifoldMarketplaceGrid {
   @State() activeCategory?: string;
   @State() observer: IntersectionObserver;
   @State() scrollToCategory: string | null;
-  @State() skeleton: boolean = true;
+  @State() skeleton: boolean = false;
   @State() search: string = '';
   @Watch('services') servicesLoaded(services: Catalog.Product[]) {
     if (services.length) this.skeleton = false;
@@ -76,7 +76,10 @@ export class ManifoldMarketplaceGrid {
 
   get filteredServices(): Catalog.Product[] {
     // While services are loading, display skeleton cards
-    if (!this.services || !this.services.length) return skeletonProducts;
+    if (!this.services || !this.services.length) {
+      this.skeleton = true;
+      return skeletonProducts;
+    }
 
     let services: Catalog.Product[] = [];
 
