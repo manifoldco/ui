@@ -67,7 +67,7 @@ manifold-marketplace {
 ### Grayscales & Dark Theming
 
 | Name                                 | Default         | Description                                        |
-|--------------------------------------|-----------------|----------------------------------------------------|
+| ------------------------------------ | --------------- | -------------------------------------------------- |
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
@@ -98,7 +98,7 @@ By default, `--manifold-grayscale-[opacity]` values range from solid black down 
 There are four theming levels:
 
 | Level       | Name              | Description                                                          |
-|-------------|-------------------|----------------------------------------------------------------------|
+| ----------- | ----------------- | -------------------------------------------------------------------- |
 | 1 (highest) | Base              | The base theme provided by Manifold UI                               |
 | 2           | Top-level         | Your custom theme and branding                                       |
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
@@ -162,14 +162,14 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 ### Grayscale
 
 | Name                                 | Default         | Description                                        |
-|--------------------------------------|-----------------|----------------------------------------------------|
+| ------------------------------------ | --------------- | -------------------------------------------------- |
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
 ### Top Level Properties
 
 | Name                                         | Default                                   | Description                                         |
-|----------------------------------------------|-------------------------------------------|-----------------------------------------------------|
+| -------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
 | `--manifold-color-primary`                   | `rgb(30, 80, 218)`                        | Primary color                                       |
 | `--manifold-color-secondary`                 | `rgb(15, 181, 208)`                       | Secondary color                                     |
 | `--manifold-color-info`                      | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
@@ -188,10 +188,10 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 #### Text
 
-Text components are used thoughout most components. 
+Text components are used thoughout most components.
 
 | Name                                               | Default                          | Description                                                                                              |
-|----------------------------------------------------|----------------------------------|----------------------------------------------------------------------------------------------------------|
+| -------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `--manifold-text-color-secondary`                  | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
 | `--manifold-text-color-accent`                     | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
 | `--manifold-text-color-body`                       | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
@@ -203,13 +203,12 @@ Text components are used thoughout most components.
 | [NOT IMPLEMENTED] `--manifold-font-size-h3`        | `--`                             | Level 3 heading font size.                                                                               |
 | [NOT IMPLEMENTED] `--manifold-font-size-h4`        | `--`                             | Level 4 heading font size.                                                                               |
 
-
 #### Cards
 
 Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, plan details panel).
 
 | Name                                                  | Default                           | Description       |
-|-------------------------------------------------------|-----------------------------------|-------------------|
+| ----------------------------------------------------- | --------------------------------- | ----------------- |
 | `--manifold-card-background`                          | `var(--manifold-grayscale-100i)`  | Background        |
 | `--manifold-card-border`                              | `var(--manifold-border)`          | Border            |
 | `--manifold-card-radius`                              | `var(--manifold-radius)`          | Corner radius     |
@@ -229,22 +228,35 @@ TODO
 
 #### Input Fields
 
-TODO
+| Name                                                   | Default                                  | Description      |
+| ------------------------------------------------------ | ---------------------------------------- | ---------------- |
+| [PART IMPLEMENTED] `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
+| [PART IMPLEMENTED] `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
+| [NOT IMPLEMENTED] `--manifold-input-radius`            | `var(--manifold-radius)`                 | Radius           |
+| [PART IMPLEMENTED] `--manifold-input-shadow`           | `none`                                   | Shadow           |
+|                                                        |                                          |                  |
+| [NOT IMPLEMENTED] `--manifold-input-background-hover`  | `var(--manifold-input-background)`       | Background:hover |
+| [NOT IMPLEMENTED] `--manifold-input-border-hover`      | `var(--manifold-input-border)`           | Background:hover |
+| [NOT IMPLEMENTED] `--manifold-input-shadow-hover`      | `var(--manifold-input-shadow)`           | Shadow:hover     |
+|                                                        |                                          |                  |
+| [PART IMPLEMENTED] `--manifold-input-background-focus` | `var(--manifold-input-background-hover)` | Background:focus |
+| [PART IMPLEMENTED] `--manifold-input-border-focus`     | `var(--manifold-input-border-hover)`     | Border:focus     |
+| [PART IMPLEMENTED] `--manifold-input-shadow-focus`     | `var(--manifold-input-shadow-hover)`     | Shadow:focus     |
 
 #### Tags
 
-| Name                                              | Default                             | Description                |
-|---------------------------------------------------|-------------------------------------|----------------------------|
-| `--manifold-tag-background`                       | `var(--manifold-color-primary)`     | Background                 |
-| `--manifold-tag-text-color`                       | `var(--manifold-text-color-accent)` | Text color                 |
-| `--manifold-tag-font-size`                        | `1rem`                              | Font size                  |
-| `--manifold-tag-font-weight`                      | `900`                               | Font Weight                |
-| [NOT IMPLEMENTED] `--manifold-tag-text-transform` | `uppercase`                         | Text transform             |
-| `--manifold-tag-radius`                           | `3em` (round)                       | Border radius              |
-| `--manifold-tag-padding`                          | `--`                                | Padding                    |
-|                                                   |                                     |                            |
-| `--manifold-tag-background-free`                  | `var(--manifold-color-secondary)`   | Background for "Free" tags |
-| `--manifold-tag-text-color-free`                  | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
+| Name                                               | Default                             | Description                |
+| -------------------------------------------------- | ----------------------------------- | -------------------------- |
+| `--manifold-tag-background`                        | `var(--manifold-color-primary)`     | Background                 |
+| `--manifold-tag-text-color`                        | `var(--manifold-text-color-accent)` | Text color                 |
+| [NOT IMPLEMENTED] `--manifold-tag-font-size`       | `1rem`                              | Font size                  |
+| `--manifold-tag-font-weight`                       | `900`                               | Font Weight                |
+| [NOT IMPLEMENTED] `--manifold-tag-text-transform`  | `uppercase`                         | Text transform             |
+| `--manifold-tag-radius`                            | `3em` (round)                       | Border radius              |
+| `--manifold-tag-padding`                           | `0.25em 1em`                        | Padding                    |
+|                                                    |                                     |                            |
+| `--manifold-tag-free-background`                   | `var(--manifold-color-secondary)`   | Background for "Free" tags |
+| [NOT IMPLEMENTED] `--manifold-tag-free-text-color` | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
 
 ### Unique Component Properties
 
