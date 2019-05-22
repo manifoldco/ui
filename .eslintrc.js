@@ -5,7 +5,7 @@ module.exports = {
     'prettier',
     'prettier/@typescript-eslint',
   ],
-  plugins: ['@typescript-eslint', 'prettier', 'manifoldco-ui'],
+  plugins: ['@typescript-eslint', 'prettier', '@manifoldco/stencil'],
   env: {
     browser: true,
     node: true,
@@ -53,7 +53,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
-    'manifoldco-ui/stencil-component-prefix': 'error',
-    'manifoldco-ui/restrict-required-props': 'error',
+    '@manifoldco/stencil/component-prefix': 'error',
+    '@manifoldco/stencil/restrict-required-props': 'error',
   },
 };
