@@ -26,8 +26,6 @@ path: /theming
     color: white;
     content: 'N'
   }
-
-  
 </style>
 
 # Theming
@@ -288,7 +286,30 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 
 #### Marketplace
 
-Coming Soon!
+| Name                                                                   | Default                                | Description                             |
+| ---------------------------------------------------------------------- | -------------------------------------- | --------------------------------------- |
+| <span class="tag not-implemented" /> `--link-text-color`               | `var(--manifold-text-color-secondary)` | Category menu link text color           |
+| <span class="tag not-implemented" /> `--link-font-weight`              | `inherit`                              | Category menu link font weight          |
+| <span class="tag not-implemented" /> `--link-text-color-hover`         | `var(--manifold-text-color-primary)`   | Category menu link text color (hover)   |
+| <span class="tag not-implemented" /> `--link-font-weight-hover`        | `var(--link-font-weight)`              | Category menu link font weight (hover)  |
+| <span class="tag not-implemented" /> `--link-text-color-active`        | `var(--link-text-color-hover)`         | Category menu link text color (active)  |
+| <span class="tag not-implemented" /> `--link-font-weight-active`       | `var(--link-font-weight-hover)`        | Category menu link font weight (active) |
+|                                                                        |                                        |                                         |
+| <span class="tag not-implemented" /> `--search-background`             | `var(--manifold-input-background)`     | Search field background                 |
+| <span class="tag not-implemented" /> `--search-border`                 | `var(--manifold-input-border)`         | Search field border                     |
+| <span class="tag not-implemented" /> `--search-radius`                 | `var(--manifold-input-radius)`         | Search field border radius              |
+| <span class="tag not-implemented" /> `--search-shadow`                 | `var(--manifold-input-shadow)`         | Search field shadow                     |
+| <span class="tag not-implemented" /> `--search-text-color`             | `var(--manifold-text-color)`           | Search field text color                 |
+| <span class="tag not-implemented" /> `--search-placeholder-text-color` | `var(--manifold-text-color-secondary)` | Search field text color                 |
+| <span class="tag not-implemented" /> `--search-background-focus`       | `var(--search-background)`             | Search field background (focus)         |
+| <span class="tag not-implemented" /> `--search-border-focus`           | `var(--search-border)`                 | Search field border (focus)             |
+| <span class="tag not-implemented" /> `--search-shadow-focus`           | `var(--search-shadow)`                 | Search field shadow (focus)             |
+|                                                                        |                                        |                                         |
+| <span class="tag not-implemented" /> `--heading-color`                 | `var(--manifold-text-color-secondary)` | Category heading text color             |
+| <span class="tag not-implemented" /> `--heading-font-size`             | `--`                                   | Category heading font size              |
+| <span class="tag not-implemented" /> `--heading-font-weight`           | `inherit`                              | Category heading font weight            |
+|                                                                        |                                        |                                         |
+| <span class="tag not-implemented" /> `--grid-gap`                      | `1rem`                                 | Gap between product/service cards       |
 
 #### Plan Selector
 
