@@ -11,7 +11,7 @@ import {
   Connection,
 } from './utils/connections';
 import {
-  State,
+  ResourceState,
 } from './data/resource';
 import {
   Option,
@@ -291,7 +291,7 @@ export namespace Components {
   }
   interface ManifoldResourceCredentialsView {
     'credentials'?: Marketplace.Credential[];
-    'resourceState': State;
+    'resourceState': ResourceState;
   }
   interface ManifoldResourceDetails {
     /**
@@ -650,7 +650,7 @@ declare namespace LocalJSX {
   interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes {
     'credentials'?: Marketplace.Credential[];
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceState'?: State;
+    'resourceState'?: ResourceState;
   }
   interface ManifoldResourceDetails extends JSXBase.HTMLAttributes {
     /**

@@ -1,12 +1,12 @@
 import { h } from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
 
-export interface State {
+export interface ResourceState {
   resource?: Gateway.Resource;
   loading: boolean;
 }
 
-export default createProviderConsumer<State>(
+export default createProviderConsumer<ResourceState>(
   {
     resource: undefined,
     loading: false,

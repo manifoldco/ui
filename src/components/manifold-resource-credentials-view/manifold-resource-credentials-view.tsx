@@ -1,7 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
 
-import { State } from '../../data/resource';
+import { ResourceState } from '../../data/resource';
 
 @Component({
   tag: 'manifold-resource-credentials-view',
@@ -10,7 +10,7 @@ import { State } from '../../data/resource';
 })
 export class ManifoldResourceCredentials {
   @Prop() credentials?: Marketplace.Credential[];
-  @Prop() resourceState: State;
+  @Prop() resourceState: ResourceState;
   @Event() credentialsRequested: EventEmitter;
 
   get lines() {

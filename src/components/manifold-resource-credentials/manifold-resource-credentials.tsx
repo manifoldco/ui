@@ -1,7 +1,7 @@
 import { h, Component, Prop, State } from '@stencil/core';
 
 import ConnectionTunnel from '../../data/connection';
-import ResourceTunnel, { State as ResourceState } from '../../data/resource';
+import ResourceTunnel, { ResourceState } from '../../data/resource';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
