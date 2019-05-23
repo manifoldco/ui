@@ -1,30 +1,28 @@
 import { h, Component, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'manifold-link-button',
-  styleUrl: 'link-button.css',
+  tag: 'manifold-button',
+  styleUrl: 'button.css',
   shadow: true,
 })
-export class LinkButton {
+export class ManifoldButton {
   @Prop() color?: 'black' | 'white';
-  @Prop() href?: string;
-  @Prop() onClickEvent?: (e: Event) => void;
-  @Prop() rel?: string;
+  @Prop() onClickEvent?: (e: MouseEvent) => void;
   @Prop() size?: 'small';
-  @Prop() target?: string;
+  @Prop() disabled: boolean = false;
+  @Prop() wait: boolean = false;
 
   render() {
     return (
-      <a
-        href={this.href}
-        rel={this.rel}
+      <button
         onClick={this.onClickEvent}
-        target={this.target}
         data-color={this.color}
         data-size={this.size}
+        data-wait={this.wait}
+        disabled={this.disabled}
       >
         <slot />
-      </a>
+      </button>
     );
   }
 }
