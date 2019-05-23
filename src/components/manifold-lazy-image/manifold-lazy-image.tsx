@@ -8,29 +8,25 @@ export class ManifoldLazyImage {
   @State() observer: IntersectionObserver;
 
   componentWillLoad() {
-    this.observer = new IntersectionObserver(this.observe, {
-      rootMargin: '0px 0px 50px 0px',
-      threshold: 0,
-    });
+    this.observer = new IntersectionObserver(this.observe);
   }
 
   private observe = (
     entries: IntersectionObserverEntry[],
     observer: IntersectionObserver
   ): void => {
-    const entry = entries[0];
+    const entry = entries.find(({ isIntersecting }) => isIntersecting === true);
+    if (!entry) return;
+
     const image = entry.target as HTMLImageElement;
     image.onload = () => image.setAttribute('data-loaded', 'true');
+    const source = image.getAttribute('data-src');
 
-    if (entry && entry.isIntersecting) {
-      const source = image.getAttribute('data-src');
-
-      if (source) {
-        image.src = source;
-      }
-
-      observer.unobserve(image);
+    if (source) {
+      image.src = source;
     }
+
+    observer.unobserve(image);
   };
 
   private observeImage = (el?: HTMLElement) => {
