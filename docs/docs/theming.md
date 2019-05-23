@@ -11,6 +11,9 @@ Manifold UI offers a simple, yet versitle, theming API for customizing the look 
   Theming is still a work-in-progress. This documentation may not be entirely accurate.
 </manifold-toast>
 
+<span class="tag part-implemented" /> = Partially Implemented <br />
+<span class="tag not-implemented" /> = Not Implemented
+
 ## Concepts
 
 ### CSS Custom Properties
@@ -168,75 +171,156 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 ### Top Level Properties
 
-| Name                               | Default                                   | Description                                         |
-| ---------------------------------- | ----------------------------------------- | --------------------------------------------------- |
-| `--manifold-background`            | `white`                                   | Default background color                            |
-| `--manifold-color-primary`         | `rgb(30, 80, 218)`                        | Primary color                                       |
-| `--manifold-color-secondary`       | `rgb(15, 181, 208)`                       | Secondary color                                     |
-| `--manifold-color-info`            | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
-| `--manifold-color-success`         | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
-| `--manifold-color-warn`            | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
-| `--manifold-color-error`           | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
-| `--manifold-font-family`           | (System)                                  | Default text family                                 |
-| `--manifold-font-family-monospace` | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
-| `--manifold-text-color`            | `var(--manifold-grayscale-100)`           | Base text color                                     |
-| `--manifold-radius`                | `4px`                                     | Default radius for buttons, tags, cards, textfields |
-| `--manifold-border`                | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
-| `--manifold-border-active`         | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
-| `--manifold-border-focus`          | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| Name                                                            | Default                                   | Description                                         |
+| --------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| `--manifold-color-primary`                                      | `rgb(30, 80, 218)`                        | Primary color                                       |
+| `--manifold-color-info`                                         | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
+| `--manifold-color-success`                                      | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
+| `--manifold-color-warn`                                         | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
+| `--manifold-color-error`                                        | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
+| `--manifold-font-family`                                        | (System)                                  | Default text family                                 |
+| `--manifold-font-family-monospace`                              | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
+| `--manifold-text-color`                                         | `var(--manifold-grayscale-100)`           | Base text color                                     |
+| `--manifold-radius`                                             | `4px`                                     | Default radius for buttons, tags, cards, textfields |
+| `--manifold-border`                                             | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
+| <span class="tag not-implemented" /> `--manifold-border-active` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| <span class="tag not-implemented" /> `--manifold-border-focus`  | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
 
 ### Common Component Properties
 
 #### Text
 
-| Name                              | Default                          | Description                                                |
-| --------------------------------- | -------------------------------- | ---------------------------------------------------------- |
-| `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color                                       |
-| `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color                                            |
-| `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color (overlays on `--manifold-color-primary`) |
+Text components are used thoughout most components.
+
+| Name                                                                  | Default                          | Description                                                                                              |
+| --------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `--manifold-text-color-secondary`                                     | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
+| `--manifold-text-color-accent`                                        | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
+| `--manifold-text-color-body`                                          | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
+| <span class="tag not-implemented" /> `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
+| <span class="tag not-implemented" /> `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
+| <span class="tag not-implemented" /> `--manifold-font-weight-heading` | `700`                            | Weight for all headings                                                                                  |
 
 #### Cards
 
-| Name                                | Default                           | Description       |
-| ----------------------------------- | --------------------------------- | ----------------- |
-| `--manifold-card-background`        | `var(--manifold-grayscale-100i)`  | Background        |
-| `--manifold-card-border`            | `var(--manifold-border)`          | Border            |
-| `--manifold-card-radius`            | `var(--manifold-radius)`          | Corner radius     |
-| `--manifold-card-shadow`            | `none`                            | Box shadow        |
-|                                     |                                   |                   |
-| `--manifold-card-background-hover`  | `var(--manifold-card-background)` | Hover background  |
-| `--manifold-card-border-hover`      | `var(--manifold-card-border)`     | Hover border      |
-| `--manifold-card-shadow-hover`      | `var(--manifold-card-shadow)`     | Box shadow        |
-|                                     |                                   |                   |
-| `--manifold-card-background-active` | `var(--manifold-card-background)` | Active background |
-| `--manifold-card-border-active`     | `var(--manifold-border-active)`   | Active border     |
-| `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
+Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, plan details panel).
 
-#### Buttons
-
-TODO
+| Name                                                                     | Default                           | Description       |
+| ------------------------------------------------------------------------ | --------------------------------- | ----------------- |
+| `--manifold-card-background`                                             | `var(--manifold-grayscale-100i)`  | Background        |
+| `--manifold-card-border`                                                 | `var(--manifold-border)`          | Border            |
+| `--manifold-card-radius`                                                 | `var(--manifold-radius)`          | Corner radius     |
+| `--manifold-card-shadow`                                                 | `none`                            | Box shadow        |
+|                                                                          |                                   |                   |
+| `--manifold-card-background-hover`                                       | `var(--manifold-card-background)` | Hover background  |
+| `--manifold-card-border-hover`                                           | `var(--manifold-card-border)`     | Hover border      |
+| `--manifold-card-shadow-hover`                                           | `var(--manifold-card-shadow)`     | Box shadow        |
+|                                                                          |                                   |                   |
+| `--manifold-card-background-active`                                      | `var(--manifold-card-background)` | Active background |
+| `--manifold-card-border-active`                                          | `var(--manifold-border-active)`   | Active border     |
+| <span class="tag not-implemented" /> `--manifold-card-text-color-active` | `var(--manifold-text-color)`      | Active text color |
 
 #### Input Fields
 
-TODO
+| Name                                                                      | Default                                  | Description      |
+| ------------------------------------------------------------------------- | ---------------------------------------- | ---------------- |
+| <span class="tag part-implemented" /> `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
+| <span class="tag part-implemented" /> `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
+| <span class="tag not-implemented" /> `--manifold-input-radius`            | `var(--manifold-radius)`                 | Radius           |
+| <span class="tag part-implemented" /> `--manifold-input-shadow`           | `none`                                   | Shadow           |
+|                                                                           |                                          |                  |
+| <span class="tag not-implemented" /> `--manifold-input-background-hover`  | `var(--manifold-input-background)`       | Background:hover |
+| <span class="tag not-implemented" /> `--manifold-input-border-hover`      | `var(--manifold-input-border)`           | Background:hover |
+| <span class="tag not-implemented" /> `--manifold-input-shadow-hover`      | `var(--manifold-input-shadow)`           | Shadow:hover     |
+|                                                                           |                                          |                  |
+| <span class="tag part-implemented" /> `--manifold-input-background-focus` | `var(--manifold-input-background-hover)` | Background:focus |
+| <span class="tag part-implemented" /> `--manifold-input-border-focus`     | `var(--manifold-input-border-hover)`     | Border:focus     |
+| <span class="tag part-implemented" /> `--manifold-input-shadow-focus`     | `var(--manifold-input-shadow-hover)`     | Shadow:focus     |
 
 #### Tags
 
-TODO
+| Name                                                                  | Default                             | Description                |
+| --------------------------------------------------------------------- | ----------------------------------- | -------------------------- |
+| `--manifold-tag-background`                                           | `var(--manifold-color-primary)`     | Background                 |
+| `--manifold-tag-text-color`                                           | `var(--manifold-text-color-accent)` | Text color                 |
+| <span class="tag not-implemented" /> `--manifold-tag-font-size`       | `1rem`                              | Font size                  |
+| `--manifold-tag-font-weight`                                          | `900`                               | Font Weight                |
+| <span class="tag not-implemented" /> `--manifold-tag-text-transform`  | `uppercase`                         | Text transform             |
+| `--manifold-tag-radius`                                               | `3em` (round)                       | Border radius              |
+| `--manifold-tag-padding`                                              | `0.25em 1em`                        | Padding                    |
+|                                                                       |                                     |                            |
+| `--manifold-tag-free-background`                                      | `var(--manifold-color-secondary)`   | Background for "Free" tags |
+| <span class="tag not-implemented" /> `--manifold-tag-free-text-color` | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
 
 ### Unique Component Properties
 
 #### Marketplace
 
-TODO
+| Name                                                                   | Default                                | Description                             |
+| ---------------------------------------------------------------------- | -------------------------------------- | --------------------------------------- |
+| <span class="tag not-implemented" /> `--link-text-color`               | `var(--manifold-text-color-secondary)` | Category menu link text color           |
+| <span class="tag not-implemented" /> `--link-font-weight`              | `inherit`                              | Category menu link font weight          |
+| <span class="tag not-implemented" /> `--link-text-color-hover`         | `var(--manifold-text-color-primary)`   | Category menu link text color (hover)   |
+| <span class="tag not-implemented" /> `--link-font-weight-hover`        | `var(--link-font-weight)`              | Category menu link font weight (hover)  |
+| <span class="tag not-implemented" /> `--link-text-color-active`        | `var(--link-text-color-hover)`         | Category menu link text color (active)  |
+| <span class="tag not-implemented" /> `--link-font-weight-active`       | `var(--link-font-weight-hover)`        | Category menu link font weight (active) |
+|                                                                        |                                        |                                         |
+| <span class="tag not-implemented" /> `--search-background`             | `var(--manifold-input-background)`     | Search field background                 |
+| <span class="tag not-implemented" /> `--search-border`                 | `var(--manifold-input-border)`         | Search field border                     |
+| <span class="tag not-implemented" /> `--search-radius`                 | `var(--manifold-input-radius)`         | Search field border radius              |
+| <span class="tag not-implemented" /> `--search-shadow`                 | `var(--manifold-input-shadow)`         | Search field shadow                     |
+| <span class="tag not-implemented" /> `--search-text-color`             | `var(--manifold-text-color)`           | Search field text color                 |
+| <span class="tag not-implemented" /> `--search-placeholder-text-color` | `var(--manifold-text-color-secondary)` | Search field text color                 |
+| <span class="tag not-implemented" /> `--search-background-focus`       | `var(--search-background)`             | Search field background (focus)         |
+| <span class="tag not-implemented" /> `--search-border-focus`           | `var(--search-border)`                 | Search field border (focus)             |
+| <span class="tag not-implemented" /> `--search-shadow-focus`           | `var(--search-shadow)`                 | Search field shadow (focus)             |
+|                                                                        |                                        |                                         |
+| <span class="tag not-implemented" /> `--heading-color`                 | `var(--manifold-text-color-secondary)` | Category heading text color             |
+| <span class="tag not-implemented" /> `--heading-font-size`             | `--`                                   | Category heading font size              |
+| <span class="tag not-implemented" /> `--heading-font-weight`           | `inherit`                              | Category heading font weight            |
+|                                                                        |                                        |                                         |
+| <span class="tag not-implemented" /> `--grid-gap`                      | `1rem`                                 | Gap between product/service cards       |
 
 #### Plan Selector
 
-TODO
+| Name                                                                      | Default                            | Description                   |
+| ------------------------------------------------------------------------- | ---------------------------------- | ----------------------------- |
+| <span class="tag not-implemented" /> `--plan-menu-grid-gap`               | `1rem`                             | Gap between plan menu buttons |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-menu-card-background`        | `var(--manifold-card-background)`  | Background                    |
+| <span class="tag not-implemented" /> `--plan-menu-card-border`            | `var(--manifold-card-border)`      | Border                        |
+| <span class="tag not-implemented" /> `--plan-menu-card-radius`            | `var(--manifold-card-radius)`      | Corner radius                 |
+| <span class="tag not-implemented" /> `--plan-menu-card-shadow`            | `var(--manifold-card-shadow)`      | Box shadow                    |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-menu-card-background-hover`  | `var(--plan-menu-card-background)` | Hover background              |
+| <span class="tag not-implemented" /> `--plan-menu-card-border-hover`      | `var(--plan-menu-card-border)`     | Hover border                  |
+| <span class="tag not-implemented" /> `--plan-menu-card-shadow-hover`      | `var(--plan-menu-card-shadow)`     | Box shadow                    |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-menu-card-background-active` | `var(--plan-menu-card-background)` | Active background             |
+| <span class="tag not-implemented" /> `--plan-menu-card-border-active`     | `var(--plan-menu-border-active)`   | Active border                 |
+| <span class="tag not-implemented" /> `--plan-menu-card-text-color-active` | `var(--plan-menu-text-color)`      | Active text color             |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-details-card-background`     | `var(--manifold-card-background)`  | Plan details panel background |
+| <span class="tag not-implemented" /> `--plan-details-card-border`         | `var(--manifold-card-border)`      | Plan details panel border     |
+| <span class="tag not-implemented" /> `--plan-details-card-radius`         | `var(--manifold-card-radius)`      | Plan details panel radius     |
+| <span class="tag not-implemented" /> `--plan-details-card-shadow`         | `var(--manifold-card-shadow)`      | Plan details panel box shadow |
 
 #### Product
 
-TODO
+| Name                                                                    | Default                                | Description                      |
+| ----------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
+| <span class="tag not-implemented" /> `--product-card-background`        | Branded Gradient                       | Background                       |
+| <span class="tag not-implemented" /> `--product-card-border`            | `var(--manifold-border)`               | Border                           |
+| <span class="tag not-implemented" /> `--product-card-radius`            | `var(--manifold-radius)`               | Corner radius                    |
+| <span class="tag not-implemented" /> `--product-card-shadow`            | `none`                                 | Box shadow                       |
+|                                                                         |                                        |                                  |
+| <span class="tag not-implemented" /> `--sidebar-text-color-heading`     | `var(--manifold-text-color-heading)`   | Text color for sidebar headings. |
+| <span class="tag not-implemented" /> `--sidebar-font-family-heading`    | `var(--manifold-font-family-heading)`  | Font family for sidebar headings |
+| <span class="tag not-implemented" /> `--sidebar-font-weight-heading`    | `var(--manifold-font-weight-heading)`  | Weight for sidebar headings      |
+| <span class="tag not-implemented" /> `--sidebar-font-size-heading`      | `var(--manifold-font-size-h4)`         | Font size for sidebar headings   |
+|                                                                         |                                        |                                  |
+| <span class="tag not-implemented" /> `--sidebar-text-color-links`       | `var(--manifold-text-color-secondary)` | Text color for sidebar links.    |
+| <span class="tag not-implemented" /> `--sidebar-text-color-links-hover` | `var(--manifold-color-primary)`        | Text color for sidebar links.    |
 
 [css-part]: https://meowni.ca/posts/part-theme-explainer/
 [shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM

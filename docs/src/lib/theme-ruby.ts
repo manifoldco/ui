@@ -28,9 +28,7 @@ export default css`
      ********************************************************************************/
 
     /* UI Colors */
-    --manifold-background: var(--theme-white);
     --manifold-color-primary: var(--theme-red);
-    --manifold-color-secondary: var(--theme-red);
     --manifold-color-success: var(--theme-green);
     --manifold-color-info: var(--theme-teal);
     --manifold-color-warn: var(--theme-red);
