@@ -29,7 +29,7 @@
     "build": "npm run build:docs && cd docs && npm run build",
     "build:docs": "rm -rf docs/node_modules/@manifoldco/ui && mkdir docs/node_modules/@manifoldco/ui && cp package.json docs/node_modules/@manifoldco/ui && stencil build && cp -r dist docs/node_modules/@manifoldco/ui",
     "build-storybook": "build-storybook && cp -r dist/manifold storybook-static",
-    "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && manifold run -- npm run storybook'",
+    "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && cp .manifold-local.yml .manifold.yml && manifold run -- npm run storybook'",
     "docs": "npm run build:docs && cd docs && npm start",
     "generate:specs": "npm run generate:specs:billing && npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace",
     "generate:specs:billing": "npx @manifoldco/swagger-to-ts src/spec/billing/v1.yaml -o src/types/billing.ts -n Billing",
