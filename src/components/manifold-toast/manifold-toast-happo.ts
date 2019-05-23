@@ -1,10 +1,16 @@
+export const basic = () => {
+    const plan = document.createElement('manifold-toast');
+  
+    document.body.appendChild(plan);
+    };
+
 export const error = () => {
-  const plan = document.createElement('manifold-toast');
-  plan.setAttribute("alert-type", "error");
-
-  document.body.appendChild(plan);
-};
-
+    const plan = document.createElement('manifold-toast');
+    plan.setAttribute("alert-type", "error");
+  
+    document.body.appendChild(plan);
+  };
+    
 export const warning = () => {
     const plan = document.createElement('manifold-toast');
     plan.setAttribute("alert-type", "warning");
@@ -21,7 +27,7 @@ export const warning = () => {
 
   export const dismissable = () => {
     const plan = document.createElement('manifold-toast');
-    plan.setAttribute("alert-type", "dismissable");
+    plan.setAttribute("dismissable", "true");
   
     document.body.appendChild(plan);
   };
