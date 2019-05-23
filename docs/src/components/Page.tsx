@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Entry from './Entry';
 import Example from './Example';
 import SEO from './SEO';
@@ -23,6 +23,31 @@ function Page({ currentPage, links }: PageProps) {
   );
 }
 
+const contentStyles = css`
+  .tag::before {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    height: 1.5em;
+    font-weight: 700;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    border-radius: 50%;
+  }
+
+  .part-implemented::before {
+    background: var(--manifold-g-yellow);
+    content: 'P';
+  }
+
+  .not-implemented::before {
+    color: white;
+    background: var(--manifold-g-red);
+    content: 'N';
+  }
+`;
+
 const Main = styled.main`
   box-sizing: border-box;
   width: 100vw;
@@ -38,6 +63,8 @@ const Main = styled.main`
     margin-top: 0;
     padding-left: 15rem;
   }
+
+  ${contentStyles}
 `;
 
 export default Page;

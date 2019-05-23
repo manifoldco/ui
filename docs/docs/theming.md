@@ -3,31 +3,6 @@ title: Theming
 path: /theming
 ---
 
-<style>
-  .tag::before {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75em;
-    font-weight: 700;
-    height: 1.5em;
-    width: 1.5em;
-    border-radius: 50%;
-    text-transform: uppercase;
-  }
-
-  .part-implemented::before {
-    background: var(--manifold-g-yellow);
-    content: 'P'
-  }
-
-  .not-implemented::before {
-    background: var(--manifold-g-red);
-    color: white;
-    content: 'N'
-  }
-</style>
-
 # Theming
 
 Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of components.
@@ -199,7 +174,6 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 | Name                                                            | Default                                   | Description                                         |
 | --------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
 | `--manifold-color-primary`                                      | `rgb(30, 80, 218)`                        | Primary color                                       |
-| `--manifold-color-secondary`                                    | `rgb(15, 181, 208)`                       | Secondary color                                     |
 | `--manifold-color-info`                                         | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
 | `--manifold-color-success`                                      | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
 | `--manifold-color-warn`                                         | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
@@ -225,11 +199,7 @@ Text components are used thoughout most components.
 | `--manifold-text-color-body`                                          | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
 | <span class="tag not-implemented" /> `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
 | <span class="tag not-implemented" /> `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
-| <span class="tag not-implemented" /> `--manifold-text-weight-heading` | `700`                            | Weight for all headings                                                                                  |
-| <span class="tag not-implemented" /> `--manifold-font-size-h1`        | `--`                             | Level 1 heading font size.                                                                               |
-| <span class="tag not-implemented" /> `--manifold-font-size-h2`        | `--`                             | Level 2 heading font size.                                                                               |
-| <span class="tag not-implemented" /> `--manifold-font-size-h3`        | `--`                             | Level 3 heading font size.                                                                               |
-| <span class="tag not-implemented" /> `--manifold-font-size-h4`        | `--`                             | Level 4 heading font size.                                                                               |
+| <span class="tag not-implemented" /> `--manifold-font-weight-heading` | `700`                            | Weight for all headings                                                                                  |
 
 #### Cards
 
@@ -313,11 +283,44 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 
 #### Plan Selector
 
-Coming Soon!
+| Name                                                                      | Default                            | Description                   |
+| ------------------------------------------------------------------------- | ---------------------------------- | ----------------------------- |
+| <span class="tag not-implemented" /> `--plan-menu-grid-gap`               | `1rem`                             | Gap between plan menu buttons |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-menu-card-background`        | `var(--manifold-card-background)`  | Background                    |
+| <span class="tag not-implemented" /> `--plan-menu-card-border`            | `var(--manifold-card-border)`      | Border                        |
+| <span class="tag not-implemented" /> `--plan-menu-card-radius`            | `var(--manifold-card-radius)`      | Corner radius                 |
+| <span class="tag not-implemented" /> `--plan-menu-card-shadow`            | `var(--manifold-card-shadow)`      | Box shadow                    |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-menu-card-background-hover`  | `var(--plan-menu-card-background)` | Hover background              |
+| <span class="tag not-implemented" /> `--plan-menu-card-border-hover`      | `var(--plan-menu-card-border)`     | Hover border                  |
+| <span class="tag not-implemented" /> `--plan-menu-card-shadow-hover`      | `var(--plan-menu-card-shadow)`     | Box shadow                    |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-menu-card-background-active` | `var(--plan-menu-card-background)` | Active background             |
+| <span class="tag not-implemented" /> `--plan-menu-card-border-active`     | `var(--plan-menu-border-active)`   | Active border                 |
+| <span class="tag not-implemented" /> `--plan-menu-card-text-color-active` | `var(--plan-menu-text-color)`      | Active text color             |
+|                                                                           |                                    |                               |
+| <span class="tag not-implemented" /> `--plan-details-card-background`     | `var(--manifold-card-background)`  | Plan details panel background |
+| <span class="tag not-implemented" /> `--plan-details-card-border`         | `var(--manifold-card-border)`      | Plan details panel border     |
+| <span class="tag not-implemented" /> `--plan-details-card-radius`         | `var(--manifold-card-radius)`      | Plan details panel radius     |
+| <span class="tag not-implemented" /> `--plan-details-card-shadow`         | `var(--manifold-card-shadow)`      | Plan details panel box shadow |
 
 #### Product
 
-Coming Soon!
+| Name                                                                    | Default                                | Description                      |
+| ----------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
+| <span class="tag not-implemented" /> `--product-card-background`        | Branded Gradient                       | Background                       |
+| <span class="tag not-implemented" /> `--product-card-border`            | `var(--manifold-border)`               | Border                           |
+| <span class="tag not-implemented" /> `--product-card-radius`            | `var(--manifold-radius)`               | Corner radius                    |
+| <span class="tag not-implemented" /> `--product-card-shadow`            | `none`                                 | Box shadow                       |
+|                                                                         |                                        |                                  |
+| <span class="tag not-implemented" /> `--sidebar-text-color-heading`     | `var(--manifold-text-color-heading)`   | Text color for sidebar headings. |
+| <span class="tag not-implemented" /> `--sidebar-font-family-heading`    | `var(--manifold-font-family-heading)`  | Font family for sidebar headings |
+| <span class="tag not-implemented" /> `--sidebar-font-weight-heading`    | `var(--manifold-font-weight-heading)`  | Weight for sidebar headings      |
+| <span class="tag not-implemented" /> `--sidebar-font-size-heading`      | `var(--manifold-font-size-h4)`         | Font size for sidebar headings   |
+|                                                                         |                                        |                                  |
+| <span class="tag not-implemented" /> `--sidebar-text-color-links`       | `var(--manifold-text-color-secondary)` | Text color for sidebar links.    |
+| <span class="tag not-implemented" /> `--sidebar-text-color-links-hover` | `var(--manifold-color-primary)`        | Text color for sidebar links.    |
 
 [css-part]: https://meowni.ca/posts/part-theme-explainer/
 [shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
