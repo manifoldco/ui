@@ -10,7 +10,7 @@ import { ResourceState } from '../../data/resource';
 })
 export class ManifoldResourceCredentials {
   @Prop() credentials?: Marketplace.Credential[];
-  @Prop() resourceState: ResourceState;
+  @Prop() resourceState: ResourceState = { resource: undefined, loading: false };
   @Event() credentialsRequested: EventEmitter;
 
   get lines() {

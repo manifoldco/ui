@@ -1,4 +1,4 @@
-import { ManifoldResourceContainer } from '../manifold-resource-container/manifold-resource-container';
+import { ManifoldResourceContainer } from './manifold-resource-container';
 
 describe('<manifold-resource-credentials>', () => {
   it('fetches resource on load', () => {
