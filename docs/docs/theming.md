@@ -171,20 +171,24 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 ### Top Level Properties
 
-| Name                                                            | Default                                   | Description                                         |
-| --------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------- |
-| `--manifold-color-primary`                                      | `rgb(30, 80, 218)`                        | Primary color                                       |
-| `--manifold-color-info`                                         | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>             |
-| `--manifold-color-success`                                      | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                          |
-| `--manifold-color-warn`                                         | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                          |
-| `--manifold-color-error`                                        | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                            |
-| `--manifold-font-family`                                        | (System)                                  | Default text family                                 |
-| `--manifold-font-family-monospace`                              | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)                |
-| `--manifold-text-color`                                         | `var(--manifold-grayscale-100)`           | Base text color                                     |
-| `--manifold-radius`                                             | `4px`                                     | Default radius for buttons, tags, cards, textfields |
-| `--manifold-border`                                             | `1px solid var(--manifold-grayscale-10)`  | Default border for cards, text fields               |
-| <span class="tag not-implemented" /> `--manifold-border-active` | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
-| <span class="tag not-implemented" /> `--manifold-border-focus`  | `1px solid var(--manifold-color-primary)` | Default border for text fields on focus             |
+| Name                               | Default                                   | Description                                        |
+| ---------------------------------- | ----------------------------------------- | -------------------------------------------------- |
+| `--manifold-color-primary`         | `rgb(30, 80, 218)`                        | Primary color                                      |
+| `--manifold-color-success`         | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                         |
+| `--manifold-color-info`            | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>            |
+| `--manifold-color-warn`            | `rgb(254, 113, 75)`                       | Warning color<sup>\*</sup>                         |
+| `--manifold-color-error`           | `rgb(213, 15, 73)`                        | Error color<sup>\*</sup>                           |
+|                                    |                                           |                                                    |
+| `--manifold-font-family`           | (System)                                  | Default text family                                |
+| `--manifold-font-family-monospace` | `IBM Plex Sans Monospace,monospace`       | Code font family (credentials, etc.)               |
+| `--manifold-text-color`            | `var(--manifold-grayscale-100)`           | Base text color                                    |
+|                                    |                                           |                                                    |
+| `--manifold-radius`                | `4px`                                     | Radius for buttons, tags, cards, textfields        |
+|                                    |                                           |                                                    |
+| `--manifold-border`                | `1px solid var(--manifold-grayscale-15)`  | Border for cards, text fields                      |
+| `--manifold-border-hover`          | `1px solid var(--manifold-grayscale-30)`  | Border for interactive cards, text fields on hover |
+| `--manifold-border-focus`          | `1px solid var(--manifold-color-primary)` | Border for interactive cards, text fields on focus |
+| `--manifold-border-active`         | `1px solid var(--manifold-color-primary)` | Border for interactive cards when they are active  |
 
 ### Common Component Properties
 

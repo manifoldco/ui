@@ -165,11 +165,14 @@
   margin-top: calc(var(--overlap) * -1);
 
   & img {
+    box-sizing: border-box;
     display: block;
+    background: white;
     width: 100%;
     min-width: 3rem;
     height: auto;
     min-height: 3rem;
+    padding: 2px;
     object-fit: contain;
     border-radius: var(--logo-radius);
   }

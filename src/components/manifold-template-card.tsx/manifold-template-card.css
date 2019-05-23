@@ -2,10 +2,10 @@
   --padding: 0.75rem;
 
   /* theme vars */
-  --card-background: var(--manifold-grayscale-100i);
-  --card-text-color: var(--manifold-grayscale-70);
-  --card-border: var(--manifold-card-border, var(--manifold-border));
-  --card-radius: var(--manifold-card-radius, var(--manifold-radius));
+  --card-background: var(--manifold-card-background);
+  --card-text-color: var(--manifold-text-color);
+  --card-border: var(--manifold-card-border);
+  --card-radius: var(--manifold-card-radius);
   --card-shadow: var(--manifold-card-shadow, none);
   --card-body-text-color: var(--manifold-text-color-secondary);
   --card-body-background: var(--manifold-grayscale-03);
@@ -14,7 +14,7 @@
   /* card:hover */
   --card-background-hover: var(--manifold-card-background-hover, var(--manifold-grayscale-80i));
   --card-text-color-hover: var(--manifold-card-color-hover, var(--card-text-color));
-  --card-border-hover: var(--manifold-card-border-hover, var(--card-border));
+  --card-border-hover: var(--manifold-card-border-hover, var(--manifold-border-hover));
   --card-shadow-hover: var(--manifold-card-shadow-hover, var(--card-shadow));
 }
 
@@ -103,8 +103,11 @@
   }
 
   & img {
+    box-sizing: border-box;
+    background: white;
     width: 100%;
     height: 100%;
+    padding: 2px;
     overflow: hidden;
   }
 }
