@@ -10,7 +10,6 @@ export class ManifoldButton {
   @Prop() onClickEvent?: (e: MouseEvent) => void;
   @Prop() size?: 'small';
   @Prop() disabled: boolean = false;
-  @Prop() wait: boolean = false;
 
   render() {
     return (
@@ -18,7 +17,6 @@ export class ManifoldButton {
         onClick={this.onClickEvent}
         data-color={this.color}
         data-size={this.size}
-        data-wait={this.wait}
         disabled={this.disabled}
       >
         <slot />

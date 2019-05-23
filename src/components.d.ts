@@ -32,7 +32,6 @@ export namespace Components {
     'disabled': boolean;
     'onClickEvent'?: (e: MouseEvent) => void;
     'size'?: 'small';
-    'wait': boolean;
   }
   interface ManifoldConnection {
     /**
@@ -378,7 +377,6 @@ declare namespace LocalJSX {
     'disabled'?: boolean;
     'onClickEvent'?: (e: MouseEvent) => void;
     'size'?: 'small';
-    'wait'?: boolean;
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes {
     /**
