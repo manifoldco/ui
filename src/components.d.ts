@@ -292,15 +292,13 @@ export namespace Components {
     'credentials'?: Marketplace.Credential[];
     'resourceState': ResourceState;
   }
-  interface ManifoldResourceDetails {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection': Connection;
-    /**
-    * Which resource does this belong to?
-    */
-    'resourceName': string;
+  interface ManifoldResourceDetails {}
+  interface ManifoldResourceDetailsView {
+    'data'?: Gateway.Resource;
+  }
+  interface ManifoldResourceProvider {
+    'data'?: Gateway.Resource;
+    'loading': boolean;
   }
   interface ManifoldResourceStatus {
     /**
@@ -650,15 +648,13 @@ declare namespace LocalJSX {
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceState'?: ResourceState;
   }
-  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * Which resource does this belong to?
-    */
-    'resourceName'?: string;
+  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes {}
+  interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes {
+    'data'?: Gateway.Resource;
+  }
+  interface ManifoldResourceProvider extends JSXBase.HTMLAttributes {
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {
     /**
@@ -754,6 +750,8 @@ declare namespace LocalJSX {
     'manifold-resource-credentials': ManifoldResourceCredentials;
     'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
     'manifold-resource-details': ManifoldResourceDetails;
+    'manifold-resource-details-view': ManifoldResourceDetailsView;
+    'manifold-resource-provider': ManifoldResourceProvider;
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
@@ -954,6 +952,18 @@ declare global {
     new (): HTMLManifoldResourceDetailsElement;
   };
 
+  interface HTMLManifoldResourceDetailsViewElement extends Components.ManifoldResourceDetailsView, HTMLStencilElement {}
+  var HTMLManifoldResourceDetailsViewElement: {
+    prototype: HTMLManifoldResourceDetailsViewElement;
+    new (): HTMLManifoldResourceDetailsViewElement;
+  };
+
+  interface HTMLManifoldResourceProviderElement extends Components.ManifoldResourceProvider, HTMLStencilElement {}
+  var HTMLManifoldResourceProviderElement: {
+    prototype: HTMLManifoldResourceProviderElement;
+    new (): HTMLManifoldResourceProviderElement;
+  };
+
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
@@ -1038,6 +1048,8 @@ declare global {
     'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement;
     'manifold-resource-credentials-view': HTMLManifoldResourceCredentialsViewElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
+    'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
+    'manifold-resource-provider': HTMLManifoldResourceProviderElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
