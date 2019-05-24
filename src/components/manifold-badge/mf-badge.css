@@ -8,7 +8,7 @@
   line-height: 1.5;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
-  background: var(--manifold-color-secondary);
+  background: var(--manifold-color-primary);
   border-radius: var(--manifold-tag-radius, 3em);
 
   /* TODO: move .tag styles from service-card to here and unify naming */

@@ -11,11 +11,11 @@
   }
 
   /* theme vars */
-  --card-background: var(--manifold-card-background, var(--manifold-grayscale-100i));
-  --card-border: var(--manifold-card-border, var(--manifold-border));
-  --card-shadow: var(--manifold-card-shadow, none);
-  --card-radius: var(--manifold-card-radius, var(--manifold-radius));
-  --card-text-color: var(--manifold-card-text-color, var(--manifold-text-color));
+  --card-background: var(--manifold-card-background);
+  --card-border: var(--manifold-card-border);
+  --card-shadow: var(--manifold-card-shadow);
+  --card-radius: var(--manifold-card-radius);
+  --card-text-color: var(--manifold-card-text-color);
   --logo-radius: var(--manifold-product-logo-radius, var(--manifold-radius));
 
   /* boolean values */
@@ -54,7 +54,6 @@
   height: var(--logo-size);
   overflow: hidden;
   background: var(--manifold-grayscale-100i);
-  border-radius: var(--logo-radius);
 
   @media (--viewport-s) {
     --logo-size: 3rem;
@@ -65,10 +64,14 @@
   }
 
   & img {
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center center;
+    background: white;
+    border: 2px solid white;
+    border-radius: var(--logo-radius);
   }
 }
 

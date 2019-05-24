@@ -7,26 +7,23 @@
 
   /* plan button */
   --card-spacing: var(--manifold-card-gap, 1rem);
-  --card-border: var(
-    --manifold-card-border,
-    var(--manifold-border, 1px solid var(--manifold-grayscale-20))
-  );
-  --card-radius: var(--manifold-card-radius, var(--manifold-radius, 4px));
-  --card-background: var(--manifold-grayscale-100i);
-  --card-color: var(--manifold-text-color, inherit);
-  --card-shadow: var(--manifold-card-shadow, none);
+  --card-border: var(--manifold-card-border);
+  --card-radius: var(--manifold-card-radius);
+  --card-background: var(--manifold-card-background);
+  --card-color: var(--manifold-card-text-color);
+  --card-shadow: var(--manifold-card-shadow);
 
   /* hover/focus */
-  --card-border-hover: var(--manifold-card-border-hover, var(--card-border));
+  --card-border-hover: var(--manifold-card-border-hover, var(--manifold-border-hover));
   --card-background-hover: var(--manifold-card-background-hover, var(--card-background));
-  --card-color-hover: var(--manifold-card-color-hover, var(--card-color));
-  --card-shadow-hover: var(--manifold-card-shadow-hover, none);
+  --card-color-hover: var(--manifold-card-text-color-hover, var(--card-color));
+  --card-shadow-hover: var(--manifold-card-shadow-hover);
 
   /* active */
-  --card-background-active: var(--manifold-card-background-active, var(--manifold-grayscale-100i));
-  --card-border-active: var(--manifold-card-border-active, 1px solid var(--manifold-color-primary));
-  --card-color-active: var(--manifold-card-color-active, var(--manifold-color-primary));
-  --card-shadow-active: var(--manifold-card-shadow-active, none);
+  --card-background-active: var(--manifold-card-background-active, var(--card-background-hover));
+  --card-border-active: var(--manifold-card-border-active, var(--manifold-border-active));
+  --card-color-active: var(--manifold-card-text-color-active, var(--manifold-color-primary));
+  --card-shadow-active: var(--manifold-card-shadow-active);
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);
@@ -69,6 +66,7 @@
   grid-template-areas: 'overlap';
   min-width: 8rem;
   margin: 0;
+  cursor: pointer;
 
   @media (--viewport-m) {
     margin: -1px -0.25rem; /* border offset */

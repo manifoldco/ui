@@ -6,8 +6,8 @@
 
   /* theme */
   --link-color: var(--manifold-text-color-secondary);
-  --link-color-active: var(--manifold-color-primary);
   --link-color-hover: var(--manifold-color-primary);
+  --link-color-active: var(--link-color-hover);
   --heading-color: var(--manifold-grayscale-60);
   --heading-border: 1px solid var(--manifold-grayscale-10);
 

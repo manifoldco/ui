@@ -166,11 +166,14 @@
 
   & img {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     min-width: 3rem;
     height: auto;
     min-height: 3rem;
     object-fit: contain;
+    background: white;
+    border: 2px solid white;
     border-radius: var(--logo-radius);
   }
 }
