@@ -54,7 +54,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@manifoldco/eslint-plugin-stencil": "^0.2.0",
+    "@manifoldco/eslint-plugin-stencil": "^0.2.1",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
     "@stencil/core": "^1.0.0-beta.0",
