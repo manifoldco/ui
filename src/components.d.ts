@@ -331,6 +331,18 @@ export namespace Components {
     'linkFormat'?: string;
     'preserveEvent': boolean;
   }
+  interface ManifoldTextToast {
+    /**
+    * `success` | `warning` | `error`
+    */
+    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+    'dismissable'?: boolean;
+    /**
+    * Use custom icon path data (1024×1024)
+    */
+    'icon'?: string;
+    'text': string;
+  }
   interface ManifoldToast {
     /**
     * `success` | `warning` | `error`
@@ -686,6 +698,18 @@ declare namespace LocalJSX {
     'onManifold-template-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
   }
+  interface ManifoldTextToast extends JSXBase.HTMLAttributes {
+    /**
+    * `success` | `warning` | `error`
+    */
+    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+    'dismissable'?: boolean;
+    /**
+    * Use custom icon path data (1024×1024)
+    */
+    'icon'?: string;
+    'text'?: string;
+  }
   interface ManifoldToast extends JSXBase.HTMLAttributes {
     /**
     * `success` | `warning` | `error`
@@ -749,6 +773,7 @@ declare namespace LocalJSX {
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
     'manifold-template-card': ManifoldTemplateCard;
+    'manifold-text-toast': ManifoldTextToast;
     'manifold-toast': ManifoldToast;
     'manifold-toggle': ManifoldToggle;
     'manifold-tooltip': ManifoldTooltip;
@@ -985,6 +1010,12 @@ declare global {
     new (): HTMLManifoldTemplateCardElement;
   };
 
+  interface HTMLManifoldTextToastElement extends Components.ManifoldTextToast, HTMLStencilElement {}
+  var HTMLManifoldTextToastElement: {
+    prototype: HTMLManifoldTextToastElement;
+    new (): HTMLManifoldTextToastElement;
+  };
+
   interface HTMLManifoldToastElement extends Components.ManifoldToast, HTMLStencilElement {}
   var HTMLManifoldToastElement: {
     prototype: HTMLManifoldToastElement;
@@ -1040,6 +1071,7 @@ declare global {
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
+    'manifold-text-toast': HTMLManifoldTextToastElement;
     'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-tooltip': HTMLManifoldTooltipElement;
