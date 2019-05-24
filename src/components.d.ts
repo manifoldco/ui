@@ -296,10 +296,6 @@ export namespace Components {
   interface ManifoldResourceDetailsView {
     'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceProvider {
-    'data'?: Gateway.Resource;
-    'loading': boolean;
-  }
   interface ManifoldResourceStatus {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -652,10 +648,6 @@ declare namespace LocalJSX {
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes {
     'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceProvider extends JSXBase.HTMLAttributes {
-    'data'?: Gateway.Resource;
-    'loading'?: boolean;
-  }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -751,7 +743,6 @@ declare namespace LocalJSX {
     'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
     'manifold-resource-details': ManifoldResourceDetails;
     'manifold-resource-details-view': ManifoldResourceDetailsView;
-    'manifold-resource-provider': ManifoldResourceProvider;
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
@@ -958,12 +949,6 @@ declare global {
     new (): HTMLManifoldResourceDetailsViewElement;
   };
 
-  interface HTMLManifoldResourceProviderElement extends Components.ManifoldResourceProvider, HTMLStencilElement {}
-  var HTMLManifoldResourceProviderElement: {
-    prototype: HTMLManifoldResourceProviderElement;
-    new (): HTMLManifoldResourceProviderElement;
-  };
-
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
@@ -1049,7 +1034,6 @@ declare global {
     'manifold-resource-credentials-view': HTMLManifoldResourceCredentialsViewElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
-    'manifold-resource-provider': HTMLManifoldResourceProviderElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;

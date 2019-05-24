@@ -1,6 +1,7 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 
 import ConnectionTunnel from '../../data/connection';
+import ResourceTunnel from '../../data/resource';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
@@ -31,9 +32,9 @@ export class ManifoldResourceContainer {
 
   render() {
     return (
-      <manifold-resource-provider data={this.resource} loading={this.loading}>
+      <ResourceTunnel.Provider state={{ data: this.resource, loading: this.loading }}>
         <slot />
-      </manifold-resource-provider>
+      </ResourceTunnel.Provider>
     );
   }
 }
