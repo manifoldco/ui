@@ -361,6 +361,9 @@ export namespace Components {
   interface ManifoldTooltip {
     'labelText'?: string;
   }
+  interface ManifoldTooltipText {
+    'text': string;
+  }
 }
 
 declare namespace LocalJSX {
@@ -723,6 +726,9 @@ declare namespace LocalJSX {
   interface ManifoldTooltip extends JSXBase.HTMLAttributes {
     'labelText'?: string;
   }
+  interface ManifoldTooltipText extends JSXBase.HTMLAttributes {
+    'text'?: string;
+  }
 
   interface IntrinsicElements {
     'manifold-active-plan': ManifoldActivePlan;
@@ -763,6 +769,7 @@ declare namespace LocalJSX {
     'manifold-toast': ManifoldToast;
     'manifold-toggle': ManifoldToggle;
     'manifold-tooltip': ManifoldTooltip;
+    'manifold-tooltip-text': ManifoldTooltipText;
   }
 }
 
@@ -1008,6 +1015,12 @@ declare global {
     new (): HTMLManifoldTooltipElement;
   };
 
+  interface HTMLManifoldTooltipTextElement extends Components.ManifoldTooltipText, HTMLStencilElement {}
+  var HTMLManifoldTooltipTextElement: {
+    prototype: HTMLManifoldTooltipTextElement;
+    new (): HTMLManifoldTooltipTextElement;
+  };
+
   interface HTMLElementTagNameMap {
     'manifold-active-plan': HTMLManifoldActivePlanElement;
     'manifold-badge': HTMLManifoldBadgeElement;
@@ -1047,6 +1060,7 @@ declare global {
     'manifold-toast': HTMLManifoldToastElement;
     'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-tooltip': HTMLManifoldTooltipElement;
+    'manifold-tooltip-text': HTMLManifoldTooltipTextElement;
   }
 
   interface ElementTagNameMap extends HTMLElementTagNameMap {}
