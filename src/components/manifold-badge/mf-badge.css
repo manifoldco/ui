@@ -1,15 +1,23 @@
 :host {
+  --padding: var(--manifold-tag-padding, 0.25em 1em);
+  --text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
+  --font-family: var(--manifold-tag-font-family, var(--manifold-font-family));
+  --font-weight: var(--manifold-tag-font-weight, 700);
+  --font-size: var(--manifold-tag-font-size, var(--manifold-font-d2));
+  --text-transform: var(--manifold-tag-text-transform, initial);
+  --background: var(--manifold-color-primary);
+  --radius: var(--manifold-tag-radius, 3em);
+
   display: inline-flex;
   align-items: center;
-  padding: var(--manifold-tag-padding, 0.25em 1em);
-  color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
-  font-weight: var(--manifold-tag-font-weight, 900);
-  font-size: var(--manifold-font-d2);
+  padding: var(--padding);
+  color: var(--text-color);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
   line-height: 1.5;
-  letter-spacing: 0.0625em;
-  text-transform: uppercase;
-  background: var(--manifold-color-primary);
-  border-radius: var(--manifold-tag-radius, 3em);
+  text-transform: var(--text-transform);
+  background: var(--background);
+  border-radius: var(--radius);
 
   /* TODO: move .tag styles from service-card to here and unify naming */
 }

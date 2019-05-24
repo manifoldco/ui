@@ -63,7 +63,8 @@ export default css`
 
     /* Tags */
     --manifold-tag-radius: 4px;
-    --manifold-tag-background: var(--theme-red);
+    --manifold-tag-font-weight: 400;
+    --manifold-tag-text-transform: lowercase;
 
     /* Buttons */
     --manifold-button-font-size: 0.9rem;

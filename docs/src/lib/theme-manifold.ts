@@ -72,5 +72,6 @@ export default css`
     /* Tags */
     --manifold-tag-radius: 1em;
     --manifold-tag-free-background: var(--manifold-g-green);
+    --manifold-tag-text-transform: uppercase;
   }
 `;
