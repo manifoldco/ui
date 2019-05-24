@@ -24,6 +24,9 @@ function Page({ currentPage, links }: PageProps) {
 }
 
 const contentStyles = css`
+  --manifold-g-red: linear-gradient(to top right, #a65084, #ec7740);
+  --manifold-g-yellow: linear-gradient(to top right, #ffb83a, #ffe268);
+
   .tag::before {
     display: inline-flex;
     align-items: center;
