@@ -330,18 +330,6 @@ export namespace Components {
     linkFormat?: string;
     preserveEvent: boolean;
   }
-  interface ManifoldToastText {
-    /**
-     * `success` | `warning` | `error`
-     */
-    alertType?: 'success' | 'warning' | 'error' | undefined;
-    dismissable?: boolean;
-    /**
-     * Use custom icon path data (1024×1024)
-     */
-    icon?: string;
-    text: string;
-  }
   interface ManifoldToast {
     /**
      * `success` | `warning` | `error`
@@ -355,6 +343,18 @@ export namespace Components {
      * Use custom icon path data (1024×1024)
      */
     icon?: string;
+  }
+  interface ManifoldToastText {
+    /**
+     * `success` | `warning` | `error`
+     */
+    alertType?: 'success' | 'warning' | 'error' | undefined;
+    dismissable?: boolean;
+    /**
+     * Use custom icon path data (1024×1024)
+     */
+    icon?: string;
+    text: string;
   }
   interface ManifoldToggle {
     ariaLabelledby?: string;
@@ -697,18 +697,6 @@ declare namespace LocalJSX {
     'onManifold-template-click'?: (event: CustomEvent<any>) => void;
     preserveEvent?: boolean;
   }
-  interface ManifoldToastText extends JSXBase.HTMLAttributes {
-    /**
-     * `success` | `warning` | `error`
-     */
-    alertType?: 'success' | 'warning' | 'error' | undefined;
-    dismissable?: boolean;
-    /**
-     * Use custom icon path data (1024×1024)
-     */
-    icon?: string;
-    text?: string;
-  }
   interface ManifoldToast extends JSXBase.HTMLAttributes {
     /**
      * `success` | `warning` | `error`
@@ -722,6 +710,18 @@ declare namespace LocalJSX {
      * Use custom icon path data (1024×1024)
      */
     icon?: string;
+  }
+  interface ManifoldToastText extends JSXBase.HTMLAttributes {
+    /**
+     * `success` | `warning` | `error`
+     */
+    alertType?: 'success' | 'warning' | 'error' | undefined;
+    dismissable?: boolean;
+    /**
+     * Use custom icon path data (1024×1024)
+     */
+    icon?: string;
+    text?: string;
   }
   interface ManifoldToggle extends JSXBase.HTMLAttributes {
     ariaLabelledby?: string;
@@ -772,8 +772,8 @@ declare namespace LocalJSX {
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
     'manifold-template-card': ManifoldTemplateCard;
-    'manifold-toast-text': ManifoldToastText;
     'manifold-toast': ManifoldToast;
+    'manifold-toast-text': ManifoldToastText;
     'manifold-toggle': ManifoldToggle;
     'manifold-tooltip': ManifoldTooltip;
   }
@@ -1044,16 +1044,16 @@ declare global {
     new (): HTMLManifoldTemplateCardElement;
   };
 
-  interface HTMLManifoldToastTextElement extends Components.ManifoldToastText, HTMLStencilElement {}
-  var HTMLManifoldToastTextElement: {
-    prototype: HTMLManifoldToastTextElement;
-    new (): HTMLManifoldToastTextElement;
-  };
-
   interface HTMLManifoldToastElement extends Components.ManifoldToast, HTMLStencilElement {}
   var HTMLManifoldToastElement: {
     prototype: HTMLManifoldToastElement;
     new (): HTMLManifoldToastElement;
+  };
+
+  interface HTMLManifoldToastTextElement extends Components.ManifoldToastText, HTMLStencilElement {}
+  var HTMLManifoldToastTextElement: {
+    prototype: HTMLManifoldToastTextElement;
+    new (): HTMLManifoldToastTextElement;
   };
 
   interface HTMLManifoldToggleElement extends Components.ManifoldToggle, HTMLStencilElement {}
@@ -1105,8 +1105,8 @@ declare global {
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
-    'manifold-toast-text': HTMLManifoldToastTextElement;
     'manifold-toast': HTMLManifoldToastElement;
+    'manifold-toast-text': HTMLManifoldToastTextElement;
     'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-tooltip': HTMLManifoldTooltipElement;
   }
