@@ -54,7 +54,6 @@
   height: var(--logo-size);
   overflow: hidden;
   background: var(--manifold-grayscale-100i);
-  border-radius: var(--logo-radius);
 
   @media (--viewport-s) {
     --logo-size: 3rem;
@@ -72,6 +71,7 @@
     object-position: center center;
     background: white;
     border: 2px solid white;
+    border-radius: var(--logo-radius);
   }
 }
 

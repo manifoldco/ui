@@ -95,7 +95,6 @@
     padding: 0;
     object-fit: cover;
     overflow: hidden;
-    border-radius: var(--manifold-radius);
 
     & + li {
       margin-left: calc(var(--padding) / 2);
@@ -109,5 +108,6 @@
     overflow: hidden;
     background: white;
     border: 2px solid white;
+    border-radius: var(--manifold-radius);
   }
 }
