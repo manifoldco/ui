@@ -1,12 +1,12 @@
 export const basic = () => {
-  const toast = document.createElement('manifold-text-toast');
+  const toast = document.createElement('manifold-toast-text');
   toast.text = 'Basic';
 
   document.body.appendChild(toast);
 };
 
 export const dismissable = () => {
-  const toast = document.createElement('manifold-text-toast');
+  const toast = document.createElement('manifold-toast-text');
   toast.setAttribute('dismissable', 'true');
   toast.text = 'Dismissable';
 
@@ -14,7 +14,7 @@ export const dismissable = () => {
 };
 
 export const error = () => {
-  const toast = document.createElement('manifold-text-toast');
+  const toast = document.createElement('manifold-toast-text');
   toast.setAttribute('alert-type', 'error');
   toast.text = 'Error';
 
@@ -22,7 +22,7 @@ export const error = () => {
 };
 
 export const success = () => {
-  const toast = document.createElement('manifold-text-toast');
+  const toast = document.createElement('manifold-toast-text');
   toast.setAttribute('alert-type', 'success');
   toast.text = 'Success';
 
@@ -30,7 +30,7 @@ export const success = () => {
 };
 
 export const warning = () => {
-  const toast = document.createElement('manifold-text-toast');
+  const toast = document.createElement('manifold-toast-text');
   toast.setAttribute('alert-type', 'warning');
   toast.text = 'Warning';
 

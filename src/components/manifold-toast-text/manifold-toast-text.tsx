@@ -1,7 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
 
-@Component({ tag: 'manifold-text-toast' })
-export class ManifoldTextToast {
+@Component({ tag: 'manifold-toast-text' })
+export class ManifoldToastText {
   @Prop() dismissable?: boolean = false;
   /** Use custom icon path data (1024×1024) */
   @Prop() icon?: string;
