@@ -171,9 +171,9 @@
     min-width: 3rem;
     height: auto;
     min-height: 3rem;
-    padding: 2px;
     object-fit: contain;
     background: white;
+    border: 2px solid white;
     border-radius: var(--logo-radius);
   }
 }

@@ -108,10 +108,10 @@
     box-sizing: border-box;
     width: var(--manifold-product-logo-s);
     height: var(--manifold-product-logo-s);
-    padding: 2px;
     overflow: hidden;
     color: transparent;
     background: white;
+    border: 2px solid white;
     border-radius: var(--manifold-radius);
     opacity: 0.1;
     transition: opacity 150ms linear 100ms;
