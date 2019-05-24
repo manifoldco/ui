@@ -16,4 +16,5 @@ module.exports = {
   setupScript: path.resolve(__dirname, 'happoSetup.js'),
   stylesheets: [path.join(__dirname, 'dist/manifold/manifold.css')],
   plugins: [happoPluginTypeScript()],
+  asyncTimeout: 1000,
 };

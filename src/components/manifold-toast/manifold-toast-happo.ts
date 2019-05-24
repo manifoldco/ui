@@ -1,34 +1,51 @@
 export const basic = () => {
-    const plan = document.createElement('manifold-toast');
-  
-    document.body.appendChild(plan);
-    };
+  const text = "Basic";
+
+  const toast = document.createElement('manifold-toast');
+  toast.innerHTML = text;
+
+  document.body.appendChild(toast);
+};
+
+export const dismissable = () => {
+  const text = "Dismissable";
+
+  const toast = document.createElement('manifold-toast');
+  toast.setAttribute("dismissable", "true");
+  toast.innerHTML = text;
+
+  document.body.appendChild(toast);
+};
 
 export const error = () => {
-    const plan = document.createElement('manifold-toast');
-    plan.setAttribute("alert-type", "error");
-  
-    document.body.appendChild(plan);
-  };
+  const text = "Error";
+
+  const toast = document.createElement('manifold-toast');
+  toast.setAttribute("alert-type", "error");
+  toast.innerHTML = text;
+
+  document.body.appendChild(toast);
+};
     
+export const success = () => {
+  const text = "Success";
+
+  const toast = document.createElement('manifold-toast');
+  toast.setAttribute("alert-type", "success");
+  toast.innerHTML = text;
+
+  document.body.appendChild(toast);
+};
+
 export const warning = () => {
-    const plan = document.createElement('manifold-toast');
-    plan.setAttribute("alert-type", "warning");
-  
-    document.body.appendChild(plan);
-  };
+  const text = "Warning";
 
-  export const success = () => {
-    const plan = document.createElement('manifold-toast');
-    plan.setAttribute("alert-type", "success");
-  
-    document.body.appendChild(plan);
-  };
+  const toast = document.createElement('manifold-toast');
+  toast.setAttribute("alert-type", "warning");
+  toast.innerHTML = text;
 
-  export const dismissable = () => {
-    const plan = document.createElement('manifold-toast');
-    plan.setAttribute("dismissable", "true");
-  
-    document.body.appendChild(plan);
-  };
+  document.body.appendChild(toast);
+};
+
+
   
