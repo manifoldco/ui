@@ -63,9 +63,6 @@
   --manifold-color-success: var(--manifold-green);
   --manifold-color-warn: var(--manifold-orange);
   --manifold-color-error: var(--manifold-red);
-  --manifold-radius: 4px;
-  --manifold-border: 1px solid var(--manifold-grayscale-10);
-  --manifold-border-focus: 1px solid var(--manifold-color-primary);
 
   /* Text */
   --manifold-text-color: var(--manifold-grayscale-100);
@@ -164,9 +161,4 @@
   --manifold-input-border: var(--manifold-border);
   --manifold-input-radius: var(--manifold-radius);
   --manifold-input-shadow: none;
-
-  /* Input:focus */
-  --manifold-input-background-focus: var(--manifold-input-background);
-  --manifold-input-border-focus: var(--manifold-border-focus);
-  --manifold-input-shadow-focus: var(--manifold-input-shadow);
 }

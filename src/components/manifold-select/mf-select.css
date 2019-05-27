@@ -44,7 +44,7 @@ select:focus {
   background-image: linear-gradient(45deg, transparent 50%, var(--focus-color) 50%),
     linear-gradient(135deg, var(--focus-color) 50%, transparent 50%),
     linear-gradient(to right, var(--focus-color), var(--focus-color));
-  border-color: var(--focus-color);
+  border: var(--border-focus);
   outline: 0;
   box-shadow: var(--shadow-focus);
 }
