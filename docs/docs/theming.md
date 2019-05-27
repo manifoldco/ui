@@ -70,7 +70,7 @@ manifold-marketplace {
 ### Grayscales & Dark Theming
 
 | Name                                 | Default         | Description                                        |
-|--------------------------------------|-----------------|----------------------------------------------------|
+| ------------------------------------ | --------------- | -------------------------------------------------- |
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
@@ -101,7 +101,7 @@ By default, `--manifold-grayscale-[opacity]` values range from solid black down 
 There are four theming levels:
 
 | Level       | Name              | Description                                                          |
-|-------------|-------------------|----------------------------------------------------------------------|
+| ----------- | ----------------- | -------------------------------------------------------------------- |
 | 1 (highest) | Base              | The base theme provided by Manifold UI                               |
 | 2           | Top-level         | Your custom theme and branding                                       |
 | 3           | Common Components | Reusable UI elements like cards, buttons, and tags                   |
@@ -165,14 +165,14 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 ### Grayscale
 
 | Name                                 | Default         | Description                                        |
-|--------------------------------------|-----------------|----------------------------------------------------|
+| ------------------------------------ | --------------- | -------------------------------------------------- |
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
 ### Top Level Properties
 
 | Name                               | Default                                   | Description                                        |
-|------------------------------------|-------------------------------------------|----------------------------------------------------|
+| ---------------------------------- | ----------------------------------------- | -------------------------------------------------- |
 | `--manifold-color-primary`         | `rgb(30, 80, 218)`                        | Primary color                                      |
 | `--manifold-color-success`         | `rgb(49, 186, 162)`                       | Success color<sup>\*</sup>                         |
 | `--manifold-color-info`            | `rgb(30, 80, 218)`                        | General info message color<sup>\*</sup>            |
@@ -196,21 +196,21 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 Text components are used thoughout most components.
 
-| Name                                                                  | Default                          | Description                                                                                              |
-|-----------------------------------------------------------------------|----------------------------------|----------------------------------------------------------------------------------------------------------|
-| `--manifold-text-color-secondary`                                     | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
-| `--manifold-text-color-accent`                                        | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
-| `--manifold-text-color-body`                                          | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
-| <span class="tag not-implemented" /> `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
-| <span class="tag not-implemented" /> `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
-| <span class="tag not-implemented" /> `--manifold-font-weight-heading` | `700`                            | Weight for all headings                                                                                  |
+| Name                              | Default                          | Description                                                                                              |
+| --------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
+| `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
+| `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
+| `--manifold-text-color-heading`   | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
+| `--manifold-font-family-heading`  | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
+| `--manifold-font-weight-heading`  | `400`                            | Weight for all headings                                                                                  |
 
 #### Cards
 
 Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, plan details panel).
 
 | Name                                | Default                           | Description       |
-|-------------------------------------|-----------------------------------|-------------------|
+| ----------------------------------- | --------------------------------- | ----------------- |
 | `--manifold-card-background`        | `var(--manifold-grayscale-100i)`  | Background        |
 | `--manifold-card-border`            | `var(--manifold-border)`          | Border            |
 | `--manifold-card-radius`            | `var(--manifold-radius)`          | Corner radius     |
@@ -227,7 +227,7 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 #### Input Fields
 
 | Name                                                                      | Default                                  | Description      |
-|---------------------------------------------------------------------------|------------------------------------------|------------------|
+| ------------------------------------------------------------------------- | ---------------------------------------- | ---------------- |
 | <span class="tag part-implemented" /> `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
 | <span class="tag part-implemented" /> `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
 | <span class="tag not-implemented" /> `--manifold-input-radius`            | `var(--manifold-radius)`                 | Radius           |
@@ -244,7 +244,7 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 #### Tags
 
 | Name                                                                  | Default                             | Description                |
-|-----------------------------------------------------------------------|-------------------------------------|----------------------------|
+| --------------------------------------------------------------------- | ----------------------------------- | -------------------------- |
 | `--manifold-tag-background`                                           | `var(--manifold-color-primary)`     | Background                 |
 | `--manifold-tag-text-color`                                           | `var(--manifold-text-color-accent)` | Text color                 |
 | <span class="tag not-implemented" /> `--manifold-tag-font-size`       | `1rem`                              | Font size                  |
@@ -261,7 +261,7 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 #### Marketplace
 
 | Name                                                                   | Default                                | Description                             |
-|------------------------------------------------------------------------|----------------------------------------|-----------------------------------------|
+| ---------------------------------------------------------------------- | -------------------------------------- | --------------------------------------- |
 | <span class="tag not-implemented" /> `--link-text-color`               | `var(--manifold-text-color-secondary)` | Category menu link text color           |
 | <span class="tag not-implemented" /> `--link-font-weight`              | `inherit`                              | Category menu link font weight          |
 | <span class="tag not-implemented" /> `--link-text-color-hover`         | `var(--manifold-text-color-primary)`   | Category menu link text color (hover)   |
@@ -288,7 +288,7 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 #### Plan Selector
 
 | Name                                                                      | Default                            | Description                   |
-|---------------------------------------------------------------------------|------------------------------------|-------------------------------|
+| ------------------------------------------------------------------------- | ---------------------------------- | ----------------------------- |
 | <span class="tag not-implemented" /> `--plan-menu-grid-gap`               | `1rem`                             | Gap between plan menu buttons |
 |                                                                           |                                    |                               |
 | <span class="tag not-implemented" /> `--plan-menu-card-background`        | `var(--manifold-card-background)`  | Background                    |
@@ -312,7 +312,7 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 #### Product
 
 | Name                                                                    | Default                                | Description                      |
-|-------------------------------------------------------------------------|----------------------------------------|----------------------------------|
+| ----------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
 | <span class="tag not-implemented" /> `--product-card-background`        | Branded Gradient                       | Background                       |
 | <span class="tag not-implemented" /> `--product-card-border`            | `var(--manifold-border)`               | Border                           |
 | <span class="tag not-implemented" /> `--product-card-radius`            | `var(--manifold-radius)`               | Corner radius                    |

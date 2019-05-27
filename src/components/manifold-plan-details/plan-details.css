@@ -79,7 +79,10 @@
   margin-top: 0;
   margin-bottom: 0;
   font-weight: 400;
+  color: var(--manifold-text-color-heading);
+  font-weight: var(--mainfold-font-weight-heading);
   font-size: var(--manifold-font-u3);
+  font-family: var(--manifold-font-family-heading);
 
   @media (--viewport-m) {
     font-size: var(--manifold-font-u4);
