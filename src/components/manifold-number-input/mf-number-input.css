@@ -1,12 +1,19 @@
 :host {
-  --input-background: var(--manifold-grayscale-100i);
-  --input-placeholder-color: var(--manifold-text-color-secondary);
-  --input-border: var(--manfold-input-border, var(--manifold-border));
-  --input-border-focus: 1px solid var(--manifold-color-primary);
   --button-background: var(--manifold-grayscale-05);
-  --text-color: var(--manifold-grayscale-100);
-  --radius: var(--manifold-radius);
+  --text-color: var(--manifold-input-text-color);
   --range-text-color: var(--manifold-text-color-secondary);
+
+  /* field */
+  --input-background: var(--manifold-input-background);
+  --input-placeholder-color: var(--manifold-text-color-secondary);
+  --input-border: var(--manfold-input-border);
+  --input-shadow: var(--manifold-input-shadow);
+  --radius: var(--manifold-input-radius);
+
+  /* field:focus */
+  --input-background-focus: var(--input-background-focus);
+  --input-border-focus: var(--input-border-focus);
+  --input-shadow-focus: var(--input-shadow);
 }
 
 .container {
@@ -27,6 +34,7 @@
   background: var(--input-background);
   border: var(--input-border);
   border-radius: var(--radius);
+  box-shadow: var(--input-shadow);
   -webkit-appearance: none;
   -moz-appearance: textfield; /* hides up/down buttons on firefox */
   font-variant-ligatures: none;
@@ -45,8 +53,10 @@
   }
 
   &:focus {
+    background: var(--input-background-focus);
     border: var(--input-border-focus);
     outline: 0;
+    box-shadow: var(--input-shadow-focus);
   }
 }
 

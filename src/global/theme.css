@@ -157,4 +157,16 @@
   --manifold-card-radius: var(--manifold-radius);
   --manifold-card-shadow: none;
   --manifold-card-text-color: var(--manifold-text-color);
+
+  /* Input */
+  --manifold-input-background: var(--manifold-grayscale-100i);
+  --manifold-input-text-color: var(--manifold-text-color);
+  --manifold-input-border: var(--manifold-border);
+  --manifold-input-radius: var(--manifold-radius);
+  --manifold-input-shadow: none;
+
+  /* Input:focus */
+  --manifold-input-background-focus: var(--manifold-input-background);
+  --manifold-input-border-focus: var(--manifold-border-focus);
+  --manifold-input-shadow-focus: var(--manifold-input-shadow);
 }

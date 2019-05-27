@@ -12,15 +12,17 @@
   --heading-border: 1px solid var(--manifold-grayscale-10);
 
   /* search */
-  --search-text-color: var(--manifold-grayscale-100);
-  --search-background: var(--manifold-input-background, var(--manifold-grayscale-05));
-  --search-shadow: var(--manifold-input-shadow, none);
-  --search-shadow-focus: var(--manifold-input-shadow-focus, --search-shadow);
-  --search-background-focus: var(--manifold-input-background-focus, var(--search-background));
-  --search-border: var(--manifold-input-border, var(--manifold-border));
-  --search-border-focus: var(--manifold-input-border-focus, var(--manifold-border-focus));
-  --search-radius: var(--manifold-radius);
+  --search-text-color: var(--manifold-input-text-color);
+  --search-background: var(--manifold-input-background);
+  --search-border: var(--manifold-input-border);
+  --search-shadow: var(--manifold-input-shadow);
+  --search-radius: var(--manifold-input-radius);
   --search-placeholder-color: var(--manifold-text-color-secondary);
+
+  /* focus */
+  --search-shadow-focus: var(--manifold-input-shadow-focus, var(--search-shadow));
+  --search-background-focus: var(--manifold-input-background-focus, var(--search-background));
+  --search-border-focus: var(--manifold-input-border-focus, var(--search-border));
 
   color: var(--manifold-text-color);
   font-family: var(--manifold-font-family);
