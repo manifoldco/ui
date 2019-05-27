@@ -6,13 +6,13 @@
   /* field */
   --input-background: var(--manifold-input-background);
   --input-placeholder-color: var(--manifold-text-color-secondary);
-  --input-border: var(--manfold-input-border);
+  --input-border: var(--manifold-input-border);
   --input-shadow: var(--manifold-input-shadow);
   --radius: var(--manifold-input-radius);
 
   /* field:focus */
-  --input-background-focus: var(--input-background-focus);
-  --input-border-focus: var(--input-border-focus);
+  --input-background-focus: var(--input-background);
+  --input-border-focus: var(--manifold-border-focus);
   --input-shadow-focus: var(--input-shadow);
 }
 
