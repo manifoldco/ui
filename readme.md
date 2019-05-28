@@ -30,7 +30,7 @@ npm i @manifoldco/ui
   <link
     rel="stylesheet"
     type="text/css"
-    href="https://unpkg.com/@manifoldco/ui/dist/manifold/manifold.css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
   />
 </head>
 <body>
@@ -49,7 +49,7 @@ npm i @manifoldco/ui
   <link
     rel="stylesheet"
     type="text/css"
-    href="https://unpkg.com/@manifoldco/ui/dist/manifold/manifold.css"
+    href="https://unpkg.com/@manifoldco/ui/dist/manifold.css"
   />
 </head>
 <body>
