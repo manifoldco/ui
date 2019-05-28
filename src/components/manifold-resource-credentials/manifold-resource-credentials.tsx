@@ -9,7 +9,6 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldResourceCredentials {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
-  /** Which resource does this belong to? */
   @State() credentials?: Marketplace.Credential[];
 
   fetchCredentials = async (resource?: Gateway.Resource) => {
