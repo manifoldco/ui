@@ -23,6 +23,7 @@ export class ManifoldMarketplaceGrid {
   @Prop() preserveEvent: boolean = false;
   @Prop() products?: string[] = [];
   @Prop() services?: Catalog.Product[];
+  @Prop() templateLinkFormat?: string;
   @State() filter: string | null;
   @State() activeCategory?: string;
   @State() observer: IntersectionObserver;
@@ -207,7 +208,7 @@ export class ManifoldMarketplaceGrid {
                   <manifold-template-card
                     category={category}
                     preserveEvent={this.preserveEvent}
-                    linkFormat={this.linkFormat}
+                    templateLinkFormat={this.templateLinkFormat}
                   />
                 ),
               ])

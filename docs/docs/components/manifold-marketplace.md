@@ -97,11 +97,12 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 `link-format`:
 
 ```html
-<manifold-marketplace link-format="/product/:product" />
+<manifold-marketplace link-format="/product/:product" template-link-format="/template/:template" />
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
-`:product` will be replaced with the url-friendly slug for the product.
+`:product` will be replaced with the url-friendly slug for the product, as
+will `:template` for custom resource templates.
 
 Note that this will disable the custom events unless `preserve-event` is
 passed as well.

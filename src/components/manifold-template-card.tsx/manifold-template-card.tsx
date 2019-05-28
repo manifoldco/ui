@@ -14,16 +14,16 @@ interface EventDetail {
 export class ManifoldTemplateCard {
   @Event({ eventName: 'manifold-template-click', bubbles: true }) templateClick: EventEmitter;
   @Prop() category: string;
-  @Prop() linkFormat?: string;
+  @Prop() templateLinkFormat?: string;
   @Prop() preserveEvent: boolean = false;
 
-  get formattedLink(): string {
-    if (this.linkFormat !== 'string') return '';
-    return this.linkFormat.replace(/:product/gi, this.category);
+  get href() {
+    if (!this.templateLinkFormat || !this.category) return '';
+    return this.templateLinkFormat.replace(/:template/gi, this.category);
   }
 
   onClick = (e: Event): void => {
-    if (!this.linkFormat || this.preserveEvent) {
+    if (!this.templateLinkFormat || this.preserveEvent) {
       e.preventDefault();
       const detail: EventDetail = { category: this.category };
       this.templateClick.emit(detail);
@@ -46,7 +46,7 @@ export class ManifoldTemplateCard {
         itemscope
         itemtype="https://schema.org/Product"
         itemprop="url"
-        href={this.formattedLink}
+        href={this.href}
         onClick={this.onClick}
       >
         <h4 class="heading">

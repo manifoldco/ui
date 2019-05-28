@@ -23,6 +23,8 @@ export class ManifoldMarketplace {
   @Prop() preserveEvent: boolean = false;
   /** Comma-separated list of shown products (labels) */
   @Prop() products?: string;
+  /** Template format structure, with `:product` placeholder */
+  @Prop() templateLinkFormat?: string;
   @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
@@ -61,6 +63,7 @@ export class ManifoldMarketplace {
         preserveEvent={this.preserveEvent}
         products={this.parsedProducts}
         services={this.services}
+        templateLinkFormat={this.templateLinkFormat}
       />
     );
   }

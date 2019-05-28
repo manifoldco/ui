@@ -6,7 +6,6 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-import { JSX } from '@stencil/core';
 import {
   Connection,
 } from './utils/connections';
@@ -186,6 +185,10 @@ export namespace Components {
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
+    /**
+    * Template format structure, with `:product` placeholder
+    */
+    'templateLinkFormat'?: string;
   }
   interface ManifoldMarketplaceGrid {
     'excludes'?: string[];
@@ -196,6 +199,7 @@ export namespace Components {
     'preserveEvent': boolean;
     'products'?: string[];
     'services'?: Catalog.Product[];
+    'templateLinkFormat'?: string;
   }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
@@ -322,8 +326,8 @@ export namespace Components {
   interface ManifoldSkeletonText {}
   interface ManifoldTemplateCard {
     'category': string;
-    'linkFormat'?: string;
     'preserveEvent': boolean;
+    'templateLinkFormat'?: string;
   }
   interface ManifoldToast {
     /**
@@ -527,6 +531,10 @@ declare namespace LocalJSX {
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
+    /**
+    * Template format structure, with `:product` placeholder
+    */
+    'templateLinkFormat'?: string;
   }
   interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes {
     'excludes'?: string[];
@@ -537,6 +545,7 @@ declare namespace LocalJSX {
     'preserveEvent'?: boolean;
     'products'?: string[];
     'services'?: Catalog.Product[];
+    'templateLinkFormat'?: string;
   }
   interface ManifoldNumberInput extends JSXBase.HTMLAttributes {
     'decrementDisabledLabel'?: string;
@@ -670,9 +679,9 @@ declare namespace LocalJSX {
   interface ManifoldSkeletonText extends JSXBase.HTMLAttributes {}
   interface ManifoldTemplateCard extends JSXBase.HTMLAttributes {
     'category'?: string;
-    'linkFormat'?: string;
     'onManifold-template-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
+    'templateLinkFormat'?: string;
   }
   interface ManifoldToast extends JSXBase.HTMLAttributes {
     /**
