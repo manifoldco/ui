@@ -57,7 +57,7 @@
     "@manifoldco/eslint-plugin-stencil": "^0.2.1",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
-    "@stencil/core": "^1.0.0-beta.0",
+    "@stencil/core": "^1.0.0-beta.5",
     "@stencil/postcss": "^0.1.0",
     "@stencil/state-tunnel": "^1.0.0-1",
     "@storybook/html": "^5.0.11",
