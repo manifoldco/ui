@@ -6,6 +6,8 @@ export const available = () => {
   status.resourceState = { loading: false, data: fromJSON(resource) };
 
   document.body.appendChild(status);
+
+  return status.componentOnReady();
 };
 
 export const offline = () => {
@@ -13,6 +15,8 @@ export const offline = () => {
   status.resourceState = { loading: false, data: undefined };
 
   document.body.appendChild(status);
+
+  return status.componentOnReady();
 };
 
 export const resourceLoading = () => {
@@ -20,4 +24,6 @@ export const resourceLoading = () => {
   status.resourceState = { loading: true, data: undefined };
 
   document.body.appendChild(status);
+
+  return status.componentOnReady();
 };
