@@ -11,6 +11,11 @@
   --heading-color: var(--manifold-grayscale-60);
   --heading-border: 1px solid var(--manifold-grayscale-10);
 
+  /* headings */
+  --font-family-heading: var(--manifold-font-family-heading);
+  --font-weight-heading: var(--manifold-font-weight-heading);
+  --text-color-heading: var(--manifold-text-color-heading);
+
   /* search */
   --search-text-color: var(--manifold-input-text-color);
   --search-background: var(--manifold-input-background);
@@ -98,10 +103,10 @@
   margin-bottom: var(--grid-s);
   padding-top: var(--grid-s);
   padding-bottom: var(--grid-s);
-  color: var(--heading-color);
-  font-weight: 400;
+  color: var(--text-color-heading);
+  font-weight: var(--font-weight-heading);
   font-size: 1em;
-  font-family: var(--manifold-font-family);
+  font-family: var(--font-family-heading);
   text-transform: capitalize;
   border-bottom: var(--heading-border);
 

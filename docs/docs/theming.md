@@ -196,14 +196,14 @@ Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` wi
 
 Text components are used thoughout most components.
 
-| Name                                                                  | Default                          | Description                                                                                              |
-| --------------------------------------------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `--manifold-text-color-secondary`                                     | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
-| `--manifold-text-color-accent`                                        | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
-| `--manifold-text-color-body`                                          | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
-| <span class="tag not-implemented" /> `--manifold-text-color-heading`  | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
-| <span class="tag not-implemented" /> `--manifold-font-family-heading` | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
-| <span class="tag not-implemented" /> `--manifold-font-weight-heading` | `700`                            | Weight for all headings                                                                                  |
+| Name                              | Default                          | Description                                                                                              |
+| --------------------------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
+| `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
+| `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
+| `--manifold-heading-text-color`   | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
+| `--manifold-heading-font-family`  | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
+| `--manifold-heading-font-weight`  | `400`                            | Weight for all headings                                                                                  |
 
 #### Cards
 

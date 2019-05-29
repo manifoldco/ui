@@ -80,6 +80,11 @@
   /* Radii */
   --manifold-radius: 4px;
 
+  /* Headings */
+  --manifold-font-family-heading: inherit;
+  --manifold-font-weight-heading: 400;
+  --manifold-text-color-heading: inherit;
+
   /* Borders */
   --manifold-border: 1px solid var(--manifold-grayscale-15);
   --manifold-border-hover: 1px solid var(--manifold-grayscale-30);
