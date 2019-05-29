@@ -17,10 +17,10 @@ export class ManifoldMarketplace {
   @Prop() hideTemplates?: boolean = false;
   /** Hide categories & side menu? */
   @Prop() hideCategories?: boolean = false;
-  /** Link format structure, with `:product` placeholder */
-  @Prop() linkFormat?: string;
-  /** Should the JS event still fire, even if link-format is passed?  */
+  /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent: boolean = false;
+  /** Product link structure, with `:product` placeholder */
+  @Prop() productLinkFormat?: string;
   /** Comma-separated list of shown products (labels) */
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
@@ -59,7 +59,7 @@ export class ManifoldMarketplace {
         featured={this.parsedFeatured}
         hideCategories={this.hideCategories}
         hideTemplates={this.hideTemplates}
-        linkFormat={this.linkFormat}
+        productLinkFormat={this.productLinkFormat}
         preserveEvent={this.preserveEvent}
         products={this.parsedProducts}
         services={this.services}

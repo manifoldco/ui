@@ -6,7 +6,7 @@ storiesOf('Resource List 🔒 [Data]', module)
   .add(
     'default',
     () => `
-  <manifold-data-resource-list link-format="/resources/:resource" paused>
+  <manifold-data-resource-list resource-link-format="/resources/:resource" paused>
   <ul>
     <li><a href="/resources/db-prod">db-prod</a></li>
     <li><a href="/resources/db-stage">db-stage</a></li>

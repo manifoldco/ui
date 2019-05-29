@@ -30,14 +30,14 @@ Navigating client-side happens via the `manifold-resourceList-click` custom even
 
 ## Link format
 
-To navigate using a traditional `<a>` tag, specify a `link-format` attribute, using
-`:resource` as a placeholder:
+To navigate using a traditional `<a>` tag, specify a `resource-link-format`
+attribute, using `:resource` as a placeholder:
 
 ```html
-<manifold-data-resource-list link-format="/resource/:resource" />
+<manifold-data-resource-list resource-link-format="/resource/:resource" />
 ```
 
-Note that this will disable the custom events unless `preserve-event` is
+Note that this will disable the custom event unless `preserve-event` is
 passed as well.
 
 ## Pausing updates

@@ -19,8 +19,8 @@ export class ManifoldMarketplaceGrid {
   @Prop() featured?: string[] = [];
   @Prop() hideCategories?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
-  @Prop() linkFormat?: string;
   @Prop() preserveEvent: boolean = false;
+  @Prop() productLinkFormat?: string;
   @Prop() products?: string[] = [];
   @Prop() services?: Catalog.Product[];
   @Prop() templateLinkFormat?: string;
@@ -161,7 +161,7 @@ export class ManifoldMarketplaceGrid {
       description={tagline}
       isFeatured={this.featured && this.featured.includes(label)}
       label={label}
-      linkFormat={this.linkFormat}
+      productLinkFormat={this.productLinkFormat}
       logo={logo_url}
       name={name}
       preserveEvent={this.preserveEvent}

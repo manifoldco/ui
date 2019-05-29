@@ -6,7 +6,7 @@ storiesOf('Marketplace', module)
   .add(
     'default',
     () =>
-      '<manifold-marketplace link-format="/products/:product" template-link-format="/products/custom/:template" preserve-event></manifold-marketplace>'
+      '<manifold-marketplace product-link-format="/products/:product" template-link-format="/products/custom/:template" preserve-event></manifold-marketplace>'
   )
   .add('no templates', () => '<manifold-marketplace hide-templates></manifold-marketplace>')
   .add('compact', () => '<manifold-marketplace hide-categories></manifold-marketplace>')

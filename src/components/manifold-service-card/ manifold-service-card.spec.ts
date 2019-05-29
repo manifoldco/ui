@@ -27,7 +27,7 @@ describe('<manifold-service-card>', () => {
     serviceCard.logo = Product.body.logo_url;
     serviceCard.name = Product.body.name;
     serviceCard.description = Product.body.tagline;
-    serviceCard.linkFormat = '/product/:product';
+    serviceCard.productLinkFormat = '/product/:product';
 
     expect(serviceCard.href).toBe(`/product/${Product.body.label}`);
   });

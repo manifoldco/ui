@@ -21,7 +21,7 @@ export class ManifoldServiceCard {
   @Prop() description?: string;
   @Prop() isFeatured?: boolean;
   @Prop() label?: string;
-  @Prop() linkFormat?: string;
+  @Prop() productLinkFormat?: string;
   @Prop() logo?: string;
   @Prop() preserveEvent: boolean = false;
   @Prop() productId?: string;
@@ -36,8 +36,8 @@ export class ManifoldServiceCard {
   }
 
   get href() {
-    if (!this.linkFormat || !this.label) return '';
-    return this.linkFormat.replace(/:product/gi, this.label);
+    if (!this.productLinkFormat || !this.label) return '';
+    return this.productLinkFormat.replace(/:product/gi, this.label);
   }
 
   async fetchIsFree(productId: string) {
@@ -50,7 +50,7 @@ export class ManifoldServiceCard {
   }
 
   onClick = (e: Event): void => {
-    if (!this.linkFormat || this.preserveEvent) {
+    if (!this.productLinkFormat || this.preserveEvent) {
       e.preventDefault();
       const detail: EventDetail = {
         productId: this.productId,
