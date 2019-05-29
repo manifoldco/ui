@@ -174,8 +174,8 @@
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
-  font-size: var(--manifold-font-d1);
   color: var(--card-price-text-color);
+  font-size: var(--manifold-font-d1);
   transition: opacity 100ms linear;
 
   & > span {

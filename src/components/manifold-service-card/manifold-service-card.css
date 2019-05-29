@@ -165,9 +165,9 @@
   margin-left: 0.5em;
   padding: var(--tag-padding);
   color: var(--tag-text-color);
-  font-family: var(--tag-font-family);
   font-weight: var(--tag-font-weight);
   font-size: var(--tag-font-size);
+  font-family: var(--tag-font-family);
   line-height: 1.5;
   text-transform: var(--tag-text-transform);
   background: var(--tag-background);
