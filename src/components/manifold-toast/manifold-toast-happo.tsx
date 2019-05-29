@@ -1,34 +1,48 @@
-import toHTML from '../../../test-utils/to-html';
-
 export const basic = () => {
-  const toast = toHTML('<manifold-toast>Basic</manifold-toast>');
+  const toast = document.createElement('manifold-toast');
+  toast.textContent = 'Basic';
 
   document.body.appendChild(toast);
+
+  return toast.componentOnReady();
 };
 
 export const dismissable = () => {
-  const toast = toHTML('<manifold-toast dismissable>Dismissable</manifold-toast>');
+  const toast = document.createElement('manifold-toast');
+  toast.dismissable = true;
+  toast.textContent = 'Dismissable';
 
   document.body.appendChild(toast);
+
+  return toast.componentOnReady();
 };
 
 export const error = () => {
-  const toast = toHTML('<manifold-toast>Error</manifold-toast>') as HTMLManifoldToastElement;
+  const toast = document.createElement('manifold-toast');
   toast.alertType = 'error';
+  toast.textContent = 'Error';
 
   document.body.appendChild(toast);
+
+  return toast.componentOnReady();
 };
 
 export const success = () => {
-  const toast = toHTML('<manifold-toast>Success</manifold-toast>') as HTMLManifoldToastElement;
+  const toast = document.createElement('manifold-toast');
   toast.alertType = 'success';
+  toast.textContent = 'Success';
 
   document.body.appendChild(toast);
+
+  return toast.componentOnReady();
 };
 
 export const warning = () => {
-  const toast = toHTML('<manifold-toast>Warning</manifold-toast>') as HTMLManifoldToastElement;
+  const toast = document.createElement('manifold-toast');
   toast.alertType = 'warning';
+  toast.textContent = 'Warning';
 
   document.body.appendChild(toast);
+
+  return toast.componentOnReady();
 };

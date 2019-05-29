@@ -11,5 +11,8 @@ export const primary = () => {
       </span>
   `;
 
-  document.body.appendChild(toHTML(content));
+  const tooltip = toHTML(content) as HTMLManifoldTooltipElement;
+  document.body.appendChild(tooltip);
+
+  return tooltip.componentOnReady();
 };
