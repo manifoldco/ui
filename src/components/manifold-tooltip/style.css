@@ -31,6 +31,7 @@
   }
 }
 
-slot:hover + .tooltip {
+slot:hover + .tooltip,
+slot:focus + .tooltip {
   display: block;
 }
