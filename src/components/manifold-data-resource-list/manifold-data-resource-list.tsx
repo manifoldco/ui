@@ -26,8 +26,8 @@ export class ManifoldDataResourceList {
   /** Disable auto-updates? */
   @Prop() paused: boolean = false;
   /** Link format structure, with `:resource` placeholder */
-  @Prop() linkFormat?: string;
-  /** Should the JS event still fire, even if link-format is passed?  */
+  @Prop() resourceLinkFormat?: string;
+  /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent: boolean = false;
   @State() interval?: number;
   @State() resources?: Marketplace.Resource[];
@@ -53,7 +53,7 @@ export class ManifoldDataResourceList {
   }
 
   handleClick(resource: Marketplace.Resource, e: Event) {
-    if (!this.linkFormat || this.preserveEvent) {
+    if (!this.resourceLinkFormat || this.preserveEvent) {
       e.preventDefault();
       const detail: EventDetail = {
         resourceId: resource.id,
@@ -65,8 +65,8 @@ export class ManifoldDataResourceList {
   }
 
   formatLink(resource: Marketplace.Resource) {
-    if (!this.linkFormat) return undefined;
-    return this.linkFormat.replace(/:resource/gi, resource.body.label);
+    if (!this.resourceLinkFormat) return undefined;
+    return this.resourceLinkFormat.replace(/:resource/gi, resource.body.label);
   }
 
   userResources(resources: RealResource[]) {

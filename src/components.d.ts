@@ -115,17 +115,17 @@ export namespace Components {
     */
     'connection': Connection;
     /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'linkFormat'?: string;
-    /**
     * Disable auto-updates?
     */
     'paused': boolean;
     /**
-    * Should the JS event still fire, even if link-format is passed?
+    * Should the JS event still fire, even if product-link-format is passed?
     */
     'preserveEvent': boolean;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'resourceLinkFormat'?: string;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
@@ -174,27 +174,32 @@ export namespace Components {
     */
     'hideTemplates'?: boolean;
     /**
-    * Link format structure, with `:product` placeholder
-    */
-    'linkFormat'?: string;
-    /**
-    * Should the JS event still fire, even if link-format is passed?
+    * Should the JS event still fire, even if product-link-format is passed?
     */
     'preserveEvent': boolean;
+    /**
+    * Product link structure, with `:product` placeholder
+    */
+    'productLinkFormat'?: string;
     /**
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
+    /**
+    * Template format structure, with `:product` placeholder
+    */
+    'templateLinkFormat'?: string;
   }
   interface ManifoldMarketplaceGrid {
     'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
-    'linkFormat'?: string;
     'preserveEvent': boolean;
+    'productLinkFormat'?: string;
     'products'?: string[];
     'services'?: Catalog.Product[];
+    'templateLinkFormat'?: string;
   }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
@@ -310,19 +315,19 @@ export namespace Components {
     'description'?: string;
     'isFeatured'?: boolean;
     'label'?: string;
-    'linkFormat'?: string;
     'logo'?: string;
     'name'?: string;
     'preserveEvent': boolean;
     'productId'?: string;
+    'productLinkFormat'?: string;
     'skeleton': boolean;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
   interface ManifoldTemplateCard {
     'category': string;
-    'linkFormat'?: string;
     'preserveEvent': boolean;
+    'templateLinkFormat'?: string;
   }
   interface ManifoldToast {
     /**
@@ -454,19 +459,19 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
-    /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'linkFormat'?: string;
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
     /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
     /**
-    * Should the JS event still fire, even if link-format is passed?
+    * Should the JS event still fire, even if product-link-format is passed?
     */
     'preserveEvent'?: boolean;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'resourceLinkFormat'?: string;
   }
   interface ManifoldForwardSlot extends JSXBase.HTMLAttributes {}
   interface ManifoldIcon extends JSXBase.HTMLAttributes {
@@ -515,27 +520,32 @@ declare namespace LocalJSX {
     */
     'hideTemplates'?: boolean;
     /**
-    * Link format structure, with `:product` placeholder
-    */
-    'linkFormat'?: string;
-    /**
-    * Should the JS event still fire, even if link-format is passed?
+    * Should the JS event still fire, even if product-link-format is passed?
     */
     'preserveEvent'?: boolean;
+    /**
+    * Product link structure, with `:product` placeholder
+    */
+    'productLinkFormat'?: string;
     /**
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
+    /**
+    * Template format structure, with `:product` placeholder
+    */
+    'templateLinkFormat'?: string;
   }
   interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes {
     'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
     'hideTemplates'?: boolean;
-    'linkFormat'?: string;
     'preserveEvent'?: boolean;
+    'productLinkFormat'?: string;
     'products'?: string[];
     'services'?: Catalog.Product[];
+    'templateLinkFormat'?: string;
   }
   interface ManifoldNumberInput extends JSXBase.HTMLAttributes {
     'decrementDisabledLabel'?: string;
@@ -657,21 +667,21 @@ declare namespace LocalJSX {
     'description'?: string;
     'isFeatured'?: boolean;
     'label'?: string;
-    'linkFormat'?: string;
     'logo'?: string;
     'name'?: string;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
     'productId'?: string;
+    'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
   interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes {}
   interface ManifoldSkeletonText extends JSXBase.HTMLAttributes {}
   interface ManifoldTemplateCard extends JSXBase.HTMLAttributes {
     'category'?: string;
-    'linkFormat'?: string;
     'onManifold-template-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
+    'templateLinkFormat'?: string;
   }
   interface ManifoldToast extends JSXBase.HTMLAttributes {
     /**

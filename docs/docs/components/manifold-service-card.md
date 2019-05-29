@@ -25,10 +25,10 @@ Compact view of a Manifold Product.
 
 By default, service cards will only emit the `manifold-marketplace-click`
 event (above). But it can also be turned into an `<a>` tag by specifying
-`link-format`:
+`product-link-format`:
 
 ```html
-<manifold-marketplace link-format="/product/:product" />
+<manifold-service-card product-link-format="/product/:product" />
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 

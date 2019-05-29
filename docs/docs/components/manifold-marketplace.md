@@ -94,14 +94,18 @@ The following events are emitted:
 
 By default, service cards will only emit the `manifold-marketplace-click`
 event (above). But it can also be turned into an `<a>` tag by specifying
-`link-format`:
+`product-link-format` and `template-link-format`:
 
 ```html
-<manifold-marketplace link-format="/product/:product" />
+<manifold-marketplace
+  product-link-format="/product/:product"
+  template-link-format="/template/:template"
+/>
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
-`:product` will be replaced with the url-friendly slug for the product.
+`:product` will be replaced with the url-friendly slug for the product, as
+will `:template` for custom resource templates.
 
 Note that this will disable the custom events unless `preserve-event` is
 passed as well.
