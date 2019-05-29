@@ -86,7 +86,7 @@ export class ManifoldServiceCard {
           {this.isFeatured && <div class="tag">featured</div>}
           {this.isFree && (
             <div class="tag" data-tag="free">
-              free
+              Free
             </div>
           )}
         </div>

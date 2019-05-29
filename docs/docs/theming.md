@@ -240,18 +240,19 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 
 #### Tags
 
-| Name                                                                  | Default                             | Description                |
-| --------------------------------------------------------------------- | ----------------------------------- | -------------------------- |
-| `--manifold-tag-background`                                           | `var(--manifold-color-primary)`     | Background                 |
-| `--manifold-tag-text-color`                                           | `var(--manifold-text-color-accent)` | Text color                 |
-| <span class="tag not-implemented" /> `--manifold-tag-font-size`       | `1rem`                              | Font size                  |
-| `--manifold-tag-font-weight`                                          | `900`                               | Font Weight                |
-| <span class="tag not-implemented" /> `--manifold-tag-text-transform`  | `uppercase`                         | Text transform             |
-| `--manifold-tag-radius`                                               | `3em` (round)                       | Border radius              |
-| `--manifold-tag-padding`                                              | `0.25em 1em`                        | Padding                    |
-|                                                                       |                                     |                            |
-| `--manifold-tag-free-background`                                      | `var(--manifold-color-secondary)`   | Background for "Free" tags |
-| <span class="tag not-implemented" /> `--manifold-tag-free-text-color` | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
+| Name                             | Default                             | Description                |
+|----------------------------------|-------------------------------------|----------------------------|
+| `--manifold-tag-background`      | `var(--manifold-color-primary)`     | Background                 |
+| `--manifold-tag-text-color`      | `var(--manifold-text-color-accent)` | Text color                 |
+| `--manifold-tag-font-family`     | `var(--manifold-font-family)`       | Font family                |
+| `--manifold-tag-font-size`       | `down1`                             | Font size                  |
+| `--manifold-tag-font-weight`     | `700`                               | Font Weight                |
+| `--manifold-tag-text-transform`  | `initial`                           | Text transform             |
+| `--manifold-tag-radius`          | `3em` (round)                       | Border radius              |
+| `--manifold-tag-padding`         | `0.25em 1em`                        | Padding                    |
+|                                  |                                     |                            |
+| `--manifold-tag-free-background` | `var(--manifold-color-secondary)`   | Background for "Free" tags |
+| `--manifold-tag-free-text-color` | `var(--manifold-text-color-accent)` | Text color for "Free" tags |
 
 ### Unique Component Properties
 

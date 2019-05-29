@@ -61,6 +61,7 @@ export default css`
     --manifold-tag-free-background: var(--theme-teal);
     --manifold-tag-padding: 0.3em 0.9em;
     --manifold-tag-radius: 2px;
+    --manifold-tag-text-transform: uppercase;
 
     /* Buttons */
     --manifold-button-font-size: 0.9rem;

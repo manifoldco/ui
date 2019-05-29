@@ -27,11 +27,14 @@
   --card-heading-text-color: var(--manifold-text-color-heading);
 
   /* tag */
-  --tag-background: var(--manifold-tag-background, var(--manifold-color-primary));
+  --tag-padding: var(--manifold-tag-padding, 0.25em 1em);
   --tag-text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
-  --tag-font-weight: var(--manifold-tag-font-weight, 900);
-  --tag-radius: var(--manifold-tag-radius, 3rem);
-  --tag-padding: var(--manifold-tag-padding, 0.25em 0.75em);
+  --tag-font-family: var(--manifold-tag-font-family, var(--manifold-font-family));
+  --tag-font-weight: var(--manifold-tag-font-weight, 700);
+  --tag-font-size: var(--manifold-tag-font-size, var(--manifold-font-d3));
+  --tag-text-transform: var(--manifold-tag-text-transform, initial);
+  --tag-background: var(--manifold-color-primary);
+  --tag-radius: var(--manifold-tag-radius, 3em);
 }
 
 .wrapper {
@@ -163,10 +166,10 @@
   padding: var(--tag-padding);
   color: var(--tag-text-color);
   font-weight: var(--tag-font-weight);
-  font-size: var(--manifold-font-d3);
+  font-size: var(--tag-font-size);
+  font-family: var(--tag-font-family);
   line-height: 1.5;
-  letter-spacing: 0.0625em;
-  text-transform: uppercase;
+  text-transform: var(--tag-text-transform);
   background: var(--tag-background);
   border-radius: var(--tag-radius);
 
