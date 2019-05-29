@@ -10,7 +10,7 @@ import { ResourceState } from '../../data/resource';
 })
 export class ManifoldResourceCredentials {
   @Prop() credentials?: Marketplace.Credential[];
-  @Prop() resourceState: ResourceState = { resource: undefined, loading: false };
+  @Prop() resourceState: ResourceState = { data: undefined, loading: false };
   @Event() credentialsRequested: EventEmitter;
 
   get lines() {
@@ -24,7 +24,7 @@ export class ManifoldResourceCredentials {
   }
 
   get label() {
-    return this.resourceState.resource && this.resourceState.resource.label;
+    return this.resourceState.data && this.resourceState.data.label;
   }
 
   hideCredentials = () => {
@@ -32,7 +32,7 @@ export class ManifoldResourceCredentials {
   };
 
   requestCredentials = () => {
-    this.credentialsRequested.emit(this.resourceState.resource);
+    this.credentialsRequested.emit(this.resourceState.data);
   };
 
   render() {

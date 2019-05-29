@@ -201,9 +201,9 @@ Text components are used thoughout most components.
 | `--manifold-text-color-secondary` | `var(--manifold-grayscale-50)`   | Secondary text color; provides additional context to some primary text. Examples: suffixes, descriptions |
 | `--manifold-text-color-accent`    | `var(--manifold-grayscale-100i)` | Accent text color; overlays on `--manifold-color-primary` for buttons, tags, etc.                        |
 | `--manifold-text-color-body`      | `var(--manifold-text-color)`     | Body text color; paragraphs of text.                                                                     |
-| `--manifold-text-color-heading`   | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
-| `--manifold-font-family-heading`  | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
-| `--manifold-font-weight-heading`  | `400`                            | Weight for all headings                                                                                  |
+| `--manifold-heading-text-color`   | `var(--manifold-text-color)`     | Text color for all headings.                                                                             |
+| `--manifold-heading-font-family`  | `var(--manifold-font-family)`    | Font family for all headings                                                                             |
+| `--manifold-heading-font-weight`  | `400`                            | Weight for all headings                                                                                  |
 
 #### Cards
 
@@ -226,20 +226,17 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 
 #### Input Fields
 
-| Name                                                                      | Default                                  | Description      |
-| ------------------------------------------------------------------------- | ---------------------------------------- | ---------------- |
-| <span class="tag part-implemented" /> `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
-| <span class="tag part-implemented" /> `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
-| <span class="tag not-implemented" /> `--manifold-input-radius`            | `var(--manifold-radius)`                 | Radius           |
-| <span class="tag part-implemented" /> `--manifold-input-shadow`           | `none`                                   | Shadow           |
-|                                                                           |                                          |                  |
-| <span class="tag not-implemented" /> `--manifold-input-background-hover`  | `var(--manifold-input-background)`       | Background:hover |
-| <span class="tag not-implemented" /> `--manifold-input-border-hover`      | `var(--manifold-input-border)`           | Background:hover |
-| <span class="tag not-implemented" /> `--manifold-input-shadow-hover`      | `var(--manifold-input-shadow)`           | Shadow:hover     |
-|                                                                           |                                          |                  |
-| <span class="tag part-implemented" /> `--manifold-input-background-focus` | `var(--manifold-input-background-hover)` | Background:focus |
-| <span class="tag part-implemented" /> `--manifold-input-border-focus`     | `var(--manifold-input-border-hover)`     | Border:focus     |
-| <span class="tag part-implemented" /> `--manifold-input-shadow-focus`     | `var(--manifold-input-shadow-hover)`     | Shadow:focus     |
+| Name                                | Default                                  | Description      |
+| ----------------------------------- | ---------------------------------------- | ---------------- |
+| `--manifold-input-background`       | `var(--manifold-grayscale-100i)`         | Background       |
+| `--manifold-input-text-color`       | `var(--manifold-text-color)`             | Text color       |
+| `--manifold-input-border`           | `var(--manifold-border)`                 | Border           |
+| `--manifold-input-radius`           | `var(--manifold-radius)`                 | Radius           |
+| `--manifold-input-shadow`           | `none`                                   | Shadow           |
+|                                     |                                          |                  |
+| `--manifold-input-background-focus` | `var(--manifold-input-background-hover)` | Background:focus |
+| `--manifold-input-border-focus`     | `var(--manifold-input-border-focus)`     | Border:focus     |
+| `--manifold-input-shadow-focus`     | `var(--manifold-input-shadow-hover)`     | Shadow:focus     |
 
 #### Tags
 

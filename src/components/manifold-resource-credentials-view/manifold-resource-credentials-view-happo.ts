@@ -4,14 +4,14 @@ import fromJSON from '../../spec/mock/fromJSON';
 
 export const credsHidden = () => {
   const creds = document.createElement('manifold-resource-credentials-view');
-  creds.resourceState = { loading: false, resource: fromJSON(resource) };
+  creds.resourceState = { loading: false, data: fromJSON(resource) };
 
   document.body.appendChild(creds);
 };
 
 export const credsShown = () => {
   const creds = document.createElement('manifold-resource-credentials-view');
-  creds.resourceState = { loading: false, resource: fromJSON(resource) };
+  creds.resourceState = { loading: false, data: fromJSON(resource) };
   creds.credentials = fromJSON(credentials);
 
   document.body.appendChild(creds);
@@ -19,7 +19,7 @@ export const credsShown = () => {
 
 export const resourceLoading = () => {
   const creds = document.createElement('manifold-resource-credentials-view');
-  creds.resourceState = { loading: true, resource: undefined };
+  creds.resourceState = { loading: true, data: undefined };
 
   document.body.appendChild(creds);
 };
