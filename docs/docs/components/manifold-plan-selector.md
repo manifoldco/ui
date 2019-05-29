@@ -3,7 +3,7 @@ title: Plan Selector
 path: /components/plan-selector
 example: |
   <manifold-plan-selector product-label="jawsdb-mysql">
-    <manifold-link-button slot="cta">Get JawsDB MySQL</manifold-link-button>
+    <manifold-button slot="cta">Get JawsDB MySQL</manifold-button>
   </manifold-plan-selector>
 ---
 

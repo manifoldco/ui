@@ -6,7 +6,6 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-import { JSX } from '@stencil/core';
 import {
   Connection,
 } from './utils/connections';
@@ -292,25 +291,13 @@ export namespace Components {
     'credentials'?: Marketplace.Credential[];
     'resourceState': ResourceState;
   }
-  interface ManifoldResourceDetails {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection': Connection;
-    /**
-    * Which resource does this belong to?
-    */
-    'resourceName': string;
+  interface ManifoldResourceDetails {}
+  interface ManifoldResourceDetailsView {
+    'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceStatus {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection': Connection;
-    /**
-    * Resource name for this status
-    */
-    'resourceName'?: string;
+  interface ManifoldResourceStatus {}
+  interface ManifoldResourceStatusView {
+    'resourceState': ResourceState;
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
@@ -650,25 +637,13 @@ declare namespace LocalJSX {
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceState'?: ResourceState;
   }
-  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * Which resource does this belong to?
-    */
-    'resourceName'?: string;
+  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes {}
+  interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes {
+    'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * Resource name for this status
-    */
-    'resourceName'?: string;
+  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {}
+  interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes {
+    'resourceState'?: ResourceState;
   }
   interface ManifoldSelect extends JSXBase.HTMLAttributes {
     'defaultValue'?: string;
@@ -754,7 +729,9 @@ declare namespace LocalJSX {
     'manifold-resource-credentials': ManifoldResourceCredentials;
     'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
     'manifold-resource-details': ManifoldResourceDetails;
+    'manifold-resource-details-view': ManifoldResourceDetailsView;
     'manifold-resource-status': ManifoldResourceStatus;
+    'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
     'manifold-skeleton-img': ManifoldSkeletonImg;
@@ -954,10 +931,22 @@ declare global {
     new (): HTMLManifoldResourceDetailsElement;
   };
 
+  interface HTMLManifoldResourceDetailsViewElement extends Components.ManifoldResourceDetailsView, HTMLStencilElement {}
+  var HTMLManifoldResourceDetailsViewElement: {
+    prototype: HTMLManifoldResourceDetailsViewElement;
+    new (): HTMLManifoldResourceDetailsViewElement;
+  };
+
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
     new (): HTMLManifoldResourceStatusElement;
+  };
+
+  interface HTMLManifoldResourceStatusViewElement extends Components.ManifoldResourceStatusView, HTMLStencilElement {}
+  var HTMLManifoldResourceStatusViewElement: {
+    prototype: HTMLManifoldResourceStatusViewElement;
+    new (): HTMLManifoldResourceStatusViewElement;
   };
 
   interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
@@ -1038,7 +1027,9 @@ declare global {
     'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement;
     'manifold-resource-credentials-view': HTMLManifoldResourceCredentialsViewElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
+    'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
+    'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;

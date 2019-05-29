@@ -45,8 +45,7 @@ export default css`
 
     /* Input Fields */
     --manifold-input-background: var(--theme-lightest-gray);
-    --manifold-input-border: var(--theme-lightest-gray);
-    --manifold-input-border-focus: var(--theme-lightest-gray);
+    --manifold-input-border: 1px solid var(--theme-lightest-gray);
 
     /* Borders */
     --manifold-radius: 0;

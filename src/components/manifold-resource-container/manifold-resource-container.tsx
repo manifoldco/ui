@@ -32,7 +32,7 @@ export class ManifoldResourceContainer {
 
   render() {
     return (
-      <ResourceTunnel.Provider state={{ resource: this.resource, loading: this.loading }}>
+      <ResourceTunnel.Provider state={{ data: this.resource, loading: this.loading }}>
         <slot />
       </ResourceTunnel.Provider>
     );

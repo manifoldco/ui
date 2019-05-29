@@ -21,6 +21,11 @@
   --card-border-hover: var(--manifold-card-border-hover, var(--manifold-border-hover));
   --card-shadow-hover: var(--manifold-card-shadow-hover, var(--card-shadow));
 
+  /* headings */
+  --card-heading-font-family: var(--manifold-font-family-heading);
+  --card-heading-font-weight: var(--manifold-font-weight-heading);
+  --card-heading-text-color: var(--manifold-text-color-heading);
+
   /* tag */
   --tag-padding: var(--manifold-tag-padding, 0.25em 1em);
   --tag-text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
@@ -141,9 +146,10 @@
   margin-top: 0;
   margin-bottom: 0;
   padding-right: 1em;
-  color: var(--text-color);
-  font-weight: 400;
+  color: var(--card-heading-text-color);
+  font-weight: var(--card-heading-font-weight);
   font-size: 1em;
+  font-family: var(--card-heading-font-family);
   line-height: 1.2;
 
   @media (--viewport-l) {
