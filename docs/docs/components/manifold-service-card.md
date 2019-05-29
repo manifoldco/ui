@@ -28,7 +28,7 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 `product-link-format`:
 
 ```html
-<service-card product-link-format="/product/:product" />
+<manifold-service-card product-link-format="/product/:product" />
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
