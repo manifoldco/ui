@@ -101,9 +101,9 @@
   margin-bottom: var(--grid-s);
   padding-top: var(--grid-s);
   padding-bottom: var(--grid-s);
-  font-size: 1em;
   color: var(--text-color-heading);
   font-weight: var(--font-weight-heading);
+  font-size: 1em;
   font-family: var(--font-family-heading);
   text-transform: capitalize;
   border-bottom: var(--heading-border);

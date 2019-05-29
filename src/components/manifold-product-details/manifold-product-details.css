@@ -37,7 +37,6 @@
   & h3 {
     margin-top: 0;
     margin-bottom: 0.375em;
-    font-weight: 500;
     color: var(--manifold-text-color-heading);
     font-weight: var(--manifold-font-weight-heading);
     font-size: 1em;
