@@ -296,15 +296,9 @@ export namespace Components {
   interface ManifoldResourceDetailsView {
     'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceStatus {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection': Connection;
-    /**
-    * Resource name for this status
-    */
-    'resourceName'?: string;
+  interface ManifoldResourceStatus {}
+  interface ManifoldResourceStatusView {
+    'resourceState': ResourceState;
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
@@ -648,15 +642,9 @@ declare namespace LocalJSX {
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes {
     'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * Resource name for this status
-    */
-    'resourceName'?: string;
+  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {}
+  interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes {
+    'resourceState'?: ResourceState;
   }
   interface ManifoldSelect extends JSXBase.HTMLAttributes {
     'defaultValue'?: string;
@@ -744,6 +732,7 @@ declare namespace LocalJSX {
     'manifold-resource-details': ManifoldResourceDetails;
     'manifold-resource-details-view': ManifoldResourceDetailsView;
     'manifold-resource-status': ManifoldResourceStatus;
+    'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
     'manifold-skeleton-img': ManifoldSkeletonImg;
@@ -955,6 +944,12 @@ declare global {
     new (): HTMLManifoldResourceStatusElement;
   };
 
+  interface HTMLManifoldResourceStatusViewElement extends Components.ManifoldResourceStatusView, HTMLStencilElement {}
+  var HTMLManifoldResourceStatusViewElement: {
+    prototype: HTMLManifoldResourceStatusViewElement;
+    new (): HTMLManifoldResourceStatusViewElement;
+  };
+
   interface HTMLManifoldSelectElement extends Components.ManifoldSelect, HTMLStencilElement {}
   var HTMLManifoldSelectElement: {
     prototype: HTMLManifoldSelectElement;
@@ -1035,6 +1030,7 @@ declare global {
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
+    'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
