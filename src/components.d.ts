@@ -355,416 +355,7 @@ export namespace Components {
   }
 }
 
-declare namespace LocalJSX {
-  interface ManifoldActivePlan extends JSXBase.HTMLAttributes {
-    'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
-    'product'?: Catalog.Product;
-    'regions'?: string[];
-    'selectedResource'?: Gateway.Resource;
-  }
-  interface ManifoldBadge extends JSXBase.HTMLAttributes {}
-  interface ManifoldButton extends JSXBase.HTMLAttributes {
-    'color'?: 'black' | 'white';
-    'disabled'?: boolean;
-    'onClickEvent'?: (e: MouseEvent) => void;
-    'size'?: 'small';
-  }
-  interface ManifoldConnection extends JSXBase.HTMLAttributes {
-    /**
-    * _(optional)_ Specify `env="stage"` for staging
-    */
-    'env'?: 'stage' | 'prod';
-  }
-  interface ManifoldCostDisplay extends JSXBase.HTMLAttributes {
-    'baseCost'?: number;
-    'compact'?: boolean;
-    'isCustomizable'?: boolean;
-    'measuredFeatures'?: Catalog.ExpandedFeature[];
-  }
-  interface ManifoldDataManageButton extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'features'?: Gateway.FeatureMap;
-    'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-manageButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-manageButton-success'?: (event: CustomEvent<any>) => void;
-    'planId'?: string;
-    'productId'?: string;
-    'regionId'?: string;
-    /**
-    * Name of resource
-    */
-    'resourceName'?: string;
-  }
-  interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes {
-    /**
-    * _(optional)_ `alt` attribute
-    */
-    'alt'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
-    /**
-    * Look up product name from resource
-    */
-    'resourceName'?: string;
-  }
-  interface ManifoldDataProductName extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
-    /**
-    * Look up product name from resource
-    */
-    'resourceName'?: string;
-  }
-  interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'features'?: Gateway.FeatureMap;
-    /**
-    * ID of input (useful for `<label>`)
-    */
-    'inputId'?: string;
-    'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
-    'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
-    'ownerId'?: string;
-    'planId'?: string;
-    'productId'?: string;
-    /**
-    * Product to provision (slug)
-    */
-    'productLabel'?: string;
-    'regionId'?: string;
-  }
-  interface ManifoldDataResourceList extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
-    /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
-    /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
-    /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'resourceLinkFormat'?: string;
-  }
-  interface ManifoldForwardSlot extends JSXBase.HTMLAttributes {}
-  interface ManifoldIcon extends JSXBase.HTMLAttributes {
-    /**
-    * a CSS variable starting with `--manifold-c-*`
-    */
-    'color'?: string;
-    /**
-    * a CSS variable starting with `--manifold-g-*`
-    */
-    'gradient'?: string;
-    /**
-    * The icon ID
-    */
-    'icon'?: string;
-    'marginLeft'?: boolean;
-    'marginRight'?: boolean;
-  }
-  interface ManifoldImageGallery extends JSXBase.HTMLAttributes {
-    'images'?: string[];
-  }
-  interface ManifoldLazyImage extends JSXBase.HTMLAttributes {
-    'alt'?: string;
-    'itemprop'?: string;
-    'src'?: string;
-  }
-  interface ManifoldMarketplace extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'excludes'?: string;
-    /**
-    * Comma-separated list of featured products (labels)
-    */
-    'featured'?: string;
-    /**
-    * Hide categories & side menu?
-    */
-    'hideCategories'?: boolean;
-    /**
-    * Hide template cards?
-    */
-    'hideTemplates'?: boolean;
-    /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
-    /**
-    * Product link structure, with `:product` placeholder
-    */
-    'productLinkFormat'?: string;
-    /**
-    * Comma-separated list of shown products (labels)
-    */
-    'products'?: string;
-    /**
-    * Template format structure, with `:product` placeholder
-    */
-    'templateLinkFormat'?: string;
-  }
-  interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes {
-    'excludes'?: string[];
-    'featured'?: string[];
-    'hideCategories'?: boolean;
-    'hideTemplates'?: boolean;
-    'preserveEvent'?: boolean;
-    'productLinkFormat'?: string;
-    'products'?: string[];
-    'services'?: Catalog.Product[];
-    'templateLinkFormat'?: string;
-  }
-  interface ManifoldNumberInput extends JSXBase.HTMLAttributes {
-    'decrementDisabledLabel'?: string;
-    'error'?: string;
-    'increment'?: number;
-    'incrementDisabledLabel'?: string;
-    'max'?: number;
-    'min'?: number;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'suffix'?: string;
-    'value'?: number;
-  }
-  interface ManifoldPlanCost extends JSXBase.HTMLAttributes {
-    'allFeatures'?: Catalog.ExpandedFeature[];
-    'compact'?: boolean;
-    'connection'?: Connection;
-    'customizable'?: boolean;
-    'planId'?: string;
-    'selectedFeatures'?: Gateway.FeatureMap;
-  }
-  interface ManifoldPlanDetails extends JSXBase.HTMLAttributes {
-    'isExistingResource'?: boolean;
-    'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
-    'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
-    'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.Product;
-    'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: string;
-  }
-  interface ManifoldPlanMenu extends JSXBase.HTMLAttributes {
-    'plans'?: Catalog.ExpandedPlan[];
-    'selectPlan'?: Function;
-    'selectedPlanId'?: string;
-  }
-  interface ManifoldPlanSelector extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
-    /**
-    * Specify region order
-    */
-    'regions'?: string;
-    /**
-    * Is this tied to an existing resource?
-    */
-    'resourceName'?: string;
-  }
-  interface ManifoldProduct extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * _(optional)_ Hide the CTA on the left?
-    */
-    'productLabel'?: string;
-  }
-  interface ManifoldProductDetails extends JSXBase.HTMLAttributes {
-    'product'?: Catalog.Product;
-  }
-  interface ManifoldProductPage extends JSXBase.HTMLAttributes {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
-  }
-  interface ManifoldRegionSelector extends JSXBase.HTMLAttributes {
-    'allowedRegions'?: string[];
-    'ariaLabel'?: string;
-    'connection'?: Connection;
-    'name'?: string;
-    'onChange'?: (event: CustomEvent<any>) => void;
-    'preferredRegions'?: string[];
-    'value'?: string;
-  }
-  interface ManifoldResourceContainer extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
-    * Which resource does this belong to?
-    */
-    'resourceLabel'?: string;
-  }
-  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-  }
-  interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes {
-    'credentials'?: Marketplace.Credential[];
-    'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceState'?: ResourceState;
-  }
-  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes {}
-  interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes {
-    'data'?: Gateway.Resource;
-  }
-  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes {}
-  interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes {
-    'resourceState'?: ResourceState;
-  }
-  interface ManifoldSelect extends JSXBase.HTMLAttributes {
-    'defaultValue'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'options'?: Option[];
-    'required'?: boolean;
-  }
-  interface ManifoldServiceCard extends JSXBase.HTMLAttributes {
-    'connection'?: Connection;
-    'description'?: string;
-    'isFeatured'?: boolean;
-    'label'?: string;
-    'logo'?: string;
-    'name'?: string;
-    'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'productId'?: string;
-    'productLinkFormat'?: string;
-    'skeleton'?: boolean;
-  }
-  interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes {}
-  interface ManifoldSkeletonText extends JSXBase.HTMLAttributes {}
-  interface ManifoldTemplateCard extends JSXBase.HTMLAttributes {
-    'category'?: string;
-    'onManifold-template-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'templateLinkFormat'?: string;
-  }
-  interface ManifoldToast extends JSXBase.HTMLAttributes {
-    /**
-    * `success` | `warning` | `error`
-    */
-    'alertType'?: 'success' | 'warning' | 'error' | undefined;
-    /**
-    * Is this dismissable?
-    */
-    'dismissable'?: boolean;
-    /**
-    * Use custom icon path data (1024×1024)
-    */
-    'icon'?: string;
-  }
-  interface ManifoldToggle extends JSXBase.HTMLAttributes {
-    'ariaLabelledby'?: string;
-    'defaultValue'?: boolean;
-    'disabled'?: boolean;
-    'label'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-  }
-  interface ManifoldTooltip extends JSXBase.HTMLAttributes {
-    'labelText'?: string;
-  }
-
-  interface IntrinsicElements {
-    'manifold-active-plan': ManifoldActivePlan;
-    'manifold-badge': ManifoldBadge;
-    'manifold-button': ManifoldButton;
-    'manifold-connection': ManifoldConnection;
-    'manifold-cost-display': ManifoldCostDisplay;
-    'manifold-data-manage-button': ManifoldDataManageButton;
-    'manifold-data-product-logo': ManifoldDataProductLogo;
-    'manifold-data-product-name': ManifoldDataProductName;
-    'manifold-data-provision-button': ManifoldDataProvisionButton;
-    'manifold-data-resource-list': ManifoldDataResourceList;
-    'manifold-forward-slot': ManifoldForwardSlot;
-    'manifold-icon': ManifoldIcon;
-    'manifold-image-gallery': ManifoldImageGallery;
-    'manifold-lazy-image': ManifoldLazyImage;
-    'manifold-marketplace': ManifoldMarketplace;
-    'manifold-marketplace-grid': ManifoldMarketplaceGrid;
-    'manifold-number-input': ManifoldNumberInput;
-    'manifold-plan-cost': ManifoldPlanCost;
-    'manifold-plan-details': ManifoldPlanDetails;
-    'manifold-plan-menu': ManifoldPlanMenu;
-    'manifold-plan-selector': ManifoldPlanSelector;
-    'manifold-product': ManifoldProduct;
-    'manifold-product-details': ManifoldProductDetails;
-    'manifold-product-page': ManifoldProductPage;
-    'manifold-region-selector': ManifoldRegionSelector;
-    'manifold-resource-container': ManifoldResourceContainer;
-    'manifold-resource-credentials': ManifoldResourceCredentials;
-    'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
-    'manifold-resource-details': ManifoldResourceDetails;
-    'manifold-resource-details-view': ManifoldResourceDetailsView;
-    'manifold-resource-status': ManifoldResourceStatus;
-    'manifold-resource-status-view': ManifoldResourceStatusView;
-    'manifold-select': ManifoldSelect;
-    'manifold-service-card': ManifoldServiceCard;
-    'manifold-skeleton-img': ManifoldSkeletonImg;
-    'manifold-skeleton-text': ManifoldSkeletonText;
-    'manifold-template-card': ManifoldTemplateCard;
-    'manifold-toast': ManifoldToast;
-    'manifold-toggle': ManifoldToggle;
-    'manifold-tooltip': ManifoldTooltip;
-  }
-}
-
-export { LocalJSX as JSX };
-
-
-declare module "@stencil/core" {
-  export namespace JSX {
-    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
-  }
-}
-
-
 declare global {
-
 
 
   interface HTMLManifoldActivePlanElement extends Components.ManifoldActivePlan, HTMLStencilElement {}
@@ -1006,7 +597,6 @@ declare global {
     prototype: HTMLManifoldTooltipElement;
     new (): HTMLManifoldTooltipElement;
   };
-
   interface HTMLElementTagNameMap {
     'manifold-active-plan': HTMLManifoldActivePlanElement;
     'manifold-badge': HTMLManifoldBadgeElement;
@@ -1049,7 +639,413 @@ declare global {
     'manifold-toggle': HTMLManifoldToggleElement;
     'manifold-tooltip': HTMLManifoldTooltipElement;
   }
-
-  interface ElementTagNameMap extends HTMLElementTagNameMap {}
 }
+
+declare namespace LocalJSX {
+  interface ManifoldActivePlan extends JSXBase.HTMLAttributes<HTMLManifoldActivePlanElement> {
+    'isExistingResource'?: boolean;
+    'plans'?: Catalog.ExpandedPlan[];
+    'product'?: Catalog.Product;
+    'regions'?: string[];
+    'selectedResource'?: Gateway.Resource;
+  }
+  interface ManifoldBadge extends JSXBase.HTMLAttributes<HTMLManifoldBadgeElement> {}
+  interface ManifoldButton extends JSXBase.HTMLAttributes<HTMLManifoldButtonElement> {
+    'color'?: 'black' | 'white';
+    'disabled'?: boolean;
+    'onClickEvent'?: (e: MouseEvent) => void;
+    'size'?: 'small';
+  }
+  interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
+    /**
+    * _(optional)_ Specify `env="stage"` for staging
+    */
+    'env'?: 'stage' | 'prod';
+  }
+  interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
+    'baseCost'?: number;
+    'compact'?: boolean;
+    'isCustomizable'?: boolean;
+    'measuredFeatures'?: Catalog.ExpandedFeature[];
+  }
+  interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'features'?: Gateway.FeatureMap;
+    'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-manageButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-manageButton-success'?: (event: CustomEvent<any>) => void;
+    'planId'?: string;
+    'productId'?: string;
+    'regionId'?: string;
+    /**
+    * Name of resource
+    */
+    'resourceName'?: string;
+  }
+  interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
+  }
+  interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel'?: string;
+    /**
+    * Look up product name from resource
+    */
+    'resourceName'?: string;
+  }
+  interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'features'?: Gateway.FeatureMap;
+    /**
+    * ID of input (useful for `<label>`)
+    */
+    'inputId'?: string;
+    'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
+    'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
+    'planId'?: string;
+    'productId'?: string;
+    /**
+    * Product to provision (slug)
+    */
+    'productLabel'?: string;
+    'regionId'?: string;
+  }
+  interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
+    /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
+    /**
+    * Should the JS event still fire, even if product-link-format is passed?
+    */
+    'preserveEvent'?: boolean;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'resourceLinkFormat'?: string;
+  }
+  interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
+  interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
+    /**
+    * a CSS variable starting with `--manifold-c-*`
+    */
+    'color'?: string;
+    /**
+    * a CSS variable starting with `--manifold-g-*`
+    */
+    'gradient'?: string;
+    /**
+    * The icon ID
+    */
+    'icon'?: string;
+    'marginLeft'?: boolean;
+    'marginRight'?: boolean;
+  }
+  interface ManifoldImageGallery extends JSXBase.HTMLAttributes<HTMLManifoldImageGalleryElement> {
+    'images'?: string[];
+  }
+  interface ManifoldLazyImage extends JSXBase.HTMLAttributes<HTMLManifoldLazyImageElement> {
+    'alt'?: string;
+    'itemprop'?: string;
+    'src'?: string;
+  }
+  interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Comma-separated list of hidden products (labels)
+    */
+    'excludes'?: string;
+    /**
+    * Comma-separated list of featured products (labels)
+    */
+    'featured'?: string;
+    /**
+    * Hide categories & side menu?
+    */
+    'hideCategories'?: boolean;
+    /**
+    * Hide template cards?
+    */
+    'hideTemplates'?: boolean;
+    /**
+    * Should the JS event still fire, even if product-link-format is passed?
+    */
+    'preserveEvent'?: boolean;
+    /**
+    * Product link structure, with `:product` placeholder
+    */
+    'productLinkFormat'?: string;
+    /**
+    * Comma-separated list of shown products (labels)
+    */
+    'products'?: string;
+    /**
+    * Template format structure, with `:product` placeholder
+    */
+    'templateLinkFormat'?: string;
+  }
+  interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
+    'excludes'?: string[];
+    'featured'?: string[];
+    'hideCategories'?: boolean;
+    'hideTemplates'?: boolean;
+    'preserveEvent'?: boolean;
+    'productLinkFormat'?: string;
+    'products'?: string[];
+    'services'?: Catalog.Product[];
+    'templateLinkFormat'?: string;
+  }
+  interface ManifoldNumberInput extends JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement> {
+    'decrementDisabledLabel'?: string;
+    'error'?: string;
+    'increment'?: number;
+    'incrementDisabledLabel'?: string;
+    'max'?: number;
+    'min'?: number;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent<any>) => void;
+    'suffix'?: string;
+    'value'?: number;
+  }
+  interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
+    'allFeatures'?: Catalog.ExpandedFeature[];
+    'compact'?: boolean;
+    'connection'?: Connection;
+    'customizable'?: boolean;
+    'planId'?: string;
+    'selectedFeatures'?: Gateway.FeatureMap;
+  }
+  interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {
+    'isExistingResource'?: boolean;
+    'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
+    'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
+    'plan'?: Catalog.ExpandedPlan;
+    'product'?: Catalog.Product;
+    'regions'?: string[];
+    'resourceFeatures'?: Gateway.ResolvedFeature[];
+    'resourceRegion'?: string;
+  }
+  interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
+    'plans'?: Catalog.ExpandedPlan[];
+    'selectPlan'?: Function;
+    'selectedPlanId'?: string;
+  }
+  interface ManifoldPlanSelector extends JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel'?: string;
+    /**
+    * Specify region order
+    */
+    'regions'?: string;
+    /**
+    * Is this tied to an existing resource?
+    */
+    'resourceName'?: string;
+  }
+  interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * _(optional)_ Hide the CTA on the left?
+    */
+    'productLabel'?: string;
+  }
+  interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
+    'product'?: Catalog.Product;
+  }
+  interface ManifoldProductPage extends JSXBase.HTMLAttributes<HTMLManifoldProductPageElement> {
+    'product'?: Catalog.Product;
+    'provider'?: Catalog.Provider;
+  }
+  interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
+    'allowedRegions'?: string[];
+    'ariaLabel'?: string;
+    'connection'?: Connection;
+    'name'?: string;
+    'onChange'?: (event: CustomEvent<any>) => void;
+    'preferredRegions'?: string[];
+    'value'?: string;
+  }
+  interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Which resource does this belong to?
+    */
+    'resourceLabel'?: string;
+  }
+  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+  }
+  interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
+    'credentials'?: Marketplace.Credential[];
+    'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
+    'resourceState'?: ResourceState;
+  }
+  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
+  interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
+    'data'?: Gateway.Resource;
+  }
+  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {}
+  interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
+    'resourceState'?: ResourceState;
+  }
+  interface ManifoldSelect extends JSXBase.HTMLAttributes<HTMLManifoldSelectElement> {
+    'defaultValue'?: string;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent<any>) => void;
+    'options'?: Option[];
+    'required'?: boolean;
+  }
+  interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
+    'connection'?: Connection;
+    'description'?: string;
+    'isFeatured'?: boolean;
+    'label'?: string;
+    'logo'?: string;
+    'name'?: string;
+    'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
+    'productId'?: string;
+    'productLinkFormat'?: string;
+    'skeleton'?: boolean;
+  }
+  interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement> {}
+  interface ManifoldSkeletonText extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement> {}
+  interface ManifoldTemplateCard extends JSXBase.HTMLAttributes<HTMLManifoldTemplateCardElement> {
+    'category'?: string;
+    'onManifold-template-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
+    'templateLinkFormat'?: string;
+  }
+  interface ManifoldToast extends JSXBase.HTMLAttributes<HTMLManifoldToastElement> {
+    /**
+    * `success` | `warning` | `error`
+    */
+    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+    /**
+    * Is this dismissable?
+    */
+    'dismissable'?: boolean;
+    /**
+    * Use custom icon path data (1024×1024)
+    */
+    'icon'?: string;
+  }
+  interface ManifoldToggle extends JSXBase.HTMLAttributes<HTMLManifoldToggleElement> {
+    'ariaLabelledby'?: string;
+    'defaultValue'?: boolean;
+    'disabled'?: boolean;
+    'label'?: string;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent<any>) => void;
+  }
+  interface ManifoldTooltip extends JSXBase.HTMLAttributes<HTMLManifoldTooltipElement> {
+    'labelText'?: string;
+  }
+
+  interface IntrinsicElements {
+    'manifold-active-plan': ManifoldActivePlan;
+    'manifold-badge': ManifoldBadge;
+    'manifold-button': ManifoldButton;
+    'manifold-connection': ManifoldConnection;
+    'manifold-cost-display': ManifoldCostDisplay;
+    'manifold-data-manage-button': ManifoldDataManageButton;
+    'manifold-data-product-logo': ManifoldDataProductLogo;
+    'manifold-data-product-name': ManifoldDataProductName;
+    'manifold-data-provision-button': ManifoldDataProvisionButton;
+    'manifold-data-resource-list': ManifoldDataResourceList;
+    'manifold-forward-slot': ManifoldForwardSlot;
+    'manifold-icon': ManifoldIcon;
+    'manifold-image-gallery': ManifoldImageGallery;
+    'manifold-lazy-image': ManifoldLazyImage;
+    'manifold-marketplace': ManifoldMarketplace;
+    'manifold-marketplace-grid': ManifoldMarketplaceGrid;
+    'manifold-number-input': ManifoldNumberInput;
+    'manifold-plan-cost': ManifoldPlanCost;
+    'manifold-plan-details': ManifoldPlanDetails;
+    'manifold-plan-menu': ManifoldPlanMenu;
+    'manifold-plan-selector': ManifoldPlanSelector;
+    'manifold-product': ManifoldProduct;
+    'manifold-product-details': ManifoldProductDetails;
+    'manifold-product-page': ManifoldProductPage;
+    'manifold-region-selector': ManifoldRegionSelector;
+    'manifold-resource-container': ManifoldResourceContainer;
+    'manifold-resource-credentials': ManifoldResourceCredentials;
+    'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
+    'manifold-resource-details': ManifoldResourceDetails;
+    'manifold-resource-details-view': ManifoldResourceDetailsView;
+    'manifold-resource-status': ManifoldResourceStatus;
+    'manifold-resource-status-view': ManifoldResourceStatusView;
+    'manifold-select': ManifoldSelect;
+    'manifold-service-card': ManifoldServiceCard;
+    'manifold-skeleton-img': ManifoldSkeletonImg;
+    'manifold-skeleton-text': ManifoldSkeletonText;
+    'manifold-template-card': ManifoldTemplateCard;
+    'manifold-toast': ManifoldToast;
+    'manifold-toggle': ManifoldToggle;
+    'manifold-tooltip': ManifoldTooltip;
+  }
+}
+
+export { LocalJSX as JSX };
+
+
+declare module "@stencil/core" {
+  export namespace JSX {
+    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
+  }
+}
+
 

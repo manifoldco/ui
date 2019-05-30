@@ -77,6 +77,11 @@
   &:active {
     background-color: var(--button-background-active);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
 }
 
 .display-units {
