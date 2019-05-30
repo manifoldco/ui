@@ -2,6 +2,8 @@ export const primary = () => {
   const toggle = document.createElement('manifold-toggle');
 
   document.body.appendChild(toggle);
+
+  return toggle.componentOnReady();
 };
 
 export const labeled = () => {
@@ -9,6 +11,8 @@ export const labeled = () => {
   toggle.label = 'Happo Test Label';
 
   document.body.appendChild(toggle);
+
+  return toggle.componentOnReady();
 };
 
 export const disabled = () => {
@@ -16,6 +20,8 @@ export const disabled = () => {
   toggle.disabled = true;
 
   document.body.appendChild(toggle);
+
+  return toggle.componentOnReady();
 };
 
 export const checked = () => {
@@ -23,4 +29,6 @@ export const checked = () => {
   toggle.defaultValue = true;
 
   document.body.appendChild(toggle);
+
+  return toggle.componentOnReady();
 };

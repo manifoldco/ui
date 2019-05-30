@@ -42,16 +42,20 @@ You can do this by clicking `Details` on a failed Happo check and using the `Rev
 
 A passing Happo check means that the test detected no visual changes.
 
+*Note:* Some diffs may be detected based on animations happening in the components. This may be resolved in the future, but as of writing these diffs require human approval.
+
 ### Writing Happo Tests
 
 New components that are not yet covered by Happo screenshots should include visual regression test coverage. In order to write a new test, add a file to your component directory titled `[my-component]-happo.ts`, substituting [my-component] with the name of your component.
 
-A simple Happo test just requires the component to be appended to the body of the DOM and exported:
+A simple Happo test just requires the component to be appended to the body of the DOM and exported as a function that returns `componentOnReady()` on the component element:
 ```
 export const skeleton = () => {
   const details = document.createElement('manifold-resource-details-view');
 
   document.body.appendChild(details);
+
+  return details.componentOnReady();
 };
 ```
 
@@ -92,6 +96,7 @@ export const jawsDB = () => {
 
 If necessary, tests can be written with HTML as a string and interpolated using the `toHTML` util:
 ```
+import { lock } from '@manifoldco/icons';
 import toHTML from '../../../test-utils/to-html';
 
 export const primary = () => {
@@ -110,7 +115,7 @@ export const primary = () => {
 };
 ```
 
-Returning on `componentOnReady()` helps ensure the screenshot loads all the necessary data before the test is run.
+Returning on `componentOnReady()` helps ensure the component is hydrated before Happo calculates the bounding rectangle of the screenshot and then captures or tests it.
 
 Use the CLI during test development to create reports that show you the screenshots that will be tested:
 
