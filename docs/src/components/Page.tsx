@@ -27,6 +27,17 @@ const contentStyles = css`
   --manifold-g-red: linear-gradient(to top right, #a65084, #ec7740);
   --manifold-g-yellow: linear-gradient(to top right, #ffb83a, #ffe268);
 
+  .color {
+    display: inline-block;
+    width: 1.25em;
+    height: 1.25em;
+    margin-bottom: -0.35em;
+    vertical-align: baseline;
+    border: 2px solid white;
+    border-radius: 4px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+
   .tag::before {
     display: inline-flex;
     align-items: center;
