@@ -36,6 +36,7 @@ export class ManifoldLazyImage {
   };
 
   render() {
+    // TODO reimplement lazy loading and ensure it works on search in manifold-marketplace
     return (
       <img
         src={this.src}
