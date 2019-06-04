@@ -6,10 +6,14 @@ export const detailsLoaded = () => {
   details.data = fromJSON(resource);
 
   document.body.appendChild(details);
+
+  return details.componentOnReady();
 };
 
 export const skeleton = () => {
   const details = document.createElement('manifold-resource-details-view');
 
   document.body.appendChild(details);
+
+  return details.componentOnReady();
 };

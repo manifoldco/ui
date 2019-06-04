@@ -7,6 +7,8 @@ export const skeleton = () => {
   const productPage = document.createElement('manifold-product-page');
 
   document.body.appendChild(productPage);
+
+  return productPage.componentOnReady();
 };
 
 export const jawsDB = () => {

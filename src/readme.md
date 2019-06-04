@@ -32,6 +32,100 @@ Storybook. Testing every version of a component is recommended.
 | `npm run test:spec [pattern]`  | (fast) Run all unit tests matching `[pattern]`                |
 | `npm run test:watch [pattern]` | (fast) Run all unit tests while working, matching `[pattern]` |
 
+## 🖼️ Visual Regression Testing
+
+We use [Happo](https://happo.io/) integrated into our CI pipeline for visual regression testing.
+
+After a PR is made, Happo tests a screenshot of the new PR against a screenshot of the previous version of the same component. If a visual change is detected, the Happo check in the CI pipeline will fail, and it will require human eyes to approve the check.
+
+You can do this by clicking `Details` on a failed Happo check and using the `Review ˅` drop down to Accept or Reject the visual differences you see in the screenshot tests. If the changes are intended PR changes, you can Accept, and if the changes are unexpected you can Reject and the author will be signaled to review their changes.
+
+A passing Happo check means that the test detected no visual changes.
+
+*Note:* Some diffs may be detected based on animations happening in the components. This may be resolved in the future, but as of writing these diffs require human approval.
+
+### Writing Happo Tests
+
+New components that are not yet covered by Happo screenshots should include visual regression test coverage. In order to write a new test, add a file to your component directory titled `[my-component]-happo.ts`, substituting [my-component] with the name of your component.
+
+A simple Happo test just requires the component to be appended to the body of the DOM and exported as a function that returns `componentOnReady()` on the component element:
+```js
+export const skeleton = () => {
+  const details = document.createElement('manifold-resource-details-view');
+
+  document.body.appendChild(details);
+
+  return details.componentOnReady();
+};
+```
+
+Components that use data can add mocked data to the element objects with the `fromJSON` util:
+```js
+import resource from '../../spec/mock/cms-stage/resource.json';
+import fromJSON from '../../spec/mock/fromJSON';
+
+export const available = () => {
+  const status = document.createElement('manifold-resource-status-view');
+  status.resourceState = { loading: false, data: fromJSON(resource) };
+
+  document.body.appendChild(status);
+
+  return status.componentOnReady();
+};
+```
+
+Components that have slots can have the slot elements appended to them using `appendChild` before the element is returned:
+```js
+import fromJSON from '../../spec/mock/fromJSON';
+
+export const jawsDB = () => {
+  const productPage = document.createElement('manifold-product-page');
+  productPage.product = fromJSON(jawsdbMock);
+  productPage.provider = fromJSON(jawsdbProvider);
+
+  const button = document.createElement('manifold-button');
+  button.textContent = 'Get JawsDB MySQL';
+  button.slot = 'cta';
+
+  productPage.appendChild(button);
+  document.body.appendChild(productPage);
+
+  return productPage.componentOnReady();
+};
+```
+
+If necessary, tests can be written with HTML as a string and interpolated using the `toHTML` util:
+```jsx
+import { lock } from '@manifoldco/icons';
+import toHTML from '../../../test-utils/to-html';
+
+export const primary = () => {
+  const content = `
+    <manifold-tooltip label-text="This is a tooltip">
+      <span class="value" data-value="42" data-locked>
+        <manifold-icon class="icon" icon="${lock}" margin-right></manifold-icon>
+        42
+      </span>
+  `;
+
+  const tooltip = toHTML(content) as HTMLManifoldTooltipElement;
+  document.body.appendChild(tooltip);
+
+  return tooltip.componentOnReady();
+};
+```
+
+Returning on `componentOnReady()` helps ensure the component is hydrated before Happo calculates the bounding rectangle of the screenshot and then captures or tests it.
+
+Use the CLI during test development to create reports that show you the screenshots that will be tested:
+
+| Command                        | Effect                                                        |
+| :----------------------------- | :------------------------------------------------------------ |
+| `npm run happo dev`       | Run a Happo example test that will watch your changes for test iterations            |
+| `npm run happo`   | Run a Happo example test that will persist                 |
+
+Further examples of Happo tests can be found in their [docs](https://github.com/happo/happo.io/blob/master/README.md#defining-examples).
+
 ## 🖋️ Editing documentation
 
 The docs are powered by Gatsby. To preview them locally, run:

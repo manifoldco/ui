@@ -8,4 +8,6 @@ export const jawsDB = () => {
   plan.product = fromJSON(product);
 
   document.body.appendChild(plan);
+
+  return plan.componentOnReady();
 };
