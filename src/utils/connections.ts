@@ -5,10 +5,16 @@ export interface Connection {
   marketplace: string;
 }
 
-export type Env = 'stage' | 'prod';
+export type Env = 'local' | 'stage' | 'prod';
 type Connections = { [K in Env]: Connection };
 
 export const connections: Connections = {
+  local: {
+    billing: 'https://api.billing.arigato.tools/v1',
+    catalog: 'https://api.catalog.arigato.tools/v1',
+    gateway: 'https://api.arigato.tools/v1',
+    marketplace: 'https://api.marketplace.arigato.tools/v1',
+  },
   stage: {
     billing: 'https://api.billing.stage.manifold.co/v1',
     catalog: 'https://api.catalog.stage.manifold.co/v1',
