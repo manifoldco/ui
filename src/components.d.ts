@@ -6,6 +6,7 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
+import { JSX } from '@stencil/core';
 import {
   Connection,
 } from './utils/connections';
