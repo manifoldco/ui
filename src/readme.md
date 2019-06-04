@@ -49,7 +49,7 @@ A passing Happo check means that the test detected no visual changes.
 New components that are not yet covered by Happo screenshots should include visual regression test coverage. In order to write a new test, add a file to your component directory titled `[my-component]-happo.ts`, substituting [my-component] with the name of your component.
 
 A simple Happo test just requires the component to be appended to the body of the DOM and exported as a function that returns `componentOnReady()` on the component element:
-```
+```js
 export const skeleton = () => {
   const details = document.createElement('manifold-resource-details-view');
 
@@ -60,7 +60,7 @@ export const skeleton = () => {
 ```
 
 Components that use data can add mocked data to the element objects with the `fromJSON` util:
-```
+```js
 import resource from '../../spec/mock/cms-stage/resource.json';
 import fromJSON from '../../spec/mock/fromJSON';
 
@@ -75,7 +75,7 @@ export const available = () => {
 ```
 
 Components that have slots can have the slot elements appended to them using `appendChild` before the element is returned:
-```
+```js
 import fromJSON from '../../spec/mock/fromJSON';
 
 export const jawsDB = () => {
@@ -95,7 +95,7 @@ export const jawsDB = () => {
 ```
 
 If necessary, tests can be written with HTML as a string and interpolated using the `toHTML` util:
-```
+```jsx
 import { lock } from '@manifoldco/icons';
 import toHTML from '../../../test-utils/to-html';
 
