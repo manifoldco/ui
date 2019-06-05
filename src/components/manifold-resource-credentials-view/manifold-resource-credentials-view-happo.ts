@@ -7,6 +7,8 @@ export const credsHidden = () => {
   creds.resourceState = { loading: false, data: fromJSON(resource) };
 
   document.body.appendChild(creds);
+
+  return creds.componentOnReady();
 };
 
 export const credsShown = () => {
@@ -15,6 +17,8 @@ export const credsShown = () => {
   creds.credentials = fromJSON(credentials);
 
   document.body.appendChild(creds);
+
+  return creds.componentOnReady();
 };
 
 export const resourceLoading = () => {
@@ -22,4 +26,6 @@ export const resourceLoading = () => {
   creds.resourceState = { loading: true, data: undefined };
 
   document.body.appendChild(creds);
+
+  return creds.componentOnReady();
 };

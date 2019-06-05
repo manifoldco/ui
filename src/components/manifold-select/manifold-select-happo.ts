@@ -23,4 +23,6 @@ export const primary = () => {
   select.name = name;
 
   document.body.appendChild(select);
+
+  return select.componentOnReady();
 };
