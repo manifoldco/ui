@@ -75,7 +75,7 @@
     "eslint-plugin-prettier": "^3.1.0",
     "fs-extra": "^8.0.1",
     "happo-plugin-typescript": "^1.0.0",
-    "happo.io": "^3.15.0",
+    "happo.io": "^3.18.0",
     "jest": "23.6.0",
     "jest-cli": "23.6.0",
     "postcss-preset-env": "^6.6.0",
