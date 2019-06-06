@@ -13,7 +13,7 @@ export class ManifoldResourceContainer {
   @Prop() resourceLabel: string;
   @State() resource?: Gateway.Resource;
   @State() loading: boolean = false;
-  @Watch('resourceName') resourceChange(newName: string) {
+  @Watch('resourceLabel') resourceChange(newName: string) {
     this.fetchResource(newName);
   }
 
