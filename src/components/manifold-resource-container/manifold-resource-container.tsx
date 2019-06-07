@@ -10,15 +10,15 @@ export class ManifoldResourceContainer {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
   /** Which resource does this belong to? */
-  @Prop() resourceLabel: string;
+  @Prop() resourceName: string;
   @State() resource?: Gateway.Resource;
   @State() loading: boolean = false;
-  @Watch('resourceLabel') resourceChange(newName: string) {
+  @Watch('resourceName') resourceChange(newName: string) {
     this.fetchResource(newName);
   }
 
   componentWillLoad() {
-    this.fetchResource(this.resourceLabel);
+    this.fetchResource(this.resourceName);
   }
 
   fetchResource = async (resourceName: string) => {
