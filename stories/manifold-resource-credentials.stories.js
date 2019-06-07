@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/html';
 import markdown from '../docs/docs/components/manifold-resource-credentials.md';
 
 const credentialsView = `
-<manifold-resource-container resource-label="cms-stage">
+<manifold-resource-container resource-name="cms-stage">
   <manifold-resource-credentials></manifold-resource-credentials>
 </manifold-resource-container>
 `;
