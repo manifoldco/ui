@@ -284,7 +284,7 @@ export namespace Components {
     /**
     * Which resource does this belong to?
     */
-    'resourceLabel': string;
+    'resourceName': string;
   }
   interface ManifoldResourceCredentials {
     /**
@@ -920,7 +920,7 @@ declare namespace LocalJSX {
     /**
     * Which resource does this belong to?
     */
-    'resourceLabel'?: string;
+    'resourceName'?: string;
   }
   interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
     /**

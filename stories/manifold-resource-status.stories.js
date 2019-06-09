@@ -2,7 +2,7 @@ import { storiesOf } from '@storybook/html';
 import markdown from '../docs/docs/components/manifold-resource-status.md';
 
 const view = `
-  <manifold-resource-container resource-label="my-resource">
+  <manifold-resource-container resource-name="my-resource">
     <manifold-resource-status></manifold-resource-status>
   </manifold-resource-container>
 `;

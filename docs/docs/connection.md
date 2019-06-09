@@ -21,6 +21,11 @@ children’s API calls.
 <manifold-connection env="stage">
   <manifold-product product-label="ant-hill-stage"></manifold-product>
 </manifold-connection>
+
+<!-- Local (if you have marketplace running locally) -->
+<manifold-connection env="local">
+  <manifold-product product-label="my-local-product"></manifold-product>
+</manifold-connection>
 ```
 
 The `<manifold-connection>` component is only needed once, at the top level
