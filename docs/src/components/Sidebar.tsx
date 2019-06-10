@@ -8,6 +8,7 @@ import { base64 } from './Icon';
 import manifoldTheme from '../lib/theme-manifold';
 import sapphireTheme from '../lib/theme-sapphire';
 import rubyTheme from '../lib/theme-ruby';
+import diamondTheme from '../lib/theme-diamond';
 import moonTheme from '../lib/theme-moon';
 
 interface SidebarProps {
@@ -20,6 +21,7 @@ const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
 const SAPPHIRE = 'sapphire';
 const RUBY = 'ruby';
+const DIAMOND = 'diamond';
 const MOON = 'moon';
 
 const themes = [
@@ -27,6 +29,7 @@ const themes = [
   [MANIFOLD, 'Manifold'],
   [SAPPHIRE, 'Sapphire'],
   [RUBY, 'Ruby'],
+  [DIAMOND, 'Diamond'],
   [MOON, 'Moon'],
 ];
 
@@ -147,6 +150,7 @@ ${switchProp('userTheme', {
   [MANIFOLD]: manifoldTheme,
   [SAPPHIRE]: sapphireTheme,
   [RUBY]: rubyTheme,
+  [DIAMOND]: diamondTheme,
   [MOON]: moonTheme,
 })}
 `;
