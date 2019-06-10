@@ -26,10 +26,10 @@ export namespace Components {
   }
   interface ManifoldBadge {}
   interface ManifoldButton {
-    'color'?: 'black' | 'white';
-    'disabled': boolean;
+    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    'disabled'?: boolean;
     'onClickEvent'?: (e: MouseEvent) => void;
-    'size'?: 'small';
+    'size'?: 'medium' | 'small';
   }
   interface ManifoldConnection {
     /**
@@ -650,10 +650,10 @@ declare namespace LocalJSX {
   }
   interface ManifoldBadge extends JSXBase.HTMLAttributes<HTMLManifoldBadgeElement> {}
   interface ManifoldButton extends JSXBase.HTMLAttributes<HTMLManifoldButtonElement> {
-    'color'?: 'black' | 'white';
+    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'disabled'?: boolean;
     'onClickEvent'?: (e: MouseEvent) => void;
-    'size'?: 'small';
+    'size'?: 'medium' | 'small';
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
     /**

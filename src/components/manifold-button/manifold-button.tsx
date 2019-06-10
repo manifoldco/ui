@@ -2,14 +2,14 @@ import { h, Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'manifold-button',
-  styleUrl: 'button.css',
+  styleUrl: 'manifold-button.css',
   shadow: true,
 })
 export class ManifoldButton {
-  @Prop() color?: 'black' | 'white';
-  @Prop() onClickEvent?: (e: MouseEvent) => void;
-  @Prop() size?: 'small';
-  @Prop() disabled: boolean = false;
+  @Prop() color?: 'black' | 'gray' | 'orange' | 'pink' | 'white' = 'white';
+  @Prop() disabled?: boolean = false;
+  @Prop() onClickEvent?: (e: MouseEvent) => void = () => null;
+  @Prop() size?: 'medium' | 'small' = 'medium';
 
   render() {
     return (
