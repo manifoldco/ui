@@ -2,10 +2,4 @@ version: 1
 update_configs:
   - ignored_updates:
       - match:
-        dependency_name: '@types/jest' # Version-managed by Stencil
-      - match:
         dependency_name: 'fs-extra' # For a Travis script; doesn’t matter
-      - match:
-        dependency_name: 'jest' # Version-managed by Stencil
-      - match:
-        dependency_name: 'jest-cli' # Version-managed by Stencil
