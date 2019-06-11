@@ -1,9 +1,5 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 
-interface EventDetail {
-  href?: string;
-}
-
 @Component({
   tag: 'manifold-button',
   styleUrl: 'manifold-button.css',
@@ -13,39 +9,19 @@ export class ManifoldButton {
   @Prop() color?: 'black' | 'gray' | 'orange' | 'pink' | 'white' = 'white';
   @Prop() disabled?: boolean = false;
   @Prop() href?: string;
-  @Prop() preserveEvent: boolean = false;
   @Prop() size?: 'medium' | 'small' = 'medium';
-  @Prop() onClickEvent?: (e: MouseEvent) => void;
+  @Prop() stencilClickEvent?: (e: MouseEvent) => void;
   @Event({ eventName: 'manifold-button-click', bubbles: true }) buttonClick: EventEmitter;
 
   onClick = (e: MouseEvent): void => {
-    if (this.preserveEvent) {
-      e.preventDefault();
-    }
+    this.buttonClick.emit();
 
-    const detail: EventDetail = { href: this.href };
-    this.buttonClick.emit(detail);
-
-    if (this.onClickEvent) {
-      this.onClickEvent(e);
+    if (this.stencilClickEvent) {
+      this.stencilClickEvent(e);
     }
   };
 
   render() {
-    if (this.href) {
-      return (
-        <a
-          onClick={this.onClick}
-          class="button"
-          href={this.href}
-          data-color={this.color}
-          data-size={this.size}
-        >
-          <slot />
-        </a>
-      );
-    }
-
     return (
       <button
         class="button"

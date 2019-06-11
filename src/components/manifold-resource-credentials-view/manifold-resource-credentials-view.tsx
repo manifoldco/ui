@@ -38,7 +38,7 @@ export class ManifoldResourceCredentials {
   render() {
     return [
       <menu class="secrets-menu" data-showing={!!this.credentials}>
-        <manifold-button color="white" size="small" onClickEvent={this.hideCredentials}>
+        <manifold-button color="white" size="small" stencilClickEvent={this.hideCredentials}>
           <manifold-icon marginRight icon={lock} />
           Hide credentials
         </manifold-button>
@@ -77,7 +77,7 @@ export class ManifoldResourceCredentials {
               </span>
             </manifold-button>
           ) : (
-            <manifold-button color="black" onClickEvent={this.requestCredentials}>
+            <manifold-button color="black" stencilClickEvent={this.requestCredentials}>
               <manifold-icon marginRight icon={eye} /> Show credentials
             </manifold-button>
           )}

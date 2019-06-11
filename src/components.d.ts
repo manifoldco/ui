@@ -29,9 +29,17 @@ export namespace Components {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'disabled'?: boolean;
     'href'?: string;
-    'onClickEvent'?: (e: MouseEvent) => void;
-    'preserveEvent': boolean;
     'size'?: 'medium' | 'small';
+    'stencilClickEvent'?: (e: MouseEvent) => void;
+  }
+  interface ManifoldButtonLink {
+    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    'href': string;
+    'preserveEvent': boolean;
+    'rel'?: string;
+    'size'?: 'medium' | 'small';
+    'stencilClickEvent'?: (e: MouseEvent) => void;
+    'target'?: string;
   }
   interface ManifoldConnection {
     /**
@@ -377,6 +385,12 @@ declare global {
     new (): HTMLManifoldButtonElement;
   };
 
+  interface HTMLManifoldButtonLinkElement extends Components.ManifoldButtonLink, HTMLStencilElement {}
+  var HTMLManifoldButtonLinkElement: {
+    prototype: HTMLManifoldButtonLinkElement;
+    new (): HTMLManifoldButtonLinkElement;
+  };
+
   interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
   var HTMLManifoldConnectionElement: {
     prototype: HTMLManifoldConnectionElement;
@@ -602,6 +616,7 @@ declare global {
     'manifold-active-plan': HTMLManifoldActivePlanElement;
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-button': HTMLManifoldButtonElement;
+    'manifold-button-link': HTMLManifoldButtonLinkElement;
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
@@ -655,10 +670,19 @@ declare namespace LocalJSX {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'disabled'?: boolean;
     'href'?: string;
-    'onClickEvent'?: (e: MouseEvent) => void;
     'onManifold-button-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
     'size'?: 'medium' | 'small';
+    'stencilClickEvent'?: (e: MouseEvent) => void;
+  }
+  interface ManifoldButtonLink extends JSXBase.HTMLAttributes<HTMLManifoldButtonLinkElement> {
+    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    'href'?: string;
+    'onManifold-buttonLink-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
+    'rel'?: string;
+    'size'?: 'medium' | 'small';
+    'stencilClickEvent'?: (e: MouseEvent) => void;
+    'target'?: string;
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
     /**
@@ -1003,6 +1027,7 @@ declare namespace LocalJSX {
     'manifold-active-plan': ManifoldActivePlan;
     'manifold-badge': ManifoldBadge;
     'manifold-button': ManifoldButton;
+    'manifold-button-link': ManifoldButtonLink;
     'manifold-connection': ManifoldConnection;
     'manifold-cost-display': ManifoldCostDisplay;
     'manifold-data-manage-button': ManifoldDataManageButton;
