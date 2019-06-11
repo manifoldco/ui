@@ -77,7 +77,7 @@ export class ManifoldResourceCredentials {
               </span>
             </manifold-button>
           ) : (
-            <manifold-button color="black" onClick={this.requestCredentials}>
+            <manifold-button color="black" onClickEvent={this.requestCredentials}>
               <manifold-icon marginRight icon={eye} /> Show credentials
             </manifold-button>
           )}
