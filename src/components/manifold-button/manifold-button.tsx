@@ -1,4 +1,8 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
+
+interface EventDetail {
+  href?: string;
+}
 
 @Component({
   tag: 'manifold-button',
@@ -8,16 +12,43 @@ import { h, Component, Prop } from '@stencil/core';
 export class ManifoldButton {
   @Prop() color?: 'black' | 'gray' | 'orange' | 'pink' | 'white' = 'white';
   @Prop() disabled?: boolean = false;
-  @Prop() onClickEvent?: (e: MouseEvent) => void = () => null;
+  @Prop() href?: string;
+  @Prop() preserveEvent: boolean = false;
   @Prop() size?: 'medium' | 'small' = 'medium';
+  @Prop() onClickEvent?: (e: MouseEvent) => void;
+  @Event({ eventName: 'manifold-button-click', bubbles: true }) buttonClick: EventEmitter;
+
+  onClick = (e: Event): void => {
+    if (this.preserveEvent) {
+      e.preventDefault();
+    }
+    const detail: EventDetail = { href: this.href };
+    this.buttonClick.emit(detail);
+  };
 
   render() {
+    if (this.href) {
+      return (
+        <a
+          onClick={this.onClick}
+          class="button"
+          href={this.href}
+          data-color={this.color}
+          data-size={this.size}
+        >
+          <slot />
+        </a>
+      );
+    }
+
     return (
       <button
-        onClick={this.onClickEvent}
+        class="button"
         data-color={this.color}
         data-size={this.size}
         disabled={this.disabled}
+        onClick={this.onClickEvent}
+        type="button"
       >
         <slot />
       </button>

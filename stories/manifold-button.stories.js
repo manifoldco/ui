@@ -20,4 +20,18 @@ storiesOf('Button', module)
   .add('black', () => renderButton('black'))
   .add('gray', () => renderButton('gray'))
   .add('orange', () => renderButton('orange'))
-  .add('pink', () => renderButton('pink'));
+  .add('pink', () => renderButton('pink'))
+  .add(
+    'link',
+    () => `
+  <div>
+    <manifold-button color="orange" href="/about" preserve-event>Link</manifold-button>
+    <br />
+    <br />
+    <manifold-button color="orange" href="/about" size="small">Link small</manifold-button>
+    <br />
+    <br />
+    <manifold-button color="orange" href="/about" disabled>Link disabled</manifold-button>
+  </div>
+`
+  );

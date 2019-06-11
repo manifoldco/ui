@@ -28,7 +28,9 @@ export namespace Components {
   interface ManifoldButton {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'disabled'?: boolean;
+    'href'?: string;
     'onClickEvent'?: (e: MouseEvent) => void;
+    'preserveEvent': boolean;
     'size'?: 'medium' | 'small';
   }
   interface ManifoldConnection {
@@ -652,7 +654,10 @@ declare namespace LocalJSX {
   interface ManifoldButton extends JSXBase.HTMLAttributes<HTMLManifoldButtonElement> {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'disabled'?: boolean;
+    'href'?: string;
     'onClickEvent'?: (e: MouseEvent) => void;
+    'onManifold-button-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
     'size'?: 'medium' | 'small';
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {

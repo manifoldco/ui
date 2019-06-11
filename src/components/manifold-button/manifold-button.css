@@ -1,4 +1,4 @@
-button {
+.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -6,6 +6,7 @@ button {
   height: 2.5rem;
   padding: 0 1.5rem;
   color: var(--manifold-color-gray);
+  font-family: var(--theme-font-family, var(--manifold-font-family));
   font-size: var(--manifold-font-d1);
   line-height: 2.5;
   white-space: nowrap;
