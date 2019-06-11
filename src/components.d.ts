@@ -16,7 +16,6 @@ import {
   Option,
 } from 'types/Select';
 
-
 export namespace Components {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
