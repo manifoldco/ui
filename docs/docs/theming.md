@@ -18,13 +18,23 @@ Manifold UI offers a simple, yet versitle, theming API for customizing the look 
 
 ### CSS Custom Properties
 
-For the purposes of theming, we need to be able to apply styles within the shadow DOM. Although selectors can't penetrate the shadow DOM, properties can still be inherited from ancestor elements. This includes [CSS Custom Properites][custom-properties]. The use of custom properties within Manifold UI components means that components will inherit theme values defined outside of their shadow DOM. This preserves style encapsulation and allows certain style properties within components to be customizable.
+For the purposes of theming, we need to be able to apply styles within the
+shadow DOM. Although selectors can't penetrate the shadow DOM, properties can
+still be inherited from ancestor elements. This includes [CSS Custom
+Properites][custom-properties]. The use of custom properties within Manifold
+UI components means that components will inherit theme values defined outside
+of their shadow DOM. This preserves style encapsulation and allows certain
+style properties within components to be customizable.
 
 ### Base Theme
 
-Manifold UI comes with a base theme that provides various levels of abstraction. This allows for easy theming at a high level for all components with just a small set of valiables, while also exposing lower level variables for more precise theming of individual components.
+Manifold UI comes with a base theme that provides various levels of
+abstraction. This allows for easy theming at a high level for all components
+with just a small set of valiables, while also exposing lower level variables
+for more precise theming of individual components.
 
-We reccomend that you use this base theme as a starting point for building your own custom theme. To add the base theme to your project:
+We recommend that you use this base theme as a starting point for building
+your own custom theme. To add the base theme to your project:
 
 ```js
 import '@manifoldco/ui/dist/manifold/manifold.css';
@@ -32,9 +42,11 @@ import '@manifoldco/ui/dist/manifold/manifold.css';
 
 ### Global Theming
 
-Global theming is the easiest way to set theme values that will be propagrated throughout the Manifold UI components.
+Global theming is the easiest way to set theme values that will be
+propagrated throughout the Manifold UI components.
 
-We recommend setting variables on `:root`, which will override variables from the base theme:
+We recommend setting variables on `:root`, which will override variables from
+the base theme:
 
 ```css
 /* Import the base theme somewhere before this. */
