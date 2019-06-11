@@ -1,10 +1,17 @@
 import { storiesOf } from '@storybook/html';
+import { eye } from '@manifoldco/icons';
 import markdown from '../docs/docs/components/manifold-button.md';
 
 const renderButton = color =>
   `
     <div>
       <manifold-button color=${color || '""'}>${color || 'Default'}</manifold-button>
+      <br />
+      <br />
+      <manifold-button color=${color || '""'} href="#">
+        <manifold-icon icon="${eye}"></manifold-icon>
+        &nbsp;with icon
+      </manifold-button>
       <br />
       <br />
       <manifold-button color=${color || '""'} size="small">${color ||

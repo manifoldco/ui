@@ -2,7 +2,7 @@ import { h, Component, Element, Prop } from '@stencil/core';
 
 @Component({
   tag: 'manifold-icon',
-  styleUrl: 'mf-icon.css',
+  styleUrl: 'manifold-icon.css',
   shadow: true,
 })
 export class ManifoldIcon {
