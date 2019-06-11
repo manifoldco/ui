@@ -6,8 +6,8 @@
   height: 2.5rem;
   padding: 0 1.5rem;
   color: var(--manifold-color-gray);
-  font-family: var(--theme-font-family, var(--manifold-font-family));
   font-size: var(--manifold-font-d1);
+  font-family: var(--theme-font-family, var(--manifold-font-family));
   line-height: 2.5;
   white-space: nowrap;
   text-align: center;
@@ -20,9 +20,9 @@
   outline: none;
   box-shadow: var(--manifold-shadow-default);
   cursor: pointer;
+  transition-timing-function: linear;
   transition-duration: 150ms;
   transition-property: background-color, border-color, color, box-shadow, filter;
-  transition-timing-function: linear;
 
   &:focus,
   &:hover {
