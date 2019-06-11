@@ -16,10 +16,7 @@
     "jsx": "react",
     "jsxFactory": "h",
     "strictNullChecks": true,
-    "resolveJsonModule": true,
-    "paths": {
-      "*": ["../node_modules/*", "*"]
-    }
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

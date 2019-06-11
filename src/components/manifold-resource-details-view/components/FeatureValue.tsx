@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from '@stencil/core';
-
+import { Catalog } from '../../../types/catalog';
 import { CustomFeature } from './CustomFeature';
 import { MeasurableFeatureUsageDisplay } from './MeasurableFeatureUsageDisplay';
 import { FeatureDisplay } from './FeatureDisplay';

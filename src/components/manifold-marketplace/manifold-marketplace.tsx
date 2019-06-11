@@ -1,11 +1,11 @@
 import { h, Component, Prop, State, Element } from '@stencil/core';
-
+import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
-export class ManifoldMarketplace {
+export class Marketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
@@ -69,4 +69,4 @@ export class ManifoldMarketplace {
   }
 }
 
-Tunnel.injectProps(ManifoldMarketplace, ['connection']);
+Tunnel.injectProps(Marketplace, ['connection']);

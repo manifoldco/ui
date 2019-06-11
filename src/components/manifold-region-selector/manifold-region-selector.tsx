@@ -1,6 +1,6 @@
 import { h, Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
-import { Option } from 'types/Select';
-
+import { Option } from '../../types/Select';
+import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
@@ -44,7 +44,10 @@ export class ManifoldRegionSelector {
     }));
   }
 
-  sortRegions(regions: Catalog.Region[], preferredRegions?: string[]): Catalog.Region[] {
+  sortRegions(
+    regions: Catalog.Region[],
+    preferredRegions?: string[]
+  ): Catalog.Region[] {
     return [...regions].sort((a, b) => {
       // If user specified preferred regions first
       const regionA = this.regionCode(a);

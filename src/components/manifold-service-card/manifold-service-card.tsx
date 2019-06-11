@@ -1,5 +1,5 @@
 import { h, Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-
+import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';

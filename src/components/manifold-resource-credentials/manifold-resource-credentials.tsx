@@ -1,5 +1,6 @@
 import { h, Component, Prop, State } from '@stencil/core';
-
+import { Gateway } from '../../types/gateway';
+import { Marketplace } from '../../types/marketplace';
 import ConnectionTunnel from '../../data/connection';
 import ResourceTunnel, { ResourceState } from '../../data/resource';
 import { withAuth } from '../../utils/auth';

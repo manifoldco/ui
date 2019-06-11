@@ -1,5 +1,5 @@
 import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
-import { Option } from 'types/Select';
+import { Option } from '../../types/Select';
 
 @Component({
   tag: 'manifold-select',

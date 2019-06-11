@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
+import { Gateway } from '../types/gateway';
 
 export interface ResourceState {
   data?: Gateway.Resource;

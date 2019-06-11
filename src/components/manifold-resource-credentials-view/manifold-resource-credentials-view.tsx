@@ -1,6 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
-
+import { Marketplace } from '../../types/marketplace';
 import { ResourceState } from '../../data/resource';
 
 @Component({

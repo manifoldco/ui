@@ -1,4 +1,5 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { Catalog } from '../../types/catalog';
 import skeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
 import {
@@ -13,7 +14,7 @@ import {
   styleUrl: 'manifold-marketplace-grid.css',
   shadow: true,
 })
-export class ManifoldMarketplaceGrid {
+export class MarketplaceGrid {
   @Element() el: HTMLElement;
   @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];

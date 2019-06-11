@@ -1,4 +1,6 @@
-import { Option } from 'types/Select';
+import { Option } from '../types/Select';
+import { Catalog } from '../types/catalog';
+import { Gateway } from '../types/gateway';
 import { withAuth } from './auth';
 import { Connection } from './connections';
 import { $ } from './currency';
@@ -123,7 +125,9 @@ export function numberFeatureDefaultValue(value: Catalog.FeatureValueDetails): n
 /**
  * Calculate pricing tiers for metered features
  */
-export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): PricingTier[] {
+export function pricingTiers({
+  numeric_details,
+}: Catalog.FeatureValueDetails): PricingTier[] {
   if (!numeric_details) return [];
 
   // Features can be really, really (really) cheap. Let’s make things easier.
@@ -225,7 +229,9 @@ export function numberFeatureDisplayValue(value: Catalog.FeatureValueDetails): s
 /**
  * Collect all default data values for a feature set
  */
-export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.FeatureMap {
+export function initialFeatures(
+  features: Catalog.ExpandedFeature[]
+): Gateway.FeatureMap {
   // We want to set _all_ features, not just customizable ones, to calculate cost
   return features.reduce((obj, feature) => {
     if (!feature.value) return obj;

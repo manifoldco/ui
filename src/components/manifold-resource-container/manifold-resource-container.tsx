@@ -1,5 +1,5 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
-
+import { Gateway } from '../../types/gateway';
 import ConnectionTunnel from '../../data/connection';
 import ResourceTunnel from '../../data/resource';
 import { withAuth } from '../../utils/auth';

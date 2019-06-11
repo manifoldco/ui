@@ -9,6 +9,8 @@ import {
 } from '../../../utils/plan';
 import { $ } from '../../../utils/currency';
 import { pluralize } from '../../../utils/string';
+import { Catalog } from '../../../types/catalog';
+import { Gateway } from '../../../types/gateway';
 import { LockedFeature } from './LockedFeature';
 
 interface NumberFeatureProps {

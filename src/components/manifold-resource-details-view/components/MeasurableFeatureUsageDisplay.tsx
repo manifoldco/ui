@@ -1,5 +1,6 @@
 import { h, FunctionalComponent } from '@stencil/core';
 import { $ } from '../../../utils/currency';
+import { Catalog } from '../../../types/catalog';
 
 const COST_COEFFICIENT = 10000;
 

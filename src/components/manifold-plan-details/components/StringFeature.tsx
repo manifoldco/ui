@@ -4,6 +4,7 @@ import {
   stringFeatureDefaultValue,
   stringFeatureDisplayValue,
 } from '../../../utils/plan';
+import { Catalog } from '../../../types/catalog';
 import { LockedFeature } from './LockedFeature';
 
 interface StringFeatureProps {

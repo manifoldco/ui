@@ -19,6 +19,7 @@ import {
   tool,
   worker,
 } from '@manifoldco/icons';
+import { Catalog } from '../types/catalog';
 
 export interface CategoryMap {
   [category: string]: Catalog.Product[];
@@ -53,7 +54,10 @@ export function categories(services?: Catalog.Product[]): CategoryMap {
   return categoryMap;
 }
 
-export function filteredServices(filter: string, services?: Catalog.Product[]): Catalog.Product[] {
+export function filteredServices(
+  filter: string,
+  services?: Catalog.Product[]
+): Catalog.Product[] {
   if (!filter || !services) {
     return [];
   }

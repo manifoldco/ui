@@ -1,4 +1,6 @@
 import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { Catalog } from '../../types/catalog';
+import { Gateway } from '../../types/gateway';
 import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
@@ -57,7 +59,9 @@ export class ManifoldPlanDetails {
       this.planUpdate.emit(detail);
     }
   }
-  @Watch('resourceFeatures') resourceFeaturesChange(newFeatures: Gateway.ResolvedFeature[]) {
+  @Watch('resourceFeatures') resourceFeaturesChange(
+    newFeatures: Gateway.ResolvedFeature[]
+  ) {
     this.features = this.setFeaturesFromResource(newFeatures);
   }
   @Watch('resourceRegion') resourceRegionChange(newRegion: string) {

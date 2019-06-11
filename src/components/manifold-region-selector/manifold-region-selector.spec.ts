@@ -1,3 +1,4 @@
+import { Catalog } from '../../types/catalog';
 import { ManifoldRegionSelector } from './manifold-region-selector';
 import { Regions } from '../../spec/mock/catalog';
 
