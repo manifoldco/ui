@@ -18,12 +18,17 @@ export class ManifoldButton {
   @Prop() onClickEvent?: (e: MouseEvent) => void;
   @Event({ eventName: 'manifold-button-click', bubbles: true }) buttonClick: EventEmitter;
 
-  onClick = (e: Event): void => {
+  onClick = (e: MouseEvent): void => {
     if (this.preserveEvent) {
       e.preventDefault();
     }
+
     const detail: EventDetail = { href: this.href };
     this.buttonClick.emit(detail);
+
+    if (this.onClickEvent) {
+      this.onClickEvent(e);
+    }
   };
 
   render() {
@@ -47,7 +52,7 @@ export class ManifoldButton {
         data-color={this.color}
         data-size={this.size}
         disabled={this.disabled}
-        onClick={this.onClickEvent}
+        onClick={this.onClick}
         type="button"
       >
         <slot />
