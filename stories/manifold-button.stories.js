@@ -1,4 +1,5 @@
 import { storiesOf } from '@storybook/html';
+import markdown from '../docs/docs/components/manifold-button.md';
 
 const renderButton = color =>
   `
@@ -16,6 +17,7 @@ const renderButton = color =>
   `;
 
 storiesOf('Button', module)
+  .addParameters({ readme: { sidebar: markdown } })
   .add('default', () => renderButton())
   .add('black', () => renderButton('black'))
   .add('gray', () => renderButton('gray'))
