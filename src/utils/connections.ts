@@ -10,10 +10,10 @@ type Connections = { [K in Env]: Connection };
 
 export const connections: Connections = {
   local: {
-    billing: 'https://api.billing.arigato.tools/v1',
-    catalog: 'https://api.catalog.arigato.tools/v1',
-    gateway: 'https://api.arigato.tools/v1',
-    marketplace: 'https://api.marketplace.arigato.tools/v1',
+    billing: 'http://api.billing.arigato.tools/v1',
+    catalog: 'http://api.catalog.arigato.tools/v1',
+    gateway: 'http://api.arigato.tools/v1',
+    marketplace: 'http://api.marketplace.arigato.tools/v1',
   },
   stage: {
     billing: 'https://api.billing.stage.manifold.co/v1',
