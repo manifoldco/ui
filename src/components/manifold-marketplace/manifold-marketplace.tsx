@@ -5,7 +5,7 @@ import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-marketplace' })
-export class Marketplace {
+export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
@@ -69,4 +69,4 @@ export class Marketplace {
   }
 }
 
-Tunnel.injectProps(Marketplace, ['connection']);
+Tunnel.injectProps(ManifoldMarketplace, ['connection']);

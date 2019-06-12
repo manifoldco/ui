@@ -44,10 +44,7 @@ export class ManifoldRegionSelector {
     }));
   }
 
-  sortRegions(
-    regions: Catalog.Region[],
-    preferredRegions?: string[]
-  ): Catalog.Region[] {
+  sortRegions(regions: Catalog.Region[], preferredRegions?: string[]): Catalog.Region[] {
     return [...regions].sort((a, b) => {
       // If user specified preferred regions first
       const regionA = this.regionCode(a);

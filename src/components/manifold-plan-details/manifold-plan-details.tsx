@@ -59,9 +59,7 @@ export class ManifoldPlanDetails {
       this.planUpdate.emit(detail);
     }
   }
-  @Watch('resourceFeatures') resourceFeaturesChange(
-    newFeatures: Gateway.ResolvedFeature[]
-  ) {
+  @Watch('resourceFeatures') resourceFeaturesChange(newFeatures: Gateway.ResolvedFeature[]) {
     this.features = this.setFeaturesFromResource(newFeatures);
   }
   @Watch('resourceRegion') resourceRegionChange(newRegion: string) {

@@ -14,7 +14,7 @@ import {
   styleUrl: 'manifold-marketplace-grid.css',
   shadow: true,
 })
-export class MarketplaceGrid {
+export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
   @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];

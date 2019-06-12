@@ -3,10 +3,7 @@ import { stringFeatureOptions } from '../../../utils/plan';
 import { Catalog } from '../../../types/catalog';
 import { LockedFeature } from './LockedFeature';
 
-const getCustomValue = (
-  feature: Catalog.ExpandedFeature,
-  value: number | string | boolean
-) => {
+const getCustomValue = (feature: Catalog.ExpandedFeature, value: number | string | boolean) => {
   if (!feature.values) return value;
   switch (feature.type) {
     case 'boolean': {
