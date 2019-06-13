@@ -17,7 +17,7 @@ export class ManifoldRegionSelector {
   @Prop() value?: string;
   @State() globalRegion: Catalog.Region = globalRegion;
   @State() regions?: Catalog.Region[];
-  @Event() change: EventEmitter;
+  @Event() updateValue: EventEmitter;
 
   async componentWillLoad() {
     const response = await fetch(`${this.connection.catalog}/regions`, withAuth());
@@ -30,7 +30,7 @@ export class ManifoldRegionSelector {
   }
 
   handleChange = ({ detail }: CustomEvent) => {
-    this.change.emit({ ...detail });
+    this.updateValue.emit({ ...detail });
   };
 
   filterRegions(regions: Catalog.Region[]): Catalog.Region[] {

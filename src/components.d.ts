@@ -945,7 +945,7 @@ declare namespace LocalJSX {
     'ariaLabel'?: string;
     'connection'?: Connection;
     'name'?: string;
-    'onChange'?: (event: CustomEvent<any>) => void;
+    'onUpdateValue'?: (event: CustomEvent<any>) => void;
     'preferredRegions'?: string[];
     'value'?: string;
   }

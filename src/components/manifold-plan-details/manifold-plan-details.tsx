@@ -199,7 +199,7 @@ export class ManifoldPlanDetails {
           allowedRegions={regions}
           ariaLabel={name}
           name={name}
-          onChange={e => this.handleChangeRegion(e)}
+          onUpdateValue={this.handleChangeRegion}
           preferredRegions={this.regions}
           value={this.regionId}
         />

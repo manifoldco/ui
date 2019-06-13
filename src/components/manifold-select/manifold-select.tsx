@@ -16,7 +16,7 @@ export class ManifoldSelect {
     this.updateValue.emit({ name: this.name, value: newVal });
   }
 
-  onChangeHandler = (e: CustomEvent) => {
+  onChangeHandler = (e: Event) => {
     if (!e.target) return;
     const { value } = e.target as HTMLSelectElement;
     this.updateValue.emit({ name: this.name, value });
