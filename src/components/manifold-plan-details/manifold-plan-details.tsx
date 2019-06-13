@@ -1,4 +1,6 @@
 import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { Catalog } from '../../types/catalog';
+import { Gateway } from '../../types/gateway';
 import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
@@ -197,7 +199,7 @@ export class ManifoldPlanDetails {
           allowedRegions={regions}
           ariaLabel={name}
           name={name}
-          onChange={e => this.handleChangeRegion(e)}
+          onUpdateValue={this.handleChangeRegion}
           preferredRegions={this.regions}
           value={this.regionId}
         />

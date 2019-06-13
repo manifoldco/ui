@@ -7,14 +7,23 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
+  Catalog,
+} from './types/catalog';
+import {
+  Gateway,
+} from './types/gateway';
+import {
   Connection,
 } from './utils/connections';
+import {
+  Marketplace,
+} from './types/marketplace';
 import {
   ResourceState,
 } from './data/resource';
 import {
   Option,
-} from 'types/Select';
+} from './types/Select';
 
 export namespace Components {
   interface ManifoldActivePlan {
@@ -936,7 +945,7 @@ declare namespace LocalJSX {
     'ariaLabel'?: string;
     'connection'?: Connection;
     'name'?: string;
-    'onChange'?: (event: CustomEvent<any>) => void;
+    'onUpdateValue'?: (event: CustomEvent<any>) => void;
     'preferredRegions'?: string[];
     'value'?: string;
   }

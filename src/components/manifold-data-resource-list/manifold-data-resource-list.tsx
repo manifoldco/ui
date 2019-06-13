@@ -1,4 +1,5 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
+import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';

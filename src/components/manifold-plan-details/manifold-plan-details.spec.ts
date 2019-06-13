@@ -1,3 +1,4 @@
+import { Gateway } from '../../types/gateway';
 import { ManifoldPlanDetails as PlanDetails } from './manifold-plan-details';
 import { ExpandedPlan, ExpandedPlanCustom, Product } from '../../spec/mock/catalog';
 

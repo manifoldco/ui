@@ -1,5 +1,6 @@
 import { h, Component, Prop, FunctionalComponent } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
+import { Catalog } from '../../types/catalog';
 
 const PlanButton: FunctionalComponent<{
   checked?: boolean;

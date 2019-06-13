@@ -1,5 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 import { arrow_up_right, book, life_buoy } from '@manifoldco/icons';
+import { Catalog } from '../../types/catalog';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
 

@@ -1,4 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
+import { Catalog } from '../../types/catalog';
 import {
   BooleanFeatureCustom,
   BooleanFeatureStaticFalse,

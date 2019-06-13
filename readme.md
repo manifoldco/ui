@@ -60,7 +60,7 @@ npm i @manifoldco/ui
 
 ### React
 
-```ts
+```tsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@manifoldco/ui/dist/manifold/manifold.css';
@@ -81,31 +81,25 @@ When using inside TypeScript, you’ll likely see this error (
 Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'
 ```
 
-To solve that, add the `@manifoldco/ui` directory to `typeRoots` in
-`tsconfig.json`:
-
-```json
-"compilerOptions": {
-  "typeRoots": ["./node_modules/@types", "./node_modules/@manifoldco"],
-  "types": ["ui"]
-}
-```
-
-Next, create a `custom-elements.d.ts` file somewhere inside your project
-(must be inside the [include][tsconfig] option in `tsconfig.json`):
+To solve that, create a `custom-elements.d.ts` file somewhere inside your
+project (must be inside the [include][tsconfig] option in `tsconfig.json`):
 
 ```ts
-declare module JSX {
-  export interface IntrinsicElements {
-    'manifold-connection': StencilIntrinsicElements['manifold-connection'] & {
-      children?: ReactElement;
-    };
-    'manifold-product': StencilIntrinsicElements['manifold-product'] & {
-      children?: ReactElement;
-    };
-    'manifold-plan-selector': StencilIntrinsicElements['manifold-plan-selector'] & {
-      children?: ReactElement;
-    };
+import { Components } from '@manifoldco/ui';
+import { ReactNode } from 'react';
+
+interface ReactProps {
+  children?: ReactNode;
+  // Additional properties may go here as needed
+}
+
+declare global {
+  export namespace JSX {
+    interface IntrinsicElements {
+      'manifold-marketplace': Components.ManifoldMarketplace & ReactProps;
+      'manifold-product': Components.ManifoldProduct & ReactProps;
+      'manifold-plan-selector': Components.ManifoldPlanSelector & ReactProps;
+    }
   }
 }
 ```
@@ -124,6 +118,6 @@ please refer to Stencil’s [docs on integration][stencil-framework].
 
 [stencil]: https://stenciljs.com/
 [stencil-framework]: https://stenciljs.com/docs/overview
-[ts-include]: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
+[tsconfig]: https://www.typescriptlang.org/docs/handbook/tsconfig-json.htm
 [ts-fix]: https://github.com/Microsoft/TypeScript/pull/26797
 [web-components]: https://www.webcomponents.org/introduction

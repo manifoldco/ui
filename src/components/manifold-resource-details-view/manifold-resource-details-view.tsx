@@ -1,5 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
-
+import { Gateway } from '../../types/gateway';
 import { FeatureName } from './components/FeatureName';
 import { FeatureValue } from './components/FeatureValue';
 import { $ } from '../../utils/currency';

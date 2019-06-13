@@ -1,6 +1,7 @@
 import { h, FunctionalComponent } from '@stencil/core';
 import { check } from '@manifoldco/icons';
 import { booleanFeatureDisplayValue, booleanFeatureDefaultValue } from '../../../utils/plan';
+import { Catalog } from '../../../types/catalog';
 import { LockedFeature } from './LockedFeature';
 
 interface BooleanFeatureProps {
