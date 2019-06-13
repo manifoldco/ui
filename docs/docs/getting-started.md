@@ -56,7 +56,7 @@ modern framework like React, Vue, or Angular.
 
 ### React
 
-```jsx
+```tsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@manifoldco/ui/dist/manifold/manifold.css';
@@ -77,31 +77,22 @@ When using inside TypeScript, you’ll likely see this error (
 Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'
 ```
 
-To solve that, add the `@manifoldco/ui` directory to `typeRoots` in
-`tsconfig.json`:
-
-```json
-"compilerOptions": {
-  "typeRoots": ["./node_modules/@types", "./node_modules/@manifoldco"],
-  "types": ["ui"]
-}
-```
-
-Next, create a `custom-elements.d.ts` file somewhere inside your project
-(must be inside the [include][tsconfig] option in `tsconfig.json`):
+To solve that, create a `custom-elements.d.ts` file somewhere inside your
+project (must be inside the [include][tsconfig] option in `tsconfig.json`):
 
 ```ts
-declare module JSX {
-  export interface IntrinsicElements {
-    'manifold-connection': StencilIntrinsicElements['manifold-connection'] & {
-      children?: ReactElement;
-    };
-    'manifold-product': StencilIntrinsicElements['manifold-product'] & {
-      children?: ReactElement;
-    };
-    'manifold-plan-selector': StencilIntrinsicElements['manifold-plan-selector'] & {
-      children?: ReactElement;
-    };
+import { Components, JSX as StencilJSX } from '@manifoldco/ui';
+import { HTMLAttributes, ReactNode } from 'react';
+
+interface ReactInterface {
+  children?: ReactNode;
+}
+
+declare global {
+  export namespace JSX {
+    interface IntrinsicElements {
+      'manifold-button-link': HTMLManifoldButtonLinkElement & ReactInterface;
+    }
   }
 }
 ```
@@ -109,8 +100,8 @@ declare module JSX {
 This will expose the types from Stencil to JSX, and you’ll be able to get
 typechecking as you write.
 
-_Note: every element will have to be declared manually, at least until [this
-PR][ts-fix] is merged in TypeScript core._
+*Note: every element will have to be declared manually, at least until [this
+PR][ts-fix] is merged in TypeScript core.*🎉
 
 ### Ember, Angular, Vue, and others
 
