@@ -1,5 +1,6 @@
 import { h, FunctionalComponent } from '@stencil/core';
 import { featureDescription } from '../../../utils/plan';
+import { Catalog } from '../../../types/catalog';
 
 interface FeatureLabelProps {
   feature: Catalog.ExpandedFeature;

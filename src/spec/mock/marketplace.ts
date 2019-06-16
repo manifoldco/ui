@@ -1,3 +1,5 @@
+import { Marketplace } from '../../types/marketplace';
+
 interface RealResource extends Marketplace.Resource {
   body: RealResourceBody;
 }

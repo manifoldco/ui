@@ -1,4 +1,4 @@
-namespace Catalog {
+export namespace Catalog {
   export interface ValueProp {
     // Heading of a value proposition.
     header: string;

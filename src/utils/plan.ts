@@ -1,4 +1,6 @@
-import { Option } from 'types/Select';
+import { Option } from '../types/Select';
+import { Catalog } from '../types/catalog';
+import { Gateway } from '../types/gateway';
 import { withAuth } from './auth';
 import { Connection } from './connections';
 import { $ } from './currency';

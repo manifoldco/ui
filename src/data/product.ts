@@ -1,3 +1,5 @@
+import { Catalog } from '../types/catalog';
+
 const skeletonProduct: Catalog.Product = {
   body: {
     billing: { type: 'monthly-prorated', currency: 'usd' },

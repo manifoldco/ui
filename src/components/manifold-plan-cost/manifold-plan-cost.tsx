@@ -1,4 +1,6 @@
 import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
+import { Catalog } from '../../types/catalog';
+import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { Connection, connections } from '../../utils/connections';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';

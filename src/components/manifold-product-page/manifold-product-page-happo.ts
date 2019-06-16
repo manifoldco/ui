@@ -16,11 +16,16 @@ export const jawsDB = () => {
   productPage.product = fromJSON(jawsdbMock);
   productPage.provider = fromJSON(jawsdbProvider);
 
-  const button = document.createElement('manifold-button');
-  button.textContent = 'Get JawsDB MySQL';
-  button.slot = 'cta';
+  const buttonWrapper = document.createElement('div');
+  buttonWrapper.style.width = '100%';
+  buttonWrapper.slot = 'cta';
 
-  productPage.appendChild(button);
+  const button = document.createElement('manifold-button');
+  button.color = 'orange';
+  button.textContent = 'Get JawsDB MySQL';
+
+  buttonWrapper.appendChild(button);
+  productPage.appendChild(buttonWrapper);
   document.body.appendChild(productPage);
 
   return productPage.componentOnReady();

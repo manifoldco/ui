@@ -1,4 +1,6 @@
 import { h, Component, State, Prop, Watch } from '@stencil/core';
+import { Catalog } from '../../types/catalog';
+import { Gateway } from '../../types/gateway';
 
 @Component({
   tag: 'manifold-active-plan',

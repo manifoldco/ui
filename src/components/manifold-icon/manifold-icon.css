@@ -3,10 +3,13 @@
   --icon-width: 1em;
   --icon-height: 1em;
 
-  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 svg {
+  display: block;
   width: var(--icon-width);
   height: var(--icon-height);
   transition: color 200ms, fill 200ms;

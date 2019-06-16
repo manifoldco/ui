@@ -1,3 +1,5 @@
+import { Catalog } from '../../types/catalog';
+
 // Mock data is static, so we don’t need our null checks
 // These shims should only stay within this mock data, and never be exported
 interface TExpandedPlan extends Catalog.ExpandedPlan {

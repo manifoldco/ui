@@ -28,6 +28,12 @@ module.exports = {
     },
   },
   rules: {
+    '@manifoldco/stencil/component-prefix': ['error', { prefix: 'manifold-' }],
+    '@manifoldco/stencil/restrict-required-props': 'error',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
     parser: '@typescript-eslint/parser',
     'arrow-parens': 'off', // let Prettier decide
     camelcase: 'off', // underscores are a thing
@@ -49,11 +55,5 @@ module.exports = {
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
     'object-curly-newline': 'off', // let Prettier decide,
-    '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-member-accessibility': 'off',
-    '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
-    '@manifoldco/stencil/component-prefix': 'error',
-    '@manifoldco/stencil/restrict-required-props': 'error',
   },
 };

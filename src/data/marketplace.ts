@@ -1,3 +1,5 @@
+import { Catalog } from '../types/catalog';
+
 const id = '2015-12-24T19:22:00-0300';
 
 const body: Catalog.ProductBody = {

@@ -1,4 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
+import { Catalog } from '../../types/catalog';
 import skeletonProduct from '../../data/product';
 
 @Component({

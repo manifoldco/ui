@@ -55,7 +55,28 @@
   --manifold-grayscale-75i: rgba(var(--manifold-grayscale-base-inverted), 0.75);
   --manifold-grayscale-80i: rgba(var(--manifold-grayscale-base-inverted), 0.8);
   --manifold-grayscale-90i: rgba(var(--manifold-grayscale-base-inverted), 0.9);
+  --manifold-grayscale-95i: rgba(var(--manifold-grayscale-base-inverted), 0.95);
+  --manifold-grayscale-97i: rgba(var(--manifold-grayscale-base-inverted), 0.97);
   --manifold-grayscale-100i: rgba(var(--manifold-grayscale-base-inverted), 1);
+
+  /* Grays */
+  --manifold-color-gray: rgba(50, 57, 64, 1); /* grayDarker */
+  --manifold-color-gray0: rgba(50, 57, 64, 0);
+  --manifold-color-gray03: rgba(50, 57, 64, 0.03);
+  --manifold-color-gray05: rgba(50, 57, 64, 0.05); /* grayLightest */
+  --manifold-color-gray07: rgba(50, 57, 64, 0.07);
+  --manifold-color-gray10: rgba(50, 57, 64, 0.1); /* grayLighter */
+  --manifold-color-gray20: rgba(50, 57, 64, 0.2); /* grayLight */
+  --manifold-color-gray25: rgba(50, 57, 64, 0.25);
+  --manifold-color-gray30: rgba(50, 57, 64, 0.3); /* med */
+  --manifold-color-gray40: rgba(50, 57, 64, 0.4);
+  --manifold-color-gray50: rgba(50, 57, 64, 0.5);
+  --manifold-color-gray60: rgba(50, 57, 64, 0.6); /* gray */
+  --manifold-color-gray70: rgba(50, 57, 64, 0.7);
+  --manifold-color-gray75: rgba(50, 57, 64, 0.75);
+  --manifold-color-gray80: rgba(50, 57, 64, 0.8);
+  --manifold-color-gray90: rgba(50, 57, 64, 0.9); /* grayDark */
+  --manifold-color-gray95: rgba(50, 57, 64, 0.95);
 
   /* Colors */
   --manifold-color-primary: var(--manifold-blue);
@@ -63,6 +84,36 @@
   --manifold-color-success: var(--manifold-green);
   --manifold-color-warn: var(--manifold-orange);
   --manifold-color-error: var(--manifold-red);
+
+  /* Gradients */
+
+  --manifold-g-blue: linear-gradient(to top right, #329dd1, #4f50a4);
+  --manifold-g-blueFaded: linear-gradient(to top right, #c5c6ff, #b1e5ff);
+  --manifold-g-gray: linear-gradient(
+    45deg,
+    var(--manifold-grayscale-75),
+    var(--manifold-grayscale-90)
+  );
+  --manifold-g-green: linear-gradient(to top right, #329dd1, #4cbc88);
+  --manifold-g-greenFaded: linear-gradient(to top right, #d5f1ff, #d2f5e4);
+  --manifold-g-orange: linear-gradient(63deg, #f56d41, #b54a84);
+  --manifold-g-orangeFaded: linear-gradient(to top right, #f5bca5, #fff1d7);
+  --manifold-g-pink: linear-gradient(to top right, #e35767, #7041a3);
+  --manifold-g-purple: linear-gradient(to top right, #543edd, #a572ff);
+  --manifold-g-purpleFaded: linear-gradient(to top right, #cbc3ff, #eadeff);
+  --manifold-g-rainbow: linear-gradient(
+    to top right,
+    #fdc935 0%,
+    #fd8745 22.52%,
+    #2d98cc 39.1%,
+    #814eae 73.54%,
+    #fe1360 100%
+  );
+  --manifold-g-red: linear-gradient(to top right, #a65084, #ec7740);
+  --manifold-g-redFaded: linear-gradient(to top right, #f1b2ce, #ffcbb3);
+  --manifold-g-skyBlue: linear-gradient(-152deg, #388dc7 5%, #4e56a7 98%);
+  --manifold-g-yellow: linear-gradient(to top right, #ffb83a, #ffe268);
+  --manifold-g-yellowFaded: linear-gradient(to top right, #ffd995, #fff7d3);
 
   /* Text */
   --manifold-text-color: var(--manifold-grayscale-100);
@@ -150,6 +201,10 @@
   --manifold-layer-base: 10;
   --manifold-layer-hover: 20;
   --manifold-layer-nav: 30;
+
+  /* Shadow */
+  --manifold-shadow-default: 0 2px 6px rgba(31, 31, 38, 0.1);
+  --manifold-shadow-transparent: 0 2px 6px rgba(31, 31, 38, 0);
 
   /* Common Component Properties */
 

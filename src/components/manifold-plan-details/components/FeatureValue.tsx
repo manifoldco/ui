@@ -1,4 +1,6 @@
 import { h, FunctionalComponent } from '@stencil/core';
+import { Catalog } from '../../../types/catalog';
+import { Gateway } from '../../../types/gateway';
 import { BooleanFeature } from './BooleanFeature';
 import { StringFeature } from './StringFeature';
 import { NumberFeature } from './NumberFeature';

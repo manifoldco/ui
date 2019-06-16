@@ -3,7 +3,9 @@ title: Product
 path: /components/product
 example: |
   <manifold-product product-label="jawsdb-mysql">
-    <manifold-button slot="cta">Get JawsDB MySQL</manifold-button>
+    <div slot="cta" style="display:flex;justify-content:center;width:100%;">
+      <manifold-button color="orange">Get JawsDB MySQL</manifold-button>
+    </div>
   </manifold-product>
 ---
 

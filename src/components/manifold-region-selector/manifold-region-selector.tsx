@@ -1,6 +1,6 @@
 import { h, Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
-import { Option } from 'types/Select';
-
+import { Option } from '../../types/Select';
+import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
@@ -17,7 +17,7 @@ export class ManifoldRegionSelector {
   @Prop() value?: string;
   @State() globalRegion: Catalog.Region = globalRegion;
   @State() regions?: Catalog.Region[];
-  @Event() change: EventEmitter;
+  @Event() updateValue: EventEmitter;
 
   async componentWillLoad() {
     const response = await fetch(`${this.connection.catalog}/regions`, withAuth());
@@ -30,7 +30,7 @@ export class ManifoldRegionSelector {
   }
 
   handleChange = ({ detail }: CustomEvent) => {
-    this.change.emit({ ...detail });
+    this.updateValue.emit({ ...detail });
   };
 
   filterRegions(regions: Catalog.Region[]): Catalog.Region[] {

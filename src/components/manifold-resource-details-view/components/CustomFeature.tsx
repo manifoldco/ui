@@ -1,6 +1,7 @@
 import { h, FunctionalComponent } from '@stencil/core';
-import { LockedFeature } from './LockedFeature';
 import { stringFeatureOptions } from '../../../utils/plan';
+import { Catalog } from '../../../types/catalog';
+import { LockedFeature } from './LockedFeature';
 
 const getCustomValue = (feature: Catalog.ExpandedFeature, value: number | string | boolean) => {
   if (!feature.values) return value;
