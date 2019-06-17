@@ -25,6 +25,7 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
+  @Prop() preloadedServices?: Catalog.Product[] = [];
   @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
@@ -36,10 +37,12 @@ export class ManifoldMarketplace {
   }
 
   fetchProducts = async () => {
-    const response = await fetch(`${this.connection.catalog}/products`, withAuth());
-    const products: Catalog.ExpandedProduct[] = await response.json();
-    // Alphabetize once, then don’t worry about it
-    this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
+    if (!this.preloadedServices) {
+      const response = await fetch(`${this.connection.catalog}/products`, withAuth());
+      const products: Catalog.ExpandedProduct[] = await response.json();
+      // Alphabetize once, then don’t worry about it
+      this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
+    }
   };
 
   private parse(list: string): string[] {
@@ -62,7 +65,7 @@ export class ManifoldMarketplace {
         productLinkFormat={this.productLinkFormat}
         preserveEvent={this.preserveEvent}
         products={this.parsedProducts}
-        services={this.services}
+        services={this.preloadedServices || this.services}
         templateLinkFormat={this.templateLinkFormat}
       />
     );
