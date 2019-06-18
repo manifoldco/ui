@@ -25,7 +25,7 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
-  @Prop() preloadedServices?: Catalog.Product[] = [];
+  @Prop() preloadedServices?: Catalog.Product[];
   @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
