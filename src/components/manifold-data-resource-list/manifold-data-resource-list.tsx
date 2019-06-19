@@ -25,11 +25,11 @@ export class ManifoldDataResourceList {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
   /** Disable auto-updates? */
-  @Prop() paused: boolean = false;
+  @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
   @Prop() resourceLinkFormat?: string;
   /** Should the JS event still fire, even if product-link-format is passed?  */
-  @Prop() preserveEvent: boolean = false;
+  @Prop() preserveEvent?: boolean = false;
   @State() interval?: number;
   @State() resources?: Marketplace.Resource[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;

@@ -18,7 +18,7 @@ export class ManifoldMarketplace {
   /** Hide categories & side menu? */
   @Prop() hideCategories?: boolean = false;
   /** Should the JS event still fire, even if product-link-format is passed?  */
-  @Prop() preserveEvent: boolean = false;
+  @Prop() preserveEvent?: boolean = false;
   /** Product link structure, with `:product` placeholder */
   @Prop() productLinkFormat?: string;
   /** Comma-separated list of shown products (labels) */
