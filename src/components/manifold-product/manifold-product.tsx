@@ -10,7 +10,7 @@ export class ManifoldProduct {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
   /** _(optional)_ Hide the CTA on the left? */
-  @Prop() productLabel: string;
+  @Prop() productLabel?: string;
   @State() product?: Catalog.Product;
   @State() provider?: Catalog.Provider;
   @Watch('productLabel') productChange(newLabel: string) {
@@ -18,7 +18,9 @@ export class ManifoldProduct {
   }
 
   componentWillLoad() {
-    this.fetchProduct(this.productLabel);
+    if (this.productLabel) {
+      this.fetchProduct(this.productLabel);
+    }
   }
 
   fetchProduct = async (productLabel: string) => {

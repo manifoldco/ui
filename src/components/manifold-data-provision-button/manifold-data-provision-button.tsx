@@ -31,13 +31,13 @@ export class ManifoldDataProvisionButton {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
   /** Product to provision (slug) */
-  @Prop() productLabel: string;
+  @Prop() productLabel?: string;
   /** ID of input (useful for `<label>`) */
-  @Prop() inputId: string = 'manifold-provision-resource';
-  @Prop() features: Gateway.FeatureMap = {};
-  @Prop() ownerId: string = '';
-  @Prop() planId: string = '';
-  @Prop({ mutable: true }) productId: string = '';
+  @Prop() inputId?: string = 'manifold-provision-resource';
+  @Prop() features?: Gateway.FeatureMap = {};
+  @Prop() ownerId?: string = '';
+  @Prop() planId?: string = '';
+  @Prop({ mutable: true }) productId?: string = '';
   @Prop() regionId?: string = globalRegion.id;
   @State() resourceName: string = '';
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true })
@@ -52,10 +52,22 @@ export class ManifoldDataProvisionButton {
   }
 
   componentWillLoad() {
-    this.fetchProductId(this.productLabel);
+    if (this.productLabel) {
+      this.fetchProductId(this.productLabel);
+    }
   }
 
   async provision() {
+    if (typeof this.features !== 'object') {
+      console.error('Property “features” is missing');
+      return;
+    }
+
+    if (!this.ownerId) {
+      console.error('Property “ownerId” is missing');
+      return;
+    }
+
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
     this.clickEvent.emit({ resourceName: this.resourceName });
 

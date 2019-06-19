@@ -44,7 +44,7 @@ export namespace Components {
   interface ManifoldButtonLink {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'href': string;
-    'preserveEvent': boolean;
+    'preserveEvent'?: boolean;
     'rel'?: string;
     'size'?: 'medium' | 'small';
     'stencilClickEvent'?: (e: MouseEvent) => void;
@@ -67,14 +67,14 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
-    'features': Gateway.FeatureMap;
-    'planId': string;
-    'productId': string;
+    'features'?: Gateway.FeatureMap;
+    'planId'?: string;
+    'productId'?: string;
     'regionId'?: string;
     /**
     * Name of resource
     */
-    'resourceName': string;
+    'resourceName'?: string;
   }
   interface ManifoldDataProductLogo {
     /**
@@ -113,18 +113,18 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
-    'features': Gateway.FeatureMap;
+    'features'?: Gateway.FeatureMap;
     /**
     * ID of input (useful for `<label>`)
     */
-    'inputId': string;
-    'ownerId': string;
-    'planId': string;
-    'productId': string;
+    'inputId'?: string;
+    'ownerId'?: string;
+    'planId'?: string;
+    'productId'?: string;
     /**
     * Product to provision (slug)
     */
-    'productLabel': string;
+    'productLabel'?: string;
     'regionId'?: string;
   }
   interface ManifoldDataResourceList {
@@ -135,11 +135,11 @@ export namespace Components {
     /**
     * Disable auto-updates?
     */
-    'paused': boolean;
+    'paused'?: boolean;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */
-    'preserveEvent': boolean;
+    'preserveEvent'?: boolean;
     /**
     * Link format structure, with `:resource` placeholder
     */
@@ -150,7 +150,7 @@ export namespace Components {
     /**
     * a CSS variable starting with `--manifold-c-*`
     */
-    'color': string;
+    'color'?: string;
     /**
     * a CSS variable starting with `--manifold-g-*`
     */
@@ -159,15 +159,15 @@ export namespace Components {
     * The icon ID
     */
     'icon': string;
-    'marginLeft': boolean;
-    'marginRight': boolean;
+    'marginLeft'?: boolean;
+    'marginRight'?: boolean;
   }
   interface ManifoldImageGallery {
     'images'?: string[];
   }
   interface ManifoldLazyImage {
     'alt': string;
-    'itemprop': string;
+    'itemprop'?: string;
     'src': string;
   }
   interface ManifoldMarketplace {
@@ -194,7 +194,7 @@ export namespace Components {
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */
-    'preserveEvent': boolean;
+    'preserveEvent'?: boolean;
     /**
     * Product link structure, with `:product` placeholder
     */
@@ -277,7 +277,7 @@ export namespace Components {
     /**
     * _(optional)_ Hide the CTA on the left?
     */
-    'productLabel': string;
+    'productLabel'?: string;
   }
   interface ManifoldProductDetails {
     'product'?: Catalog.Product;
@@ -335,10 +335,10 @@ export namespace Components {
     'label'?: string;
     'logo'?: string;
     'name'?: string;
-    'preserveEvent': boolean;
+    'preserveEvent'?: boolean;
     'productId'?: string;
     'productLinkFormat'?: string;
-    'skeleton': boolean;
+    'skeleton'?: boolean;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}

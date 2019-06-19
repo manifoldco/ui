@@ -23,9 +23,9 @@ export class ManifoldServiceCard {
   @Prop() label?: string;
   @Prop() productLinkFormat?: string;
   @Prop() logo?: string;
-  @Prop() preserveEvent: boolean = false;
+  @Prop() preserveEvent?: boolean = false;
   @Prop() productId?: string;
-  @Prop() skeleton: boolean = false;
+  @Prop() skeleton?: boolean = false;
   @State() isFree: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
   @Watch('skeleton') skeletonChange(skeleton: boolean) {

@@ -12,7 +12,7 @@ interface EventDetail {
 export class ManifoldButtonLink {
   @Prop() color?: 'black' | 'gray' | 'orange' | 'pink' | 'white' = 'white';
   @Prop() href: string;
-  @Prop() preserveEvent: boolean = false;
+  @Prop() preserveEvent?: boolean = false;
   @Prop() rel?: string;
   @Prop() size?: 'medium' | 'small' = 'medium';
   @Prop() target?: string;
