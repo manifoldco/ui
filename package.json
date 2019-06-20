@@ -60,7 +60,7 @@
     "@reach/observe-rect": "^1.0.3",
     "@stencil/core": "^1.0.6",
     "@stencil/postcss": "^1.0.1",
-    "@storybook/addons": "^5.1.8",
+    "@storybook/addons": "^5.1.9",
     "@storybook/html": "^5.1.8",
     "@types/jest": "24.0.15",
     "@types/puppeteer": "1.12.4",
