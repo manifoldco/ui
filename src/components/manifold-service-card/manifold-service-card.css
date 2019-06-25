@@ -25,16 +25,6 @@
   --card-heading-font-family: var(--manifold-font-family-heading);
   --card-heading-font-weight: var(--manifold-font-weight-heading);
   --card-heading-text-color: var(--manifold-text-color-heading);
-
-  /* tag */
-  --tag-padding: var(--manifold-tag-padding, 0.25em 1em);
-  --tag-text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
-  --tag-font-family: var(--manifold-tag-font-family, var(--manifold-font-family));
-  --tag-font-weight: var(--manifold-tag-font-weight, 700);
-  --tag-font-size: var(--manifold-tag-font-size, var(--manifold-font-d3));
-  --tag-text-transform: var(--manifold-tag-text-transform, initial);
-  --tag-background: var(--manifold-color-primary);
-  --tag-radius: var(--manifold-tag-radius, 3em);
 }
 
 .wrapper {
@@ -154,27 +144,6 @@
 
   @media (--viewport-l) {
     padding-left: 0;
-  }
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 0.125rem;
-  margin-bottom: 0.125rem; /* top & bottom help when tags stack */
-  margin-left: 0.5em;
-  padding: var(--tag-padding);
-  color: var(--tag-text-color);
-  font-weight: var(--tag-font-weight);
-  font-size: var(--tag-font-size);
-  font-family: var(--tag-font-family);
-  line-height: 1.5;
-  text-transform: var(--tag-text-transform);
-  background: var(--tag-background);
-  border-radius: var(--tag-radius);
-
-  &[data-tag='free'] {
-    background: var(--manifold-tag-free-background, var(--manifold-color-primary));
   }
 }
 

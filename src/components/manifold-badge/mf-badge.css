@@ -3,13 +3,17 @@
   --text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
   --font-family: var(--manifold-tag-font-family, var(--manifold-font-family));
   --font-weight: var(--manifold-tag-font-weight, 700);
-  --font-size: var(--manifold-tag-font-size, var(--manifold-font-d2));
+  --font-size: var(--manifold-tag-font-size, var(--manifold-font-d3));
   --text-transform: var(--manifold-tag-text-transform, initial);
-  --background: var(--manifold-color-primary);
+  --background: var(--manifold-tag-free-background, var(--manifold-color-primary));
+  --free-background: var(--manifold-tag-free-background, var(--manifold-color-primary));
   --radius: var(--manifold-tag-radius, 3em);
 
   display: inline-flex;
   align-items: center;
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem; /* top & bottom help when tags stack */
+  margin-left: 0.5em;
   padding: var(--padding);
   color: var(--text-color);
   font-weight: var(--font-weight);
@@ -19,5 +23,7 @@
   background: var(--background);
   border-radius: var(--radius);
 
-  /* TODO: move .tag styles from service-card to here and unify naming */
+  &[data-tag='free'] {
+    background: var(--free-background);
+  }
 }

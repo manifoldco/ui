@@ -32,13 +32,13 @@ describe('<manifold-service-card>', () => {
 
   it('displays a featured tag if featured', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card is-featured />` });
-    const el = await page.find('manifold-service-card >>> .tag');
+    const el = await page.find('manifold-service-card >>> manifold-badge');
     expect(el.innerText).toBe('featured');
   });
 
   it('doesn’t display “free” tag by default (when not featured)', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card />` });
-    const el = await page.find('manifold-service-card >>> .tag');
+    const el = await page.find('manifold-service-card >>> manifold-badge');
     expect(el).toBeNull();
   });
 });

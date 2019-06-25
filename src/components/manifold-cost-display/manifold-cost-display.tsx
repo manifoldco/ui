@@ -22,7 +22,7 @@ export class ManifoldCostDisplay {
 
     if (this.isFreeMonthly) {
       // Show the badge for compact, large text otherwise
-      return this.compact ? <manifold-badge>Free</manifold-badge> : 'Free';
+      return this.compact ? <manifold-badge data-tag="free">Free</manifold-badge> : 'Free';
     }
     // $5 / mo
     return this.compact ? $(this.baseCost) : [$(this.baseCost), <small>&nbsp;/&nbsp;mo</small>];
