@@ -5,8 +5,8 @@
   --font-weight: var(--manifold-tag-font-weight, 700);
   --font-size: var(--manifold-tag-font-size, var(--manifold-font-d3));
   --text-transform: var(--manifold-tag-text-transform, initial);
-  --background: var(--manifold-color-primary);
-  --free-background: var(--manifold-tag-free-background, var(--manifold-color-primary));
+  --background: var(--manifold-tag-background, var(--manifold-color-primary));
+  --free-background: var(--manifold-tag-free-background, var(--background));
   --radius: var(--manifold-tag-radius, 3em);
 
   display: inline-flex;
@@ -22,8 +22,8 @@
   text-transform: var(--text-transform);
   background: var(--background);
   border-radius: var(--radius);
+}
 
-  &[data-tag='free'] {
-    background: var(--free-background);
-  }
+:host([data-tag='free']) {
+  background: var(--free-background);
 }
