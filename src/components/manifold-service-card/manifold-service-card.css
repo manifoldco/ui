@@ -157,3 +157,9 @@
   margin-right: -0.125rem;
   margin-bottom: -0.125rem; /* offset stacking margin from .tag */
 }
+
+manifold-badge {
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem; /* top & bottom help when tags stack */
+  margin-left: 0.5em;
+}
