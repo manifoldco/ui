@@ -5,7 +5,7 @@
   --font-weight: var(--manifold-tag-font-weight, 700);
   --font-size: var(--manifold-tag-font-size, var(--manifold-font-d3));
   --text-transform: var(--manifold-tag-text-transform, initial);
-  --background: var(--manifold-tag-free-background, var(--manifold-color-primary));
+  --background: var(--manifold-color-primary);
   --free-background: var(--manifold-tag-free-background, var(--manifold-color-primary));
   --radius: var(--manifold-tag-radius, 3em);
 
