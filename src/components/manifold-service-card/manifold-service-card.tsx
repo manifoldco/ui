@@ -17,7 +17,7 @@ interface EventDetail {
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   @Prop() name?: string;
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   @Prop() description?: string;
   @Prop() isFeatured?: boolean;
   @Prop() label?: string;
@@ -41,8 +41,13 @@ export class ManifoldServiceCard {
   }
 
   async fetchIsFree(productId: string) {
-    const { catalog } = this.connection;
-    const response = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
+    if (!this.connection) {
+      return;
+    }
+    const response = await fetch(
+      `${this.connection.catalog}/plans/?product_id=${productId}`,
+      withAuth()
+    );
     const plans: Catalog.ExpandedPlan[] = await response.json();
     if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
       this.isFree = true;
