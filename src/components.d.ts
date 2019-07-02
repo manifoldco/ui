@@ -269,7 +269,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
