@@ -9,9 +9,13 @@ storiesOf('Marketplace', module)
       '<manifold-marketplace product-link-format="/products/:product" template-link-format="/products/custom/:template" preserve-event></manifold-marketplace>'
   )
   .add('no templates', () => '<manifold-marketplace hide-templates></manifold-marketplace>')
-  .add('compact', () => '<manifold-marketplace hide-categories></manifold-marketplace>')
   .add(
-    'filtered',
+    'featured',
     () =>
-      '<manifold-marketplace hide-categories products="iron_cache,iron_mq,iron_worker"></manifold-marketplace>'
+      '<manifold-marketplace featured="zerosix,jawsdb-maria,jawsdb-mysql,jawsdb-postgres"></manifold-marketplace>'
+  )
+  .add(
+    'compact',
+    () =>
+      '<manifold-marketplace hide-categories hide-search products="iron_cache,iron_mq,jawsdb-mysql,jawsdb-postgres,mailgun,logdna,iron_worker,zerosix"></manifold-marketplace>'
   );

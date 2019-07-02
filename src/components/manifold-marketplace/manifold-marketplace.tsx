@@ -65,8 +65,8 @@ export class ManifoldMarketplace {
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}
-        productLinkFormat={this.productLinkFormat}
         preserveEvent={this.preserveEvent}
+        productLinkFormat={this.productLinkFormat}
         products={this.parsedProducts}
         services={this.services}
         templateLinkFormat={this.templateLinkFormat}

@@ -19,7 +19,7 @@ export class ManifoldServiceCard {
   @Prop() name?: string;
   @Prop() connection?: Connection = connections.prod;
   @Prop() description?: string;
-  @Prop() isFeatured?: boolean;
+  @Prop({ reflect: true }) isFeatured?: boolean;
   @Prop() label?: string;
   @Prop() productLinkFormat?: string;
   @Prop() logo?: string;
