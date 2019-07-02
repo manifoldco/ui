@@ -230,6 +230,20 @@ export namespace Components {
     'suffix': string;
     'value': number;
   }
+  interface ManifoldPlan {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    /**
+    * URL-friendly slug (e.g. `"kitefin"`)
+    */
+    'planLabel'?: string;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel'?: string;
+  }
   interface ManifoldPlanCost {
     'allFeatures': Catalog.ExpandedFeature[];
     'compact'?: boolean;
@@ -484,6 +498,12 @@ declare global {
     new (): HTMLManifoldNumberInputElement;
   };
 
+  interface HTMLManifoldPlanElement extends Components.ManifoldPlan, HTMLStencilElement {}
+  var HTMLManifoldPlanElement: {
+    prototype: HTMLManifoldPlanElement;
+    new (): HTMLManifoldPlanElement;
+  };
+
   interface HTMLManifoldPlanCostElement extends Components.ManifoldPlanCost, HTMLStencilElement {}
   var HTMLManifoldPlanCostElement: {
     prototype: HTMLManifoldPlanCostElement;
@@ -640,6 +660,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
+    'manifold-plan': HTMLManifoldPlanElement;
     'manifold-plan-cost': HTMLManifoldPlanCostElement;
     'manifold-plan-details': HTMLManifoldPlanDetailsElement;
     'manifold-plan-menu': HTMLManifoldPlanMenuElement;
@@ -882,6 +903,20 @@ declare namespace LocalJSX {
     'suffix'?: string;
     'value'?: number;
   }
+  interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * URL-friendly slug (e.g. `"kitefin"`)
+    */
+    'planLabel'?: string;
+    /**
+    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+    */
+    'productLabel'?: string;
+  }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
     'allFeatures'?: Catalog.ExpandedFeature[];
     'compact'?: boolean;
@@ -1051,6 +1086,7 @@ declare namespace LocalJSX {
     'manifold-marketplace': ManifoldMarketplace;
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
     'manifold-number-input': ManifoldNumberInput;
+    'manifold-plan': ManifoldPlan;
     'manifold-plan-cost': ManifoldPlanCost;
     'manifold-plan-details': ManifoldPlanDetails;
     'manifold-plan-menu': ManifoldPlanMenu;
