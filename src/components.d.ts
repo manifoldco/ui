@@ -33,6 +33,13 @@ export namespace Components {
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
+  interface ManifoldAuthToken {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'setAuthToken'?: (s: string) => void;
+    'token'?: string;
+  }
   interface ManifoldBadge {}
   interface ManifoldButton {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
@@ -66,6 +73,10 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
     'features'?: Gateway.FeatureMap;
     'planId'?: string;
@@ -84,6 +95,10 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -98,6 +113,10 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -109,6 +128,10 @@ export namespace Components {
     'resourceName'?: string;
   }
   interface ManifoldDataProvisionButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -128,6 +151,10 @@ export namespace Components {
     'regionId'?: string;
   }
   interface ManifoldDataResourceList {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -171,6 +198,10 @@ export namespace Components {
     'src': string;
   }
   interface ManifoldMarketplace {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -234,6 +265,10 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection': Connection;
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
@@ -246,6 +281,10 @@ export namespace Components {
   }
   interface ManifoldPlanCost {
     'allFeatures': Catalog.ExpandedFeature[];
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     'compact'?: boolean;
     'connection': Connection;
     'customizable'?: boolean;
@@ -269,7 +308,11 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection'?: Connection;
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -284,6 +327,10 @@ export namespace Components {
     'resourceName'?: string;
   }
   interface ManifoldProduct {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -303,12 +350,20 @@ export namespace Components {
   interface ManifoldRegionSelector {
     'allowedRegions': string[];
     'ariaLabel': string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     'connection': Connection;
     'name': string;
     'preferredRegions'?: string[];
     'value'?: string;
   }
   interface ManifoldResourceContainer {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -319,6 +374,10 @@ export namespace Components {
     'resourceName': string;
   }
   interface ManifoldResourceCredentials {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -343,6 +402,10 @@ export namespace Components {
     'required'?: boolean;
   }
   interface ManifoldServiceCard {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     'connection': Connection;
     'description'?: string;
     'isFeatured'?: boolean;
@@ -394,6 +457,12 @@ declare global {
   var HTMLManifoldActivePlanElement: {
     prototype: HTMLManifoldActivePlanElement;
     new (): HTMLManifoldActivePlanElement;
+  };
+
+  interface HTMLManifoldAuthTokenElement extends Components.ManifoldAuthToken, HTMLStencilElement {}
+  var HTMLManifoldAuthTokenElement: {
+    prototype: HTMLManifoldAuthTokenElement;
+    new (): HTMLManifoldAuthTokenElement;
   };
 
   interface HTMLManifoldBadgeElement extends Components.ManifoldBadge, HTMLStencilElement {}
@@ -643,6 +712,7 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'manifold-active-plan': HTMLManifoldActivePlanElement;
+    'manifold-auth-token': HTMLManifoldAuthTokenElement;
     'manifold-badge': HTMLManifoldBadgeElement;
     'manifold-button': HTMLManifoldButtonElement;
     'manifold-button-link': HTMLManifoldButtonLinkElement;
@@ -695,6 +765,13 @@ declare namespace LocalJSX {
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
+  interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'setAuthToken'?: (s: string) => void;
+    'token'?: string;
+  }
   interface ManifoldBadge extends JSXBase.HTMLAttributes<HTMLManifoldBadgeElement> {}
   interface ManifoldButton extends JSXBase.HTMLAttributes<HTMLManifoldButtonElement> {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
@@ -730,6 +807,10 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
     'features'?: Gateway.FeatureMap;
     'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
@@ -751,6 +832,10 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -765,6 +850,10 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -776,6 +865,10 @@ declare namespace LocalJSX {
     'resourceName'?: string;
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -799,6 +892,10 @@ declare namespace LocalJSX {
     'regionId'?: string;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -843,6 +940,10 @@ declare namespace LocalJSX {
     'src'?: string;
   }
   interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -907,6 +1008,10 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
@@ -919,6 +1024,10 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
     'allFeatures'?: Catalog.ExpandedFeature[];
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     'compact'?: boolean;
     'connection'?: Connection;
     'customizable'?: boolean;
@@ -944,6 +1053,10 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -959,6 +1072,10 @@ declare namespace LocalJSX {
     'resourceName'?: string;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -978,6 +1095,10 @@ declare namespace LocalJSX {
   interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
     'allowedRegions'?: string[];
     'ariaLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     'connection'?: Connection;
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
@@ -988,6 +1109,10 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
     'connection'?: Connection;
     /**
     * Which resource does this belong to?
@@ -995,6 +1120,10 @@ declare namespace LocalJSX {
     'resourceName'?: string;
   }
   interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1021,6 +1150,10 @@ declare namespace LocalJSX {
     'required'?: boolean;
   }
   interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
     'connection'?: Connection;
     'description'?: string;
     'isFeatured'?: boolean;
@@ -1069,6 +1202,7 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'manifold-active-plan': ManifoldActivePlan;
+    'manifold-auth-token': ManifoldAuthToken;
     'manifold-badge': ManifoldBadge;
     'manifold-button': ManifoldButton;
     'manifold-button-link': ManifoldButtonLink;

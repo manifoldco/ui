@@ -30,6 +30,8 @@ export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** ID of input (useful for `<label>`) */
@@ -87,7 +89,7 @@ export class ManifoldDataProvisionButton {
 
     const response = await fetch(
       `${this.connection.gateway}/resource/`,
-      withAuth({
+      withAuth(this.authToken, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(req),
@@ -170,4 +172,4 @@ export class ManifoldDataProvisionButton {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProvisionButton, ['connection']);
+Tunnel.injectProps(ManifoldDataProvisionButton, ['connection', 'authToken']);
