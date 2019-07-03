@@ -51,6 +51,14 @@ recommended to use this if you’re only displaying a few products via
 <manifold-marketplace hide-categories />
 ```
 
+## Hide search
+
+This hides the search bar (always shown by default).
+
+```html
+<manifold-marketplace hide-search />
+```
+
 ## Hide template cards
 
 Add the `hide-templates` attribute to hide external service template cards

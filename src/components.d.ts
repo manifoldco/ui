@@ -174,7 +174,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * Comma-separated list of hidden products (labels)
     */
@@ -187,6 +187,10 @@ export namespace Components {
     * Hide categories & side menu?
     */
     'hideCategories'?: boolean;
+    /**
+    * Hide search?
+    */
+    'hideSearch'?: boolean;
     /**
     * Hide template cards?
     */
@@ -212,6 +216,7 @@ export namespace Components {
     'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
+    'hideSearch'?: boolean;
     'hideTemplates'?: boolean;
     'preserveEvent': boolean;
     'productLinkFormat'?: string;
@@ -343,7 +348,7 @@ export namespace Components {
     'required'?: boolean;
   }
   interface ManifoldServiceCard {
-    'connection': Connection;
+    'connection'?: Connection;
     'description'?: string;
     'isFeatured'?: boolean;
     'label'?: string;
@@ -860,6 +865,10 @@ declare namespace LocalJSX {
     */
     'hideCategories'?: boolean;
     /**
+    * Hide search?
+    */
+    'hideSearch'?: boolean;
+    /**
     * Hide template cards?
     */
     'hideTemplates'?: boolean;
@@ -884,6 +893,7 @@ declare namespace LocalJSX {
     'excludes'?: string[];
     'featured'?: string[];
     'hideCategories'?: boolean;
+    'hideSearch'?: boolean;
     'hideTemplates'?: boolean;
     'preserveEvent'?: boolean;
     'productLinkFormat'?: string;

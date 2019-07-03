@@ -8,15 +8,17 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** Comma-separated list of hidden products (labels) */
   @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
-  /** Hide template cards? */
-  @Prop() hideTemplates?: boolean = false;
   /** Hide categories & side menu? */
   @Prop() hideCategories?: boolean = false;
+  /** Hide search? */
+  @Prop() hideSearch?: boolean = false;
+  /** Hide template cards? */
+  @Prop() hideTemplates?: boolean = false;
   /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent?: boolean = false;
   /** Product link structure, with `:product` placeholder */
@@ -36,6 +38,9 @@ export class ManifoldMarketplace {
   }
 
   fetchProducts = async () => {
+    if (!this.connection) {
+      return;
+    }
     const response = await fetch(`${this.connection.catalog}/products`, withAuth());
     const products: Catalog.ExpandedProduct[] = await response.json();
     // Alphabetize once, then don’t worry about it
@@ -58,9 +63,10 @@ export class ManifoldMarketplace {
         excludes={this.parsedExcludes}
         featured={this.parsedFeatured}
         hideCategories={this.hideCategories}
+        hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}
-        productLinkFormat={this.productLinkFormat}
         preserveEvent={this.preserveEvent}
+        productLinkFormat={this.productLinkFormat}
         products={this.parsedProducts}
         services={this.services}
         templateLinkFormat={this.templateLinkFormat}

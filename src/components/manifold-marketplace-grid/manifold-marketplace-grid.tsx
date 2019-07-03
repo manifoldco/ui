@@ -19,6 +19,7 @@ export class ManifoldMarketplaceGrid {
   @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];
   @Prop() hideCategories?: boolean = false;
+  @Prop() hideSearch?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
   @Prop() preserveEvent: boolean = false;
   @Prop() productLinkFormat?: string;
@@ -174,15 +175,17 @@ export class ManifoldMarketplaceGrid {
   render() {
     return (
       <div class="wrapper" data-categorized={this.showCategories}>
-        <input
-          class="search"
-          type="search"
-          autocapitalize="off"
-          placeholder="Search for a service or category"
-          value={this.filter || ''}
-          onKeyUp={this.updateFilter}
-          ref={this.handleSearch}
-        />
+        {this.hideSearch !== true && (
+          <input
+            class="search"
+            type="search"
+            autocapitalize="off"
+            placeholder="Search for a service or category"
+            value={this.filter || ''}
+            onKeyUp={this.updateFilter}
+            ref={this.handleSearch}
+          />
+        )}
         <aside class="category-list" data-categorized={this.showCategories}>
           <div class="category-list-scroll">
             {this.categories.map(category => (
