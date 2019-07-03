@@ -9,6 +9,8 @@ export class ManifoldPlan {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** URL-friendly slug (e.g. `"kitefin"`) */
@@ -34,7 +36,7 @@ export class ManifoldPlan {
     this.product = undefined;
     const { catalog } = this.connection;
 
-    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth());
+    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth(this.authToken));
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
 
     this.product = products[0]; // eslint-disable-line prefer-destructuring
@@ -45,7 +47,7 @@ export class ManifoldPlan {
     this.plan = undefined;
     const { catalog } = this.connection;
 
-    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}&label=${planLabel}`, withAuth());
+    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}&label=${planLabel}`, withAuth(this.authToken));
     const plans: Catalog.ExpandedPlan[] = await plansResp.json();
 
     this.plan = plans[0]; // eslint-disable-line prefer-destructuring
@@ -61,4 +63,4 @@ export class ManifoldPlan {
   }
 }
 
-Tunnel.injectProps(ManifoldPlan, ['connection']);
+Tunnel.injectProps(ManifoldPlan, ['connection', 'authToken']);

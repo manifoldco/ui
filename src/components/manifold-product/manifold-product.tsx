@@ -9,6 +9,8 @@ export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
   @State() product?: Catalog.Product;
@@ -26,13 +28,13 @@ export class ManifoldProduct {
   fetchProduct = async (productLabel: string) => {
     const productResp = await fetch(
       `${this.connection.catalog}/products?label=${productLabel}`,
-      withAuth()
+      withAuth(this.authToken)
     );
     const products: Catalog.Product[] = await productResp.json();
     this.product = products[0]; // eslint-disable-line prefer-destructuring
     const providerResp = await fetch(
       `${this.connection.catalog}/providers/${products[0].body.provider_id}`,
-      withAuth()
+      withAuth(this.authToken)
     );
     const provider = await providerResp.json();
     this.provider = provider;
@@ -49,4 +51,4 @@ export class ManifoldProduct {
   }
 }
 
-Tunnel.injectProps(ManifoldProduct, ['connection']);
+Tunnel.injectProps(ManifoldProduct, ['connection', 'authToken']);

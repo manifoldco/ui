@@ -24,6 +24,8 @@ export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -43,7 +45,7 @@ export class ManifoldDataResourceList {
   }
 
   fetchResources() {
-    fetch(`${this.connection.marketplace}/resources/?me`, withAuth())
+    fetch(`${this.connection.marketplace}/resources/?me`, withAuth(this.authToken))
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {
         if (Array.isArray(resources))
@@ -95,4 +97,4 @@ export class ManifoldDataResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldDataResourceList, ['connection']);
+Tunnel.injectProps(ManifoldDataResourceList, ['connection', 'authToken']);

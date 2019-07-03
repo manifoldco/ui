@@ -18,6 +18,8 @@ export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   @Prop() name?: string;
   @Prop() connection?: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   @Prop() description?: string;
   @Prop({ reflect: true }) isFeatured?: boolean;
   @Prop() label?: string;
@@ -46,7 +48,7 @@ export class ManifoldServiceCard {
     }
     const response = await fetch(
       `${this.connection.catalog}/plans/?product_id=${productId}`,
-      withAuth()
+      withAuth(this.authToken)
     );
     const plans: Catalog.ExpandedPlan[] = await response.json();
     if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
@@ -111,4 +113,4 @@ export class ManifoldServiceCard {
   }
 }
 
-Tunnel.injectProps(ManifoldServiceCard, ['connection']);
+Tunnel.injectProps(ManifoldServiceCard, ['connection', 'authToken']);

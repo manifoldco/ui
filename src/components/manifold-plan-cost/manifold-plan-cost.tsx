@@ -9,6 +9,8 @@ import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;
@@ -61,7 +63,7 @@ export class ManifoldPlanCost {
       planID: this.planId,
       features: allFeatures,
       init: { signal: this.controller.signal },
-    }).then(({ cost }: Gateway.Price) => {
+    }, this.authToken).then(({ cost }: Gateway.Price) => {
       this.baseCost = cost || 0;
       this.controller = undefined; // Request finished, so signal no longer needed
     });
@@ -79,4 +81,4 @@ export class ManifoldPlanCost {
   }
 }
 
-Tunnel.injectProps(ManifoldPlanCost, ['connection']);
+Tunnel.injectProps(ManifoldPlanCost, ['connection', 'authToken']);

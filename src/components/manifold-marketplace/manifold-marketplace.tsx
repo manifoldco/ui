@@ -9,6 +9,8 @@ export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection?: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** Comma-separated list of hidden products (labels) */
   @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
@@ -41,7 +43,7 @@ export class ManifoldMarketplace {
     if (!this.connection) {
       return;
     }
-    const response = await fetch(`${this.connection.catalog}/products`, withAuth());
+    const response = await fetch(`${this.connection.catalog}/products`, withAuth(this.authToken));
     const products: Catalog.ExpandedProduct[] = await response.json();
     // Alphabetize once, then don’t worry about it
     this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
@@ -75,4 +77,4 @@ export class ManifoldMarketplace {
   }
 }
 
-Tunnel.injectProps(ManifoldMarketplace, ['connection']);
+Tunnel.injectProps(ManifoldMarketplace, ['connection', 'authToken']);

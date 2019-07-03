@@ -12,6 +12,8 @@ export class ManifoldRegionSelector {
   @Prop() allowedRegions: string[] = [];
   @Prop() ariaLabel: string;
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   @Prop() name: string;
   @Prop() preferredRegions?: string[];
   @Prop() value?: string;
@@ -20,7 +22,7 @@ export class ManifoldRegionSelector {
   @Event() updateValue: EventEmitter;
 
   async componentWillLoad() {
-    const response = await fetch(`${this.connection.catalog}/regions`, withAuth());
+    const response = await fetch(`${this.connection.catalog}/regions`, withAuth(this.authToken));
     const regions: Catalog.Region[] = await response.json();
     // Sorting is important, otherwise the region selector is in a different order every plan
     this.regions = this.sortRegions(regions, this.preferredRegions);
@@ -90,4 +92,4 @@ export class ManifoldRegionSelector {
   }
 }
 
-Tunnel.injectProps(ManifoldRegionSelector, ['connection']);
+Tunnel.injectProps(ManifoldRegionSelector, ['connection', 'authToken']);

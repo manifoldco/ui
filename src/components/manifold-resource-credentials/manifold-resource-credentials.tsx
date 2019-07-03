@@ -10,6 +10,8 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldResourceCredentials {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   @State() credentials?: Marketplace.Credential[];
 
   fetchCredentials = async (resource?: Gateway.Resource) => {
@@ -20,7 +22,7 @@ export class ManifoldResourceCredentials {
     const { marketplace } = this.connection;
     const response = await fetch(
       `${marketplace}/credentials/?resource_id=${resource.id}`,
-      withAuth()
+      withAuth(this.authToken)
     );
     const credentials: Marketplace.Credential[] = await response.json();
     this.credentials = credentials;
@@ -45,4 +47,4 @@ export class ManifoldResourceCredentials {
   }
 }
 
-ConnectionTunnel.injectProps(ManifoldResourceCredentials, ['connection']);
+ConnectionTunnel.injectProps(ManifoldResourceCredentials, ['connection', 'authToken']);

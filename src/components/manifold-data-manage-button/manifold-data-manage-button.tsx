@@ -23,6 +23,8 @@ export class ManifoldDataManageButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** Name of resource */
   @Prop() resourceName?: string;
   @Prop() features?: Gateway.FeatureMap = {};
@@ -63,7 +65,7 @@ export class ManifoldDataManageButton {
 
     const response = await fetch(
       `${this.connection.gateway}/id/resource/${this.resourceId}`,
-      withAuth({
+      withAuth(this.authToken,{
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(req),
@@ -101,4 +103,4 @@ export class ManifoldDataManageButton {
   }
 }
 
-Tunnel.injectProps(ManifoldDataManageButton, ['connection']);
+Tunnel.injectProps(ManifoldDataManageButton, ['connection', 'authToken']);

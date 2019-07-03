@@ -10,6 +10,8 @@ export class ManifoldDataProductName {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
@@ -30,7 +32,7 @@ export class ManifoldDataProductName {
   fetchProduct = async (productLabel: string) => {
     this.productName = undefined;
     const { catalog } = this.connection;
-    const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth());
+    const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth(this.authToken));
     const products: Catalog.Product[] = await response.json();
     this.productName = products[0].body.name; // eslint-disable-line prefer-destructuring
   };
@@ -38,7 +40,7 @@ export class ManifoldDataProductName {
   fetchResource = async (resourceName: string) => {
     this.productName = undefined;
     const { gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
     const resource: Gateway.Resource = await response.json();
     this.productName = resource.product && resource.product.name;
   };
@@ -48,4 +50,4 @@ export class ManifoldDataProductName {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProductName, ['connection']);
+Tunnel.injectProps(ManifoldDataProductName, ['connection', 'authToken']);

@@ -3,14 +3,15 @@
  * You may also pass through any other fetch options you’d like.
  */
 
-export function withAuth(options?: RequestInit): RequestInit | undefined {
-  const token = localStorage.getItem('manifold_api_token');
-  if (typeof token !== 'string') return options;
+export function withAuth(authToken?: string, options?: RequestInit): RequestInit | undefined {
+  if (!authToken) {
+    return options;
+  }
   return {
     ...(options || {}),
     headers: {
       ...((options && options.headers) || {}),
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${authToken}`,
     },
   };
 }
