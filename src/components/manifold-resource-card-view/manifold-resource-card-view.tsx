@@ -12,6 +12,8 @@ interface EventDetail {
 }
 
 const AVAILABLE = 'available';
+const PROVISIONING = 'provisioning';
+const DEGRADED = 'degraded';
 const OFFLINE = 'offline';
 
 @Component({
@@ -42,7 +44,7 @@ export class ManifoldResourceCardView {
 
   componentWillLoad() {
     if (!this.loading && !this.resourceId && this.label) {
-      this.fetchResourceId(this.label)
+      this.fetchResourceId(this.label);
     }
   }
 
@@ -50,13 +52,17 @@ export class ManifoldResourceCardView {
     if (!this.resourceLinkFormat || !this.label) {
       return '';
     }
-    return this.resourceLinkFormat.replace(/:resource/gi, this.label);
+    return this.resourceLinkFormat.replace(/:label/gi, this.label);
   }
 
-  status(resourceStatus?: string): string {
-    console.log(resourceStatus);
-    if (resourceStatus && resourceStatus === AVAILABLE) {
-      return AVAILABLE;
+  get status(): string {
+    if (
+      this.resourceStatus &&
+      (this.resourceStatus === AVAILABLE ||
+        this.resourceStatus === PROVISIONING ||
+        this.resourceStatus === DEGRADED)
+    ) {
+      return this.resourceStatus;
     }
     return OFFLINE;
   }
@@ -89,8 +95,6 @@ export class ManifoldResourceCardView {
   };
 
   render() {
-    console.log(this.resourceStatus);
-    const status = this.status(this.resourceStatus);
 
     return !this.loading && this.resourceId ? (
       <a
@@ -106,12 +110,14 @@ export class ManifoldResourceCardView {
           {this.label}
         </h3>
         <div class="status-box">
-          <div class="status" data-status={status}>
-            <div class="inner">{status[0].toUpperCase() + status.slice(1)}</div>
+          <div class="status" data-status={this.status}>
+            <div class="inner" itemprop="status">
+              {this.status[0].toUpperCase() + this.status.slice(1)}
+            </div>
           </div>
         </div>
         <div class="logo">
-          <manifold-lazy-image src={this.logo} alt={this.label} itemprop="image"/>
+          <manifold-lazy-image src={this.logo} alt={this.label} itemprop="image" />
         </div>
       </a>
     ) : (
@@ -122,12 +128,12 @@ export class ManifoldResourceCardView {
         </h3>
         <div class="status-box">
           <div class="loading" data-status={this.resourceStatus}>
-            <manifold-icon icon={refresh_cw}/>
+            <manifold-icon icon={refresh_cw} />
             Loading
           </div>
         </div>
         <div class="logo">
-          <manifold-skeleton-img/>
+          <manifold-skeleton-img />
         </div>
       </div>
     );

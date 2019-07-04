@@ -2,43 +2,34 @@ import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 
-const name = 'JawsDB MySQL';
-const description = 'Fast, reliable, no-bullshark MySQL as a Service';
+const name = 'my-resource';
 const logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png';
 
-describe('<manifold-service-card>', () => {
-  it('displays name', async () => {
-    const page = await newE2EPage({ html: `<manifold-service-card name="${name}" />` });
-    const el = await page.find('manifold-service-card >>> [itemprop="name"]');
+describe('<manifold-resource-card>', () => {
+  it('displays label', async () => {
+    const page = await newE2EPage({
+      html: `<manifold-resource-card-view label="${name}" resource-id="test" />`,
+    });
+    const el = await page.find('manifold-resource-card-view >>> [itemprop="name"]');
 
     expect(el.innerText).toBe(name);
   });
 
-  it('displays description', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-service-card description="${description}" />`,
-    });
-    const el = await page.find('manifold-service-card >>> [itemprop="description"]');
-
-    expect(el.innerText).toBe(description);
-  });
-
   it('displays logo', async () => {
-    const page = await newE2EPage({ html: `<manifold-service-card logo="${logo}" />` });
-    const el = await page.find('manifold-service-card >>> manifold-lazy-image');
+    const page = await newE2EPage({
+      html: `<manifold-resource-card-view logo="${logo}" resource-id="test" />`,
+    });
+    const el = await page.find('manifold-resource-card-view >>> manifold-lazy-image');
     const src = await el.getProperty('src');
     expect(src).toBe(logo);
   });
 
-  it('displays a featured tag if featured', async () => {
-    const page = await newE2EPage({ html: `<manifold-service-card is-featured />` });
-    const el = await page.find('manifold-service-card >>> manifold-badge');
-    expect(el.innerText).toBe('featured');
-  });
+  it('displays the given status', async () => {
+    const page = await newE2EPage({
+      html: `<manifold-resource-card-view resource-status="provisioning" resource-id="test" />`,
+    });
+    const el = await page.find('manifold-resource-card-view >>> [itemprop="status"]');
 
-  it('doesn’t display “free” tag by default (when not featured)', async () => {
-    const page = await newE2EPage({ html: `<manifold-service-card />` });
-    const el = await page.find('manifold-service-card >>> manifold-badge');
-    expect(el).toBeNull();
+    expect(el.innerText).toBe('Provisioning');
   });
 });

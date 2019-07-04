@@ -1,34 +1,33 @@
-import { ManifoldResourceCard } from './manifold-service-card';
+import { ManifoldResourceCardView } from './manifold-resource-card-view';
+import { Resource } from '../../spec/mock/marketplace';
 import { Product } from '../../spec/mock/catalog';
 
-describe('<manifold-service-card>', () => {
+describe('<manifold-resource-card>', () => {
   it('dispatches click event', () => {
-    const serviceCard = new ManifoldResourceCard();
-    serviceCard.label = Product.body.label;
-    serviceCard.productId = Product.id;
+    const serviceCard = new ManifoldResourceCardView();
+    serviceCard.label = Resource.body.label;
+    serviceCard.resourceId = Resource.id;
     serviceCard.logo = Product.body.logo_url;
-    serviceCard.name = Product.body.name;
-    serviceCard.description = Product.body.tagline;
+    serviceCard.resourceStatus = 'available';
 
     const mock = { emit: jest.fn() };
-    serviceCard.marketplaceClick = mock;
+    serviceCard.resourceClick = mock;
 
     serviceCard.onClick(new Event('click'));
     expect(mock.emit).toHaveBeenCalledWith({
-      productId: Product.id,
-      productLabel: Product.body.label,
+      resourceId: Resource.id,
+      resourceLabel: Resource.body.label,
     });
   });
 
   it('formats links correctly', () => {
-    const serviceCard = new ManifoldResourceCard();
-    serviceCard.label = Product.body.label;
-    serviceCard.productId = Product.id;
+    const serviceCard = new ManifoldResourceCardView();
+    serviceCard.label = Resource.body.label;
+    serviceCard.resourceId = Resource.id;
     serviceCard.logo = Product.body.logo_url;
-    serviceCard.name = Product.body.name;
-    serviceCard.description = Product.body.tagline;
-    serviceCard.productLinkFormat = '/product/:product';
+    serviceCard.resourceStatus = 'available';
+    serviceCard.resourceLinkFormat = '/resource/:label';
 
-    expect(serviceCard.href).toBe(`/product/${Product.body.label}`);
+    expect(serviceCard.href).toBe(`/resource/${Resource.body.label}`);
   });
 });
