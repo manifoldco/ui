@@ -41,8 +41,8 @@
   height: 100%;
   padding: var(--padding);
   color: var(--card-text-color);
-  text-decoration: none;
   font-family: var(--manifold-font-family);
+  text-decoration: none;
   background: var(--card-background);
   border: var(--card-border, 1px solid #d3d3d4);
   border-radius: var(--card-radius);
