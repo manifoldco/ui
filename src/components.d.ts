@@ -205,7 +205,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection?': Connection;
+    'connection'?: Connection;
     /**
     * Comma-separated list of hidden products (labels)
     */
@@ -364,6 +364,31 @@ export namespace Components {
     'preferredRegions'?: string[];
     'value'?: string;
   }
+  interface ManifoldResourceCard {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    'connection'?: Connection;
+    'label'?: string;
+    'preserveEvent'?: boolean;
+    'resourceId'?: string;
+    'resourceLinkFormat'?: string;
+  }
+  interface ManifoldResourceCardView {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    'connection'?: Connection;
+    'label'?: string;
+    'loading'?: boolean;
+    'logo'?: string;
+    'preserveEvent'?: boolean;
+    'resourceId'?: string;
+    'resourceLinkFormat'?: string;
+    'resourceStatus'?: string;
+  }
   interface ManifoldResourceContainer {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -411,7 +436,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'authToken'?: string;
-    'connection?': Connection;
+    'connection'?: Connection;
     'description'?: string;
     'isFeatured'?: boolean;
     'label'?: string;
@@ -626,6 +651,18 @@ declare global {
     new (): HTMLManifoldRegionSelectorElement;
   };
 
+  interface HTMLManifoldResourceCardElement extends Components.ManifoldResourceCard, HTMLStencilElement {}
+  var HTMLManifoldResourceCardElement: {
+    prototype: HTMLManifoldResourceCardElement;
+    new (): HTMLManifoldResourceCardElement;
+  };
+
+  interface HTMLManifoldResourceCardViewElement extends Components.ManifoldResourceCardView, HTMLStencilElement {}
+  var HTMLManifoldResourceCardViewElement: {
+    prototype: HTMLManifoldResourceCardViewElement;
+    new (): HTMLManifoldResourceCardViewElement;
+  };
+
   interface HTMLManifoldResourceContainerElement extends Components.ManifoldResourceContainer, HTMLStencilElement {}
   var HTMLManifoldResourceContainerElement: {
     prototype: HTMLManifoldResourceContainerElement;
@@ -744,6 +781,8 @@ declare global {
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-region-selector': HTMLManifoldRegionSelectorElement;
+    'manifold-resource-card': HTMLManifoldResourceCardElement;
+    'manifold-resource-card-view': HTMLManifoldResourceCardViewElement;
     'manifold-resource-container': HTMLManifoldResourceContainerElement;
     'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement;
     'manifold-resource-credentials-view': HTMLManifoldResourceCredentialsViewElement;
@@ -1115,6 +1154,32 @@ declare namespace LocalJSX {
     'preferredRegions'?: string[];
     'value'?: string;
   }
+  interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    'connection'?: Connection;
+    'label'?: string;
+    'preserveEvent'?: boolean;
+    'resourceId'?: string;
+    'resourceLinkFormat'?: string;
+  }
+  interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    'connection'?: Connection;
+    'label'?: string;
+    'loading'?: boolean;
+    'logo'?: string;
+    'onManifold-resource-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
+    'resourceId'?: string;
+    'resourceLinkFormat'?: string;
+    'resourceStatus'?: string;
+  }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -1239,6 +1304,8 @@ declare namespace LocalJSX {
     'manifold-product-details': ManifoldProductDetails;
     'manifold-product-page': ManifoldProductPage;
     'manifold-region-selector': ManifoldRegionSelector;
+    'manifold-resource-card': ManifoldResourceCard;
+    'manifold-resource-card-view': ManifoldResourceCardView;
     'manifold-resource-container': ManifoldResourceContainer;
     'manifold-resource-credentials': ManifoldResourceCredentials;
     'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
