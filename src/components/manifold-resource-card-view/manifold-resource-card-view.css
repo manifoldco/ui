@@ -1,0 +1,201 @@
+@custom-media --viewport-s (min-width: 450px);
+@custom-media --viewport-m (min-width: 750px);
+@custom-media --viewport-l (min-width: 1080px);
+
+:host {
+  --manifold-product-logo-s: 0.50rem;
+  --manifold-product-logo-m: 1.25rem;
+  --manifold-product-logo-l: 1.50rem;
+  --padding: 0.75rem;
+
+  /* theme vars */
+  --card-background: var(--manifold-card-background);
+  --card-text-color: var(--manifold-text-color);
+  --card-border: var(--manifold-card-border);
+  --card-radius: var(--manifold-card-radius);
+  --card-shadow: var(--manifold-card-shadow);
+
+  /* card:hover */
+  --card-background-hover: var(--manifold-card-background-hover, var(--manifold-grayscale-80i));
+  --card-text-color-hover: var(--manifold-card-text-color-hover, var(--card-text-color));
+  --card-border-hover: var(--manifold-card-border-hover, var(--manifold-border-hover));
+  --card-shadow-hover: var(--manifold-card-shadow-hover, var(--card-shadow));
+
+  /* headings */
+  --card-heading-font-family: var(--manifold-font-family-heading);
+  --card-heading-font-weight: var(--manifold-font-weight-heading);
+  --card-heading-text-color: var(--manifold-text-color-heading);
+}
+
+.wrapper {
+  position: relative;
+  display: grid;
+  grid-column-gap: var(--padding);
+  grid-template-areas:
+    'logo name'
+    'info info'
+    'tags tags';
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: var(--manifold-product-logo-s) auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--padding);
+  color: var(--card-text-color);
+  font-family: var(--manifold-font-family);
+  text-decoration: none;
+  background: var(--card-background);
+  border: var(--card-border, 1px solid #d3d3d4);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+  transition: border-color 150ms linear, box-shadow 150ms linear;
+
+  @media (--viewport-s) {
+    grid-template-areas:
+      'name logo'
+      'availability logo';
+    grid-template-columns: auto var(--manifold-product-logo-m);
+  }
+
+  @media (--viewport-m) {
+    grid-template-columns: auto var(--manifold-product-logo-l);
+    padding: 0.875rem;
+  }
+
+  &:focus,
+  &:hover {
+    background: var(--card-background-hover);
+    border: var(--card-border-hover);
+    box-shadow: var(--card-shadow-hover);
+  }
+}
+
+.name {
+  grid-area: name;
+  align-self: start;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-right: 1em;
+  color: var(--card-heading-text-color);
+  font-weight: var(--card-heading-font-weight);
+  font-size: 1em;
+  font-family: var(--card-heading-font-family);
+  line-height: 1.2;
+
+  @media (--viewport-l) {
+    padding-left: 0;
+  }
+}
+
+.status-box {
+  display: flex;
+  flex-direction: column;
+  grid-area: availability;
+  padding-top: 0.25rem;
+  color: var(--manifold-text-color);
+  font-size: var(--manifold-font-d1);
+  font-family: var(--manifold-font-family);
+
+  @media (--viewport-m) {
+    padding-top: 0;
+  }
+
+  @media (--viewport-l) {
+    padding-left: 0;
+  }
+}
+
+.status {
+  --status-color: var(--manifold-color-success);
+
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+  overflow: hidden;
+  color: var(--manifold-color-gray60);
+
+  &[data-status='provisioning'] {
+     --status-color: var(--manifold-color-info);
+  }
+
+  &[data-status='degraded'] {
+     --status-color: var(--manifold-color-warn);
+  }
+
+  &[data-status='offline'] {
+     --status-color: var(--manifold-color-error);
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+
+  &::before {
+   display: block;
+   width: 0.5rem;
+   height: 0.5rem;
+   margin-right: 0.5rem;
+   background: var(--status-color);
+   border-radius: 50%;
+   content: '';
+ }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+  color: var(--manifold-grayscale-60);
+
+  & manifold-icon {
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.75rem;
+    transform-origin: 50% 40%;
+    animation-name: spin;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.logo {
+  grid-area: logo;
+  align-content: start;
+
+  & img {
+    box-sizing: border-box;
+    width: var(--manifold-product-logo-s);
+    height: var(--manifold-product-logo-s);
+    overflow: hidden;
+    color: transparent;
+    background: white;
+    border: 2px solid white;
+    border-radius: var(--manifold-radius);
+    opacity: 0.1;
+    transition: opacity 150ms linear 100ms;
+
+    @media (--viewport-s) {
+      width: var(--manifold-product-logo-m);
+      height: var(--manifold-product-logo-m);
+    }
+
+    @media (--viewport-m) {
+      width: var(--manifold-product-logo-l);
+      height: var(--manifold-product-logo-l);
+    }
+
+    &[data-loaded] {
+      opacity: 1;
+    }
+  }
+}
