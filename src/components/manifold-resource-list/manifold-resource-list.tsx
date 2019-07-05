@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element } from '@stencil/core';
+import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Marketplace } from '../../types/marketplace';
 import { Catalog } from '../../types/catalog';
@@ -42,6 +42,14 @@ export class ManifoldResourceList {
   @Prop() preserveEvent?: boolean = false;
   @State() interval?: number;
   @State() resources?: FoundResource[];
+
+  @Watch('paused') pausedChange(newPaused: boolean) {
+    if (newPaused) {
+      window.clearInterval(this.interval);
+    } else {
+      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    }
+  }
 
   componentWillLoad() {
     if (!this.paused) {

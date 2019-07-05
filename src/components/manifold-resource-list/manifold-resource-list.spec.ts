@@ -60,4 +60,22 @@ describe('<manifold-resource-list>', () => {
       },
     ]);
   });
+
+  it('changing the paused attribute to true leads to a removal of the interval', () => {
+    window.clearInterval = jest.fn();
+
+    const resourceList = new ManifoldResourceList();
+    resourceList.pausedChange(true);
+
+    expect( window.clearInterval).toHaveBeenCalled();
+  });
+
+  it('changing the paused attribute to false leads to a creation of the interval', () => {
+    window.setInterval = jest.fn();
+
+    const resourceList = new ManifoldResourceList();
+    resourceList.pausedChange(false);
+
+    expect(window.setInterval).toHaveBeenCalled();
+  });
 });
