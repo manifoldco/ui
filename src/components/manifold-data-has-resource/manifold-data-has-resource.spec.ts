@@ -19,7 +19,7 @@ describe('<manifold-resource-list>', () => {
     const hasResource = await newSpecPage({
       components: [ManifoldDataHasResource],
       html: `
-        <manifold-data-has-resource>
+        <manifold-data-has-resource paused="">
           <div itemprop="has-resource" slot="has-resources"></div>
           <div itemprop="no-resource" slot="no-resources"></div>
         </manifold-data-has-resource>`,
@@ -37,7 +37,7 @@ describe('<manifold-resource-list>', () => {
     const hasResource = await newSpecPage({
       components: [ManifoldDataHasResource],
       html: `
-        <manifold-data-has-resource>
+        <manifold-data-has-resource paused="">
           <div itemprop="no-resource" slot="no-resources"></div>
           <div itemprop="has-resource" slot="has-resources"></div>
         </manifold-data-has-resource>`,
