@@ -69,6 +69,20 @@ export namespace Components {
     'isCustomizable'?: boolean;
     'measuredFeatures': Catalog.ExpandedFeature[];
   }
+  interface ManifoldDataHasResource {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
+  }
   interface ManifoldDataManageButton {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -547,6 +561,12 @@ declare global {
     new (): HTMLManifoldCostDisplayElement;
   };
 
+  interface HTMLManifoldDataHasResourceElement extends Components.ManifoldDataHasResource, HTMLStencilElement {}
+  var HTMLManifoldDataHasResourceElement: {
+    prototype: HTMLManifoldDataHasResourceElement;
+    new (): HTMLManifoldDataHasResourceElement;
+  };
+
   interface HTMLManifoldDataManageButtonElement extends Components.ManifoldDataManageButton, HTMLStencilElement {}
   var HTMLManifoldDataManageButtonElement: {
     prototype: HTMLManifoldDataManageButtonElement;
@@ -788,6 +808,7 @@ declare global {
     'manifold-button-link': HTMLManifoldButtonLinkElement;
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
+    'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
@@ -875,6 +896,20 @@ declare namespace LocalJSX {
     'compact'?: boolean;
     'isCustomizable'?: boolean;
     'measuredFeatures'?: Catalog.ExpandedFeature[];
+  }
+  interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
   }
   interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
     /**
@@ -1334,6 +1369,7 @@ declare namespace LocalJSX {
     'manifold-button-link': ManifoldButtonLink;
     'manifold-connection': ManifoldConnection;
     'manifold-cost-display': ManifoldCostDisplay;
+    'manifold-data-has-resource': ManifoldDataHasResource;
     'manifold-data-manage-button': ManifoldDataManageButton;
     'manifold-data-product-logo': ManifoldDataProductLogo;
     'manifold-data-product-name': ManifoldDataProductName;
