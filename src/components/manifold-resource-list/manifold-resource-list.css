@@ -1,0 +1,41 @@
+@custom-media --viewport-s (min-width: 600px);
+
+:host {
+  --grid-s: 1rem;
+  --grid-m: 1.5rem;
+
+  /* theme */
+  --link-color: var(--manifold-text-color-secondary);
+  --link-color-hover: var(--manifold-color-primary);
+  --link-color-active: var(--link-color-hover);
+  --heading-color: var(--manifold-grayscale-60);
+  --heading-border: 1px solid var(--manifold-grayscale-10);
+
+  /* headings */
+  --font-family-heading: var(--manifold-font-family-heading);
+  --font-weight-heading: var(--manifold-font-weight-heading);
+  --text-color-heading: var(--manifold-text-color-heading);
+
+  /* search */
+  --search-text-color: var(--manifold-input-text-color);
+  --search-background: var(--manifold-input-background);
+  --search-border: var(--manifold-input-border);
+  --search-shadow: var(--manifold-input-shadow);
+  --search-radius: var(--manifold-input-radius);
+  --search-placeholder-color: var(--manifold-text-color-secondary);
+
+  /* focus */
+  --search-shadow-focus: var(--manifold-input-shadow-focus, var(--search-shadow));
+  --search-background-focus: var(--manifold-input-background-focus, var(--search-background));
+  --search-border-focus: var(--manifold-input-border-focus, var(--search-border));
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
+}
+
+.wrapper {
+  display: grid;
+  grid-area: services;
+  grid-gap: var(--grid-s);
+  grid-template-columns: repeat(2, 1fr);
+}

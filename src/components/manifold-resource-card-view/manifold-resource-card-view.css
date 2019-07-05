@@ -114,7 +114,7 @@
   overflow: hidden;
   color: var(--manifold-color-gray60);
 
-  &[data-status='provisioning'] {
+  &[data-status='provision'] {
      --status-color: var(--manifold-color-info);
   }
 

@@ -13,5 +13,5 @@ storiesOf('Resource card 🔒 ', module)
   )
   .add(
     'Resource with link',
-    () => '<manifold-resource-card-view label="my-resource" logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" resource-id="1234" resource-status="unknown" resource-link-format="/resources/:label" />'
+    () => '<manifold-resource-card-view label="my-resource" logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" resource-id="1234" resource-status="unknown" resource-link-format="/resources/:resource" />'
   );

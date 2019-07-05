@@ -26,10 +26,10 @@ describe('<manifold-resource-card>', () => {
 
   it('displays the given status', async () => {
     const page = await newE2EPage({
-      html: `<manifold-resource-card-view resource-status="provisioning" resource-id="test" />`,
+      html: `<manifold-resource-card-view resource-status="provision" resource-id="test" />`,
     });
     const el = await page.find('manifold-resource-card-view >>> [itemprop="status"]');
 
-    expect(el.innerText).toBe('Provisioning');
+    expect(el.innerText).toBe('Provision');
   });
 });
