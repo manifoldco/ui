@@ -150,7 +150,6 @@ export class ManifoldResourceList {
   }
 
   render() {
-    console.log(this.resources);
     if (Array.isArray(this.resources) && !this.resources.length) {
       return (
         <slot name="no-resources" />
