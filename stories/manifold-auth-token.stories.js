@@ -12,7 +12,7 @@ storiesOf('Auth Token Provider [Data]', module)
       <manifold-connection>
         These resources are loaded from the server rather than mocks
         <manifold-auth-token token="${localStorage.manifold_api_token}"/>
-        <manifold-data-resource-list />
+        <manifold-resource-list />
       </manifold-connection>
     `
   );

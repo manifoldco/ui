@@ -30,7 +30,7 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 `resource-link-format`:
 
 ```html
-<manifold-resource-card resource-link-format="/resources/:label" />
+<manifold-resource-card resource-link-format="/resources/:resource" />
 <!-- <a href="/resource/my-resource"> -->
 ```
 
@@ -68,7 +68,7 @@ The underlying `<manifold-resource-card-view />` component may be used to displa
   logo="http://logo.png"
   resource-id="123456"
   resource-status="available"
-  resource-link-format="/resources/:label"
+  resource-link-format="/resources/:resource"
   preserve-event=""
 />
 ```

@@ -12,7 +12,7 @@ interface EventDetail {
 }
 
 const AVAILABLE = 'available';
-const PROVISIONING = 'provisioning';
+const PROVISIONING = 'provision';
 const DEGRADED = 'degraded';
 const OFFLINE = 'offline';
 
@@ -52,7 +52,7 @@ export class ManifoldResourceCardView {
     if (!this.resourceLinkFormat || !this.label) {
       return '';
     }
-    return this.resourceLinkFormat.replace(/:label/gi, this.label);
+    return this.resourceLinkFormat.replace(/:resource/gi, this.label);
   }
 
   get status(): string {
@@ -117,7 +117,7 @@ export class ManifoldResourceCardView {
           </div>
         </div>
         <div class="logo">
-          <manifold-lazy-image src={this.logo} alt={this.label} itemprop="image" />
+          {this.logo && <manifold-lazy-image src={this.logo} alt={this.label} itemprop="image" />}
         </div>
       </a>
     ) : (

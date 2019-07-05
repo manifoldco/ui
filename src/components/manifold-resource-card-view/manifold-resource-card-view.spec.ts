@@ -26,7 +26,7 @@ describe('<manifold-resource-card>', () => {
     serviceCard.resourceId = Resource.id;
     serviceCard.logo = Product.body.logo_url;
     serviceCard.resourceStatus = 'available';
-    serviceCard.resourceLinkFormat = '/resource/:label';
+    serviceCard.resourceLinkFormat = '/resource/:resource';
 
     expect(serviceCard.href).toBe(`/resource/${Resource.body.label}`);
   });

@@ -421,6 +421,28 @@ export namespace Components {
   interface ManifoldResourceDetailsView {
     'data'?: Gateway.Resource;
   }
+  interface ManifoldResourceList {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
+    /**
+    * Should the JS event still fire, even if product-link-format is passed?
+    */
+    'preserveEvent'?: boolean;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'resourceLinkFormat'?: string;
+  }
   interface ManifoldResourceStatus {}
   interface ManifoldResourceStatusView {
     'resourceState': ResourceState;
@@ -693,6 +715,12 @@ declare global {
     new (): HTMLManifoldResourceDetailsViewElement;
   };
 
+  interface HTMLManifoldResourceListElement extends Components.ManifoldResourceList, HTMLStencilElement {}
+  var HTMLManifoldResourceListElement: {
+    prototype: HTMLManifoldResourceListElement;
+    new (): HTMLManifoldResourceListElement;
+  };
+
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
@@ -788,6 +816,7 @@ declare global {
     'manifold-resource-credentials-view': HTMLManifoldResourceCredentialsViewElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
+    'manifold-resource-list': HTMLManifoldResourceListElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
@@ -1213,6 +1242,28 @@ declare namespace LocalJSX {
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
     'data'?: Gateway.Resource;
   }
+  interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Disable auto-updates?
+    */
+    'paused'?: boolean;
+    /**
+    * Should the JS event still fire, even if product-link-format is passed?
+    */
+    'preserveEvent'?: boolean;
+    /**
+    * Link format structure, with `:resource` placeholder
+    */
+    'resourceLinkFormat'?: string;
+  }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {}
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
     'resourceState'?: ResourceState;
@@ -1311,6 +1362,7 @@ declare namespace LocalJSX {
     'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
     'manifold-resource-details': ManifoldResourceDetails;
     'manifold-resource-details-view': ManifoldResourceDetailsView;
+    'manifold-resource-list': ManifoldResourceList;
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
