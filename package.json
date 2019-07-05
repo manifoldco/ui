@@ -59,7 +59,7 @@
     "@manifoldco/eslint-plugin-stencil": "^0.2.1",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
-    "@stencil/core": "^1.1.3",
+    "@stencil/core": "^1.1.4",
     "@stencil/postcss": "^1.0.1",
     "@storybook/addons": "^5.1.9",
     "@storybook/html": "^5.1.9",
