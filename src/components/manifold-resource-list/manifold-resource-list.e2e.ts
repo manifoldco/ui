@@ -9,7 +9,12 @@ describe('<manifold-resource-list>', () => {
   // TODO: Find a way to test the internal state
 
   it('renders the no resource state if no resources are found', async () => {
-    const page = await newE2EPage({ html: `<manifold-resource-list />` });
+    const page = await newE2EPage({
+      html: `
+        <manifold-resource-list>
+          <span itemprop="no-resources" slot="no-resources">No resources</span>
+        </manifold-resource-list>`,
+    });
     await page.$eval(
       'manifold-resource-list',
       (elm: any, props: any) => {
