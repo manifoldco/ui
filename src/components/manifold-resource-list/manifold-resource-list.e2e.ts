@@ -8,8 +8,13 @@ fetchMock.restore(); // Is required because tests are run async and if fetch is 
 describe('<manifold-resource-list>', () => {
   // TODO: Find a way to test the internal state
 
-  it.skip('renders the no resource state if no resources are found', async () => {
-    const page = await newE2EPage({ html: `<manifold-resource-list />` });
+  it('renders the no resource state if no resources are found', async () => {
+    const page = await newE2EPage({
+      html: `
+        <manifold-resource-list>
+          <span itemprop="no-resources" slot="no-resources">No resources</span>
+        </manifold-resource-list>`,
+    });
     await page.$eval(
       'manifold-resource-list',
       (elm: any, props: any) => {
