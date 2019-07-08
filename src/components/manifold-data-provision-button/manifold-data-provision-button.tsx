@@ -1,10 +1,11 @@
 import { h, Component, Prop, Element, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { Catalog } from '../../types/catalog';
+
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import { Catalog } from '../../types/catalog';
 
 /* eslint-disable no-console */
 
@@ -13,11 +14,6 @@ interface SuccessMessage {
   resourceName: string;
   resourceId: string;
   message: string;
-}
-
-interface InvalidMessage {
-  message: string;
-  resourceName: string;
 }
 
 interface ErrorMessage {
@@ -34,14 +30,16 @@ export class ManifoldDataProvisionButton {
   @Prop() authToken?: string;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
-  /** ID of input (useful for `<label>`) */
-  @Prop() inputId?: string = 'manifold-provision-resource';
-  @Prop() features?: Gateway.FeatureMap = {};
-  @Prop() ownerId?: string = '';
-  @Prop() planId?: string = '';
-  @Prop({ mutable: true }) productId?: string = '';
-  @Prop() regionId?: string = globalRegion.id;
-  @State() resourceName: string = '';
+  /** Plan to provision (slug) */
+  @Prop() planLabel?: string;
+  /** Region to provision (complete name), omit for all region */
+  @Prop() regionName?: string;
+  /** The name of the resource to provision */
+  @Prop() resourceName?: string;
+  @Prop({ mutable: true }) ownerId?: string = '';
+  @State() regionId?: string = globalRegion.id;
+  @State() planId?: string = '';
+  @State() productId?: string = '';
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true })
   clickEvent: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true })
@@ -49,24 +47,45 @@ export class ManifoldDataProvisionButton {
   @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) errorEvent: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
   successEvent: EventEmitter;
+
   @Watch('productLabel') productChange(newProduct: string) {
-    this.fetchProductId(newProduct);
+    this.fetchProductPlanId(newProduct, this.planLabel);
+  }
+  @Watch('planLabel') planChange(newPlan: string) {
+    if (this.productLabel) {
+      this.fetchProductPlanId(this.productLabel, newPlan);
+    }
   }
 
   componentWillLoad() {
     if (this.productLabel) {
-      this.fetchProductId(this.productLabel);
+      this.fetchProductPlanId(this.productLabel, this.planLabel);
     }
   }
 
   async provision() {
-    if (typeof this.features !== 'object') {
-      console.error('Property “features” is missing');
+    if (!this.ownerId) {
+      console.error('Property “ownerId” is missing');
+      return;
+    }
+    if (!this.resourceName) {
+      console.error('Property “resourceName” is missing');
       return;
     }
 
-    if (!this.ownerId) {
-      console.error('Property “ownerId” is missing');
+    if (this.resourceName.length < 3) {
+      this.invalidEvent.emit({
+        message: 'Must be at least 3 characters.',
+        resourceName: this.resourceName,
+      });
+      return;
+    }
+    if (!this.validate(this.resourceName)) {
+      this.invalidEvent.emit({
+        message:
+          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
+        resourceName: this.resourceName,
+      });
       return;
     }
 
@@ -83,9 +102,8 @@ export class ManifoldDataProvisionButton {
       product_id: this.productId,
       region_id: this.regionId,
       source: 'catalog',
+      features: {},
     };
-
-    if (Object.keys(this.features).length) req.features = this.features;
 
     const response = await fetch(
       `${this.connection.gateway}/resource/`,
@@ -118,35 +136,38 @@ export class ManifoldDataProvisionButton {
     }
   }
 
-  fetchProductId(productLabel: string) {
-    if (!productLabel) return;
-    fetch(`${this.connection.catalog}/products/?label=${productLabel}`, withAuth())
-      .then(response => response.json())
-      .then((products: Catalog.Product[]) => {
-        if (products.length === 1) {
-          this.productId = products[0].id;
-        } else {
-          console.error(`${productLabel} product not found`);
-        }
-      });
-  }
-
-  handleInput(e: Event) {
-    if (!e.target) return;
-    const { value } = e.target as HTMLInputElement;
-    this.resourceName = value;
-
-    if (!value.length) return;
-
-    let message;
-    if (value.length < 3) message = 'Must be at least 3 characters.';
-    else if (!this.validate(value))
-      message = 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.';
-
-    if (message) {
-      const invalid: InvalidMessage = { message, resourceName: value };
-      this.invalidEvent.emit(invalid);
+  async fetchProductPlanId(productLabel: string, planLabel?: string) {
+    // TODO: Add region fetching too
+    if (!productLabel) {
+      return;
     }
+
+    const productResp = await fetch(
+      `${this.connection.catalog}/products/?label=${productLabel}`,
+      withAuth(this.authToken)
+    );
+    const products: Catalog.Product[] = await productResp.json();
+
+    if (!Array.isArray(products) || !products.length) {
+      console.error(`${productLabel} product not found`);
+      return;
+    }
+
+    const planResp = await fetch(
+      `${this.connection.catalog}/plans/?product_id=${products[0].id}${
+        planLabel ? `&label=${planLabel}` : ''
+      }`,
+      withAuth(this.authToken)
+    );
+    const plans: Catalog.Plan[] = await planResp.json();
+
+    if (!Array.isArray(plans) || !plans.length) {
+      console.error(`${productLabel} plans not found`);
+      return;
+    }
+
+    this.productId = products[0].id;
+    this.planId = plans[0].id;
   }
 
   validate(input: string) {
@@ -154,21 +175,15 @@ export class ManifoldDataProvisionButton {
   }
 
   render() {
-    return [
-      <input
-        autocapitalize="off"
-        id={this.inputId}
-        name="resource-name"
-        onChange={e => this.handleInput(e)}
-        pattern="^[a-z][a-z0-9-]{3,64}"
-        required
-        type="text"
-        value={this.resourceName}
-      />,
-      <button type="submit" onClick={() => this.provision()}>
+    return (
+      <button
+        type="submit"
+        onClick={() => this.provision()}
+        disabled={!this.planId || !this.productId}
+      >
         <slot />
-      </button>,
-    ];
+      </button>
+    );
   }
 }
 

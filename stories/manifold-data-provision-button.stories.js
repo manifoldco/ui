@@ -6,8 +6,10 @@ storiesOf('Provision Button [Data]', module)
   .add(
     'default',
     () => `
-  <label for="my-provision-button">Resource Name</label>
-  <manifold-data-provision-button input-id="my-provision-button">
-    🚀 Provision Business plan on Prefab.cloud
-  </manifold-data-provision-button>`
+      <label for="my-provision-button">Resource Name</label>
+      <input id="my-provision-button" value="my-resource">my-resource</input>
+      <manifold-data-provision-button resource-name="my-resource">
+        🚀 Provision Business plan on Prefab.cloud
+      </manifold-data-provision-button>
+    `
   );

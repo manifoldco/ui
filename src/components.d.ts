@@ -150,19 +150,23 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection': Connection;
-    'features'?: Gateway.FeatureMap;
-    /**
-    * ID of input (useful for `<label>`)
-    */
-    'inputId'?: string;
     'ownerId'?: string;
-    'planId'?: string;
-    'productId'?: string;
+    /**
+    * Plan to provision (slug)
+    */
+    'planLabel'?: string;
     /**
     * Product to provision (slug)
     */
     'productLabel'?: string;
-    'regionId'?: string;
+    /**
+    * Region to provision (complete name), omit for all region
+    */
+    'regionName'?: string;
+    /**
+    * The name of the resource to provision
+    */
+    'resourceName'?: string;
   }
   interface ManifoldDataResourceList {
     /**
@@ -981,23 +985,27 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
-    'features'?: Gateway.FeatureMap;
-    /**
-    * ID of input (useful for `<label>`)
-    */
-    'inputId'?: string;
     'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
     'ownerId'?: string;
-    'planId'?: string;
-    'productId'?: string;
+    /**
+    * Plan to provision (slug)
+    */
+    'planLabel'?: string;
     /**
     * Product to provision (slug)
     */
     'productLabel'?: string;
-    'regionId'?: string;
+    /**
+    * Region to provision (complete name), omit for all region
+    */
+    'regionName'?: string;
+    /**
+    * The name of the resource to provision
+    */
+    'resourceName'?: string;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
     /**
