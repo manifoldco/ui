@@ -20,17 +20,15 @@ describe('<manifold-resource-list>', () => {
       components: [ManifoldDataHasResource],
       html: `
         <manifold-data-has-resource paused="">
-          <div itemprop="has-resource" slot="has-resources"></div>
-          <div itemprop="no-resource" slot="no-resources"></div>
+          <div itemprop="has-resource" slot="has-resource"></div>
+          <div itemprop="no-resource" slot="no-resource"></div>
         </manifold-data-has-resource>`,
     });
 
     // @ts-ignore
-    expect(hasResource.root.querySelector('[itemprop="has-resource"]')).toBeDefined();
-    // @ts-ignore
-    expect(hasResource.root.querySelector('[itemprop="no-resource"]')).not.toBeDefined();
-
-    fetchMock.restore();
+    expect(hasResource.root.shadowRoot).toEqualHtml(
+      `<slot name="has-resource"></slot>`
+    );
   });
 
   it('Displays the right slot if user has no resources', async () => {
@@ -40,16 +38,14 @@ describe('<manifold-resource-list>', () => {
       components: [ManifoldDataHasResource],
       html: `
         <manifold-data-has-resource paused="">
-          <div itemprop="no-resource" slot="no-resources"></div>
-          <div itemprop="has-resource" slot="has-resources"></div>
+          <div itemprop="has-resource" slot="has-resource"></div>
+          <div itemprop="no-resource" slot="no-resource"></div>
         </manifold-data-has-resource>`,
     });
 
     // @ts-ignore
-    expect(hasResource.root.querySelector('[itemprop="no-resource"]')).toBeDefined();
-    // @ts-ignore
-    expect(hasResource.root.querySelector('[itemprop="has-resource"]')).not.toBeDefined();
-
-    fetchMock.restore();
+    expect(hasResource.root.shadowRoot).toEqualHtml(
+      `<slot name="no-resource"></slot>`
+    );
   });
 });
