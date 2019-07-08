@@ -27,6 +27,8 @@ describe('<manifold-resource-list>', () => {
 
     // @ts-ignore
     expect(hasResource.root.querySelector('[itemprop="has-resource"]')).toBeDefined();
+    // @ts-ignore
+    expect(hasResource.root.querySelector('[itemprop="no-resource"]')).not.toBeDefined();
 
     fetchMock.restore();
   });
@@ -45,6 +47,8 @@ describe('<manifold-resource-list>', () => {
 
     // @ts-ignore
     expect(hasResource.root.querySelector('[itemprop="no-resource"]')).toBeDefined();
+    // @ts-ignore
+    expect(hasResource.root.querySelector('[itemprop="has-resource"]')).not.toBeDefined();
 
     fetchMock.restore();
   });
