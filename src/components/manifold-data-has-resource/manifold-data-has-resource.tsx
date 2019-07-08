@@ -21,14 +21,14 @@ export class ManifoldDataHasResource {
     if (newPaused) {
       window.clearInterval(this.interval);
     } else {
-      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+      this.makeInterval();
     }
   }
 
   componentWillLoad() {
     this.fetchResources();
     if (!this.paused) {
-      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+      this.makeInterval();
     }
   }
 
@@ -36,6 +36,10 @@ export class ManifoldDataHasResource {
     if (this.interval) {
       window.clearInterval(this.interval);
     }
+  }
+
+  makeInterval() {
+    this.interval = window.setInterval(() => this.fetchResources(), 3000);
   }
 
   async fetchResources() {
