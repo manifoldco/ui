@@ -273,6 +273,9 @@ export namespace Components {
     'services'?: Catalog.Product[];
     'templateLinkFormat'?: string;
   }
+  interface ManifoldMockResource {
+    'mock': Gateway.Resource;
+  }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
     'error'?: string;
@@ -419,7 +422,7 @@ export namespace Components {
     /**
     * Which resource does this belong to?
     */
-    'resourceName': string;
+    'resourceName'?: string;
   }
   interface ManifoldResourceCredentials {
     /**
@@ -461,6 +464,10 @@ export namespace Components {
     */
     'resourceLinkFormat'?: string;
   }
+  interface ManifoldResourcePlan {}
+  interface ManifoldResourceProduct {
+    'asCard'?: boolean;
+  }
   interface ManifoldResourceStatus {}
   interface ManifoldResourceStatusView {
     'resourceState': ResourceState;
@@ -486,6 +493,18 @@ export namespace Components {
     'productId'?: string;
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
+  }
+  interface ManifoldServiceView {
+    'asCard'?: boolean;
+    'description'?: string;
+    'hideTags'?: boolean;
+    'isFeatured'?: boolean;
+    'isFree'?: boolean;
+    'label'?: string;
+    'loading'?: boolean;
+    'logo'?: string;
+    'name'?: string;
+    'productId'?: string;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
@@ -637,6 +656,12 @@ declare global {
     new (): HTMLManifoldMarketplaceGridElement;
   };
 
+  interface HTMLManifoldMockResourceElement extends Components.ManifoldMockResource, HTMLStencilElement {}
+  var HTMLManifoldMockResourceElement: {
+    prototype: HTMLManifoldMockResourceElement;
+    new (): HTMLManifoldMockResourceElement;
+  };
+
   interface HTMLManifoldNumberInputElement extends Components.ManifoldNumberInput, HTMLStencilElement {}
   var HTMLManifoldNumberInputElement: {
     prototype: HTMLManifoldNumberInputElement;
@@ -745,6 +770,18 @@ declare global {
     new (): HTMLManifoldResourceListElement;
   };
 
+  interface HTMLManifoldResourcePlanElement extends Components.ManifoldResourcePlan, HTMLStencilElement {}
+  var HTMLManifoldResourcePlanElement: {
+    prototype: HTMLManifoldResourcePlanElement;
+    new (): HTMLManifoldResourcePlanElement;
+  };
+
+  interface HTMLManifoldResourceProductElement extends Components.ManifoldResourceProduct, HTMLStencilElement {}
+  var HTMLManifoldResourceProductElement: {
+    prototype: HTMLManifoldResourceProductElement;
+    new (): HTMLManifoldResourceProductElement;
+  };
+
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
@@ -767,6 +804,12 @@ declare global {
   var HTMLManifoldServiceCardElement: {
     prototype: HTMLManifoldServiceCardElement;
     new (): HTMLManifoldServiceCardElement;
+  };
+
+  interface HTMLManifoldServiceViewElement extends Components.ManifoldServiceView, HTMLStencilElement {}
+  var HTMLManifoldServiceViewElement: {
+    prototype: HTMLManifoldServiceViewElement;
+    new (): HTMLManifoldServiceViewElement;
   };
 
   interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
@@ -824,6 +867,7 @@ declare global {
     'manifold-lazy-image': HTMLManifoldLazyImageElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
+    'manifold-mock-resource': HTMLManifoldMockResourceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
     'manifold-plan': HTMLManifoldPlanElement;
     'manifold-plan-cost': HTMLManifoldPlanCostElement;
@@ -842,10 +886,13 @@ declare global {
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
     'manifold-resource-list': HTMLManifoldResourceListElement;
+    'manifold-resource-plan': HTMLManifoldResourcePlanElement;
+    'manifold-resource-product': HTMLManifoldResourceProductElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
+    'manifold-service-view': HTMLManifoldServiceViewElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
@@ -1113,6 +1160,9 @@ declare namespace LocalJSX {
     'services'?: Catalog.Product[];
     'templateLinkFormat'?: string;
   }
+  interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {
+    'mock'?: Gateway.Resource;
+  }
   interface ManifoldNumberInput extends JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement> {
     'decrementDisabledLabel'?: string;
     'error'?: string;
@@ -1307,6 +1357,10 @@ declare namespace LocalJSX {
     */
     'resourceLinkFormat'?: string;
   }
+  interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
+  interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
+    'asCard'?: boolean;
+  }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {}
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
     'resourceState'?: ResourceState;
@@ -1334,6 +1388,18 @@ declare namespace LocalJSX {
     'productId'?: string;
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
+  }
+  interface ManifoldServiceView extends JSXBase.HTMLAttributes<HTMLManifoldServiceViewElement> {
+    'asCard'?: boolean;
+    'description'?: string;
+    'hideTags'?: boolean;
+    'isFeatured'?: boolean;
+    'isFree'?: boolean;
+    'label'?: string;
+    'loading'?: boolean;
+    'logo'?: string;
+    'name'?: string;
+    'productId'?: string;
   }
   interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement> {}
   interface ManifoldSkeletonText extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement> {}
@@ -1389,6 +1455,7 @@ declare namespace LocalJSX {
     'manifold-lazy-image': ManifoldLazyImage;
     'manifold-marketplace': ManifoldMarketplace;
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
+    'manifold-mock-resource': ManifoldMockResource;
     'manifold-number-input': ManifoldNumberInput;
     'manifold-plan': ManifoldPlan;
     'manifold-plan-cost': ManifoldPlanCost;
@@ -1407,10 +1474,13 @@ declare namespace LocalJSX {
     'manifold-resource-details': ManifoldResourceDetails;
     'manifold-resource-details-view': ManifoldResourceDetailsView;
     'manifold-resource-list': ManifoldResourceList;
+    'manifold-resource-plan': ManifoldResourcePlan;
+    'manifold-resource-product': ManifoldResourceProduct;
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
+    'manifold-service-view': ManifoldServiceView;
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
     'manifold-template-card': ManifoldTemplateCard;

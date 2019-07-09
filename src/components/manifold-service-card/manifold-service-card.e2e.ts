@@ -9,7 +9,7 @@ const logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.pn
 describe('<manifold-service-card>', () => {
   it('displays name', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card name="${name}" />` });
-    const el = await page.find('manifold-service-card >>> [itemprop="name"]');
+    const el = await page.find('manifold-service-view >>> [itemprop="name"]');
 
     expect(el.innerText).toBe(name);
   });
@@ -18,27 +18,27 @@ describe('<manifold-service-card>', () => {
     const page = await newE2EPage({
       html: `<manifold-service-card description="${description}" />`,
     });
-    const el = await page.find('manifold-service-card >>> [itemprop="description"]');
+    const el = await page.find('manifold-service-view >>> [itemprop="description"]');
 
     expect(el.innerText).toBe(description);
   });
 
   it('displays logo', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card logo="${logo}" />` });
-    const el = await page.find('manifold-service-card >>> manifold-lazy-image');
+    const el = await page.find('manifold-service-view >>> manifold-lazy-image');
     const src = await el.getProperty('src');
     expect(src).toBe(logo);
   });
 
   it('displays a featured tag if featured', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card is-featured />` });
-    const el = await page.find('manifold-service-card >>> manifold-badge');
-    expect(el.innerText).toBe('featured');
+    const el = await page.find('manifold-service-view >>> manifold-badge');
+    expect(el.innerText).toBe('Featured');
   });
 
   it('doesn’t display “free” tag by default (when not featured)', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card />` });
-    const el = await page.find('manifold-service-card >>> manifold-badge');
+    const el = await page.find('manifold-service-view >>> manifold-badge');
     expect(el).toBeNull();
   });
 });

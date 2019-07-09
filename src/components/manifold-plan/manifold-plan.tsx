@@ -40,7 +40,7 @@ export class ManifoldPlan {
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
 
     this.product = products[0]; // eslint-disable-line prefer-destructuring
-    this.fetchPlan(products[0].id, planLabel);
+    await this.fetchPlan(products[0].id, planLabel);
   }
 
   async fetchPlan(productId: string, planLabel: string) {

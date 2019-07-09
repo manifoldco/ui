@@ -160,6 +160,7 @@ export class ManifoldMarketplaceGrid {
   }: Catalog.Product) => (
     <manifold-service-card
       data-label={label}
+      data-featured={this.featured && this.featured.includes(label)}
       description={tagline}
       isFeatured={this.featured && this.featured.includes(label)}
       label={label}
