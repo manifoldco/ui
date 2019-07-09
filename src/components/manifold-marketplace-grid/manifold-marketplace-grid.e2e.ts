@@ -147,7 +147,7 @@ describe('<manifold-marketplace-grid>', () => {
     );
     await page.waitForChanges();
 
-    const serviceCards = await page.findAll(`manifold-marketplace-grid >>> [is-featured]`);
+    const serviceCards = await page.findAll(`manifold-marketplace-grid >>> [data-featured]`);
     const featuredServices = serviceCards.map(card => card.getAttribute('data-label'));
     expect(featuredServices).toEqual(featured);
   });
