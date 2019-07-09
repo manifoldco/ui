@@ -33,7 +33,7 @@ export class ManifoldServiceView {
           </p>
         </div>
         {!this.hideTags && (<div class="tags">
-          {this.isFeatured && <manifold-badge>featured</manifold-badge>}
+          {this.isFeatured && <manifold-badge>Featured</manifold-badge>}
           {this.isFree && <manifold-badge data-tag="free">Free</manifold-badge>}
         </div>)}
       </div>

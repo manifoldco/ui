@@ -8,7 +8,7 @@ export const convertPlan = (plan: Gateway.ResolvedPlan, productId: string, provi
     ...plan,
     product_id: productId,
     provider_id: providerId,
-    regions: [globalRegion.id], // TODO: Until we get graphQL, we're going to lise regions
+    regions: [globalRegion.id], // TODO: Until we get graphQL, we're going to lose regions
   },
   version: 1,
   type: 'plan',
