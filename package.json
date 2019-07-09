@@ -83,7 +83,7 @@
     "happo.io": "^3.20.0",
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
-    "postcss-preset-env": "^6.6.0",
+    "postcss-preset-env": "^6.7.0",
     "prettier": "^1.18.2",
     "puppeteer": "1.17.0",
     "storybook-readme": "^5.0.5",
