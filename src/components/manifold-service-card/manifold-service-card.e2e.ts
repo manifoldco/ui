@@ -33,7 +33,7 @@ describe('<manifold-service-card>', () => {
   it('displays a featured tag if featured', async () => {
     const page = await newE2EPage({ html: `<manifold-service-card is-featured />` });
     const el = await page.find('manifold-service-view >>> manifold-badge');
-    expect(el.innerText).toBe('featured');
+    expect(el.innerText).toBe('Featured');
   });
 
   it('doesn’t display “free” tag by default (when not featured)', async () => {
