@@ -273,7 +273,9 @@ export namespace Components {
     'services'?: Catalog.Product[];
     'templateLinkFormat'?: string;
   }
-  interface ManifoldMockResource {}
+  interface ManifoldMockResource {
+    'mock': Gateway.Resource;
+  }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
     'error'?: string;
@@ -1158,7 +1160,9 @@ declare namespace LocalJSX {
     'services'?: Catalog.Product[];
     'templateLinkFormat'?: string;
   }
-  interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {}
+  interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {
+    'mock'?: Gateway.Resource;
+  }
   interface ManifoldNumberInput extends JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement> {
     'decrementDisabledLabel'?: string;
     'error'?: string;

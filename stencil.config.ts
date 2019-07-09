@@ -9,7 +9,7 @@ export const config: Config = {
   globalStyle: 'src/global/theme.css',
   globalScript: 'src/global/app.ts',
   outputTargets: [{ type: 'dist' }],
-  excludeSrc: ['**/*-happo.*'],
+  excludeSrc: ['**/*-happo.*', '**/spec/mock/*'],
   plugins: [
     postcss({
       plugins: [
