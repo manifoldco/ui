@@ -10,7 +10,7 @@
     "url": "https://github.com/manifoldco/ui/issues"
   },
   "engines": {
-    "node": ">=11.0.0"
+    "node": ">=10.16.0"
   },
   "author": "manifoldco",
   "license": "ISC",
