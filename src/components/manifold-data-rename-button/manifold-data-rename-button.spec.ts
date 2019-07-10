@@ -6,7 +6,7 @@ import { connections } from '../../utils/connections';
 
 import { ManifoldDataRenameButton } from './manifold-data-rename-button';
 
-describe('<manifold-data-provision-button>', () => {
+describe('<manifold-data-rename-button>', () => {
   it('fetches the resource id on load if not set', () => {
     const resourceName = 'test-resource';
 
