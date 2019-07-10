@@ -69,6 +69,18 @@ export namespace Components {
     'isCustomizable'?: boolean;
     'measuredFeatures': Catalog.ExpandedFeature[];
   }
+  interface ManifoldCredentials {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    'resourceId'?: string;
+    'resourceName': string;
+  }
   interface ManifoldDataHasResource {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -424,19 +436,11 @@ export namespace Components {
     */
     'resourceName'?: string;
   }
-  interface ManifoldResourceCredentials {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection': Connection;
-  }
+  interface ManifoldResourceCredentials {}
   interface ManifoldResourceCredentialsView {
     'credentials'?: Marketplace.Credential[];
-    'resourceState': ResourceState;
+    'loading': boolean;
+    'resourceName': string;
   }
   interface ManifoldResourceDetails {}
   interface ManifoldResourceDetailsView {
@@ -582,6 +586,12 @@ declare global {
   var HTMLManifoldCostDisplayElement: {
     prototype: HTMLManifoldCostDisplayElement;
     new (): HTMLManifoldCostDisplayElement;
+  };
+
+  interface HTMLManifoldCredentialsElement extends Components.ManifoldCredentials, HTMLStencilElement {}
+  var HTMLManifoldCredentialsElement: {
+    prototype: HTMLManifoldCredentialsElement;
+    new (): HTMLManifoldCredentialsElement;
   };
 
   interface HTMLManifoldDataHasResourceElement extends Components.ManifoldDataHasResource, HTMLStencilElement {}
@@ -855,6 +865,7 @@ declare global {
     'manifold-button-link': HTMLManifoldButtonLinkElement;
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
+    'manifold-credentials': HTMLManifoldCredentialsElement;
     'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
@@ -947,6 +958,18 @@ declare namespace LocalJSX {
     'compact'?: boolean;
     'isCustomizable'?: boolean;
     'measuredFeatures'?: Catalog.ExpandedFeature[];
+  }
+  interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'resourceId'?: string;
+    'resourceName'?: string;
   }
   interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
     /**
@@ -1316,20 +1339,12 @@ declare namespace LocalJSX {
     */
     'resourceName'?: string;
   }
-  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-  }
+  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
   interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
     'credentials'?: Marketplace.Credential[];
+    'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceState'?: ResourceState;
+    'resourceName'?: string;
   }
   interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
@@ -1443,6 +1458,7 @@ declare namespace LocalJSX {
     'manifold-button-link': ManifoldButtonLink;
     'manifold-connection': ManifoldConnection;
     'manifold-cost-display': ManifoldCostDisplay;
+    'manifold-credentials': ManifoldCredentials;
     'manifold-data-has-resource': ManifoldDataHasResource;
     'manifold-data-manage-button': ManifoldDataManageButton;
     'manifold-data-product-logo': ManifoldDataProductLogo;
