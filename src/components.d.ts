@@ -83,7 +83,7 @@ export namespace Components {
     /**
     * The label of the resource to deprovision
     */
-    'resourceLabel'?: string;
+    'resourceName'?: string;
   }
   interface ManifoldDataHasResource {
     /**
@@ -949,7 +949,7 @@ declare namespace LocalJSX {
     /**
     * The label of the resource to deprovision
     */
-    'resourceLabel'?: string;
+    'resourceName'?: string;
   }
   interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
     /**
