@@ -89,7 +89,7 @@ describe('<manifold-data-provision-button>', () => {
         components: [ManifoldDataDeprovisionButton],
         html: `
           <manifold-data-deprovision-button
-            resource-label="${resourceName}"
+            resource-name="${resourceName}"
           >Deprovision</manifold-data-deprovision-button>
         `,
       });
@@ -137,7 +137,7 @@ describe('<manifold-data-provision-button>', () => {
       });
     });
 
-    it('will trigger a dom event on failed provision', async () => {
+    it('will trigger a dom event on failed deprovision', async () => {
       fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, {
         status: 500,
         body: {
