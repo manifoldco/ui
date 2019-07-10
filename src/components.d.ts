@@ -47,6 +47,7 @@ export namespace Components {
     'href'?: string;
     'size'?: 'medium' | 'small';
     'stencilClickEvent'?: (e: MouseEvent) => void;
+    'type'?: 'button' | 'submit';
   }
   interface ManifoldButtonLink {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
@@ -168,6 +169,29 @@ export namespace Components {
     */
     'resourceName'?: string;
   }
+  interface ManifoldDataRenameButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection': Connection;
+    'loading'?: boolean;
+    /**
+    * The new name to give to the resource
+    */
+    'newName': string;
+    /**
+    * The id of the resource to rename, will be fetched if not set
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to rename
+    */
+    'resourceName'?: string;
+  }
   interface ManifoldDataResourceList {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -209,6 +233,15 @@ export namespace Components {
   }
   interface ManifoldImageGallery {
     'images'?: string[];
+  }
+  interface ManifoldInput {
+    'defaultValue'?: string;
+    'disabled'?: boolean;
+    'inputId'?: string;
+    'name'?: string;
+    'pattern'?: string;
+    'required'?: boolean;
+    'type'?: string;
   }
   interface ManifoldLazyImage {
     'alt': string;
@@ -468,6 +501,7 @@ export namespace Components {
   interface ManifoldResourceProduct {
     'asCard'?: boolean;
   }
+  interface ManifoldResourceRename {}
   interface ManifoldResourceStatus {}
   interface ManifoldResourceStatusView {
     'resourceState': ResourceState;
@@ -614,6 +648,12 @@ declare global {
     new (): HTMLManifoldDataProvisionButtonElement;
   };
 
+  interface HTMLManifoldDataRenameButtonElement extends Components.ManifoldDataRenameButton, HTMLStencilElement {}
+  var HTMLManifoldDataRenameButtonElement: {
+    prototype: HTMLManifoldDataRenameButtonElement;
+    new (): HTMLManifoldDataRenameButtonElement;
+  };
+
   interface HTMLManifoldDataResourceListElement extends Components.ManifoldDataResourceList, HTMLStencilElement {}
   var HTMLManifoldDataResourceListElement: {
     prototype: HTMLManifoldDataResourceListElement;
@@ -636,6 +676,12 @@ declare global {
   var HTMLManifoldImageGalleryElement: {
     prototype: HTMLManifoldImageGalleryElement;
     new (): HTMLManifoldImageGalleryElement;
+  };
+
+  interface HTMLManifoldInputElement extends Components.ManifoldInput, HTMLStencilElement {}
+  var HTMLManifoldInputElement: {
+    prototype: HTMLManifoldInputElement;
+    new (): HTMLManifoldInputElement;
   };
 
   interface HTMLManifoldLazyImageElement extends Components.ManifoldLazyImage, HTMLStencilElement {}
@@ -782,6 +828,12 @@ declare global {
     new (): HTMLManifoldResourceProductElement;
   };
 
+  interface HTMLManifoldResourceRenameElement extends Components.ManifoldResourceRename, HTMLStencilElement {}
+  var HTMLManifoldResourceRenameElement: {
+    prototype: HTMLManifoldResourceRenameElement;
+    new (): HTMLManifoldResourceRenameElement;
+  };
+
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
@@ -860,10 +912,12 @@ declare global {
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
+    'manifold-data-rename-button': HTMLManifoldDataRenameButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
     'manifold-forward-slot': HTMLManifoldForwardSlotElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
+    'manifold-input': HTMLManifoldInputElement;
     'manifold-lazy-image': HTMLManifoldLazyImageElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
@@ -888,6 +942,7 @@ declare global {
     'manifold-resource-list': HTMLManifoldResourceListElement;
     'manifold-resource-plan': HTMLManifoldResourcePlanElement;
     'manifold-resource-product': HTMLManifoldResourceProductElement;
+    'manifold-resource-rename': HTMLManifoldResourceRenameElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
@@ -925,6 +980,7 @@ declare namespace LocalJSX {
     'onManifold-button-click'?: (event: CustomEvent<any>) => void;
     'size'?: 'medium' | 'small';
     'stencilClickEvent'?: (e: MouseEvent) => void;
+    'type'?: 'button' | 'submit';
   }
   interface ManifoldButtonLink extends JSXBase.HTMLAttributes<HTMLManifoldButtonLinkElement> {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
@@ -1054,6 +1110,33 @@ declare namespace LocalJSX {
     */
     'resourceName'?: string;
   }
+  interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'loading'?: boolean;
+    /**
+    * The new name to give to the resource
+    */
+    'newName'?: string;
+    'onManifold-renameButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
+    'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
+    /**
+    * The id of the resource to rename, will be fetched if not set
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to rename
+    */
+    'resourceName'?: string;
+  }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -1096,6 +1179,16 @@ declare namespace LocalJSX {
   }
   interface ManifoldImageGallery extends JSXBase.HTMLAttributes<HTMLManifoldImageGalleryElement> {
     'images'?: string[];
+  }
+  interface ManifoldInput extends JSXBase.HTMLAttributes<HTMLManifoldInputElement> {
+    'defaultValue'?: string;
+    'disabled'?: boolean;
+    'inputId'?: string;
+    'name'?: string;
+    'onUpdateValue'?: (event: CustomEvent<any>) => void;
+    'pattern'?: string;
+    'required'?: boolean;
+    'type'?: string;
   }
   interface ManifoldLazyImage extends JSXBase.HTMLAttributes<HTMLManifoldLazyImageElement> {
     'alt'?: string;
@@ -1361,6 +1454,7 @@ declare namespace LocalJSX {
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
     'asCard'?: boolean;
   }
+  interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {}
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {}
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
     'resourceState'?: ResourceState;
@@ -1448,10 +1542,12 @@ declare namespace LocalJSX {
     'manifold-data-product-logo': ManifoldDataProductLogo;
     'manifold-data-product-name': ManifoldDataProductName;
     'manifold-data-provision-button': ManifoldDataProvisionButton;
+    'manifold-data-rename-button': ManifoldDataRenameButton;
     'manifold-data-resource-list': ManifoldDataResourceList;
     'manifold-forward-slot': ManifoldForwardSlot;
     'manifold-icon': ManifoldIcon;
     'manifold-image-gallery': ManifoldImageGallery;
+    'manifold-input': ManifoldInput;
     'manifold-lazy-image': ManifoldLazyImage;
     'manifold-marketplace': ManifoldMarketplace;
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
@@ -1476,6 +1572,7 @@ declare namespace LocalJSX {
     'manifold-resource-list': ManifoldResourceList;
     'manifold-resource-plan': ManifoldResourcePlan;
     'manifold-resource-product': ManifoldResourceProduct;
+    'manifold-resource-rename': ManifoldResourceRename;
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;

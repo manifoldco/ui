@@ -1,0 +1,54 @@
+:host {
+  /* redefining theme variables here so they'll work properly */
+  --default-color: var(--manifold-grayscale-40);
+  --focus-color: var(--manifold-color-primary);
+
+  /* field */
+  --text-color: var(--manifold-input-text-color);
+  --background: var(--manifold-input-background);
+  --border: var(--manifold-input-border);
+  --shadow: var(--manifold-input-shadow);
+  --radius: var(--manifold-input-radius);
+
+  /* field-disabled */
+  --text-color-disabled: var(--manifold-input-text-color-disabled);
+  --background-disabled: var(--manifold-input-background-disabled);
+  --border-disabled: var(--manifold-input-border-disabled);
+
+  /* field:focus */
+  --background-focus: var(--background);
+  --border-focus: var(--manifold-border-focus);
+  --shadow-focus: var(--shadow);
+}
+
+input {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 0.5em 3.5em 0.5em 1em;
+  color: var(--text-color);
+  font: inherit;
+  line-height: 1.5em;
+  background-color: var(--background);
+  border: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  appearance: none;
+}
+
+input[disabled] {
+  color: var(--text-color-disabled);
+  background-color: var(--background-disabled);
+  border: var(--border-disabled);
+}
+
+input:focus {
+  background-color: var(--background-focus);
+  background-image: linear-gradient(45deg, transparent 50%, var(--focus-color) 50%),
+  linear-gradient(135deg, var(--focus-color) 50%, transparent 50%),
+  linear-gradient(to right, var(--focus-color), var(--focus-color));
+  border: var(--border-focus);
+  outline: 0;
+  box-shadow: var(--shadow-focus);
+}

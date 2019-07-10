@@ -28,6 +28,7 @@ export namespace Gateway {
   }
   export interface ResourceBodyRequired {
     label: string;
+    name: string;
     owner: Owner;
   }
   export interface ResourceBodyReadSource
