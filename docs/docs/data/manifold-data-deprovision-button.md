@@ -7,7 +7,7 @@ example: |
   </manifold-data-provision-button>
 ---
 
-# 🔒 Derovision Button
+# 🔒 Deprovision Button
 
 An unstyled button for deprovisioning resources. 🔒 Requires authentication.
 
@@ -41,9 +41,9 @@ document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => co
 
 | Name                               |                       Returns                        | Description                                                                                                                 |
 | :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-provisionButton-click`   |                    `resourceName`                   | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-provisionButton-success` |     `message`, `resourceId`, `resourceName`         | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
-| `manifold-provisionButton-error`   |     `message`, `resourceId`, `resourceName`         | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-deprovisionButton-click`   |                    `resourceName`                   | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-deprovisionButton-success` |     `message`, `resourceId`, `resourceName`         | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
+| `manifold-deprovisionButton-error`   |     `message`, `resourceId`, `resourceName`         | Erred provision, along with information on what went wrong.                                                                 |
 
 ## Styling
 
