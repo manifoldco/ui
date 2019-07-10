@@ -1,42 +1,46 @@
 import { h, Component, Prop } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
 
-import { ResourceState } from '../../data/resource';
+const AVAILABLE = 'available';
+const OFFLINE = 'offline';
+const PROVISIONING = 'provision';
+const DEGRADED = 'degraded';
 
-const AVAILABLE = 'AVAILABLE';
-const OFFLINE = 'OFFLINE';
-
-const message = {
+const message: {[s: string]: string} = {
   [AVAILABLE]: 'Available',
   [OFFLINE]: 'Offline',
+  [PROVISIONING]: 'Provision',
+  [DEGRADED]: 'Degraded',
 };
 
 @Component({
   tag: 'manifold-resource-status-view',
-  styleUrl: 'style.css',
+  styleUrl: 'manifold-resource-status-view.css',
   shadow: true,
 })
 export class ManifoldResourceStatusView {
-  @Prop() resourceState: ResourceState = { loading: false, data: undefined };
+  @Prop() loading?: boolean = false;
+  @Prop() resourceState?: string = OFFLINE;
+  @Prop() size?: 'small' | 'medium' = 'medium';
 
   status(resourceState = this.resourceState) {
-    if (resourceState.data) {
-      return AVAILABLE;
+    if (resourceState && message[resourceState]) {
+      return resourceState;
     }
     return OFFLINE;
   }
 
   statusMessage(resourceState = this.resourceState) {
-    if (resourceState.data) {
-      return message[AVAILABLE];
+    if (resourceState && message[resourceState]) {
+      return message[resourceState];
     }
     return message[OFFLINE];
   }
 
   render() {
-    if (this.resourceState.loading) {
+    if (this.loading) {
       return (
-        <div class="loading" data-status={this.status(this.resourceState)}>
+        <div class="loading" data-size={this.size} data-status={this.status(this.resourceState)}>
           <manifold-icon icon={refresh_cw} />
           Loading
         </div>
@@ -44,7 +48,7 @@ export class ManifoldResourceStatusView {
     }
 
     return (
-      <div class="status" data-status={this.status(this.resourceState)}>
+      <div class="status" data-size={this.size}  data-status={this.status(this.resourceState)}>
         <div class="inner">{this.statusMessage(this.resourceState)}</div>
       </div>
     );

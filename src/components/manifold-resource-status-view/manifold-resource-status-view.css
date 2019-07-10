@@ -3,43 +3,6 @@
   font-family: var(--manifold-font-family);
 }
 
-.status {
-  --status-color: var(--manifold-color-success);
-
-  &[data-status='PROVISIONING'] {
-    --status-color: var(--manifold-color-info);
-  }
-
-  &[data-status='DEGRADED'] {
-    --status-color: var(--manifold-color-warn);
-  }
-
-  &[data-status='OFFLINE'] {
-    --status-color: var(--manifold-color-error);
-  }
-
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  height: 2.75rem;
-  padding-right: 1.5rem;
-  padding-left: 1rem;
-  overflow: hidden;
-  color: var(--manifold-grayscale-60);
-  border-radius: var(--manifold-tag-radius, var(--manifold-radius));
-
-  &::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: var(--status-color);
-    opacity: 0.1;
-    content: '';
-  }
-}
-
 .inner {
   position: relative;
   z-index: 2;
@@ -53,6 +16,55 @@
     margin-right: 0.5rem;
     background: var(--status-color);
     border-radius: 50%;
+    content: '';
+  }
+}
+
+.status {
+  --status-color: var(--manifold-color-success);
+
+  &[data-status='provision'] {
+    --status-color: var(--manifold-color-info);
+  }
+
+  &[data-status='degraded'] {
+    --status-color: var(--manifold-color-warn);
+  }
+
+  &[data-status='offline'] {
+    --status-color: var(--manifold-color-error);
+  }
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 2.75rem;
+  padding-right: 1.5rem;
+  padding-left: 1rem;
+  overflow: hidden;
+  color: var(--manifold-grayscale-60);
+  border-radius: var(--manifold-tag-radius, var(--manifold-radius));
+
+  &[data-size='small'] {
+    height: 1.325rem;
+    padding-right: 0.75rem;
+    padding-left: 0.5rem;
+    font-size: var(--manifold-font-d1);
+
+    & .inner::before {
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: var(--status-color);
+    opacity: 0.1;
     content: '';
   }
 }
@@ -81,5 +93,17 @@
     animation-duration: 1s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+  }
+
+  &[data-size='small'] {
+    height: 1.325rem;
+    padding-right: 0.75rem;
+    padding-left: 0.5rem;
+    font-size: var(--manifold-font-d1);
+
+    & manifold-icon {
+        width: 0.5rem;
+        height: 0.5rem;
+    }
   }
 }

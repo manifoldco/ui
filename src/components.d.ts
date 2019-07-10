@@ -468,9 +468,13 @@ export namespace Components {
   interface ManifoldResourceProduct {
     'asCard'?: boolean;
   }
-  interface ManifoldResourceStatus {}
+  interface ManifoldResourceStatus {
+    'size'?: 'small' | 'medium';
+  }
   interface ManifoldResourceStatusView {
-    'resourceState': ResourceState;
+    'loading'?: boolean;
+    'resourceState'?: string;
+    'size'?: 'small' | 'medium';
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
@@ -1361,9 +1365,13 @@ declare namespace LocalJSX {
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
     'asCard'?: boolean;
   }
-  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {}
+  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
+    'size'?: 'small' | 'medium';
+  }
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
-    'resourceState'?: ResourceState;
+    'loading'?: boolean;
+    'resourceState'?: string;
+    'size'?: 'small' | 'medium';
   }
   interface ManifoldSelect extends JSXBase.HTMLAttributes<HTMLManifoldSelectElement> {
     'defaultValue'?: string;
