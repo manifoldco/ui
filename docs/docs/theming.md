@@ -291,6 +291,7 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 | <span class="tag not-implemented" /> `--heading-color`                 | `var(--manifold-text-color-secondary)` | Category heading text color             |
 | <span class="tag not-implemented" /> `--heading-font-size`             | `--`                                   | Category heading font size              |
 | <span class="tag not-implemented" /> `--heading-font-weight`           | `inherit`                              | Category heading font weight            |
+| `--heading-background`                                                 | `rgba(255,255,255,1)`                  | Category heading background style       |
 |                                                                        |                                        |                                         |
 | <span class="tag not-implemented" /> `--grid-gap`                      | `1rem`                                 | Gap between product/service cards       |
 
