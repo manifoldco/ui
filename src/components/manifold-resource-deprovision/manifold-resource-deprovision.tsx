@@ -8,7 +8,7 @@ export class ManifoldResourceDeprovision {
     return (
       <ResourceTunnel.Consumer>
         {(state: ResourceState) => state.loading && state.data ? (
-          <manifold-data-deprovision-button resourceId={state.data.id} resourceLabel={state.data.label}>
+          <manifold-data-deprovision-button resourceId={state.data.id} resourceName={state.data.label}>
             <manifold-forward-slot>
               <slot />
             </manifold-forward-slot>

@@ -28,22 +28,22 @@ Set the CTA text by adding anything between the opening and closing tags:
 For validation, error, and success messages, it will emit custom events.
 
 ```js
-document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
-  console.info(`⌛ Derovisioning ${resourceLabel} …`)
+document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceName } }) =>
+  console.info(`⌛ Derovisioning ${resourceName} …`)
 );
 document.addEventListener(
   'manifold-deprovisionButton-success',
-  ({ details: { resourceLabel } }) =>alert(`${resourceLabel} deprovisioned successfully!`)
+  ({ details: { resourceName } }) =>alert(`${resourceName} deprovisioned successfully!`)
 );
 document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceName: "my-resource"}
 ```
 
 | Name                               |                       Returns                        | Description                                                                                                                 |
 | :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-provisionButton-click`   |                    `resourceLabel`                   | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-provisionButton-success` |     `message`, `resourceId`, `resourceLabel`         | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
-| `manifold-provisionButton-error`   |     `message`, `resourceId`, `resourceLabel`         | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-provisionButton-click`   |                    `resourceName`                   | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-provisionButton-success` |     `message`, `resourceId`, `resourceName`         | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
+| `manifold-provisionButton-error`   |     `message`, `resourceId`, `resourceName`         | Erred provision, along with information on what went wrong.                                                                 |
 
 ## Styling
 

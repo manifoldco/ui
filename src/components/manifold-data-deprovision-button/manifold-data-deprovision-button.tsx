@@ -9,13 +9,13 @@ import { Marketplace } from '../../types/marketplace';
 
 interface SuccessMessage {
   message: string;
-  resourceLabel: string;
+  resourceName: string;
   resourceId: string;
 }
 
 interface ErrorMessage {
   message: string;
-  resourceLabel: string;
+  resourceName: string;
   resourceId: string;
 }
 
@@ -27,7 +27,7 @@ export class ManifoldDataDeprovisionButton {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** The label of the resource to deprovision */
-  @Prop() resourceLabel?: string;
+  @Prop() resourceName?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
   @Event({ eventName: 'manifold-deprovisionButton-click', bubbles: true })
@@ -36,15 +36,15 @@ export class ManifoldDataDeprovisionButton {
   @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
   successEvent: EventEmitter;
 
-  @Watch('resourceLabel') labelChange(newLabel: string) {
+  @Watch('resourceName') nameChange(newName: string) {
     if (!this.resourceId) {
-      this.fetchResourceId(newLabel);
+      this.fetchResourceId(newName);
     }
   }
 
   componentWillLoad() {
-    if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel);
+    if (this.resourceName && !this.resourceId) {
+      this.fetchResourceId(this.resourceName);
     }
   }
 
@@ -57,7 +57,7 @@ export class ManifoldDataDeprovisionButton {
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
     this.clickEvent.emit({
       resourceId: this.resourceId,
-      resourceLabel: this.resourceLabel || '',
+      resourceName: this.resourceName || '',
     });
 
     const response = await fetch(
@@ -70,8 +70,8 @@ export class ManifoldDataDeprovisionButton {
     // If successful, this will return 200 and stop here
     if (response.status >= 200 && response.status < 300) {
       const success: SuccessMessage = {
-        message: `${this.resourceLabel} successfully deprovisioned`,
-        resourceLabel: this.resourceLabel || '',
+        message: `${this.resourceName} successfully deprovisioned`,
+        resourceName: this.resourceName || '',
         resourceId: this.resourceId,
       };
       this.successEvent.emit(success);
@@ -82,22 +82,22 @@ export class ManifoldDataDeprovisionButton {
       const message = Array.isArray(body) ? body[0].message : body.message;
       const error: ErrorMessage = {
         message,
-        resourceLabel: this.resourceLabel || '',
+        resourceName: this.resourceName || '',
         resourceId: this.resourceId,
       };
       this.errorEvent.emit(error);
     }
   }
 
-  async fetchResourceId(resourcelabel: string) {
+  async fetchResourceId(resourceName: string) {
     const resourceResp = await fetch(
-      `${this.connection.marketplace}/resources/?me&label=${resourcelabel}`,
+      `${this.connection.marketplace}/resources/?me&label=${resourceName}`,
       withAuth(this.authToken)
     );
     const resources: Marketplace.Resource[] = await resourceResp.json();
 
     if (!Array.isArray(resources) || !resources.length) {
-      console.error(`${resourcelabel} product not found`);
+      console.error(`${resourceName} product not found`);
       return;
     }
 

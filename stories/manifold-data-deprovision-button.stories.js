@@ -6,7 +6,7 @@ storiesOf('Provision Button [Data]', module)
   .add(
     'default',
     () => `
-      <manifold-data-provision-button resource-label="my-resource">
+      <manifold-data-provision-button resource-name="my-resource">
         Deprovision resource
       </manifold-data-provision-button>
     `
