@@ -10,6 +10,10 @@
   --link-color-active: var(--link-color-hover);
   --heading-color: var(--manifold-grayscale-60);
   --heading-border: 1px solid var(--manifold-grayscale-10);
+  --scrolling-category-background: var(
+    --manifold-scrolling-background,
+    var(--manifold-grayscale-base-inverted)
+  );
 
   /* headings */
   --font-family-heading: var(--manifold-font-family-heading);
@@ -89,6 +93,7 @@
   display: flex;
   flex-direction: column;
   margin-left: auto;
+  background-color: var(--scrolling-category-background);
 }
 
 .category-heading {
