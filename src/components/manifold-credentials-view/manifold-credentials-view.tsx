@@ -1,21 +1,24 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
+
 import { Marketplace } from '../../types/marketplace';
-import { ResourceState } from '../../data/resource';
 
 @Component({
   tag: 'manifold-resource-credentials-view',
-  styleUrl: 'manifold-resource-credentials.css',
+  styleUrl: 'manifold-credentials-view.css',
   shadow: true,
 })
 export class ManifoldResourceCredentials {
   @Prop() credentials?: Marketplace.Credential[];
-  @Prop() resourceState: ResourceState = { data: undefined, loading: false };
+  @Prop() resourceName: string = '';
+  @Prop() loading: boolean = false;
   @Event() credentialsRequested: EventEmitter;
 
   get lines() {
     // Returns # of lines for creds.
-    if (!this.credentials) return 0;
+    if (!this.credentials) {
+      return 0;
+    }
     const linesPerResource = 3;
     return this.credentials.reduce(
       (lines, creds) => lines + linesPerResource + Object.keys(creds.body.values).length,
@@ -23,16 +26,12 @@ export class ManifoldResourceCredentials {
     );
   }
 
-  get label() {
-    return this.resourceState.data && this.resourceState.data.label;
-  }
-
   hideCredentials = () => {
     this.credentials = undefined;
   };
 
   requestCredentials = () => {
-    this.credentialsRequested.emit(this.resourceState.data);
+    this.credentialsRequested.emit();
   };
 
   render() {
@@ -56,7 +55,7 @@ export class ManifoldResourceCredentials {
             <pre class="env">
               <code>
                 {this.credentials.map(({ body }) => [
-                  <span class="comment"># {this.label}</span>,
+                  <span class="comment"># {this.resourceName}</span>,
                   '\n\n',
                   Object.entries(body.values).map(([key, value]) => [
                     <span class="env-key">{key}</span>,
@@ -70,7 +69,7 @@ export class ManifoldResourceCredentials {
           </div>
         )}
         <div class="hidden">
-          {this.resourceState.loading ? (
+          {this.loading ? (
             <manifold-button color="black" disabled>
               <span class="spin">
                 <manifold-icon icon={loader} />
