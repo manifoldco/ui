@@ -1,9 +1,16 @@
-import resource from '../../spec/mock/cms-stage/resource.json';
-import fromJSON from '../../spec/mock/fromJSON';
-
 export const available = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = { loading: false, data: fromJSON(resource) };
+  status.resourceState = 'available';
+
+  document.body.appendChild(status);
+
+  return status.componentOnReady();
+};
+
+export const availableSmall = () => {
+  const status = document.createElement('manifold-resource-status-view');
+  status.resourceState = 'available';
+  status.size = 'small';
 
   document.body.appendChild(status);
 
@@ -12,7 +19,6 @@ export const available = () => {
 
 export const offline = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = { loading: false, data: undefined };
 
   document.body.appendChild(status);
 
@@ -21,7 +27,7 @@ export const offline = () => {
 
 export const resourceLoading = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = { loading: true, data: undefined };
+  status.loading = true;
 
   document.body.appendChild(status);
 

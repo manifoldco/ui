@@ -1,12 +1,15 @@
 import { storiesOf } from '@storybook/html';
 import markdown from '../docs/docs/components/manifold-resource-status.md';
 
-const view = `
-  <manifold-resource-container resource-name="my-resource">
-    <manifold-resource-status></manifold-resource-status>
-  </manifold-resource-container>
-`;
-
 storiesOf('Resource Status 🔒', module)
   .addParameters({ readme: { sidebar: markdown } })
-  .add('default', () => view);
+  .add('default', () => `
+    <manifold-mock-resource>
+      <manifold-resource-status></manifold-resource-status>
+    </manifold-mock-resource>
+  `)
+  .add('small tag', () => `
+    <manifold-mock-resource>
+      <manifold-resource-status size="small"></manifold-resource-status>
+    </manifold-mock-resource>
+  `);
