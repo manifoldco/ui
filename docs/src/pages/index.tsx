@@ -2,11 +2,13 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { graphql } from 'gatsby';
 import { defineCustomElements } from '@manifoldco/ui/dist/loader';
+import { defineCustomElements as defineShadowcatCustomElement } from '@manifoldco/shadowcat/dist/loader';
 import Page from '../components/Page';
 import theme from '../lib/theme';
 
 if (typeof window !== 'undefined') {
   defineCustomElements(window);
+  defineShadowcatCustomElement(window);
 }
 
 interface HomePageProps {
@@ -32,7 +34,10 @@ function HomePage({ data }: HomePageProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Page links={links} currentPage={currentPage} />
+      <>
+        <manifold-oauth oauth-url="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web" />
+        <Page links={links} currentPage={currentPage} />
+      </>
     </ThemeProvider>
   );
 }

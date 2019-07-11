@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@manifoldco/icons": "0.0.3",
+    "@manifoldco/shadowcat": "0.0.2",
     "@manifoldco/ui": "file:../",
     "@reach/router": "^1.2.1",
     "gatsby": "^2.9.0",
