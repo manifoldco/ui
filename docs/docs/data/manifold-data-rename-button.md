@@ -7,7 +7,7 @@ example: |
   </manifold-data-provision-button>
 ---
 
-# 🔒 Derovision Button
+# 🔒 Rename Button
 
 An unstyled button for renaming resources. 🔒 Requires authentication.
 
