@@ -7,6 +7,7 @@ const ResourceMock: Gateway.Resource = {
   annotations: { 'manifold.co/projects': ['test-project'] },
   created_at: '2019-04-25T22:11:06.691Z',
   label: 'logdna',
+  name: 'logdna',
   source: 'catalog',
   updated_at: '2019-04-25T22:11:06.691Z',
   type: 'resource',

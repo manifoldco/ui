@@ -10,6 +10,7 @@ export class ManifoldButton {
   @Prop() disabled?: boolean = false;
   @Prop() href?: string;
   @Prop() size?: 'medium' | 'small' = 'medium';
+  @Prop() type?: 'button' | 'submit' = 'button';
   @Prop() stencilClickEvent?: (e: MouseEvent) => void;
   @Event({ eventName: 'manifold-button-click', bubbles: true }) buttonClick: EventEmitter;
 
@@ -29,7 +30,7 @@ export class ManifoldButton {
         data-size={this.size}
         disabled={this.disabled}
         onClick={this.onClick}
-        type="button"
+        type={this.type}
       >
         <slot />
       </button>
