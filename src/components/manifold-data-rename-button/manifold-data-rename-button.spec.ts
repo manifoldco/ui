@@ -8,46 +8,46 @@ import { ManifoldDataRenameButton } from './manifold-data-rename-button';
 
 describe('<manifold-data-rename-button>', () => {
   it('fetches the resource id on load if not set', () => {
-    const resourceName = 'test-resource';
+    const resourceLabel = 'test-resource';
 
     const provisionButton = new ManifoldDataRenameButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = resourceName;
+    provisionButton.resourceLabel = resourceLabel;
     provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
+    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('does not fetch the resource id on load if set', () => {
-    const resourceName = 'test-resource';
+    const resourceLabel = 'test-resource';
 
     const provisionButton = new ManifoldDataRenameButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = resourceName;
-    provisionButton.resourceId = resourceName;
+    provisionButton.resourceLabel = resourceLabel;
+    provisionButton.resourceId = resourceLabel;
     provisionButton.componentWillLoad();
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 
   it('fetches resource id on change if not set', () => {
-    const resourceName = 'new-resource';
+    const resourceLabel = 'new-resource';
 
     const provisionButton = new ManifoldDataRenameButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = 'old-resource';
+    provisionButton.resourceLabel = 'old-resource';
 
-    provisionButton.nameChange(resourceName);
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
+    provisionButton.labelChange(resourceLabel);
+    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('does not resource id on change if set', () => {
-    const resourceName = 'new-resource';
+    const resourceLabel = 'new-resource';
 
     const provisionButton = new ManifoldDataRenameButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = 'old-resource';
+    provisionButton.resourceLabel = 'old-resource';
     provisionButton.resourceId = '1234';
 
-    provisionButton.nameChange(resourceName);
+    provisionButton.labelChange(resourceLabel);
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 
@@ -57,9 +57,9 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     it('will fetch the resource id', async () => {
-      const resourceName = 'new-resource';
+      const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`, [
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
         Resource,
       ]);
 
@@ -67,13 +67,13 @@ describe('<manifold-data-rename-button>', () => {
         components: [ManifoldDataRenameButton],
         html: `
           <manifold-data-rename-button
-            resource-name="${resourceName}"
+            resource-label="${resourceLabel}"
           >Rename</manifold-data-rename-button>
         `,
       });
 
       expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`)
+        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
       const root = page.rootInstance as ManifoldDataRenameButton;
@@ -81,21 +81,21 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     it('will do nothing on a fetch error', async () => {
-      const resourceName = 'new-resource';
+      const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceName}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataRenameButton],
         html: `
           <manifold-data-rename-button
-            resource-name="${resourceName}"
+            resource-label="${resourceLabel}"
           >Rename</manifold-data-rename-button>
         `,
       });
 
       expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`)
+        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
       const root = page.rootInstance as ManifoldDataRenameButton;
@@ -109,18 +109,18 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     beforeEach(() => {
-      fetchMock.mock(/.*\/resources\/.*/, [Resource]);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${Resource.body.label}`, [Resource]);
     });
 
     it('will trigger a dom event on successful rename', async () => {
-      fetchMock.mock(`${connections.prod.marketplace}/resource/${Resource.id}`, Resource);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/${Resource.id}`, Resource);
 
       const page = await newSpecPage({
         components: [ManifoldDataRenameButton],
         html: `
           <manifold-data-rename-button
-            resource-name="test"
-            new-name="test2"
+            resource-label="${Resource.body.label}"
+            new-label="test2"
           >Rename</manifold-data-rename-button>
         `,
       });
@@ -130,17 +130,17 @@ describe('<manifold-data-rename-button>', () => {
 
       await instance.rename();
 
-      expect(fetchMock.called(`${connections.prod.marketplace}/resource/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(true);
       expect(instance.successEvent.emit).toHaveBeenCalledWith({
-        message: `test successfully renamed`,
-        resourceName: 'test',
-        newName: 'test2',
+        message: `${Resource.body.label} successfully renamed`,
+        resourceLabel: Resource.body.label,
+        newLabel: 'test2',
         resourceId: Resource.id,
       });
     });
 
     it('will trigger a dom event on failed rename', async () => {
-      fetchMock.mock(`${connections.prod.marketplace}/resource/${Resource.id}`, {
+      fetchMock.mock(`${connections.prod.marketplace}/resources/${Resource.id}`, {
         status: 500,
         body: {
           message: 'ohnoes',
@@ -151,8 +151,8 @@ describe('<manifold-data-rename-button>', () => {
         components: [ManifoldDataRenameButton],
         html: `
           <manifold-data-rename-button
-            resource-name="test"
-            new-name="test2"
+            resource-label="${Resource.body.label}"
+            new-label="test2"
           >Provision</manifold-data-rename-button>
         `,
       });
@@ -162,11 +162,11 @@ describe('<manifold-data-rename-button>', () => {
 
       await instance.rename();
 
-      expect(fetchMock.called(`${connections.prod.marketplace}/resource/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(true);
       expect(instance.errorEvent.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
-        resourceName: 'test',
-        newName: 'test2',
+        resourceLabel: Resource.body.label,
+        newLabel: 'test2',
         resourceId: Resource.id,
       });
     });

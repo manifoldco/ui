@@ -22,13 +22,13 @@ describe('<manifold-data-product-logo>', () => {
   });
 
   it('fetches resource on load', () => {
-    const resourceName = 'my-resource';
+    const resourceLabel = 'my-resource';
 
     const productLogo = new ManifoldDataProductLogo();
     productLogo.fetchResource = jest.fn();
-    productLogo.resourceName = resourceName;
+    productLogo.resourceLabel = resourceLabel;
     productLogo.componentWillLoad();
-    expect(productLogo.fetchResource).toHaveBeenCalledWith(resourceName);
+    expect(productLogo.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('fetches resource on change', () => {
@@ -36,7 +36,7 @@ describe('<manifold-data-product-logo>', () => {
 
     const productLogo = new ManifoldDataProductLogo();
     productLogo.fetchResource = jest.fn();
-    productLogo.resourceName = 'old-resource';
+    productLogo.resourceLabel = 'old-resource';
     productLogo.resourceChange(newResource);
     expect(productLogo.fetchResource).toHaveBeenCalledWith(newResource);
   });

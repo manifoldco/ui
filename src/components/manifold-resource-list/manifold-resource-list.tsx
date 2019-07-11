@@ -10,6 +10,7 @@ import { Connection, connections } from '../../utils/connections';
 interface FoundResource {
   id: string;
   label: string;
+  name: string;
   logo?: string;
   status: string;
 }
@@ -147,6 +148,7 @@ export class ManifoldResourceList {
           return {
             id: resource.id,
             label: resource.body.label,
+            name: resource.body.name,
             logo: product && product.body.logo_url,
             status: operation ? ManifoldResourceList.opStateToStatus(operation) : 'available',
           };
@@ -169,6 +171,7 @@ export class ManifoldResourceList {
         {this.resources.map(resource => (
           <manifold-resource-card-view
             label={resource.label}
+            name={resource.name}
             logo={resource.logo}
             resource-id={resource.id}
             resource-status={resource.status}

@@ -24,9 +24,9 @@ Creates an unstyled, unordered list with `<a>` tags.
 
 Navigating client-side happens via the `manifold-resourceList-click` custom event.
 
-| Name                          | Details                    | Data                         |
-| :---------------------------- | :------------------------- | :--------------------------- |
-| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName` |
+| Name                          | Details                    | Data                                          |
+| :---------------------------- | :------------------------- | :-------------------------------------------- |
+| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName`, `resourceLabel` |
 
 ## Link format
 

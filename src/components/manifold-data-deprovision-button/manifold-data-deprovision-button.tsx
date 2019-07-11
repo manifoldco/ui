@@ -9,17 +9,20 @@ import { Marketplace } from '../../types/marketplace';
 
 interface SuccessMessage {
   message: string;
-  resourceName: string;
+  resourceLabel: string;
   resourceId: string;
 }
 
 interface ErrorMessage {
   message: string;
-  resourceName: string;
+  resourceLabel: string;
   resourceId: string;
 }
 
-@Component({ tag: 'manifold-data-deprovision-button' })
+@Component({
+  tag: 'manifold-data-deprovision-button',
+  shadow: true,
+})
 export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -27,7 +30,7 @@ export class ManifoldDataDeprovisionButton {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** The label of the resource to deprovision */
-  @Prop() resourceName?: string;
+  @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
   @Event({ eventName: 'manifold-deprovisionButton-click', bubbles: true })
@@ -36,15 +39,15 @@ export class ManifoldDataDeprovisionButton {
   @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
   successEvent: EventEmitter;
 
-  @Watch('resourceName') nameChange(newName: string) {
+  @Watch('resourceLabel') labelChange(newLabel: string) {
     if (!this.resourceId) {
-      this.fetchResourceId(newName);
+      this.fetchResourceId(newLabel);
     }
   }
 
   componentWillLoad() {
-    if (this.resourceName && !this.resourceId) {
-      this.fetchResourceId(this.resourceName);
+    if (this.resourceLabel && !this.resourceId) {
+      this.fetchResourceId(this.resourceLabel);
     }
   }
 
@@ -57,7 +60,7 @@ export class ManifoldDataDeprovisionButton {
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
     this.clickEvent.emit({
       resourceId: this.resourceId,
-      resourceName: this.resourceName || '',
+      resourceLabel: this.resourceLabel || '',
     });
 
     const response = await fetch(
@@ -70,8 +73,8 @@ export class ManifoldDataDeprovisionButton {
     // If successful, this will return 200 and stop here
     if (response.status >= 200 && response.status < 300) {
       const success: SuccessMessage = {
-        message: `${this.resourceName} successfully deprovisioned`,
-        resourceName: this.resourceName || '',
+        message: `${this.resourceLabel} successfully deprovisioned`,
+        resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
       this.successEvent.emit(success);
@@ -82,22 +85,22 @@ export class ManifoldDataDeprovisionButton {
       const message = Array.isArray(body) ? body[0].message : body.message;
       const error: ErrorMessage = {
         message,
-        resourceName: this.resourceName || '',
+        resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
       this.errorEvent.emit(error);
     }
   }
 
-  async fetchResourceId(resourceName: string) {
+  async fetchResourceId(resourceLabel: string) {
     const resourceResp = await fetch(
-      `${this.connection.marketplace}/resources/?me&label=${resourceName}`,
+      `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
       withAuth(this.authToken)
     );
     const resources: Marketplace.Resource[] = await resourceResp.json();
 
     if (!Array.isArray(resources) || !resources.length) {
-      console.error(`${resourceName} product not found`);
+      console.error(`${resourceLabel} product not found`);
       return;
     }
 

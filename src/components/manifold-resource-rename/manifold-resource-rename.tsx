@@ -1,24 +1,30 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
-import ResourceTunnel, { ResourceState } from '../../data/resource';
+import ResourceTunnel from '../../data/resource';
+import { Gateway } from '../../types/gateway';
 
-@Component({ tag: 'manifold-resource-rename' })
+@Component({
+  tag: 'manifold-resource-rename',
+  shadow: true,
+})
 export class ManifoldResourceRename {
+  @Prop() data?: Gateway.Resource;
+  @Prop() loading: boolean = true;
+
   render() {
     return (
-      <ResourceTunnel.Consumer>
-        {(state: ResourceState) => (
-          <manifold-data-rename-button
-            resourceId={state.data && state.data.id}
-            resourceName={state.data && state.data.label}
-            loading={state.loading}
-          >
-            <manifold-forward-slot>
-              <slot />
-            </manifold-forward-slot>
-          </manifold-data-rename-button>
-        )}
-      </ResourceTunnel.Consumer>
+      <manifold-data-rename-button
+        resourceId={this.data && this.data.id}
+        resourceLabel={this.data && this.data.label}
+        loading={this.loading}
+      >
+        <manifold-forward-slot>
+          <slot />
+        </manifold-forward-slot>
+      </manifold-data-rename-button>
     );
   }
 }
+
+ResourceTunnel.injectProps(ManifoldResourceRename, ['data', 'loading']);
+

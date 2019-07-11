@@ -16,7 +16,7 @@ An unstyled button for deprovisioning resources. 🔒 Requires authentication.
 Set the CTA text by adding anything between the opening and closing tags:
 
 ```html
-<manifold-data-deprovision-button>
+<manifold-data-deprovision-button resource-label="my-resource">
   Deprovision My Resource
 </manifold-data-provision-button>
 ```
@@ -28,22 +28,22 @@ Set the CTA text by adding anything between the opening and closing tags:
 For validation, error, and success messages, it will emit custom events.
 
 ```js
-document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceName } }) =>
-  console.info(`⌛ Derovisioning ${resourceName} …`)
+document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
+  console.info(`⌛ Derovisioning ${resourceLabel} …`)
 );
 document.addEventListener(
   'manifold-deprovisionButton-success',
-  ({ details: { resourceName } }) =>alert(`${resourceName} deprovisioned successfully!`)
+  ({ details: { resourceLabel } }) =>alert(`${resourceLabel} deprovisioned successfully!`)
 );
 document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceName: "my-resource"}
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}
 ```
 
 | Name                               |                       Returns                        | Description                                                                                                                 |
 | :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-deprovisionButton-click`   |                    `resourceName`                   | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-deprovisionButton-success` |     `message`, `resourceId`, `resourceName`         | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
-| `manifold-deprovisionButton-error`   |     `message`, `resourceId`, `resourceName`         | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-deprovisionButton-click`   |                    `resourceLabel`                 | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-deprovisionButton-success` |     `message`, `resourceId`, `resourceLabel`       | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
+| `manifold-deprovisionButton-error`   |     `message`, `resourceId`, `resourceLabel`       | Erred provision, along with information on what went wrong.                                                                 |
 
 ## Styling
 

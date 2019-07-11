@@ -1,12 +1,12 @@
 ---
-title: '🔒 Resource Status'
+title: 'Resource Status'
 path: '/components/resource-status'
 example: '<manifold-mock-resource><manifold-resource-status></manifold-resource-status></manifold-mock-resource>'
 ---
 
-# 🔒 Resource Status
+# Resource Status
 
-Displays the current availability of the resource. 🔒 Requires authentication.
+Displays an availability tag for a resource. Can be used standalone without any data fetching.
 
 ```html
   <manifold-resource-status-view state="available"></manifold-resource-product>

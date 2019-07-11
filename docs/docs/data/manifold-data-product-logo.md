@@ -29,8 +29,8 @@ can override this by specifying one of your own:
 
 ## Resource Name
 
-You can look up a logo by resource name by passing `resource-name`:
+You can look up a logo by resource name by passing `resource-label`:
 
 ```html
-<manifold-data-product-logo resource-name="my-resource" />
+<manifold-data-product-logo resource-label="my-resource" />
 ```

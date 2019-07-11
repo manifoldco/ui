@@ -7,6 +7,7 @@ import { Connection, connections } from '../../utils/connections';
 interface EventDetail {
   ownerId?: string;
   resourceId: string;
+  resourceLabel: string;
   resourceName: string;
 }
 
@@ -60,7 +61,8 @@ export class ManifoldDataResourceList {
       e.preventDefault();
       const detail: EventDetail = {
         resourceId: resource.id,
-        resourceName: resource.body.label,
+        resourceLabel: resource.body.label,
+        resourceName: resource.body.name,
         ownerId: resource.body.owner_id,
       };
       this.clickEvent.emit(detail);
@@ -68,7 +70,9 @@ export class ManifoldDataResourceList {
   }
 
   formatLink(resource: Marketplace.Resource) {
-    if (!this.resourceLinkFormat) return undefined;
+    if (!this.resourceLinkFormat) {
+      return undefined;
+    }
     return this.resourceLinkFormat.replace(/:resource/gi, resource.body.label);
   }
 
@@ -89,7 +93,7 @@ export class ManifoldDataResourceList {
         {this.resources.map(resource => (
           <li>
             <a href={this.formatLink(resource)} onClick={e => this.handleClick(resource, e)}>
-              {resource.body.label}
+              {resource.body.name}
             </a>
           </li>
         ))}

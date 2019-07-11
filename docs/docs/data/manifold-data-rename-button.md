@@ -28,25 +28,25 @@ Set the CTA text by adding anything between the opening and closing tags:
 For validation, error, and success messages, it will emit custom events.
 
 ```js
-document.addEventListener('manifold-renameButton-click', ({ detail: { resourceName, newName } }) =>
-  console.info(`⌛ Renaming ${resourceName} to ${newName} …`)
+document.addEventListener('manifold-renameButton-click', ({ detail: { resourceLabel, newLabel } }) =>
+  console.info(`⌛ Renaming ${resourceLabel} to ${newLabel} …`)
 );
 document.addEventListener(
   'manifold-renameButton-success',
-  ({ details: { resourceName, newName } }) =>alert(`${resourceName} renamed to ${newName} successfully!`)
+  ({ details: { resourceLabel, newLabel } }) =>alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
 );
 document.addEventListener('manifold-renameButton-error', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceName: "my-resource", newName: "new-name"}
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
 document.addEventListener('manifold-renameButton-invalid', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceName: "my-resource", newName: "new-name"}
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
 ```
 
-| Name                               |                       Returns                        | Description                                                                                                                 |
-| :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-renameButton-click`   |      `resourceId`, `resourceName`, `newName`         | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-renameButton-success` |  `message`, `resourceId`, `resourceName`, `newName`  | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
-| `manifold-renameButton-error`   |  `message`, `resourceId`, `resourceName`, `newName`  | Erred rename, along with information on what went wrong.                                                                    |
-| `manifold-renameButton-error`   |  `message`, `resourceId`, `resourceName`, `newName`  | Invalid renaming, along with information on what went wrong.                                                                |
+| Name                            |                       Returns                            | Description                                                                                                                 |
+| :-------------------------------| :------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-renameButton-click`   |       `resourceId`, `resourceLabel`, `newLabel`          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-renameButton-success` |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
+| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Erred rename, along with information on what went wrong.                                                                    |
+| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Invalid renaming, along with information on what went wrong.                                                                |
 
 ## Styling
 
