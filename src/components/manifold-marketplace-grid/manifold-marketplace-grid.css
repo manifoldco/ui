@@ -10,6 +10,7 @@
   --link-color-active: var(--link-color-hover);
   --heading-color: var(--manifold-grayscale-60);
   --heading-border: 1px solid var(--manifold-grayscale-10);
+  --heading-background: var(--manifold-grayscale-100i);
 
   /* headings */
   --font-family-heading: var(--manifold-font-family-heading);
@@ -109,13 +110,13 @@
   font-family: var(--font-family-heading);
   text-transform: capitalize;
   border-bottom: var(--heading-border);
+  background: var(--heading-background);
 
   @media (--viewport-s) {
     position: static;
     margin-bottom: 0;
     padding-bottom: 0;
     font-size: var(--manifold-font-u1);
-    background: transparent;
     border-bottom: none;
   }
 
