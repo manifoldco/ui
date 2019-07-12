@@ -1,12 +1,11 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
+import graphqlFetch from '../../utils/graphqlFetch';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
-
-const GRAPHQL_ENDPOINT = 'https://api.manifold.co/graphql';
 
 const query = gql`
   query PRODUCT_LOGO($productLabel: String!) {
@@ -45,17 +44,8 @@ export class ManifoldDataProductLogo {
 
   fetchProduct = async (productLabel: string) => {
     this.product = undefined;
-    const response = await fetch(
-      GRAPHQL_ENDPOINT,
-      withAuth(this.authToken, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query, variables: { productLabel } }),
-      })
-    );
-    const { data, error } = await response.json();
+    const variables = { productLabel };
+    const { data, error } = await graphqlFetch({ query, variables });
     if (error) {
       console.error(error);
     }
@@ -73,7 +63,13 @@ export class ManifoldDataProductLogo {
     const productId = resource.product && resource.product.id;
     const productResp = await fetch(`${catalog}/products/${productId}`, withAuth(this.authToken));
     const product: Catalog.Product = await productResp.json();
-    this.product = product;
+
+    // NOTE: Temporary util GraphQL supports resources
+    const newProduct = {
+      displayName: product.body.name,
+      logoUrl: product.body.logo_url,
+    };
+    this.product = newProduct;
   };
 
   render() {
