@@ -11,20 +11,20 @@ export class ManifoldCredentials {
   @Prop() connection: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
-  @Prop() resourceName: string = '';
+  @Prop() resourceLabel: string = '';
   @Prop({ mutable: true }) resourceId?: string = '';
   @State() loading?: boolean = false;
   @State() credentials?: Marketplace.Credential[];
 
-  @Watch('resourceName') nameChange(newName: string) {
+  @Watch('resourceLabel') labelChange(newLabel: string) {
     if (!this.resourceId) {
-      this.fetchResourceId(newName);
+      this.fetchResourceId(newLabel);
     }
   }
 
   componentWillLoad() {
-    if (this.resourceName && !this.resourceId) {
-      this.fetchResourceId(this.resourceName);
+    if (this.resourceLabel && !this.resourceId) {
+      this.fetchResourceId(this.resourceLabel);
     }
   }
 
@@ -43,15 +43,15 @@ export class ManifoldCredentials {
     this.loading = false;
   };
 
-  async fetchResourceId(resourceName: string) {
+  async fetchResourceId(resourceLabel: string) {
     const resourceResp = await fetch(
-      `${this.connection.marketplace}/resources/?me&label=${resourceName}`,
+      `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
       withAuth(this.authToken)
     );
     const resources: Marketplace.Resource[] = await resourceResp.json();
 
     if (!Array.isArray(resources) || !resources.length) {
-      console.error(`${resourceName} product not found`);
+      console.error(`${resourceLabel} product not found`);
       return;
     }
 
@@ -66,7 +66,7 @@ export class ManifoldCredentials {
     return (
       <manifold-resource-credentials-view
         loading={this.loading}
-        resourceName={this.resourceName}
+        resourceLabel={this.resourceLabel}
         credentials={this.credentials}
         onCredentialsRequested={this.credentialsRequested}
       />

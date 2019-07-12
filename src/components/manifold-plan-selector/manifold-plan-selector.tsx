@@ -17,7 +17,7 @@ export class ManifoldPlanSelector {
   /** Specify region order */
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
-  @Prop() resourceName?: string;
+  @Prop() resourceLabel?: string;
   @State() product?: Catalog.Product;
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
@@ -25,7 +25,7 @@ export class ManifoldPlanSelector {
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductByLabel(newProduct);
   }
-  @Watch('resourceName') resourceChange(newResource: string) {
+  @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
   }
   @Watch('regions') regionsChange(newRegions: string) {
@@ -35,8 +35,8 @@ export class ManifoldPlanSelector {
   componentWillLoad() {
     if (this.productLabel) {
       this.fetchProductByLabel(this.productLabel);
-    } else if (this.resourceName) {
-      this.fetchResource(this.resourceName);
+    } else if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
     }
   }
 
@@ -58,11 +58,11 @@ export class ManifoldPlanSelector {
     this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
   }
 
-  async fetchResource(resourceName: string) {
+  async fetchResource(resourceLabel: string) {
     this.resource = undefined;
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
+    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
     const resource: Gateway.Resource = await response.json();
     this.resource = resource;
     if (!resource.product) return;

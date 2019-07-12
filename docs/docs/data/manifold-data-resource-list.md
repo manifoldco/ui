@@ -12,6 +12,10 @@ example: |
   </manifold-data-resource-list>
 ---
 
+<manifold-toast alert-type="warning">
+  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
+</manifold-toast>
+
 # 🔒 Resource List
 
 Creates an unstyled, unordered list with `<a>` tags.
@@ -24,9 +28,9 @@ Creates an unstyled, unordered list with `<a>` tags.
 
 Navigating client-side happens via the `manifold-resourceList-click` custom event.
 
-| Name                          | Details                    | Data                         |
-| :---------------------------- | :------------------------- | :--------------------------- |
-| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName` |
+| Name                          | Details                    | Data                                          |
+| :---------------------------- | :------------------------- | :-------------------------------------------- |
+| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName`, `resourceLabel` |
 
 ## Link format
 

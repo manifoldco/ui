@@ -11,14 +11,14 @@ import { Catalog } from '../../types/catalog';
 
 interface SuccessMessage {
   createdAt: string;
-  resourceName: string;
+  resourceLabel: string;
   resourceId: string;
   message: string;
 }
 
 interface ErrorMessage {
   message: string;
-  resourceName: string;
+  resourceLabel: string;
 }
 
 @Component({ tag: 'manifold-data-provision-button' })
@@ -34,8 +34,8 @@ export class ManifoldDataProvisionButton {
   @Prop() planLabel?: string;
   /** Region to provision (complete name), omit for all region */
   @Prop() regionName?: string;
-  /** The name of the resource to provision */
-  @Prop() resourceName?: string;
+  /** The label of the resource to provision */
+  @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) ownerId?: string = '';
   @State() regionId?: string = globalRegion.id;
   @State() planId?: string = '';
@@ -68,32 +68,34 @@ export class ManifoldDataProvisionButton {
       console.error('Property “ownerId” is missing');
       return;
     }
-    if (!this.resourceName) {
-      console.error('Property “resourceName” is missing');
+    if (!this.resourceLabel) {
+      console.error('Property “resourceLabel” is missing');
       return;
     }
 
-    if (this.resourceName.length < 3) {
+    if (this.resourceLabel.length < 3) {
       this.invalidEvent.emit({
         message: 'Must be at least 3 characters.',
-        resourceName: this.resourceName,
+        resourceLabel: this.resourceLabel,
       });
       return;
     }
-    if (!this.validate(this.resourceName)) {
+    if (!this.validate(this.resourceLabel)) {
       this.invalidEvent.emit({
         message:
           'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-        resourceName: this.resourceName,
+        resourceLabel: this.resourceLabel,
       });
       return;
     }
 
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
-    this.clickEvent.emit({ resourceName: this.resourceName });
+    this.clickEvent.emit({
+      resourceLabel: this.resourceLabel,
+    });
 
     const req: Gateway.ResourceCreateRequest = {
-      label: this.resourceName,
+      label: this.resourceLabel,
       owner: {
         id: this.ownerId,
         type: 'user',
@@ -120,9 +122,9 @@ export class ManifoldDataProvisionButton {
     if (response.status >= 200 && response.status < 300) {
       const success: SuccessMessage = {
         createdAt: body.created_at,
-        message: `${this.resourceName} successfully provisioned`,
+        message: `${this.resourceLabel} successfully provisioned`,
         resourceId: body.id,
-        resourceName: body.label,
+        resourceLabel: body.label,
       };
       this.successEvent.emit(success);
     } else {
@@ -130,7 +132,7 @@ export class ManifoldDataProvisionButton {
       const message = Array.isArray(body) ? body[0].message : body.message;
       const error: ErrorMessage = {
         message,
-        resourceName: this.resourceName,
+        resourceLabel: this.resourceLabel,
       };
       this.errorEvent.emit(error);
     }

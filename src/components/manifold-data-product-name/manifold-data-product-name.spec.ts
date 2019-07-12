@@ -22,13 +22,13 @@ describe('<manifold-data-product-name>', () => {
   });
 
   it('fetches resource on load', () => {
-    const resourceName = 'my-resource';
+    const resourceLabel = 'my-resource';
 
     const productName = new ManifoldDataProductName();
     productName.fetchResource = jest.fn();
-    productName.resourceName = resourceName;
+    productName.resourceLabel = resourceLabel;
     productName.componentWillLoad();
-    expect(productName.fetchResource).toHaveBeenCalledWith(resourceName);
+    expect(productName.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('fetches resource on change', () => {
@@ -36,7 +36,7 @@ describe('<manifold-data-product-name>', () => {
 
     const productName = new ManifoldDataProductName();
     productName.fetchResource = jest.fn();
-    productName.resourceName = 'old-resource';
+    productName.resourceLabel = 'old-resource';
     productName.resourceChange(newResource);
     expect(productName.fetchResource).toHaveBeenCalledWith(newResource);
   });

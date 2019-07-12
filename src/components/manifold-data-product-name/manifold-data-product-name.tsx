@@ -15,18 +15,18 @@ export class ManifoldDataProductName {
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
-  @Prop() resourceName?: string;
+  @Prop() resourceLabel?: string;
   @State() productName?: string;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
   }
-  @Watch('resourceName') resourceChange(newResource: string) {
+  @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
   }
 
   componentWillLoad() {
     if (this.productLabel) this.fetchProduct(this.productLabel);
-    if (this.resourceName) this.fetchResource(this.resourceName);
+    if (this.resourceLabel) this.fetchResource(this.resourceLabel);
   }
 
   fetchProduct = async (productLabel: string) => {

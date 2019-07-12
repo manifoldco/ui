@@ -10,7 +10,7 @@ import { Marketplace } from '../../types/marketplace';
 })
 export class ManifoldResourceCredentials {
   @Prop() credentials?: Marketplace.Credential[];
-  @Prop() resourceName: string = '';
+  @Prop() resourceLabel: string = '';
   @Prop() loading: boolean = false;
   @Event() credentialsRequested: EventEmitter;
 
@@ -55,7 +55,7 @@ export class ManifoldResourceCredentials {
             <pre class="env">
               <code>
                 {this.credentials.map(({ body }) => [
-                  <span class="comment"># {this.resourceName}</span>,
+                  <span class="comment"># {this.resourceLabel}</span>,
                   '\n\n',
                   Object.entries(body.values).map(([key, value]) => [
                     <span class="env-key">{key}</span>,

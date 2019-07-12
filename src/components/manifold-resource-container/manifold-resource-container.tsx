@@ -12,24 +12,24 @@ export class ManifoldResourceContainer {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** Which resource does this belong to? */
-  @Prop() resourceName?: string;
+  @Prop() resourceLabel?: string;
   @State() resource?: Gateway.Resource;
   @State() loading: boolean = false;
 
-  @Watch('resourceName') resourceChange(newName: string) {
+  @Watch('resourceLabel') resourceChange(newName: string) {
     this.fetchResource(newName);
   }
 
   componentWillLoad() {
-    if (this.resourceName) {
-      this.fetchResource(this.resourceName);
+    if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
     }
   }
 
-  fetchResource = async (resourceName: string) => {
+  fetchResource = async (resourceLabel: string) => {
     this.loading = true;
     const { gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
+    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
     this.resource = await response.json();
     this.loading = false;
   };

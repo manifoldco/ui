@@ -6,6 +6,7 @@ describe('<manifold-resource-card>', () => {
   it('dispatches click event', () => {
     const serviceCard = new ManifoldResourceCardView();
     serviceCard.label = Resource.body.label;
+    serviceCard.name = Resource.body.name;
     serviceCard.resourceId = Resource.id;
     serviceCard.logo = Product.body.logo_url;
     serviceCard.resourceStatus = 'available';
@@ -16,6 +17,7 @@ describe('<manifold-resource-card>', () => {
     serviceCard.onClick(new Event('click'));
     expect(mock.emit).toHaveBeenCalledWith({
       resourceId: Resource.id,
+      resourceName: Resource.body.name,
       resourceLabel: Resource.body.label,
     });
   });

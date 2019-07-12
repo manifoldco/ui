@@ -9,7 +9,7 @@ export class ManifoldResourceCredentials {
       <ResourceTunnel.Consumer>
         {(state: ResourceState) => (
           <manifold-credentials
-            resourceName={state.data && state.data.label}
+            resourceLabel={state.data && state.data.label}
             resourceId={state.data && state.data.id}
           />
         )}

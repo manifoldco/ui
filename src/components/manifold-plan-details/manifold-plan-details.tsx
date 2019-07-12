@@ -22,6 +22,7 @@ interface EventDetail {
 })
 export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean = false;
+  @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Catalog.ExpandedPlan;
   @Prop() product?: Catalog.Product;
   @Prop() regions?: string[];
@@ -225,7 +226,12 @@ export class ManifoldPlanDetails {
       const { expanded_features, name: planName } = this.plan.body;
 
       return (
-        <section class="scroll" itemscope itemtype="https://schema.org/IndividualProduct">
+        <section
+          class="wrapper"
+          data-scroll-locked={this.scrollLocked}
+          itemscope
+          itemtype="https://schema.org/IndividualProduct"
+        >
           <div class="card">
             <header class="header">
               <div class="logo">
@@ -256,7 +262,7 @@ export class ManifoldPlanDetails {
     }
     // 💀
     return (
-      <section class="scroll">
+      <section class="wrapper" data-scroll-locked={this.scrollLocked}>
         <div class="card">
           <header class="header">
             <div class="logo">
