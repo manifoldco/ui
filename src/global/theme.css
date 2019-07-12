@@ -217,8 +217,11 @@
 
   /* Input */
   --manifold-input-background: var(--manifold-grayscale-100i);
+  --manifold-input-background-disabled: var(--manifold-grayscale-10);
   --manifold-input-text-color: var(--manifold-text-color);
+  --manifold-input-text-color-disabled: var(--manifold-text-color-secondary);
   --manifold-input-border: var(--manifold-border);
+  --manifold-input-border-disabled: var(--manifold-border);
   --manifold-input-radius: var(--manifold-radius);
   --manifold-input-shadow: none;
 }

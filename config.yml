@@ -4,8 +4,12 @@ update_configs:
       - match:
         dependency_name: '@types/jest' # Version-managed by Stencil
       - match:
+        dependency_name: '@types/puppeteer' # Version-managed by Stencil
+      - match:
         dependency_name: 'fs-extra' # For a Travis script; doesn’t matter
       - match:
         dependency_name: 'jest' # Version-managed by Stencil
       - match:
         dependency_name: 'jest-cli' # Version-managed by Stencil
+      - match:
+        dependency_name: 'puppeteer' # Version-managed by Stencil

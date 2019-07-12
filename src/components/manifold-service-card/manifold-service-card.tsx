@@ -9,40 +9,50 @@ interface EventDetail {
   productLabel?: string;
 }
 
-@Component({
-  tag: 'manifold-service-card',
-  styleUrl: 'manifold-service-card.css',
-  shadow: true,
-})
+@Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   @Prop() name?: string;
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   @Prop() description?: string;
-  @Prop() isFeatured?: boolean;
+  @Prop({ reflect: true }) isFeatured?: boolean;
   @Prop() label?: string;
   @Prop() productLinkFormat?: string;
   @Prop() logo?: string;
-  @Prop() preserveEvent: boolean = false;
+  @Prop() preserveEvent?: boolean = false;
   @Prop() productId?: string;
-  @Prop() skeleton: boolean = false;
+  @Prop() skeleton?: boolean = false;
   @State() isFree: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
+
   @Watch('skeleton') skeletonChange(skeleton: boolean) {
-    if (!skeleton && this.productId) this.fetchIsFree(this.productId);
+    if (!skeleton && this.productId) {
+      this.fetchIsFree(this.productId);
+    }
   }
   @Watch('productId') productChange(newProductId: string) {
-    if (this.skeleton !== true) this.fetchIsFree(newProductId);
+    if (!this.skeleton) {
+      this.fetchIsFree(newProductId);
+    }
   }
 
   get href() {
-    if (!this.productLinkFormat || !this.label) return '';
+    if (!this.productLinkFormat || !this.label) {
+      return '';
+    }
     return this.productLinkFormat.replace(/:product/gi, this.label);
   }
 
   async fetchIsFree(productId: string) {
-    const { catalog } = this.connection;
-    const response = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
+    if (!this.connection) {
+      return;
+    }
+    const response = await fetch(
+      `${this.connection.catalog}/plans/?product_id=${productId}`,
+      withAuth(this.authToken)
+    );
     const plans: Catalog.ExpandedPlan[] = await response.json();
     if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
       this.isFree = true;
@@ -63,51 +73,33 @@ export class ManifoldServiceCard {
   render() {
     return !this.skeleton ? (
       <a
-        class="wrapper"
         role="button"
         itemscope
         itemtype="https://schema.org/Product"
         itemprop="url"
         href={this.href}
         onClick={this.onClick}
+        style={{ textDecoration: 'none' }}
       >
-        <div class="logo">
-          <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
-        </div>
-        <h3 class="name" itemprop="name">
-          {this.name}
-        </h3>
-        <div class="info">
-          <p class="description" itemprop="description">
-            {this.description}
-          </p>
-        </div>
-        <div class="tags">
-          {this.isFeatured && <div class="tag">featured</div>}
-          {this.isFree && (
-            <div class="tag" data-tag="free">
-              Free
-            </div>
-          )}
-        </div>
+        <manifold-service-view
+          name={this.name}
+          description={this.description}
+          isFeatured={this.isFeatured}
+          label={this.label}
+          logo={this.logo}
+          productId={this.productId}
+          isFree={this.isFree}
+        />
       </a>
     ) : (
       // ☠
-      <div class="wrapper">
-        <div class="logo">
-          <manifold-skeleton-img />
-        </div>
-        <h3 class="name">
-          <manifold-skeleton-text>{this.name}</manifold-skeleton-text>
-        </h3>
-        <div class="info">
-          <p class="description">
-            <manifold-skeleton-text>{this.description}</manifold-skeleton-text>
-          </p>
-        </div>
-      </div>
+      <manifold-service-view
+        loading={true}
+        name={this.name}
+        description={this.description}
+      />
     );
   }
 }
 
-Tunnel.injectProps(ManifoldServiceCard, ['connection']);
+Tunnel.injectProps(ManifoldServiceCard, ['connection', 'authToken']);

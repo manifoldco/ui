@@ -22,4 +22,7 @@ export const config: Config = {
       ],
     }),
   ],
+  testing: {
+    testPathIgnorePatterns: ['/node_modules/', '/docs/'],
+  },
 };

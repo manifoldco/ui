@@ -1,0 +1,177 @@
+import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
+
+import Tunnel from '../../data/connection';
+import { withAuth } from '../../utils/auth';
+import { Connection, connections } from '../../utils/connections';
+import { Marketplace } from '../../types/marketplace';
+
+/* eslint-disable no-console */
+
+interface ClickMessage {
+  newName: string;
+  resourceName: string;
+  resourceId: string;
+}
+
+interface InvalidMessage {
+  message: string;
+  newName: string;
+  resourceName: string;
+  resourceId: string;
+}
+
+interface SuccessMessage {
+  message: string;
+  newName: string;
+  resourceName: string;
+  resourceId: string;
+}
+
+interface ErrorMessage {
+  message: string;
+  newName: string;
+  resourceName: string;
+  resourceId: string;
+}
+
+@Component({ tag: 'manifold-data-rename-button' })
+export class ManifoldDataRenameButton {
+  @Element() el: HTMLElement;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
+  /** The label of the resource to rename */
+  @Prop() resourceName?: string;
+  /** The new name to give to the resource */
+  @Prop() newName: string = '';
+  /** The id of the resource to rename, will be fetched if not set */
+  @Prop({ mutable: true }) resourceId?: string = '';
+  @Prop() loading?: boolean = false;
+  @Event({ eventName: 'manifold-renameButton-click', bubbles: true })
+  clickEvent: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-invalid', bubbles: true })
+  invalidEvent: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-error', bubbles: true }) errorEvent: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-success', bubbles: true })
+  successEvent: EventEmitter;
+
+  @Watch('resourceName') nameChange(newName: string) {
+    if (!this.resourceId) {
+      this.fetchResourceId(newName);
+    }
+  }
+
+  componentWillLoad() {
+    if (this.resourceName && !this.resourceId) {
+      this.fetchResourceId(this.resourceName);
+    }
+  }
+
+  async rename() {
+    if (!this.resourceId) {
+      console.error('Property “resourceId” is missing');
+      return;
+    }
+
+    if (this.newName.length < 3) {
+      const message: InvalidMessage = {
+        message: 'Must be at least 3 characters.',
+        resourceName: this.resourceName || '',
+        newName: this.newName,
+        resourceId: this.resourceId,
+      };
+      this.invalidEvent.emit(message);
+      return;
+    }
+    if (!this.validate(this.newName)) {
+      const message: InvalidMessage = {
+        message:
+          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
+        resourceName: this.resourceName || '',
+        newName: this.newName,
+        resourceId: this.resourceId,
+      };
+      this.invalidEvent.emit(message);
+      return;
+    }
+
+    const clickMessage: ClickMessage = {
+      resourceName: this.resourceName || '',
+      newName: this.newName,
+      resourceId: this.resourceId,
+    };
+    this.clickEvent.emit(clickMessage);
+
+    const body: Marketplace.PublicUpdateResource = {
+      body: {
+        name: this.newName,
+        label: this.newName,
+      },
+    };
+    const response = await fetch(
+      `${this.connection.marketplace}/resource/${this.resourceId}`,
+      withAuth(this.authToken, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+    );
+
+    // If successful, this will return 200 and stop here
+    if (response.status >= 200 && response.status < 300) {
+      const success: SuccessMessage = {
+        message: `${this.resourceName} successfully renamed`,
+        resourceName: this.resourceName || '',
+        newName: this.newName,
+        resourceId: this.resourceId,
+      };
+      this.successEvent.emit(success);
+    } else {
+      const result = await response.json();
+
+      // Sometimes messages are an array, sometimes they aren’t. Different strokes!
+      const message = Array.isArray(result) ? result[0].message : result.message;
+      const error: ErrorMessage = {
+        message,
+        resourceName: this.resourceName || '',
+        newName: this.newName,
+        resourceId: this.resourceId,
+      };
+      this.errorEvent.emit(error);
+    }
+  }
+
+  async fetchResourceId(resourceName: string) {
+    const resourceResp = await fetch(
+      `${this.connection.marketplace}/resources/?me&label=${resourceName}`,
+      withAuth(this.authToken)
+    );
+    const resources: Marketplace.Resource[] = await resourceResp.json();
+
+    if (!Array.isArray(resources) || !resources.length) {
+      console.error(`${resourceName} product not found`);
+      return;
+    }
+
+    this.resourceId = resources[0].id;
+  }
+
+  validate(input: string) {
+    return /^[a-z][a-z0-9]*/.test(input);
+  }
+
+  render() {
+    return (
+      <button
+        type="submit"
+        onClick={() => this.rename()}
+        disabled={!this.resourceId && !this.loading}
+      >
+        <slot />
+      </button>
+    );
+  }
+}
+
+Tunnel.injectProps(ManifoldDataRenameButton, ['connection', 'authToken']);

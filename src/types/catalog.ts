@@ -23,6 +23,7 @@ export namespace Catalog {
   }
   export interface UpdateProductBody {
     name?: string;
+    label?: string;
     logo_url?: string;
     listing?: ProductListing;
     // 140 character sentence positioning the product.

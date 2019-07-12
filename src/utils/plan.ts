@@ -248,11 +248,12 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
  */
 export function planCost(
   connection: Connection,
-  { planID, features, init }: PlanCostOptions
+  { planID, features, init }: PlanCostOptions,
+  authToken?: string
 ): Promise<Gateway.Price> {
   return fetch(
     `${connection.gateway}/id/plan/${planID}/cost`,
-    withAuth({
+    withAuth(authToken,{
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ features }),

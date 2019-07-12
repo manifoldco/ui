@@ -52,10 +52,8 @@ describe('<manifold-marketplace-grid>', () => {
       { services }
     );
     await page.waitForChanges();
-
-    expect(await page.findAll(`manifold-marketplace-grid >>> manifold-service-card`)).toHaveLength(
-      services.length
-    );
+    const serviceCards = await page.findAll('manifold-marketplace-grid >>> manifold-service-card');
+    expect(serviceCards).toHaveLength(services.length);
   });
 
   it('displays service template cards', async () => {
@@ -70,9 +68,25 @@ describe('<manifold-marketplace-grid>', () => {
     await page.waitForChanges();
 
     // Note: <manifold-template-card> determines whether or not the card appears (if templates are empty), but we should still check to make sure it’s being rendered.
-    expect(await page.findAll(`manifold-marketplace-grid >>> manifold-template-card`)).toHaveLength(
-      categoriesWithTemplates.length
+    const templateCards = await page.findAll(
+      `manifold-marketplace-grid >>> manifold-template-card`
     );
+    expect(templateCards).toHaveLength(categoriesWithTemplates.length);
+  });
+
+  it('hides template cards with hide-templates', async () => {
+    const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
+    await page.$eval(
+      'manifold-marketplace-grid',
+      (elm: any, props: any) => {
+        elm.services = props.services;
+        elm.hideTemplates = true;
+      },
+      { services }
+    );
+    await page.waitForChanges();
+    const templateCards = await page.findAll('manifold-service-grid >>> manifold-template-card');
+    expect(templateCards).toHaveLength(0);
   });
 
   it('accepts exclusion list of products', async () => {
@@ -92,14 +106,11 @@ describe('<manifold-marketplace-grid>', () => {
     const notExcluded = testCategories
       .map(category => `service-${category}`)
       .filter(category => !excludes.includes(category));
-    notExcluded.forEach(async product =>
-      expect(
-        await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)
-      ).not.toBeNull()
-    );
-    excludes.forEach(async product =>
-      expect(await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)).toBeNull()
-    );
+
+    const serviceCards = await page.findAll(`manifold-marketplace-grid >>> [data-label]`);
+    const productLabels = await serviceCards.map(card => card.getAttribute('data-label'));
+
+    expect(productLabels).toEqual(notExcluded);
   });
 
   it('accepts manual product list', async () => {
@@ -116,17 +127,10 @@ describe('<manifold-marketplace-grid>', () => {
     );
     await page.waitForChanges();
 
-    const notIncluded = testCategories
-      .map(category => `service-${category}`)
-      .filter(category => !products.includes(category));
-    notIncluded.forEach(async product =>
-      expect(await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)).toBeNull()
-    );
-    products.forEach(async product =>
-      expect(
-        await page.find(`manifold-marketplace-grid >>> [data-label="${product}"]`)
-      ).not.toBeNull()
-    );
+    const serviceCards = await page.findAll(`manifold-marketplace-grid >>> [data-label]`);
+    const productLabels = await serviceCards.map(card => card.getAttribute('data-label'));
+
+    expect(productLabels).toEqual(products);
   });
 
   it('features specified products', async () => {
@@ -143,10 +147,9 @@ describe('<manifold-marketplace-grid>', () => {
     );
     await page.waitForChanges();
 
-    featured.forEach(async service => {
-      const card = await page.find(`manifold-marketplace-grid >>> [data-label="${service}"]`);
-      return expect(await card.getProperty('isFeatured')).toBe(true);
-    });
+    const serviceCards = await page.findAll(`manifold-marketplace-grid >>> [data-featured]`);
+    const featuredServices = serviceCards.map(card => card.getAttribute('data-label'));
+    expect(featuredServices).toEqual(featured);
   });
 
   it('displays categories by default', async () => {
@@ -193,6 +196,7 @@ describe('<manifold-marketplace-grid>', () => {
       },
       { services }
     );
+    await page.waitForChanges();
 
     // This is just enough to only get `service-logging` to show (1)
     const input = await page.find('manifold-marketplace-grid >>> [type="search"]');
@@ -200,25 +204,40 @@ describe('<manifold-marketplace-grid>', () => {
     await input.press('KeyO');
     await input.press('KeyG');
 
-    expect(await page.findAll('manifold-marketplace-grid >>> manifold-service-card')).toHaveLength(
-      1
-    );
+    const serviceCards = await page.findAll('manifold-marketplace-grid >>> manifold-service-card');
+    expect(serviceCards).toHaveLength(1);
 
     // Also ensure category titles are hidden when searching
-    expect(await page.findAll('manifold-marketplace-grid >>> [id^="category-"]')).toHaveLength(0);
+    const categoryTitles = await page.findAll('manifold-marketplace-grid >>> [id^="category-"]');
+    expect(categoryTitles).toHaveLength(0);
   });
 
-  it('hides template cards with hide-templates', async () => {
+  it('shows the search bar by default', async () => {
     const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
     await page.$eval(
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
-        elm.hideTemplates = true;
       },
       { services }
     );
+    await page.waitForChanges();
+    const search = await page.findAll('manifold-marketplace-grid >>> [type="search"]');
+    expect(search).toHaveLength(1);
+  });
 
-    expect(await page.findAll('manifold-service-grid >>> manifold-template-card')).toHaveLength(0);
+  it('hides the search bar with hide-search', async () => {
+    const page = await newE2EPage({ html: `<manifold-marketplace-grid />` });
+    await page.$eval(
+      'manifold-marketplace-grid',
+      (elm: any, props: any) => {
+        elm.services = props.services;
+        elm.hideSearch = true;
+      },
+      { services }
+    );
+    await page.waitForChanges();
+    const search = await page.findAll('manifold-marketplace-grid >>> [type="search"]');
+    expect(search).toHaveLength(0);
   });
 });

@@ -10,6 +10,8 @@ export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
@@ -42,7 +44,7 @@ export class ManifoldPlanSelector {
     this.product = undefined;
     if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
     const { catalog } = this.connection;
-    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth());
+    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth(this.authToken));
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
     this.product = products[0]; // eslint-disable-line prefer-destructuring
     this.fetchPlans(products[0].id);
@@ -51,7 +53,7 @@ export class ManifoldPlanSelector {
   async fetchPlans(productId: string) {
     this.plans = undefined;
     const { catalog } = this.connection;
-    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth());
+    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth(this.authToken));
     const plans: Catalog.ExpandedPlan[] = await plansResp.json();
     this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
   }
@@ -60,11 +62,11 @@ export class ManifoldPlanSelector {
     this.resource = undefined;
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
     const resource: Gateway.Resource = await response.json();
     this.resource = resource;
     if (!resource.product) return;
-    const productResp = await fetch(`${catalog}/products/${resource.product.id}`, withAuth());
+    const productResp = await fetch(`${catalog}/products/${resource.product.id}`, withAuth(this.authToken));
     const product: Catalog.Product = await productResp.json();
     this.product = product;
     this.fetchPlans(product.id);
@@ -90,4 +92,4 @@ export class ManifoldPlanSelector {
   }
 }
 
-Tunnel.injectProps(ManifoldPlanSelector, ['connection']);
+Tunnel.injectProps(ManifoldPlanSelector, ['connection', 'authToken']);

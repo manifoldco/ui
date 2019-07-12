@@ -9,24 +9,28 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldResourceContainer {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection: Connection = connections.prod;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() authToken?: string;
   /** Which resource does this belong to? */
-  @Prop() resourceName: string;
+  @Prop() resourceName?: string;
   @State() resource?: Gateway.Resource;
   @State() loading: boolean = false;
+
   @Watch('resourceName') resourceChange(newName: string) {
     this.fetchResource(newName);
   }
 
   componentWillLoad() {
-    this.fetchResource(this.resourceName);
+    if (this.resourceName) {
+      this.fetchResource(this.resourceName);
+    }
   }
 
   fetchResource = async (resourceName: string) => {
     this.loading = true;
     const { gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth());
-    const resource: Gateway.Resource = await response.json();
-    this.resource = resource;
+    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
+    this.resource = await response.json();
     this.loading = false;
   };
 
@@ -39,4 +43,4 @@ export class ManifoldResourceContainer {
   }
 }
 
-ConnectionTunnel.injectProps(ManifoldResourceContainer, ['connection']);
+ConnectionTunnel.injectProps(ManifoldResourceContainer, ['connection', 'authToken']);

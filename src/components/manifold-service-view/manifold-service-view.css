@@ -25,19 +25,40 @@
   --card-heading-font-family: var(--manifold-font-family-heading);
   --card-heading-font-weight: var(--manifold-font-weight-heading);
   --card-heading-text-color: var(--manifold-text-color-heading);
-
-  /* tag */
-  --tag-padding: var(--manifold-tag-padding, 0.25em 1em);
-  --tag-text-color: var(--manifold-tag-text-color, var(--manifold-text-color-accent));
-  --tag-font-family: var(--manifold-tag-font-family, var(--manifold-font-family));
-  --tag-font-weight: var(--manifold-tag-font-weight, 700);
-  --tag-font-size: var(--manifold-tag-font-size, var(--manifold-font-d3));
-  --tag-text-transform: var(--manifold-tag-text-transform, initial);
-  --tag-background: var(--manifold-color-primary);
-  --tag-radius: var(--manifold-tag-radius, 3em);
 }
 
 .wrapper {
+  position: relative;
+  display: grid;
+  grid-column-gap: var(--padding);
+  grid-template-areas:
+    'logo name'
+    'info info'
+    'tags tags';
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: var(--manifold-product-logo-s) auto;
+  box-sizing: border-box;
+  height: 100%;
+  padding: var(--padding);
+  color: var(--card-text-color);
+  text-decoration: none;
+  cursor: pointer;
+
+  @media (--viewport-s) {
+    grid-template-areas:
+      'logo name'
+      'logo info'
+      'tags tags';
+    grid-template-columns: var(--manifold-product-logo-m) auto;
+  }
+
+  @media (--viewport-m) {
+    grid-template-columns: var(--manifold-product-logo-l) auto;
+    padding: 0.875rem;
+  }
+}
+
+.card-wrapper {
   position: relative;
   display: grid;
   grid-column-gap: var(--padding);
@@ -157,27 +178,6 @@
   }
 }
 
-.tag {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 0.125rem;
-  margin-bottom: 0.125rem; /* top & bottom help when tags stack */
-  margin-left: 0.5em;
-  padding: var(--tag-padding);
-  color: var(--tag-text-color);
-  font-weight: var(--tag-font-weight);
-  font-size: var(--tag-font-size);
-  font-family: var(--tag-font-family);
-  line-height: 1.5;
-  text-transform: var(--tag-text-transform);
-  background: var(--tag-background);
-  border-radius: var(--tag-radius);
-
-  &[data-tag='free'] {
-    background: var(--manifold-tag-free-background, var(--manifold-color-primary));
-  }
-}
-
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -187,4 +187,10 @@
   margin-top: 0.375rem;
   margin-right: -0.125rem;
   margin-bottom: -0.125rem; /* offset stacking margin from .tag */
+}
+
+manifold-badge {
+  margin-top: 0.125rem;
+  margin-bottom: 0.125rem; /* top & bottom help when tags stack */
+  margin-left: 0.5em;
 }

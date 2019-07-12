@@ -56,7 +56,7 @@ modern framework like React, Vue, or Angular.
 
 ### React
 
-```tsx
+```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@manifoldco/ui/dist/manifold/manifold.css';
@@ -82,19 +82,18 @@ project (must be inside the [include][tsconfig] option in `tsconfig.json`):
 
 ```ts
 import { Components } from '@manifoldco/ui';
-import { ReactNode } from 'react';
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
 
-interface ReactProps {
-  children?: ReactNode;
-  // Additional properties may go here as needed
-}
+type ToReact<T> = DetailedHTMLProps<HTMLAttributes<T>, T>;
 
 declare global {
   export namespace JSX {
     interface IntrinsicElements {
-      'manifold-marketplace': Components.ManifoldMarketplace & ReactProps;
-      'manifold-product': Components.ManifoldProduct & ReactProps;
-      'manifold-plan-selector': Components.ManifoldPlanSelector & ReactProps;
+      'manifold-marketplace': Components.ManifoldMarketplace &
+        ToReact<HTMLManifoldMarketplaceElement>;
+      'manifold-product': Components.ManifoldProduct & ToReact<HTMLManifoldProductElement>;
+      'manifold-plan-selector': Components.ManifoldPlanSelector &
+        ToReact<HTMLManifoldPlanSelectorElement>;
     }
   }
 }
@@ -103,8 +102,8 @@ declare global {
 This will expose the types from Stencil to JSX, and you’ll be able to get
 typechecking as you write.
 
-*Note: every element will have to be declared manually, at least until [this
-PR][ts-fix] is merged in TypeScript core.*🎉
+_Note: every element will have to be declared manually, at least until [this
+PR][ts-fix] is merged in TypeScript core._
 
 ### Ember, Angular, Vue, and others
 

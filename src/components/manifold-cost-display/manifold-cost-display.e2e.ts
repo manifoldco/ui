@@ -30,7 +30,7 @@ describe('<manifold-plan-cost>', () => {
     await page.waitForChanges();
     const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
     expect(el).toEqualHtml(
-      '<span itemprop="price"><manifold-badge class="hydrated">Free</manifold-badge></span>'
+      '<span itemprop="price"><manifold-badge class="hydrated" data-tag="free">Free</manifold-badge></span>'
     );
   });
 

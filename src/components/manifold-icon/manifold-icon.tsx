@@ -6,14 +6,14 @@ import { h, Component, Element, Prop } from '@stencil/core';
   shadow: true,
 })
 export class ManifoldIcon {
-  @Prop() marginRight: boolean = false;
-  @Prop() marginLeft: boolean = false;
+  @Prop() marginRight?: boolean = false;
+  @Prop() marginLeft?: boolean = false;
   /** The icon ID */
   @Prop() icon: string;
   /** a CSS variable starting with `--manifold-g-*` */
   @Prop() gradient?: string;
   /** a CSS variable starting with `--manifold-c-*` */
-  @Prop() color: string = 'currentColor';
+  @Prop() color?: string = 'currentColor';
   @Element() element: HTMLElement;
 
   get gradientID() {
@@ -63,7 +63,7 @@ export class ManifoldIcon {
         ) : (
           <path
             d={this.icon}
-            fill={this.color.startsWith('--') ? `var(${this.color})` : this.color}
+            fill={this.color && this.color.startsWith('--') ? `var(${this.color})` : this.color}
           />
         )}
       </svg>

@@ -3,7 +3,7 @@ import { h, Component, Prop, State } from '@stencil/core';
 @Component({ tag: 'manifold-lazy-image' })
 export class ManifoldLazyImage {
   @Prop() src: string;
-  @Prop() itemprop: string;
+  @Prop() itemprop?: string;
   @Prop() alt: string;
   @State() observer: IntersectionObserver;
 

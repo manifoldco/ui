@@ -3,15 +3,15 @@ title: 🔒 Provision Button
 path: /data/provision-button
 example: |
   <label for="my-provision-button">Resource Name</label>
-  <manifold-data-provision-button input-id="my-provision-button">
+  <input id="my-provision-button" value="my-resource"></input>
+  <manifold-data-provision-button resource-name="my-resource">
     🚀 Provision Business plan on Prefab.cloud
   </manifold-data-provision-button>
 ---
 
 # 🔒 Provision Button
 
-An unstyled text input + button combination for provisioning resources. 🔒
-Requires authentication.
+An unstyled button for provisioning resources. 🔒 Requires authentication.
 
 ## Using with Plan Selector
 
@@ -21,15 +21,17 @@ selector](#manifold-plan-selector) component. You could do that like so:
 
 ```js
 const userId = ''; // Note: must be set
+const resourceName = ''; // Can be obtained from your own input
 
-function updateButton({ detail: { features, planId, productLabel, regionId } }) {
+function updateButton({ detail: { features, planLabel, productLabel, regionName } }) {
   const provisionButton = document.querySelector('manifold-data-provision-button');
   provisionButton.features = features;
-  provisionButton.planId = planId;
+  provisionButton.planLabel = planLabel;
   provisionButton.productLabel = productLabel;
-  provisionButton.regionId = regionId;
+  provisionButton.regionName = regionName;
+  provisionButton.resourceName = resourceName;
 
-  provisionButton.userId = userId;
+  provisionButton.ownerId = userId;
 }
 
 document.addEventListener('manifold-planSelector-load', updateButton);
