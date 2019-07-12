@@ -21,6 +21,15 @@ Compact view of a Manifold Product.
 ></manifold-service-card>
 ```
 
+## Fetching using the label
+
+If you don't have the data for the product and would rather fetch using the product's label, the
+`manifold-product-card` component can be used instead.
+
+```html
+<manifold-service-card product-label="logdna"></manifold-service-card>
+```
+
 ## Navigation
 
 By default, service cards will only emit the `manifold-marketplace-click`

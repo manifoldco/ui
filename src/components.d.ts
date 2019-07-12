@@ -19,9 +19,6 @@ import {
   Marketplace,
 } from './types/marketplace';
 import {
-  ResourceState,
-} from './data/resource';
-import {
   Option,
 } from './types/Select';
 
@@ -427,6 +424,16 @@ export namespace Components {
     */
     'productLabel'?: string;
   }
+  interface ManifoldProductCard {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    'connection'?: Connection;
+    'preserveEvent'?: boolean;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+  }
   interface ManifoldProductDetails {
     'product'?: Catalog.Product;
   }
@@ -787,6 +794,12 @@ declare global {
     new (): HTMLManifoldProductElement;
   };
 
+  interface HTMLManifoldProductCardElement extends Components.ManifoldProductCard, HTMLStencilElement {}
+  var HTMLManifoldProductCardElement: {
+    prototype: HTMLManifoldProductCardElement;
+    new (): HTMLManifoldProductCardElement;
+  };
+
   interface HTMLManifoldProductDetailsElement extends Components.ManifoldProductDetails, HTMLStencilElement {}
   var HTMLManifoldProductDetailsElement: {
     prototype: HTMLManifoldProductDetailsElement;
@@ -974,6 +987,7 @@ declare global {
     'manifold-plan-menu': HTMLManifoldPlanMenuElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'manifold-product-card': HTMLManifoldProductCardElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-region-selector': HTMLManifoldRegionSelectorElement;
@@ -1426,6 +1440,16 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
   }
+  interface ManifoldProductCard extends JSXBase.HTMLAttributes<HTMLManifoldProductCardElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    'connection'?: Connection;
+    'preserveEvent'?: boolean;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+  }
   interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
     'product'?: Catalog.Product;
   }
@@ -1635,6 +1659,7 @@ declare namespace LocalJSX {
     'manifold-plan-menu': ManifoldPlanMenu;
     'manifold-plan-selector': ManifoldPlanSelector;
     'manifold-product': ManifoldProduct;
+    'manifold-product-card': ManifoldProductCard;
     'manifold-product-details': ManifoldProductDetails;
     'manifold-product-page': ManifoldProductPage;
     'manifold-region-selector': ManifoldRegionSelector;
