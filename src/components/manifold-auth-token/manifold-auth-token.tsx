@@ -1,5 +1,4 @@
 import { h, Component, Prop, Watch } from '@stencil/core';
-// import '@manifoldco/shadowcat';
 import Tunnel from '../../data/connection';
 
 @Component({ tag: 'manifold-auth-token' })
@@ -18,7 +17,8 @@ export class ManifoldAuthToken {
       this.setAuthToken(this.token);
     }
   }
-  async componentDidLoad() {
+
+  componentDidLoad() {
     document.addEventListener('receiveManifoldToken', (e: CustomEvent) => {
       this.token = e.detail;
     });
@@ -27,10 +27,7 @@ export class ManifoldAuthToken {
   render() {
     return (
       <div>
-        <manifold-oauth
-          id="test"
-          oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
-        ></manifold-oauth>
+        <manifold-oauth oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"></manifold-oauth>
         <input type="hidden" value={this.token ? 'true' : 'false'} />;
       </div>
     );
