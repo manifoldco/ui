@@ -27,7 +27,7 @@ If you don't have the data for the product and would rather fetch using the prod
 `manifold-product-card` component can be used instead.
 
 ```html
-<manifold-service-card product-label="logdna"></manifold-service-card>
+<manifold-product-card product-label="logdna"></manifold-product-card>
 ```
 
 ## Navigation
