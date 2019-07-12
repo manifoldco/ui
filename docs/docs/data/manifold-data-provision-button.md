@@ -9,6 +9,10 @@ example: |
   </manifold-data-provision-button>
 ---
 
+<manifold-toast alert-type="warning">
+  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
+</manifold-toast>
+
 # 🔒 Provision Button
 
 An unstyled button for provisioning resources. 🔒 Requires authentication.

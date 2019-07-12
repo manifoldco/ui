@@ -15,7 +15,7 @@ interface SidebarProps {
   pages: ([string, string])[];
 }
 
-const topPages = ['/getting-started', '/connection', '/theming', '/resource-details'];
+const topPages = ['/getting-started', '/connection', '/theming', '/resource-details', '/changelog'];
 
 const DEFAULT = 'default';
 const MANIFOLD = 'manifold';

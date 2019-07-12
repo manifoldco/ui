@@ -12,6 +12,10 @@ example: |
   </manifold-data-resource-list>
 ---
 
+<manifold-toast alert-type="warning">
+  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
+</manifold-toast>
+
 # 🔒 Resource List
 
 Creates an unstyled, unordered list with `<a>` tags.
