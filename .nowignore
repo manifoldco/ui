@@ -1,0 +1,10 @@
+.cache
+.stencil
+*.spec.ts
+*.e2e.ts
+coverage
+dist
+node_modules
+pkg
+public
+storybook-static
