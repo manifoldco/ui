@@ -53,6 +53,7 @@
     "test:watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
+    "@manifoldco/gql-zero": "^0.2.0",
     "@stencil/state-tunnel": "^1.0.1"
   },
   "devDependencies": {

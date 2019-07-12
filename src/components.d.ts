@@ -19,9 +19,6 @@ import {
   Marketplace,
 } from './types/marketplace';
 import {
-  ResourceState,
-} from './data/resource';
-import {
   Option,
 } from './types/Select';
 

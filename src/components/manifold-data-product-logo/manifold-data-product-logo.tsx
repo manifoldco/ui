@@ -1,9 +1,21 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+
+const GRAPHQL_ENDPOINT = 'https://api.manifold.co/graphql';
+
+const query = gql`
+  query PRODUCT_LOGO($productLabel: String!) {
+    product(label: $productLabel) {
+      displayName
+      logoUrl
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-data-product-logo' })
 export class ManifoldDataProductLogo {
@@ -18,7 +30,7 @@ export class ManifoldDataProductLogo {
   @Prop() productLabel?: string;
   /** Look up product name from resource */
   @Prop() resourceName?: string;
-  @State() product?: Catalog.Product;
+  @State() product?: any;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
   }
@@ -33,16 +45,30 @@ export class ManifoldDataProductLogo {
 
   fetchProduct = async (productLabel: string) => {
     this.product = undefined;
-    const { catalog } = this.connection;
-    const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth(this.authToken));
-    const products: Catalog.Product[] = await response.json();
-    this.product = products[0]; // eslint-disable-line prefer-destructuring
+    const response = await fetch(
+      GRAPHQL_ENDPOINT,
+      withAuth(this.authToken, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query, variables: { productLabel } }),
+      })
+    );
+    const { data, error } = await response.json();
+    if (error) {
+      console.error(error);
+    }
+    this.product = data.product;
   };
 
   fetchResource = async (resourceName: string) => {
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
+    const response = await fetch(
+      `${gateway}/resources/me/${resourceName}`,
+      withAuth(this.authToken)
+    );
     const resource: Gateway.Resource = await response.json();
     const productId = resource.product && resource.product.id;
     const productResp = await fetch(`${catalog}/products/${productId}`, withAuth(this.authToken));
@@ -52,7 +78,7 @@ export class ManifoldDataProductLogo {
 
   render() {
     return this.product ? (
-      <img src={this.product.body.logo_url} alt={this.alt || this.product.body.name} />
+      <img src={this.product.logoUrl} alt={this.alt || this.product.displayName} />
     ) : null;
   }
 }
