@@ -226,7 +226,12 @@ export class ManifoldPlanDetails {
       const { expanded_features, name: planName } = this.plan.body;
 
       return (
-        <section class={this.scrollLocked ? 'scroll' : ''} itemscope itemtype="https://schema.org/IndividualProduct">
+        <section
+          class="wrapper"
+          data-scroll-locked={this.scrollLocked}
+          itemscope
+          itemtype="https://schema.org/IndividualProduct"
+        >
           <div class="card">
             <header class="header">
               <div class="logo">
@@ -257,7 +262,7 @@ export class ManifoldPlanDetails {
     }
     // 💀
     return (
-      <section class={this.scrollLocked ? 'scroll' : ''}>
+      <section class="wrapper" data-scroll-locked={this.scrollLocked}>
         <div class="card">
           <header class="header">
             <div class="logo">

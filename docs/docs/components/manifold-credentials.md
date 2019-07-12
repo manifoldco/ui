@@ -11,6 +11,6 @@ Display credentials for a resource. 🔒 Requires authentication.
 The resource label needs to be provided for the component to be able to fetch the resource's credentials on demand.
 
 ```html
-<manifold-credentials resource-name="my-resource"></manifold-credentials>
+<manifold-credentials resource-label="my-resource"></manifold-credentials>
 ```
 
