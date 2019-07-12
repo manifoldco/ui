@@ -33,7 +33,7 @@ document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resou
 );
 document.addEventListener(
   'manifold-deprovisionButton-success',
-  ({ details: { resourceLabel } }) =>alert(`${resourceLabel} deprovisioned successfully!`)
+  ({ detail: { resourceLabel } }) =>alert(`${resourceLabel} deprovisioned successfully!`)
 );
 document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}

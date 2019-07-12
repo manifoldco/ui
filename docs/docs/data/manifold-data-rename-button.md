@@ -33,7 +33,7 @@ document.addEventListener('manifold-renameButton-click', ({ detail: { resourceLa
 );
 document.addEventListener(
   'manifold-renameButton-success',
-  ({ details: { resourceLabel, newLabel } }) =>alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
+  ({ detail: { resourceLabel, newLabel } }) => alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
 );
 document.addEventListener('manifold-renameButton-error', ({ detail }) => console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
