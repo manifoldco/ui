@@ -1,4 +1,5 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
 import skeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
@@ -32,37 +33,49 @@ export class ManifoldMarketplaceGrid {
   @State() scrollToCategory: string | null;
   @State() skeleton: boolean = false;
   @State() search: string = '';
+
   @Watch('services') servicesLoaded(services: Catalog.Product[]) {
-    if (services.length) this.skeleton = false;
+    if (services.length) {
+      this.skeleton = false;
+    }
   }
 
   componentWillLoad() {
-    if (!this.hideCategories)
+    if (!this.hideCategories) {
       this.observer = new IntersectionObserver(this.observe, {
         root: null,
         threshold: 0.9,
       });
+    }
   }
 
   componentDidUpdate() {
     if (this.scrollToCategory) {
       if (this.el.shadowRoot) {
         const heading = this.el.shadowRoot.querySelector(`#category-${this.scrollToCategory}`);
-        if (heading) heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (heading) {
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       }
       this.scrollToCategory = null;
     }
   }
 
   get categories(): string[] {
-    if (this.hideCategories) return [];
+    if (this.hideCategories) {
+      return [];
+    }
     const categoryList: string[] = [];
 
     // Iterate through services, only add unique categories
     this.filteredServices.forEach(({ body: { tags } }: Catalog.Product) => {
-      if (!Array.isArray(tags)) return;
+      if (!Array.isArray(tags)) {
+        return;
+      }
       tags.forEach(tag => {
-        if (!categoryList.includes(tag)) categoryList.push(tag);
+        if (!categoryList.includes(tag)) {
+          categoryList.push(tag);
+        }
       });
     });
 
@@ -87,31 +100,41 @@ export class ManifoldMarketplaceGrid {
     let services: Catalog.Product[] = [];
 
     // If not including, start out with all services
-    if (this.products && !this.products.length) services = this.services; // eslint-disable-line prefer-destructuring
+    if (this.products && !this.products.length) {
+      services = this.services; // eslint-disable-line prefer-destructuring
+    }
 
     // Handle includes
-    if (Array.isArray(this.products))
+    if (Array.isArray(this.products)) {
       this.products.forEach(product => {
         const service =
           this.services && this.services.find(({ body: { label } }) => label === product);
-        if (service) services.push(service);
+        if (service) {
+          services.push(service);
+        }
       });
+    }
 
     // Handle excludes
-    if (Array.isArray(this.excludes))
+    if (Array.isArray(this.excludes)) {
       services = services.filter(
         ({ body: { label } }) => this.excludes && !this.excludes.includes(label)
       );
+    }
 
     // Handle search
-    if (this.filter && this.filter.length) services = filteredServices(this.filter, services);
+    if (this.filter && this.filter.length) {
+      services = filteredServices(this.filter, services);
+    }
 
     return services;
   }
 
   get showCategories(): boolean {
     // Hide categories if searching
-    if (this.filter) return false;
+    if (this.filter) {
+      return false;
+    }
     // Else, hide categories if hide-categories is specified
     return !this.hideCategories;
   }
@@ -127,15 +150,21 @@ export class ManifoldMarketplaceGrid {
   }
 
   private handleSearch = (el?: HTMLElement) => {
-    if (!el) return;
+    if (!el) {
+      return;
+    }
     el.addEventListener('search', (e: Event) => {
       const val = (e.srcElement as HTMLInputElement).value;
-      if (!val) this.filter = '';
+      if (!val) {
+        this.filter = '';
+      }
     });
   };
 
   private updateFilter = (e: KeyboardEvent): void => {
-    if (e.srcElement) this.filter = (e.srcElement as HTMLInputElement).value;
+    if (e.srcElement) {
+      this.filter = (e.srcElement as HTMLInputElement).value;
+    }
   };
 
   private observe = (
@@ -151,32 +180,25 @@ export class ManifoldMarketplaceGrid {
   };
 
   private observeCategory = (el?: HTMLElement) => {
-    if (el) this.observer.observe(el);
+    if (el) {
+      this.observer.observe(el);
+    }
   };
 
-  private renderServiceCard = ({
-    id,
-    body: { name, tagline, label, logo_url },
-  }: Catalog.Product) => (
-    <manifold-service-card
-      data-label={label}
-      data-featured={this.featured && this.featured.includes(label)}
-      description={tagline}
-      isFeatured={this.featured && this.featured.includes(label)}
-      label={label}
-      productLinkFormat={this.productLinkFormat}
-      logo={logo_url}
-      name={name}
-      preserveEvent={this.preserveEvent}
-      productId={id}
-      skeleton={this.skeleton}
-    />
-  );
+  private renderServiceCard = (product: Catalog.Product) => (
+      <manifold-service-card
+        data-label={product.body.label}
+        data-featured={this.featured && this.featured.includes(product.body.label)}
+        isFeatured={this.featured && this.featured.includes(product.body.label)}
+        product={product}
+        skeleton={this.skeleton}
+      />
+    );
 
   render() {
     return (
       <div class="wrapper" data-categorized={this.showCategories}>
-        {this.hideSearch !== true && (
+        {!this.hideSearch && (
           <input
             class="search"
             type="search"

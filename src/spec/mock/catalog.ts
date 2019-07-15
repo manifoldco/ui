@@ -201,6 +201,31 @@ export const BooleanFeatureCustom: TExpandedFeature = {
   upgradable: true,
 };
 
+export const ExpandedFreePlan: TExpandedPlan = {
+  body: {
+    cost: 0,
+    features: [
+      { feature: StringFeatureStatic.label, value: StringFeatureStatic.value.label },
+      { feature: NumberFeatureStatic.label, value: NumberFeatureStatic.value.label },
+      { feature: BooleanFeatureStatic.label, value: BooleanFeatureStatic.value.label },
+    ],
+    label: 'free',
+    name: 'Free',
+    product_id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+    provider_id: '2346mdxcuca9ez2n93f72nb2fpjgu',
+    regions: ['235mhkk15ky7ha9qpu4gazrqjt2gr', '235m2c51y0625vvtk6ptf55bhpkty'],
+    resizable_to: ['23556xtwybe9zv877e6g2c7ygnxpj', '2358u3xj4d8x5qud8x1atgafwchfy'],
+    state: 'available',
+    trial_days: 0,
+    defaultCost: 0,
+    expanded_features: [StringFeatureStatic, NumberFeatureStatic, BooleanFeatureStatic],
+    free: true,
+  },
+  id: '235abe2ba8b39e941u2h70ayw5m9j',
+  type: 'plan',
+  version: 1,
+};
+
 export const ExpandedPlan: TExpandedPlan = {
   body: {
     cost: 500,

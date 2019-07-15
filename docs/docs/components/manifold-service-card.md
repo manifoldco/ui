@@ -2,32 +2,39 @@
 title: Service Card
 path: '/components/manifold-service-card'
 example: |
-  <manifold-service-card
+  <manifold-service-view
     logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
     name="LogDNA"
     description="The best logging service you will ever use">
-  </manifold-service-card>
+  </manifold-service-view>
 ---
 
 # Service Card
 
-Compact view of a Manifold Product.
+Compact view of a Manifold Product. Available as a self-fetching component or a view component.
 
 ```html
-<manifold-service-card
+<manifold-service-card-view
   logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
   name="LogDNA"
   description="The best logging service you will ever use"
-></manifold-service-card>
+></manifold-service-card-view>
 ```
 
 ## Fetching using the label
 
-If you don't have the data for the product and would rather fetch using the product's label, the
-`manifold-product-card` component can be used instead.
+The `manifold-service-card` component can be used to fetch a product's data with a label.
 
 ```html
-<manifold-product-card product-label="logdna"></manifold-product-card>
+<manifold-service-card product-label="logdna"></manifold-product-card>
+```
+
+## Fetching using the id
+
+The `manifold-service-card` component can be used to fetch a product's data with an id.
+
+```html
+<manifold-service-card product-id="1234"></manifold-product-card>
 ```
 
 ## Navigation
@@ -37,7 +44,7 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 `product-link-format`:
 
 ```html
-<manifold-service-card product-link-format="/product/:product" />
+<manifold-service-card product-label="jawsdb-mysql" product-link-format="/product/:product" />
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
@@ -54,7 +61,7 @@ when it updates. To listen to those events, add an event listener either on
 the component itself, or `document`:
 
 ```js
-document.addEventListener('manifold-marketplace-click', { detail: { productLabel } } => {
+document.addEventListener('manifold-marketplace-click', ({ detail: { productLabel } }) => {
   alert(`You clicked the card for ${productLabel}`);
 });
 ```
