@@ -18,16 +18,17 @@ export class ManifoldAuthToken {
     }
   }
 
-  componentDidLoad() {
-    document.addEventListener('receiveManifoldToken', (e: CustomEvent) => {
-      this.token = e.detail;
-    });
+  setInternalToken(e: CustomEvent) {
+    this.token = e.detail;
   }
 
   render() {
     return (
       <div>
-        <manifold-oauth oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"></manifold-oauth>
+        <manifold-oauth
+          onReceiveManifoldToken={this.setInternalToken}
+          oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
+        ></manifold-oauth>
         <input type="hidden" value={this.token ? 'true' : 'false'} />;
       </div>
     );
