@@ -548,13 +548,11 @@ export namespace Components {
     */
     'authToken'?: string;
     'connection'?: Connection;
-    'description'?: string;
     'isFeatured'?: boolean;
-    'label'?: string;
-    'logo'?: string;
-    'name'?: string;
     'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'productId'?: string;
+    'productLabel'?: string;
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
@@ -1559,14 +1557,12 @@ declare namespace LocalJSX {
     */
     'authToken'?: string;
     'connection'?: Connection;
-    'description'?: string;
     'isFeatured'?: boolean;
-    'label'?: string;
-    'logo'?: string;
-    'name'?: string;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'productId'?: string;
+    'productLabel'?: string;
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
