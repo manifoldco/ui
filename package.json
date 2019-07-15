@@ -41,6 +41,7 @@
     "lint": "npm run lint:js && npm run lint:css && cd docs && npm run lint",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
+    "now-build": "npm run build-storybook",
     "postinstall": "cd docs && npm i",
     "prepare": "stencil build",
     "publish": "node scripts/publish",
