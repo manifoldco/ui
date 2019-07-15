@@ -15,6 +15,7 @@ export class ManifoldResourcePlan {
           state.data.plan &&
           state.data.product.provider ? (
             <manifold-plan-details
+              scrollLocked={false}
               plan={convertPlan(
                 state.data.plan,
                 state.data.product.id || '',

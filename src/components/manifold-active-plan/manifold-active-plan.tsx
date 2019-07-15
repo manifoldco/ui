@@ -49,6 +49,7 @@ export class ManifoldActivePlan {
         selectPlan={this.selectPlan}
       />,
       <manifold-plan-details
+        scrollLocked={true}
         isExistingResource={this.isExistingResource}
         plan={this.selectedPlan}
         product={this.product}

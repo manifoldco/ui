@@ -56,6 +56,7 @@ export class ManifoldPlan {
   render() {
     return (
       <manifold-plan-details
+        scrollLocked={false}
         plan={this.plan}
         product={this.product}
       />

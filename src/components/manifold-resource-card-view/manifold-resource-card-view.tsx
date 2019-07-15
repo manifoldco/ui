@@ -9,6 +9,7 @@ import { Gateway } from '../../types/gateway';
 interface EventDetail {
   resourceId?: string;
   resourceLabel?: string;
+  resourceName?: string;
 }
 
 const AVAILABLE = 'available';
@@ -28,6 +29,7 @@ export class ManifoldResourceCardView {
   @Prop() authToken?: string;
 
   @Prop() label?: string;
+  @Prop() name?: string;
   @Prop() logo?: string;
   @Prop() resourceId?: string;
   @Prop() resourceStatus?: string;
@@ -89,6 +91,7 @@ export class ManifoldResourceCardView {
       const detail: EventDetail = {
         resourceId: this.resourceId,
         resourceLabel: this.label,
+        resourceName: this.name,
       };
       this.resourceClick.emit(detail);
     }
@@ -107,7 +110,7 @@ export class ManifoldResourceCardView {
         onClick={this.onClick}
       >
         <h3 class="name" itemprop="name">
-          {this.label}
+          {this.name || this.label}
         </h3>
         <div class="status-box">
           <div class="status" data-status={this.status}>

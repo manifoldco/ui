@@ -4,10 +4,14 @@ path: /data/provision-button
 example: |
   <label for="my-provision-button">Resource Name</label>
   <input id="my-provision-button" value="my-resource"></input>
-  <manifold-data-provision-button resource-name="my-resource">
+  <manifold-data-provision-button resource-label="my-resource">
     🚀 Provision Business plan on Prefab.cloud
   </manifold-data-provision-button>
 ---
+
+<manifold-toast alert-type="warning">
+  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
+</manifold-toast>
 
 # 🔒 Provision Button
 
@@ -21,7 +25,7 @@ selector](#manifold-plan-selector) component. You could do that like so:
 
 ```js
 const userId = ''; // Note: must be set
-const resourceName = ''; // Can be obtained from your own input
+const resourceLabel = ''; // Can be obtained from your own input
 
 function updateButton({ detail: { features, planLabel, productLabel, regionName } }) {
   const provisionButton = document.querySelector('manifold-data-provision-button');
@@ -29,7 +33,7 @@ function updateButton({ detail: { features, planLabel, productLabel, regionName 
   provisionButton.planLabel = planLabel;
   provisionButton.productLabel = productLabel;
   provisionButton.regionName = regionName;
-  provisionButton.resourceName = resourceName;
+  provisionButton.resourceLabel = resourceLabel;
 
   provisionButton.ownerId = userId;
 }
@@ -57,26 +61,26 @@ Set the CTA text by adding anything between the opening and closing tags:
 For validation, error, and success messages, it will emit custom events.
 
 ```js
-document.addEventListener('manifold-provisionButton-click', ({ detail: { resourceName } }) =>
-  console.info(`⌛ Provisioning ${resourceName} …`)
+document.addEventListener('manifold-provisionButton-click', ({ detail: { resourceLabel } }) =>
+  console.info(`⌛ Provisioning ${resourceLabel} …`)
 );
 document.addEventListener(
   'manifold-provisionButton-success',
-  ({ detail: { createdAt, resourceName } }) =>
-    alert(`🚀 ${resourceName} provisioned successfully on ${createdAt}!`)
+  ({ detail: { createdAt, resourceLabel } }) =>
+    alert(`🚀 ${resourceLabel} provisioned successfully on ${createdAt}!`)
 );
 document.addEventListener('manifold-provisionButton-error', ({ detail }) => console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceName: "auauau"}
 document.addEventListener('manifold-provisionButton-invalid', ({ detail }) => console.log(detail));
-// {resourceName: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
+// {resourceLabel: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
 ```
 
-| Name                               |                       Returns                        | Description                                                                                                                 |
-| :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-provisionButton-click`   |                    `resourceName`                    | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-provisionButton-success` | `message`, `resourceName`, `resourceId`, `createdAt` | Successful provision. Returns name, along with a resource ID                                                                |
-| `manifold-provisionButton-error`   |              `message`, `resourceName`               | Erred provision, along with information on what went wrong.                                                                 |
-| `manifold-provisionButton-invalid` |              `message`, `resourceName`               | Fires if the resource name isn’t named properly.                                                                            |
+| Name                               |                       Returns                         | Description                                                                                                                 |
+| :--------------------------------- | :--------------------------------------------------:  | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-provisionButton-click`   |                    `resourceLabel`                    | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-provisionButton-success` | `message`, `resourceLabel`, `resourceId`, `createdAt` | Successful provision. Returns name, along with a resource ID                                                                |
+| `manifold-provisionButton-error`   |              `message`, `resourceLabel`               | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-provisionButton-invalid` |              `message`, `resourceLabel`               | Fires if the resource name isn’t named properly.                                                                            |
 
 ## Styling
 

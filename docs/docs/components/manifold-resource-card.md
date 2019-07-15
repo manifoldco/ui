@@ -2,7 +2,7 @@
 title: '🔒 Resource Card'
 path: '/components/manifold-resource-card'
 example: |
-  <manifold-resource-card-view label="my-resource" logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" resource-id="1234" resource-status="available" />
+  <manifold-resource-card-view label="my-resource" name="my resource" logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" resource-id="1234" resource-status="available" />
 ---
 
 # 🔒 Resource Card
@@ -65,6 +65,7 @@ The underlying `<manifold-resource-card-view />` component may be used to displa
 ```html
 <manifold-resource-card-view
   label="my-resource"
+  name="my resource"
   logo="http://logo.png"
   resource-id="123456"
   resource-status="available"
@@ -84,6 +85,7 @@ The `<manifold-resource-card-view />` can display a loading status rather than t
 ```html
 <manifold-resource-card-view
   label="my-resource"
+  name="my resource"
   logo="http://logo.png"
   resource-id="123456"
   resource-status="unknown"

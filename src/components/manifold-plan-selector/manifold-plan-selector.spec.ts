@@ -22,13 +22,13 @@ describe('<manifold-plan-selector>', () => {
   });
 
   it('fetches resource on load by resource name, if given', () => {
-    const resourceName = 'my-resource';
+    const resourceLabel = 'my-resource';
 
     const planSelector = new ManifoldPlanSelector();
     planSelector.fetchResource = jest.fn();
-    planSelector.resourceName = resourceName;
+    planSelector.resourceLabel = resourceLabel;
     planSelector.componentWillLoad();
-    expect(planSelector.fetchResource).toHaveBeenCalledWith(resourceName);
+    expect(planSelector.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('fetches resource on change by resource name, if given', () => {
@@ -36,7 +36,7 @@ describe('<manifold-plan-selector>', () => {
 
     const planSelector = new ManifoldPlanSelector();
     planSelector.fetchResource = jest.fn();
-    planSelector.resourceName = 'old-resource';
+    planSelector.resourceLabel = 'old-resource';
     planSelector.resourceChange(newResource);
     expect(planSelector.fetchResource).toHaveBeenCalledWith(newResource);
   });
