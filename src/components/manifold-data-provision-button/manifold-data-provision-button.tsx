@@ -25,7 +25,7 @@ interface ErrorMessage {
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** Product to provision (slug) */
@@ -64,6 +64,10 @@ export class ManifoldDataProvisionButton {
   }
 
   async provision() {
+    if (!this.connection) {
+      return;
+    }
+
     if (!this.ownerId) {
       console.error('Property “ownerId” is missing');
       return;
@@ -140,7 +144,7 @@ export class ManifoldDataProvisionButton {
 
   async fetchProductPlanId(productLabel: string, planLabel?: string) {
     // TODO: Add region fetching too
-    if (!productLabel) {
+    if (!productLabel || !this.connection) {
       return;
     }
 

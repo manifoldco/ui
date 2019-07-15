@@ -9,7 +9,7 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldDataProductName {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -25,11 +25,19 @@ export class ManifoldDataProductName {
   }
 
   componentWillLoad() {
-    if (this.productLabel) this.fetchProduct(this.productLabel);
-    if (this.resourceLabel) this.fetchResource(this.resourceLabel);
+    if (this.productLabel) {
+      this.fetchProduct(this.productLabel);
+    }
+    if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
+    }
   }
 
   fetchProduct = async (productLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.productName = undefined;
     const { catalog } = this.connection;
     const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth(this.authToken));
@@ -38,6 +46,10 @@ export class ManifoldDataProductName {
   };
 
   fetchResource = async (resourceName: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.productName = undefined;
     const { gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));

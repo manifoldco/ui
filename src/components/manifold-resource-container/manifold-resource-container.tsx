@@ -8,7 +8,7 @@ import { Connection, connections } from '../../utils/connections';
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** Which resource does this belong to? */
@@ -27,6 +27,10 @@ export class ManifoldResourceContainer {
   }
 
   fetchResource = async (resourceLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.loading = true;
     const { gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));

@@ -26,7 +26,7 @@ interface ErrorMessage {
 export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** The label of the resource to deprovision */
@@ -52,7 +52,7 @@ export class ManifoldDataDeprovisionButton {
   }
 
   async deprovision() {
-    if (!this.resourceId) {
+    if (!this.resourceId || !this.connection) {
       console.error('Property “resourceId” is missing');
       return;
     }
@@ -93,6 +93,10 @@ export class ManifoldDataDeprovisionButton {
   }
 
   async fetchResourceId(resourceLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     const resourceResp = await fetch(
       `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
       withAuth(this.authToken)

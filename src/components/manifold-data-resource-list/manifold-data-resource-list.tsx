@@ -24,7 +24,7 @@ interface RealResourceBody extends Marketplace.ResourceBody {
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** Disable auto-updates? */
@@ -38,14 +38,22 @@ export class ManifoldDataResourceList {
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
-    if (!this.paused) this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    if (!this.paused) {
+      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    }
   }
 
   componentDidUnload() {
-    if (this.interval) window.clearInterval(this.interval);
+    if (this.interval) {
+      window.clearInterval(this.interval);
+    }
   }
 
   fetchResources() {
+    if (!this.connection) {
+      return;
+    }
+
     fetch(`${this.connection.marketplace}/resources/?me`, withAuth(this.authToken))
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {

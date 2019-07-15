@@ -26,7 +26,7 @@ interface ErrorMessage {
 export class ManifoldDataManageButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** Name of resource */
@@ -46,10 +46,16 @@ export class ManifoldDataManageButton {
   }
 
   componentWillLoad() {
-    if (this.resourceLabel) this.fetchResourceId(this.resourceLabel);
+    if (this.resourceLabel) {
+      this.fetchResourceId(this.resourceLabel);
+    }
   }
 
   async fetchResourceId(resourceLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     const { gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth());
     const resource: Gateway.Resource = await response.json();
@@ -57,6 +63,10 @@ export class ManifoldDataManageButton {
   }
 
   async update() {
+    if (!this.connection) {
+      return;
+    }
+
     if (typeof this.features !== 'object') {
       console.error('Property “features” is missing!');
       return;

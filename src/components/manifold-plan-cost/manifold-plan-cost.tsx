@@ -8,7 +8,7 @@ import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
@@ -49,10 +49,16 @@ export class ManifoldPlanCost {
   }
 
   calculateCost() {
+    if (!this.connection) {
+      return null;
+    }
+
     const allFeatures = { ...initialFeatures(this.allFeatures), ...this.selectedFeatures };
 
     // Fetch base cost from cost API (and cancel in-flight reqs)
-    if (!this.planId) return Promise.resolve();
+    if (!this.planId) {
+      return Promise.resolve();
+    }
     // Hide display while calculating
     this.baseCost = undefined;
     if (this.controller) this.controller.abort(); // If a request is in flight, cancel it
