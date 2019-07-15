@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.0]
 ### Deprecated
 - Deprecated the `resource-name` attribute in all the resource components for `resource-label` as to be more consistent with the other components and our other codebases.
 
