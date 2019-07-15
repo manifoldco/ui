@@ -8,7 +8,7 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** _(optional)_ Hide the CTA on the left? */
@@ -26,6 +26,10 @@ export class ManifoldProduct {
   }
 
   fetchProduct = async (productLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     const productResp = await fetch(
       `${this.connection.catalog}/products?label=${productLabel}`,
       withAuth(this.authToken)

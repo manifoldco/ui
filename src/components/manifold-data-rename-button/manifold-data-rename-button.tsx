@@ -41,7 +41,7 @@ interface ErrorMessage {
 export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** The label of the resource to rename */
@@ -72,6 +72,10 @@ export class ManifoldDataRenameButton {
   }
 
   async rename() {
+    if (!this.connection) {
+      return;
+    }
+
     if (!this.resourceId) {
       console.error('Property “resourceId” is missing');
       return;
@@ -146,6 +150,10 @@ export class ManifoldDataRenameButton {
   }
 
   async fetchResourceId(resourceLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     const resourceResp = await fetch(
       `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
       withAuth(this.authToken)

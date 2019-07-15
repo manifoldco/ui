@@ -8,7 +8,7 @@ import { Connection, connections } from '../../utils/connections';
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   @Prop() resourceLabel: string = '';
@@ -29,7 +29,7 @@ export class ManifoldCredentials {
   }
 
   fetchCredentials = async () => {
-    if (!this.resourceId) {
+    if (!this.connection || !this.resourceId) {
       return;
     }
 
@@ -44,6 +44,10 @@ export class ManifoldCredentials {
   };
 
   async fetchResourceId(resourceLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     const resourceResp = await fetch(
       `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
       withAuth(this.authToken)

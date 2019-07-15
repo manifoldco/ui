@@ -75,7 +75,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'resourceId'?: string;
     'resourceLabel': string;
   }
@@ -87,7 +87,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'loading'?: boolean;
     'resourceId'?: string;
     /**
@@ -117,7 +117,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'features'?: Gateway.FeatureMap;
     'planId'?: string;
     'productId'?: string;
@@ -139,7 +139,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -157,7 +157,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -175,7 +175,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'ownerId'?: string;
     /**
     * Plan to provision (slug)
@@ -202,7 +202,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -225,7 +225,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * Disable auto-updates?
     */
@@ -353,7 +353,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
     */
@@ -370,7 +370,7 @@ export namespace Components {
     */
     'authToken'?: string;
     'compact'?: boolean;
-    'connection': Connection;
+    'connection'?: Connection;
     'customizable'?: boolean;
     'planId': string;
     'selectedFeatures': Gateway.FeatureMap;
@@ -397,7 +397,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -419,7 +419,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
@@ -439,7 +439,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'authToken'?: string;
-    'connection': Connection;
+    'connection'?: Connection;
     'name': string;
     'preferredRegions'?: string[];
     'value'?: string;
@@ -478,7 +478,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * Which resource does this belong to?
     */

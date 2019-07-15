@@ -11,7 +11,7 @@ export class ManifoldDataProductLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -32,6 +32,10 @@ export class ManifoldDataProductLogo {
   }
 
   fetchProduct = async (productLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.product = undefined;
     const { catalog } = this.connection;
     const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth(this.authToken));
@@ -40,6 +44,10 @@ export class ManifoldDataProductLogo {
   };
 
   fetchResource = async (resourceLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.product = undefined;
     const { catalog, gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
