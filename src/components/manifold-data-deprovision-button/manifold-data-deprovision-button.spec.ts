@@ -125,12 +125,12 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.successEvent.emit = jest.fn();
+      instance.success.emit = jest.fn();
 
       await instance.deprovision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
-      expect(instance.successEvent.emit).toHaveBeenCalledWith({
+      expect(instance.success.emit).toHaveBeenCalledWith({
         message: 'test successfully deprovisioned',
         resourceLabel: 'test',
         resourceId: Resource.id,
@@ -155,12 +155,12 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.errorEvent.emit = jest.fn();
+      instance.error.emit = jest.fn();
 
       await instance.deprovision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
-      expect(instance.errorEvent.emit).toHaveBeenCalledWith({
+      expect(instance.error.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
         resourceLabel: 'test',
         resourceId: Resource.id,

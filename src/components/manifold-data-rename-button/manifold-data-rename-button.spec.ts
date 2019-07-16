@@ -126,12 +126,12 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataRenameButton;
-      instance.successEvent.emit = jest.fn();
+      instance.success.emit = jest.fn();
 
       await instance.rename();
 
       expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(true);
-      expect(instance.successEvent.emit).toHaveBeenCalledWith({
+      expect(instance.success.emit).toHaveBeenCalledWith({
         message: `${Resource.body.label} successfully renamed`,
         resourceLabel: Resource.body.label,
         newLabel: 'test2',
@@ -158,12 +158,12 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataRenameButton;
-      instance.errorEvent.emit = jest.fn();
+      instance.error.emit = jest.fn();
 
       await instance.rename();
 
       expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(true);
-      expect(instance.errorEvent.emit).toHaveBeenCalledWith({
+      expect(instance.error.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
         resourceLabel: Resource.body.label,
         newLabel: 'test2',
