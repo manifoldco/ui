@@ -8,43 +8,46 @@ import { Marketplace } from '../../types/marketplace';
 /* eslint-disable no-console */
 
 interface ClickMessage {
-  newName: string;
-  resourceName: string;
+  newLabel: string;
+  resourceLabel: string;
   resourceId: string;
 }
 
 interface InvalidMessage {
   message: string;
-  newName: string;
-  resourceName: string;
+  newLabel: string;
+  resourceLabel: string;
   resourceId: string;
 }
 
 interface SuccessMessage {
   message: string;
-  newName: string;
-  resourceName: string;
+  newLabel: string;
+  resourceLabel: string;
   resourceId: string;
 }
 
 interface ErrorMessage {
   message: string;
-  newName: string;
-  resourceName: string;
+  newLabel: string;
+  resourceLabel: string;
   resourceId: string;
 }
 
-@Component({ tag: 'manifold-data-rename-button' })
+@Component({
+  tag: 'manifold-data-rename-button',
+  shadow: true,
+})
 export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** The label of the resource to rename */
-  @Prop() resourceName?: string;
-  /** The new name to give to the resource */
-  @Prop() newName: string = '';
+  @Prop() resourceLabel?: string;
+  /** The new label to give to the resource */
+  @Prop() newLabel: string = '';
   /** The id of the resource to rename, will be fetched if not set */
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
@@ -56,40 +59,44 @@ export class ManifoldDataRenameButton {
   @Event({ eventName: 'manifold-renameButton-success', bubbles: true })
   successEvent: EventEmitter;
 
-  @Watch('resourceName') nameChange(newName: string) {
+  @Watch('resourceLabel') labelChange(newLabel: string) {
     if (!this.resourceId) {
-      this.fetchResourceId(newName);
+      this.fetchResourceId(newLabel);
     }
   }
 
   componentWillLoad() {
-    if (this.resourceName && !this.resourceId) {
-      this.fetchResourceId(this.resourceName);
+    if (this.resourceLabel && !this.resourceId) {
+      this.fetchResourceId(this.resourceLabel);
     }
   }
 
   async rename() {
+    if (!this.connection) {
+      return;
+    }
+
     if (!this.resourceId) {
       console.error('Property “resourceId” is missing');
       return;
     }
 
-    if (this.newName.length < 3) {
+    if (this.newLabel.length < 3) {
       const message: InvalidMessage = {
         message: 'Must be at least 3 characters.',
-        resourceName: this.resourceName || '',
-        newName: this.newName,
+        resourceLabel: this.resourceLabel || '',
+        newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
       this.invalidEvent.emit(message);
       return;
     }
-    if (!this.validate(this.newName)) {
+    if (!this.validate(this.newLabel)) {
       const message: InvalidMessage = {
         message:
           'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-        resourceName: this.resourceName || '',
-        newName: this.newName,
+        resourceLabel: this.resourceLabel || '',
+        newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
       this.invalidEvent.emit(message);
@@ -97,20 +104,20 @@ export class ManifoldDataRenameButton {
     }
 
     const clickMessage: ClickMessage = {
-      resourceName: this.resourceName || '',
-      newName: this.newName,
+      resourceLabel: this.resourceLabel || '',
+      newLabel: this.newLabel,
       resourceId: this.resourceId,
     };
     this.clickEvent.emit(clickMessage);
 
     const body: Marketplace.PublicUpdateResource = {
       body: {
-        name: this.newName,
-        label: this.newName,
+        name: this.newLabel,
+        label: this.newLabel,
       },
     };
     const response = await fetch(
-      `${this.connection.marketplace}/resource/${this.resourceId}`,
+      `${this.connection.marketplace}/resources/${this.resourceId}`,
       withAuth(this.authToken, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -121,9 +128,9 @@ export class ManifoldDataRenameButton {
     // If successful, this will return 200 and stop here
     if (response.status >= 200 && response.status < 300) {
       const success: SuccessMessage = {
-        message: `${this.resourceName} successfully renamed`,
-        resourceName: this.resourceName || '',
-        newName: this.newName,
+        message: `${this.resourceLabel} successfully renamed`,
+        resourceLabel: this.resourceLabel || '',
+        newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
       this.successEvent.emit(success);
@@ -134,23 +141,27 @@ export class ManifoldDataRenameButton {
       const message = Array.isArray(result) ? result[0].message : result.message;
       const error: ErrorMessage = {
         message,
-        resourceName: this.resourceName || '',
-        newName: this.newName,
+        resourceLabel: this.resourceLabel || '',
+        newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
       this.errorEvent.emit(error);
     }
   }
 
-  async fetchResourceId(resourceName: string) {
+  async fetchResourceId(resourceLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     const resourceResp = await fetch(
-      `${this.connection.marketplace}/resources/?me&label=${resourceName}`,
+      `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
       withAuth(this.authToken)
     );
     const resources: Marketplace.Resource[] = await resourceResp.json();
 
     if (!Array.isArray(resources) || !resources.length) {
-      console.error(`${resourceName} product not found`);
+      console.error(`${resourceLabel} product not found`);
       return;
     }
 

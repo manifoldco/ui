@@ -54,6 +54,7 @@ describe('<manifold-resource-list>', () => {
     expect(resourceList.resources).toEqual([
       {
         id: Resource.id,
+        name: Resource.body.name,
         label: Resource.body.label,
         logo: Product.body.logo_url,
         status: 'provision',

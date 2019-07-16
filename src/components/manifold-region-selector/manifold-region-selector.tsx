@@ -11,7 +11,7 @@ export class ManifoldRegionSelector {
   @Element() el: HTMLElement;
   @Prop() allowedRegions: string[] = [];
   @Prop() ariaLabel: string;
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   @Prop() name: string;
@@ -22,6 +22,10 @@ export class ManifoldRegionSelector {
   @Event() updateValue: EventEmitter;
 
   async componentWillLoad() {
+    if (!this.connection) {
+      return;
+    }
+
     const response = await fetch(`${this.connection.catalog}/regions`, withAuth(this.authToken));
     const regions: Catalog.Region[] = await response.json();
     // Sorting is important, otherwise the region selector is in a different order every plan

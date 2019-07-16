@@ -27,6 +27,13 @@
   font-family: var(--manifold-font-family);
 }
 
+.wrapper {
+  &[data-scroll-locked] {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
 .card {
   padding-top: var(--padding);
   padding-right: var(--padding);
@@ -95,11 +102,6 @@
   font-size: var(--manifold-font-d2);
   letter-spacing: 0.0625em;
   text-transform: uppercase;
-}
-
-.scroll {
-  position: sticky;
-  top: 1.5rem;
 }
 
 .features {

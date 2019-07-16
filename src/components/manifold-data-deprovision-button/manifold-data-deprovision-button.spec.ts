@@ -8,46 +8,46 @@ import { ManifoldDataDeprovisionButton } from './manifold-data-deprovision-butto
 
 describe('<manifold-data-provision-button>', () => {
   it('fetches the resource id on load if not set', () => {
-    const resourceName = 'test-resource';
+    const resourceLabel = 'test-resource';
 
     const provisionButton = new ManifoldDataDeprovisionButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = resourceName;
+    provisionButton.resourceLabel = resourceLabel;
     provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
+    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('does not fetch the resource id on load if set', () => {
-    const resourceName = 'test-resource';
+    const resourceLabel = 'test-resource';
 
     const provisionButton = new ManifoldDataDeprovisionButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = resourceName;
-    provisionButton.resourceId = resourceName;
+    provisionButton.resourceLabel = resourceLabel;
+    provisionButton.resourceId = resourceLabel;
     provisionButton.componentWillLoad();
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 
   it('fetches resource id on change if not set', () => {
-    const resourceName = 'new-resource';
+    const resourceLabel = 'new-resource';
 
     const provisionButton = new ManifoldDataDeprovisionButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = 'old-resource';
+    provisionButton.resourceLabel = 'old-resource';
 
-    provisionButton.nameChange(resourceName);
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
+    provisionButton.labelChange(resourceLabel);
+    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('does not resource id on change if set', () => {
-    const resourceName = 'new-resource';
+    const resourceLabel = 'new-resource';
 
     const provisionButton = new ManifoldDataDeprovisionButton();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = 'old-resource';
+    provisionButton.resourceLabel = 'old-resource';
     provisionButton.resourceId = '1234';
 
-    provisionButton.nameChange(resourceName);
+    provisionButton.labelChange(resourceLabel);
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 
@@ -57,9 +57,9 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     it('will fetch the resource id', async () => {
-      const resourceName = 'new-resource';
+      const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`, [
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
         Resource,
       ]);
 
@@ -67,13 +67,13 @@ describe('<manifold-data-provision-button>', () => {
         components: [ManifoldDataDeprovisionButton],
         html: `
           <manifold-data-deprovision-button
-            resource-name="${resourceName}"
+            resource-label="${resourceLabel}"
           >Deprovision</manifold-data-deprovision-button>
         `,
       });
 
       expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`)
+        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
       const root = page.rootInstance as ManifoldDataDeprovisionButton;
@@ -81,21 +81,21 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     it('will do nothing on a fetch error', async () => {
-      const resourceName = 'new-resource';
+      const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceName}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
         html: `
           <manifold-data-deprovision-button
-            resource-name="${resourceName}"
+            resource-label="${resourceLabel}"
           >Deprovision</manifold-data-deprovision-button>
         `,
       });
 
       expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`)
+        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
       const root = page.rootInstance as ManifoldDataDeprovisionButton;
@@ -119,7 +119,7 @@ describe('<manifold-data-provision-button>', () => {
         components: [ManifoldDataDeprovisionButton],
         html: `
           <manifold-data-deprovision-button
-            resource-name="test"
+            resource-label="test"
           >Deprovision</manifold-data-deprovision-button>
         `,
       });
@@ -132,7 +132,7 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
       expect(instance.successEvent.emit).toHaveBeenCalledWith({
         message: 'test successfully deprovisioned',
-        resourceName: 'test',
+        resourceLabel: 'test',
         resourceId: Resource.id,
       });
     });
@@ -149,7 +149,7 @@ describe('<manifold-data-provision-button>', () => {
         components: [ManifoldDataDeprovisionButton],
         html: `
           <manifold-data-deprovision-button
-            resource-name="test"
+            resource-label="test"
           >Provision</manifold-data-deprovision-button>
         `,
       });
@@ -162,7 +162,7 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
       expect(instance.errorEvent.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
-        resourceName: 'test',
+        resourceLabel: 'test',
         resourceId: Resource.id,
       });
     });

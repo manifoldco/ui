@@ -22,27 +22,31 @@ export class ManifoldDataProductLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
-  @Prop() resourceName?: string;
+  @Prop() resourceLabel?: string;
   @State() product?: any;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
   }
-  @Watch('resourceName') resourceChange(newResource: string) {
+  @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
   }
 
   componentWillLoad() {
     if (this.productLabel) this.fetchProduct(this.productLabel);
-    if (this.resourceName) this.fetchResource(this.resourceName);
+    if (this.resourceLabel) this.fetchResource(this.resourceLabel);
   }
 
   fetchProduct = async (productLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.product = undefined;
     const variables = { productLabel };
     const { data, error } = await graphqlFetch({ query, variables });
@@ -52,11 +56,15 @@ export class ManifoldDataProductLogo {
     this.product = data.product;
   };
 
-  fetchResource = async (resourceName: string) => {
+  fetchResource = async (resourceLabel: string) => {
+    if (!this.connection) {
+      return;
+    }
+
     this.product = undefined;
     const { catalog, gateway } = this.connection;
     const response = await fetch(
-      `${gateway}/resources/me/${resourceName}`,
+      `${gateway}/resources/me/${resourceLabel}`,
       withAuth(this.authToken)
     );
     const resource: Gateway.Resource = await response.json();
