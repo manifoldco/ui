@@ -3,6 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 import graphqlFetch from '../../utils/graphqlFetch';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
+import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
@@ -29,7 +30,7 @@ export class ManifoldDataProductLogo {
   @Prop() productLabel?: string;
   /** Look up product name from resource */
   @Prop() resourceLabel?: string;
-  @State() product?: any;
+  @State() product?: Product;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
   }
@@ -77,7 +78,7 @@ export class ManifoldDataProductLogo {
       displayName: product.body.name,
       logoUrl: product.body.logo_url,
     };
-    this.product = newProduct;
+    this.product = newProduct as Product;
   };
 
   render() {
