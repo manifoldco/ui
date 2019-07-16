@@ -19,18 +19,13 @@ interface ErrorMessage {
   resourceId: string;
 }
 
-@Component({
-  tag: 'manifold-data-deprovision-button',
-  shadow: true,
-})
+@Component({ tag: 'manifold-data-deprovision-button' })
 export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
-  /** Which html tag to use as the root for the component */
-  @Prop() as?: 'button' | 'a' = 'button';
   /** The label of the resource to deprovision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
@@ -121,7 +116,7 @@ export class ManifoldDataDeprovisionButton {
   }
 
   render() {
-    return this.as === 'button' ? (
+    return (
       <button
         type="submit"
         onClick={this.handleClick}
@@ -129,10 +124,6 @@ export class ManifoldDataDeprovisionButton {
       >
         <slot />
       </button>
-    ) : (
-      <a onClick={this.handleClick}>
-        <slot />
-      </a>
     );
   }
 }

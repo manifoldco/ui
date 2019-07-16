@@ -16,7 +16,12 @@ a `manifold-resource-container` component with access to the resource label.
   <!--- Your structure goes here --->
 </manifold-resource-container>
 ```
-
+<style>
+  manifold-data-rename-button button, manifold-data-deprovision-button button {
+    border: none;
+    padding: 0;
+  }
+</style>
 <manifold-mock-resource>
   <div style="display: flex; justify-content: space-between; margin-bottom: 1em;">
     <div style="display: flex; align-items: center;">
@@ -24,10 +29,10 @@ a `manifold-resource-container` component with access to the resource label.
       <manifold-resource-status size="small" style="margin-left: 1em;"></manifold-resource-status>
     </div>
     <div>
-      <manifold-resource-rename as="a">
+      <manifold-resource-rename>
         <manifold-button>Rename</manifold-button>
       </manifold-resource-rename>
-      <manifold-resource-deprovision as="a">
+      <manifold-resource-deprovision>
         <manifold-button>Deprovision</manifold-button>
       </manifold-resource-deprovision>
     </div>

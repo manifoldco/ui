@@ -34,18 +34,13 @@ interface ErrorMessage {
   resourceId: string;
 }
 
-@Component({
-  tag: 'manifold-data-rename-button',
-  shadow: true,
-})
+@Component({ tag: 'manifold-data-rename-button' })
 export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
-  /** Which html tag to use as the root for the component */
-  @Prop() as?: 'button' | 'a' = 'button';
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The new label to give to the resource */
@@ -182,7 +177,7 @@ export class ManifoldDataRenameButton {
   }
 
   render() {
-    return this.as === 'button' ? (
+    return (
       <button
         type="submit"
         onClick={this.handleClick}
@@ -190,10 +185,6 @@ export class ManifoldDataRenameButton {
       >
         <slot />
       </button>
-    ) : (
-      <a onClick={this.handleClick}>
-        <slot />
-      </a>
     );
   }
 }

@@ -11,16 +11,6 @@ example: |
 
 An unstyled button for renaming resources. 🔒 Requires authentication.
 
-## As
-
-You can render the component as either a button or an anchor by using the `as` attribute.
-
-```html
-<manifold-data-rename-button resource-label="my-resource" as="a">
-  Rename My Resource
-</manifold-data-provision-button>
-```
-
 ## CTA text
 
 Set the CTA text by adding anything between the opening and closing tags:

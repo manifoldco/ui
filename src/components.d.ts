@@ -81,10 +81,6 @@ export namespace Components {
   }
   interface ManifoldDataDeprovisionButton {
     /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
-    /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'authToken'?: string;
@@ -199,10 +195,6 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldDataRenameButton {
-    /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -499,10 +491,6 @@ export namespace Components {
     'resourceLabel': string;
   }
   interface ManifoldResourceDeprovision {
-    /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
     'data'?: Gateway.Resource;
     'loading': boolean;
   }
@@ -537,10 +525,6 @@ export namespace Components {
     'asCard'?: boolean;
   }
   interface ManifoldResourceRename {
-    /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
     'data'?: Gateway.Resource;
     'loading': boolean;
   }
@@ -1083,10 +1067,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
-    /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'authToken'?: string;
@@ -1211,10 +1191,6 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
-    /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1523,10 +1499,6 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
-    /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
     'data'?: Gateway.Resource;
     'loading'?: boolean;
   }
@@ -1561,10 +1533,6 @@ declare namespace LocalJSX {
     'asCard'?: boolean;
   }
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
-    /**
-    * Which html tag to use as the root for the component
-    */
-    'as'?: 'button' | 'a';
     'data'?: Gateway.Resource;
     'loading'?: boolean;
   }
