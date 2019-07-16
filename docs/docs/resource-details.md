@@ -67,6 +67,28 @@ be stylized or be given children.
 </manifold-resource-container>
 ```
 
+### Events
+
+For validation, error, and success messages, it will emit custom events.
+
+```js
+document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
+  console.info(`⌛ Derovisioning ${resourceLabel} …`)
+);
+document.addEventListener(
+  'manifold-deprovisionButton-success',
+  ({ detail: { resourceLabel } }) =>alert(`${resourceLabel} deprovisioned successfully!`)
+);
+document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}
+```
+
+| Name                               |                       Returns                        | Description                                                                                                                 |
+| :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-deprovisionButton-click`   |                    `resourceLabel`                 | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-deprovisionButton-success` |     `message`, `resourceId`, `resourceLabel`       | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
+| `manifold-deprovisionButton-error`   |     `message`, `resourceId`, `resourceLabel`       | Erred provision, along with information on what went wrong.     
+
 ## The resource rename Button
 
 The [`manifold-data-rename-button`](/data/rename-button) component can be used inside the container without any attribute by
@@ -79,6 +101,31 @@ be stylized or be given children.
   <manifold-resource-rename>Rename</manifold-resource-rename>
 </manifold-resource-container>
 ```
+
+### Events
+
+For validation, error, and success messages, it will emit custom events.
+
+```js
+document.addEventListener('manifold-renameButton-click', ({ detail: { resourceLabel, newLabel } }) =>
+  console.info(`⌛ Renaming ${resourceLabel} to ${newLabel} …`)
+);
+document.addEventListener(
+  'manifold-renameButton-success',
+  ({ detail: { resourceLabel, newLabel } }) => alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
+);
+document.addEventListener('manifold-renameButton-error', ({ detail }) => console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
+document.addEventListener('manifold-renameButton-invalid', ({ detail }) => console.log(detail));
+// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
+```
+
+| Name                            |                       Returns                            | Description                                                                                                                 |
+| :-------------------------------| :------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-renameButton-click`   |       `resourceId`, `resourceLabel`, `newLabel`          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-renameButton-success` |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
+| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Erred rename, along with information on what went wrong.                                                                    |
+| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Invalid renaming, along with information on what went wrong. 
 
 ## The resource product details
 
