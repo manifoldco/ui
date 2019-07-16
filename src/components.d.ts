@@ -527,6 +527,10 @@ export namespace Components {
   interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
     'loading': boolean;
+    /**
+    * The new label to give to the resource
+    */
+    'newLabel': string;
   }
   interface ManifoldResourceStatus {
     'size'?: 'small' | 'medium';
@@ -1077,7 +1081,7 @@ declare namespace LocalJSX {
     'loading'?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
+    'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
@@ -1501,6 +1505,9 @@ declare namespace LocalJSX {
   interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
+    'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
@@ -1535,6 +1542,14 @@ declare namespace LocalJSX {
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
+    /**
+    * The new label to give to the resource
+    */
+    'newLabel'?: string;
+    'onManifold-renameButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
+    'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
     'size'?: 'small' | 'medium';

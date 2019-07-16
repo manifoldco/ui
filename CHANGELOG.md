@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- Changed the deprovision and rename button to not include a shadow dom root, they can now be styled from external stylesheets.
+
+## [0.4.1]
+### Changed
 - Made all the internal attributes optional on the components to make sure TypeScript does not complain.
 
 ## [0.4.0]

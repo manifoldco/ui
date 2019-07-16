@@ -125,12 +125,12 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.successEvent.emit = jest.fn();
+      instance.success.emit = jest.fn();
 
       await instance.deprovision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
-      expect(instance.successEvent.emit).toHaveBeenCalledWith({
+      expect(instance.success.emit).toHaveBeenCalledWith({
         message: 'test successfully deprovisioned',
         resourceLabel: 'test',
         resourceId: Resource.id,
@@ -155,16 +155,56 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.errorEvent.emit = jest.fn();
+      instance.error.emit = jest.fn();
 
       await instance.deprovision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
-      expect(instance.errorEvent.emit).toHaveBeenCalledWith({
+      expect(instance.error.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
         resourceLabel: 'test',
         resourceId: Resource.id,
       });
+    });
+
+    it('will do nothing if still loading', async () => {
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="test"
+          >Provision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
+      instance.loading = true;
+
+      await instance.deprovision();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+    });
+
+    it('will do nothing if no resourceId is provided', async () => {
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="test"
+          >Provision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
+      instance.resourceId = undefined;
+
+      await instance.deprovision();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
     });
   });
 });

@@ -1,0 +1,11 @@
+overwrite: true
+schema: 'https://api.manifold.co/graphql'
+documents: '{,!(node_modules)/**/}*.graphql'
+generates:
+  src/types/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+  src/spec/graphql.schema.json:
+    plugins:
+      - 'introspection'
