@@ -30,11 +30,9 @@ export class ManifoldDataDeprovisionButton {
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
-  @Event({ eventName: 'manifold-deprovisionButton-click', bubbles: true })
-  clickEvent: EventEmitter;
-  @Event({ eventName: 'manifold-deprovisionButton-error', bubbles: true }) errorEvent: EventEmitter;
-  @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
-  successEvent: EventEmitter;
+  @Event({ eventName: 'manifold-deprovisionButton-click', bubbles: true }) click: EventEmitter;
+  @Event({ eventName: 'manifold-deprovisionButton-error', bubbles: true }) error: EventEmitter;
+  @Event({ eventName: 'manifold-deprovisionButton-success', bubbles: true }) success: EventEmitter;
 
   @Watch('resourceLabel') labelChange(newLabel: string) {
     if (!this.resourceId) {
@@ -59,7 +57,7 @@ export class ManifoldDataDeprovisionButton {
     }
 
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
-    this.clickEvent.emit({
+    this.click.emit({
       resourceId: this.resourceId,
       resourceLabel: this.resourceLabel || '',
     });
@@ -78,7 +76,7 @@ export class ManifoldDataDeprovisionButton {
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
-      this.successEvent.emit(success);
+      this.success.emit(success);
     } else {
       const body = await response.json();
 
@@ -89,7 +87,7 @@ export class ManifoldDataDeprovisionButton {
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
-      this.errorEvent.emit(error);
+      this.error.emit(error);
     }
   }
 

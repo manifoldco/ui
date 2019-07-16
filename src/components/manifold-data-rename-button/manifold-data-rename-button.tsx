@@ -48,13 +48,10 @@ export class ManifoldDataRenameButton {
   /** The id of the resource to rename, will be fetched if not set */
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
-  @Event({ eventName: 'manifold-renameButton-click', bubbles: true })
-  clickEvent: EventEmitter;
-  @Event({ eventName: 'manifold-renameButton-invalid', bubbles: true })
-  invalidEvent: EventEmitter;
-  @Event({ eventName: 'manifold-renameButton-error', bubbles: true }) errorEvent: EventEmitter;
-  @Event({ eventName: 'manifold-renameButton-success', bubbles: true })
-  successEvent: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-click', bubbles: true }) click: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-invalid', bubbles: true }) invalid: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-error', bubbles: true }) error: EventEmitter;
+  @Event({ eventName: 'manifold-renameButton-success', bubbles: true }) success: EventEmitter;
 
   @Watch('resourceLabel') labelChange(newLabel: string) {
     if (!this.resourceId) {
@@ -85,7 +82,7 @@ export class ManifoldDataRenameButton {
         newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
-      this.invalidEvent.emit(message);
+      this.invalid.emit(message);
       return;
     }
     if (!this.validate(this.newLabel)) {
@@ -96,7 +93,7 @@ export class ManifoldDataRenameButton {
         newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
-      this.invalidEvent.emit(message);
+      this.invalid.emit(message);
       return;
     }
 
@@ -105,7 +102,7 @@ export class ManifoldDataRenameButton {
       newLabel: this.newLabel,
       resourceId: this.resourceId,
     };
-    this.clickEvent.emit(clickMessage);
+    this.click.emit(clickMessage);
 
     const body: Marketplace.PublicUpdateResource = {
       body: {
@@ -130,7 +127,7 @@ export class ManifoldDataRenameButton {
         newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
-      this.successEvent.emit(success);
+      this.success.emit(success);
     } else {
       const result = await response.json();
 
@@ -142,7 +139,7 @@ export class ManifoldDataRenameButton {
         newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
-      this.errorEvent.emit(error);
+      this.error.emit(error);
     }
   }
 
