@@ -3,10 +3,7 @@ import { h, Component, Prop } from '@stencil/core';
 import ResourceTunnel from '../../data/resource';
 import { Gateway } from '../../types/gateway';
 
-@Component({
-  tag: 'manifold-resource-rename',
-  shadow: true,
-})
+@Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;

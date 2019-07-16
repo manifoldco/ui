@@ -34,10 +34,7 @@ interface ErrorMessage {
   resourceId: string;
 }
 
-@Component({
-  tag: 'manifold-data-rename-button',
-  shadow: true,
-})
+@Component({ tag: 'manifold-data-rename-button' })
 export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -172,11 +169,18 @@ export class ManifoldDataRenameButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
+  handleClick() {
+    if (!this.resourceId && !this.loading) {
+      return;
+    }
+    this.rename();
+  }
+
   render() {
     return (
       <button
         type="submit"
-        onClick={() => this.rename()}
+        onClick={this.handleClick}
         disabled={!this.resourceId && !this.loading}
       >
         <slot />

@@ -17,7 +17,7 @@ Set the CTA text by adding anything between the opening and closing tags:
 
 ```html
 <manifold-data-rename-button>
-  Deprovision My Resource
+  Rename My Resource
 </manifold-data-provision-button>
 ```
 
