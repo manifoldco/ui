@@ -7,6 +7,8 @@ import { Gateway } from '../../types/gateway';
 export class ManifoldResourceRename {
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;
+  /** The new label to give to the resource */
+  @Prop() newLabel: string = '';
 
   render() {
     return (
@@ -14,6 +16,7 @@ export class ManifoldResourceRename {
         resourceId={this.data && this.data.id}
         resourceLabel={this.data && this.data.label}
         loading={this.loading}
+        newLabel={this.newLabel}
       >
         <manifold-forward-slot>
           <slot />

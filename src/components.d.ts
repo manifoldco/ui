@@ -527,6 +527,10 @@ export namespace Components {
   interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
     'loading': boolean;
+    /**
+    * The new label to give to the resource
+    */
+    'newLabel': string;
   }
   interface ManifoldResourceStatus {
     'size'?: 'small' | 'medium';
@@ -1535,6 +1539,10 @@ declare namespace LocalJSX {
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
+    /**
+    * The new label to give to the resource
+    */
+    'newLabel'?: string;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
     'size'?: 'small' | 'medium';
