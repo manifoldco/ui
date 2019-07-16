@@ -2,17 +2,27 @@ import { newE2EPage } from '@stencil/core/testing';
 
 /* eslint-disable no-param-reassign */
 
-const name = 'my-resource';
+const label = 'my-resource';
+const name = 'my resource';
 const logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png';
 
 describe('<manifold-resource-card>', () => {
-  it('displays label', async () => {
+  it('displays name', async () => {
     const page = await newE2EPage({
-      html: `<manifold-resource-card-view label="${name}" resource-id="test" />`,
+      html: `<manifold-resource-card-view label="${label}" name="${name}" resource-id="test" />`,
     });
     const el = await page.find('manifold-resource-card-view >>> [itemprop="name"]');
 
     expect(el.innerText).toBe(name);
+  });
+
+  it('displays label', async () => {
+    const page = await newE2EPage({
+      html: `<manifold-resource-card-view label="${label}" resource-id="test" />`,
+    });
+    const el = await page.find('manifold-resource-card-view >>> [itemprop="name"]');
+
+    expect(el.innerText).toBe(label);
   });
 
   it('displays logo', async () => {

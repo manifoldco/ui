@@ -3,7 +3,7 @@ import fromJSON from '../../spec/mock/fromJSON';
 
 export const credsHidden = () => {
   const creds = document.createElement('manifold-resource-credentials-view');
-  creds.resourceName = 'test';
+  creds.resourceLabel = 'test';
 
   document.body.appendChild(creds);
 
@@ -12,7 +12,7 @@ export const credsHidden = () => {
 
 export const credsShown = () => {
   const creds = document.createElement('manifold-resource-credentials-view');
-  creds.resourceName = 'test';
+  creds.resourceLabel = 'test';
   creds.credentials = fromJSON(credentials);
 
   document.body.appendChild(creds);

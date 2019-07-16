@@ -9,7 +9,7 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -17,7 +17,7 @@ export class ManifoldPlanSelector {
   /** Specify region order */
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
-  @Prop() resourceName?: string;
+  @Prop() resourceLabel?: string;
   @State() product?: Catalog.Product;
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
@@ -25,7 +25,7 @@ export class ManifoldPlanSelector {
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductByLabel(newProduct);
   }
-  @Watch('resourceName') resourceChange(newResource: string) {
+  @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
   }
   @Watch('regions') regionsChange(newRegions: string) {
@@ -35,14 +35,20 @@ export class ManifoldPlanSelector {
   componentWillLoad() {
     if (this.productLabel) {
       this.fetchProductByLabel(this.productLabel);
-    } else if (this.resourceName) {
-      this.fetchResource(this.resourceName);
+    } else if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
     }
   }
 
   async fetchProductByLabel(productLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     this.product = undefined;
-    if (this.regions) this.parsedRegions = this.parseRegions(this.regions);
+    if (this.regions) {
+      this.parsedRegions = this.parseRegions(this.regions);
+    }
     const { catalog } = this.connection;
     const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth(this.authToken));
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
@@ -51,6 +57,10 @@ export class ManifoldPlanSelector {
   }
 
   async fetchPlans(productId: string) {
+    if (!this.connection) {
+      return;
+    }
+
     this.plans = undefined;
     const { catalog } = this.connection;
     const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth(this.authToken));
@@ -58,14 +68,20 @@ export class ManifoldPlanSelector {
     this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
   }
 
-  async fetchResource(resourceName: string) {
+  async fetchResource(resourceLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     this.resource = undefined;
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceName}`, withAuth(this.authToken));
+    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
     const resource: Gateway.Resource = await response.json();
     this.resource = resource;
-    if (!resource.product) return;
+    if (!resource.product) {
+      return;
+    }
     const productResp = await fetch(`${catalog}/products/${resource.product.id}`, withAuth(this.authToken));
     const product: Catalog.Product = await productResp.json();
     this.product = product;

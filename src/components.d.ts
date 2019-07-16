@@ -19,9 +19,6 @@ import {
   Marketplace,
 } from './types/marketplace';
 import {
-  ResourceState,
-} from './data/resource';
-import {
   Option,
 } from './types/Select';
 
@@ -78,9 +75,9 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'resourceId'?: string;
-    'resourceName': string;
+    'resourceLabel': string;
   }
   interface ManifoldDataDeprovisionButton {
     /**
@@ -90,13 +87,13 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'loading'?: boolean;
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataHasResource {
     /**
@@ -120,7 +117,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'features'?: Gateway.FeatureMap;
     'planId'?: string;
     'productId'?: string;
@@ -128,7 +125,7 @@ export namespace Components {
     /**
     * Name of resource
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataProductLogo {
     /**
@@ -142,7 +139,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -150,7 +147,7 @@ export namespace Components {
     /**
     * Look up product name from resource
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataProductName {
     /**
@@ -160,7 +157,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -168,7 +165,7 @@ export namespace Components {
     /**
     * Look up product name from resource
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataProvisionButton {
     /**
@@ -178,7 +175,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'ownerId'?: string;
     /**
     * Plan to provision (slug)
@@ -193,9 +190,9 @@ export namespace Components {
     */
     'regionName'?: string;
     /**
-    * The name of the resource to provision
+    * The label of the resource to provision
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataRenameButton {
     /**
@@ -205,12 +202,12 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     'loading'?: boolean;
     /**
-    * The new name to give to the resource
+    * The new label to give to the resource
     */
-    'newName': string;
+    'newLabel': string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -218,7 +215,7 @@ export namespace Components {
     /**
     * The label of the resource to rename
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataResourceList {
     /**
@@ -228,7 +225,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * Disable auto-updates?
     */
@@ -356,7 +353,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
     */
@@ -373,7 +370,7 @@ export namespace Components {
     */
     'authToken'?: string;
     'compact'?: boolean;
-    'connection': Connection;
+    'connection'?: Connection;
     'customizable'?: boolean;
     'planId': string;
     'selectedFeatures': Gateway.FeatureMap;
@@ -385,6 +382,7 @@ export namespace Components {
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
+    'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
     'plans'?: Catalog.ExpandedPlan[];
@@ -399,7 +397,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -411,7 +409,7 @@ export namespace Components {
     /**
     * Is this tied to an existing resource?
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldProduct {
     /**
@@ -421,7 +419,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
@@ -441,7 +439,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'authToken'?: string;
-    'connection': Connection;
+    'connection'?: Connection;
     'name': string;
     'preferredRegions'?: string[];
     'value'?: string;
@@ -466,6 +464,7 @@ export namespace Components {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
+    'name'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
@@ -479,19 +478,22 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'connection': Connection;
+    'connection'?: Connection;
     /**
     * Which resource does this belong to?
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldResourceCredentials {}
   interface ManifoldResourceCredentialsView {
     'credentials'?: Marketplace.Credential[];
     'loading': boolean;
-    'resourceName': string;
+    'resourceLabel': string;
   }
-  interface ManifoldResourceDeprovision {}
+  interface ManifoldResourceDeprovision {
+    'data'?: Gateway.Resource;
+    'loading': boolean;
+  }
   interface ManifoldResourceDetails {}
   interface ManifoldResourceDetailsView {
     'data'?: Gateway.Resource;
@@ -522,7 +524,10 @@ export namespace Components {
   interface ManifoldResourceProduct {
     'asCard'?: boolean;
   }
-  interface ManifoldResourceRename {}
+  interface ManifoldResourceRename {
+    'data'?: Gateway.Resource;
+    'loading': boolean;
+  }
   interface ManifoldResourceStatus {
     'size'?: 'small' | 'medium';
   }
@@ -543,13 +548,11 @@ export namespace Components {
     */
     'authToken'?: string;
     'connection'?: Connection;
-    'description'?: string;
     'isFeatured'?: boolean;
-    'label'?: string;
-    'logo'?: string;
-    'name'?: string;
     'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'productId'?: string;
+    'productLabel'?: string;
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
@@ -1060,7 +1063,7 @@ declare namespace LocalJSX {
     */
     'connection'?: Connection;
     'resourceId'?: string;
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     /**
@@ -1079,7 +1082,7 @@ declare namespace LocalJSX {
     /**
     * The label of the resource to deprovision
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
     /**
@@ -1114,7 +1117,7 @@ declare namespace LocalJSX {
     /**
     * Name of resource
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
     /**
@@ -1136,7 +1139,7 @@ declare namespace LocalJSX {
     /**
     * Look up product name from resource
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
     /**
@@ -1154,7 +1157,7 @@ declare namespace LocalJSX {
     /**
     * Look up product name from resource
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
     /**
@@ -1183,9 +1186,9 @@ declare namespace LocalJSX {
     */
     'regionName'?: string;
     /**
-    * The name of the resource to provision
+    * The label of the resource to provision
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
     /**
@@ -1198,9 +1201,9 @@ declare namespace LocalJSX {
     'connection'?: Connection;
     'loading'?: boolean;
     /**
-    * The new name to give to the resource
+    * The new label to give to the resource
     */
-    'newName'?: string;
+    'newLabel'?: string;
     'onManifold-renameButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
@@ -1212,7 +1215,7 @@ declare namespace LocalJSX {
     /**
     * The label of the resource to rename
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
     /**
@@ -1384,6 +1387,7 @@ declare namespace LocalJSX {
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
+    'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
     'plans'?: Catalog.ExpandedPlan[];
@@ -1410,7 +1414,7 @@ declare namespace LocalJSX {
     /**
     * Is this tied to an existing resource?
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
@@ -1466,6 +1470,7 @@ declare namespace LocalJSX {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
+    'name'?: string;
     'onManifold-resource-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
@@ -1484,16 +1489,19 @@ declare namespace LocalJSX {
     /**
     * Which resource does this belong to?
     */
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
   interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
   interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
     'credentials'?: Marketplace.Credential[];
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceName'?: string;
+    'resourceLabel'?: string;
   }
-  interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {}
+  interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
+  }
   interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
     'data'?: Gateway.Resource;
@@ -1524,7 +1532,10 @@ declare namespace LocalJSX {
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
     'asCard'?: boolean;
   }
-  interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {}
+  interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
+  }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
     'size'?: 'small' | 'medium';
   }
@@ -1546,14 +1557,12 @@ declare namespace LocalJSX {
     */
     'authToken'?: string;
     'connection'?: Connection;
-    'description'?: string;
     'isFeatured'?: boolean;
-    'label'?: string;
-    'logo'?: string;
-    'name'?: string;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
+    'product'?: Catalog.Product;
     'productId'?: string;
+    'productLabel'?: string;
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }

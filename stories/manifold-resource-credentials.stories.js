@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../docs/docs/components/manifold-resource-credentials.md';
+import markdown from '../docs/docs/components/manifold-credentials.md';
 
 const credentialsView = `
 <manifold-resource-container resource-name="cms-stage">

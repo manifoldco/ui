@@ -7,6 +7,7 @@ import { Connection, connections } from '../../utils/connections';
 interface EventDetail {
   ownerId?: string;
   resourceId: string;
+  resourceLabel: string;
   resourceName: string;
 }
 
@@ -23,7 +24,7 @@ interface RealResourceBody extends Marketplace.ResourceBody {
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod; // Provided by manifold-connection
+  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** Disable auto-updates? */
@@ -37,14 +38,22 @@ export class ManifoldDataResourceList {
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
-    if (!this.paused) this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    if (!this.paused) {
+      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    }
   }
 
   componentDidUnload() {
-    if (this.interval) window.clearInterval(this.interval);
+    if (this.interval) {
+      window.clearInterval(this.interval);
+    }
   }
 
   fetchResources() {
+    if (!this.connection) {
+      return;
+    }
+
     fetch(`${this.connection.marketplace}/resources/?me`, withAuth(this.authToken))
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {
@@ -60,7 +69,8 @@ export class ManifoldDataResourceList {
       e.preventDefault();
       const detail: EventDetail = {
         resourceId: resource.id,
-        resourceName: resource.body.label,
+        resourceLabel: resource.body.label,
+        resourceName: resource.body.name,
         ownerId: resource.body.owner_id,
       };
       this.clickEvent.emit(detail);
@@ -68,7 +78,9 @@ export class ManifoldDataResourceList {
   }
 
   formatLink(resource: Marketplace.Resource) {
-    if (!this.resourceLinkFormat) return undefined;
+    if (!this.resourceLinkFormat) {
+      return undefined;
+    }
     return this.resourceLinkFormat.replace(/:resource/gi, resource.body.label);
   }
 
@@ -89,7 +101,7 @@ export class ManifoldDataResourceList {
         {this.resources.map(resource => (
           <li>
             <a href={this.formatLink(resource)} onClick={e => this.handleClick(resource, e)}>
-              {resource.body.label}
+              {resource.body.name}
             </a>
           </li>
         ))}

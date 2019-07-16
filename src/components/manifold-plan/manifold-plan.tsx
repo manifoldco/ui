@@ -8,7 +8,7 @@ import { Connection, connections } from '../../utils/connections';
 export class ManifoldPlan {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection: Connection = connections.prod;
+  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -29,7 +29,7 @@ export class ManifoldPlan {
   }
 
   async fetchProductAndPlan(productLabel?: string, planLabel?: string) {
-    if (!productLabel || !planLabel) {
+    if (!productLabel || !planLabel || !this.connection) {
       return;
     }
 
@@ -44,6 +44,10 @@ export class ManifoldPlan {
   }
 
   async fetchPlan(productId: string, planLabel: string) {
+    if (!this.connection) {
+      return;
+    }
+
     this.plan = undefined;
     const { catalog } = this.connection;
 
@@ -56,6 +60,7 @@ export class ManifoldPlan {
   render() {
     return (
       <manifold-plan-details
+        scrollLocked={false}
         plan={this.plan}
         product={this.product}
       />

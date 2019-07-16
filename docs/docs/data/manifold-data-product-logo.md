@@ -6,6 +6,10 @@ example: |
   </manifold-data-product-logo>
 ---
 
+<manifold-toast alert-type="warning">
+  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
+</manifold-toast>
+
 # Data Product Logo
 
 Retrieve an unstyled `<img>` tag with the product’s logo from a
@@ -29,8 +33,8 @@ can override this by specifying one of your own:
 
 ## Resource Name
 
-You can look up a logo by resource name by passing `resource-name`:
+You can look up a logo by resource name by passing `resource-label`:
 
 ```html
-<manifold-data-product-logo resource-name="my-resource" />
+<manifold-data-product-logo resource-label="my-resource" />
 ```

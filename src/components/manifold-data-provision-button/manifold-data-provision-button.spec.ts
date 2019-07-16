@@ -199,7 +199,7 @@ describe('<manifold-data-provision-button>', () => {
           <manifold-data-provision-button
             product-label="test"
             owner-id="1234"
-            resource-name="test"
+            resource-label="test"
           >Provision</manifold-data-provision-button>
         `,
       });
@@ -214,7 +214,7 @@ describe('<manifold-data-provision-button>', () => {
         createdAt: GatewayResource.created_at,
         message: 'test successfully provisioned',
         resourceId: GatewayResource.id,
-        resourceName: GatewayResource.label,
+        resourceLabel: GatewayResource.label,
       });
     });
 
@@ -232,7 +232,7 @@ describe('<manifold-data-provision-button>', () => {
           <manifold-data-provision-button
             product-label="test"
             owner-id="1234"
-            resource-name="test"
+            resource-label="test"
           >Provision</manifold-data-provision-button>
         `,
       });
@@ -245,7 +245,7 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
       expect(instance.errorEvent.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
-        resourceName: 'test',
+        resourceLabel: 'test',
       });
     });
 
@@ -258,7 +258,7 @@ describe('<manifold-data-provision-button>', () => {
           <manifold-data-provision-button
             product-label="test"
             owner-id="1234"
-            resource-name="t"
+            resource-label="t"
           >Provision</manifold-data-provision-button>
         `,
       });
@@ -271,17 +271,17 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(false);
       expect(instance.invalidEvent.emit).toHaveBeenCalledWith({
         message: 'Must be at least 3 characters.',
-        resourceName: 't',
+        resourceLabel: 't',
       });
 
-      instance.resourceName = 'Test';
+      instance.resourceLabel = 'Test';
       await instance.provision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(false);
       expect(instance.invalidEvent.emit).toHaveBeenCalledWith({
         message:
           'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-        resourceName: 'Test',
+        resourceLabel: 'Test',
       });
     });
   });

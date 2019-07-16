@@ -8,46 +8,46 @@ import { ManifoldCredentials } from './manifold-credentials';
 
 describe('<manifold-credentials>', () => {
   it('fetches the resource id on load if not set', () => {
-    const resourceName = 'test-resource';
+    const resourceLabel = 'test-resource';
 
     const provisionButton = new ManifoldCredentials();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = resourceName;
+    provisionButton.resourceLabel = resourceLabel;
     provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
+    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('does not fetch the resource id on load if set', () => {
-    const resourceName = 'test-resource';
+    const resourceLabel = 'test-resource';
 
     const provisionButton = new ManifoldCredentials();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = resourceName;
-    provisionButton.resourceId = resourceName;
+    provisionButton.resourceLabel = resourceLabel;
+    provisionButton.resourceId = resourceLabel;
     provisionButton.componentWillLoad();
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 
   it('fetches resource id on change if not set', () => {
-    const resourceName = 'new-resource';
+    const resourceLabel = 'new-resource';
 
     const provisionButton = new ManifoldCredentials();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = 'old-resource';
+    provisionButton.resourceLabel = 'old-resource';
 
-    provisionButton.nameChange(resourceName);
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
+    provisionButton.labelChange(resourceLabel);
+    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
   it('does not resource id on change if set', () => {
-    const resourceName = 'new-resource';
+    const resourceLabel = 'new-resource';
 
     const provisionButton = new ManifoldCredentials();
     provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceName = 'old-resource';
+    provisionButton.resourceLabel = 'old-resource';
     provisionButton.resourceId = '1234';
 
-    provisionButton.nameChange(resourceName);
+    provisionButton.labelChange(resourceLabel);
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 
@@ -57,9 +57,9 @@ describe('<manifold-credentials>', () => {
     });
 
     it('will fetch the resource id', async () => {
-      const resourceName = 'new-resource';
+      const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`, [
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
         Resource,
       ]);
 
@@ -67,13 +67,13 @@ describe('<manifold-credentials>', () => {
         components: [ManifoldCredentials],
         html: `
           <manifold-credentials
-            resource-name="${resourceName}"
+            resource-label="${resourceLabel}"
           ></manifold-credentials>
         `,
       });
 
       expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`)
+        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
       const root = page.rootInstance as ManifoldCredentials;
@@ -81,21 +81,21 @@ describe('<manifold-credentials>', () => {
     });
 
     it('will do nothing on a fetch error', async () => {
-      const resourceName = 'new-resource';
+      const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceName}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldCredentials],
         html: `
           <manifold-credentials
-            resource-name="${resourceName}"
+            resource-label="${resourceLabel}"
           ></manifold-credentials>
         `,
       });
 
       expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceName}`)
+        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
       const root = page.rootInstance as ManifoldCredentials;
@@ -119,7 +119,7 @@ describe('<manifold-credentials>', () => {
         components: [ManifoldCredentials],
         html: `
           <manifold-credentials
-            resource-name="test"
+            resource-label="test"
           ></manifold-credentials>
         `,
       });
@@ -138,7 +138,7 @@ describe('<manifold-credentials>', () => {
         components: [ManifoldCredentials],
         html: `
           <manifold-credentials
-            resource-name="test"
+            resource-label="test"
           ></manifold-credentials>
         `,
       });
