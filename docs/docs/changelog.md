@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Added the ability to render the deprovision and rename buttons as anchors as well as buttons.
+- Changed the deprovision and rename button to not include a shadow dom root, they can now be styled from external stylesheets.
 
 ## [0.4.1]
 ### Changed
