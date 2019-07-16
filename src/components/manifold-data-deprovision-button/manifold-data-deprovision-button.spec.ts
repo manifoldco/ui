@@ -166,5 +166,45 @@ describe('<manifold-data-provision-button>', () => {
         resourceId: Resource.id,
       });
     });
+
+    it('will do nothing if still loading', async () => {
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="test"
+          >Provision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
+      instance.loading = true;
+
+      await instance.deprovision();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+    });
+
+    it('will do nothing if no resourceId is provided', async () => {
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="test"
+          >Provision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
+      instance.resourceId = undefined;
+
+      await instance.deprovision();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+    });
   });
 });

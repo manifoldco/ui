@@ -49,7 +49,11 @@ export class ManifoldDataDeprovisionButton {
   }
 
   async deprovision() {
-    if (!this.resourceId || !this.connection) {
+    if (!this.connection || this.loading) {
+      return;
+    }
+
+    if (!this.resourceId) {
       console.error('Property “resourceId” is missing');
       return;
     }
@@ -108,18 +112,11 @@ export class ManifoldDataDeprovisionButton {
     this.resourceId = resources[0].id;
   }
 
-  handleClick() {
-    if (!this.resourceId && !this.loading) {
-      return;
-    }
-    this.deprovision();
-  }
-
   render() {
     return (
       <button
         type="submit"
-        onClick={this.handleClick}
+        onClick={() => this.deprovision()}
         disabled={!this.resourceId && !this.loading}
       >
         <slot />

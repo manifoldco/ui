@@ -170,5 +170,45 @@ describe('<manifold-data-rename-button>', () => {
         resourceId: Resource.id,
       });
     });
+
+    it('will do nothing if still loading', async () => {
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+
+      const page = await newSpecPage({
+        components: [ManifoldDataRenameButton],
+        html: `
+          <manifold-data-rename-button
+            resource-label="test"
+          >Provision</manifold-data-rename-button>
+        `,
+      });
+
+      const instance = page.rootInstance as ManifoldDataRenameButton;
+      instance.loading = true;
+
+      await instance.rename();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+    });
+
+    it('will do nothing if no resourceId is provided', async () => {
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+
+      const page = await newSpecPage({
+        components: [ManifoldDataRenameButton],
+        html: `
+          <manifold-data-rename-button
+            resource-label="test"
+          >Provision</manifold-data-rename-button>
+        `,
+      });
+
+      const instance = page.rootInstance as ManifoldDataRenameButton;
+      instance.resourceId = undefined;
+
+      await instance.rename();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+    });
   });
 });

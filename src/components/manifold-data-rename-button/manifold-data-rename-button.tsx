@@ -69,7 +69,7 @@ export class ManifoldDataRenameButton {
   }
 
   async rename() {
-    if (!this.connection) {
+    if (!this.connection || this.loading) {
       return;
     }
 
@@ -169,18 +169,11 @@ export class ManifoldDataRenameButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
-  handleClick() {
-    if (!this.resourceId && !this.loading) {
-      return;
-    }
-    this.rename();
-  }
-
   render() {
     return (
       <button
         type="submit"
-        onClick={this.handleClick}
+        onClick={() => this.rename()}
         disabled={!this.resourceId && !this.loading}
       >
         <slot />
