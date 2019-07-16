@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- Added the ability to render the deprovision and rename buttons as anchors as well as buttons.
+
+## [0.4.1]
+### Changed
 - Made all the internal attributes optional on the components to make sure TypeScript does not complain.
 
 ## [0.4.0]

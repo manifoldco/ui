@@ -44,6 +44,8 @@ export class ManifoldDataRenameButton {
   @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
+  /** Which html tag to use as the root for the component */
+  @Prop() as?: 'button' | 'a' = 'button';
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The new label to give to the resource */
@@ -172,15 +174,26 @@ export class ManifoldDataRenameButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
+  handleClick() {
+    if (!this.resourceId && !this.loading) {
+      return;
+    }
+    this.rename();
+  }
+
   render() {
-    return (
+    return this.as === 'button' ? (
       <button
         type="submit"
-        onClick={() => this.rename()}
+        onClick={this.handleClick}
         disabled={!this.resourceId && !this.loading}
       >
         <slot />
       </button>
+    ) : (
+      <a onClick={this.handleClick}>
+        <slot />
+      </a>
     );
   }
 }

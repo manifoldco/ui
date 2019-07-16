@@ -8,6 +8,8 @@ import { Gateway } from '../../types/gateway';
   shadow: true,
 })
 export class ManifoldResourceRename {
+  /** Which html tag to use as the root for the component */
+  @Prop() as?: 'button' | 'a' = 'button';
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;
 
@@ -17,6 +19,7 @@ export class ManifoldResourceRename {
         resourceId={this.data && this.data.id}
         resourceLabel={this.data && this.data.label}
         loading={this.loading}
+        as={this.as}
       >
         <manifold-forward-slot>
           <slot />
