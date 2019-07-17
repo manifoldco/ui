@@ -18,7 +18,7 @@ interface SuccessMessage {
 
 interface ErrorMessage {
   message: string;
-  resourceLabel: string;
+  resourceLabel?: string;
 }
 
 @Component({ tag: 'manifold-data-provision-button' })
@@ -72,19 +72,15 @@ export class ManifoldDataProvisionButton {
       console.error('Property “ownerId” is missing');
       return;
     }
-    if (!this.resourceLabel) {
-      console.error('Property “resourceLabel” is missing');
-      return;
-    }
 
-    if (this.resourceLabel.length < 3) {
+    if (this.resourceLabel && this.resourceLabel.length < 3) {
       this.invalidEvent.emit({
         message: 'Must be at least 3 characters.',
         resourceLabel: this.resourceLabel,
       });
       return;
     }
-    if (!this.validate(this.resourceLabel)) {
+    if (this.resourceLabel && !this.validate(this.resourceLabel)) {
       this.invalidEvent.emit({
         message:
           'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
