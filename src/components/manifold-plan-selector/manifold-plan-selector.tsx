@@ -29,7 +29,9 @@ export class ManifoldPlanSelector {
     this.fetchResource(newResource);
   }
   @Watch('regions') regionsChange(newRegions: string) {
-    if (newRegions) this.parsedRegions = this.parseRegions(newRegions);
+    if (newRegions) {
+      this.parsedRegions = this.parseRegions(newRegions);
+    }
   }
 
   componentWillLoad() {

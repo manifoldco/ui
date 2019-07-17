@@ -33,7 +33,9 @@ export class ManifoldPlanCost {
   }
 
   get isCustomizable() {
-    if (!Array.isArray(this.allFeatures)) return false;
+    if (!Array.isArray(this.allFeatures)) {
+      return false;
+    }
     return hasCustomizableFeatures(this.allFeatures);
   }
 
@@ -41,7 +43,9 @@ export class ManifoldPlanCost {
     return features
       .filter(({ measurable }) => measurable === true)
       .filter(({ value }) => {
-        if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) return false;
+        if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) {
+          return false;
+        }
         return value.numeric_details.cost_ranges.find(
           ({ cost_multiple }) => typeof cost_multiple === 'number' && cost_multiple > 0
         );
@@ -61,7 +65,9 @@ export class ManifoldPlanCost {
     }
     // Hide display while calculating
     this.baseCost = undefined;
-    if (this.controller) this.controller.abort(); // If a request is in flight, cancel it
+    if (this.controller) {
+      this.controller.abort();
+    } // If a request is in flight, cancel it
     this.controller = new AbortController();
 
     // Returning the promise is necessary for componentWillLoad()

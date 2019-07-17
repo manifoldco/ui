@@ -82,7 +82,9 @@ export class ManifoldMarketplaceGrid {
     // Skip template-only categories if hiding custom
     if (!this.hideTemplates) {
       serviceTemplates.forEach(({ category }) => {
-        if (!categoryList.includes(category)) categoryList.push(category);
+        if (!categoryList.includes(category)) {
+          categoryList.push(category);
+        }
       });
     }
 

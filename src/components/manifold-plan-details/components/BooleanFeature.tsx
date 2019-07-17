@@ -15,7 +15,9 @@ export const BooleanFeature: FunctionalComponent<BooleanFeatureProps> = ({
   isExistingResource,
   onChange,
 }) => {
-  if (!feature.value) return '';
+  if (!feature.value) {
+    return '';
+  }
 
   const displayValue = booleanFeatureDisplayValue(feature.value);
 

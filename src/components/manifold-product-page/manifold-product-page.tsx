@@ -14,7 +14,9 @@ export class ManifoldProductPage {
   @Prop() provider?: Catalog.Provider;
 
   get providerName() {
-    if (!this.product || !this.provider) return undefined;
+    if (!this.product || !this.provider) {
+      return undefined;
+    }
     return (
       (this.provider.body.name !== this.product.body.name && this.provider.body.name) || undefined
     );

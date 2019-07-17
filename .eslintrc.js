@@ -55,7 +55,7 @@ module.exports = {
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
     'object-curly-newline': 'off', // let Prettier decide,
-    'curly': 'error',
+    "curly": ["error", "all"],
     'prettier/prettier': 'error',
   },
 };

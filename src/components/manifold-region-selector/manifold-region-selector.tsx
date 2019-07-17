@@ -32,7 +32,9 @@ export class ManifoldRegionSelector {
     this.regions = this.sortRegions(regions, this.preferredRegions);
     // Set global region (the one in src/data is just a fallback; we should always grab live)
     const global = this.regions.find(({ body: { location } }) => location === 'global');
-    if (global) this.globalRegion = global;
+    if (global) {
+      this.globalRegion = global;
+    }
   }
 
   handleChange = ({ detail }: CustomEvent) => {
@@ -61,9 +63,13 @@ export class ManifoldRegionSelector {
       ) {
         // Get preferred region index and compare; otherwise move to end
         let indexA = preferredRegions.indexOf(regionA);
-        if (indexA === -1) indexA = preferredRegions.length;
+        if (indexA === -1) {
+          indexA = preferredRegions.length;
+        }
         let indexB = preferredRegions.indexOf(regionB);
-        if (indexB === -1) indexB = preferredRegions.length;
+        if (indexB === -1) {
+          indexB = preferredRegions.length;
+        }
         return indexA - indexB;
       }
       // For all unspecified regions, sort alphabetically
@@ -78,7 +84,9 @@ export class ManifoldRegionSelector {
   render() {
     const regions = this.filterRegions(this.regions || []);
 
-    if (!regions) return null;
+    if (!regions) {
+      return null;
+    }
 
     if (regions.length === 1) {
       return <div class="region-name">{regions[0].body.name}</div>;

@@ -57,10 +57,11 @@ export class ManifoldDataResourceList {
     fetch(`${this.connection.marketplace}/resources/?me`, withAuth(this.authToken))
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {
-        if (Array.isArray(resources))
-          {this.resources = this.userResources(
+        if (Array.isArray(resources)) {
+          this.resources = this.userResources(
             [...resources].sort((a, b) => a.body.label.localeCompare(b.body.label))
-          );}
+          );
+        }
       });
   }
 
