@@ -11,10 +11,7 @@ export class ManifoldAuthToken {
 
   @Watch('token') tokenChange(newToken: string) {
     this.setAuthToken(newToken);
-
-    if ((!this.token && newToken) || (this.token && !newToken)) {
-      this.manifoldOauthTokenChange.emit(newToken);
-    }
+    this.manifoldOauthTokenChange.emit(newToken);
   }
 
   componentWillLoad() {
