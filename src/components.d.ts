@@ -4,611 +4,600 @@
  * It contains typing information for all components that exist in this project.
  */
 
-
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-import {
-  Catalog,
-} from './types/catalog';
-import {
-  Gateway,
-} from './types/gateway';
-import {
-  Connection,
-} from './utils/connections';
-import {
-  Marketplace,
-} from './types/marketplace';
-import {
-  Option,
-} from './types/Select';
+import { Catalog } from './types/catalog';
+import { Gateway } from './types/gateway';
+import { Connection } from './utils/connections';
+import { Marketplace } from './types/marketplace';
+import { Option } from './types/Select';
 
 export namespace Components {
   interface ManifoldActivePlan {
-    'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
-    'product'?: Catalog.Product;
-    'regions'?: string[];
-    'selectedResource'?: Gateway.Resource;
+    isExistingResource?: boolean;
+    plans?: Catalog.ExpandedPlan[];
+    product?: Catalog.Product;
+    regions?: string[];
+    selectedResource?: Gateway.Resource;
   }
   interface ManifoldAuthToken {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'setAuthToken'?: (s: string) => void;
-    'token'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    setAuthToken?: (s: string) => void;
+    token?: string;
   }
   interface ManifoldBadge {}
   interface ManifoldButton {
-    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
-    'disabled'?: boolean;
-    'href'?: string;
-    'size'?: 'medium' | 'small';
-    'stencilClickEvent'?: (e: MouseEvent) => void;
-    'type'?: 'button' | 'submit';
+    color?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    disabled?: boolean;
+    href?: string;
+    size?: 'medium' | 'small';
+    stencilClickEvent?: (e: MouseEvent) => void;
+    type?: 'button' | 'submit';
   }
   interface ManifoldButtonLink {
-    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
-    'href': string;
-    'preserveEvent'?: boolean;
-    'rel'?: string;
-    'size'?: 'medium' | 'small';
-    'stencilClickEvent'?: (e: MouseEvent) => void;
-    'target'?: string;
+    color?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    href: string;
+    preserveEvent?: boolean;
+    rel?: string;
+    size?: 'medium' | 'small';
+    stencilClickEvent?: (e: MouseEvent) => void;
+    target?: string;
   }
   interface ManifoldConnection {
     /**
-    * _(optional)_ Specify `env="stage"` for staging
-    */
-    'env': 'stage' | 'prod';
+     * _(optional)_ Specify `env="stage"` for staging
+     */
+    env: 'stage' | 'prod';
   }
   interface ManifoldCostDisplay {
-    'baseCost'?: number;
-    'compact'?: boolean;
-    'isCustomizable'?: boolean;
-    'measuredFeatures': Catalog.ExpandedFeature[];
+    baseCost?: number;
+    compact?: boolean;
+    isCustomizable?: boolean;
+    measuredFeatures: Catalog.ExpandedFeature[];
   }
   interface ManifoldCredentials {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'resourceId'?: string;
-    'resourceLabel': string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    resourceId?: string;
+    resourceLabel: string;
   }
   interface ManifoldDataDeprovisionButton {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'loading'?: boolean;
-    'resourceId'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    loading?: boolean;
+    resourceId?: string;
     /**
-    * The label of the resource to deprovision
-    */
-    'resourceLabel'?: string;
+     * The label of the resource to deprovision
+     */
+    resourceLabel?: string;
   }
   interface ManifoldDataHasResource {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
+     * Disable auto-updates?
+     */
+    paused?: boolean;
   }
   interface ManifoldDataManageButton {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'features'?: Gateway.FeatureMap;
-    'planId'?: string;
-    'productId'?: string;
-    'regionId'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    features?: Gateway.FeatureMap;
+    planId?: string;
+    productId?: string;
+    regionId?: string;
     /**
-    * Name of resource
-    */
-    'resourceLabel'?: string;
+     * Name of resource
+     */
+    resourceLabel?: string;
   }
   interface ManifoldDataProductLogo {
     /**
-    * _(optional)_ `alt` attribute
-    */
-    'alt'?: string;
+     * _(optional)_ `alt` attribute
+     */
+    alt?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
     /**
-    * Look up product name from resource
-    */
-    'resourceLabel'?: string;
+     * Look up product name from resource
+     */
+    resourceLabel?: string;
   }
   interface ManifoldDataProductName {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
     /**
-    * Look up product name from resource
-    */
-    'resourceLabel'?: string;
+     * Look up product name from resource
+     */
+    resourceLabel?: string;
   }
   interface ManifoldDataProvisionButton {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'ownerId'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    ownerId?: string;
     /**
-    * Plan to provision (slug)
-    */
-    'planLabel'?: string;
+     * Plan to provision (slug)
+     */
+    planLabel?: string;
     /**
-    * Product to provision (slug)
-    */
-    'productLabel'?: string;
+     * Product to provision (slug)
+     */
+    productLabel?: string;
     /**
-    * Region to provision (complete name), omit for all region
-    */
-    'regionName'?: string;
+     * Region to provision (complete name), omit for all region
+     */
+    regionName?: string;
     /**
-    * The label of the resource to provision
-    */
-    'resourceLabel'?: string;
+     * The label of the resource to provision
+     */
+    resourceLabel?: string;
   }
   interface ManifoldDataRenameButton {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'loading'?: boolean;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    loading?: boolean;
     /**
-    * The new label to give to the resource
-    */
-    'newLabel': string;
+     * The new label to give to the resource
+     */
+    newLabel: string;
     /**
-    * The id of the resource to rename, will be fetched if not set
-    */
-    'resourceId'?: string;
+     * The id of the resource to rename, will be fetched if not set
+     */
+    resourceId?: string;
     /**
-    * The label of the resource to rename
-    */
-    'resourceLabel'?: string;
+     * The label of the resource to rename
+     */
+    resourceLabel?: string;
   }
   interface ManifoldDataResourceList {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
+     * Disable auto-updates?
+     */
+    paused?: boolean;
     /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
+     * Should the JS event still fire, even if product-link-format is passed?
+     */
+    preserveEvent?: boolean;
     /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'resourceLinkFormat'?: string;
+     * Link format structure, with `:resource` placeholder
+     */
+    resourceLinkFormat?: string;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
     /**
-    * a CSS variable starting with `--manifold-c-*`
-    */
-    'color'?: string;
+     * a CSS variable starting with `--manifold-c-*`
+     */
+    color?: string;
     /**
-    * a CSS variable starting with `--manifold-g-*`
-    */
-    'gradient'?: string;
+     * a CSS variable starting with `--manifold-g-*`
+     */
+    gradient?: string;
     /**
-    * The icon ID
-    */
-    'icon': string;
-    'marginLeft'?: boolean;
-    'marginRight'?: boolean;
+     * The icon ID
+     */
+    icon: string;
+    marginLeft?: boolean;
+    marginRight?: boolean;
   }
   interface ManifoldImageGallery {
-    'images'?: string[];
+    images?: string[];
   }
   interface ManifoldInput {
-    'defaultValue'?: string;
-    'disabled'?: boolean;
-    'inputId'?: string;
-    'name'?: string;
-    'pattern'?: string;
-    'required'?: boolean;
-    'type'?: string;
+    defaultValue?: string;
+    disabled?: boolean;
+    inputId?: string;
+    name?: string;
+    pattern?: string;
+    required?: boolean;
+    type?: string;
   }
   interface ManifoldLazyImage {
-    'alt': string;
-    'itemprop'?: string;
-    'src': string;
+    alt: string;
+    itemprop?: string;
+    src: string;
   }
   interface ManifoldMarketplace {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'excludes'?: string;
+     * Comma-separated list of hidden products (labels)
+     */
+    excludes?: string;
     /**
-    * Comma-separated list of featured products (labels)
-    */
-    'featured'?: string;
+     * Comma-separated list of featured products (labels)
+     */
+    featured?: string;
     /**
-    * Hide categories & side menu?
-    */
-    'hideCategories'?: boolean;
+     * Hide categories & side menu?
+     */
+    hideCategories?: boolean;
     /**
-    * Hide search?
-    */
-    'hideSearch'?: boolean;
+     * Hide search?
+     */
+    hideSearch?: boolean;
     /**
-    * Hide template cards?
-    */
-    'hideTemplates'?: boolean;
+     * Hide template cards?
+     */
+    hideTemplates?: boolean;
     /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
+     * Should the JS event still fire, even if product-link-format is passed?
+     */
+    preserveEvent?: boolean;
     /**
-    * Product link structure, with `:product` placeholder
-    */
-    'productLinkFormat'?: string;
+     * Product link structure, with `:product` placeholder
+     */
+    productLinkFormat?: string;
     /**
-    * Comma-separated list of shown products (labels)
-    */
-    'products'?: string;
+     * Comma-separated list of shown products (labels)
+     */
+    products?: string;
     /**
-    * Template format structure, with `:product` placeholder
-    */
-    'templateLinkFormat'?: string;
+     * Template format structure, with `:product` placeholder
+     */
+    templateLinkFormat?: string;
   }
   interface ManifoldMarketplaceGrid {
-    'excludes'?: string[];
-    'featured'?: string[];
-    'hideCategories'?: boolean;
-    'hideSearch'?: boolean;
-    'hideTemplates'?: boolean;
-    'preserveEvent': boolean;
-    'productLinkFormat'?: string;
-    'products'?: string[];
-    'services'?: Catalog.Product[];
-    'templateLinkFormat'?: string;
+    excludes?: string[];
+    featured?: string[];
+    hideCategories?: boolean;
+    hideSearch?: boolean;
+    hideTemplates?: boolean;
+    preserveEvent: boolean;
+    productLinkFormat?: string;
+    products?: string[];
+    services?: Catalog.Product[];
+    templateLinkFormat?: string;
   }
   interface ManifoldMockResource {
-    'mock': Gateway.Resource;
+    mock: Gateway.Resource;
   }
   interface ManifoldNumberInput {
-    'decrementDisabledLabel'?: string;
-    'error'?: string;
-    'increment': number;
-    'incrementDisabledLabel'?: string;
-    'max': number;
-    'min': number;
-    'name': string;
-    'suffix': string;
-    'value': number;
+    decrementDisabledLabel?: string;
+    error?: string;
+    increment: number;
+    incrementDisabledLabel?: string;
+    max: number;
+    min: number;
+    name: string;
+    suffix: string;
+    value: number;
   }
   interface ManifoldPlan {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"kitefin"`)
-    */
-    'planLabel'?: string;
+     * URL-friendly slug (e.g. `"kitefin"`)
+     */
+    planLabel?: string;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
   }
   interface ManifoldPlanCost {
-    'allFeatures': Catalog.ExpandedFeature[];
+    allFeatures: Catalog.ExpandedFeature[];
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'compact'?: boolean;
-    'connection'?: Connection;
-    'customizable'?: boolean;
-    'planId': string;
-    'selectedFeatures': Gateway.FeatureMap;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    compact?: boolean;
+    connection?: Connection;
+    customizable?: boolean;
+    planId: string;
+    selectedFeatures: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
-    'isExistingResource'?: boolean;
-    'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.Product;
-    'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: string;
-    'scrollLocked'?: boolean;
+    isExistingResource?: boolean;
+    plan?: Catalog.ExpandedPlan;
+    product?: Catalog.Product;
+    regions?: string[];
+    resourceFeatures?: Gateway.ResolvedFeature[];
+    resourceRegion?: string;
+    scrollLocked?: boolean;
   }
   interface ManifoldPlanMenu {
-    'plans'?: Catalog.ExpandedPlan[];
-    'selectPlan': Function;
-    'selectedPlanId'?: string;
+    plans?: Catalog.ExpandedPlan[];
+    selectPlan: Function;
+    selectedPlanId?: string;
   }
   interface ManifoldPlanSelector {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
     /**
-    * Specify region order
-    */
-    'regions'?: string;
+     * Specify region order
+     */
+    regions?: string;
     /**
-    * Is this tied to an existing resource?
-    */
-    'resourceLabel'?: string;
+     * Is this tied to an existing resource?
+     */
+    resourceLabel?: string;
   }
   interface ManifoldProduct {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * _(optional)_ Hide the CTA on the left?
-    */
-    'productLabel'?: string;
+     * _(optional)_ Hide the CTA on the left?
+     */
+    productLabel?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: Catalog.Product;
+    product?: Catalog.Product;
   }
   interface ManifoldProductPage {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
+    product?: Catalog.Product;
+    provider?: Catalog.Provider;
   }
   interface ManifoldRegionSelector {
-    'allowedRegions': string[];
-    'ariaLabel': string;
+    allowedRegions: string[];
+    ariaLabel: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'name': string;
-    'preferredRegions'?: string[];
-    'value'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    name: string;
+    preferredRegions?: string[];
+    value?: string;
   }
   interface ManifoldResourceCard {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'label'?: string;
-    'preserveEvent'?: boolean;
-    'resourceId'?: string;
-    'resourceLinkFormat'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    label?: string;
+    preserveEvent?: boolean;
+    resourceId?: string;
+    resourceLinkFormat?: string;
   }
   interface ManifoldResourceCardView {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'label'?: string;
-    'loading'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'preserveEvent'?: boolean;
-    'resourceId'?: string;
-    'resourceLinkFormat'?: string;
-    'resourceStatus'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    label?: string;
+    loading?: boolean;
+    logo?: string;
+    name?: string;
+    preserveEvent?: boolean;
+    resourceId?: string;
+    resourceLinkFormat?: string;
+    resourceStatus?: string;
   }
   interface ManifoldResourceContainer {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Which resource does this belong to?
-    */
-    'resourceLabel'?: string;
+     * Which resource does this belong to?
+     */
+    resourceLabel?: string;
   }
   interface ManifoldResourceCredentials {}
   interface ManifoldResourceCredentialsView {
-    'credentials'?: Marketplace.Credential[];
-    'loading': boolean;
-    'resourceLabel': string;
+    credentials?: Marketplace.Credential[];
+    loading: boolean;
+    resourceLabel: string;
   }
   interface ManifoldResourceDeprovision {
-    'data'?: Gateway.Resource;
-    'loading': boolean;
+    data?: Gateway.Resource;
+    loading: boolean;
   }
   interface ManifoldResourceDetails {}
   interface ManifoldResourceDetailsView {
-    'data'?: Gateway.Resource;
+    data?: Gateway.Resource;
   }
   interface ManifoldResourceList {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
+     * Disable auto-updates?
+     */
+    paused?: boolean;
     /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
+     * Should the JS event still fire, even if product-link-format is passed?
+     */
+    preserveEvent?: boolean;
     /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'resourceLinkFormat'?: string;
+     * Link format structure, with `:resource` placeholder
+     */
+    resourceLinkFormat?: string;
   }
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
-    'asCard'?: boolean;
+    asCard?: boolean;
   }
   interface ManifoldResourceRename {
-    'data'?: Gateway.Resource;
-    'loading': boolean;
+    data?: Gateway.Resource;
+    loading: boolean;
     /**
-    * The new label to give to the resource
-    */
-    'newLabel': string;
+     * The new label to give to the resource
+     */
+    newLabel: string;
   }
   interface ManifoldResourceStatus {
-    'size'?: 'small' | 'medium';
+    size?: 'small' | 'medium';
   }
   interface ManifoldResourceStatusView {
-    'loading'?: boolean;
-    'resourceState'?: string;
-    'size'?: 'small' | 'medium';
+    loading?: boolean;
+    resourceState?: string;
+    size?: 'small' | 'medium';
   }
   interface ManifoldSelect {
-    'defaultValue'?: string;
-    'name': string;
-    'options': Option[];
-    'required'?: boolean;
+    defaultValue?: string;
+    name: string;
+    options: Option[];
+    required?: boolean;
   }
   interface ManifoldServiceCard {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'isFeatured'?: boolean;
-    'preserveEvent'?: boolean;
-    'product'?: Catalog.Product;
-    'productId'?: string;
-    'productLabel'?: string;
-    'productLinkFormat'?: string;
-    'skeleton'?: boolean;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    isFeatured?: boolean;
+    preserveEvent?: boolean;
+    product?: Catalog.Product;
+    productId?: string;
+    productLabel?: string;
+    productLinkFormat?: string;
+    skeleton?: boolean;
   }
   interface ManifoldServiceView {
-    'asCard'?: boolean;
-    'description'?: string;
-    'hideTags'?: boolean;
-    'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'label'?: string;
-    'loading'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'productId'?: string;
+    asCard?: boolean;
+    description?: string;
+    hideTags?: boolean;
+    isFeatured?: boolean;
+    isFree?: boolean;
+    label?: string;
+    loading?: boolean;
+    logo?: string;
+    name?: string;
+    productId?: string;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
   interface ManifoldTemplateCard {
-    'category': string;
-    'preserveEvent': boolean;
-    'templateLinkFormat'?: string;
+    category: string;
+    preserveEvent: boolean;
+    templateLinkFormat?: string;
   }
   interface ManifoldToast {
     /**
-    * `success` | `warning` | `error`
-    */
-    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+     * `success` | `warning` | `error`
+     */
+    alertType?: 'success' | 'warning' | 'error' | undefined;
     /**
-    * Is this dismissable?
-    */
-    'dismissable'?: boolean;
+     * Is this dismissable?
+     */
+    dismissable?: boolean;
     /**
-    * Use custom icon path data (1024×1024)
-    */
-    'icon'?: string;
+     * Use custom icon path data (1024×1024)
+     */
+    icon?: string;
   }
   interface ManifoldToggle {
-    'ariaLabelledby'?: string;
-    'defaultValue'?: boolean;
-    'disabled'?: boolean;
-    'label'?: string;
-    'name': string;
+    ariaLabelledby?: string;
+    defaultValue?: boolean;
+    disabled?: boolean;
+    label?: string;
+    name: string;
   }
   interface ManifoldTooltip {
-    'labelText'?: string;
+    labelText?: string;
   }
 }
 
 declare global {
-
-
-  interface HTMLManifoldActivePlanElement extends Components.ManifoldActivePlan, HTMLStencilElement {}
+  interface HTMLManifoldActivePlanElement
+    extends Components.ManifoldActivePlan,
+      HTMLStencilElement {}
   var HTMLManifoldActivePlanElement: {
     prototype: HTMLManifoldActivePlanElement;
     new (): HTMLManifoldActivePlanElement;
@@ -632,79 +621,105 @@ declare global {
     new (): HTMLManifoldButtonElement;
   };
 
-  interface HTMLManifoldButtonLinkElement extends Components.ManifoldButtonLink, HTMLStencilElement {}
+  interface HTMLManifoldButtonLinkElement
+    extends Components.ManifoldButtonLink,
+      HTMLStencilElement {}
   var HTMLManifoldButtonLinkElement: {
     prototype: HTMLManifoldButtonLinkElement;
     new (): HTMLManifoldButtonLinkElement;
   };
 
-  interface HTMLManifoldConnectionElement extends Components.ManifoldConnection, HTMLStencilElement {}
+  interface HTMLManifoldConnectionElement
+    extends Components.ManifoldConnection,
+      HTMLStencilElement {}
   var HTMLManifoldConnectionElement: {
     prototype: HTMLManifoldConnectionElement;
     new (): HTMLManifoldConnectionElement;
   };
 
-  interface HTMLManifoldCostDisplayElement extends Components.ManifoldCostDisplay, HTMLStencilElement {}
+  interface HTMLManifoldCostDisplayElement
+    extends Components.ManifoldCostDisplay,
+      HTMLStencilElement {}
   var HTMLManifoldCostDisplayElement: {
     prototype: HTMLManifoldCostDisplayElement;
     new (): HTMLManifoldCostDisplayElement;
   };
 
-  interface HTMLManifoldCredentialsElement extends Components.ManifoldCredentials, HTMLStencilElement {}
+  interface HTMLManifoldCredentialsElement
+    extends Components.ManifoldCredentials,
+      HTMLStencilElement {}
   var HTMLManifoldCredentialsElement: {
     prototype: HTMLManifoldCredentialsElement;
     new (): HTMLManifoldCredentialsElement;
   };
 
-  interface HTMLManifoldDataDeprovisionButtonElement extends Components.ManifoldDataDeprovisionButton, HTMLStencilElement {}
+  interface HTMLManifoldDataDeprovisionButtonElement
+    extends Components.ManifoldDataDeprovisionButton,
+      HTMLStencilElement {}
   var HTMLManifoldDataDeprovisionButtonElement: {
     prototype: HTMLManifoldDataDeprovisionButtonElement;
     new (): HTMLManifoldDataDeprovisionButtonElement;
   };
 
-  interface HTMLManifoldDataHasResourceElement extends Components.ManifoldDataHasResource, HTMLStencilElement {}
+  interface HTMLManifoldDataHasResourceElement
+    extends Components.ManifoldDataHasResource,
+      HTMLStencilElement {}
   var HTMLManifoldDataHasResourceElement: {
     prototype: HTMLManifoldDataHasResourceElement;
     new (): HTMLManifoldDataHasResourceElement;
   };
 
-  interface HTMLManifoldDataManageButtonElement extends Components.ManifoldDataManageButton, HTMLStencilElement {}
+  interface HTMLManifoldDataManageButtonElement
+    extends Components.ManifoldDataManageButton,
+      HTMLStencilElement {}
   var HTMLManifoldDataManageButtonElement: {
     prototype: HTMLManifoldDataManageButtonElement;
     new (): HTMLManifoldDataManageButtonElement;
   };
 
-  interface HTMLManifoldDataProductLogoElement extends Components.ManifoldDataProductLogo, HTMLStencilElement {}
+  interface HTMLManifoldDataProductLogoElement
+    extends Components.ManifoldDataProductLogo,
+      HTMLStencilElement {}
   var HTMLManifoldDataProductLogoElement: {
     prototype: HTMLManifoldDataProductLogoElement;
     new (): HTMLManifoldDataProductLogoElement;
   };
 
-  interface HTMLManifoldDataProductNameElement extends Components.ManifoldDataProductName, HTMLStencilElement {}
+  interface HTMLManifoldDataProductNameElement
+    extends Components.ManifoldDataProductName,
+      HTMLStencilElement {}
   var HTMLManifoldDataProductNameElement: {
     prototype: HTMLManifoldDataProductNameElement;
     new (): HTMLManifoldDataProductNameElement;
   };
 
-  interface HTMLManifoldDataProvisionButtonElement extends Components.ManifoldDataProvisionButton, HTMLStencilElement {}
+  interface HTMLManifoldDataProvisionButtonElement
+    extends Components.ManifoldDataProvisionButton,
+      HTMLStencilElement {}
   var HTMLManifoldDataProvisionButtonElement: {
     prototype: HTMLManifoldDataProvisionButtonElement;
     new (): HTMLManifoldDataProvisionButtonElement;
   };
 
-  interface HTMLManifoldDataRenameButtonElement extends Components.ManifoldDataRenameButton, HTMLStencilElement {}
+  interface HTMLManifoldDataRenameButtonElement
+    extends Components.ManifoldDataRenameButton,
+      HTMLStencilElement {}
   var HTMLManifoldDataRenameButtonElement: {
     prototype: HTMLManifoldDataRenameButtonElement;
     new (): HTMLManifoldDataRenameButtonElement;
   };
 
-  interface HTMLManifoldDataResourceListElement extends Components.ManifoldDataResourceList, HTMLStencilElement {}
+  interface HTMLManifoldDataResourceListElement
+    extends Components.ManifoldDataResourceList,
+      HTMLStencilElement {}
   var HTMLManifoldDataResourceListElement: {
     prototype: HTMLManifoldDataResourceListElement;
     new (): HTMLManifoldDataResourceListElement;
   };
 
-  interface HTMLManifoldForwardSlotElement extends Components.ManifoldForwardSlot, HTMLStencilElement {}
+  interface HTMLManifoldForwardSlotElement
+    extends Components.ManifoldForwardSlot,
+      HTMLStencilElement {}
   var HTMLManifoldForwardSlotElement: {
     prototype: HTMLManifoldForwardSlotElement;
     new (): HTMLManifoldForwardSlotElement;
@@ -716,7 +731,9 @@ declare global {
     new (): HTMLManifoldIconElement;
   };
 
-  interface HTMLManifoldImageGalleryElement extends Components.ManifoldImageGallery, HTMLStencilElement {}
+  interface HTMLManifoldImageGalleryElement
+    extends Components.ManifoldImageGallery,
+      HTMLStencilElement {}
   var HTMLManifoldImageGalleryElement: {
     prototype: HTMLManifoldImageGalleryElement;
     new (): HTMLManifoldImageGalleryElement;
@@ -734,25 +751,33 @@ declare global {
     new (): HTMLManifoldLazyImageElement;
   };
 
-  interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
+  interface HTMLManifoldMarketplaceElement
+    extends Components.ManifoldMarketplace,
+      HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
     new (): HTMLManifoldMarketplaceElement;
   };
 
-  interface HTMLManifoldMarketplaceGridElement extends Components.ManifoldMarketplaceGrid, HTMLStencilElement {}
+  interface HTMLManifoldMarketplaceGridElement
+    extends Components.ManifoldMarketplaceGrid,
+      HTMLStencilElement {}
   var HTMLManifoldMarketplaceGridElement: {
     prototype: HTMLManifoldMarketplaceGridElement;
     new (): HTMLManifoldMarketplaceGridElement;
   };
 
-  interface HTMLManifoldMockResourceElement extends Components.ManifoldMockResource, HTMLStencilElement {}
+  interface HTMLManifoldMockResourceElement
+    extends Components.ManifoldMockResource,
+      HTMLStencilElement {}
   var HTMLManifoldMockResourceElement: {
     prototype: HTMLManifoldMockResourceElement;
     new (): HTMLManifoldMockResourceElement;
   };
 
-  interface HTMLManifoldNumberInputElement extends Components.ManifoldNumberInput, HTMLStencilElement {}
+  interface HTMLManifoldNumberInputElement
+    extends Components.ManifoldNumberInput,
+      HTMLStencilElement {}
   var HTMLManifoldNumberInputElement: {
     prototype: HTMLManifoldNumberInputElement;
     new (): HTMLManifoldNumberInputElement;
@@ -770,7 +795,9 @@ declare global {
     new (): HTMLManifoldPlanCostElement;
   };
 
-  interface HTMLManifoldPlanDetailsElement extends Components.ManifoldPlanDetails, HTMLStencilElement {}
+  interface HTMLManifoldPlanDetailsElement
+    extends Components.ManifoldPlanDetails,
+      HTMLStencilElement {}
   var HTMLManifoldPlanDetailsElement: {
     prototype: HTMLManifoldPlanDetailsElement;
     new (): HTMLManifoldPlanDetailsElement;
@@ -782,7 +809,9 @@ declare global {
     new (): HTMLManifoldPlanMenuElement;
   };
 
-  interface HTMLManifoldPlanSelectorElement extends Components.ManifoldPlanSelector, HTMLStencilElement {}
+  interface HTMLManifoldPlanSelectorElement
+    extends Components.ManifoldPlanSelector,
+      HTMLStencilElement {}
   var HTMLManifoldPlanSelectorElement: {
     prototype: HTMLManifoldPlanSelectorElement;
     new (): HTMLManifoldPlanSelectorElement;
@@ -794,103 +823,137 @@ declare global {
     new (): HTMLManifoldProductElement;
   };
 
-  interface HTMLManifoldProductDetailsElement extends Components.ManifoldProductDetails, HTMLStencilElement {}
+  interface HTMLManifoldProductDetailsElement
+    extends Components.ManifoldProductDetails,
+      HTMLStencilElement {}
   var HTMLManifoldProductDetailsElement: {
     prototype: HTMLManifoldProductDetailsElement;
     new (): HTMLManifoldProductDetailsElement;
   };
 
-  interface HTMLManifoldProductPageElement extends Components.ManifoldProductPage, HTMLStencilElement {}
+  interface HTMLManifoldProductPageElement
+    extends Components.ManifoldProductPage,
+      HTMLStencilElement {}
   var HTMLManifoldProductPageElement: {
     prototype: HTMLManifoldProductPageElement;
     new (): HTMLManifoldProductPageElement;
   };
 
-  interface HTMLManifoldRegionSelectorElement extends Components.ManifoldRegionSelector, HTMLStencilElement {}
+  interface HTMLManifoldRegionSelectorElement
+    extends Components.ManifoldRegionSelector,
+      HTMLStencilElement {}
   var HTMLManifoldRegionSelectorElement: {
     prototype: HTMLManifoldRegionSelectorElement;
     new (): HTMLManifoldRegionSelectorElement;
   };
 
-  interface HTMLManifoldResourceCardElement extends Components.ManifoldResourceCard, HTMLStencilElement {}
+  interface HTMLManifoldResourceCardElement
+    extends Components.ManifoldResourceCard,
+      HTMLStencilElement {}
   var HTMLManifoldResourceCardElement: {
     prototype: HTMLManifoldResourceCardElement;
     new (): HTMLManifoldResourceCardElement;
   };
 
-  interface HTMLManifoldResourceCardViewElement extends Components.ManifoldResourceCardView, HTMLStencilElement {}
+  interface HTMLManifoldResourceCardViewElement
+    extends Components.ManifoldResourceCardView,
+      HTMLStencilElement {}
   var HTMLManifoldResourceCardViewElement: {
     prototype: HTMLManifoldResourceCardViewElement;
     new (): HTMLManifoldResourceCardViewElement;
   };
 
-  interface HTMLManifoldResourceContainerElement extends Components.ManifoldResourceContainer, HTMLStencilElement {}
+  interface HTMLManifoldResourceContainerElement
+    extends Components.ManifoldResourceContainer,
+      HTMLStencilElement {}
   var HTMLManifoldResourceContainerElement: {
     prototype: HTMLManifoldResourceContainerElement;
     new (): HTMLManifoldResourceContainerElement;
   };
 
-  interface HTMLManifoldResourceCredentialsElement extends Components.ManifoldResourceCredentials, HTMLStencilElement {}
+  interface HTMLManifoldResourceCredentialsElement
+    extends Components.ManifoldResourceCredentials,
+      HTMLStencilElement {}
   var HTMLManifoldResourceCredentialsElement: {
     prototype: HTMLManifoldResourceCredentialsElement;
     new (): HTMLManifoldResourceCredentialsElement;
   };
 
-  interface HTMLManifoldResourceCredentialsViewElement extends Components.ManifoldResourceCredentialsView, HTMLStencilElement {}
+  interface HTMLManifoldResourceCredentialsViewElement
+    extends Components.ManifoldResourceCredentialsView,
+      HTMLStencilElement {}
   var HTMLManifoldResourceCredentialsViewElement: {
     prototype: HTMLManifoldResourceCredentialsViewElement;
     new (): HTMLManifoldResourceCredentialsViewElement;
   };
 
-  interface HTMLManifoldResourceDeprovisionElement extends Components.ManifoldResourceDeprovision, HTMLStencilElement {}
+  interface HTMLManifoldResourceDeprovisionElement
+    extends Components.ManifoldResourceDeprovision,
+      HTMLStencilElement {}
   var HTMLManifoldResourceDeprovisionElement: {
     prototype: HTMLManifoldResourceDeprovisionElement;
     new (): HTMLManifoldResourceDeprovisionElement;
   };
 
-  interface HTMLManifoldResourceDetailsElement extends Components.ManifoldResourceDetails, HTMLStencilElement {}
+  interface HTMLManifoldResourceDetailsElement
+    extends Components.ManifoldResourceDetails,
+      HTMLStencilElement {}
   var HTMLManifoldResourceDetailsElement: {
     prototype: HTMLManifoldResourceDetailsElement;
     new (): HTMLManifoldResourceDetailsElement;
   };
 
-  interface HTMLManifoldResourceDetailsViewElement extends Components.ManifoldResourceDetailsView, HTMLStencilElement {}
+  interface HTMLManifoldResourceDetailsViewElement
+    extends Components.ManifoldResourceDetailsView,
+      HTMLStencilElement {}
   var HTMLManifoldResourceDetailsViewElement: {
     prototype: HTMLManifoldResourceDetailsViewElement;
     new (): HTMLManifoldResourceDetailsViewElement;
   };
 
-  interface HTMLManifoldResourceListElement extends Components.ManifoldResourceList, HTMLStencilElement {}
+  interface HTMLManifoldResourceListElement
+    extends Components.ManifoldResourceList,
+      HTMLStencilElement {}
   var HTMLManifoldResourceListElement: {
     prototype: HTMLManifoldResourceListElement;
     new (): HTMLManifoldResourceListElement;
   };
 
-  interface HTMLManifoldResourcePlanElement extends Components.ManifoldResourcePlan, HTMLStencilElement {}
+  interface HTMLManifoldResourcePlanElement
+    extends Components.ManifoldResourcePlan,
+      HTMLStencilElement {}
   var HTMLManifoldResourcePlanElement: {
     prototype: HTMLManifoldResourcePlanElement;
     new (): HTMLManifoldResourcePlanElement;
   };
 
-  interface HTMLManifoldResourceProductElement extends Components.ManifoldResourceProduct, HTMLStencilElement {}
+  interface HTMLManifoldResourceProductElement
+    extends Components.ManifoldResourceProduct,
+      HTMLStencilElement {}
   var HTMLManifoldResourceProductElement: {
     prototype: HTMLManifoldResourceProductElement;
     new (): HTMLManifoldResourceProductElement;
   };
 
-  interface HTMLManifoldResourceRenameElement extends Components.ManifoldResourceRename, HTMLStencilElement {}
+  interface HTMLManifoldResourceRenameElement
+    extends Components.ManifoldResourceRename,
+      HTMLStencilElement {}
   var HTMLManifoldResourceRenameElement: {
     prototype: HTMLManifoldResourceRenameElement;
     new (): HTMLManifoldResourceRenameElement;
   };
 
-  interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
+  interface HTMLManifoldResourceStatusElement
+    extends Components.ManifoldResourceStatus,
+      HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
     new (): HTMLManifoldResourceStatusElement;
   };
 
-  interface HTMLManifoldResourceStatusViewElement extends Components.ManifoldResourceStatusView, HTMLStencilElement {}
+  interface HTMLManifoldResourceStatusViewElement
+    extends Components.ManifoldResourceStatusView,
+      HTMLStencilElement {}
   var HTMLManifoldResourceStatusViewElement: {
     prototype: HTMLManifoldResourceStatusViewElement;
     new (): HTMLManifoldResourceStatusViewElement;
@@ -902,31 +965,41 @@ declare global {
     new (): HTMLManifoldSelectElement;
   };
 
-  interface HTMLManifoldServiceCardElement extends Components.ManifoldServiceCard, HTMLStencilElement {}
+  interface HTMLManifoldServiceCardElement
+    extends Components.ManifoldServiceCard,
+      HTMLStencilElement {}
   var HTMLManifoldServiceCardElement: {
     prototype: HTMLManifoldServiceCardElement;
     new (): HTMLManifoldServiceCardElement;
   };
 
-  interface HTMLManifoldServiceViewElement extends Components.ManifoldServiceView, HTMLStencilElement {}
+  interface HTMLManifoldServiceViewElement
+    extends Components.ManifoldServiceView,
+      HTMLStencilElement {}
   var HTMLManifoldServiceViewElement: {
     prototype: HTMLManifoldServiceViewElement;
     new (): HTMLManifoldServiceViewElement;
   };
 
-  interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
+  interface HTMLManifoldSkeletonImgElement
+    extends Components.ManifoldSkeletonImg,
+      HTMLStencilElement {}
   var HTMLManifoldSkeletonImgElement: {
     prototype: HTMLManifoldSkeletonImgElement;
     new (): HTMLManifoldSkeletonImgElement;
   };
 
-  interface HTMLManifoldSkeletonTextElement extends Components.ManifoldSkeletonText, HTMLStencilElement {}
+  interface HTMLManifoldSkeletonTextElement
+    extends Components.ManifoldSkeletonText,
+      HTMLStencilElement {}
   var HTMLManifoldSkeletonTextElement: {
     prototype: HTMLManifoldSkeletonTextElement;
     new (): HTMLManifoldSkeletonTextElement;
   };
 
-  interface HTMLManifoldTemplateCardElement extends Components.ManifoldTemplateCard, HTMLStencilElement {}
+  interface HTMLManifoldTemplateCardElement
+    extends Components.ManifoldTemplateCard,
+      HTMLStencilElement {}
   var HTMLManifoldTemplateCardElement: {
     prototype: HTMLManifoldTemplateCardElement;
     new (): HTMLManifoldTemplateCardElement;
@@ -1012,619 +1085,641 @@ declare global {
 
 declare namespace LocalJSX {
   interface ManifoldActivePlan extends JSXBase.HTMLAttributes<HTMLManifoldActivePlanElement> {
-    'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
-    'product'?: Catalog.Product;
-    'regions'?: string[];
-    'selectedResource'?: Gateway.Resource;
+    isExistingResource?: boolean;
+    plans?: Catalog.ExpandedPlan[];
+    product?: Catalog.Product;
+    regions?: string[];
+    selectedResource?: Gateway.Resource;
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'setAuthToken'?: (s: string) => void;
-    'token'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    setAuthToken?: (s: string) => void;
+    token?: string;
   }
   interface ManifoldBadge extends JSXBase.HTMLAttributes<HTMLManifoldBadgeElement> {}
   interface ManifoldButton extends JSXBase.HTMLAttributes<HTMLManifoldButtonElement> {
-    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
-    'disabled'?: boolean;
-    'href'?: string;
+    color?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    disabled?: boolean;
+    href?: string;
     'onManifold-button-click'?: (event: CustomEvent<any>) => void;
-    'size'?: 'medium' | 'small';
-    'stencilClickEvent'?: (e: MouseEvent) => void;
-    'type'?: 'button' | 'submit';
+    size?: 'medium' | 'small';
+    stencilClickEvent?: (e: MouseEvent) => void;
+    type?: 'button' | 'submit';
   }
   interface ManifoldButtonLink extends JSXBase.HTMLAttributes<HTMLManifoldButtonLinkElement> {
-    'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
-    'href'?: string;
+    color?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
+    href?: string;
     'onManifold-buttonLink-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'rel'?: string;
-    'size'?: 'medium' | 'small';
-    'stencilClickEvent'?: (e: MouseEvent) => void;
-    'target'?: string;
+    preserveEvent?: boolean;
+    rel?: string;
+    size?: 'medium' | 'small';
+    stencilClickEvent?: (e: MouseEvent) => void;
+    target?: string;
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
     /**
-    * _(optional)_ Specify `env="stage"` for staging
-    */
-    'env'?: 'stage' | 'prod';
+     * _(optional)_ Specify `env="stage"` for staging
+     */
+    env?: 'stage' | 'prod';
   }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
-    'baseCost'?: number;
-    'compact'?: boolean;
-    'isCustomizable'?: boolean;
-    'measuredFeatures'?: Catalog.ExpandedFeature[];
+    baseCost?: number;
+    compact?: boolean;
+    isCustomizable?: boolean;
+    measuredFeatures?: Catalog.ExpandedFeature[];
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'resourceId'?: string;
-    'resourceLabel'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    resourceId?: string;
+    resourceLabel?: string;
   }
-  interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
+  interface ManifoldDataDeprovisionButton
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'loading'?: boolean;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    loading?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
-    'resourceId'?: string;
+    resourceId?: string;
     /**
-    * The label of the resource to deprovision
-    */
-    'resourceLabel'?: string;
+     * The label of the resource to deprovision
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
+  interface ManifoldDataHasResource
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
+     * Disable auto-updates?
+     */
+    paused?: boolean;
   }
-  interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
+  interface ManifoldDataManageButton
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'features'?: Gateway.FeatureMap;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    features?: Gateway.FeatureMap;
     'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-manageButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-manageButton-success'?: (event: CustomEvent<any>) => void;
-    'planId'?: string;
-    'productId'?: string;
-    'regionId'?: string;
+    planId?: string;
+    productId?: string;
+    regionId?: string;
     /**
-    * Name of resource
-    */
-    'resourceLabel'?: string;
+     * Name of resource
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
+  interface ManifoldDataProductLogo
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
     /**
-    * _(optional)_ `alt` attribute
-    */
-    'alt'?: string;
+     * _(optional)_ `alt` attribute
+     */
+    alt?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
     /**
-    * Look up product name from resource
-    */
-    'resourceLabel'?: string;
+     * Look up product name from resource
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
+  interface ManifoldDataProductName
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
     /**
-    * Look up product name from resource
-    */
-    'resourceLabel'?: string;
+     * Look up product name from resource
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
+  interface ManifoldDataProvisionButton
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
-    'ownerId'?: string;
+    ownerId?: string;
     /**
-    * Plan to provision (slug)
-    */
-    'planLabel'?: string;
+     * Plan to provision (slug)
+     */
+    planLabel?: string;
     /**
-    * Product to provision (slug)
-    */
-    'productLabel'?: string;
+     * Product to provision (slug)
+     */
+    productLabel?: string;
     /**
-    * Region to provision (complete name), omit for all region
-    */
-    'regionName'?: string;
+     * Region to provision (complete name), omit for all region
+     */
+    regionName?: string;
     /**
-    * The label of the resource to provision
-    */
-    'resourceLabel'?: string;
+     * The label of the resource to provision
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
+  interface ManifoldDataRenameButton
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    'loading'?: boolean;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
+    loading?: boolean;
     /**
-    * The new label to give to the resource
-    */
-    'newLabel'?: string;
+     * The new label to give to the resource
+     */
+    newLabel?: string;
     'onManifold-renameButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
     /**
-    * The id of the resource to rename, will be fetched if not set
-    */
-    'resourceId'?: string;
+     * The id of the resource to rename, will be fetched if not set
+     */
+    resourceId?: string;
     /**
-    * The label of the resource to rename
-    */
-    'resourceLabel'?: string;
+     * The label of the resource to rename
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
+  interface ManifoldDataResourceList
+    extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
+     * Disable auto-updates?
+     */
+    paused?: boolean;
     /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
+     * Should the JS event still fire, even if product-link-format is passed?
+     */
+    preserveEvent?: boolean;
     /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'resourceLinkFormat'?: string;
+     * Link format structure, with `:resource` placeholder
+     */
+    resourceLinkFormat?: string;
   }
   interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
   interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
     /**
-    * a CSS variable starting with `--manifold-c-*`
-    */
-    'color'?: string;
+     * a CSS variable starting with `--manifold-c-*`
+     */
+    color?: string;
     /**
-    * a CSS variable starting with `--manifold-g-*`
-    */
-    'gradient'?: string;
+     * a CSS variable starting with `--manifold-g-*`
+     */
+    gradient?: string;
     /**
-    * The icon ID
-    */
-    'icon'?: string;
-    'marginLeft'?: boolean;
-    'marginRight'?: boolean;
+     * The icon ID
+     */
+    icon?: string;
+    marginLeft?: boolean;
+    marginRight?: boolean;
   }
   interface ManifoldImageGallery extends JSXBase.HTMLAttributes<HTMLManifoldImageGalleryElement> {
-    'images'?: string[];
+    images?: string[];
   }
   interface ManifoldInput extends JSXBase.HTMLAttributes<HTMLManifoldInputElement> {
-    'defaultValue'?: string;
-    'disabled'?: boolean;
-    'inputId'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'pattern'?: string;
-    'required'?: boolean;
-    'type'?: string;
+    defaultValue?: string;
+    disabled?: boolean;
+    inputId?: string;
+    name?: string;
+    onUpdateValue?: (event: CustomEvent<any>) => void;
+    pattern?: string;
+    required?: boolean;
+    type?: string;
   }
   interface ManifoldLazyImage extends JSXBase.HTMLAttributes<HTMLManifoldLazyImageElement> {
-    'alt'?: string;
-    'itemprop'?: string;
-    'src'?: string;
+    alt?: string;
+    itemprop?: string;
+    src?: string;
   }
   interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'excludes'?: string;
+     * Comma-separated list of hidden products (labels)
+     */
+    excludes?: string;
     /**
-    * Comma-separated list of featured products (labels)
-    */
-    'featured'?: string;
+     * Comma-separated list of featured products (labels)
+     */
+    featured?: string;
     /**
-    * Hide categories & side menu?
-    */
-    'hideCategories'?: boolean;
+     * Hide categories & side menu?
+     */
+    hideCategories?: boolean;
     /**
-    * Hide search?
-    */
-    'hideSearch'?: boolean;
+     * Hide search?
+     */
+    hideSearch?: boolean;
     /**
-    * Hide template cards?
-    */
-    'hideTemplates'?: boolean;
+     * Hide template cards?
+     */
+    hideTemplates?: boolean;
     /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
+     * Should the JS event still fire, even if product-link-format is passed?
+     */
+    preserveEvent?: boolean;
     /**
-    * Product link structure, with `:product` placeholder
-    */
-    'productLinkFormat'?: string;
+     * Product link structure, with `:product` placeholder
+     */
+    productLinkFormat?: string;
     /**
-    * Comma-separated list of shown products (labels)
-    */
-    'products'?: string;
+     * Comma-separated list of shown products (labels)
+     */
+    products?: string;
     /**
-    * Template format structure, with `:product` placeholder
-    */
-    'templateLinkFormat'?: string;
+     * Template format structure, with `:product` placeholder
+     */
+    templateLinkFormat?: string;
   }
-  interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
-    'excludes'?: string[];
-    'featured'?: string[];
-    'hideCategories'?: boolean;
-    'hideSearch'?: boolean;
-    'hideTemplates'?: boolean;
-    'preserveEvent'?: boolean;
-    'productLinkFormat'?: string;
-    'products'?: string[];
-    'services'?: Catalog.Product[];
-    'templateLinkFormat'?: string;
+  interface ManifoldMarketplaceGrid
+    extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
+    excludes?: string[];
+    featured?: string[];
+    hideCategories?: boolean;
+    hideSearch?: boolean;
+    hideTemplates?: boolean;
+    preserveEvent?: boolean;
+    productLinkFormat?: string;
+    products?: string[];
+    services?: Catalog.Product[];
+    templateLinkFormat?: string;
   }
   interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {
-    'mock'?: Gateway.Resource;
+    mock?: Gateway.Resource;
   }
   interface ManifoldNumberInput extends JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement> {
-    'decrementDisabledLabel'?: string;
-    'error'?: string;
-    'increment'?: number;
-    'incrementDisabledLabel'?: string;
-    'max'?: number;
-    'min'?: number;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'suffix'?: string;
-    'value'?: number;
+    decrementDisabledLabel?: string;
+    error?: string;
+    increment?: number;
+    incrementDisabledLabel?: string;
+    max?: number;
+    min?: number;
+    name?: string;
+    onUpdateValue?: (event: CustomEvent<any>) => void;
+    suffix?: string;
+    value?: number;
   }
   interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"kitefin"`)
-    */
-    'planLabel'?: string;
+     * URL-friendly slug (e.g. `"kitefin"`)
+     */
+    planLabel?: string;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
   }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
-    'allFeatures'?: Catalog.ExpandedFeature[];
+    allFeatures?: Catalog.ExpandedFeature[];
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'compact'?: boolean;
-    'connection'?: Connection;
-    'customizable'?: boolean;
-    'planId'?: string;
-    'selectedFeatures'?: Gateway.FeatureMap;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    compact?: boolean;
+    connection?: Connection;
+    customizable?: boolean;
+    planId?: string;
+    selectedFeatures?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {
-    'isExistingResource'?: boolean;
+    isExistingResource?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
-    'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.Product;
-    'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: string;
-    'scrollLocked'?: boolean;
+    plan?: Catalog.ExpandedPlan;
+    product?: Catalog.Product;
+    regions?: string[];
+    resourceFeatures?: Gateway.ResolvedFeature[];
+    resourceRegion?: string;
+    scrollLocked?: boolean;
   }
   interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
-    'plans'?: Catalog.ExpandedPlan[];
-    'selectPlan'?: Function;
-    'selectedPlanId'?: string;
+    plans?: Catalog.ExpandedPlan[];
+    selectPlan?: Function;
+    selectedPlanId?: string;
   }
   interface ManifoldPlanSelector extends JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
+     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
+     */
+    productLabel?: string;
     /**
-    * Specify region order
-    */
-    'regions'?: string;
+     * Specify region order
+     */
+    regions?: string;
     /**
-    * Is this tied to an existing resource?
-    */
-    'resourceLabel'?: string;
+     * Is this tied to an existing resource?
+     */
+    resourceLabel?: string;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * _(optional)_ Hide the CTA on the left?
-    */
-    'productLabel'?: string;
+     * _(optional)_ Hide the CTA on the left?
+     */
+    productLabel?: string;
   }
-  interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
-    'product'?: Catalog.Product;
+  interface ManifoldProductDetails
+    extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
+    product?: Catalog.Product;
   }
   interface ManifoldProductPage extends JSXBase.HTMLAttributes<HTMLManifoldProductPageElement> {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
+    product?: Catalog.Product;
+    provider?: Catalog.Provider;
   }
-  interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
-    'allowedRegions'?: string[];
-    'ariaLabel'?: string;
+  interface ManifoldRegionSelector
+    extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
+    allowedRegions?: string[];
+    ariaLabel?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'preferredRegions'?: string[];
-    'value'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    name?: string;
+    onUpdateValue?: (event: CustomEvent<any>) => void;
+    preferredRegions?: string[];
+    value?: string;
   }
   interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'label'?: string;
-    'preserveEvent'?: boolean;
-    'resourceId'?: string;
-    'resourceLinkFormat'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    label?: string;
+    preserveEvent?: boolean;
+    resourceId?: string;
+    resourceLinkFormat?: string;
   }
-  interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
+  interface ManifoldResourceCardView
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'label'?: string;
-    'loading'?: boolean;
-    'logo'?: string;
-    'name'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    label?: string;
+    loading?: boolean;
+    logo?: string;
+    name?: string;
     'onManifold-resource-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'resourceId'?: string;
-    'resourceLinkFormat'?: string;
-    'resourceStatus'?: string;
+    preserveEvent?: boolean;
+    resourceId?: string;
+    resourceLinkFormat?: string;
+    resourceStatus?: string;
   }
-  interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
+  interface ManifoldResourceContainer
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Which resource does this belong to?
-    */
-    'resourceLabel'?: string;
+     * Which resource does this belong to?
+     */
+    resourceLabel?: string;
   }
-  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
-  interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
-    'credentials'?: Marketplace.Credential[];
-    'loading'?: boolean;
-    'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceLabel'?: string;
+  interface ManifoldResourceCredentials
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
+  interface ManifoldResourceCredentialsView
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
+    credentials?: Marketplace.Credential[];
+    loading?: boolean;
+    onCredentialsRequested?: (event: CustomEvent<any>) => void;
+    resourceLabel?: string;
   }
-  interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
-    'data'?: Gateway.Resource;
-    'loading'?: boolean;
+  interface ManifoldResourceDeprovision
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
+    data?: Gateway.Resource;
+    loading?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
   }
-  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
-  interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
-    'data'?: Gateway.Resource;
+  interface ManifoldResourceDetails
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
+  interface ManifoldResourceDetailsView
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
+    data?: Gateway.Resource;
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    connection?: Connection;
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
+     * Disable auto-updates?
+     */
+    paused?: boolean;
     /**
-    * Should the JS event still fire, even if product-link-format is passed?
-    */
-    'preserveEvent'?: boolean;
+     * Should the JS event still fire, even if product-link-format is passed?
+     */
+    preserveEvent?: boolean;
     /**
-    * Link format structure, with `:resource` placeholder
-    */
-    'resourceLinkFormat'?: string;
+     * Link format structure, with `:resource` placeholder
+     */
+    resourceLinkFormat?: string;
   }
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
-  interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
-    'asCard'?: boolean;
+  interface ManifoldResourceProduct
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
+    asCard?: boolean;
   }
-  interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
-    'data'?: Gateway.Resource;
-    'loading'?: boolean;
+  interface ManifoldResourceRename
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
+    data?: Gateway.Resource;
+    loading?: boolean;
     /**
-    * The new label to give to the resource
-    */
-    'newLabel'?: string;
+     * The new label to give to the resource
+     */
+    newLabel?: string;
     'onManifold-renameButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
   }
-  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
-    'size'?: 'small' | 'medium';
+  interface ManifoldResourceStatus
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
+    size?: 'small' | 'medium';
   }
-  interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
-    'loading'?: boolean;
-    'resourceState'?: string;
-    'size'?: 'small' | 'medium';
+  interface ManifoldResourceStatusView
+    extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
+    loading?: boolean;
+    resourceState?: string;
+    size?: 'small' | 'medium';
   }
   interface ManifoldSelect extends JSXBase.HTMLAttributes<HTMLManifoldSelectElement> {
-    'defaultValue'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'options'?: Option[];
-    'required'?: boolean;
+    defaultValue?: string;
+    name?: string;
+    onUpdateValue?: (event: CustomEvent<any>) => void;
+    options?: Option[];
+    required?: boolean;
   }
   interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'isFeatured'?: boolean;
+     * _(hidden)_ Passed by `<manifold-connection>`
+     */
+    authToken?: string;
+    connection?: Connection;
+    isFeatured?: boolean;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'product'?: Catalog.Product;
-    'productId'?: string;
-    'productLabel'?: string;
-    'productLinkFormat'?: string;
-    'skeleton'?: boolean;
+    preserveEvent?: boolean;
+    product?: Catalog.Product;
+    productId?: string;
+    productLabel?: string;
+    productLinkFormat?: string;
+    skeleton?: boolean;
   }
   interface ManifoldServiceView extends JSXBase.HTMLAttributes<HTMLManifoldServiceViewElement> {
-    'asCard'?: boolean;
-    'description'?: string;
-    'hideTags'?: boolean;
-    'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'label'?: string;
-    'loading'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'productId'?: string;
+    asCard?: boolean;
+    description?: string;
+    hideTags?: boolean;
+    isFeatured?: boolean;
+    isFree?: boolean;
+    label?: string;
+    loading?: boolean;
+    logo?: string;
+    name?: string;
+    productId?: string;
   }
   interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement> {}
   interface ManifoldSkeletonText extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement> {}
   interface ManifoldTemplateCard extends JSXBase.HTMLAttributes<HTMLManifoldTemplateCardElement> {
-    'category'?: string;
+    category?: string;
     'onManifold-template-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'templateLinkFormat'?: string;
+    preserveEvent?: boolean;
+    templateLinkFormat?: string;
   }
   interface ManifoldToast extends JSXBase.HTMLAttributes<HTMLManifoldToastElement> {
     /**
-    * `success` | `warning` | `error`
-    */
-    'alertType'?: 'success' | 'warning' | 'error' | undefined;
+     * `success` | `warning` | `error`
+     */
+    alertType?: 'success' | 'warning' | 'error' | undefined;
     /**
-    * Is this dismissable?
-    */
-    'dismissable'?: boolean;
+     * Is this dismissable?
+     */
+    dismissable?: boolean;
     /**
-    * Use custom icon path data (1024×1024)
-    */
-    'icon'?: string;
+     * Use custom icon path data (1024×1024)
+     */
+    icon?: string;
   }
   interface ManifoldToggle extends JSXBase.HTMLAttributes<HTMLManifoldToggleElement> {
-    'ariaLabelledby'?: string;
-    'defaultValue'?: boolean;
-    'disabled'?: boolean;
-    'label'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
+    ariaLabelledby?: string;
+    defaultValue?: boolean;
+    disabled?: boolean;
+    label?: string;
+    name?: string;
+    onUpdateValue?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldTooltip extends JSXBase.HTMLAttributes<HTMLManifoldTooltipElement> {
-    'labelText'?: string;
+    labelText?: string;
   }
 
   interface IntrinsicElements {
@@ -1690,11 +1785,8 @@ declare namespace LocalJSX {
 
 export { LocalJSX as JSX };
 
-
-declare module "@stencil/core" {
+declare module '@stencil/core' {
   export namespace JSX {
     interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
   }
 }
-
-

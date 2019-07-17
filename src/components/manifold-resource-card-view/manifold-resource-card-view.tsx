@@ -98,7 +98,6 @@ export class ManifoldResourceCardView {
   };
 
   render() {
-
     return !this.loading && this.resourceId ? (
       <a
         class="wrapper"

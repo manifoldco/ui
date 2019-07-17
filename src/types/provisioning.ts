@@ -77,12 +77,7 @@ export namespace Provisioning {
   }
   export interface Error {
     // The error type
-    type?:
-      | 'bad_request'
-      | 'unauthorized'
-      | 'not_found'
-      | 'conflict'
-      | 'internal';
+    type?: 'bad_request' | 'unauthorized' | 'not_found' | 'conflict' | 'internal';
     // Explanation of the errors
     message?: string[];
   }

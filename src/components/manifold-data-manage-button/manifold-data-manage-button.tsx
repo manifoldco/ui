@@ -83,7 +83,7 @@ export class ManifoldDataManageButton {
 
     const response = await fetch(
       `${this.connection.gateway}/id/resource/${this.resourceId}`,
-      withAuth(this.authToken,{
+      withAuth(this.authToken, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(req),

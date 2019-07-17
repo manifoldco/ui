@@ -65,11 +65,15 @@ export class ManifoldPlanCost {
     this.controller = new AbortController();
 
     // Returning the promise is necessary for componentWillLoad()
-    return planCost(this.connection, {
-      planID: this.planId,
-      features: allFeatures,
-      init: { signal: this.controller.signal },
-    }, this.authToken).then(({ cost }: Gateway.Price) => {
+    return planCost(
+      this.connection,
+      {
+        planID: this.planId,
+        features: allFeatures,
+        init: { signal: this.controller.signal },
+      },
+      this.authToken
+    ).then(({ cost }: Gateway.Price) => {
       this.baseCost = cost || 0;
       this.controller = undefined; // Request finished, so signal no longer needed
     });

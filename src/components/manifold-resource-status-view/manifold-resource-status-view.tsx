@@ -6,7 +6,7 @@ const OFFLINE = 'offline';
 const PROVISIONING = 'provision';
 const DEGRADED = 'degraded';
 
-const message: {[s: string]: string} = {
+const message: { [s: string]: string } = {
   [AVAILABLE]: 'Available',
   [OFFLINE]: 'Offline',
   [PROVISIONING]: 'Provision',
@@ -48,7 +48,7 @@ export class ManifoldResourceStatusView {
     }
 
     return (
-      <div class="status" data-size={this.size}  data-status={this.status(this.resourceState)}>
+      <div class="status" data-size={this.size} data-status={this.status(this.resourceState)}>
         <div class="inner">{this.statusMessage(this.resourceState)}</div>
       </div>
     );

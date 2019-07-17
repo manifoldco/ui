@@ -5,7 +5,6 @@ import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import { Gateway } from '../../types/gateway';
 
-
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
   @Element() el: HTMLElement;
@@ -28,9 +27,9 @@ export class ManifoldResourceCard {
 
   componentWillLoad() {
     if (this.resourceId) {
-      this.fetchResourceId(this.resourceId)
+      this.fetchResourceId(this.resourceId);
     } else if (this.label) {
-      this.fetchResourceLabel(this.label)
+      this.fetchResourceLabel(this.label);
     }
   }
 

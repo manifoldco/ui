@@ -68,7 +68,7 @@ describe('<manifold-resource-list>', () => {
     const resourceList = new ManifoldResourceList();
     resourceList.pausedChange(true);
 
-    expect( window.clearInterval).toHaveBeenCalled();
+    expect(window.clearInterval).toHaveBeenCalled();
   });
 
   it('changing the paused attribute to false leads to a creation of the interval', () => {

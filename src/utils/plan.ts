@@ -132,7 +132,7 @@ export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): 
   let per = 1;
   const suffix = numeric_details.suffix || '';
   if (!Array.isArray(numeric_details.cost_ranges))
-    return [{ from: 0, to: Infinity, cost: 0, suffix, per }];
+    {return [{ from: 0, to: Infinity, cost: 0, suffix, per }];}
 
   const cheapestNonZeroCost = numeric_details.cost_ranges.reduce((cost, tier) => {
     if (!tier.cost_multiple || tier.cost_multiple === 0) return cost;
@@ -193,7 +193,7 @@ export function numberFeatureMeasurableDisplayValue(
 
   // Feature unavailable
   if (!Array.isArray(numeric_details.cost_ranges) || numeric_details.cost_ranges.length === 0)
-    return name.replace(/^No .*/, NO).replace(/^Yes/, YES);
+    {return name.replace(/^No .*/, NO).replace(/^Yes/, YES);}
 
   const tiers = pricingTiers(value);
 
@@ -233,11 +233,11 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
     if (!feature.value) return obj;
 
     if (feature.type === 'boolean')
-      return { ...obj, [feature.label]: booleanFeatureDefaultValue(feature.value) };
+      {return { ...obj, [feature.label]: booleanFeatureDefaultValue(feature.value) };}
     if (feature.type === 'number')
-      return { ...obj, [feature.label]: numberFeatureDefaultValue(feature.value) };
+      {return { ...obj, [feature.label]: numberFeatureDefaultValue(feature.value) };}
     if (feature.type === 'string')
-      return { ...obj, [feature.label]: stringFeatureDefaultValue(feature.value) };
+      {return { ...obj, [feature.label]: stringFeatureDefaultValue(feature.value) };}
 
     return obj;
   }, {});
@@ -253,7 +253,7 @@ export function planCost(
 ): Promise<Gateway.Price> {
   return fetch(
     `${connection.gateway}/id/plan/${planID}/cost`,
-    withAuth(authToken,{
+    withAuth(authToken, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ features }),

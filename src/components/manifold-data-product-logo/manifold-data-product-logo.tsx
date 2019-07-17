@@ -38,7 +38,10 @@ export class ManifoldDataProductLogo {
 
     this.product = undefined;
     const { catalog } = this.connection;
-    const response = await fetch(`${catalog}/products?label=${productLabel}`, withAuth(this.authToken));
+    const response = await fetch(
+      `${catalog}/products?label=${productLabel}`,
+      withAuth(this.authToken)
+    );
     const products: Catalog.Product[] = await response.json();
     this.product = products[0]; // eslint-disable-line prefer-destructuring
   };
@@ -50,7 +53,10 @@ export class ManifoldDataProductLogo {
 
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
+    const response = await fetch(
+      `${gateway}/resources/me/${resourceLabel}`,
+      withAuth(this.authToken)
+    );
     const resource: Gateway.Resource = await response.json();
     const productId = resource.product && resource.product.id;
     const productResp = await fetch(`${catalog}/products/${productId}`, withAuth(this.authToken));

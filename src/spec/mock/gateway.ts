@@ -1,9 +1,4 @@
-import {
-  Product,
-  ExpandedPlan,
-  Regions,
-  Provider,
-} from './catalog';
+import { Product, ExpandedPlan, Regions, Provider } from './catalog';
 import { Resource } from './marketplace';
 import { Gateway } from '../../types/gateway';
 

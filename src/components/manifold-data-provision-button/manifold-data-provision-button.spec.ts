@@ -97,11 +97,9 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
         true
       );
-      expect(
-        fetchMock.called(
-          `${connections.prod.catalog}/plans/?product_id=${Product.id}`
-        )
-      ).toBe(true);
+      expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
+        true
+      );
 
       const root = page.rootInstance as ManifoldDataProvisionButton;
       expect(root.productId).toEqual(Product.id);
@@ -109,7 +107,6 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     it('will do nothing if no product label is given', async () => {
-
       fetchMock.mock(`${connections.prod.catalog}/products/`, [Product]);
 
       await newSpecPage({
@@ -119,9 +116,7 @@ describe('<manifold-data-provision-button>', () => {
         `,
       });
 
-      expect(fetchMock.called(`${connections.prod.catalog}/products/`)).toBe(
-        false
-      );
+      expect(fetchMock.called(`${connections.prod.catalog}/products/`)).toBe(false);
     });
 
     it('will do nothing if the products return an invalid value', async () => {
@@ -167,11 +162,9 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
         true
       );
-      expect(
-        fetchMock.called(
-          `${connections.prod.catalog}/plans/?product_id=${Product.id}`
-        )
-      ).toBe(true);
+      expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
+        true
+      );
 
       const root = page.rootInstance as ManifoldDataProvisionButton;
       expect(root.productId).toEqual('');
@@ -185,9 +178,7 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     beforeEach(() => {
-      fetchMock
-        .mock(/.*\/products\/.*/, [Product])
-        .mock(/.*\/plans\/.*/, [ExpandedPlan]);
+      fetchMock.mock(/.*\/products\/.*/, [Product]).mock(/.*\/plans\/.*/, [ExpandedPlan]);
     });
 
     it('will trigger a dom event on successful provision', async () => {

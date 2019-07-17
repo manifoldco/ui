@@ -58,9 +58,9 @@ export class ManifoldDataResourceList {
       .then(response => response.json())
       .then((resources: Marketplace.Resource[]) => {
         if (Array.isArray(resources))
-          this.resources = this.userResources(
+          {this.resources = this.userResources(
             [...resources].sort((a, b) => a.body.label.localeCompare(b.body.label))
-          );
+          );}
       });
   }
 

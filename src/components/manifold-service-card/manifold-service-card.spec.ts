@@ -132,9 +132,7 @@ describe('<manifold-service-card>', () => {
         `,
       });
 
-      expect(fetchMock.called(`${connections.prod.catalog}/products/${productId}`)).toBe(
-        true
-      );
+      expect(fetchMock.called(`${connections.prod.catalog}/products/${productId}`)).toBe(true);
 
       const root = page.rootInstance as ManifoldServiceCard;
       expect(root.product).toEqual(Product);
@@ -162,7 +160,10 @@ describe('<manifold-service-card>', () => {
     it('will fetch the plans after the product has been fetched', async () => {
       fetchMock
         .mock(`${connections.prod.catalog}/products/${Product.id}`, Product)
-        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [ExpandedPlan, ExpandedFreePlan]);
+        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [
+          ExpandedPlan,
+          ExpandedFreePlan,
+        ]);
 
       const page = await newSpecPage({
         components: [ManifoldServiceCard],

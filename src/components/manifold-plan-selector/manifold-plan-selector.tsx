@@ -50,7 +50,10 @@ export class ManifoldPlanSelector {
       this.parsedRegions = this.parseRegions(this.regions);
     }
     const { catalog } = this.connection;
-    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth(this.authToken));
+    const productsResp = await fetch(
+      `${catalog}/products/?label=${productLabel}`,
+      withAuth(this.authToken)
+    );
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
     this.product = products[0]; // eslint-disable-line prefer-destructuring
     this.fetchPlans(products[0].id);
@@ -63,7 +66,10 @@ export class ManifoldPlanSelector {
 
     this.plans = undefined;
     const { catalog } = this.connection;
-    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}`, withAuth(this.authToken));
+    const plansResp = await fetch(
+      `${catalog}/plans/?product_id=${productId}`,
+      withAuth(this.authToken)
+    );
     const plans: Catalog.ExpandedPlan[] = await plansResp.json();
     this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
   }
@@ -76,13 +82,19 @@ export class ManifoldPlanSelector {
     this.resource = undefined;
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
+    const response = await fetch(
+      `${gateway}/resources/me/${resourceLabel}`,
+      withAuth(this.authToken)
+    );
     const resource: Gateway.Resource = await response.json();
     this.resource = resource;
     if (!resource.product) {
       return;
     }
-    const productResp = await fetch(`${catalog}/products/${resource.product.id}`, withAuth(this.authToken));
+    const productResp = await fetch(
+      `${catalog}/products/${resource.product.id}`,
+      withAuth(this.authToken)
+    );
     const product: Catalog.Product = await productResp.json();
     this.product = product;
     this.fetchPlans(product.id);

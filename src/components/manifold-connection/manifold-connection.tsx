@@ -16,11 +16,13 @@ export class ManiTunnel {
 
   render() {
     return (
-      <Tunnel.Provider state={{
-        connection: connections[this.env],
-        authToken: this.authToken,
-        setAuthToken: this.setAuthToken,
-      }}>
+      <Tunnel.Provider
+        state={{
+          connection: connections[this.env],
+          authToken: this.authToken,
+          setAuthToken: this.setAuthToken,
+        }}
+      >
         <slot />
       </Tunnel.Provider>
     );
