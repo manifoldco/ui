@@ -1,19 +1,25 @@
-import { h, Component, Prop, Watch } from '@stencil/core';
+import { h, Component, Prop, Watch, Event } from '@stencil/core';
 import Tunnel from '../../data/connection';
+import { EventEmitter } from 'events';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() setAuthToken?: (s: string) => void;
+  @Prop() setAuthToken: (s: string) => void = () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
-  @Prop() token?: string;
+  @Prop({ mutable: true }) token?: string;
+  @Event() manifoldOauthTokenChange: EventEmitter;
 
   @Watch('token') tokenChange(newToken: string) {
-    return this.setAuthToken && this.setAuthToken(newToken);
+    this.setAuthToken(newToken);
+
+    if ((!this.token && newToken) || (this.token && !newToken)) {
+      this.manifoldOauthTokenChange.emit(newToken);
+    }
   }
 
   componentWillLoad() {
-    if (this.setAuthToken && this.token) {
+    if (this.token) {
       this.setAuthToken(this.token);
     }
   }
