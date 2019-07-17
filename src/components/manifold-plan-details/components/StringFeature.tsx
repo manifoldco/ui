@@ -18,7 +18,9 @@ export const StringFeature: FunctionalComponent<StringFeatureProps> = ({
   isExistingResource,
   onChange,
 }) => {
-  if (!feature.value) return '';
+  if (!feature.value) {
+    return '';
+  }
 
   const displayValue = stringFeatureDisplayValue(feature.value);
 

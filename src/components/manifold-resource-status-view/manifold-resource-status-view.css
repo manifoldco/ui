@@ -52,8 +52,8 @@
     font-size: var(--manifold-font-d1);
 
     & .inner::before {
-        width: 0.5rem;
-        height: 0.5rem;
+      width: 0.5rem;
+      height: 0.5rem;
     }
   }
 
@@ -102,8 +102,8 @@
     font-size: var(--manifold-font-d1);
 
     & manifold-icon {
-        width: 0.5rem;
-        height: 0.5rem;
+      width: 0.5rem;
+      height: 0.5rem;
     }
   }
 }

@@ -1,5 +1,6 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
+
 import graphqlFetch from '../../utils/graphqlFetch';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
@@ -39,8 +40,12 @@ export class ManifoldDataProductLogo {
   }
 
   componentWillLoad() {
-    if (this.productLabel) this.fetchProduct(this.productLabel);
-    if (this.resourceLabel) this.fetchResource(this.resourceLabel);
+    if (this.productLabel) {
+      this.fetchProduct(this.productLabel);
+    }
+    if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
+    }
   }
 
   fetchProduct = async (productLabel: string) => {

@@ -29,7 +29,9 @@ export class ImageGallery {
 
   render() {
     if (Array.isArray(this.images)) {
-      if (this.images.length === 0) return null;
+      if (this.images.length === 0) {
+        return null;
+      }
 
       return (
         <div class="container">

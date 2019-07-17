@@ -26,9 +26,7 @@ describe('<manifold-resource-list>', () => {
     });
 
     // @ts-ignore
-    expect(hasResource.root.shadowRoot).toEqualHtml(
-      `<slot name="has-resource"></slot>`
-    );
+    expect(hasResource.root.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
   });
 
   it('Displays the right slot if user has no resources', async () => {
@@ -44,8 +42,6 @@ describe('<manifold-resource-list>', () => {
     });
 
     // @ts-ignore
-    expect(hasResource.root.shadowRoot).toEqualHtml(
-      `<slot name="no-resource"></slot>`
-    );
+    expect(hasResource.root.shadowRoot).toEqualHtml(`<slot name="no-resource"></slot>`);
   });
 });

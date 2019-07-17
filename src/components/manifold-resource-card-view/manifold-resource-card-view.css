@@ -3,9 +3,9 @@
 @custom-media --viewport-l (min-width: 1080px);
 
 :host {
-  --manifold-product-logo-s: 0.50rem;
+  --manifold-product-logo-s: 0.5rem;
   --manifold-product-logo-m: 1.25rem;
-  --manifold-product-logo-l: 1.50rem;
+  --manifold-product-logo-l: 1.5rem;
   --padding: 0.75rem;
 
   /* theme vars */
@@ -115,15 +115,15 @@
   color: var(--manifold-color-gray60);
 
   &[data-status='provision'] {
-     --status-color: var(--manifold-color-info);
+    --status-color: var(--manifold-color-info);
   }
 
   &[data-status='degraded'] {
-     --status-color: var(--manifold-color-warn);
+    --status-color: var(--manifold-color-warn);
   }
 
   &[data-status='offline'] {
-     --status-color: var(--manifold-color-error);
+    --status-color: var(--manifold-color-error);
   }
 }
 
@@ -134,14 +134,14 @@
   align-items: center;
 
   &::before {
-   display: block;
-   width: 0.5rem;
-   height: 0.5rem;
-   margin-right: 0.5rem;
-   background: var(--status-color);
-   border-radius: 50%;
-   content: '';
- }
+    display: block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.5rem;
+    background: var(--status-color);
+    border-radius: 50%;
+    content: '';
+  }
 }
 
 .loading {

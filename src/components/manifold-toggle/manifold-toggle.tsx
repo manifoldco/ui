@@ -17,7 +17,9 @@ export class MfToggle {
   }
 
   onChangeHandler = (e: Event) => {
-    if (!e.target) return;
+    if (!e.target) {
+      return;
+    }
     const { checked } = e.target as HTMLInputElement;
     this.updateValue.emit({
       name: this.name,

@@ -32,8 +32,12 @@ export class ManifoldActivePlan {
   };
 
   get selectedPlan() {
-    if (!this.plans) return undefined;
-    if (!this.selectedPlanId) return this.plans[0];
+    if (!this.plans) {
+      return undefined;
+    }
+    if (!this.selectedPlanId) {
+      return this.plans[0];
+    }
     return this.plans.find(({ id }) => id === this.selectedPlanId);
   }
 
