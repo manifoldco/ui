@@ -2,10 +2,10 @@ import { h, Component, Prop, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 import { arrow_up_right, book, life_buoy } from '@manifoldco/icons';
 import graphqlFetch from '../../utils/graphqlFetch';
-import { Product, Provider } from '../../types/graphql'; 
+import { Product, Provider } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
+// import { withAuth } from '../../utils/auth';
 import { categoryIcon } from '../../utils/marketplace';
 import { Connection, connections } from '../../utils/connections';
 
@@ -42,9 +42,6 @@ export class ManifoldProductPage {
     this.fetchProdProv(newProduct);
   }
 
-  //provider name
-  //product documentation_url, support_url, name, label, logo_url, tags
-
   // get providerName() {
   //   if (!this.product || !this.provider) return undefined;
   //   return (
@@ -53,7 +50,9 @@ export class ManifoldProductPage {
   // }
 
   componentWillLoad() {
-    if (this.productId) this.fetchProdProv(this.productId);
+    if (this.productId) {
+      this.fetchProdProv(this.productId);
+    }
   }
 
   fetchProdProv = async (productId: string) => {
@@ -70,11 +69,18 @@ export class ManifoldProductPage {
     }
     this.product = data.product;
     this.provider = data.product.provider;
-  }
+  };
 
   render() {
     if (this.product) {
-      const { documentationUrl, supportEmail, displayName, label, logoUrl, categories } = this.product;
+      const {
+        documentationUrl,
+        supportEmail,
+        displayName,
+        label,
+        logoUrl,
+        categories,
+      } = this.product;
       const gradient = `var(--manifold-g-${label}, var(--manifold-g-default))`;
 
       return (
@@ -90,7 +96,9 @@ export class ManifoldProductPage {
                     {displayName}
                   </h2>
                   <p class="provider-name">
-                    {this.provider.displayName && <span itemprop="brand">from {this.provider.displayName}</span>}
+                    {this.provider && this.provider.displayName && (
+                      <span itemprop="brand">from {this.provider.displayName}</span>
+                    )}
                   </p>
                 </div>
                 <div class="sidebar-cta">
