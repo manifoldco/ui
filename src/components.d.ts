@@ -34,7 +34,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'setAuthToken'?: (s: string) => void;
+    'setAuthToken': (s: string) => void;
     'token'?: string;
   }
   interface ManifoldBadge {}
@@ -1019,6 +1019,7 @@ declare namespace LocalJSX {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
+    'onManifoldOauthTokenChange'?: (event: CustomEvent<any>) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */

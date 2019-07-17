@@ -1,6 +1,5 @@
-import { h, Component, Prop, Watch, Event } from '@stencil/core';
+import { h, Component, Prop, Watch, Event, EventEmitter } from '@stencil/core';
 import Tunnel from '../../data/connection';
-import { EventEmitter } from 'events';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
