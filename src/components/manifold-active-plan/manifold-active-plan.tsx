@@ -37,7 +37,7 @@ export class ManifoldActivePlan {
     return this.plans.find(({ id }) => id === this.selectedPlanId);
   }
 
-  render() {
+  render = function() {
     const resourceRegion =
       (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
       undefined;
