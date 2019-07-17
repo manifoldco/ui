@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.4.3]
+### Fixed
+- Fixed the rename and deprovision button not behaving properly when used in their resource warpers
+
+## [0.4.2]
 ### Changed
 - Changed the deprovision and rename button to not include a shadow dom root, they can now be styled from external stylesheets.
 
