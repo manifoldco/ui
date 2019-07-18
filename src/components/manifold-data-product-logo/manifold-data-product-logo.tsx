@@ -1,6 +1,6 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
-import graphqlFetch from '../../utils/graphqlFetch';
+import { GraphqlResponseBody, GraphqlRequestBody } from '../../utils/graphqlFetch';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import { Product } from '../../types/graphql';
@@ -26,11 +26,16 @@ export class ManifoldDataProductLogo {
   @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
+  @Watch('graphqlFetch') graphqlFetchChange() {
+    if (this.productLabel) this.fetchProduct(this.productLabel);
+  }
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
   }
@@ -39,18 +44,18 @@ export class ManifoldDataProductLogo {
   }
 
   componentWillLoad() {
-    if (this.productLabel) this.fetchProduct(this.productLabel);
+    // if (this.productLabel) this.fetchProduct(this.productLabel);
     if (this.resourceLabel) this.fetchResource(this.resourceLabel);
   }
 
   fetchProduct = async (productLabel: string) => {
-    if (!this.connection) {
+    if (!this.graphqlFetch) {
       return;
     }
 
     this.product = undefined;
     const variables = { productLabel };
-    const { data, error } = await graphqlFetch({ query, variables });
+    const { data, error } = await this.graphqlFetch({ query, variables });
     if (error) {
       console.error(error);
     }
@@ -88,4 +93,4 @@ export class ManifoldDataProductLogo {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProductLogo, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataProductLogo, ['connection', 'authToken', 'graphqlFetch']);

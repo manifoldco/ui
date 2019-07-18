@@ -16,6 +16,10 @@ import {
   Connection,
 } from './utils/connections';
 import {
+  GraphqlRequestBody,
+  GraphqlResponseBody,
+} from './utils/graphqlFetch';
+import {
   Marketplace,
 } from './types/marketplace';
 import {
@@ -140,6 +144,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1136,6 +1144,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */

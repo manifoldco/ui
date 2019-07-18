@@ -2,6 +2,7 @@ import { h, Component, Prop, State } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
 import { connections } from '../../utils/connections';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 @Component({ tag: 'manifold-connection' })
 export class ManiTunnel {
@@ -16,11 +17,14 @@ export class ManiTunnel {
 
   render() {
     return (
-      <Tunnel.Provider state={{
-        connection: connections[this.env],
-        authToken: this.authToken,
-        setAuthToken: this.setAuthToken,
-      }}>
+      <Tunnel.Provider
+        state={{
+          connection: connections[this.env],
+          authToken: this.authToken,
+          setAuthToken: this.setAuthToken,
+          graphqlFetch: createGraphqlFetch({ authToken: this.authToken }),
+        }}
+      >
         <slot />
       </Tunnel.Provider>
     );
