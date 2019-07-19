@@ -27,12 +27,21 @@ export class ManiTunnel {
     localStorage.setItem(TOKEN_KEY, token);
   };
 
+  get accessToken() {
+    if (this.authToken) {
+      const [token] = this.authToken.split('.');
+      return token;
+    }
+
+    return undefined;
+  }
+
   render() {
     return (
       <Tunnel.Provider
         state={{
           connection: connections[this.env],
-          authToken: this.authToken,
+          authToken: this.accessToken,
           setAuthToken: this.setAuthToken,
         }}
       >
