@@ -2,7 +2,10 @@ import { ManifoldAuthToken } from './manifold-auth-token';
 
 describe('<manifold-auth-token>', () => {
   it('calls the set auth token on load', () => {
-    const token = 'test';
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() + 1);
+    const encodedExpiry = Buffer.from(expiry.toUTCString()).toString('base64');
+    const token = `test.${encodedExpiry}`;
 
     const provisionButton = new ManifoldAuthToken();
     provisionButton.setAuthToken = jest.fn();

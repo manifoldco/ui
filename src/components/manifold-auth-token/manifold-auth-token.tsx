@@ -1,5 +1,7 @@
 import { h, Component, Prop, Watch, Event, EventEmitter } from '@stencil/core';
+import { AuthToken } from '@manifoldco/shadowcat';
 import Tunnel from '../../data/connection';
+import { isExpired } from '../../utils/auth';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
@@ -16,12 +18,18 @@ export class ManifoldAuthToken {
 
   componentWillLoad() {
     if (this.token) {
-      this.setAuthToken(this.token);
+      if (!isExpired(this.token)) {
+        this.setAuthToken(this.token);
+      }
     }
   }
 
   setInternalToken(e: CustomEvent) {
-    this.token = e.detail;
+    const payload = e.detail as AuthToken;
+    if (!payload.error) {
+      const encodedExpiry = Buffer.from(payload.expiry || '').toString('base64');
+      this.token = `${payload.token}.${encodedExpiry}`;
+    }
   }
 
   render() {
@@ -31,10 +39,9 @@ export class ManifoldAuthToken {
           onReceiveManifoldToken={this.setInternalToken}
           oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
         ></manifold-oauth>
-        <input type="hidden" value={this.token ? 'true' : 'false'} />;
       </div>
     );
   }
 }
 
-Tunnel.injectProps(ManifoldAuthToken, ['setAuthToken']);
+Tunnel.injectProps(ManifoldAuthToken, ['setAuthToken', 'clearAuthToken']);

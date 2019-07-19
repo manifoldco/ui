@@ -15,3 +15,18 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
     },
   };
 }
+
+export function isExpired(token: string) {
+  const [, expiry] = token.split('.');
+
+  if (expiry) {
+    const d = new Date(Buffer.from(expiry, 'base64').toString());
+    const now = new Date();
+
+    if (d > now) {
+      return false;
+    }
+  }
+
+  return true;
+}
