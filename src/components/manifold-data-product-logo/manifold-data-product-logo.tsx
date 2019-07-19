@@ -44,7 +44,7 @@ export class ManifoldDataProductLogo {
   }
 
   componentWillLoad() {
-    // if (this.productLabel) this.fetchProduct(this.productLabel);
+    if (this.productLabel) this.fetchProduct(this.productLabel);
     if (this.resourceLabel) this.fetchResource(this.resourceLabel);
   }
 
@@ -87,6 +87,7 @@ export class ManifoldDataProductLogo {
   };
 
   render() {
+    console.log(this.connection, this.authToken, this.graphqlFetch);
     return this.product ? (
       <img src={this.product.logoUrl} alt={this.alt || this.product.displayName} />
     ) : null;

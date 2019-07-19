@@ -5,5 +5,6 @@ storiesOf('Product Logo [Data]', module)
   .addParameters({ readme: { sidebar: markdown } })
   .add(
     'default',
-    () => '<manifold-data-product-logo product-label="aiven-redis"></manifold-data-product-logo>'
+    () =>
+      '<manifold-connection><manifold-data-product-logo product-label="aiven-redis"></manifold-data-product-logo></manifold-connection>'
   );

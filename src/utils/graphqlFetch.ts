@@ -1,6 +1,6 @@
 interface CreateGraphqlFetch {
   endpoint?: string;
-  authToken?: string;
+  getAuthToken: () => string | undefined;
 }
 
 export interface GraphqlRequestBody {
@@ -14,18 +14,20 @@ export interface GraphqlResponseBody<T> {
   error?: object;
 }
 
-export const createGraphqlFetch = ({
-  endpoint = 'https://api.manifold.co/graphql',
-  authToken,
-}: CreateGraphqlFetch = {}): (<T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>) => {
+export const createGraphqlFetch = (
+  { endpoint = 'https://api.manifold.co/graphql', getAuthToken }: CreateGraphqlFetch = {
+    getAuthToken: () => undefined,
+  }
+): (<T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>) => {
   const graphqlFetch = async <T>(
     requestBody: GraphqlRequestBody
   ): Promise<GraphqlResponseBody<T>> => {
+    console.log('GET', getAuthToken());
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...(authToken ? { authorization: `Bearer ${authToken}` } : {}),
+        ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
       },
       body: JSON.stringify(requestBody),
     });
@@ -37,7 +39,3 @@ export const createGraphqlFetch = ({
 
   return graphqlFetch;
 };
-
-export default createGraphqlFetch({
-  authToken: localStorage.getItem('manifold_api_token') || undefined,
-});

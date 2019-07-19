@@ -15,6 +15,10 @@ export class ManiTunnel {
     this.authToken = token;
   };
 
+  getAuthToken = () => {
+    return this.authToken;
+  };
+
   render() {
     return (
       <Tunnel.Provider
@@ -22,7 +26,7 @@ export class ManiTunnel {
           connection: connections[this.env],
           authToken: this.authToken,
           setAuthToken: this.setAuthToken,
-          graphqlFetch: createGraphqlFetch({ authToken: this.authToken }),
+          graphqlFetch: createGraphqlFetch({ getAuthToken: this.getAuthToken }),
         }}
       >
         <slot />
