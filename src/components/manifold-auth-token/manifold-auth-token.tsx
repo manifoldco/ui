@@ -44,4 +44,4 @@ export class ManifoldAuthToken {
   }
 }
 
-Tunnel.injectProps(ManifoldAuthToken, ['setAuthToken', 'clearAuthToken']);
+Tunnel.injectProps(ManifoldAuthToken, ['setAuthToken']);
