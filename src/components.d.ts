@@ -16,6 +16,10 @@ import {
   Connection,
 } from './utils/connections';
 import {
+  Product,
+  Provider,
+} from './types/graphql';
+import {
   Marketplace,
 } from './types/marketplace';
 import {
@@ -426,11 +430,11 @@ export namespace Components {
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: Catalog.Product;
+    'product'?: Product;
   }
   interface ManifoldProductPage {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
+    'product'?: Product;
+    'provider'?: Provider;
   }
   interface ManifoldRegionSelector {
     'allowedRegions': string[];
@@ -1435,11 +1439,11 @@ declare namespace LocalJSX {
     'productLabel'?: string;
   }
   interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
-    'product'?: Catalog.Product;
+    'product'?: Product;
   }
   interface ManifoldProductPage extends JSXBase.HTMLAttributes<HTMLManifoldProductPageElement> {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
+    'product'?: Product;
+    'provider'?: Provider;
   }
   interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
     'allowedRegions'?: string[];

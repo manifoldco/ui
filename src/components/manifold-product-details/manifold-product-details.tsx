@@ -44,7 +44,7 @@ export class ManifoldProductDetails {
           </span>
         </h1>
         <ul class="value-prop-list" itemprop="description">
-          {value_props.map(({ body, header }) => (
+          {valueProps.map(({ body, header }) => (
             <li class="value-prop" key={header}>
               <h3>
                 <manifold-skeleton-text>{header}</manifold-skeleton-text>
