@@ -1,31 +1,8 @@
-import { h, Component, Prop, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
+import { h, Component, Prop } from '@stencil/core';
 import { arrow_up_right, book, life_buoy } from '@manifoldco/icons';
-import graphqlFetch from '../../utils/graphqlFetch';
 import { Product, Provider } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
-import Tunnel from '../../data/connection';
-// import { withAuth } from '../../utils/auth';
 import { categoryIcon } from '../../utils/marketplace';
-import { Connection, connections } from '../../utils/connections';
-
-const query = gql`
-  query PRODUCT_PAGE($productId: String!) {
-    product(id: $productId) {
-      displayName
-      documentationUrl
-      supportEmail
-      label
-      logoUrl
-      categories {
-        label
-      }
-      provider {
-        displayName
-      }
-    }
-  }
-`;
 
 @Component({
   tag: 'manifold-product-page',
@@ -34,42 +11,17 @@ const query = gql`
 })
 export class ManifoldProductPage {
   @Prop() product?: Product;
-  @Prop() productId?: string;
   @Prop() provider?: Provider;
-  @Prop() connection?: Connection = connections.prod;
-  @Prop() authToken?: string;
-  @Watch('productId') productChange(newProduct: string) {
-    this.fetchProdProv(newProduct);
+
+  get providerName() {
+    if (!this.product || !this.provider) {
+      return undefined;
+    }
+    return (
+      (this.provider.displayName !== this.product.displayName && this.provider.displayName) ||
+      undefined
+    );
   }
-
-  // get providerName() {
-  //   if (!this.product || !this.provider) return undefined;
-  //   return (
-  //     (this.provider.body.name !== this.product.body.name && this.provider.body.name) || undefined
-  //   );
-  // }
-
-  componentWillLoad() {
-    if (this.productId) {
-      this.fetchProdProv(this.productId);
-    }
-  }
-
-  fetchProdProv = async (productId: string) => {
-    if (!this.connection) {
-      return;
-    }
-
-    this.product = undefined;
-    this.provider = undefined;
-    const variables = { productId };
-    const { data, error } = await graphqlFetch({ query, variables });
-    if (error) {
-      console.error(error);
-    }
-    this.product = data.product;
-    this.provider = data.product.provider;
-  };
 
   render() {
     if (this.product) {
@@ -96,9 +48,7 @@ export class ManifoldProductPage {
                     {displayName}
                   </h2>
                   <p class="provider-name">
-                    {this.provider && this.provider.displayName && (
-                      <span itemprop="brand">from {this.provider.displayName}</span>
-                    )}
+                    {this.providerName && <span itemprop="brand">from {this.providerName}</span>}
                   </p>
                 </div>
                 <div class="sidebar-cta">
@@ -181,5 +131,3 @@ export class ManifoldProductPage {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldProductPage, ['connection', 'authToken']);

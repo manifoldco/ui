@@ -1,5 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
-import { Catalog } from '../../types/catalog';
+import { Product } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 
 @Component({
@@ -8,12 +8,10 @@ import skeletonProduct from '../../data/product';
   shadow: true,
 })
 export class ManifoldProductDetails {
-  @Prop() product?: Catalog.Product;
+  @Prop() product?: Product;
 
   render() {
-    const {
-      body: { tagline, value_props, images = [] },
-    } = this.product || skeletonProduct;
+    const { tagline, valueProps, screenshots = [] } = this.product || skeletonProduct;
 
     if (this.product) {
       return (
@@ -22,15 +20,15 @@ export class ManifoldProductDetails {
             <span class="tagline">{tagline}</span>
           </h1>
           <ul class="value-prop-list" itemprop="description">
-            {value_props.map(({ body, header }) => (
+            {valueProps.map(({ body, header }) => (
               <li class="value-prop" key={header}>
                 <h3>{header}</h3>
                 <p>{body}</p>
               </li>
             ))}
           </ul>
-          {images.length > 0 && (
-            <manifold-image-gallery images={images}>Screenshots</manifold-image-gallery>
+          {screenshots.length > 0 && (
+            <manifold-image-gallery images={screenshots}>Screenshots</manifold-image-gallery>
           )}
         </div>
       );

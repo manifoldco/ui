@@ -1,8 +1,36 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
-import { Catalog } from '../../types/catalog';
+import { gql } from '@manifoldco/gql-zero';
+import { Product, Provider } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
+import graphqlFetch from '../../utils/graphqlFetch';
 import { Connection, connections } from '../../utils/connections';
+
+const query = gql`
+  query PRODUCT_PAGE($productLabel: String!) {
+    product(label: $productLabel) {
+      screenshots {
+        url
+        order
+      }
+      tagline
+      valueProps {
+        body
+        header
+      }
+      displayName
+      documentationUrl
+      supportEmail
+      label
+      logoUrl
+      categories {
+        label
+      }
+      provider {
+        displayName
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
@@ -13,8 +41,8 @@ export class ManifoldProduct {
   @Prop() authToken?: string;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
-  @State() product?: Catalog.Product;
-  @State() provider?: Catalog.Provider;
+  @State() product?: Product;
+  @State() provider?: Provider;
   @Watch('productLabel') productChange(newLabel: string) {
     this.fetchProduct(newLabel);
   }
@@ -30,18 +58,15 @@ export class ManifoldProduct {
       return;
     }
 
-    const productResp = await fetch(
-      `${this.connection.catalog}/products?label=${productLabel}`,
-      withAuth(this.authToken)
-    );
-    const products: Catalog.Product[] = await productResp.json();
-    this.product = products[0]; // eslint-disable-line prefer-destructuring
-    const providerResp = await fetch(
-      `${this.connection.catalog}/providers/${products[0].body.provider_id}`,
-      withAuth(this.authToken)
-    );
-    const provider = await providerResp.json();
-    this.provider = provider;
+    this.product = undefined;
+    this.provider = undefined;
+    const variables = { productLabel };
+    const { data, error } = await graphqlFetch({ query, variables });
+    if (error) {
+      console.error(error);
+    }
+    this.product = data.product;
+    this.provider = data.product.provider;
   };
 
   render() {
