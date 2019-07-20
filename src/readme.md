@@ -8,11 +8,7 @@ npm run dev
 This will start Storybook at `localhost:6060`. Storybook is the preferred way
 to work on styles and testing.
 
-__Note:__ When testing the `<manifold-auth-token>` component in Storybook, a fresh token (`manifold_api_token`, available from local storage after a successful login to Dashboard) needs to be manually added to local storage in Storybook. If you don't see the resources you expect after doing this, first check the console and network calls to see if `identity` is returning a 401 Unauthorized. If this is the case, it's possible your token has expired and you need to set a fresh one.
-
-During the `ui` transition from REST calls to GraphQL and PUMA, this component needs to be able to consume several types of tokens to account for the demo apps that already exist and the testing of tokens with expirations set. In this story we are currently adding a fake expiration to the api tokens so that the resources become visible, which is why the token may expire without the component being aware. This is purely a function of testing without access to the full PUMA flow and should be resolved after the transition.
-
----
+__Note:__ When testing the `<manifold-auth-token>` component in Storybook, a fresh token (`manifold_api_token`, available from local storage after a successful login to Dashboard) needs to be manually added to local storage in Storybook. If you don't see the resources you expect after doing this, first check the console and network calls to see if `identity` is returning a 401 Unauthorized response. If this is the case, it's possible your token has expired and you need to set a fresh one in local storage.
 
 Copy these specs from [our specs][specs] into here:
 
