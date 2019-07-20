@@ -24,7 +24,7 @@ describe('<manifold-auth-token>', () => {
     expiry.setDate(expiry.getDate() - 1);
     const encodedExpiry = Buffer.from(expiry.toUTCString()).toString('base64');
 
-    it('calls the set auth token on load', () => {
+    it('does not call the set auth token on load', () => {
       const token = `test.${encodedExpiry}`;
 
       const provisionButton = new ManifoldAuthToken();
