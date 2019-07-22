@@ -46,10 +46,10 @@
 
   @media (--viewport-s) {
     grid-template-areas:
-      'logo name'
-      'logo info'
-      'tags tags';
-    grid-template-columns: var(--manifold-product-logo-m) auto;
+      'logo name cta'
+      'logo info cta'
+      'tags tags cta';
+    grid-template-columns: var(--manifold-product-logo-m) auto auto;
   }
 
   @media (--viewport-m) {
@@ -116,7 +116,8 @@
 
 .info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   grid-area: info;
   padding-top: 0.25rem;
 

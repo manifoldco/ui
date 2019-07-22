@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Added a SSO data button and the resource wrapper for ssoing into a resource's product dashboard.
+- Added a new CTA slot in the product card for displaying unique cta content.
 
 ### Fixed
 - Fixed the provision button requiring the label to be set, preventing or automatic label generation from working.

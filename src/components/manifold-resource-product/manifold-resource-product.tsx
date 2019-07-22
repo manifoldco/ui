@@ -18,7 +18,11 @@ export class ManifoldResourceProduct {
               logo={state.data.product.logo_url}
               productId={state.data.product.id}
               asCard={this.asCard}
-            />
+            >
+              <manifold-forward-slot slot="cta">
+                <slot name="cta" />
+              </manifold-forward-slot>
+            </manifold-service-view>
           ) : (
             // ☠
             <manifold-service-view
