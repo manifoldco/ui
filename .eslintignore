@@ -18,4 +18,5 @@ src/types/catalog.ts
 src/types/gateway.ts
 src/types/marketplace.ts
 src/types/provisioning.ts
+src/types/connector.ts
 src/types/graphql.ts
