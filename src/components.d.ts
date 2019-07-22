@@ -542,6 +542,8 @@ export namespace Components {
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
     'asCard'?: boolean;
+    'data'?: Gateway.Resource;
+    'loading': boolean;
   }
   interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
@@ -1597,6 +1599,8 @@ declare namespace LocalJSX {
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
     'asCard'?: boolean;
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
   }
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
     'data'?: Gateway.Resource;
