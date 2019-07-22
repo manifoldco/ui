@@ -29,7 +29,7 @@ For validation, error, and success messages, it will emit custom events.
 
 ```js
 document.addEventListener('manifold-ssoButton-click', ({ detail: { resourceLabel } }) =>
-  console.info(`⌛ Sooing into ${resourceLabel} …`)
+  console.info(`⌛ Ssoing into ${resourceLabel} …`)
 );
 document.addEventListener(
   'manifold-ssoButton-success',
