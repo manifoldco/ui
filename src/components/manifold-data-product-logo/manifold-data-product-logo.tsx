@@ -33,7 +33,7 @@ export class ManifoldDataProductLogo {
   /** Look up product name from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
-  @Watch('graphqlFetch') graphqlFetchChange() {
+  @Watch('authToken') graphqlFetchChange() {
     if (this.productLabel) this.fetchProduct(this.productLabel);
   }
   @Watch('productLabel') productChange(newProduct: string) {
@@ -56,6 +56,7 @@ export class ManifoldDataProductLogo {
     this.product = undefined;
     const variables = { productLabel };
     const { data, error } = await this.graphqlFetch({ query, variables });
+    console.log({ data, error });
     if (error) {
       console.error(error);
     }
@@ -87,7 +88,6 @@ export class ManifoldDataProductLogo {
   };
 
   render() {
-    console.log(this.connection, this.authToken, this.graphqlFetch);
     return this.product ? (
       <img src={this.product.logoUrl} alt={this.alt || this.product.displayName} />
     ) : null;

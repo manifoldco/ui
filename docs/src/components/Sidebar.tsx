@@ -7,6 +7,7 @@ import { chevron_down } from '@manifoldco/icons';
 import { base64 } from './Icon';
 import manifoldTheme from '../lib/theme-manifold';
 import sapphireTheme from '../lib/theme-sapphire';
+import alphaSapphireTheme from '../lib/theme-alpha-sapphire';
 import rubyTheme from '../lib/theme-ruby';
 import diamondTheme from '../lib/theme-diamond';
 import moonTheme from '../lib/theme-moon';
@@ -20,6 +21,7 @@ const topPages = ['/getting-started', '/connection', '/theming', '/resource-deta
 const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
 const SAPPHIRE = 'sapphire';
+const ALPHA_SAPPHIRE = 'alpha-sapphire';
 const RUBY = 'ruby';
 const DIAMOND = 'diamond';
 const MOON = 'moon';
@@ -28,6 +30,7 @@ const themes = [
   [DEFAULT, 'Default'],
   [MANIFOLD, 'Manifold'],
   [SAPPHIRE, 'Sapphire'],
+  [ALPHA_SAPPHIRE, 'Alpha Sapphire'],
   [RUBY, 'Ruby'],
   [DIAMOND, 'Diamond'],
   [MOON, 'Moon'],
@@ -149,6 +152,7 @@ body {
 ${switchProp('userTheme', {
   [MANIFOLD]: manifoldTheme,
   [SAPPHIRE]: sapphireTheme,
+  [ALPHA_SAPPHIRE]: alphaSapphireTheme,
   [RUBY]: rubyTheme,
   [DIAMOND]: diamondTheme,
   [MOON]: moonTheme,

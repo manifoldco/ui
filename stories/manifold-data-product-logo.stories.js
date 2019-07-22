@@ -6,5 +6,10 @@ storiesOf('Product Logo [Data]', module)
   .add(
     'default',
     () =>
-      '<manifold-connection><manifold-data-product-logo product-label="aiven-redis"></manifold-data-product-logo></manifold-connection>'
+      `
+        <manifold-connection>
+          <manifold-auth-token token="empty"/>
+          <manifold-data-product-logo product-label="aiven-redis"></manifold-data-product-logo>
+        </manifold-connection>
+      `
   );

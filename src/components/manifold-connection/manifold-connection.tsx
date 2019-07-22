@@ -9,24 +9,28 @@ export class ManiTunnel {
   /** _(optional)_ Specify `env="stage"` for staging */
   @Prop() env: 'stage' | 'prod' = 'prod';
 
-  @State() authToken?: string = localStorage.getItem('manifold_api_token') || undefined;
+  @State() authToken?: string;
 
-  setAuthToken = (token: string) => {
+  setAuthToken = (token?: string) => {
     this.authToken = token;
   };
 
-  getAuthToken = () => {
-    return this.authToken;
-  };
+  getAuthToken = () => this.authToken;
 
   render() {
+    const endpoint = this.env === 'stage' ? 'https://api.stage.manifold.co/graphql' : undefined;
+
     return (
       <Tunnel.Provider
         state={{
           connection: connections[this.env],
           authToken: this.authToken,
           setAuthToken: this.setAuthToken,
-          graphqlFetch: createGraphqlFetch({ getAuthToken: this.getAuthToken }),
+          graphqlFetch: createGraphqlFetch({
+            getAuthToken: this.getAuthToken,
+            setAuthToken: this.setAuthToken,
+            endpoint,
+          }),
         }}
       >
         <slot />

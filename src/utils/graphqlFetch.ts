@@ -1,6 +1,9 @@
+type Token = string | undefined;
+
 interface CreateGraphqlFetch {
   endpoint?: string;
-  getAuthToken: () => string | undefined;
+  getAuthToken?: () => Token;
+  setAuthToken?: (token?: Token) => void;
 }
 
 export interface GraphqlRequestBody {
@@ -14,15 +17,14 @@ export interface GraphqlResponseBody<T> {
   error?: object;
 }
 
-export const createGraphqlFetch = (
-  { endpoint = 'https://api.manifold.co/graphql', getAuthToken }: CreateGraphqlFetch = {
-    getAuthToken: () => undefined,
-  }
-): (<T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>) => {
+export const createGraphqlFetch = ({
+  endpoint = 'https://api.manifold.co/graphql',
+  getAuthToken = () => undefined,
+  setAuthToken = () => {},
+}: CreateGraphqlFetch = {}): (<T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>) => {
   const graphqlFetch = async <T>(
     requestBody: GraphqlRequestBody
   ): Promise<GraphqlResponseBody<T>> => {
-    console.log('GET', getAuthToken());
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -33,6 +35,10 @@ export const createGraphqlFetch = (
     });
 
     const body = await response.json();
+
+    if (body.errors && body.errors[0].message.startsWith('unauthorized')) {
+      setAuthToken(undefined);
+    }
 
     return body;
   };

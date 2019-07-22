@@ -1,7 +1,6 @@
 import { h, Component, Prop, Element, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 
-
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
   @Element() el: HTMLElement;
@@ -18,10 +17,14 @@ export class ManifoldAuthToken {
     if (this.setAuthToken && this.token) {
       this.setAuthToken(this.token);
     }
+
+    setTimeout(() => {
+      if (this.setAuthToken) this.setAuthToken('NEW_TOKEN');
+    }, 2000);
   }
 
   render() {
-    return <input type="hidden" value={this.token ? 'true' : 'false'}/>;
+    return <input type="hidden" value={this.token ? 'true' : 'false'} />;
   }
 }
 
