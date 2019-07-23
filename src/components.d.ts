@@ -153,7 +153,7 @@ export namespace Components {
     */
     'productLabel'?: string;
     /**
-    * Look up product name from resource
+    * _(Depricated)_ Look up product name from resource
     */
     'resourceLabel'?: string;
   }
@@ -246,6 +246,24 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+  }
+  interface ManifoldDataResourceLogo {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Look up product name from resource
+    */
+    'resourceLabel'?: string;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
@@ -712,6 +730,12 @@ declare global {
     new (): HTMLManifoldDataResourceListElement;
   };
 
+  interface HTMLManifoldDataResourceLogoElement extends Components.ManifoldDataResourceLogo, HTMLStencilElement {}
+  var HTMLManifoldDataResourceLogoElement: {
+    prototype: HTMLManifoldDataResourceLogoElement;
+    new (): HTMLManifoldDataResourceLogoElement;
+  };
+
   interface HTMLManifoldForwardSlotElement extends Components.ManifoldForwardSlot, HTMLStencilElement {}
   var HTMLManifoldForwardSlotElement: {
     prototype: HTMLManifoldForwardSlotElement;
@@ -974,6 +998,7 @@ declare global {
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-rename-button': HTMLManifoldDataRenameButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
+    'manifold-data-resource-logo': HTMLManifoldDataResourceLogoElement;
     'manifold-forward-slot': HTMLManifoldForwardSlotElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
@@ -1153,7 +1178,7 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
     /**
-    * Look up product name from resource
+    * _(Depricated)_ Look up product name from resource
     */
     'resourceLabel'?: string;
   }
@@ -1255,6 +1280,24 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+  }
+  interface ManifoldDataResourceLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement> {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Look up product name from resource
+    */
+    'resourceLabel'?: string;
   }
   interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
   interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
@@ -1656,6 +1699,7 @@ declare namespace LocalJSX {
     'manifold-data-provision-button': ManifoldDataProvisionButton;
     'manifold-data-rename-button': ManifoldDataRenameButton;
     'manifold-data-resource-list': ManifoldDataResourceList;
+    'manifold-data-resource-logo': ManifoldDataResourceLogo;
     'manifold-forward-slot': ManifoldForwardSlot;
     'manifold-icon': ManifoldIcon;
     'manifold-image-gallery': ManifoldImageGallery;

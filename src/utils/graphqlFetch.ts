@@ -12,9 +12,14 @@ export interface GraphqlRequestBody {
   variables?: object;
 }
 
+interface GraphqlError {
+  message: string;
+  type: string;
+}
+
 export interface GraphqlResponseBody<T> {
   data?: T;
-  errors?: object[];
+  errors?: GraphqlError[];
 }
 
 export const createGraphqlFetch = ({
@@ -36,7 +41,13 @@ export const createGraphqlFetch = ({
 
     const body = await response.json();
 
-    if (body.errors && body.errors[0].message.startsWith('unauthorized')) {
+    if (body.errors) {
+      body.errors.forEach((error: GraphqlError) => {
+        console.error(error.message);
+      });
+    }
+
+    if (body.errors && body.errors[0].type === 'unauthorized') {
       setAuthToken(undefined);
     }
 
