@@ -18,7 +18,9 @@ export class ManifoldTemplateCard {
   @Prop() preserveEvent: boolean = false;
 
   get href() {
-    if (!this.templateLinkFormat || !this.category) return '';
+    if (!this.templateLinkFormat || !this.category) {
+      return '';
+    }
     return this.templateLinkFormat.replace(/:template/gi, this.category);
   }
 

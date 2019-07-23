@@ -109,7 +109,9 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     beforeEach(() => {
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${Resource.body.label}`, [Resource]);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${Resource.body.label}`, [
+        Resource,
+      ]);
     });
 
     it('will trigger a dom event on successful rename', async () => {
@@ -130,7 +132,9 @@ describe('<manifold-data-rename-button>', () => {
 
       await instance.rename();
 
-      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(
+        true
+      );
       expect(instance.success.emit).toHaveBeenCalledWith({
         message: `${Resource.body.label} successfully renamed`,
         resourceLabel: Resource.body.label,
@@ -162,7 +166,9 @@ describe('<manifold-data-rename-button>', () => {
 
       await instance.rename();
 
-      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(
+        true
+      );
       expect(instance.error.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
         resourceLabel: Resource.body.label,
@@ -188,7 +194,9 @@ describe('<manifold-data-rename-button>', () => {
 
       await instance.rename();
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
+        false
+      );
     });
 
     it('will do nothing if no resourceId is provided', async () => {
@@ -208,7 +216,9 @@ describe('<manifold-data-rename-button>', () => {
 
       await instance.rename();
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
+        false
+      );
     });
   });
 });

@@ -35,4 +35,3 @@ export class ManifoldResourceRename {
 }
 
 ResourceTunnel.injectProps(ManifoldResourceRename, ['data', 'loading']);
-

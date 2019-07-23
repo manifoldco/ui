@@ -35,7 +35,7 @@ export const Credential: Marketplace.Credential = {
     resource_id: '26841468fmyhcn3h69ednm65knx44',
     source: 'catalog',
     values: {
-      "TEST": 'test',
+      TEST: 'test',
     },
     created_at: '2019-04-25T22:11:06.691Z',
     updated_at: '2019-04-25T22:11:06.691Z',

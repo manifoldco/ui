@@ -16,9 +16,13 @@ export class ManifoldCostDisplay {
   }
 
   renderBaseCost(): JSX.Element | null {
-    if (typeof this.baseCost !== 'number') return null;
+    if (typeof this.baseCost !== 'number') {
+      return null;
+    }
     // If there are measurable costs but no monthly cost, only show measurable
-    if (this.isFreeMonthly && this.measuredFeatures.length > 0) return null;
+    if (this.isFreeMonthly && this.measuredFeatures.length > 0) {
+      return null;
+    }
 
     if (this.isFreeMonthly) {
       // Show the badge for compact, large text otherwise
@@ -29,10 +33,14 @@ export class ManifoldCostDisplay {
   }
 
   renderMeasurableCosts() {
-    if (this.measuredFeatures.length !== 1) return null;
+    if (this.measuredFeatures.length !== 1) {
+      return null;
+    }
 
     const [{ value }] = this.measuredFeatures;
-    if (!value) return null;
+    if (!value) {
+      return null;
+    }
     const displayString = numberFeatureMeasurableDisplayValue(value) || '';
     const output: (JSX.Element)[] = this.isFreeMonthly ? [] : [' + '];
     if (displayString.indexOf('per') > 0) {
@@ -48,7 +56,9 @@ export class ManifoldCostDisplay {
   }
 
   render() {
-    if (typeof this.baseCost !== 'number') return <div class="cost" />;
+    if (typeof this.baseCost !== 'number') {
+      return <div class="cost" />;
+    }
 
     // Show “starting at” either if customizable, or too many metered features to display
     const startingAt = (this.compact && this.isCustomizable) || this.measuredFeatures.length > 1;

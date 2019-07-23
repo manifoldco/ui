@@ -26,7 +26,9 @@ export const NumberFeature: FunctionalComponent<NumberFeatureProps> = ({
   isExistingResource,
   onChange,
 }) => {
-  if (!feature.value) return '';
+  if (!feature.value) {
+    return '';
+  }
 
   const withCommas = new Intl.NumberFormat().format;
 
@@ -78,7 +80,9 @@ export const NumberFeature: FunctionalComponent<NumberFeatureProps> = ({
     return <LockedFeature>{displayValue}</LockedFeature>;
   }
 
-  if (!feature.value.numeric_details) return '';
+  if (!feature.value.numeric_details) {
+    return '';
+  }
 
   // customizable feature
   const value =

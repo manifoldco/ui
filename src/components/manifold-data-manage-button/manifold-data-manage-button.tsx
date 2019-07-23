@@ -59,7 +59,9 @@ export class ManifoldDataManageButton {
     const { gateway } = this.connection;
     const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth());
     const resource: Gateway.Resource = await response.json();
-    if (resource.id) this.resourceId = resource.id;
+    if (resource.id) {
+      this.resourceId = resource.id;
+    }
   }
 
   async update() {
@@ -79,11 +81,13 @@ export class ManifoldDataManageButton {
     });
     const req: Gateway.ResourceUpdateRequest = { plan_id: this.planId };
 
-    if (Object.keys(this.features).length) req.features = this.features;
+    if (Object.keys(this.features).length) {
+      req.features = this.features;
+    }
 
     const response = await fetch(
       `${this.connection.gateway}/id/resource/${this.resourceId}`,
-      withAuth(this.authToken,{
+      withAuth(this.authToken, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(req),

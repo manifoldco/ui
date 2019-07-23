@@ -82,7 +82,9 @@ export class ManifoldMarketplaceGrid {
     // Skip template-only categories if hiding custom
     if (!this.hideTemplates) {
       serviceTemplates.forEach(({ category }) => {
-        if (!categoryList.includes(category)) categoryList.push(category);
+        if (!categoryList.includes(category)) {
+          categoryList.push(category);
+        }
       });
     }
 
@@ -186,14 +188,14 @@ export class ManifoldMarketplaceGrid {
   };
 
   private renderServiceCard = (product: Catalog.Product) => (
-      <manifold-service-card
-        data-label={product.body.label}
-        data-featured={this.featured && this.featured.includes(product.body.label)}
-        isFeatured={this.featured && this.featured.includes(product.body.label)}
-        product={product}
-        skeleton={this.skeleton}
-      />
-    );
+    <manifold-service-card
+      data-label={product.body.label}
+      data-featured={this.featured && this.featured.includes(product.body.label)}
+      isFeatured={this.featured && this.featured.includes(product.body.label)}
+      product={product}
+      skeleton={this.skeleton}
+    />
+  );
 
   render() {
     return (

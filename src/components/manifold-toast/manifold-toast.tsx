@@ -24,10 +24,14 @@ export class ManifoldToast {
 
   componentDidLoad() {
     // Listen to the element’s height, and save it for animating (dismissable only)
-    if (!this.dismissable) return;
+    if (!this.dismissable) {
+      return;
+    }
     const el = this.el.shadowRoot || this.el; // Dumb fallback for polyfills
     const alert = el.querySelector('[role="alert"]');
-    if (!alert) return;
+    if (!alert) {
+      return;
+    }
     const observer = observeRect(alert, rect => this.handleResize(rect));
     observer.observe();
     this.observer = observer;
@@ -35,19 +39,27 @@ export class ManifoldToast {
 
   componentDidUnload() {
     // Handle breakdown
-    if (this.observer) this.observer.unobserve();
+    if (this.observer) {
+      this.observer.unobserve();
+    }
   }
 
   handleDismiss() {
     this.status = DISMISSED;
-    if (this.observer) this.observer.unobserve();
+    if (this.observer) {
+      this.observer.unobserve();
+    }
   }
 
   handleResize({ height }: ClientRect) {
     // Handle element resizes performantly using RAF
-    if (this.status === DISMISSED) return;
+    if (this.status === DISMISSED) {
+      return;
+    }
     const px = `${height}px`;
-    if (this.lastHeight !== px) this.lastHeight = px;
+    if (this.lastHeight !== px) {
+      this.lastHeight = px;
+    }
   }
 
   get alertTypeIcon() {

@@ -33,12 +33,17 @@ export class ManifoldNumberInput {
   }
 
   onChangeHandler = (e: Event) => {
-    if (!e.target) return;
+    if (!e.target) {
+      return;
+    }
     const { value } = e.target as HTMLInputElement;
     const newValue = parseInt(value, 10);
     // eslint-disable-next-line no-restricted-globals
-    if (!isNaN(newValue)) this.value = newValue;
-    else this.value = this.value;
+    if (!isNaN(newValue)) {
+      this.value = newValue;
+    } else {
+      this.value = this.value;
+    }
   };
 
   setValue = (value: number) => {
