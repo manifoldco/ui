@@ -1,10 +1,9 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
-import { Catalog } from '../../types/catalog';
-import { Gateway } from '../../types/gateway';
 import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import fetch from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
@@ -34,14 +33,13 @@ export class ManifoldDataResourceLogo {
 
     this.product = undefined;
     const { catalog, gateway } = this.connection;
-    const response = await fetch(
+    const resource = await fetch(
       `${gateway}/resources/me/${resourceLabel}`,
-      withAuth(this.authToken)
+      withAuth(`-${this.authToken}`)
     );
-    const resource: Gateway.Resource = await response.json();
+
     const productId = resource.product && resource.product.id;
-    const productResp = await fetch(`${catalog}/products/${productId}`, withAuth(this.authToken));
-    const product: Catalog.Product = await productResp.json();
+    const product = await fetch(`${catalog}/products/${productId}`, withAuth(this.authToken));
 
     // NOTE: Temporary util GraphQL supports resources
     const newProduct = {
