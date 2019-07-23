@@ -23,7 +23,9 @@ export class ManifoldIcon {
   get stopColors() {
     const style = getComputedStyle(this.element);
     const gradientValue = style.getPropertyValue(this.gradient || '');
-    if (!this.gradient || !gradientValue) return [];
+    if (!this.gradient || !gradientValue) {
+      return [];
+    }
     const colors = gradientValue.split('#');
     return colors.slice(1, colors.length).map((chunk, index) => {
       const pair = chunk

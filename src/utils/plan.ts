@@ -38,7 +38,9 @@ export function featureCost(number: number) {
 export function oneCent(number: number) {
   const min = Math.ceil(NUMBER_FEATURE_COIN / number);
   // If sorta tiny round to nearest thousand
-  if (min < 1000) return Math.ceil(min / 1000) * 1000;
+  if (min < 1000) {
+    return Math.ceil(min / 1000) * 1000;
+  }
   // Otherwise, round to nearest hundred
   return Math.ceil(min / 100) * 100;
 }
@@ -126,25 +128,36 @@ export function numberFeatureDefaultValue(value: Catalog.FeatureValueDetails): n
  * Calculate pricing tiers for metered features
  */
 export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): PricingTier[] {
-  if (!numeric_details) return [];
+  if (!numeric_details) {
+    return [];
+  }
 
   // Features can be really, really (really) cheap. Let’s make things easier.
   let per = 1;
   const suffix = numeric_details.suffix || '';
-  if (!Array.isArray(numeric_details.cost_ranges))
+  if (!Array.isArray(numeric_details.cost_ranges)) {
     return [{ from: 0, to: Infinity, cost: 0, suffix, per }];
+  }
 
   const cheapestNonZeroCost = numeric_details.cost_ranges.reduce((cost, tier) => {
-    if (!tier.cost_multiple || tier.cost_multiple === 0) return cost;
+    if (!tier.cost_multiple || tier.cost_multiple === 0) {
+      return cost;
+    }
     return tier.cost_multiple < cost ? tier.cost_multiple : cost;
   }, Infinity);
 
-  if (cheapestNonZeroCost < NUMBER_FEATURE_COIN) per = oneCent(cheapestNonZeroCost);
+  if (cheapestNonZeroCost < NUMBER_FEATURE_COIN) {
+    per = oneCent(cheapestNonZeroCost);
+  }
 
   // Sort tiers, with -1 (Infinity) at the end
   const sorted = numeric_details.cost_ranges.sort((a, b) => {
-    if (a.limit === -1) return 1;
-    if (b.limit === -1) return -1;
+    if (a.limit === -1) {
+      return 1;
+    }
+    if (b.limit === -1) {
+      return -1;
+    }
     return (a.limit || 0) - (b.limit || 0);
   });
 
@@ -152,11 +165,15 @@ export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): 
     // Each tier starts at previous + 1 (not other way around)
     let from = 0;
     const lastTier = sorted[i - 1];
-    if (lastTier && typeof lastTier.limit === 'number') from = lastTier.limit + 1;
+    if (lastTier && typeof lastTier.limit === 'number') {
+      from = lastTier.limit + 1;
+    }
 
     // Use Infinity rather than -1
     let to = typeof limit === 'number' ? limit : Infinity;
-    if (to === -1) to = Infinity;
+    if (to === -1) {
+      to = Infinity;
+    }
 
     // Special case: convert seconds for users
     if (suffix.toLowerCase() === 'seconds') {
@@ -187,13 +204,16 @@ export function numberFeatureMeasurableDisplayValue(
   value: Catalog.FeatureValueDetails
 ): string | undefined {
   const { name, numeric_details } = value;
-  if (!numeric_details) return undefined;
+  if (!numeric_details) {
+    return undefined;
+  }
 
   const withCommas = new Intl.NumberFormat().format;
 
   // Feature unavailable
-  if (!Array.isArray(numeric_details.cost_ranges) || numeric_details.cost_ranges.length === 0)
+  if (!Array.isArray(numeric_details.cost_ranges) || numeric_details.cost_ranges.length === 0) {
     return name.replace(/^No .*/, NO).replace(/^Yes/, YES);
+  }
 
   const tiers = pricingTiers(value);
 
@@ -201,10 +221,14 @@ export function numberFeatureMeasurableDisplayValue(
   if (tiers.length === 1) {
     const [{ cost, suffix, per }] = tiers;
 
-    if (cost === 0) return 'Free';
+    if (cost === 0) {
+      return 'Free';
+    }
 
     // If features are really really cheap, let’s make it more readable
-    if (per > 1) return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(suffix)}`;
+    if (per > 1) {
+      return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(suffix)}`;
+    }
 
     return `${$(featureCost(cost))} / ${suffix}`;
   }
@@ -230,14 +254,19 @@ export function numberFeatureDisplayValue(value: Catalog.FeatureValueDetails): s
 export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.FeatureMap {
   // We want to set _all_ features, not just customizable ones, to calculate cost
   return features.reduce((obj, feature) => {
-    if (!feature.value) return obj;
+    if (!feature.value) {
+      return obj;
+    }
 
-    if (feature.type === 'boolean')
+    if (feature.type === 'boolean') {
       return { ...obj, [feature.label]: booleanFeatureDefaultValue(feature.value) };
-    if (feature.type === 'number')
+    }
+    if (feature.type === 'number') {
       return { ...obj, [feature.label]: numberFeatureDefaultValue(feature.value) };
-    if (feature.type === 'string')
+    }
+    if (feature.type === 'string') {
       return { ...obj, [feature.label]: stringFeatureDefaultValue(feature.value) };
+    }
 
     return obj;
   }, {});
@@ -253,7 +282,7 @@ export function planCost(
 ): Promise<Gateway.Price> {
   return fetch(
     `${connection.gateway}/id/plan/${planID}/cost`,
-    withAuth(authToken,{
+    withAuth(authToken, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ features }),

@@ -33,7 +33,10 @@ export class ManifoldResourceContainer {
 
     this.loading = true;
     const { gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth(this.authToken));
+    const response = await fetch(
+      `${gateway}/resources/me/${resourceLabel}`,
+      withAuth(this.authToken)
+    );
     this.resource = await response.json();
     this.loading = false;
   };

@@ -36,7 +36,10 @@ export class ManifoldPlan {
     this.product = undefined;
     const { catalog } = this.connection;
 
-    const productsResp = await fetch(`${catalog}/products/?label=${productLabel}`, withAuth(this.authToken));
+    const productsResp = await fetch(
+      `${catalog}/products/?label=${productLabel}`,
+      withAuth(this.authToken)
+    );
     const products: Catalog.ExpandedProduct[] = await productsResp.json();
 
     this.product = products[0]; // eslint-disable-line prefer-destructuring
@@ -51,20 +54,17 @@ export class ManifoldPlan {
     this.plan = undefined;
     const { catalog } = this.connection;
 
-    const plansResp = await fetch(`${catalog}/plans/?product_id=${productId}&label=${planLabel}`, withAuth(this.authToken));
+    const plansResp = await fetch(
+      `${catalog}/plans/?product_id=${productId}&label=${planLabel}`,
+      withAuth(this.authToken)
+    );
     const plans: Catalog.ExpandedPlan[] = await plansResp.json();
 
     this.plan = plans[0]; // eslint-disable-line prefer-destructuring
   }
 
   render() {
-    return (
-      <manifold-plan-details
-        scrollLocked={false}
-        plan={this.plan}
-        product={this.product}
-      />
-    );
+    return <manifold-plan-details scrollLocked={false} plan={this.plan} product={this.product} />;
   }
 }
 

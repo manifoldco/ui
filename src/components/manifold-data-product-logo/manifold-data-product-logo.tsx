@@ -34,7 +34,9 @@ export class ManifoldDataProductLogo {
   @Prop() resourceLabel?: string;
   @State() product?: Product;
   @Watch('authToken') graphqlFetchChange() {
-    if (this.productLabel) this.fetchProduct(this.productLabel);
+    if (this.productLabel) {
+      this.fetchProduct(this.productLabel);
+    }
   }
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
@@ -44,8 +46,12 @@ export class ManifoldDataProductLogo {
   }
 
   componentWillLoad() {
-    if (this.productLabel) this.fetchProduct(this.productLabel);
-    if (this.resourceLabel) this.fetchResource(this.resourceLabel);
+    if (this.productLabel) {
+      this.fetchProduct(this.productLabel);
+    }
+    if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
+    }
   }
 
   fetchProduct = async (productLabel: string) => {
@@ -55,11 +61,12 @@ export class ManifoldDataProductLogo {
 
     this.product = undefined;
     const variables = { productLabel };
-    const { data, error } = await this.graphqlFetch({ query, variables });
-    console.log({ data, error });
-    if (error) {
-      console.error(error);
+    const { data, errors } = await this.graphqlFetch({ query, variables });
+
+    if (errors) {
+      console.error(errors);
     }
+
     this.product = data.product;
   };
 

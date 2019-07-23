@@ -14,7 +14,7 @@ export interface GraphqlRequestBody {
 
 export interface GraphqlResponseBody<T> {
   data?: T;
-  error?: object;
+  errors?: object[];
 }
 
 export const createGraphqlFetch = ({

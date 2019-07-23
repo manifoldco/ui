@@ -184,7 +184,9 @@ describe('<manifold-data-provision-button>', () => {
 
       await instance.deprovision();
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
+        false
+      );
     });
 
     it('will do nothing if no resourceId is provided', async () => {
@@ -204,7 +206,9 @@ describe('<manifold-data-provision-button>', () => {
 
       await instance.deprovision();
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(false);
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
+        false
+      );
     });
   });
 });

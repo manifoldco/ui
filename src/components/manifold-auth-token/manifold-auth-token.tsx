@@ -17,10 +17,6 @@ export class ManifoldAuthToken {
     if (this.setAuthToken && this.token) {
       this.setAuthToken(this.token);
     }
-
-    setTimeout(() => {
-      if (this.setAuthToken) this.setAuthToken('NEW_TOKEN');
-    }, 2000);
   }
 
   render() {

@@ -99,12 +99,7 @@ export namespace Marketplace {
   }
   export interface Error {
     // The error type
-    type?:
-      | 'bad_request'
-      | 'not_found'
-      | 'unauthorized'
-      | 'conflict'
-      | 'internal';
+    type?: 'bad_request' | 'not_found' | 'unauthorized' | 'conflict' | 'internal';
     // Explanation of the errors
     message?: string[];
   }

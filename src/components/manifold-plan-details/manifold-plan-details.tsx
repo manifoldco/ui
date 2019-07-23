@@ -100,7 +100,9 @@ export class ManifoldPlanDetails {
   }
 
   handleChangeRegion(e: CustomEvent) {
-    if (!e.detail || !e.detail.value) return;
+    if (!e.detail || !e.detail.value) {
+      return;
+    }
     this.regionId = e.detail.value;
     if (this.plan && this.product) {
       const detail: EventDetail = {
@@ -133,18 +135,24 @@ export class ManifoldPlanDetails {
   }
 
   customFeatures(features: Gateway.FeatureMap): Gateway.FeatureMap {
-    if (!this.plan || !this.plan.body.expanded_features) return features;
+    if (!this.plan || !this.plan.body.expanded_features) {
+      return features;
+    }
     const { expanded_features } = this.plan.body;
     const customFeatures = { ...features };
     Object.entries(customFeatures).forEach(([label]) => {
       const feature = expanded_features.find(f => f.label === label);
-      if (!feature || !feature.customizable) delete customFeatures[label];
+      if (!feature || !feature.customizable) {
+        delete customFeatures[label];
+      }
     });
     return customFeatures;
   }
 
   get featureList() {
-    if (!this.plan) return null;
+    if (!this.plan) {
+      return null;
+    }
 
     let { expanded_features = [] } = this.plan.body;
 
@@ -152,9 +160,13 @@ export class ManifoldPlanDetails {
     // these children rely on plan data, and it’s near-impossible to provide them with default values.
     // expose default values higher up so that the resource can overwrite them.
     expanded_features = expanded_features.map(feature => {
-      if (!this.resourceFeatures) return feature;
+      if (!this.resourceFeatures) {
+        return feature;
+      }
       const resourceFeature = this.resourceFeatures.find(rf => rf.label === feature.label);
-      if (!resourceFeature) return feature;
+      if (!resourceFeature) {
+        return feature;
+      }
       const value: Catalog.FeatureValueDetails = {
         ...feature.value,
         name: `${resourceFeature.value.displayValue}`,
@@ -187,7 +199,9 @@ export class ManifoldPlanDetails {
     }
 
     // Hide the non-region
-    if (regions.length === 1 && regions[0] === globalRegion.id) return null;
+    if (regions.length === 1 && regions[0] === globalRegion.id) {
+      return null;
+    }
 
     const name = 'manifold-region-selector';
 
@@ -215,8 +229,12 @@ export class ManifoldPlanDetails {
       let firstRegion =
         this.regions && this.regions.find(region => newPlan.body.regions.includes(region));
       // Otherwise pick the first region from the plan
-      if (!firstRegion) [firstRegion] = newPlan.body.regions;
-      if (firstRegion) this.regionId = firstRegion;
+      if (!firstRegion) {
+        [firstRegion] = newPlan.body.regions;
+      }
+      if (firstRegion) {
+        this.regionId = firstRegion;
+      }
     }
   };
 

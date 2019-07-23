@@ -2,7 +2,11 @@ import { Gateway } from '../types/gateway';
 import { Catalog } from '../types/catalog';
 import { globalRegion } from '../data/region';
 
-export const convertPlan = (plan: Gateway.ResolvedPlan, productId: string, providerId: string): Catalog.Plan => ({
+export const convertPlan = (
+  plan: Gateway.ResolvedPlan,
+  productId: string,
+  providerId: string
+): Catalog.Plan => ({
   id: plan.id || '',
   body: {
     ...plan,

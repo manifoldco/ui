@@ -113,7 +113,9 @@ describe('<manifold-credentials>', () => {
     });
 
     it('will set the credentials on a successful fetch', async () => {
-      fetchMock.mock(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`, [Credential]);
+      fetchMock.mock(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`, [
+        Credential,
+      ]);
 
       const page = await newSpecPage({
         components: [ManifoldCredentials],
@@ -127,12 +129,16 @@ describe('<manifold-credentials>', () => {
       const instance = page.rootInstance as ManifoldCredentials;
       await instance.fetchCredentials();
 
-      expect(fetchMock.called(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`)).toBe(true);
+      expect(
+        fetchMock.called(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`)
+      ).toBe(true);
       expect(instance.credentials).toEqual([Credential]);
     });
 
     it('does nothing if the resource ID is not set', async () => {
-      fetchMock.mock(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`, [Credential]);
+      fetchMock.mock(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`, [
+        Credential,
+      ]);
 
       const page = await newSpecPage({
         components: [ManifoldCredentials],
@@ -147,7 +153,9 @@ describe('<manifold-credentials>', () => {
       instance.resourceId = '';
       await instance.fetchCredentials();
 
-      expect(fetchMock.called(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`)).toBe(false);
+      expect(
+        fetchMock.called(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`)
+      ).toBe(false);
       expect(instance.credentials).not.toBeDefined();
     });
   });
