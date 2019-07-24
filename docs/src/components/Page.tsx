@@ -4,6 +4,7 @@ import Entry from './Entry';
 import Example from './Example';
 import SEO from './SEO';
 import Sidebar from './Sidebar';
+import ApiToken from './ApiToken';
 
 interface PageProps {
   currentPage: MarkdownRemark.Data;
@@ -16,6 +17,7 @@ function Page({ currentPage, links }: PageProps) {
       <SEO title={`${currentPage.frontmatter.title} | Manifold UI`} />
       <Sidebar pages={links} />
       <Main role="main">
+        <ApiToken />
         <Entry html={currentPage.html} />
         {currentPage.frontmatter.example && <Example html={currentPage.frontmatter.example} />}
       </Main>

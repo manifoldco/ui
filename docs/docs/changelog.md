@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Added
+- New field to set API token in docs UI.
+
 ### Fixed
 - Fixed the provision button requiring the label to be set, preventing or automatic label generation from working.
 
@@ -53,4 +57,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.0]: https://github.com/manifoldco/ui/compare/v0.0.2...v0.1.0
 [0.1.0]: https://github.com/manifoldco/ui/compare/v0.0.2...v0.1.0
 [0.0.3]: https://github.com/manifoldco/ui/releases/tag/v0.0.3
-
