@@ -153,7 +153,7 @@ export namespace Components {
     */
     'productLabel'?: string;
     /**
-    * _(Depricated)_ Look up product name from resource
+    * _(Depricated)_ Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
@@ -261,7 +261,7 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
-    * Look up product name from resource
+    * Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
@@ -1178,7 +1178,7 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
     /**
-    * _(Depricated)_ Look up product name from resource
+    * _(Depricated)_ Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
@@ -1295,7 +1295,7 @@ declare namespace LocalJSX {
     */
     'connection'?: Connection;
     /**
-    * Look up product name from resource
+    * Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
