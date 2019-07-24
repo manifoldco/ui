@@ -6,3 +6,11 @@
 
 // Loads base theme before styled-components tag in head.
 import '@manifoldco/ui/dist/manifold/manifold.css';
+
+export function shouldUpdateScroll({ routerProps: { location } }) {
+  if (location.hash) {
+    return false;
+  }
+
+  return true;
+}
