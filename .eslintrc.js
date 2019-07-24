@@ -34,9 +34,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
-    parser: '@typescript-eslint/parser',
     'arrow-parens': 'off', // let Prettier decide
     camelcase: 'off', // underscores are a thing
+    curly: ['error', 'all'],
     'class-methods-use-this': 'off', // component lifecycle methods sometimes don't use `this`
     'comma-dangle': [
       'error',
@@ -55,7 +55,6 @@ module.exports = {
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
     'object-curly-newline': 'off', // let Prettier decide,
-    "curly": ["error", "all"],
     'prettier/prettier': 'error',
   },
 };

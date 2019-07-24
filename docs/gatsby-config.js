@@ -31,6 +31,7 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
+        plugins: [`gatsby-remark-autolink-headers`],
         tableOfContents: {
           maxDepth: 3,
         },

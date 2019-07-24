@@ -69,9 +69,13 @@ function Sidebar({ pages }: SidebarProps) {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       params.set('theme', theme);
-      window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}?${params.toString()}${window.location.hash}`
+      );
     }
-  });
+  }, [theme]);
 
   // Note: ThemeSwitcher and nav links have to be same component, because Gatsby <Link /> doesn’t inherit search params
   function withSearch(path: string) {

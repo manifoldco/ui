@@ -18,7 +18,6 @@ module.exports = {
     },
   },
   rules: {
-    parser: '@typescript-eslint/parser',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
@@ -27,6 +26,7 @@ module.exports = {
     'class-methods-use-this': 'off', // component lifecycle methods sometimes don't use `this`
     'import/prefer-default-export': 'off', // named exports are perfectly fine
     'lines-between-class-members': 'off', // class members don’t need that space!
+    'prettier/prettier': 'error',
     'react/jsx-filename-extension': 'off', // allow .tsx
     'react/prop-types': 'off', // use TS
   },
