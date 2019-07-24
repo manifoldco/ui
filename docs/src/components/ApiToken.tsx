@@ -61,13 +61,14 @@ const Submit = styled.input.attrs({ type: 'submit' })`
 `;
 
 const ApiToken = () => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('manifold_api_token') || '');
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(e);
 
     localStorage.setItem('manifold_api_token', token);
+    window.location.reload();
   };
 
   return (
