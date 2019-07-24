@@ -140,7 +140,7 @@ export class ManifoldServiceCard {
         onClick={this.onClick}
         style={{ textDecoration: 'none' }}
       >
-        <manifold-service-view
+        <manifold-service-card-view
           name={this.product.body.name}
           description={this.product.body.tagline}
           isFeatured={this.isFeatured}
@@ -152,7 +152,7 @@ export class ManifoldServiceCard {
       </a>
     ) : (
       // ☠
-      <manifold-service-view
+      <manifold-service-card-view
         loading={true}
         name="Awesome product"
         description="Awesome product description"
