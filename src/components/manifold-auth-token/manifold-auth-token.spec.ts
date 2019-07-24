@@ -4,7 +4,8 @@ describe('<manifold-auth-token>', () => {
   describe('when the token is not expired', () => {
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 1);
-    const encodedExpiry = Buffer.from(expiry.toUTCString()).toString('base64');
+    const unixTime = Math.floor(expiry.getTime() / 1000);
+    const encodedExpiry = Buffer.from(unixTime.toString()).toString('base64');
 
     it('calls the set auth token on load', () => {
       const token = `test.${encodedExpiry}`;

@@ -11,7 +11,8 @@ function withVeryFakeExpiry(token) {
   should be changed for a fresh one. */
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + 1);
-  const encodedExpiry = Buffer.from(expiry.toUTCString()).toString('base64');
+  const unixTime = Math.floor(expiry.getTime() / 1000);
+  const encodedExpiry = Buffer.from(unixTime.toString()).toString('base64');
   return `${token}.${encodedExpiry}`;
 }
 

@@ -27,7 +27,8 @@ export function isExpired(token: string) {
   const [, expiry] = token.split('.');
 
   if (expiry) {
-    const d = new Date(Buffer.from(expiry, 'base64').toString());
+    const decodedExpiry = parseInt(Buffer.from(expiry, 'base64').toString(), 10);
+    const d = new Date(decodedExpiry * 1000);
     const now = new Date();
 
     if (d > now) {
