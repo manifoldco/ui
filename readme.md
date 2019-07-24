@@ -64,12 +64,13 @@ npm i @manifoldco/ui
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@manifoldco/ui/dist/manifold/manifold.css';
-import { defineCustomElements } from '@manifoldco/ui/dist/loader';
+import(/* webpackChunkName: "manifold-ui" */ '@manifoldco/ui/dist/loader').then(
+  ({ defineCustomElements }) => defineCustomElements(window)
+);
 
 const App = () => <manifold-marketplace />;
 
 ReactDOM.render(<App />, document.getElementById('root'));
-defineCustomElements(window);
 ```
 
 ### TypeScript + JSX setup
