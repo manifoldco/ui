@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import { Product } from '../../types/graphql';
@@ -8,14 +8,13 @@ import { Connection, connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
-  @Element() el: HTMLElement;
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
-  /** Look up product name from resource */
+  /** Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
 

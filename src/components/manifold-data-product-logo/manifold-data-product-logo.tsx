@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 import { GraphqlResponseBody, GraphqlRequestBody } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
@@ -16,7 +16,6 @@ const query = gql`
 
 @Component({ tag: 'manifold-data-product-logo' })
 export class ManifoldDataProductLogo {
-  @Element() el: HTMLElement;
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -27,7 +26,7 @@ export class ManifoldDataProductLogo {
   @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
-  /** _(Depricated)_ Look up product name from resource */
+  /** _(Depricated)_ Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
   @Watch('authToken') refetch() {
