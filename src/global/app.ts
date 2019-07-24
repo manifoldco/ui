@@ -1,1 +1,0 @@
-import '@manifoldco/shadowcat';
