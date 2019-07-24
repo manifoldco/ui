@@ -1,9 +1,9 @@
-/* DEPRICATED: replaced by manifold-service-card-view */
+/* DEPRECATED: replaced by manifold-service-card-view */
 import { h, Component, Element, Prop } from '@stencil/core';
 
 @Component({
   tag: 'manifold-service-view',
-  styleUrl: 'manifold-service-view.css',
+  styleUrl: '../manifold-service-card-view/manifold-service-card-view.css',
   shadow: true,
 })
 export class ManifoldServiceView {
@@ -20,6 +20,8 @@ export class ManifoldServiceView {
   @Prop() hideTags?: boolean = false;
 
   render() {
+    console.warn('DEPRECATED: replaced by manifold-service-card-view');
+
     return !this.loading ? (
       <div class={this.asCard ? 'card-wrapper' : 'wrapper'}>
         <div class="logo">
