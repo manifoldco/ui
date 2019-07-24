@@ -15,7 +15,7 @@ interface SidebarProps {
   pages: ([string, string])[];
 }
 
-const topPages = ['/getting-started', '/connection', '/theming', '/resource-details', '/changelog'];
+const topPages = ['/getting-started', '/connection', '/changelog'];
 
 const DEFAULT = 'default';
 const MANIFOLD = 'manifold';
@@ -52,6 +52,7 @@ const linkStyling = ({ location, href }: LinkGetProps): any | null => {
 function Sidebar({ pages }: SidebarProps) {
   const uiMenu = pages.filter(([path]) => path.indexOf('components/') !== -1);
   const dataMenu = pages.filter(([path]) => path.indexOf('data/') !== -1);
+  const advancedMenu = pages.filter(([path]) => path.indexOf('advanced/') !== -1);
   const topMenu = topPages.map(path => pages.find(page => page.indexOf(path) !== -1) || []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -134,6 +135,16 @@ function Sidebar({ pages }: SidebarProps) {
               </li>
             ))}
           </ul>
+          <h3>Advanced</h3>
+          <ul role="menu">
+            {advancedMenu.map(([path, title]) => (
+              <li key={path} role="menuitem">
+                <Link to={withSearch(path)} getProps={linkStyling}>
+                  {title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Expanded>
         <Underlay onClick={() => setIsOpen(false)} />
       </Nav>
@@ -160,8 +171,8 @@ const Aside = styled.aside`
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 
   & h3 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
     color: rgba(0, 0, 0, 0.5);
     font-weight: 400;
     font-size: 12px;
@@ -240,7 +251,7 @@ const Expanded = styled.div`
     transition: color 150ms linear;
 
     @media (min-width: 750px) {
-      height: 1.875rem;
+      font-size: 13px;
     }
 
     &[aria-current] {
@@ -299,6 +310,8 @@ const Nav = styled.nav`
     width: 15rem;
     height: 100vh;
     padding: 1.5rem;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
   }
 `;
 
