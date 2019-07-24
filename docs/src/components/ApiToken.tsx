@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, ChangeEvent } from 'react';
+import React, { FormEvent, useState, useEffect, ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -61,7 +61,11 @@ const Submit = styled.input.attrs({ type: 'submit' })`
 `;
 
 const ApiToken = () => {
-  const [token, setToken] = useState(localStorage.getItem('manifold_api_token') || '');
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    setToken(localStorage.getItem('manifold_api_token') || '');
+  }, []);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
