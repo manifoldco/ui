@@ -153,7 +153,7 @@ export namespace Components {
     */
     'productLabel'?: string;
     /**
-    * _(Depricated)_ Look up product logo from resource
+    * _(Deprecated)_ Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
@@ -1218,7 +1218,7 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
     /**
-    * _(Depricated)_ Look up product logo from resource
+    * _(Deprecated)_ Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
