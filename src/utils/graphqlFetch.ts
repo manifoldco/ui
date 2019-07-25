@@ -1,9 +1,7 @@
-type Token = string | undefined;
-
 interface CreateGraphqlFetch {
   endpoint?: string;
-  getAuthToken?: () => Token;
-  setAuthToken?: (token?: Token) => void;
+  getAuthToken?: () => string | undefined;
+  setAuthToken?: (token: string) => void;
 }
 
 export interface GraphqlRequestBody {
@@ -48,7 +46,8 @@ export const createGraphqlFetch = ({
     }
 
     if (body.errors && body.errors[0].type === 'unauthorized') {
-      setAuthToken(undefined);
+      // TODO trigger token refresh for manifold-auth-token
+      setAuthToken('');
     }
 
     return body;

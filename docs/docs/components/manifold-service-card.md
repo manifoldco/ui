@@ -21,6 +21,20 @@ Compact view of a Manifold Product. Available as a self-fetching component or a 
 ></manifold-service-card-view>
 ```
 
+## CTA
+
+You can pass in your own CTA content in the right of the component
+by passing in any element with `slot="cta"` as an attribute. [Read more about
+slots][slot].
+
+```jsx
+<manifold-service-card product-label="jawsdb-mysql">
+  <div slot="cta">
+    BUY ME!
+  </div>
+</manifold-service-card>
+```
+
 ## Fetching using the label
 
 The `manifold-service-card` component can be used to fetch a product's data with a label.

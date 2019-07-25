@@ -17,7 +17,7 @@ a `manifold-resource-container` component with access to the resource label.
 </manifold-resource-container>
 ```
 <style>
-  manifold-data-rename-button button, manifold-data-deprovision-button button {
+  manifold-data-rename-button button, manifold-data-deprovision-button button, manifold-data-sso-button button {
     border: none;
     padding: 0;
   }
@@ -32,6 +32,9 @@ a `manifold-resource-container` component with access to the resource label.
       <manifold-resource-rename>
         <manifold-button>Rename</manifold-button>
       </manifold-resource-rename>
+      <manifold-resource-sso>
+        <manifold-button>SSO</manifold-button>
+      </manifold-resource-sso>
       <manifold-resource-deprovision>
         <manifold-button>Deprovision</manifold-button>
       </manifold-resource-deprovision>
@@ -92,7 +95,7 @@ document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => co
 ## The resource rename Button
 
 The [`manifold-data-rename-button`](/data/rename-button) component can be used inside the container without any attribute by
-using the `manifold-rename-deprovision` component. This component is still acting as a data component and can
+using the `manifold-resource-rename` component. This component is still acting as a data component and can
 be stylized or be given children.
 
 ```html
@@ -126,6 +129,41 @@ document.addEventListener('manifold-renameButton-invalid', ({ detail }) => conso
 | `manifold-renameButton-success` |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
 | `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Erred rename, along with information on what went wrong.                                                                    |
 | `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Invalid renaming, along with information on what went wrong. 
+
+## The resource sso Button
+
+The [`manifold-data-sso-button`](/data/sso-button) component can be used inside the container without any attribute by
+using the `manifold-resource-sso` component. This component is still acting as a data component and can
+be stylized or be given children.
+
+```html
+<manifold-resource-container resource-label="my-resource">
+  <!--- Your structure goes here --->
+  <manifold-resource-sso>SSO into resource</manifold-resource-sso>
+</manifold-resource-container>
+```
+
+### Events
+
+For validation, error, and success messages, it will emit custom events.
+
+```js
+document.addEventListener('manifold-ssoButton-click', ({ detail: { resourceLabel } }) =>
+  console.info(`⌛ Sooing into ${resourceLabel} …`)
+);
+document.addEventListener(
+  'manifold-ssoButton-success',
+  ({ detail: { resourceLabel, redirectUrl } }) => window.location = redirectUrl
+);
+document.addEventListener('manifold-ssoButton-error', ({ detail }) => console.log(detail));
+// {type: "not_found", message: "no_found: Resource not found", resourceid: "1234", resourceLabel: "my-resource"}
+```
+
+| Name                         |                       Returns                               | Description                                                                                                                 |
+| :----------------------------| :---------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-ssoButton-click`   |              `resourceId`, `resourceLabel`                  | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-ssoButton-success` |   `message`, `resourceId`, `resourceLabel`, `redirectUrl`   | Successful sso. Returns a resource ID, resource Label and the redirect_url for the product's dashboard.                     |
+| `manifold-ssoButton-error`   |           `message`, `resourceId`, `resourceLabel`          | Erred sso, along with information on what went wrong.                                                                       |
 
 ## The resource product details
 

@@ -32,11 +32,12 @@
     "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && cp .manifold-local.yml .manifold.yml && manifold run -- npm run storybook'",
     "docs": "npm run build:docs && cd docs && npm start",
     "generate:gql": "graphql-codegen --config codegen.yml",
-    "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace && npm run generate:specs:provisioning",
+    "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace && npm run generate:specs:provisioning && npm run generate:specs:connector",
     "generate:specs:catalog": "npx @manifoldco/swagger-to-ts src/spec/catalog/v1.yaml -w 'export namespace Catalog' -o src/types/catalog.ts",
     "generate:specs:gateway": "npx @manifoldco/swagger-to-ts src/spec/gateway/v1.yaml -w 'export namespace Gateway' -o src/types/gateway.ts",
     "generate:specs:marketplace": "npx @manifoldco/swagger-to-ts src/spec/marketplace/v1.yaml -w 'export namespace Marketplace' -o src/types/marketplace.ts",
     "generate:specs:provisioning": "npx @manifoldco/swagger-to-ts src/spec/provisioning/v1.yaml -w 'export namespace Provisioning' -o src/types/provisioning.ts",
+    "generate:specs:connector": "npx @manifoldco/swagger-to-ts src/spec/connector/v1.yaml -w 'export namespace Connector' -o src/types/connector.ts",
     "happo": "stencil build && cp .manifold-ci.yml .manifold.yml && manifold run -- happo run",
     "happo-ci-travis": "stencil build && happo-ci-travis",
     "lint": "npm run lint:js && npm run lint:css && cd docs && npm run lint",
@@ -56,6 +57,7 @@
   },
   "dependencies": {
     "@manifoldco/gql-zero": "^0.2.0",
+    "@manifoldco/shadowcat": "^0.1.5",
     "@stencil/state-tunnel": "^1.0.1"
   },
   "devDependencies": {
@@ -66,7 +68,7 @@
     "@manifoldco/eslint-plugin-stencil": "^0.2.1",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
-    "@stencil/core": "^1.1.8",
+    "@stencil/core": "^1.1.9",
     "@stencil/postcss": "^1.0.1",
     "@storybook/addons": "^5.1.9",
     "@storybook/html": "^5.1.9",
@@ -84,7 +86,7 @@
     "eslint-import-resolver-typescript": "^1.1.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
-    "fetch-mock": "^7.3.7",
+    "fetch-mock": "^7.3.9",
     "fs-extra": "^8.1.0",
     "graphql": "^14.4.2",
     "happo-plugin-typescript": "^1.0.0",
@@ -93,7 +95,7 @@
     "jest-cli": "24.8.0",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.18.2",
-    "puppeteer": "1.17.0",
+    "puppeteer": "1.19.0",
     "storybook-readme": "^5.0.5",
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
@@ -101,6 +103,6 @@
     "stylelint-config-standard": "^18.3.0",
     "ts-loader": "^6.0.4",
     "wait-on": "^3.3.0",
-    "webpack": "^4.36.1"
+    "webpack": "^4.37.0"
   }
 }

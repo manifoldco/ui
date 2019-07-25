@@ -1,6 +1,6 @@
 ---
 title: Theming
-path: /theming
+path: /advanced/theming
 ---
 
 # Theming

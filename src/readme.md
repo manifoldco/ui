@@ -8,6 +8,8 @@ npm run dev
 This will start Storybook at `localhost:6060`. Storybook is the preferred way
 to work on styles and testing.
 
+__Note:__ When testing the `<manifold-auth-token>` component in Storybook, a fresh token (`manifold_api_token`, available from local storage after a successful login to Dashboard) needs to be manually added to local storage in Storybook. If you don't see the resources you expect after doing this, first check the console and network calls to see if `identity` is returning a 401 Unauthorized response. If this is the case, it's possible your token has expired and you need to set a fresh one in local storage.
+
 Copy these specs from [our specs][specs] into here:
 
 - `src/spec/catalog/v1.yaml`
@@ -42,7 +44,7 @@ You can do this by clicking `Details` on a failed Happo check and using the `Rev
 
 A passing Happo check means that the test detected no visual changes.
 
-_Note:_ Some diffs may be detected based on animations happening in the components. This may be resolved in the future, but as of writing these diffs require human approval.
+__Note:__ Some diffs may be detected based on animations happening in the components. This may be resolved in the future, but as of writing these diffs require human approval.
 
 ### Writing Happo Tests
 

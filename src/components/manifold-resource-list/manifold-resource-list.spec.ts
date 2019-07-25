@@ -5,6 +5,7 @@ import { Marketplace } from '../../types/marketplace';
 import { Provisioning } from '../../types/provisioning';
 import { Resource } from '../../spec/mock/marketplace';
 import { Product } from '../../spec/mock/catalog';
+import { connections } from '../../utils/connections';
 
 const resources: Marketplace.Resource[] = [
   {
@@ -35,18 +36,12 @@ describe('<manifold-resource-list>', () => {
 
   it('processes resources properly', async () => {
     fetchMock
-      .mock('/resources/?me', resources)
-      .mock('/products', [Product])
-      .mock('/operations/?is_deleted=false', [provisionOperation]);
+      .mock(`${connections.prod.marketplace}/resources/?me`, resources)
+      .mock(`${connections.prod.catalog}/products`, [Product])
+      .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const resourceList = new ManifoldResourceList();
-    resourceList.connection = {
-      provisioning: '',
-      catalog: '',
-      gateway: '',
-      marketplace: '',
-      billing: '',
-    };
+    resourceList.connection = connections.prod;
 
     await resourceList.fetchResources();
 

@@ -17,4 +17,13 @@ storiesOf('Service card', module)
     'Elegant CMS by ID',
     () => `
       <manifold-service-card product-id="234qqzb2wm6gavkvaqr9e6b54j9dg"></manifold-service-card>`
-  );
+  )
+  .add(
+    'With CTA',
+    () => `
+      <manifold-service-card product-id="234qqzb2wm6gavkvaqr9e6b54j9dg">
+        <manifold-button slot="cta">
+          Action!
+        </manifold-button>
+      </manifold-service-card>
+`);
