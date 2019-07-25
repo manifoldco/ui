@@ -24,7 +24,7 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
 }
 
 export function isExpired(token: string) {
-  const [, expiry] = token.split('.');
+  const expiry = token.split('.').pop();
 
   if (expiry) {
     const decodedExpiry = parseInt(Buffer.from(expiry, 'base64').toString(), 10);
