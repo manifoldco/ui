@@ -36,7 +36,7 @@ document.addEventListener(
   ({ detail: { resourceLabel, redirectUrl } }) => window.location = redirectUrl
 );
 document.addEventListener('manifold-ssoButton-error', ({ detail }) => console.log(detail));
-// {type: "not_found", message: "no_found: Resource not found", resourceid: "1234", resourceLabel: "my-resource"}
+// {type: "not_found", message: "not_found: Resource not found", resourceid: "1234", resourceLabel: "my-resource"}
 ```
 
 | Name                         |                       Returns                               | Description                                                                                                                 |
