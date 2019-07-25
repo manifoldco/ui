@@ -31,7 +31,7 @@ export const createGraphqlFetch = ({
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
         ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
       },
       body: JSON.stringify(requestBody),

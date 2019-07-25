@@ -26,7 +26,7 @@ export class ManifoldDataProductLogo {
   @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
-  /** _(Depricated)_ Look up product logo from resource */
+  /** _(Deprecated)_ Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
   @Watch('authToken') refetch() {
@@ -54,7 +54,7 @@ export class ManifoldDataProductLogo {
 
   render() {
     if (this.resourceLabel) {
-      console.warn('DEPRCATION WARNING: Use `manifold-data-resource-logo` instead.');
+      console.warn('DEPRECATION WARNING: Use `manifold-data-resource-logo` instead.');
       return <manifold-data-resource-logo resourceLabel={this.resourceLabel} />;
     }
 
