@@ -16,6 +16,7 @@ UserInterfaceState.xcuserstate
 # Manifold
 .manifold.yml
 src/spec/billing
+src/spec/connector
 src/spec/catalog
 src/spec/gateway
 src/spec/marketplace

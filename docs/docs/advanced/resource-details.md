@@ -1,26 +1,23 @@
 ---
 title: Resource Details View
-path: /advanced/resource-details
+path: /resource-details
 ---
 
 # Creating a resource details view
 
-A specific set of component are available to use for creating a resource
-details view without having to keep giving the resource label as attributes
-to all the components in the library.
+A specific set of component are available to use for creating a resource details view without having to keep
+giving the resource label as attributes to all the components in the library.
 
-To set up a resource details view, wrap all the structures you want to be
-part of the resource details view in a `manifold-resource-container`
-component with access to the resource label.
+To setup a resource details view, wrap all the structure you want to be part of the resource details view in
+a `manifold-resource-container` component with access to the resource label.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
   <!--- Your structure goes here --->
 </manifold-resource-container>
 ```
-
 <style>
-  manifold-data-rename-button button, manifold-data-deprovision-button button {
+  manifold-data-rename-button button, manifold-data-deprovision-button button, manifold-data-sso-button button {
     border: none;
     padding: 0;
   }
@@ -35,6 +32,9 @@ component with access to the resource label.
       <manifold-resource-rename>
         <manifold-button>Rename</manifold-button>
       </manifold-resource-rename>
+      <manifold-resource-sso>
+        <manifold-button>SSO</manifold-button>
+      </manifold-resource-sso>
       <manifold-resource-deprovision>
         <manifold-button>Deprovision</manifold-button>
       </manifold-resource-deprovision>
@@ -45,11 +45,10 @@ component with access to the resource label.
   <manifold-resource-credentials></manifold-resource-credentials>
 </resource-mock-resource>
 
-## Resource credentials
+## The resource credentials
 
-The [`manifold-credentials`](/components/credentials) component can be used
-inside the container without any attribute by using the
-`manifold-resource-credentials` component.
+The [`manifold-credentials`](/components/credentials) component can be used inside the container without any attribute by
+using the `manifold-resource-credentials` component.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
@@ -58,12 +57,11 @@ inside the container without any attribute by using the
 </manifold-resource-container>
 ```
 
-## Deprovision button
+## The resource deprovision Button
 
-The [`manifold-data-deprovision-button`](/data/deprovision-button) component
-can be used inside the container without any attribute by using the
-`manifold-resource-deprovision` component. This component is still acting as
-a data component and can be stylized or be given children.
+The [`manifold-data-deprovision-button`](/data/deprovision-button) component can be used inside the container without any attribute by
+using the `manifold-resource-deprovision` component. This component is still acting as a data component and can
+be stylized or be given children.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
@@ -80,25 +78,25 @@ For validation, error, and success messages, it will emit custom events.
 document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
   console.info(`⌛ Derovisioning ${resourceLabel} …`)
 );
-document.addEventListener('manifold-deprovisionButton-success', ({ detail: { resourceLabel } }) =>
-  alert(`${resourceLabel} deprovisioned successfully!`)
+document.addEventListener(
+  'manifold-deprovisionButton-success',
+  ({ detail: { resourceLabel } }) =>alert(`${resourceLabel} deprovisioned successfully!`)
 );
 document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}
 ```
 
-| Name                                 |                 Returns                  | Description                                                                                                                 |
-| :----------------------------------- | :--------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-deprovisionButton-click`   |             `resourceLabel`              | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-deprovisionButton-success` | `message`, `resourceId`, `resourceLabel` | Successful deprovision. Returns a resource ID and resource Label.                                                           |
-| `manifold-deprovisionButton-error`   | `message`, `resourceId`, `resourceLabel` | Erred provision, along with information on what went wrong.                                                                 |
+| Name                               |                       Returns                        | Description                                                                                                                 |
+| :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-deprovisionButton-click`   |                    `resourceLabel`                 | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-deprovisionButton-success` |     `message`, `resourceId`, `resourceLabel`       | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
+| `manifold-deprovisionButton-error`   |     `message`, `resourceId`, `resourceLabel`       | Erred provision, along with information on what went wrong.     
 
-## Rename button
+## The resource rename Button
 
-The [`manifold-data-rename-button`](/data/rename-button) component can be
-used inside the container without any attribute by using the
-`manifold-rename-deprovision` component. This component is still acting as a
-data component and can be stylized or be given children.
+The [`manifold-data-rename-button`](/data/rename-button) component can be used inside the container without any attribute by
+using the `manifold-resource-rename` component. This component is still acting as a data component and can
+be stylized or be given children.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
@@ -112,15 +110,12 @@ data component and can be stylized or be given children.
 For validation, error, and success messages, it will emit custom events.
 
 ```js
-document.addEventListener(
-  'manifold-renameButton-click',
-  ({ detail: { resourceLabel, newLabel } }) =>
-    console.info(`⌛ Renaming ${resourceLabel} to ${newLabel} …`)
+document.addEventListener('manifold-renameButton-click', ({ detail: { resourceLabel, newLabel } }) =>
+  console.info(`⌛ Renaming ${resourceLabel} to ${newLabel} …`)
 );
 document.addEventListener(
   'manifold-renameButton-success',
-  ({ detail: { resourceLabel, newLabel } }) =>
-    alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
+  ({ detail: { resourceLabel, newLabel } }) => alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
 );
 document.addEventListener('manifold-renameButton-error', ({ detail }) => console.log(detail));
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
@@ -128,19 +123,52 @@ document.addEventListener('manifold-renameButton-invalid', ({ detail }) => conso
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
 ```
 
-| Name                            |                       Returns                        | Description                                                                                                                 |
-| :------------------------------ | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-renameButton-click`   |      `resourceId`, `resourceLabel`, `newLabel`       | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-renameButton-success` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
-| `manifold-renameButton-error`   | `message`, `resourceId`, `resourceLabel`, `newLabel` | Erred rename, along with information on what went wrong.                                                                    |
-| `manifold-renameButton-error`   | `message`, `resourceId`, `resourceLabel`, `newLabel` | Invalid renaming, along with information on what went wrong.                                                                |
+| Name                            |                       Returns                            | Description                                                                                                                 |
+| :-------------------------------| :------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-renameButton-click`   |       `resourceId`, `resourceLabel`, `newLabel`          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-renameButton-success` |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
+| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Erred rename, along with information on what went wrong.                                                                    |
+| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Invalid renaming, along with information on what went wrong. 
 
-## Product details
+## The resource sso Button
 
-The [`manifold-resource-card`](/components/manifold-service-card) component
-can be used inside the container without any attribute by using the
-[`manifold-resource-product`](/components/manifold-resource-product)
-component.
+The [`manifold-data-sso-button`](/data/sso-button) component can be used inside the container without any attribute by
+using the `manifold-resource-sso` component. This component is still acting as a data component and can
+be stylized or be given children.
+
+```html
+<manifold-resource-container resource-label="my-resource">
+  <!--- Your structure goes here --->
+  <manifold-resource-sso>SSO into resource</manifold-resource-sso>
+</manifold-resource-container>
+```
+
+### Events
+
+For validation, error, and success messages, it will emit custom events.
+
+```js
+document.addEventListener('manifold-ssoButton-click', ({ detail: { resourceLabel } }) =>
+  console.info(`⌛ Sooing into ${resourceLabel} …`)
+);
+document.addEventListener(
+  'manifold-ssoButton-success',
+  ({ detail: { resourceLabel, redirectUrl } }) => window.location = redirectUrl
+);
+document.addEventListener('manifold-ssoButton-error', ({ detail }) => console.log(detail));
+// {type: "not_found", message: "no_found: Resource not found", resourceid: "1234", resourceLabel: "my-resource"}
+```
+
+| Name                         |                       Returns                               | Description                                                                                                                 |
+| :----------------------------| :---------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-ssoButton-click`   |              `resourceId`, `resourceLabel`                  | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-ssoButton-success` |   `message`, `resourceId`, `resourceLabel`, `redirectUrl`   | Successful sso. Returns a resource ID, resource Label and the redirect_url for the product's dashboard.                     |
+| `manifold-ssoButton-error`   |           `message`, `resourceId`, `resourceLabel`          | Erred sso, along with information on what went wrong.                                                                       |
+
+## The resource product details
+
+The [`manifold-resource-card`](/components/manifold-service-card) component can be used inside the container without any attribute by
+using the [`manifold-resource-product`](/components/manifold-resource-product) component.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
@@ -149,11 +177,10 @@ component.
 </manifold-resource-container>
 ```
 
-## Plan details
+## The resource plan details
 
-The [`manifold-plan`](/components/plan) component can be used inside the
-container without any attribute by using the
-[`manifold-resource-plan`](/components/manifold-resource-plan) component.
+The [`manifold-plan`](/components/plan) component can be used inside the container without any attribute by
+using the [`manifold-resource-plan`](/components/manifold-resource-plan) component.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
@@ -162,13 +189,11 @@ container without any attribute by using the
 </manifold-resource-container>
 ```
 
-## Status
+## The resource status
 
-You can display the resource’s status like on the `resource-card` component
-or the standalone
-[`manifold-resource-status-view`](/components/manifold-resource-card)
-component inside the container by using the `manifold-resource-status`
-component.
+You can display the resource's status like on the `resource-card` component or the standalone
+[`manifold-resource-status-view`](/components/manifold-resource-card) component inside the container by
+using the `manifold-resource-status` component.
 
 ```html
 <manifold-resource-container resource-label="my-resource">
