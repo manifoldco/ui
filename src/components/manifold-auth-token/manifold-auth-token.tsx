@@ -1,26 +1,46 @@
-import { h, Component, Prop, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, Watch, Event, EventEmitter } from '@stencil/core';
+import { AuthToken } from '@manifoldco/shadowcat';
 import Tunnel from '../../data/connection';
+import { isExpired } from '../../utils/auth';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
-  @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() setAuthToken?: (s: string) => void;
+  @Prop() setAuthToken: (s: string) => void = () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
-  @Prop() token?: string;
+  @Prop({ mutable: true }) token?: string;
+  @Event() manifoldOauthTokenChange: EventEmitter;
 
   @Watch('token') tokenChange(newToken: string) {
-    return this.setAuthToken && this.setAuthToken(newToken);
+    this.setAuthToken(newToken);
+    this.manifoldOauthTokenChange.emit(newToken);
   }
 
   componentWillLoad() {
-    if (this.setAuthToken && this.token) {
-      this.setAuthToken(this.token);
+    if (this.token) {
+      if (!isExpired(this.token)) {
+        this.setAuthToken(this.token);
+      }
+    }
+  }
+
+  setInternalToken(e: CustomEvent) {
+    const payload = e.detail as AuthToken;
+    if (!payload.error && payload.expiry) {
+      const encodedExpiry = Buffer.from(payload.expiry.toString()).toString('base64');
+      this.token = `${payload.token}.${encodedExpiry}`;
     }
   }
 
   render() {
-    return <input type="hidden" value={this.token ? 'true' : 'false'} />;
+    return (
+      <div>
+        <manifold-oauth
+          onReceiveManifoldToken={this.setInternalToken}
+          oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
+        ></manifold-oauth>
+      </div>
+    );
   }
 }
 

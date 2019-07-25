@@ -34,6 +34,9 @@ export class ManifoldServiceView {
           <p class="description" itemprop="description">
             {this.description}
           </p>
+          <div class="cta">
+            <slot name="cta" />
+          </div>
         </div>
         {!this.hideTags && (
           <div class="tags">

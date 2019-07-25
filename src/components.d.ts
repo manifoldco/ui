@@ -34,7 +34,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'setAuthToken'?: (s: string) => void;
+    'setAuthToken': (s: string) => void;
     'token'?: string;
   }
   interface ManifoldBadge {}
@@ -238,6 +238,25 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+  }
+  interface ManifoldDataSsoButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'loading'?: boolean;
+    /**
+    * The id of the resource to rename, will be fetched if not set
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to rename
+    */
+    'resourceLabel'?: string;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
@@ -523,6 +542,8 @@ export namespace Components {
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
     'asCard'?: boolean;
+    'data'?: Gateway.Resource;
+    'loading': boolean;
   }
   interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
@@ -531,6 +552,10 @@ export namespace Components {
     * The new label to give to the resource
     */
     'newLabel': string;
+  }
+  interface ManifoldResourceSso {
+    'data'?: Gateway.Resource;
+    'loading': boolean;
   }
   interface ManifoldResourceStatus {
     'size'?: 'small' | 'medium';
@@ -716,6 +741,12 @@ declare global {
     new (): HTMLManifoldDataResourceListElement;
   };
 
+  interface HTMLManifoldDataSsoButtonElement extends Components.ManifoldDataSsoButton, HTMLStencilElement {}
+  var HTMLManifoldDataSsoButtonElement: {
+    prototype: HTMLManifoldDataSsoButtonElement;
+    new (): HTMLManifoldDataSsoButtonElement;
+  };
+
   interface HTMLManifoldForwardSlotElement extends Components.ManifoldForwardSlot, HTMLStencilElement {}
   var HTMLManifoldForwardSlotElement: {
     prototype: HTMLManifoldForwardSlotElement;
@@ -896,6 +927,12 @@ declare global {
     new (): HTMLManifoldResourceRenameElement;
   };
 
+  interface HTMLManifoldResourceSsoElement extends Components.ManifoldResourceSso, HTMLStencilElement {}
+  var HTMLManifoldResourceSsoElement: {
+    prototype: HTMLManifoldResourceSsoElement;
+    new (): HTMLManifoldResourceSsoElement;
+  };
+
   interface HTMLManifoldResourceStatusElement extends Components.ManifoldResourceStatus, HTMLStencilElement {}
   var HTMLManifoldResourceStatusElement: {
     prototype: HTMLManifoldResourceStatusElement;
@@ -984,6 +1021,7 @@ declare global {
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-rename-button': HTMLManifoldDataRenameButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
+    'manifold-data-sso-button': HTMLManifoldDataSsoButtonElement;
     'manifold-forward-slot': HTMLManifoldForwardSlotElement;
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
@@ -1014,6 +1052,7 @@ declare global {
     'manifold-resource-plan': HTMLManifoldResourcePlanElement;
     'manifold-resource-product': HTMLManifoldResourceProductElement;
     'manifold-resource-rename': HTMLManifoldResourceRenameElement;
+    'manifold-resource-sso': HTMLManifoldResourceSsoElement;
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
@@ -1038,6 +1077,7 @@ declare namespace LocalJSX {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
+    'onManifoldOauthTokenChange'?: (event: CustomEvent<any>) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1262,6 +1302,28 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+  }
+  interface ManifoldDataSsoButton extends JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    'loading'?: boolean;
+    'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-ssoButton-success'?: (event: CustomEvent<any>) => void;
+    /**
+    * The id of the resource to rename, will be fetched if not set
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to rename
+    */
+    'resourceLabel'?: string;
   }
   interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
   interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
@@ -1557,6 +1619,8 @@ declare namespace LocalJSX {
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
     'asCard'?: boolean;
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
   }
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
     'data'?: Gateway.Resource;
@@ -1569,6 +1633,13 @@ declare namespace LocalJSX {
     'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
+  }
+  interface ManifoldResourceSso extends JSXBase.HTMLAttributes<HTMLManifoldResourceSsoElement> {
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
+    'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-ssoButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
     'size'?: 'small' | 'medium';
@@ -1675,6 +1746,7 @@ declare namespace LocalJSX {
     'manifold-data-provision-button': ManifoldDataProvisionButton;
     'manifold-data-rename-button': ManifoldDataRenameButton;
     'manifold-data-resource-list': ManifoldDataResourceList;
+    'manifold-data-sso-button': ManifoldDataSsoButton;
     'manifold-forward-slot': ManifoldForwardSlot;
     'manifold-icon': ManifoldIcon;
     'manifold-image-gallery': ManifoldImageGallery;
@@ -1705,6 +1777,7 @@ declare namespace LocalJSX {
     'manifold-resource-plan': ManifoldResourcePlan;
     'manifold-resource-product': ManifoldResourceProduct;
     'manifold-resource-rename': ManifoldResourceRename;
+    'manifold-resource-sso': ManifoldResourceSso;
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;

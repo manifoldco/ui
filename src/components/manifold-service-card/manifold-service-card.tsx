@@ -148,7 +148,11 @@ export class ManifoldServiceCard {
           logo={this.product.body.logo_url}
           productId={this.productId}
           isFree={this.isFree}
-        />
+        >
+          <manifold-forward-ref slot="cta">
+            <slot name="cta" />
+          </manifold-forward-ref>
+        </manifold-service-view>
       </a>
     ) : (
       // ☠
