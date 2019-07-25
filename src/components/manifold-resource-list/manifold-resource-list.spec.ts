@@ -51,7 +51,7 @@ describe('<manifold-resource-list>', () => {
       const page = await newSpecPage({
         components: [ManifoldResourceList],
         html: `
-          <manifold-resource-list>
+          <manifold-resource-list paused="">
             <div data-test="no-resources" slot="no-resources"></div>
           </manifold-resource-list>
         `,
@@ -70,7 +70,7 @@ describe('<manifold-resource-list>', () => {
       const page = await newSpecPage({
         components: [ManifoldResourceList],
         html: `
-          <manifold-resource-list>
+          <manifold-resource-list paused="">
             <div data-test="loading" slot="loading"></div>
           </manifold-resource-list>
         `,
@@ -91,7 +91,7 @@ describe('<manifold-resource-list>', () => {
       const page = await newSpecPage({
         components: [ManifoldResourceList],
         html: `
-          <manifold-resource-list></manifold-resource-list>
+          <manifold-resource-list paused=""></manifold-resource-list>
         `,
       });
 
