@@ -152,7 +152,7 @@ export class ManifoldServiceCard {
           <manifold-forward-ref slot="cta">
             <slot name="cta" />
           </manifold-forward-ref>
-        </manifold-service-view>
+        </manifold-service-card-view>
       </a>
     ) : (
       // ☠
