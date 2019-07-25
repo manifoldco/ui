@@ -20,24 +20,4 @@ describe('<manifold-data-product-logo>', () => {
     productLogo.productChange(newProduct);
     expect(productLogo.fetchProduct).toHaveBeenCalledWith(newProduct);
   });
-
-  it('fetches resource on load', () => {
-    const resourceLabel = 'my-resource';
-
-    const productLogo = new ManifoldDataProductLogo();
-    productLogo.fetchResource = jest.fn();
-    productLogo.resourceLabel = resourceLabel;
-    productLogo.componentWillLoad();
-    expect(productLogo.fetchResource).toHaveBeenCalledWith(resourceLabel);
-  });
-
-  it('fetches resource on change', () => {
-    const newResource = 'new-resource';
-
-    const productLogo = new ManifoldDataProductLogo();
-    productLogo.fetchResource = jest.fn();
-    productLogo.resourceLabel = 'old-resource';
-    productLogo.resourceChange(newResource);
-    expect(productLogo.fetchResource).toHaveBeenCalledWith(newResource);
-  });
 });

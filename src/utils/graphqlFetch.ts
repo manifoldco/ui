@@ -1,28 +1,57 @@
-interface GraphqlFetch {
+interface CreateGraphqlFetch {
   endpoint?: string;
-  query: string;
-  variables?: object;
-  authToken?: string;
+  getAuthToken?: () => string | undefined;
+  setAuthToken?: (token: string) => void;
 }
 
-const graphqlFetch = async ({
+export interface GraphqlRequestBody {
+  query?: string;
+  mutation?: string;
+  variables?: object;
+}
+
+interface GraphqlError {
+  message: string;
+  type: string;
+}
+
+export interface GraphqlResponseBody<T> {
+  data?: T;
+  errors?: GraphqlError[];
+}
+
+export const createGraphqlFetch = ({
   endpoint = 'https://api.manifold.co/graphql',
-  query,
-  variables,
-  authToken,
-}: GraphqlFetch) => {
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(authToken ? { authorization: `Bearer ${authToken}` } : {}),
-    },
-    body: JSON.stringify({ query, variables }),
-  });
+  getAuthToken = () => undefined,
+  setAuthToken = () => {},
+}: CreateGraphqlFetch = {}): (<T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>) => {
+  const graphqlFetch = async <T>(
+    requestBody: GraphqlRequestBody
+  ): Promise<GraphqlResponseBody<T>> => {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
+      },
+      body: JSON.stringify(requestBody),
+    });
 
-  const body = await response.json();
+    const body = await response.json();
 
-  return body;
+    if (body.errors) {
+      body.errors.forEach((error: GraphqlError) => {
+        console.error(error.message);
+      });
+    }
+
+    if (body.errors && body.errors[0].type === 'unauthorized') {
+      // TODO trigger token refresh for manifold-auth-token
+      setAuthToken('');
+    }
+
+    return body;
+  };
+
+  return graphqlFetch;
 };
-
-export default graphqlFetch;

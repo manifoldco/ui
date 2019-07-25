@@ -7,6 +7,7 @@
   --text-transform: var(--manifold-tag-text-transform, initial);
   --background: var(--manifold-tag-background, var(--manifold-color-primary));
   --free-background: var(--manifold-tag-free-background, var(--background));
+  --free-text-color: var(--manifold-tag-free-text-color, var(--text-color));
   --radius: var(--manifold-tag-radius, 3em);
 
   display: inline-flex;
@@ -22,5 +23,6 @@
 }
 
 :host([data-tag='free']) {
+  color: var(--free-text-color);
   background: var(--free-background);
 }
