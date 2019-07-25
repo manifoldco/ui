@@ -24,13 +24,14 @@ export class ManifoldAuthToken {
     }
   }
 
-  setInternalToken(e: CustomEvent) {
+  setInternalToken = (e: CustomEvent) => {
     const payload = e.detail as AuthToken;
     if (!payload.error && payload.expiry) {
       const encodedExpiry = Buffer.from(payload.expiry.toString()).toString('base64');
+      // This does not trigger the watch
       this.token = `${payload.token}.${encodedExpiry}`;
     }
-  }
+  };
 
   render() {
     return (
