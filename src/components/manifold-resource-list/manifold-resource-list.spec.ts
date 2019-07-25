@@ -31,6 +31,8 @@ const provisionOperation: Provisioning.Operation = {
 };
 
 describe('<manifold-resource-list>', () => {
+  window.setInterval = jest.fn();
+
   afterEach(() => {
     fetchMock.restore();
   });
