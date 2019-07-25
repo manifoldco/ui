@@ -16,6 +16,10 @@ import {
   Connection,
 } from './utils/connections';
 import {
+  GraphqlRequestBody,
+  GraphqlResponseBody,
+} from './utils/graphqlFetch';
+import {
   Marketplace,
 } from './types/marketplace';
 import {
@@ -141,11 +145,15 @@ export namespace Components {
     */
     'connection'?: Connection;
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
     /**
-    * Look up product name from resource
+    * _(Depricated)_ Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
@@ -238,6 +246,24 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+  }
+  interface ManifoldDataResourceLogo {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Look up product logo from resource
+    */
+    'resourceLabel'?: string;
   }
   interface ManifoldDataSsoButton {
     /**
@@ -729,6 +755,12 @@ declare global {
     new (): HTMLManifoldDataResourceListElement;
   };
 
+  interface HTMLManifoldDataResourceLogoElement extends Components.ManifoldDataResourceLogo, HTMLStencilElement {}
+  var HTMLManifoldDataResourceLogoElement: {
+    prototype: HTMLManifoldDataResourceLogoElement;
+    new (): HTMLManifoldDataResourceLogoElement;
+  };
+
   interface HTMLManifoldDataSsoButtonElement extends Components.ManifoldDataSsoButton, HTMLStencilElement {}
   var HTMLManifoldDataSsoButtonElement: {
     prototype: HTMLManifoldDataSsoButtonElement;
@@ -1003,6 +1035,7 @@ declare global {
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-rename-button': HTMLManifoldDataRenameButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
+    'manifold-data-resource-logo': HTMLManifoldDataResourceLogoElement;
     'manifold-data-sso-button': HTMLManifoldDataSsoButtonElement;
     'manifold-forward-slot': HTMLManifoldForwardSlotElement;
     'manifold-icon': HTMLManifoldIconElement;
@@ -1177,11 +1210,15 @@ declare namespace LocalJSX {
     */
     'connection'?: Connection;
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
     /**
-    * Look up product name from resource
+    * _(Depricated)_ Look up product logo from resource
     */
     'resourceLabel'?: string;
   }
@@ -1283,6 +1320,24 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+  }
+  interface ManifoldDataResourceLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement> {
+    /**
+    * _(optional)_ `alt` attribute
+    */
+    'alt'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'authToken'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'connection'?: Connection;
+    /**
+    * Look up product logo from resource
+    */
+    'resourceLabel'?: string;
   }
   interface ManifoldDataSsoButton extends JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement> {
     /**
@@ -1715,6 +1770,7 @@ declare namespace LocalJSX {
     'manifold-data-provision-button': ManifoldDataProvisionButton;
     'manifold-data-rename-button': ManifoldDataRenameButton;
     'manifold-data-resource-list': ManifoldDataResourceList;
+    'manifold-data-resource-logo': ManifoldDataResourceLogo;
     'manifold-data-sso-button': ManifoldDataSsoButton;
     'manifold-forward-slot': ManifoldForwardSlot;
     'manifold-icon': ManifoldIcon;
