@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'gatsby';
-import { LinkGetProps } from '@reach/router';
+import { LinkGetProps, navigate } from '@reach/router';
 import { switchProp } from 'styled-tools';
 import { chevron_down } from '@manifoldco/icons';
 import { base64 } from './Icon';
@@ -69,7 +69,7 @@ function Sidebar({ pages }: SidebarProps) {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       params.set('theme', theme);
-      window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+      navigate(`${window.location.pathname}?${params.toString()}`);
     }
   });
 

@@ -1,4 +1,5 @@
 import React, { FormEvent, useState, useEffect, ChangeEvent } from 'react';
+import { navigate } from 'gatsby';
 import styled from 'styled-components';
 
 const Form = styled.form`
@@ -69,7 +70,6 @@ const ApiToken = () => {
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
 
     localStorage.setItem('manifold_api_token', token);
     window.location.reload();

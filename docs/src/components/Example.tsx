@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import ApiToken from './ApiToken';
 
 const Wrapper = styled.div`
+  position: relative;
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -32,13 +34,24 @@ const Inner = styled.div`
   }
 `;
 
+const Heading = styled.h3`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5rem;
+  color: white;
+  font-size: 0.8rem;
+  background: black;
+`;
+
 interface ExampleProps {
   html: string;
 }
 
 const Example: React.FunctionComponent<ExampleProps> = ({ html }) => (
-  <Wrapper>
-    <h3>Example</h3>
+  <Wrapper id="example">
+    <Heading>Example</Heading>
+    <ApiToken />
     <Inner className="example-inner" dangerouslySetInnerHTML={{ __html: html }} />
   </Wrapper>
 );
