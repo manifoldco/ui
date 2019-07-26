@@ -611,6 +611,18 @@ export namespace Components {
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
+  interface ManifoldServiceCardView {
+    'asCard'?: boolean;
+    'description'?: string;
+    'hideTags'?: boolean;
+    'isFeatured'?: boolean;
+    'isFree'?: boolean;
+    'label'?: string;
+    'loading'?: boolean;
+    'logo'?: string;
+    'name'?: string;
+    'productId'?: string;
+  }
   interface ManifoldServiceView {
     'asCard'?: boolean;
     'description'?: string;
@@ -977,6 +989,12 @@ declare global {
     new (): HTMLManifoldServiceCardElement;
   };
 
+  interface HTMLManifoldServiceCardViewElement extends Components.ManifoldServiceCardView, HTMLStencilElement {}
+  var HTMLManifoldServiceCardViewElement: {
+    prototype: HTMLManifoldServiceCardViewElement;
+    new (): HTMLManifoldServiceCardViewElement;
+  };
+
   interface HTMLManifoldServiceViewElement extends Components.ManifoldServiceView, HTMLStencilElement {}
   var HTMLManifoldServiceViewElement: {
     prototype: HTMLManifoldServiceViewElement;
@@ -1072,6 +1090,7 @@ declare global {
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
+    'manifold-service-card-view': HTMLManifoldServiceCardViewElement;
     'manifold-service-view': HTMLManifoldServiceViewElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
@@ -1707,6 +1726,18 @@ declare namespace LocalJSX {
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
+  interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {
+    'asCard'?: boolean;
+    'description'?: string;
+    'hideTags'?: boolean;
+    'isFeatured'?: boolean;
+    'isFree'?: boolean;
+    'label'?: string;
+    'loading'?: boolean;
+    'logo'?: string;
+    'name'?: string;
+    'productId'?: string;
+  }
   interface ManifoldServiceView extends JSXBase.HTMLAttributes<HTMLManifoldServiceViewElement> {
     'asCard'?: boolean;
     'description'?: string;
@@ -1807,6 +1838,7 @@ declare namespace LocalJSX {
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
+    'manifold-service-card-view': ManifoldServiceCardView;
     'manifold-service-view': ManifoldServiceView;
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
