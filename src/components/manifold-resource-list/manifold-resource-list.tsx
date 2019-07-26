@@ -53,8 +53,8 @@ export class ManifoldResourceList {
   }
 
   componentWillLoad() {
+    this.fetchResources();
     if (!this.paused) {
-      this.fetchResources();
       this.interval = window.setInterval(() => this.fetchResources(), 3000);
     }
   }
