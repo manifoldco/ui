@@ -15,7 +15,6 @@ describe('isExpired', () => {
   it('returns TRUE when token is expired (2-part token).', () => {
     const now = new Date();
     const past = Math.floor(now.getTime() / 1000 - 1000); // 1000 seconds in the past
-    console.log('EXPIRY', past);
     expect(isExpired(`hello.${past}`)).toBe(true);
   });
 
