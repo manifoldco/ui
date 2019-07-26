@@ -9,6 +9,7 @@ export class ManifoldAuthToken {
   @Prop() setAuthToken: (s: string) => void = () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop({ mutable: true }) token?: string;
+  @Prop() oauthUrl?: string;
   @Event() manifoldOauthTokenChange: EventEmitter;
 
   @Watch('token') tokenChange(newToken: string) {
@@ -37,7 +38,7 @@ export class ManifoldAuthToken {
       <div>
         <manifold-oauth
           onReceiveManifoldToken={this.setInternalToken}
-          oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
+          oauthUrl={this.oauthUrl}
         ></manifold-oauth>
       </div>
     );
