@@ -27,8 +27,8 @@ export class ManifoldAuthToken {
   setInternalToken(e: CustomEvent) {
     const payload = e.detail as AuthToken;
     if (!payload.error && payload.expiry) {
-      const encodedExpiry = Buffer.from(payload.expiry.toString()).toString('base64');
-      this.token = `${payload.token}.${encodedExpiry}`;
+      const expiry = payload.expiry.toString();
+      this.token = `${payload.token}.${expiry}`;
     }
   }
 

@@ -5,10 +5,10 @@ describe('<manifold-auth-token>', () => {
     const expiry = new Date();
     expiry.setDate(expiry.getDate() + 1);
     const unixTime = Math.floor(expiry.getTime() / 1000);
-    const encodedExpiry = Buffer.from(unixTime.toString()).toString('base64');
+    const expirySeconds = unixTime.toString();
 
     it('calls the set auth token on load', () => {
-      const token = `test.${encodedExpiry}`;
+      const token = `test.${expirySeconds}`;
 
       const provisionButton = new ManifoldAuthToken();
       provisionButton.setAuthToken = jest.fn();
@@ -23,10 +23,10 @@ describe('<manifold-auth-token>', () => {
   describe('when the token is expired', () => {
     const expiry = new Date();
     expiry.setDate(expiry.getDate() - 1);
-    const encodedExpiry = Buffer.from(expiry.toUTCString()).toString('base64');
+    const expiryUTC = expiry.toUTCString();
 
     it('does not call the set auth token on load', () => {
-      const token = `test.${encodedExpiry}`;
+      const token = `test.${expiryUTC}`;
 
       const provisionButton = new ManifoldAuthToken();
       provisionButton.setAuthToken = jest.fn();
