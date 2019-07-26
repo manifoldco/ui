@@ -37,7 +37,7 @@ export class ManifoldAuthToken {
       <div>
         <manifold-oauth
           onReceiveManifoldToken={this.setInternalToken}
-          oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
+          oauthUrl="https://login.stage.manifold.co/signin/oauth/web"
         ></manifold-oauth>
       </div>
     );

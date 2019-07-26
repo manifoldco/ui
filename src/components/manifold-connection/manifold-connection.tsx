@@ -19,7 +19,7 @@ function getDefaultToken() {
 @Component({ tag: 'manifold-connection' })
 export class ManiTunnel {
   /** _(optional)_ Specify `env="stage"` for staging */
-  @Prop() env: 'stage' | 'prod' = 'prod';
+  @Prop() env: 'local' | 'stage' | 'prod' = 'prod';
 
   @State() authToken?: string = getDefaultToken();
 
@@ -40,8 +40,6 @@ export class ManiTunnel {
   }
 
   render() {
-    const endpoint = this.env === 'stage' ? 'https://api.stage.manifold.co/graphql' : undefined;
-
     return (
       <Tunnel.Provider
         state={{
@@ -51,7 +49,7 @@ export class ManiTunnel {
           graphqlFetch: createGraphqlFetch({
             getAuthToken: this.getAuthToken,
             setAuthToken: this.setAuthToken,
-            endpoint,
+            endpoint: connections[this.env].graphQl,
           }),
         }}
       >

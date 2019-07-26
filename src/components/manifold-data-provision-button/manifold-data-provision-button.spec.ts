@@ -8,16 +8,27 @@ import { connections } from '../../utils/connections';
 import { ManifoldDataProvisionButton } from './manifold-data-provision-button';
 
 describe('<manifold-data-provision-button>', () => {
-  it('fetches product and plan id on load', () => {
+  it('fetches product, plan and profile id on load', () => {
     const productLabel = 'test-product';
     const planLabel = 'test-plan';
 
     const provisionButton = new ManifoldDataProvisionButton();
     provisionButton.fetchProductPlanId = jest.fn();
+    provisionButton.fetchProfileId = jest.fn();
     provisionButton.productLabel = productLabel;
     provisionButton.planLabel = planLabel;
     provisionButton.componentWillLoad();
     expect(provisionButton.fetchProductPlanId).toHaveBeenCalledWith(productLabel, planLabel);
+    expect(provisionButton.fetchProfileId).toHaveBeenCalled();
+  });
+
+  it('does not fetch the profile id if set on load', () => {
+    const provisionButton = new ManifoldDataProvisionButton();
+    provisionButton.fetchProfileId = jest.fn();
+    provisionButton.ownerId = '1234';
+    provisionButton.componentWillLoad();
+
+    expect(provisionButton.fetchProfileId).not.toHaveBeenCalled();
   });
 
   it('fetches product and plan id on change', () => {
@@ -169,6 +180,69 @@ describe('<manifold-data-provision-button>', () => {
       const root = page.rootInstance as ManifoldDataProvisionButton;
       expect(root.productId).toEqual('');
       expect(root.planId).toEqual('');
+    });
+  });
+
+  describe('when created with no owner ID', () => {
+    afterEach(() => {
+      fetchMock.restore();
+    });
+
+    const profile = { id: '1234' };
+
+    beforeEach(() => {
+      fetchMock
+        .mock(`${connections.prod.catalog}/products/?label=test`, [Product])
+        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}&label=test`, [
+          ExpandedPlan,
+        ]);
+    });
+
+    it('will fetch the owner id on load', async () => {
+      const page = await newSpecPage({
+        components: [ManifoldDataProvisionButton],
+        html: `
+          <manifold-data-provision-button
+            product-label="test"
+            plan-label="test"
+          >Provision</manifold-data-provision-button>
+        `,
+      });
+
+      const root = page.rootInstance as ManifoldDataProvisionButton;
+      // TODO: Find a smarter way to call this. This is always undefined, even if the component is wrapper in the manifold-connection
+      // @ts-ignore
+      root.graphqlFetch = jest.fn(() => ({ data: profile }));
+
+      root.componentWillLoad();
+      await page.waitForChanges();
+
+      expect(root.graphqlFetch).toHaveBeenCalled();
+      expect(root.ownerId).toEqual(profile.id);
+    });
+
+    it('will do nothing if the owner id is set', async () => {
+      const page = await newSpecPage({
+        components: [ManifoldDataProvisionButton],
+        html: `
+          <manifold-data-provision-button
+            product-label="test"
+            plan-label="test"
+            owner-id="5678"
+          >Provision</manifold-data-provision-button>
+        `,
+      });
+
+      const root = page.rootInstance as ManifoldDataProvisionButton;
+      // TODO: Find a smarter way to call this. This is always undefined, even if the component is wrapper in the manifold-connection
+      // @ts-ignore
+      root.graphqlFetch = jest.fn(() => ({ data: profile }));
+
+      root.componentWillLoad();
+      await page.waitForChanges();
+
+      expect(root.graphqlFetch).not.toHaveBeenCalled();
+      expect(root.ownerId).toEqual('5678');
     });
   });
 
