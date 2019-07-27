@@ -26,9 +26,11 @@ export class ManifoldAuthToken {
 
   setInternalToken = (e: CustomEvent) => {
     const payload = e.detail as AuthToken;
+    console.log(payload);
     if (!payload.error && payload.expiry) {
       const expiry = payload.expiry.toString();
       this.token = `${payload.token}.${expiry}`;
+      console.log(this.token);
     }
   };
 
@@ -37,7 +39,7 @@ export class ManifoldAuthToken {
       <div>
         <manifold-oauth
           onReceiveManifoldToken={this.setInternalToken}
-          oauthUrl="https://manifold-shadowcat-test-server.herokuapp.com/signin/oauth/web"
+          oauthUrl="http://login.arigato.tools/signin/oauth/web"
         ></manifold-oauth>
       </div>
     );

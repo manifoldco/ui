@@ -19,20 +19,22 @@ function getDefaultToken() {
 @Component({ tag: 'manifold-connection' })
 export class ManiTunnel {
   /** _(optional)_ Specify `env="stage"` for staging */
-  @Prop() env: 'stage' | 'prod' = 'prod';
+  @Prop() env: 'local' | 'stage' | 'prod' = 'prod';
 
   @State() authToken?: string = getDefaultToken();
 
   setAuthToken = (token: string) => {
     this.authToken = token;
-    localStorage.setItem(TOKEN_KEY, token);
+    const accessToken = token.split('.', token.split('.').length - 1).join('.');
+    localStorage.setItem(TOKEN_KEY, accessToken);
   };
 
-  getAuthToken = () => this.authToken;
+  getAuthToken = () => this.accessToken;
 
   get accessToken() {
     if (this.authToken) {
-      const [token] = this.authToken.split('.');
+      // the auth token's last segment is its expiry
+      const token = this.authToken.split('.', this.authToken.split('.').length - 1).join('.');
       return token;
     }
 
@@ -40,8 +42,6 @@ export class ManiTunnel {
   }
 
   render() {
-    const endpoint = this.env === 'stage' ? 'https://api.stage.manifold.co/graphql' : undefined;
-
     return (
       <Tunnel.Provider
         state={{
@@ -51,7 +51,7 @@ export class ManiTunnel {
           graphqlFetch: createGraphqlFetch({
             getAuthToken: this.getAuthToken,
             setAuthToken: this.setAuthToken,
-            endpoint,
+            endpoint: connections[this.env].graphQl,
           }),
         }}
       >
