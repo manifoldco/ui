@@ -35,12 +35,7 @@ export class ManifoldAuthToken {
 
   render() {
     return (
-      <div>
-        <manifold-oauth
-          onReceiveManifoldToken={this.setInternalToken}
-          oauthUrl={this.oauthUrl}
-        ></manifold-oauth>
-      </div>
+      <manifold-oauth onReceiveManifoldToken={this.setInternalToken} oauthUrl={this.oauthUrl} />
     );
   }
 }

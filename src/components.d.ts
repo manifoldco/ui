@@ -35,6 +35,7 @@ export namespace Components {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken {
+    'oauthUrl'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -63,7 +64,7 @@ export namespace Components {
     /**
     * _(optional)_ Specify `env="stage"` for staging
     */
-    'env': 'stage' | 'prod';
+    'env': 'local' | 'stage' | 'prod';
   }
   interface ManifoldCostDisplay {
     'baseCost'?: number;
@@ -184,6 +185,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
     'ownerId'?: string;
     /**
     * Plan to provision (slug)
@@ -1110,6 +1115,7 @@ declare namespace LocalJSX {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
+    'oauthUrl'?: string;
     'onManifoldOauthTokenChange'?: (event: CustomEvent<any>) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -1141,7 +1147,7 @@ declare namespace LocalJSX {
     /**
     * _(optional)_ Specify `env="stage"` for staging
     */
-    'env'?: 'stage' | 'prod';
+    'env'?: 'local' | 'stage' | 'prod';
   }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
@@ -1268,6 +1274,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
     'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
