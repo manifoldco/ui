@@ -21,7 +21,7 @@ jobs:
       script: PREVIOUS_SHA=$(git rev-parse master) npm run happo-ci-travis
     - stage: test
       name: '📦 bundlesize'
-      script: npm run build && npx bundlesize
+      script: npm run profile
     - stage: publish
       name: Publish to npm
       script: npm run publish

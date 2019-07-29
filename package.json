@@ -46,6 +46,7 @@
     "now-build": "npm run build-storybook",
     "postinstall": "cd docs && npm i",
     "prepare": "stencil build",
+    "profile": "stencil build && npx bundlesize",
     "publish": "node scripts/publish",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
