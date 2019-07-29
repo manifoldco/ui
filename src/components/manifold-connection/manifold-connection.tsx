@@ -49,7 +49,7 @@ export class ManiTunnel {
           graphqlFetch: createGraphqlFetch({
             getAuthToken: this.getAuthToken,
             setAuthToken: this.setAuthToken,
-            endpoint: connections[this.env].graphQl,
+            endpoint: connections[this.env].graphql,
           }),
         }}
       >
