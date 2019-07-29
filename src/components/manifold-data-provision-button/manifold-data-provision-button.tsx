@@ -27,6 +27,10 @@ interface Profile {
   id: string;
 }
 
+interface ProfileMessage {
+  profile: Profile;
+}
+
 const query = gql`
   query ProfileId {
     profile {
@@ -196,11 +200,11 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const { data } = await this.graphqlFetch<Profile>({ query });
+    const { data } = await this.graphqlFetch<ProfileMessage>({ query });
     console.log(data);
 
     if (data) {
-      this.ownerId = data.id;
+      this.ownerId = data.profile.id;
     }
   }
 
