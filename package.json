@@ -63,8 +63,13 @@
       "compression": "none"
     },
     {
-      "path": "./dist/esm/*.js",
+      "path": "./dist/esm/manifold-!(mock)*.js",
       "maxSize": "32 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/chunk-*.js",
+      "maxSize": "66 kB",
       "compression": "none"
     }
   ],
