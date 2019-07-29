@@ -188,7 +188,7 @@ describe('<manifold-data-provision-button>', () => {
       fetchMock.restore();
     });
 
-    const profile = { id: '1234' };
+    const profile = { profile: { id: '1234' } };
 
     beforeEach(() => {
       fetchMock
@@ -218,7 +218,7 @@ describe('<manifold-data-provision-button>', () => {
       await page.waitForChanges();
 
       expect(root.graphqlFetch).toHaveBeenCalled();
-      expect(root.ownerId).toEqual(profile.id);
+      expect(root.ownerId).toEqual(profile.profile.id);
     });
 
     it('will do nothing if the owner id is set', async () => {
