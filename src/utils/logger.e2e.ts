@@ -21,12 +21,7 @@ describe('@logger', () => {
     const errorListener = jest.fn();
     window.addEventListener('manifold-error', errorListener);
 
-    try {
-      // throw error safely
-      new MockComponent().render('oops');
-    } finally {
-      // do nothing
-    }
+    new MockComponent().render('oops');
 
     const [eventDetail] = errorListener.mock.calls[0];
 
