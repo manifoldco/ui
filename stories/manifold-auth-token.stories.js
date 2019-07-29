@@ -12,8 +12,8 @@ function withVeryFakeExpiry(token) {
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + 1);
   const unixTime = Math.floor(expiry.getTime() / 1000);
-  const encodedExpiry = Buffer.from(unixTime.toString()).toString('base64');
-  return `${token}.${encodedExpiry}`;
+  const expirySeconds = unixTime.toString();
+  return `${token}.${expirySeconds}`;
 }
 
 storiesOf('Auth Token Provider [Data]', module)

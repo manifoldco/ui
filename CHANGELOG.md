@@ -5,7 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Added `oauth-url` prop to `manifold-auth-token` component.
+
+### Fixed
+- Fixed name for `manifold-service-view` to be `manifold-service-card-view` to match documentation.
+- Added missing support for theme variable `--manifold-tag-free-text-color`.
+
+### Deprecated
+- Deprecated `resource-label` attribute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
+
 ### Changed
+- Added graphqlFetch to `manifold-connection`.
+- Converted `manifold-data-product-logo` to use GraphQL.
 - Changed the provision button so it fetches the owner ID automatically if not set.
 
 ## [v0.5.0]
@@ -13,11 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a SSO data button and the resource wrapper for ssoing into a resource's product dashboard.
 - Added a new CTA slot in the product card for displaying unique cta content.
 
-### Deprecated
-- Deprecated `resource-label` attribute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
-
 ### Fixed
 - Fixed the provision button requiring the label to be set, preventing or automatic label generation from working.
+
+### Changed
+- Changed the `manifold-auth-token` component to now use the shadowcat oauth system rather than only use the given token. This enables platforms to now use real authentication.
 
 ## [0.4.3]
 ### Fixed

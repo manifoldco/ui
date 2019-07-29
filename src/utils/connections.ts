@@ -15,7 +15,7 @@ export const connections: Connections = {
   local: {
     billing: 'http://api.billing.arigato.tools/v1',
     catalog: 'http://api.catalog.arigato.tools/v1',
-    gateway: 'http://api.arigato.tools/v1',
+    gateway: 'http://api.gateway.arigato.tools/v1',
     marketplace: 'http://api.marketplace.arigato.tools/v1',
     provisioning: 'http://api.provisioning.arigato.tools/v1',
     connector: 'http://api.connector.arigato.tools/v1',

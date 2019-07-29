@@ -21,9 +21,10 @@ storiesOf('Service card', module)
   .add(
     'With CTA',
     () => `
-      <manifold-service-card product-id="234qqzb2wm6gavkvaqr9e6b54j9dg">
+      <manifold-service-card product-label="zerosix">
         <manifold-button slot="cta">
-          Action!
+          Choose ZeroSix
         </manifold-button>
       </manifold-service-card>
-`);
+`
+  );

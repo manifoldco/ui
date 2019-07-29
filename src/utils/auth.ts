@@ -24,17 +24,18 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
 }
 
 export function isExpired(token: string) {
-  const [, expiry] = token.split('.');
+  try {
+    const expiry = token.split('.').pop() || '';
+    const decodedExpiry = parseInt(expiry, 10);
+    if (Number.isNaN(decodedExpiry)) {
+      throw new Error('Expiry not a number.');
+    }
 
-  if (expiry) {
-    const decodedExpiry = parseInt(Buffer.from(expiry, 'base64').toString(), 10);
     const d = new Date(decodedExpiry * 1000);
     const now = new Date();
 
-    if (d > now) {
-      return false;
-    }
+    return d < now;
+  } catch (error) {
+    return true;
   }
-
-  return true;
 }
