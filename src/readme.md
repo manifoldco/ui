@@ -8,7 +8,7 @@ npm run dev
 This will start Storybook at `localhost:6060`. Storybook is the preferred way
 to work on styles and testing.
 
-__Note:__ When testing the `<manifold-auth-token>` component in Storybook, a fresh token (`manifold_api_token`, available from local storage after a successful login to Dashboard) needs to be manually added to local storage in Storybook. If you don't see the resources you expect after doing this, first check the console and network calls to see if `identity` is returning a 401 Unauthorized response. If this is the case, it's possible your token has expired and you need to set a fresh one in local storage.
+**Note:** When testing the `<manifold-auth-token>` component in Storybook, a fresh token (`manifold_api_token`, available from local storage after a successful login to Dashboard) needs to be manually added to local storage in Storybook. If you don't see the resources you expect after doing this, first check the console and network calls to see if `identity` is returning a 401 Unauthorized response. If this is the case, it's possible your token has expired and you need to set a fresh one in local storage.
 
 Copy these specs from [our specs][specs] into here:
 
@@ -44,7 +44,7 @@ You can do this by clicking `Details` on a failed Happo check and using the `Rev
 
 A passing Happo check means that the test detected no visual changes.
 
-__Note:__ Some diffs may be detected based on animations happening in the components. This may be resolved in the future, but as of writing these diffs require human approval.
+**Note:** Some diffs may be detected based on animations happening in the components. This may be resolved in the future, but as of writing these diffs require human approval.
 
 ### Writing Happo Tests
 
@@ -147,26 +147,16 @@ _Note: when adding a new `*.md` file in `/docs/docs`, it will automatically
 hot reload, however it will break if you don’t add a `path` in
 [frontmatter][frontmatter]._
 
-## 🚀 Publishing to npm
+## 🚀 Deploying
 
 To publish to npm, tag it in Git with a valid [npm-semver][npm-semver].
 
-### Stable release
-
-If you’re releasing a stable release after it’s been fully tested, create a
-semver [Git tag][git-tag], starting with `v`:
-
-```
-v1.0.0
-```
-
-This will be accessible for download at `npm i --save @manifoldco/ui`.
-
 ### Unstable release
 
-If you’re testing a release candidate, or something experimental, add a
-hyphen (`-`) followed by a named flag, and end with `.` + digit. Here are
-some examples:
+**Tagging a release version with a hyphen (`-`)** will publish a test release.
+Use this for both release candidates as well as experimental releases.
+Releasing in this way is highly-encouraged, and poses no risk to our
+partners.
 
 ```
 v1.0.0-rc.0      # first release candidate
@@ -176,6 +166,19 @@ v1.1.0-alpha.0   # buggy version, published for testing
 
 Unlike stable releases, these won’t be downloaded unless someone specifically
 requests the flag (e.g.: `npm i --save @manifoldco/ui@rc` or `npm i --save @manifoldco/ui@alpha`).
+
+### Stable release
+
+**⚠️ Don’t publish a stable version without publishing a release candidate first (above)!**
+
+If you’re releasing a stable release after it’s been fully tested, create a
+semver [Git tag][git-tag], starting with `v`:
+
+```
+v1.0.0
+```
+
+This will be accessible for download at `npm i --save @manifoldco/ui`.
 
 [git-tag]: https://help.github.com/en/articles/working-with-tags
 [npm-semver]: https://docs.npmjs.com/misc/semver

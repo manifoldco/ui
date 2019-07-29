@@ -55,6 +55,18 @@
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll"
   },
+  "bundlesize": [
+    {
+      "path": "./dist/esm/loader.mjs",
+      "maxSize": "15 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/*.js",
+      "maxSize": "32 kB",
+      "compression": "none"
+    }
+  ],
   "dependencies": {
     "@manifoldco/gql-zero": "^0.2.0",
     "@manifoldco/shadowcat": "^0.1.5",
