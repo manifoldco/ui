@@ -14,8 +14,13 @@ export const jawsDB = () => {
 
 export const planError = () => {
   const plan = document.createElement('manifold-active-plan');
-  plan.plans = fromJSON(product); // pass the wrong data model here to throw an error
+  plan.plans = fromJSON(plans);
   plan.product = fromJSON(product);
+  plan.selectedResource = {
+    get region() {
+      throw new Error('oops'); // strangely-specific render() error for this component
+    },
+  } as any;
 
   document.body.appendChild(plan);
 

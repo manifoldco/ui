@@ -20,8 +20,9 @@ custom event fires for all components:
 
 ```js
 document.addEventListener('manifold-error', e => {
-  const message = e.detail.error;
-  console.log(message); // 'Something went wrong'
+  const { component, error } = e.detail;
+  console.log(component); // ManifoldPlanSelector
+  console.log(error); // 'Something went wrong'
 
   // Report error message somewhere, or show something to the user…
 });

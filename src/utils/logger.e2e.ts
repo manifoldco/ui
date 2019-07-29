@@ -1,10 +1,16 @@
 import logger from './logger';
 
 class MockComponent {
+  errorMsg?: string;
+
+  constructor(errorMsg?: string) {
+    this.errorMsg = errorMsg;
+  }
+
   @logger()
-  public render(errorMsg?: string) {
-    if (errorMsg) {
-      throw new Error(errorMsg);
+  public render() {
+    if (this.errorMsg) {
+      throw new Error(this.errorMsg);
     }
 
     return 'success';
@@ -21,11 +27,14 @@ describe('@logger', () => {
     const errorListener = jest.fn();
     window.addEventListener('manifold-error', errorListener);
 
-    new MockComponent().render('oops');
+    new MockComponent('oops').render();
 
     const [eventDetail] = errorListener.mock.calls[0];
 
     expect(eventDetail.bubbles).toBe(true); // event should bubble
-    expect(eventDetail.detail).toEqual({ error: 'oops' }); // event should contain original error message
+    expect(eventDetail.detail).toEqual({
+      component: 'MockComponent', // event should contain class name (above)
+      error: 'oops', // event should contain original error message
+    });
   });
 });
