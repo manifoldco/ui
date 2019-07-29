@@ -7,10 +7,10 @@ path: /advanced/errors
 
 ## Automatic reporting
 
-Our components also log out the error to `console.error()` as well, which
-many APM tools such as Datadog and Rollbar will automatically pick up on. For
-many of these tools, you should see error reporting automatically happen
-there with no action on your part.
+Any error our components have while rendering logs out to `console.error()`.
+Many frontend APM tools such as Datadog and Rollbar will automatically pick
+up on this, and log accordingly. For many of these tools, you should see
+error reporting automatically happen there with no action on your part.
 
 ## Manual reporting
 
@@ -19,7 +19,7 @@ safely via the `manifold-error` [custom event][custom-event]. This same
 custom event fires for all components:
 
 ```js
-document.addEventListener('manifold-event', e => {
+document.addEventListener('manifold-error', e => {
   const message = e.detail.error;
   console.log(message); // 'Something went wrong'
 

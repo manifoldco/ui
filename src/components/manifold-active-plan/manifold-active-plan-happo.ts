@@ -11,3 +11,13 @@ export const jawsDB = () => {
 
   return plan.componentOnReady();
 };
+
+export const planError = () => {
+  const plan = document.createElement('manifold-active-plan');
+  plan.plans = fromJSON(product); // pass the wrong data model here to throw an error
+  plan.product = fromJSON(product);
+
+  document.body.appendChild(plan);
+
+  return plan.componentOnReady();
+};
