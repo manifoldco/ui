@@ -19,10 +19,10 @@ export default function logger<T>() {
         const result = originalMethod.apply(this, args); // call render()
         return result;
       } catch (e) {
-        console.error(e); // report error (Rollbar, Datadog, etc.)
+        console.error('threw', e); // report error (Rollbar, Datadog, etc.)
         const detail: ErrorDetail = { error: e.message };
-        const evt = new CustomEvent('manifold-error', { detail }); // custom event
-        window.dispatchEvent(evt);
+        const evt = new CustomEvent('manifold-error', { bubbles: true, detail }); // custom event
+        document.dispatchEvent(evt);
         return <manifold-toast alert-type="error">{e.message}</manifold-toast>;
       }
     };
