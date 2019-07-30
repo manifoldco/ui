@@ -12,6 +12,9 @@ example: |
 <manifold-toast alert-type="warning">
   <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
 </manifold-toast>
+<manifold-toast alert-type="warning">
+  <div><code>region-name</code> has been deprecated in favor of <code>region-id</code> starting in version 0.5.1.</div>
+</manifold-toast>
 
 # 🔒 Provision Button
 
@@ -27,12 +30,12 @@ selector](#manifold-plan-selector) component. You could do that like so:
 const userId = ''; // Note: must be set
 const resourceLabel = ''; // Can be obtained from your own input
 
-function updateButton({ detail: { features, planLabel, productLabel, regionName } }) {
+function updateButton({ detail: { features, planLabel, productLabel, regionId } }) {
   const provisionButton = document.querySelector('manifold-data-provision-button');
   provisionButton.features = features;
   provisionButton.planLabel = planLabel;
   provisionButton.productLabel = productLabel;
-  provisionButton.regionName = regionName;
+  provisionButton.regionId = regionId;
   provisionButton.resourceLabel = resourceLabel;
 
   provisionButton.ownerId = userId;
@@ -75,12 +78,12 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) => co
 // {resourceLabel: "MyResourceName", message: "Must start with a lowercase letter, and use only lowercase, numbers, and hyphens."}
 ```
 
-| Name                               |                       Returns                         | Description                                                                                                                 |
-| :--------------------------------- | :--------------------------------------------------:  | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-provisionButton-click`   |                    `resourceLabel`                    | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| Name                               | Returns                                               | Description                                                                                                                 |
+|------------------------------------|-------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `manifold-provisionButton-click`   | `resourceLabel`                                       | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
 | `manifold-provisionButton-success` | `message`, `resourceLabel`, `resourceId`, `createdAt` | Successful provision. Returns name, along with a resource ID                                                                |
-| `manifold-provisionButton-error`   |              `message`, `resourceLabel`               | Erred provision, along with information on what went wrong.                                                                 |
-| `manifold-provisionButton-invalid` |              `message`, `resourceLabel`               | Fires if the resource name isn’t named properly.                                                                            |
+| `manifold-provisionButton-error`   | `message`, `resourceLabel`                            | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-provisionButton-invalid` | `message`, `resourceLabel`                            | Fires if the resource name isn’t named properly.                                                                            |
 
 ## Styling
 

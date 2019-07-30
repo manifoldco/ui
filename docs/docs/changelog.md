@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Deprecated
 - Deprecated `resource-label` attibute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
+- Deprecated `region-name` prop in favour of `region-id` for `manifold-data-provision-button`.
 
 ### Fixed
 - Fixed the provision button requiring the label to be set, preventing or automatic label generation from working.
