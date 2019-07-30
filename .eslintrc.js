@@ -57,7 +57,7 @@ module.exports = {
     'object-curly-newline': 'off', // let Prettier decide,
     'curly': ['error', 'all'],
     'prettier/prettier': 'error',
-    'no-console': 'off',
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'func-names': 'off',
   },
 };
