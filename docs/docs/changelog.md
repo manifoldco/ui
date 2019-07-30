@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added missing support for theme variable `--manifold-tag-free-text-color`.
 
 ### Deprecated
-- Deprecated `resource-label` attribute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
+- Deprecated `resource-label` attibute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
+- Deprecated `region-name` prop in favour of `region-id` for `manifold-data-provision-button`.
 
 ### Changed
 - Added graphqlFetch to `manifold-connection`.

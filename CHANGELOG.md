@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed name for `manifold-service-view` to be `manifold-service-card-view` to match documentation.
 - Added missing support for theme variable `--manifold-tag-free-text-color`.
+- Fixed region selector so that it properly emits a `manifold-planSelector-change` event when the region changes.
 
 ### Deprecated
-- Deprecated `resource-label` attribute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
+- Deprecated `resource-label` attibute on `manifold-data-product-logo`. Use `manifold-data-resource-logo` component instead.
+- Deprecated `region-name` prop in favour of `region-id` for `manifold-data-provision-button`.
 
 ### Changed
 - Added graphqlFetch to `manifold-connection`.
