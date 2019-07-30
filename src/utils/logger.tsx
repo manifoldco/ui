@@ -23,17 +23,16 @@ export default function logger<T>() {
 
     descriptor.value = function render() {
       try {
-        const result = originalMethod.apply(this); // call render()
-        return result;
+        return originalMethod.apply(this); // attempt to call render()
       } catch (e) {
         console.error(e); // report error (Rollbar, Datadog, etc.)
         const detail: ErrorDetail = {
           component: target.constructor.name,
           error: e.message,
         };
-        const evt = new CustomEvent('manifold-error', { bubbles: true, detail }); // custom event
-        document.dispatchEvent(evt);
-        return <manifold-toast alert-type="error">{e.message}</manifold-toast>;
+        const evt = new CustomEvent('manifold-error', { bubbles: true, detail });
+        document.dispatchEvent(evt); // dispatch custom event
+        return <manifold-toast alert-type="error">{e.message}</manifold-toast>; // show error to user
       }
     };
 

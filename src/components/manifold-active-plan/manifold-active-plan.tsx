@@ -41,7 +41,7 @@ export class ManifoldActivePlan {
     return this.plans.find(({ id }) => id === this.selectedPlanId);
   }
 
-  @logger<ManifoldActivePlan>()
+  @logger()
   render() {
     const resourceRegion =
       (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
