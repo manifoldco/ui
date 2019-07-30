@@ -1,7 +1,6 @@
 import { Option } from '../types/Select';
 import { Catalog } from '../types/catalog';
 import { Gateway } from '../types/gateway';
-import { withAuth } from './auth';
 import { Connection } from './connections';
 import { $ } from './currency';
 import { pluralize } from './string';
@@ -276,17 +275,22 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
  * Fetch cost from our API
  */
 export function planCost(
-  connection: Connection,
-  { planID, features, init }: PlanCostOptions,
-  authToken?: string
-): Promise<Gateway.Price> {
-  return fetch(
-    `${connection.gateway}/id/plan/${planID}/cost`,
-    withAuth(authToken, {
+  restFetch: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>,
+  { planID, features, init }: PlanCostOptions
+): Promise<Gateway.Price | Error> {
+  return restFetch<Gateway.Price>(
+    'gateway',
+    `/id/plan/${planID}/cost`,
+    { features },
+    {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ features }),
       ...init,
-    })
-  ).then(response => response.json());
+    }
+  );
 }

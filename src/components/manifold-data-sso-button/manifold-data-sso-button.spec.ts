@@ -3,9 +3,25 @@ import fetchMock from 'fetch-mock';
 
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
-
-import { ManifoldDataSsoButton } from './manifold-data-sso-button';
 import { Connector } from '../../types/connector';
+import { ManifoldDataSsoButton } from './manifold-data-sso-button';
+import { createRestFetch } from '../../utils/restFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldDataSsoButton.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 describe('<manifold-data-sso-button>', () => {
   it('fetches the resource id on load if not set', () => {
@@ -84,7 +100,7 @@ describe('<manifold-data-sso-button>', () => {
     it('will do nothing on a fetch error', async () => {
       const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataSsoButton],
@@ -187,12 +203,15 @@ describe('<manifold-data-sso-button>', () => {
     });
 
     it('will do nothing if still loading', async () => {
-      fetchMock.mock(`${connections.prod.connector}/sso`, 200);
+      fetchMock
+        .mock(`${connections.prod.marketplace}/resources/?me&label=test`, [])
+        .mock(`${connections.prod.connector}/sso`, 200);
 
       const page = await newSpecPage({
         components: [ManifoldDataSsoButton],
         html: `
           <manifold-data-sso-button
+            loading=""
             resource-label="test"
           >SSO</manifold-data-sso-button>
         `,
@@ -207,7 +226,9 @@ describe('<manifold-data-sso-button>', () => {
     });
 
     it('will do nothing if no resourceId is provided', async () => {
-      fetchMock.mock(`${connections.prod.connector}/sso`, 200);
+      fetchMock
+        .mock(`${connections.prod.marketplace}/resources/?me&label=test`, [])
+        .mock(`${connections.prod.connector}/sso`, 200);
 
       const page = await newSpecPage({
         components: [ManifoldDataSsoButton],

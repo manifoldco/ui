@@ -1,16 +1,19 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
+
 import { Gateway } from '../../types/gateway';
 import ConnectionTunnel from '../../data/connection';
 import ResourceTunnel from '../../data/resource';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
 
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>;
   /** Which resource does this belong to? */
   @Prop() resourceLabel?: string;
   @State() resource?: Gateway.Resource;
@@ -27,17 +30,22 @@ export class ManifoldResourceContainer {
   }
 
   fetchResource = async (resourceLabel: string) => {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
     this.loading = true;
-    const { gateway } = this.connection;
-    const response = await fetch(
-      `${gateway}/resources/me/${resourceLabel}`,
-      withAuth(this.authToken)
+    const response = await this.restFetch<Gateway.Resource>(
+      'gateway',
+      `/resources/me/${resourceLabel}`
     );
-    this.resource = await response.json();
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.resource = response;
     this.loading = false;
   };
 
@@ -50,4 +58,4 @@ export class ManifoldResourceContainer {
   }
 }
 
-ConnectionTunnel.injectProps(ManifoldResourceContainer, ['connection', 'authToken']);
+ConnectionTunnel.injectProps(ManifoldResourceContainer, ['restFetch']);

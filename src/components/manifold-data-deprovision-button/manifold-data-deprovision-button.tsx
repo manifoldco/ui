@@ -1,8 +1,7 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
 
 /* eslint-disable no-console */
@@ -23,9 +22,12 @@ interface ErrorMessage {
 export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>;
   /** The label of the resource to deprovision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
@@ -47,7 +49,7 @@ export class ManifoldDataDeprovisionButton {
   }
 
   async deprovision() {
-    if (!this.connection || this.loading) {
+    if (!this.restFetch || this.loading) {
       return;
     }
 
@@ -62,45 +64,46 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    const response = await fetch(
-      `${this.connection.gateway}/id/resource/${this.resourceId}`,
-      withAuth(this.authToken, {
-        method: 'DELETE',
-      })
+    const response = await this.restFetch(
+      'gateway',
+      `/id/resource/${this.resourceId}`,
+      {},
+      { method: 'DELETE' }
     );
 
-    // If successful, this will return 200 and stop here
-    if (response.status >= 200 && response.status < 300) {
-      const success: SuccessMessage = {
-        message: `${this.resourceLabel} successfully deprovisioned`,
-        resourceLabel: this.resourceLabel || '',
-        resourceId: this.resourceId,
-      };
-      this.success.emit(success);
-    } else {
-      const body = await response.json();
-
-      // Sometimes messages are an array, sometimes they aren’t. Different strokes!
-      const message = Array.isArray(body) ? body[0].message : body.message;
+    if (response instanceof Error) {
       const error: ErrorMessage = {
-        message,
+        message: response.message,
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
       this.error.emit(error);
-    }
-  }
-
-  async fetchResourceId(resourceLabel: string) {
-    if (!this.connection) {
       return;
     }
 
-    const resourceResp = await fetch(
-      `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
-      withAuth(this.authToken)
+    const success: SuccessMessage = {
+      message: `${this.resourceLabel} successfully deprovisioned`,
+      resourceLabel: this.resourceLabel || '',
+      resourceId: this.resourceId,
+    };
+    this.success.emit(success);
+  }
+
+  async fetchResourceId(resourceLabel: string) {
+    if (!this.restFetch) {
+      return;
+    }
+
+    const response = await this.restFetch<Marketplace.Resource[]>(
+      'marketplace',
+      `/resources/?me&label=${resourceLabel}`
     );
-    const resources: Marketplace.Resource[] = await resourceResp.json();
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+    const resources: Marketplace.Resource[] = response;
 
     if (!Array.isArray(resources) || !resources.length) {
       console.error(`${resourceLabel} product not found`);
@@ -123,4 +126,4 @@ export class ManifoldDataDeprovisionButton {
   }
 }
 
-Tunnel.injectProps(ManifoldDataDeprovisionButton, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataDeprovisionButton, ['restFetch']);

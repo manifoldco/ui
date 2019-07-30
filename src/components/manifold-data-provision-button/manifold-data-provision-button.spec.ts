@@ -6,6 +6,31 @@ import { GatewayResource } from '../../spec/mock/gateway';
 import { connections } from '../../utils/connections';
 
 import { ManifoldDataProvisionButton } from './manifold-data-provision-button';
+import { createRestFetch } from '../../utils/restFetch';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const graphqlEndpoint = 'http://test.com/graphql';
+const proto = ManifoldDataProvisionButton.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+  (this as any).graphqlFetch = createGraphqlFetch({
+    endpoint: graphqlEndpoint,
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 describe('<manifold-data-provision-button>', () => {
   it('fetches product, plan and profile id on load', () => {
@@ -50,6 +75,10 @@ describe('<manifold-data-provision-button>', () => {
   describe('when created with product and plans labels', () => {
     afterEach(() => {
       fetchMock.restore();
+    });
+
+    beforeEach(() => {
+      fetchMock.mock(graphqlEndpoint, { data: { profile: { id: '1234' } } });
     });
 
     it('will fetch the products and find the plan', async () => {
@@ -195,7 +224,8 @@ describe('<manifold-data-provision-button>', () => {
         .mock(`${connections.prod.catalog}/products/?label=test`, [Product])
         .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}&label=test`, [
           ExpandedPlan,
-        ]);
+        ])
+        .mock(graphqlEndpoint, { data: profile });
     });
 
     it('will fetch the owner id on load', async () => {
@@ -210,14 +240,8 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const root = page.rootInstance as ManifoldDataProvisionButton;
-      // TODO: Find a smarter way to call this. This is always undefined, even if the component is wrapper in the manifold-connection
-      // @ts-ignore
-      root.graphqlFetch = jest.fn(() => ({ data: profile }));
 
-      root.componentWillLoad();
-      await page.waitForChanges();
-
-      expect(root.graphqlFetch).toHaveBeenCalled();
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(root.ownerId).toEqual(profile.profile.id);
     });
 
@@ -234,14 +258,8 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const root = page.rootInstance as ManifoldDataProvisionButton;
-      // TODO: Find a smarter way to call this. This is always undefined, even if the component is wrapper in the manifold-connection
-      // @ts-ignore
-      root.graphqlFetch = jest.fn(() => ({ data: profile }));
 
-      root.componentWillLoad();
-      await page.waitForChanges();
-
-      expect(root.graphqlFetch).not.toHaveBeenCalled();
+      expect(fetchMock.called(graphqlEndpoint)).toBe(false);
       expect(root.ownerId).toEqual('5678');
     });
   });
@@ -252,7 +270,10 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     beforeEach(() => {
-      fetchMock.mock(/.*\/products\/.*/, [Product]).mock(/.*\/plans\/.*/, [ExpandedPlan]);
+      fetchMock
+        .mock(/.*\/products\/.*/, [Product])
+        .mock(/.*\/plans\/.*/, [ExpandedPlan])
+        .mock(graphqlEndpoint, { data: { profile: { id: '1234' } } });
     });
 
     it('will trigger a dom event on successful provision', async () => {
@@ -270,12 +291,12 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.successEvent.emit = jest.fn();
+      instance.success.emit = jest.fn();
 
       await instance.provision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-      expect(instance.successEvent.emit).toHaveBeenCalledWith({
+      expect(instance.success.emit).toHaveBeenCalledWith({
         createdAt: GatewayResource.created_at,
         message: 'test successfully provisioned',
         resourceId: GatewayResource.id,
@@ -303,12 +324,12 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.errorEvent.emit = jest.fn();
+      instance.error.emit = jest.fn();
 
       await instance.provision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-      expect(instance.errorEvent.emit).toHaveBeenCalledWith({
+      expect(instance.error.emit).toHaveBeenCalledWith({
         message: 'ohnoes',
         resourceLabel: 'test',
       });
@@ -329,12 +350,12 @@ describe('<manifold-data-provision-button>', () => {
       });
 
       const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.invalidEvent.emit = jest.fn();
+      instance.invalid.emit = jest.fn();
 
       await instance.provision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(false);
-      expect(instance.invalidEvent.emit).toHaveBeenCalledWith({
+      expect(instance.invalid.emit).toHaveBeenCalledWith({
         message: 'Must be at least 3 characters.',
         resourceLabel: 't',
       });
@@ -343,7 +364,7 @@ describe('<manifold-data-provision-button>', () => {
       await instance.provision();
 
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(false);
-      expect(instance.invalidEvent.emit).toHaveBeenCalledWith({
+      expect(instance.invalid.emit).toHaveBeenCalledWith({
         message:
           'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
         resourceLabel: 'Test',

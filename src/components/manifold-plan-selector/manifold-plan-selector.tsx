@@ -1,17 +1,21 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
+import { Marketplace } from '../../types/marketplace';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
@@ -43,7 +47,7 @@ export class ManifoldPlanSelector {
   }
 
   async fetchProductByLabel(productLabel: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
@@ -51,55 +55,65 @@ export class ManifoldPlanSelector {
     if (this.regions) {
       this.parsedRegions = this.parseRegions(this.regions);
     }
-    const { catalog } = this.connection;
-    const productsResp = await fetch(
-      `${catalog}/products/?label=${productLabel}`,
-      withAuth(this.authToken)
+
+    const response = await this.restFetch<Catalog.ExpandedProduct[]>(
+      'catalog',
+      `/products/?label=${productLabel}`
     );
-    const products: Catalog.ExpandedProduct[] = await productsResp.json();
-    this.product = products[0]; // eslint-disable-line prefer-destructuring
-    this.fetchPlans(products[0].id);
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.product = response[0]; // eslint-disable-line prefer-destructuring
+    this.fetchPlans(response[0].id);
   }
 
   async fetchPlans(productId: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
     this.plans = undefined;
-    const { catalog } = this.connection;
-    const plansResp = await fetch(
-      `${catalog}/plans/?product_id=${productId}`,
-      withAuth(this.authToken)
+
+    const response = await this.restFetch<Catalog.ExpandedPlan[]>(
+      'catalog',
+      `/plans/?product_id=${productId}`
     );
-    const plans: Catalog.ExpandedPlan[] = await plansResp.json();
-    this.plans = [...plans].sort((a, b) => a.body.cost - b.body.cost);
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.plans = [...response].sort((a, b) => a.body.cost - b.body.cost);
   }
 
   async fetchResource(resourceLabel: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
     this.resource = undefined;
-    this.product = undefined;
-    const { catalog, gateway } = this.connection;
-    const response = await fetch(
-      `${gateway}/resources/me/${resourceLabel}`,
-      withAuth(this.authToken)
+
+    const response = await this.restFetch<Marketplace.Resource[]>(
+      'marketplace',
+      `/resources/?me&label=${resourceLabel}`
     );
-    const resource: Gateway.Resource = await response.json();
-    this.resource = resource;
-    if (!resource.product) {
+
+    if (response instanceof Error) {
+      console.error(response);
       return;
     }
-    const productResp = await fetch(
-      `${catalog}/products/${resource.product.id}`,
-      withAuth(this.authToken)
-    );
-    const product: Catalog.Product = await productResp.json();
-    this.product = product;
-    this.fetchPlans(product.id);
+
+    const resource = response[0];
+    if (!resource || !resource.body.product_id) {
+      console.error('No resource found');
+      return;
+    }
+
+    this.fetchPlans(resource.body.product_id);
   }
 
   parseRegions(regions: string) {
@@ -122,4 +136,4 @@ export class ManifoldPlanSelector {
   }
 }
 
-Tunnel.injectProps(ManifoldPlanSelector, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldPlanSelector, ['restFetch']);

@@ -1,17 +1,20 @@
 import { Component, Prop, State, Element, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
@@ -34,32 +37,44 @@ export class ManifoldDataProductName {
   }
 
   fetchProduct = async (productLabel: string) => {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
     this.productName = undefined;
-    const { catalog } = this.connection;
-    const response = await fetch(
-      `${catalog}/products?label=${productLabel}`,
-      withAuth(this.authToken)
+
+    const response = await this.restFetch<Catalog.Product[]>(
+      'catalog',
+      `/products?label=${productLabel}`
     );
-    const products: Catalog.Product[] = await response.json();
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    const products: Catalog.Product[] = await response;
     this.productName = products[0].body.name; // eslint-disable-line prefer-destructuring
   };
 
   fetchResource = async (resourceName: string) => {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
     this.productName = undefined;
-    const { gateway } = this.connection;
-    const response = await fetch(
-      `${gateway}/resources/me/${resourceName}`,
-      withAuth(this.authToken)
+
+    const response = await this.restFetch<Gateway.Resource>(
+      'gateway',
+      `/resources/me/${resourceName}`
     );
-    const resource: Gateway.Resource = await response.json();
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    const resource: Gateway.Resource = await response;
     this.productName = resource.product && resource.product.name;
   };
 
@@ -68,4 +83,4 @@ export class ManifoldDataProductName {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProductName, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataProductName, ['restFetch']);

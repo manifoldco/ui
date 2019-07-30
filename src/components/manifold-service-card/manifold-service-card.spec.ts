@@ -4,6 +4,23 @@ import fetchMock from 'fetch-mock';
 import { ManifoldServiceCard } from './manifold-service-card';
 import { Product, ExpandedFreePlan, ExpandedPlan } from '../../spec/mock/catalog';
 import { connections } from '../../utils/connections';
+import { createRestFetch } from '../../utils/restFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldServiceCard.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 describe('<manifold-service-card>', () => {
   it('dispatches click event', () => {
@@ -80,7 +97,12 @@ describe('<manifold-service-card>', () => {
     it('will fetch the products', async () => {
       const productLabel = 'test-product';
 
-      fetchMock.mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product]);
+      fetchMock
+        .mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product])
+        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [
+          ExpandedPlan,
+          ExpandedFreePlan,
+        ]);
 
       const page = await newSpecPage({
         components: [ManifoldServiceCard],
@@ -121,7 +143,12 @@ describe('<manifold-service-card>', () => {
     it('will fetch the products', async () => {
       const productId = '1234';
 
-      fetchMock.mock(`${connections.prod.catalog}/products/${productId}`, Product);
+      fetchMock
+        .mock(`${connections.prod.catalog}/products/${productId}`, Product)
+        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [
+          ExpandedPlan,
+          ExpandedFreePlan,
+        ]);
 
       const page = await newSpecPage({
         components: [ManifoldServiceCard],

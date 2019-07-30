@@ -1,5 +1,6 @@
 interface CreateGraphqlFetch {
   endpoint?: string;
+  wait?: number;
   getAuthToken?: () => string | undefined;
   setAuthToken?: (token: string) => void;
 }
@@ -22,36 +23,54 @@ export interface GraphqlResponseBody<T> {
 
 export const createGraphqlFetch = ({
   endpoint = 'https://api.manifold.co/graphql',
+  wait = 15000,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
-}: CreateGraphqlFetch = {}): (<T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>) => {
-  const graphqlFetch = async <T>(
-    requestBody: GraphqlRequestBody
-  ): Promise<GraphqlResponseBody<T>> => {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
-      },
-      body: JSON.stringify(requestBody),
+}: CreateGraphqlFetch = {}): (<T>(
+  body: GraphqlRequestBody
+) => Promise<GraphqlResponseBody<T>>) => async <T>(
+  requestBody: GraphqlRequestBody
+): Promise<GraphqlResponseBody<T>> => {
+  const start = new Date();
+
+  while (!getAuthToken() && start.getTime() - new Date().getTime() <= wait) {
+    // eslint-disable-next-line no-await-in-loop
+    await new Promise(resolve => setTimeout(resolve, 2000));
+  }
+
+  if (!getAuthToken()) {
+    console.error('No auth token given');
+    return {
+      errors: [
+        {
+          type: 'unauthorized',
+          message: 'No auth token given',
+        },
+      ],
+    };
+  }
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  const body = await response.json();
+
+  if (body.errors) {
+    body.errors.forEach((error: GraphqlError) => {
+      console.error(error.message);
     });
+  }
 
-    const body = await response.json();
+  if (body.errors && body.errors[0].type === 'unauthorized') {
+    // TODO trigger token refresh for manifold-auth-token
+    setAuthToken('');
+  }
 
-    if (body.errors) {
-      body.errors.forEach((error: GraphqlError) => {
-        console.error(error.message);
-      });
-    }
-
-    if (body.errors && body.errors[0].type === 'unauthorized') {
-      // TODO trigger token refresh for manifold-auth-token
-      setAuthToken('');
-    }
-
-    return body;
-  };
-
-  return graphqlFetch;
+  return body;
 };

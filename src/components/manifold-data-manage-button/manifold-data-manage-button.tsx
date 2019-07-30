@@ -2,16 +2,16 @@ import { h, Component, Prop, State, Element, Event, EventEmitter, Watch } from '
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
+import { Marketplace } from '../../types/marketplace';
 
 /* eslint-disable no-console */
 
 interface SuccessMessage {
-  features: Gateway.FeatureMap;
+  features?: Gateway.FeatureMap;
   resourceLabel: string;
   resourceId: string;
-  planName: string;
+  planName?: string;
   message: string;
 }
 
@@ -26,9 +26,12 @@ interface ErrorMessage {
 export class ManifoldDataManageButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>;
   /** Name of resource */
   @Prop() resourceLabel?: string;
   @Prop() features?: Gateway.FeatureMap = {};
@@ -36,11 +39,9 @@ export class ManifoldDataManageButton {
   @Prop({ mutable: true }) productId?: string = '';
   @Prop() regionId?: string = globalRegion.id;
   @State() resourceId: string = '';
-  @Event({ eventName: 'manifold-manageButton-click', bubbles: true })
-  clickEvent: EventEmitter;
-  @Event({ eventName: 'manifold-manageButton-error', bubbles: true }) errorEvent: EventEmitter;
-  @Event({ eventName: 'manifold-manageButton-success', bubbles: true })
-  successEvent: EventEmitter;
+  @Event({ eventName: 'manifold-manageButton-click', bubbles: true }) click: EventEmitter;
+  @Event({ eventName: 'manifold-manageButton-error', bubbles: true }) error: EventEmitter;
+  @Event({ eventName: 'manifold-manageButton-success', bubbles: true }) success: EventEmitter;
   @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResourceId(newResource);
   }
@@ -52,20 +53,31 @@ export class ManifoldDataManageButton {
   }
 
   async fetchResourceId(resourceLabel: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const { gateway } = this.connection;
-    const response = await fetch(`${gateway}/resources/me/${resourceLabel}`, withAuth());
-    const resource: Gateway.Resource = await response.json();
-    if (resource.id) {
-      this.resourceId = resource.id;
+    const response = await this.restFetch<Marketplace.Resource[]>(
+      'marketplace',
+      `/resources/?me&label=${resourceLabel}`
+    );
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
     }
+    const resources: Marketplace.Resource[] = response;
+
+    if (!Array.isArray(resources) || !resources.length) {
+      console.error(`${resourceLabel} product not found`);
+      return;
+    }
+
+    this.resourceId = resources[0].id;
   }
 
   async update() {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
@@ -74,7 +86,7 @@ export class ManifoldDataManageButton {
       return;
     }
 
-    this.clickEvent.emit({
+    this.click.emit({
       planId: this.planId,
       resourceLabel: this.resourceLabel,
       resourceId: this.resourceId,
@@ -85,39 +97,36 @@ export class ManifoldDataManageButton {
       req.features = this.features;
     }
 
-    const response = await fetch(
-      `${this.connection.gateway}/id/resource/${this.resourceId}`,
-      withAuth(this.authToken, {
+    const response = await this.restFetch<Gateway.Resource>(
+      'gateway',
+      `/id/resource/${this.resourceId}`,
+      req,
+      {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(req),
-      })
+      }
     );
 
-    const body = await response.json();
-
-    // If successful, this will return 200 and stop here
-    if (response.status >= 200 && response.status < 300) {
-      const planName = body.plan && body.plan.name;
-      const success: SuccessMessage = {
-        message: `${this.resourceLabel} successfully updated to ${planName}`,
-        resourceLabel: this.resourceLabel || '',
-        resourceId: this.resourceId,
-        planName,
-        features: body.features,
-      };
-      this.successEvent.emit(success);
-    } else {
-      // Sometimes messages are an array, sometimes they aren’t. Different strokes!
-      const message = Array.isArray(body) ? body[0].message : body.message;
+    if (response instanceof Error) {
       const error: ErrorMessage = {
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
-        message,
+        message: response.message,
         features: this.features,
       };
-      this.errorEvent.emit(error);
+      this.error.emit(error);
+      return;
     }
+
+    const planName = response.plan && response.plan.name;
+    const success: SuccessMessage = {
+      message: `${this.resourceLabel} successfully updated to ${planName}`,
+      resourceLabel: this.resourceLabel || '',
+      resourceId: this.resourceId,
+      planName,
+      features: response.features,
+    };
+    this.success.emit(success);
   }
 
   render() {
@@ -129,4 +138,4 @@ export class ManifoldDataManageButton {
   }
 }
 
-Tunnel.injectProps(ManifoldDataManageButton, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataManageButton, ['restFetch']);

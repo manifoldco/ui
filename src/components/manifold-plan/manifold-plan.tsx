@@ -1,16 +1,19 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Connection } from '../../utils/connections';
 
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: <T>(
+    service: keyof Connection,
+    endpoint: string,
+    body?: object,
+    options?: object
+  ) => Promise<T | Error>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** URL-friendly slug (e.g. `"kitefin"`) */
@@ -29,38 +32,42 @@ export class ManifoldPlan {
   }
 
   async fetchProductAndPlan(productLabel?: string, planLabel?: string) {
-    if (!productLabel || !planLabel || !this.connection) {
+    if (!productLabel || !planLabel || !this.restFetch) {
       return;
     }
 
     this.product = undefined;
-    const { catalog } = this.connection;
-
-    const productsResp = await fetch(
-      `${catalog}/products/?label=${productLabel}`,
-      withAuth(this.authToken)
+    const response = await this.restFetch<Catalog.ExpandedProduct[]>(
+      'catalog',
+      `/products/?label=${productLabel}`
     );
-    const products: Catalog.ExpandedProduct[] = await productsResp.json();
 
-    this.product = products[0]; // eslint-disable-line prefer-destructuring
-    await this.fetchPlan(products[0].id, planLabel);
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.product = response[0]; // eslint-disable-line prefer-destructuring
+    await this.fetchPlan(response[0].id, planLabel);
   }
 
   async fetchPlan(productId: string, planLabel: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
     this.plan = undefined;
-    const { catalog } = this.connection;
-
-    const plansResp = await fetch(
-      `${catalog}/plans/?product_id=${productId}&label=${planLabel}`,
-      withAuth(this.authToken)
+    const response = await this.restFetch<Catalog.ExpandedPlan[]>(
+      'catalog',
+      `/plans/?product_id=${productId}&label=${planLabel}`
     );
-    const plans: Catalog.ExpandedPlan[] = await plansResp.json();
 
-    this.plan = plans[0]; // eslint-disable-line prefer-destructuring
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.plan = response[0]; // eslint-disable-line prefer-destructuring
   }
 
   render() {
@@ -68,4 +75,4 @@ export class ManifoldPlan {
   }
 }
 
-Tunnel.injectProps(ManifoldPlan, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldPlan, ['restFetch']);

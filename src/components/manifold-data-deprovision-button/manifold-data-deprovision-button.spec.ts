@@ -3,10 +3,26 @@ import fetchMock from 'fetch-mock';
 
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
-
 import { ManifoldDataDeprovisionButton } from './manifold-data-deprovision-button';
+import { createRestFetch } from '../../utils/restFetch';
 
-describe('<manifold-data-provision-button>', () => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldDataDeprovisionButton.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
+
+describe('<manifold-data-deprovision-button>', () => {
   it('fetches the resource id on load if not set', () => {
     const resourceLabel = 'test-resource';
 
@@ -83,7 +99,7 @@ describe('<manifold-data-provision-button>', () => {
     it('will do nothing on a fetch error', async () => {
       const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
@@ -109,11 +125,14 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     beforeEach(() => {
-      fetchMock.mock(/.*\/resources\/.*/, [Resource]);
+      fetchMock.mock('path:/v1/resources/', [Resource]);
     });
 
     it('will trigger a dom event on successful deprovision', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, {
+        status: 200,
+        body: Resource,
+      });
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
