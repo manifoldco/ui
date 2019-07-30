@@ -17,25 +17,20 @@ export class ManifoldPlanCost {
   /** Compact mode (for plan selector sidebar) */
   @Prop() compact?: boolean = false;
   /** Plan default cost */
-  @Prop() defaultCost: number = 0;
+  @Prop({ mutable: true }) defaultCost?: number = 0;
   /** Plan ID */
   @Prop() planId?: string;
   /** User-selected plan features (needed only for customizable) */
   @Prop() selectedFeatures?: Gateway.FeatureMap = {};
   @State() controller?: AbortController;
-  @State() baseCost?: number;
   @Watch('allFeatures') featuresChanged() {
     this.fetchCustomCost();
-  }
-  @Watch('defaultCost') costChanged() {
-    this.baseCost = this.defaultCost;
   }
   @Watch('selectedFeatures') selectedFeaturesChanged() {
     this.fetchCustomCost();
   }
 
   componentWillLoad() {
-    this.baseCost = this.defaultCost;
     return this.fetchCustomCost(); // If we’re calculating custom features, wait to render until call finishes
   }
 
@@ -73,7 +68,7 @@ export class ManifoldPlanCost {
       return Promise.resolve();
     }
     // Hide display while calculating
-    this.baseCost = undefined;
+    this.defaultCost = undefined;
     if (this.controller) {
       this.controller.abort();
     } // If a request is in flight, cancel it
@@ -85,7 +80,7 @@ export class ManifoldPlanCost {
       features: allFeatures,
       init: { signal: this.controller.signal },
     }).then(({ cost }: Gateway.Price) => {
-      this.baseCost = cost || 0;
+      this.defaultCost = cost || 0;
       this.controller = undefined; // Request finished, so signal no longer needed
     });
   }
@@ -94,7 +89,7 @@ export class ManifoldPlanCost {
   render() {
     return (
       <manifold-cost-display
-        baseCost={this.baseCost}
+        baseCost={this.defaultCost}
         compact={this.compact}
         measuredFeatures={this.measuredFeatures(this.allFeatures)}
         startingAt={this.isCustomizable && this.compact}

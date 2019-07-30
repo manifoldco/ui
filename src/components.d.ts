@@ -391,7 +391,7 @@ export namespace Components {
     /**
     * Plan default cost
     */
-    'defaultCost': number;
+    'defaultCost'?: number;
     /**
     * Plan ID
     */
