@@ -198,6 +198,7 @@ export namespace Components {
     * Product to provision (slug)
     */
     'productLabel'?: string;
+    'regionId'?: string;
     /**
     * Region to provision (complete name), omit for all region
     */
@@ -1291,6 +1292,7 @@ declare namespace LocalJSX {
     * Product to provision (slug)
     */
     'productLabel'?: string;
+    'regionId'?: string;
     /**
     * Region to provision (complete name), omit for all region
     */

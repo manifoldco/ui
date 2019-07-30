@@ -32,8 +32,7 @@ export class ManiTunnel {
 
   get accessToken() {
     if (this.authToken) {
-      const [token] = this.authToken.split('.');
-      return token;
+      return this.authToken;
     }
 
     return undefined;

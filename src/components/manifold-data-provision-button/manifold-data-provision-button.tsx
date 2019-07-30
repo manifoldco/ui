@@ -57,7 +57,7 @@ export class ManifoldDataProvisionButton {
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) ownerId?: string = '';
-  @State() regionId?: string = globalRegion.id;
+  @Prop() regionId?: string = globalRegion.id;
   @State() planId?: string = '';
   @State() productId?: string = '';
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true })
