@@ -275,12 +275,17 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
  * Sort plans
  */
 export function planSort(plans: Catalog.ExpandedPlan[]): Catalog.ExpandedPlan[] {
+  // Clone array to prevent accidental mutation with sort()
   return [...plans].sort((a, b) => {
-    // Free plans up front
+    // If comparing 2 free plans, leave both where they are
+    if (a.body.free === true && b.body.free === true) {
+      return 0;
+    }
+    // Move free plans to the beginning
     if (a.body.free === true || b.body.free === true) {
       return a.body.free === true ? -1 : 1;
     }
-    // Sort by cost
+    // By default, sort by cost
     return (a.body.defaultCost || a.body.cost) - (b.body.defaultCost || b.body.cost);
   });
 }

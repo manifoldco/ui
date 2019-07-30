@@ -137,23 +137,26 @@ describe('other plan methods', () => {
 });
 
 describe('plan sort function', () => {
-  it('sorts plans correctly', () => {
-    const freePlan = { body: { cost: 0, free: true } } as Catalog.ExpandedPlan;
-    const fauxFreePlan = { body: { cost: 0, free: false } } as Catalog.ExpandedPlan;
-    const cheapPlan = { body: { cost: 50, defaultCost: 50, free: false } } as Catalog.ExpandedPlan;
-    const highDefaultCost = {
-      body: { defaultCost: 100, cost: 0, free: false },
-    } as Catalog.ExpandedPlan;
-    const expensivePlan = {
-      body: { defaultCost: 1000, cost: 1000, free: false },
-    } as Catalog.ExpandedPlan;
+  const freePlan = { body: { cost: 0, free: true } } as Catalog.ExpandedPlan;
+  const fauxFreePlan = { body: { cost: 0, free: false } } as Catalog.ExpandedPlan;
+  const cheapPlan = { body: { cost: 50, defaultCost: 50, free: false } } as Catalog.ExpandedPlan;
+  const highDefaultCost = {
+    body: { defaultCost: 100, cost: 0, free: false },
+  } as Catalog.ExpandedPlan;
+  const expensivePlan = {
+    body: { defaultCost: 1000, cost: 1000, free: false },
+  } as Catalog.ExpandedPlan;
 
-    expect(planSort([highDefaultCost, fauxFreePlan, expensivePlan, cheapPlan, freePlan])).toEqual([
-      freePlan,
-      fauxFreePlan,
-      cheapPlan,
-      highDefaultCost,
-      expensivePlan,
-    ]);
+  const wrongOrder = [highDefaultCost, fauxFreePlan, expensivePlan, cheapPlan, freePlan];
+  const rightOrder = [freePlan, fauxFreePlan, cheapPlan, highDefaultCost, expensivePlan];
+
+  it('sorts plans correctly', () => {
+    expect(planSort(wrongOrder)).toEqual(rightOrder);
+  });
+
+  it('sort() doesn’t reorder original reference', () => {
+    const clone = [...wrongOrder];
+    planSort(clone);
+    expect(clone).toEqual(wrongOrder);
   });
 });
