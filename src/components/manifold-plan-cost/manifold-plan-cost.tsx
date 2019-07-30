@@ -12,31 +12,34 @@ export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
+  /** All plan features */
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
+  /** Compact mode (for plan selector sidebar) */
   @Prop() compact?: boolean = false;
-  @Prop() customizable?: boolean = false;
-  @Prop() planId: string;
-  @Prop() selectedFeatures: Gateway.FeatureMap = {};
+  /** Plan default cost */
+  @Prop() defaultCost: number = 0;
+  /** Plan ID */
+  @Prop() planId?: string;
+  /** User-selected plan features (needed only for customizable) */
+  @Prop() selectedFeatures?: Gateway.FeatureMap = {};
   @State() controller?: AbortController;
   @State() baseCost?: number;
   @Watch('allFeatures') featuresChanged() {
-    this.calculateCost();
+    this.fetchCustomCost();
   }
-  @Watch('planId') planChanged() {
-    this.calculateCost();
+  @Watch('defaultCost') costChanged() {
+    this.baseCost = this.defaultCost;
   }
   @Watch('selectedFeatures') selectedFeaturesChanged() {
-    this.calculateCost();
+    this.fetchCustomCost();
   }
 
   componentWillLoad() {
-    return this.calculateCost();
+    this.baseCost = this.defaultCost;
+    return this.fetchCustomCost(); // If we’re calculating custom features, wait to render until call finishes
   }
 
   get isCustomizable() {
-    if (!Array.isArray(this.allFeatures)) {
-      return false;
-    }
     return hasCustomizableFeatures(this.allFeatures);
   }
 
@@ -53,8 +56,13 @@ export class ManifoldPlanCost {
       });
   }
 
-  calculateCost() {
+  fetchCustomCost() {
     if (!this.restFetch) {
+      return null;
+    }
+
+    // If this doesn’t have customizable features, then don’t call the API
+    if (!this.isCustomizable) {
       return null;
     }
 
@@ -88,8 +96,8 @@ export class ManifoldPlanCost {
       <manifold-cost-display
         baseCost={this.baseCost}
         compact={this.compact}
-        isCustomizable={this.isCustomizable}
         measuredFeatures={this.measuredFeatures(this.allFeatures)}
+        startingAt={this.isCustomizable && this.compact}
       />
     );
   }

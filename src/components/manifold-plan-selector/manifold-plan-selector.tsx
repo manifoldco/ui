@@ -6,6 +6,7 @@ import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import { planSort } from '../../utils/plan';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
@@ -72,6 +73,7 @@ export class ManifoldPlanSelector {
     }
 
     this.plans = undefined;
+<<<<<<< HEAD
 
     const response = await this.restFetch<Catalog.ExpandedPlan[]>({
       service: 'catalog',
@@ -84,6 +86,15 @@ export class ManifoldPlanSelector {
     }
 
     this.plans = [...response].sort((a, b) => a.body.cost - b.body.cost);
+=======
+    const { catalog } = this.connection;
+    const plansResp = await fetch(
+      `${catalog}/plans/?product_id=${productId}`,
+      withAuth(this.authToken)
+    );
+    const plans: Catalog.ExpandedPlan[] = await plansResp.json();
+    this.plans = planSort(plans); // Sort plans
+>>>>>>> Don’t use cost API unless necessary
   }
 
   async fetchResource(resourceLabel: string) {
