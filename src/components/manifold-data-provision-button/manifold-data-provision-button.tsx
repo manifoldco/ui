@@ -52,12 +52,11 @@ export class ManifoldDataProvisionButton {
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
   @Prop() planLabel?: string;
-  /** Region to provision (complete name), omit for all region */
-  @Prop() regionName?: string;
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) ownerId?: string = '';
-  @State() regionId?: string = globalRegion.id;
+  /** Region to provision (ID) */
+  @Prop() regionId?: string = globalRegion.id;
   @State() planId?: string = '';
   @State() productId?: string = '';
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true })
