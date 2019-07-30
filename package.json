@@ -46,6 +46,7 @@
     "now-build": "npm run build-storybook",
     "postinstall": "cd docs && npm i",
     "prepare": "stencil build",
+    "profile": "stencil build && npx bundlesize",
     "publish": "node scripts/publish",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
@@ -55,6 +56,23 @@
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll"
   },
+  "bundlesize": [
+    {
+      "path": "./dist/esm/loader.mjs",
+      "maxSize": "15 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/manifold-!(mock)*.js",
+      "maxSize": "32 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/chunk-*.js",
+      "maxSize": "66 kB",
+      "compression": "none"
+    }
+  ],
   "dependencies": {
     "@manifoldco/gql-zero": "^0.2.0",
     "@manifoldco/shadowcat": "^0.1.5",
