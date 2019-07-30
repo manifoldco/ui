@@ -75,7 +75,7 @@ export class ManifoldProductPage {
                     </a>
                   </div>
                   <div class="provider-link">
-                    <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
+                    <a href={`mailto:${support_email}`}>
                       <manifold-icon icon={life_buoy} margin-right />
                       Support
                       <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
