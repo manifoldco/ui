@@ -99,7 +99,7 @@ export class ManifoldPlanDetails {
     }
   }
 
-  handleChangeRegion(e: CustomEvent) {
+  handleChangeRegion = (e: CustomEvent) => {
     if (!e.detail || !e.detail.value) {
       return;
     }
@@ -115,7 +115,7 @@ export class ManifoldPlanDetails {
       };
       this.planUpdate.emit(detail);
     }
-  }
+  };
 
   setFeaturesFromPlan(plan: Catalog.ExpandedPlan) {
     if (plan.body.expanded_features) {

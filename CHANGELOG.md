@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the provision button requiring the label to be set, preventing or automatic label generation from working.
 - Fixed name for `manifold-service-view` to be `manifold-service-card-view` to match documentation.
 - Added missing support for theme variable `--manifold-tag-free-text-color`.
+- Fixed region selector so that it properly emits a `manifold-planSelector-change` event when the region changes.
 
 ### Changed
 - Added graphqlFetch to `manifold-connection`.
