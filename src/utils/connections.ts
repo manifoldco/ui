@@ -26,8 +26,8 @@ export const connections: Connections = {
     catalog: 'https://api.catalog.stage.manifold.co/v1',
     gateway: 'https://api.stage.manifold.co/v1',
     marketplace: 'https://api.marketplace.stage.manifold.co/v1',
-    provisioning: 'https://api.provisioning.stage.manifold/v1',
-    connector: 'https://api.connector.stage.manifold/v1',
+    provisioning: 'https://api.provisioning.stage.manifold.co/v1',
+    connector: 'https://api.connector.stage.manifold.co/v1',
     graphql: 'https://api.stage.manifold.co/graphql',
   },
   prod: {
