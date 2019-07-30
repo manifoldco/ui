@@ -1,7 +1,7 @@
 import { h, Component, State, Prop, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
-
+import logger from '../../utils/logger';
 @Component({
   tag: 'manifold-active-plan',
   styleUrl: 'plan-selector.css',
@@ -41,6 +41,7 @@ export class ManifoldActivePlan {
     return this.plans.find(({ id }) => id === this.selectedPlanId);
   }
 
+  @logger()
   render() {
     const resourceRegion =
       (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
