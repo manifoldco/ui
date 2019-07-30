@@ -1,4 +1,5 @@
 import { h, Component, Prop, Element, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
@@ -6,6 +7,7 @@ import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import { Catalog } from '../../types/catalog';
+import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
 
 /* eslint-disable no-console */
 
@@ -21,6 +23,22 @@ interface ErrorMessage {
   resourceLabel?: string;
 }
 
+interface Profile {
+  id: string;
+}
+
+interface ProfileMessage {
+  profile: Profile;
+}
+
+const query = gql`
+  query ProfileId {
+    profile {
+      id
+    }
+  }
+`;
+
 @Component({ tag: 'manifold-data-provision-button' })
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
@@ -28,6 +46,8 @@ export class ManifoldDataProvisionButton {
   @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() authToken?: string;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
@@ -59,6 +79,9 @@ export class ManifoldDataProvisionButton {
   componentWillLoad() {
     if (this.productLabel) {
       this.fetchProductPlanId(this.productLabel, this.planLabel);
+    }
+    if (!this.ownerId) {
+      this.fetchProfileId();
     }
   }
 
@@ -171,6 +194,19 @@ export class ManifoldDataProvisionButton {
     this.planId = plans[0].id;
   }
 
+  async fetchProfileId() {
+    if (!this.graphqlFetch || this.ownerId) {
+      return;
+    }
+
+    const { data } = await this.graphqlFetch<ProfileMessage>({ query });
+    console.log(data);
+
+    if (data) {
+      this.ownerId = data.profile.id;
+    }
+  }
+
   validate(input: string) {
     return /^[a-z][a-z0-9]*/.test(input);
   }
@@ -188,4 +224,4 @@ export class ManifoldDataProvisionButton {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProvisionButton, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataProvisionButton, ['connection', 'authToken', 'graphqlFetch']);

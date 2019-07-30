@@ -64,7 +64,7 @@ export namespace Components {
     /**
     * _(optional)_ Specify `env="stage"` for staging
     */
-    'env': 'stage' | 'prod';
+    'env': 'local' | 'stage' | 'prod';
   }
   interface ManifoldCostDisplay {
     'baseCost'?: number;
@@ -185,6 +185,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
     'ownerId'?: string;
     /**
     * Plan to provision (slug)
@@ -1143,7 +1147,7 @@ declare namespace LocalJSX {
     /**
     * _(optional)_ Specify `env="stage"` for staging
     */
-    'env'?: 'stage' | 'prod';
+    'env'?: 'local' | 'stage' | 'prod';
   }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
@@ -1270,6 +1274,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'connection'?: Connection;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
     'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
