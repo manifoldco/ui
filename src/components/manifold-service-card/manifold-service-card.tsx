@@ -141,13 +141,13 @@ export class ManifoldServiceCard {
         style={{ textDecoration: 'none' }}
       >
         <manifold-service-card-view
-          name={this.product.body.name}
           description={this.product.body.tagline}
           isFeatured={this.isFeatured}
+          isFree={this.isFree}
           label={this.productLabel}
           logo={this.product.body.logo_url}
+          name={this.product.body.name}
           productId={this.productId}
-          isFree={this.isFree}
         >
           <manifold-forward-ref slot="cta">
             <slot name="cta" />

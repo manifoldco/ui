@@ -1,4 +1,5 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import observeRect from '@reach/observe-rect';
 
 import { Catalog } from '../../types/catalog';
 import skeletonProducts from '../../data/marketplace';
@@ -29,7 +30,6 @@ export class ManifoldMarketplaceGrid {
   @Prop() templateLinkFormat?: string;
   @State() filter: string | null;
   @State() activeCategory?: string;
-  @State() observer: IntersectionObserver;
   @State() scrollToCategory: string | null;
   @State() skeleton: boolean = false;
   @State() search: string = '';
@@ -40,12 +40,14 @@ export class ManifoldMarketplaceGrid {
     }
   }
 
-  componentWillLoad() {
-    if (!this.hideCategories) {
-      this.observer = new IntersectionObserver(this.observe, {
-        root: null,
-        threshold: 0.9,
-      });
+  componentDidLoad() {
+    this.activeCategory = this.categories[0]; // eslint-disable-line prefer-destructuring
+
+    if (this.el.shadowRoot) {
+      const container = this.el.shadowRoot.querySelector('.service-grid');
+      if (container) {
+        observeRect(container, this.handleScroll).observe();
+      }
     }
   }
 
@@ -163,27 +165,48 @@ export class ManifoldMarketplaceGrid {
     });
   };
 
+  private handleScroll = ({ bottom }: ClientRect): void => {
+    if (!this.el.shadowRoot) {
+      return;
+    }
+
+    let currentCategory = this.categories[0]; // save last category name
+    let nextY = -Infinity; // save upcoming scroll position
+
+    let i = 0;
+    const sections = this.el.shadowRoot.querySelectorAll('.category-heading'); // grab all section headings
+
+    // if we’ve scrolled to the bottom, highlight the last section
+    if (bottom <= window.innerHeight) {
+      this.activeCategory = this.categories[this.categories.length - 1];
+      return;
+    }
+
+    // loop through every section, and find the first section where its top >= -1 (it’s visible)
+    // we use 1 because of subpixel rounding errors; at 0 the next section doesn’t highlight properly
+    while (nextY < 1) {
+      // if we’ve reached the end, grab last category and break
+      if (i + 1 >= sections.length) {
+        currentCategory = this.categories[this.categories.length - 1];
+        break;
+      }
+
+      currentCategory = this.categories[i]; // get current section name
+      if (sections[i + 1]) {
+        // get next section’s scroll position to see if it’s in the viewport (>= 1)
+        nextY = Math.floor(sections[i + 1].getBoundingClientRect().top); // round
+      }
+
+      i += 1; // continue
+    }
+
+    // Update active category
+    this.activeCategory = currentCategory;
+  };
+
   private updateFilter = (e: KeyboardEvent): void => {
     if (e.srcElement) {
       this.filter = (e.srcElement as HTMLInputElement).value;
-    }
-  };
-
-  private observe = (
-    entries: IntersectionObserverEntry[],
-    _observer: IntersectionObserver
-  ): void => {
-    const visibleEntry = entries.find(e => e.isIntersecting && e.intersectionRatio > 0.99);
-    if (visibleEntry) {
-      // Grab everything after first hyphen
-      const category = visibleEntry.target.id.replace('category-', '');
-      this.activeCategory = category;
-    }
-  };
-
-  private observeCategory = (el?: HTMLElement) => {
-    if (el) {
-      this.observer.observe(el);
     }
   };
 
@@ -228,7 +251,7 @@ export class ManifoldMarketplaceGrid {
         <div class="service-grid" data-categorized={this.showCategories}>
           {this.showCategories
             ? this.categories.map(category => [
-                <h1 id={`category-${category}`} class="category-heading" ref={this.observeCategory}>
+                <h1 id={`category-${category}`} class="category-heading">
                   <manifold-icon icon={categoryIcon[category]} />
                   {formatCategoryLabel(category)}
                 </h1>,

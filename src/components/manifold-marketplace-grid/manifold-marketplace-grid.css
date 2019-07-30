@@ -5,7 +5,7 @@
   --grid-m: 1.5rem;
 
   /* theme */
-  --link-color: var(--manifold-text-color-secondary);
+  --link-color: var(--manifold-text-color-secondary, var(--manifold-color-gray60));
   --link-color-hover: var(--manifold-color-primary);
   --link-color-active: var(--link-color-hover);
   --heading-color: var(--manifold-grayscale-60);
@@ -77,9 +77,15 @@
     color: var(--link-color-active);
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     color: var(--link-color-hover);
+  }
+
+  &:focus:focus-visible {
+    color: var(--link-color-active);
+  }
+
+  &:not(:focus-visible):focus {
     outline: 0;
   }
 }
@@ -98,6 +104,8 @@
   left: 0;
   z-index: var(--manifold-layer-hover);
   grid-column: 1 / -1; /* always start new row, and span full row */
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
   width: 100%;
   margin-top: 0;
