@@ -426,6 +426,7 @@ export namespace Components {
     'ariaLabel': string;
     'name': string;
     'preferredRegions'?: string[];
+    'regions'?: Catalog.Region[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1459,6 +1460,7 @@ declare namespace LocalJSX {
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
     'preferredRegions'?: string[];
+    'regions'?: Catalog.Region[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */

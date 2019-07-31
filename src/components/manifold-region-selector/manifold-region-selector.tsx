@@ -17,8 +17,8 @@ export class ManifoldRegionSelector {
   @Prop() name: string;
   @Prop() preferredRegions?: string[];
   @Prop() value?: string;
+  @Prop({ mutable: true }) regions?: Catalog.Region[];
   @State() globalRegion: Catalog.Region = globalRegion;
-  @State() regions?: Catalog.Region[];
   @Event() updateValue: EventEmitter;
 
   async componentWillLoad() {
