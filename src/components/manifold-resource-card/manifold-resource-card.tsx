@@ -1,19 +1,14 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { Gateway } from '../../types/gateway';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
 
   @Prop() resourceId?: string;
   @Prop() label?: string;
@@ -41,7 +36,10 @@ export class ManifoldResourceCard {
       return;
     }
 
-    const response = await this.restFetch<Gateway.Resource>('gateway', `/resources/${resourceId}`);
+    const response = await this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/resources/${resourceId}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
@@ -56,10 +54,10 @@ export class ManifoldResourceCard {
       return;
     }
 
-    const response = await this.restFetch<Gateway.Resource[]>(
-      'gateway',
-      `/resources/me/${resourceName}`
-    );
+    const response = await this.restFetch<Gateway.Resource[]>({
+      service: 'gateway',
+      endpoint: `/resources/me/${resourceName}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

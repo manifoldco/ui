@@ -2,7 +2,7 @@ import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stenci
 
 import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 interface EventDetail {
   ownerId?: string;
@@ -24,12 +24,7 @@ interface RealResourceBody extends Marketplace.ResourceBody {
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -58,7 +53,10 @@ export class ManifoldDataResourceList {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>('marketplace', `/resources/?me`);
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

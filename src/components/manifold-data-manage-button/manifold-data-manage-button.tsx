@@ -1,9 +1,10 @@
 import { h, Component, Prop, State, Element, Event, EventEmitter, Watch } from '@stencil/core';
+
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
-import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
 
 /* eslint-disable no-console */
 
@@ -26,12 +27,7 @@ interface ErrorMessage {
 export class ManifoldDataManageButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** Name of resource */
   @Prop() resourceLabel?: string;
   @Prop() features?: Gateway.FeatureMap = {};
@@ -57,10 +53,10 @@ export class ManifoldDataManageButton {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me&label=${resourceLabel}`
-    );
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
@@ -97,15 +93,15 @@ export class ManifoldDataManageButton {
       req.features = this.features;
     }
 
-    const response = await this.restFetch<Gateway.Resource>(
-      'gateway',
-      `/id/resource/${this.resourceId}`,
-      req,
-      {
+    const response = await this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/id/resource/${this.resourceId}`,
+      body: req,
+      options: {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-      }
-    );
+      },
+    });
 
     if (response instanceof Error) {
       const error: ErrorMessage = {

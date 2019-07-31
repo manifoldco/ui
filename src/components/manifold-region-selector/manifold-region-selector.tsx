@@ -4,7 +4,7 @@ import { Option } from '../../types/Select';
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-region-selector' })
 export class ManifoldRegionSelector {
@@ -12,12 +12,7 @@ export class ManifoldRegionSelector {
   @Prop() allowedRegions: string[] = [];
   @Prop() ariaLabel: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   @Prop() name: string;
   @Prop() preferredRegions?: string[];
   @Prop() value?: string;
@@ -30,13 +25,17 @@ export class ManifoldRegionSelector {
       return;
     }
 
-    const response = await this.restFetch<Catalog.Region[]>('catalog', `/regions`);
+    const response = await this.restFetch<Catalog.Region[]>({
+      service: 'catalog',
+      endpoint: `/regions`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
       return;
     }
 
+    debugger;
     // Sorting is important, otherwise the region selector is in a different order every plan
     this.regions = this.sortRegions(response, this.preferredRegions);
     // Set global region (the one in src/data is just a fallback; we should always grab live)

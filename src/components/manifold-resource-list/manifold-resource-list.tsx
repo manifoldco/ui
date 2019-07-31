@@ -4,7 +4,7 @@ import { Marketplace } from '../../types/marketplace';
 import { Catalog } from '../../types/catalog';
 import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 interface FoundResource {
   id: string;
@@ -31,12 +31,7 @@ interface RealResourceBody extends Marketplace.ResourceBody {
 export class ManifoldResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -102,10 +97,10 @@ export class ManifoldResourceList {
       return;
     }
 
-    const resourcesResp = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me`
-    );
+    const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
 
     if (resourcesResp instanceof Error) {
       console.error(resourcesResp);
@@ -113,16 +108,19 @@ export class ManifoldResourceList {
     }
 
     if (Array.isArray(resourcesResp)) {
-      const productsResp = await this.restFetch<Catalog.Product[]>('catalog', `/products`);
+      const productsResp = await this.restFetch<Catalog.Product[]>({
+        service: 'catalog',
+        endpoint: `/products`,
+      });
 
       if (productsResp instanceof Error) {
         return;
       }
 
-      const operationsResp = await this.restFetch<Provisioning.Operation[]>(
-        'provisioning',
-        `/operations/?is_deleted=false`
-      );
+      const operationsResp = await this.restFetch<Provisioning.Operation[]>({
+        service: 'provisioning',
+        endpoint: `/operations/?is_deleted=false`,
+      });
 
       if (operationsResp instanceof Error) {
         console.error(operationsResp);

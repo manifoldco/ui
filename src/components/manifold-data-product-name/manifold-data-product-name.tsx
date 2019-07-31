@@ -3,18 +3,13 @@ import { Component, Prop, State, Element, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
@@ -43,10 +38,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const response = await this.restFetch<Catalog.Product[]>(
-      'catalog',
-      `/products?label=${productLabel}`
-    );
+    const response = await this.restFetch<Catalog.Product[]>({
+      service: 'catalog',
+      endpoint: `/products?label=${productLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
@@ -64,10 +59,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const response = await this.restFetch<Gateway.Resource>(
-      'gateway',
-      `/resources/me/${resourceName}`
-    );
+    const response = await this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/resources/me/${resourceName}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

@@ -2,18 +2,13 @@ import { h, Component, Prop, State, Element } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** Comma-separated list of hidden products (labels) */
   @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
@@ -47,7 +42,10 @@ export class ManifoldMarketplace {
       return;
     }
 
-    const response = await this.restFetch<Catalog.ExpandedProduct[]>('catalog', `/products`);
+    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
+      service: 'catalog',
+      endpoint: `/products`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

@@ -2,18 +2,13 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
   @State() product?: Catalog.Product;
@@ -34,10 +29,10 @@ export class ManifoldProduct {
     }
 
     this.product = undefined;
-    const productResp = await this.restFetch<Catalog.ExpandedProduct[]>(
-      'catalog',
-      `/products/?label=${productLabel}`
-    );
+    const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
+      service: 'catalog',
+      endpoint: `/products/?label=${productLabel}`,
+    });
 
     if (productResp instanceof Error) {
       console.error(productResp);
@@ -46,10 +41,10 @@ export class ManifoldProduct {
 
     this.product = productResp[0]; // eslint-disable-line prefer-destructuring
 
-    const providerResp = await this.restFetch<Catalog.Provider>(
-      'catalog',
-      `/providers/${productResp[0].body.provider_id}`
-    );
+    const providerResp = await this.restFetch<Catalog.Provider>({
+      service: 'catalog',
+      endpoint: `/providers/${productResp[0].body.provider_id}`,
+    });
 
     if (providerResp instanceof Error) {
       console.error(providerResp);

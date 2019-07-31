@@ -8,23 +8,22 @@ interface CreateRestFetch {
   setAuthToken?: (token: string) => void;
 }
 
+interface RestFetchArguments {
+  service: keyof Connection;
+  endpoint: string;
+  body?: object;
+  options?: object;
+}
+
+export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Error>;
+
 export const createRestFetch = ({
   endpoints = connections.prod,
   wait = 15000,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
-}: CreateRestFetch = {}): (<T>(
-  service: keyof Connection,
-  endpoint: string,
-  body?: object,
-  options?: object
-) => Promise<T | Error>) => async <T>(
-  service: keyof Connection,
-  endpoint: string,
-  requestBody?: object,
-  options?: object
-): Promise<T | Error> => {
-  const url = `${endpoints[service]}${endpoint}`;
+}: CreateRestFetch = {}): RestFetch => async (args: RestFetchArguments) => {
+  const url = `${endpoints[args.service]}${args.endpoint}`;
   const start = new Date();
 
   while (!getAuthToken() && start.getTime() - new Date().getTime() <= wait) {
@@ -32,13 +31,15 @@ export const createRestFetch = ({
     await new Promise(resolve => setTimeout(resolve, 2000));
   }
 
+  debugger;
   if (!getAuthToken()) {
     return new Error('No auth token given');
   }
   try {
+    debugger;
     const response = await fetch(url as string, {
-      ...withAuth(getAuthToken(), options),
-      body: JSON.stringify(requestBody),
+      ...withAuth(getAuthToken(), args.options),
+      body: JSON.stringify(args.body),
     });
 
     const body = await response.json();

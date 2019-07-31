@@ -2,16 +2,11 @@ import { h } from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
 
 import { GraphqlRequestBody, GraphqlResponseBody } from '../utils/graphqlFetch';
-import { Connection } from '../utils/connections';
+import { RestFetch } from '../utils/restFetch';
 
 export interface State {
   setAuthToken: (s: string) => void;
-  restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  restFetch?: RestFetch;
   graphqlFetch?: <T>(body: GraphqlRequestBody) => Promise<GraphqlResponseBody<T>>;
 }
 

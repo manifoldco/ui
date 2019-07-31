@@ -1,8 +1,8 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
 
 /* eslint-disable no-console */
 
@@ -22,12 +22,7 @@ interface ErrorMessage {
 export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** The label of the resource to deprovision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
@@ -64,12 +59,11 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    const response = await this.restFetch(
-      'gateway',
-      `/id/resource/${this.resourceId}`,
-      {},
-      { method: 'DELETE' }
-    );
+    const response = await this.restFetch({
+      service: 'gateway',
+      endpoint: `/id/resource/${this.resourceId}`,
+      options: { method: 'DELETE' },
+    });
 
     if (response instanceof Error) {
       const error: ErrorMessage = {
@@ -94,10 +88,10 @@ export class ManifoldDataDeprovisionButton {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me&label=${resourceLabel}`
-    );
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

@@ -3,19 +3,14 @@ import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
@@ -56,10 +51,10 @@ export class ManifoldPlanSelector {
       this.parsedRegions = this.parseRegions(this.regions);
     }
 
-    const response = await this.restFetch<Catalog.ExpandedProduct[]>(
-      'catalog',
-      `/products/?label=${productLabel}`
-    );
+    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
+      service: 'catalog',
+      endpoint: `/products/?label=${productLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
@@ -77,10 +72,10 @@ export class ManifoldPlanSelector {
 
     this.plans = undefined;
 
-    const response = await this.restFetch<Catalog.ExpandedPlan[]>(
-      'catalog',
-      `/plans/?product_id=${productId}`
-    );
+    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
+      service: 'catalog',
+      endpoint: `/plans/?product_id=${productId}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
@@ -97,10 +92,10 @@ export class ManifoldPlanSelector {
 
     this.resource = undefined;
 
-    const response = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me&label=${resourceLabel}`
-    );
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

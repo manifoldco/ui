@@ -1,9 +1,9 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
 import { Connector } from '../../types/connector';
+import { RestFetch } from '../../utils/restFetch';
 
 /* eslint-disable no-console */
 
@@ -29,12 +29,7 @@ interface ErrorMessage {
 export class ManifoldDataSsoButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The id of the resource to rename, will be fetched if not set */
@@ -78,9 +73,14 @@ export class ManifoldDataSsoButton {
       },
     };
 
-    const response = await this.restFetch<Connector.AuthorizationCode>('connector', `/sso`, body, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await this.restFetch<Connector.AuthorizationCode>({
+      service: 'connector',
+      endpoint: `/sso`,
+      body,
+      options: {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      },
     });
 
     if (response instanceof Error) {
@@ -107,10 +107,10 @@ export class ManifoldDataSsoButton {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me&label=${resourceLabel}`
-    );
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

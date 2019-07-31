@@ -2,8 +2,8 @@ import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stenci
 import { refresh_cw } from '@manifoldco/icons';
 
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
 
 interface EventDetail {
   resourceId?: string;
@@ -24,12 +24,7 @@ const OFFLINE = 'offline';
 export class ManifoldResourceCardView {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
 
   @Prop() label?: string;
   @Prop() name?: string;
@@ -77,10 +72,10 @@ export class ManifoldResourceCardView {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me&label=${resourceLabel}`
-    );
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

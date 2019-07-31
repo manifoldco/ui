@@ -1,19 +1,14 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Marketplace } from '../../types/marketplace';
-import { Connection } from '../../utils/connections';
 import Tunnel from '../../data/connection';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-data-has-resource', shadow: true })
 export class ManifoldDataHasResource {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   @State() interval?: number;
@@ -49,7 +44,10 @@ export class ManifoldDataHasResource {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>('marketplace', `/resources/?me`);
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

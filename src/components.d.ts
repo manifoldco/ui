@@ -13,8 +13,8 @@ import {
   Gateway,
 } from './types/gateway';
 import {
-  Connection,
-} from './utils/connections';
+  RestFetch,
+} from './utils/restFetch';
 import {
   GraphqlRequestBody,
   GraphqlResponseBody,
@@ -82,12 +82,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataDeprovisionButton {
     'loading'?: boolean;
@@ -99,12 +94,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataHasResource {
     /**
@@ -114,12 +104,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataManageButton {
     'features'?: Gateway.FeatureMap;
@@ -133,12 +118,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProductLogo {
     /**
@@ -170,12 +150,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProvisionButton {
     /**
@@ -202,12 +177,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton {
     'loading'?: boolean;
@@ -226,12 +196,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList {
     /**
@@ -249,12 +214,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceLogo {
     /**
@@ -268,12 +228,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataSsoButton {
     'loading'?: boolean;
@@ -288,12 +243,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
@@ -365,12 +315,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     /**
     * Template format structure, with `:product` placeholder
     */
@@ -414,12 +359,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldPlanCost {
     'allFeatures': Catalog.ExpandedFeature[];
@@ -429,12 +369,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     'selectedFeatures': Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
@@ -467,12 +402,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct {
     /**
@@ -482,12 +412,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProductDetails {
     'product'?: Catalog.Product;
@@ -504,12 +429,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     'value'?: string;
   }
   interface ManifoldResourceCard {
@@ -520,12 +440,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCardView {
     'label'?: string;
@@ -539,12 +454,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer {
     /**
@@ -554,12 +464,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials {}
   interface ManifoldResourceCredentialsView {
@@ -591,12 +496,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
@@ -640,12 +540,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView {
@@ -1197,12 +1092,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     'loading'?: boolean;
@@ -1217,12 +1107,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
     /**
@@ -1232,12 +1117,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
     'features'?: Gateway.FeatureMap;
@@ -1254,12 +1134,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
     /**
@@ -1291,12 +1166,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
     /**
@@ -1327,12 +1197,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
     'loading'?: boolean;
@@ -1355,12 +1220,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
@@ -1379,12 +1239,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement> {
     /**
@@ -1398,12 +1253,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataSsoButton extends JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement> {
     'loading'?: boolean;
@@ -1421,12 +1271,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
   interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
@@ -1499,12 +1344,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     /**
     * Template format structure, with `:product` placeholder
     */
@@ -1549,12 +1389,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
     'allFeatures'?: Catalog.ExpandedFeature[];
@@ -1564,12 +1399,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {
@@ -1604,12 +1434,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
@@ -1619,12 +1444,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
     'product'?: Catalog.Product;
@@ -1642,12 +1462,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     'value'?: string;
   }
   interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
@@ -1658,12 +1473,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
     'label'?: string;
@@ -1678,12 +1488,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
     /**
@@ -1693,12 +1498,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
   interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
@@ -1734,12 +1534,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
@@ -1792,12 +1587,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-    ) => Promise<T | Error>;
+    'restFetch'?: RestFetch;
     'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {

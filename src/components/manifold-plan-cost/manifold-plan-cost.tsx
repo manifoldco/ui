@@ -3,19 +3,14 @@ import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;

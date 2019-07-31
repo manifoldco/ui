@@ -3,20 +3,15 @@ import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
@@ -35,10 +30,10 @@ export class ManifoldDataResourceLogo {
     }
 
     this.product = undefined;
-    const resourceResp = await this.restFetch<Marketplace.Resource[]>(
-      'marketplace',
-      `/resources/?me&label=${resourceLabel}`
-    );
+    const resourceResp = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
 
     if (resourceResp instanceof Error) {
       console.error(resourceResp);
@@ -47,7 +42,10 @@ export class ManifoldDataResourceLogo {
 
     const resource: Marketplace.Resource = resourceResp[0];
     const productId = resource.body.product_id;
-    const productResp = await this.restFetch<Catalog.Product>('catalog', `/products/${productId}`);
+    const productResp = await this.restFetch<Catalog.Product>({
+      service: 'catalog',
+      endpoint: `/products/${productId}`,
+    });
 
     if (productResp instanceof Error) {
       console.error(productResp);

@@ -1,9 +1,9 @@
 import { Option } from '../types/Select';
 import { Catalog } from '../types/catalog';
 import { Gateway } from '../types/gateway';
-import { Connection } from './connections';
 import { $ } from './currency';
 import { pluralize } from './string';
+import { RestFetch } from './restFetch';
 
 interface PlanCostOptions {
   planID: string;
@@ -275,22 +275,17 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
  * Fetch cost from our API
  */
 export function planCost(
-  restFetch: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>,
+  restFetch: RestFetch,
   { planID, features, init }: PlanCostOptions
 ): Promise<Gateway.Price | Error> {
-  return restFetch<Gateway.Price>(
-    'gateway',
-    `/id/plan/${planID}/cost`,
-    { features },
-    {
+  return restFetch<Gateway.Price>({
+    service: 'gateway',
+    endpoint: `/id/plan/${planID}/cost`,
+    body: { features },
+    options: {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       ...init,
-    }
-  );
+    },
+  });
 }

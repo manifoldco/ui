@@ -4,9 +4,9 @@ import { gql } from '@manifoldco/gql-zero';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
-import { Connection } from '../../utils/connections';
 import { Catalog } from '../../types/catalog';
 import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
+import { RestFetch } from '../../utils/restFetch';
 
 /* eslint-disable no-console */
 
@@ -42,12 +42,7 @@ const query = gql`
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** Product to provision (slug) */
@@ -128,9 +123,14 @@ export class ManifoldDataProvisionButton {
       features: {},
     };
 
-    const response = await this.restFetch<Gateway.Resource>('gateway', `/resource/`, req, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/resource/`,
+      body: req,
+      options: {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      },
     });
 
     if (response instanceof Error) {
@@ -157,10 +157,10 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const productResp = await this.restFetch<Catalog.Product[]>(
-      'catalog',
-      `/products/?label=${productLabel}`
-    );
+    const productResp = await this.restFetch<Catalog.Product[]>({
+      service: 'catalog',
+      endpoint: `/products/?label=${productLabel}`,
+    });
 
     if (productResp instanceof Error) {
       console.error(productResp);
@@ -173,10 +173,10 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const planResp = await this.restFetch<Catalog.Plan[]>(
-      'catalog',
-      `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`
-    );
+    const planResp = await this.restFetch<Catalog.Plan[]>({
+      service: 'catalog',
+      endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
+    });
 
     if (planResp instanceof Error) {
       console.error(planResp);

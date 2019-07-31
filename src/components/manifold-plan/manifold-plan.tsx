@@ -2,18 +2,13 @@ import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** URL-friendly slug (e.g. `"kitefin"`) */
@@ -37,10 +32,10 @@ export class ManifoldPlan {
     }
 
     this.product = undefined;
-    const response = await this.restFetch<Catalog.ExpandedProduct[]>(
-      'catalog',
-      `/products/?label=${productLabel}`
-    );
+    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
+      service: 'catalog',
+      endpoint: `/products/?label=${productLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
@@ -57,10 +52,10 @@ export class ManifoldPlan {
     }
 
     this.plan = undefined;
-    const response = await this.restFetch<Catalog.ExpandedPlan[]>(
-      'catalog',
-      `/plans/?product_id=${productId}&label=${planLabel}`
-    );
+    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
+      service: 'catalog',
+      endpoint: `/plans/?product_id=${productId}&label=${planLabel}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);

@@ -2,7 +2,7 @@ import { h, Component, Element, State, Prop, Event, EventEmitter, Watch } from '
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { Connection } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 
 interface EventDetail {
   productId?: string;
@@ -13,12 +13,7 @@ interface EventDetail {
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: <T>(
-    service: keyof Connection,
-    endpoint: string,
-    body?: object,
-    options?: object
-  ) => Promise<T | Error>;
+  @Prop() restFetch?: RestFetch;
   @Prop() skeleton?: boolean = false;
   @Prop() productId?: string;
   @Prop() productLabel?: string;
@@ -82,10 +77,10 @@ export class ManifoldServiceCard {
 
     if (productId) {
       this.product = undefined;
-      const productResp = await this.restFetch<Catalog.ExpandedProduct>(
-        'catalog',
-        `/products/${productId}`
-      );
+      const productResp = await this.restFetch<Catalog.ExpandedProduct>({
+        service: 'catalog',
+        endpoint: `/products/${productId}`,
+      });
 
       if (productResp instanceof Error) {
         console.error(productResp);
@@ -96,10 +91,10 @@ export class ManifoldServiceCard {
 
       await this.fetchIsFree();
     } else if (productLabel) {
-      const productResp = await this.restFetch<Catalog.ExpandedProduct[]>(
-        'catalog',
-        `/products/?label=${productLabel}`
-      );
+      const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
+        service: 'catalog',
+        endpoint: `/products/?label=${productLabel}`,
+      });
 
       if (productResp instanceof Error) {
         console.error(productResp);
@@ -122,10 +117,10 @@ export class ManifoldServiceCard {
       return;
     }
 
-    const response = await this.restFetch<Catalog.ExpandedPlan[]>(
-      'catalog',
-      `/plans/?product_id=${this.product.id}`
-    );
+    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
+      service: 'catalog',
+      endpoint: `/plans/?product_id=${this.product.id}`,
+    });
 
     if (response instanceof Error) {
       console.error(response);
