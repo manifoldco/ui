@@ -10,19 +10,22 @@ export class ManifoldAuthToken {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() setAuthToken: (s: string) => void = () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
-  @Prop({ mutable: true }) token?: string;
+  @Prop() token?: string;
   @Prop() oauthUrl?: string;
   @Event() manifoldOauthTokenChange: EventEmitter;
 
-  @Watch('token') tokenChange(newToken: string) {
-    this.setAuthToken(newToken);
-    this.manifoldOauthTokenChange.emit(newToken);
+  @Watch('token') tokenChange(newToken?: string) {
+    this.setExternalToken(newToken);
   }
 
   componentWillLoad() {
-    if (this.token) {
-      if (!isExpired(this.token)) {
-        this.setAuthToken(this.token);
+    this.setExternalToken(this.token);
+  }
+
+  setExternalToken(token?: string) {
+    if (token) {
+      if (!isExpired(token)) {
+        this.setAuthToken(token);
       }
     }
   }
@@ -30,7 +33,9 @@ export class ManifoldAuthToken {
   setInternalToken = (e: CustomEvent) => {
     const payload = e.detail as AuthToken;
     if (!payload.error && payload.expiry) {
-      this.token = `${payload.token}|${payload.expiry}`;
+      const formattedToken = `${payload.token}|${payload.expiry}`;
+      this.setAuthToken(formattedToken);
+      this.manifoldOauthTokenChange.emit(formattedToken);
     }
   };
 
