@@ -5,6 +5,7 @@ import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   planId: string;
@@ -238,6 +239,7 @@ export class ManifoldPlanDetails {
     }
   };
 
+  @logger()
   render() {
     if (this.plan && this.product) {
       const { logo_url, name: productName } = this.product.body;
@@ -297,7 +299,6 @@ export class ManifoldPlanDetails {
           </header>
           <br />
           <manifold-skeleton-text>Features features features features</manifold-skeleton-text>
-          {this.regionSelector}
           <footer class="footer">
             <manifold-skeleton-text>Free</manifold-skeleton-text>
           </footer>

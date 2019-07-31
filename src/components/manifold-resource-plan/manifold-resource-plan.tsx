@@ -2,9 +2,11 @@ import { h, Component } from '@stencil/core';
 
 import ResourceTunnel, { ResourceState } from '../../data/resource';
 import { convertPlan, convertProduct } from '../../utils/gatewayToCatalog';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
+  @logger()
   render() {
     return (
       <ResourceTunnel.Consumer>

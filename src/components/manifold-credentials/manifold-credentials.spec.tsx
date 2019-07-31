@@ -3,8 +3,24 @@ import fetchMock from 'fetch-mock';
 
 import { Resource, Credential } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
-
 import { ManifoldCredentials } from './manifold-credentials';
+import { createRestFetch } from '../../utils/restFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldCredentials.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 describe('<manifold-credentials>', () => {
   it('fetches the resource id on load if not set', () => {
@@ -83,7 +99,7 @@ describe('<manifold-credentials>', () => {
     it('will do nothing on a fetch error', async () => {
       const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldCredentials],

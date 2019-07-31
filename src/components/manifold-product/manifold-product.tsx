@@ -1,16 +1,15 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
   @State() product?: Catalog.Product;
@@ -26,24 +25,37 @@ export class ManifoldProduct {
   }
 
   fetchProduct = async (productLabel: string) => {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const productResp = await fetch(
-      `${this.connection.catalog}/products?label=${productLabel}`,
-      withAuth(this.authToken)
-    );
-    const products: Catalog.Product[] = await productResp.json();
-    this.product = products[0]; // eslint-disable-line prefer-destructuring
-    const providerResp = await fetch(
-      `${this.connection.catalog}/providers/${products[0].body.provider_id}`,
-      withAuth(this.authToken)
-    );
-    const provider = await providerResp.json();
-    this.provider = provider;
+    this.product = undefined;
+    const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
+      service: 'catalog',
+      endpoint: `/products/?label=${productLabel}`,
+    });
+
+    if (productResp instanceof Error) {
+      console.error(productResp);
+      return;
+    }
+
+    this.product = productResp[0]; // eslint-disable-line prefer-destructuring
+
+    const providerResp = await this.restFetch<Catalog.Provider>({
+      service: 'catalog',
+      endpoint: `/providers/${productResp[0].body.provider_id}`,
+    });
+
+    if (providerResp instanceof Error) {
+      console.error(providerResp);
+      return;
+    }
+
+    this.provider = providerResp;
   };
 
+  @logger()
   render() {
     return (
       <manifold-product-page product={this.product} provider={this.provider}>
@@ -55,4 +67,4 @@ export class ManifoldProduct {
   }
 }
 
-Tunnel.injectProps(ManifoldProduct, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldProduct, ['restFetch']);

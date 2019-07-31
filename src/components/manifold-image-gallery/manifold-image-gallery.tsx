@@ -1,4 +1,5 @@
 import { h, Component, Prop, State, FunctionalComponent } from '@stencil/core';
+import logger from '../../utils/logger';
 
 interface ThumbnailProps {
   src: string;
@@ -27,6 +28,7 @@ export class ImageGallery {
     this.selectedImage = image;
   };
 
+  @logger()
   render() {
     if (Array.isArray(this.images)) {
       if (this.images.length === 0) {

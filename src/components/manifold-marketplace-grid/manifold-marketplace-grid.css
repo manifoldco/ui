@@ -77,9 +77,15 @@
     color: var(--link-color-active);
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     color: var(--link-color-hover);
+  }
+
+  &:focus:focus-visible {
+    color: var(--link-color-active);
+  }
+
+  &:not(:focus-visible):focus {
     outline: 0;
   }
 }
@@ -98,6 +104,8 @@
   left: 0;
   z-index: var(--manifold-layer-hover);
   grid-column: 1 / -1; /* always start new row, and span full row */
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
   width: 100%;
   margin-top: 0;

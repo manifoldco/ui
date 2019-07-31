@@ -1,4 +1,5 @@
 import { h, Component, Prop, Event, State, EventEmitter, Watch } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-input',
@@ -35,6 +36,7 @@ export class ManifoldSelect {
     this.updateValue.emit({ name: this.name, value: this.value });
   };
 
+  @logger()
   render() {
     return (
       <input

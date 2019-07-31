@@ -1,4 +1,5 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-button',
@@ -22,6 +23,7 @@ export class ManifoldButton {
     }
   };
 
+  @logger()
   render() {
     return (
       <button

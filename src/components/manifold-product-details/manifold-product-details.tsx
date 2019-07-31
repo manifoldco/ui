@@ -1,6 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import skeletonProduct from '../../data/product';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-product-details',
@@ -10,6 +11,7 @@ import skeletonProduct from '../../data/product';
 export class ManifoldProductDetails {
   @Prop() product?: Catalog.Product;
 
+  @logger()
   render() {
     const {
       body: { tagline, value_props, images = [] },

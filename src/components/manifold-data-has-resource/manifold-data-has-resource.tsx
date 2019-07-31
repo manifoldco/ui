@@ -1,17 +1,15 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Marketplace } from '../../types/marketplace';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
 import Tunnel from '../../data/connection';
+import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-has-resource', shadow: true })
 export class ManifoldDataHasResource {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   @State() interval?: number;
@@ -43,23 +41,30 @@ export class ManifoldDataHasResource {
   }
 
   async fetchResources() {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const resourcesResp = await fetch(
-      `${this.connection.marketplace}/resources/?me`,
-      withAuth(this.authToken)
-    );
-    const resources: Marketplace.Resource[] = await resourcesResp.json();
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    const resources: Marketplace.Resource[] = await response;
     if (Array.isArray(resources) && resources.length) {
       this.hasResources = true;
     }
   }
 
+  @logger()
   render() {
     return <slot name={this.hasResources ? 'has-resource' : 'no-resource'} />;
   }
 }
 
-Tunnel.injectProps(ManifoldDataHasResource, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataHasResource, ['restFetch']);

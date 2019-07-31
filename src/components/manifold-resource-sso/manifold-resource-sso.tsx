@@ -2,6 +2,7 @@ import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import { Gateway } from '../../types/gateway';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-sso' })
 export class ManifoldResourceSso {
@@ -11,6 +12,7 @@ export class ManifoldResourceSso {
   @Event({ eventName: 'manifold-ssoButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-ssoButton-success', bubbles: true }) success: EventEmitter;
 
+  @logger()
   render() {
     return (
       <manifold-data-sso-button

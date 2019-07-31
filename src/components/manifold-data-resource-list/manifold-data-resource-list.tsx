@@ -1,8 +1,9 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
+
 import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   ownerId?: string;
@@ -24,9 +25,7 @@ interface RealResourceBody extends Marketplace.ResourceBody {
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -38,6 +37,7 @@ export class ManifoldDataResourceList {
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
+    this.fetchResources();
     if (!this.paused) {
       this.interval = window.setInterval(() => this.fetchResources(), 3000);
     }
@@ -49,21 +49,27 @@ export class ManifoldDataResourceList {
     }
   }
 
-  fetchResources() {
-    if (!this.connection) {
+  fetchResources = async () => {
+    if (!this.restFetch) {
       return;
     }
 
-    fetch(`${this.connection.marketplace}/resources/?me`, withAuth(this.authToken))
-      .then(response => response.json())
-      .then((resources: Marketplace.Resource[]) => {
-        if (Array.isArray(resources)) {
-          this.resources = this.userResources(
-            [...resources].sort((a, b) => a.body.label.localeCompare(b.body.label))
-          );
-        }
-      });
-  }
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    if (Array.isArray(response)) {
+      this.resources = this.userResources(
+        [...response].sort((a, b) => a.body.label.localeCompare(b.body.label))
+      );
+    }
+  };
 
   handleClick(resource: Marketplace.Resource, e: Event) {
     if (!this.resourceLinkFormat || this.preserveEvent) {
@@ -92,6 +98,7 @@ export class ManifoldDataResourceList {
     );
   }
 
+  @logger()
   render() {
     if (!Array.isArray(this.resources)) {
       return null;
@@ -110,4 +117,4 @@ export class ManifoldDataResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldDataResourceList, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataResourceList, ['restFetch']);

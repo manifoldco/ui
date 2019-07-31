@@ -1,5 +1,6 @@
 /* DEPRECATED: replaced by manifold-service-card-view */
 import { h, Component, Element, Prop } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-service-view',
@@ -19,6 +20,7 @@ export class ManifoldServiceView {
   @Prop() asCard?: boolean = true;
   @Prop() hideTags?: boolean = false;
 
+  @logger()
   render() {
     console.warn('DEPRECATED: replaced by manifold-service-card-view');
 

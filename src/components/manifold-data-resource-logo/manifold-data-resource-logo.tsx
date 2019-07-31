@@ -1,19 +1,18 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
-import { Gateway } from '../../types/gateway';
 import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
@@ -27,29 +26,42 @@ export class ManifoldDataResourceLogo {
   }
 
   fetchResource = async (resourceLabel?: string) => {
-    if (!this.connection || !this.resourceLabel) {
+    if (!this.restFetch || !this.resourceLabel) {
       return;
     }
 
     this.product = undefined;
-    const { catalog, gateway } = this.connection;
-    const response = await fetch(
-      `${gateway}/resources/me/${resourceLabel}`,
-      withAuth(this.authToken)
-    );
-    const resource: Gateway.Resource = await response.json();
-    const productId = resource.product && resource.product.id;
-    const productResp = await fetch(`${catalog}/products/${productId}`, withAuth(this.authToken));
-    const product: Catalog.Product = await productResp.json();
+    const resourceResp = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
+
+    if (resourceResp instanceof Error) {
+      console.error(resourceResp);
+      return;
+    }
+
+    const resource: Marketplace.Resource = resourceResp[0];
+    const productId = resource.body.product_id;
+    const productResp = await this.restFetch<Catalog.Product>({
+      service: 'catalog',
+      endpoint: `/products/${productId}`,
+    });
+
+    if (productResp instanceof Error) {
+      console.error(productResp);
+      return;
+    }
 
     // NOTE: Temporary util GraphQL supports resources
     const newProduct = {
-      displayName: product.body.name,
-      logoUrl: product.body.logo_url,
+      displayName: productResp.body.name,
+      logoUrl: productResp.body.logo_url,
     };
     this.product = newProduct as Product;
   };
 
+  @logger()
   render() {
     return this.product ? (
       <img src={this.product.logoUrl} alt={this.alt || this.product.displayName} />
@@ -57,4 +69,4 @@ export class ManifoldDataResourceLogo {
   }
 }
 
-Tunnel.injectProps(ManifoldDataResourceLogo, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldDataResourceLogo, ['restFetch']);

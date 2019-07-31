@@ -1,35 +1,43 @@
 import { h, Component, Prop, State, Event, Element, EventEmitter } from '@stencil/core';
+
 import { Option } from '../../types/Select';
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-region-selector' })
 export class ManifoldRegionSelector {
   @Element() el: HTMLElement;
   @Prop() allowedRegions: string[] = [];
   @Prop() ariaLabel: string;
-  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   @Prop() name: string;
   @Prop() preferredRegions?: string[];
   @Prop() value?: string;
+  @Prop({ mutable: true }) regions?: Catalog.Region[];
   @State() globalRegion: Catalog.Region = globalRegion;
-  @State() regions?: Catalog.Region[];
   @Event() updateValue: EventEmitter;
 
   async componentWillLoad() {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const response = await fetch(`${this.connection.catalog}/regions`, withAuth(this.authToken));
-    const regions: Catalog.Region[] = await response.json();
+    const response = await this.restFetch<Catalog.Region[]>({
+      service: 'catalog',
+      endpoint: `/regions`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
     // Sorting is important, otherwise the region selector is in a different order every plan
-    this.regions = this.sortRegions(regions, this.preferredRegions);
+    this.regions = this.sortRegions(response, this.preferredRegions);
     // Set global region (the one in src/data is just a fallback; we should always grab live)
     const global = this.regions.find(({ body: { location } }) => location === 'global');
     if (global) {
@@ -81,6 +89,7 @@ export class ManifoldRegionSelector {
     return `${platform.replace('digital-ocean', 'do')}-${location}`;
   }
 
+  @logger()
   render() {
     const regions = this.filterRegions(this.regions || []);
 
@@ -104,4 +113,4 @@ export class ManifoldRegionSelector {
   }
 }
 
-Tunnel.injectProps(ManifoldRegionSelector, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldRegionSelector, ['restFetch']);

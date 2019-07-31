@@ -2,16 +2,14 @@ import { h, Component, Prop, State, Element } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** Comma-separated list of hidden products (labels) */
   @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
@@ -41,15 +39,22 @@ export class ManifoldMarketplace {
   }
 
   fetchProducts = async () => {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const response = await fetch(`${this.connection.catalog}/products`, withAuth(this.authToken));
-    const products: Catalog.ExpandedProduct[] = await response.json();
+    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
+      service: 'catalog',
+      endpoint: `/products`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
 
     // Alphabetize once, then don’t worry about it
-    this.services = [...products].sort((a, b) => a.body.name.localeCompare(b.body.name));
+    this.services = [...response].sort((a, b) => a.body.name.localeCompare(b.body.name));
   };
 
   private parse(list: string): string[] {
@@ -68,6 +73,7 @@ export class ManifoldMarketplace {
     }
   }
 
+  @logger()
   render() {
     return (
       <manifold-marketplace-grid
@@ -86,4 +92,4 @@ export class ManifoldMarketplace {
   }
 }
 
-Tunnel.injectProps(ManifoldMarketplace, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldMarketplace, ['restFetch']);

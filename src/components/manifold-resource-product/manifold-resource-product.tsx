@@ -2,6 +2,7 @@ import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import { Gateway } from '../../types/gateway';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-product' })
 export class ManifoldResourceProduct {
@@ -9,6 +10,7 @@ export class ManifoldResourceProduct {
   @Prop() loading: boolean = true;
   @Prop() asCard?: boolean = false;
 
+  @logger()
   render() {
     return this.data && this.data.product ? (
       <manifold-service-view

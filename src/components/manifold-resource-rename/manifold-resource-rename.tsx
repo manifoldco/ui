@@ -2,6 +2,7 @@ import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import { Gateway } from '../../types/gateway';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
@@ -14,6 +15,7 @@ export class ManifoldResourceRename {
   @Event({ eventName: 'manifold-renameButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-renameButton-success', bubbles: true }) success: EventEmitter;
 
+  @logger()
   render() {
     return (
       <manifold-data-rename-button

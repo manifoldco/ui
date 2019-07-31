@@ -1,4 +1,5 @@
 import { storiesOf } from '@storybook/html';
+
 import markdown from '../docs/docs/components/manifold-resource-plan.md';
 
 storiesOf('Resource Plan Details 🔒', module)
