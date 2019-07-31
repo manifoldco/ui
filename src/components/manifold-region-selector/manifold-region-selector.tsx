@@ -35,7 +35,6 @@ export class ManifoldRegionSelector {
       return;
     }
 
-    debugger;
     // Sorting is important, otherwise the region selector is in a different order every plan
     this.regions = this.sortRegions(response, this.preferredRegions);
     // Set global region (the one in src/data is just a fallback; we should always grab live)
