@@ -130,7 +130,7 @@ describe('<manifold-resource-list>', () => {
     const page = await newSpecPage({
       components: [ManifoldResourceList],
       html: `
-          <manifold-resource-list></manifold-resource-list>
+          <manifold-resource-list paused=""></manifold-resource-list>
         `,
     });
 
