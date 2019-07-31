@@ -1,4 +1,5 @@
 import { h, Component } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-skeleton-text',
@@ -6,6 +7,7 @@ import { h, Component } from '@stencil/core';
   shadow: true,
 })
 export class ManifoldSkeletonText {
+  @logger()
   render() {
     return (
       <div class="wrapper">

@@ -9,6 +9,7 @@ import {
   formatCategoryLabel,
   filteredServices,
 } from '../../utils/marketplace';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-marketplace-grid',
@@ -197,6 +198,7 @@ export class ManifoldMarketplaceGrid {
     />
   );
 
+  @logger()
   render() {
     return (
       <div class="wrapper" data-categorized={this.showCategories}>

@@ -1,6 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { categoryIcon } from '../../utils/marketplace';
 import serviceTemplates from '../../data/templates';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   category: string;
@@ -36,6 +37,7 @@ export class ManifoldTemplateCard {
     return serviceTemplates.filter(({ category }) => category === this.category);
   }
 
+  @logger()
   render() {
     if (this.templates.length === 0) {
       return null;

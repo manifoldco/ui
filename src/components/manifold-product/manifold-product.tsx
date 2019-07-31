@@ -3,6 +3,7 @@ import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
@@ -44,6 +45,7 @@ export class ManifoldProduct {
     this.provider = provider;
   };
 
+  @logger()
   render() {
     return (
       <manifold-product-page product={this.product} provider={this.provider}>

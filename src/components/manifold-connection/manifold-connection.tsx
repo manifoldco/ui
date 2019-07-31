@@ -4,6 +4,7 @@ import Tunnel from '../../data/connection';
 import { connections } from '../../utils/connections';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 import { isExpired } from '../../utils/auth';
+import logger from '../../utils/logger';
 
 const TOKEN_KEY = 'manifold_api_token';
 
@@ -39,6 +40,7 @@ export class ManiTunnel {
     return undefined;
   }
 
+  @logger()
   render() {
     return (
       <Tunnel.Provider

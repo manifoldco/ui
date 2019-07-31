@@ -4,6 +4,7 @@ import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import { Gateway } from '../../types/gateway';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
@@ -61,6 +62,7 @@ export class ManifoldResourceCard {
     }
   }
 
+  @logger()
   render() {
     return this.resource ? (
       <manifold-resource-card-view

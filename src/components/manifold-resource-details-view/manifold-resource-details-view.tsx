@@ -3,6 +3,7 @@ import { Gateway } from '../../types/gateway';
 import { FeatureName } from './components/FeatureName';
 import { FeatureValue } from './components/FeatureValue';
 import { $ } from '../../utils/currency';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-resource-details-view',
@@ -12,6 +13,7 @@ import { $ } from '../../utils/currency';
 export class ManifoldResourceDetails {
   @Prop() data?: Gateway.Resource;
 
+  @logger()
   render() {
     if (this.data) {
       const { expanded_features, name } = this.data.plan as Gateway.ResolvedPlan;

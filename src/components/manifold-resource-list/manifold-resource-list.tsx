@@ -6,6 +6,7 @@ import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 interface FoundResource {
   id: string;
@@ -159,6 +160,7 @@ export class ManifoldResourceList {
     }
   }
 
+  @logger()
   render() {
     if (Array.isArray(this.resources) && !this.resources.length) {
       return <slot name="no-resources" />;

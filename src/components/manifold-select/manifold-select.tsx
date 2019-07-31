@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { Option } from '../../types/Select';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-select',
@@ -24,6 +25,7 @@ export class ManifoldSelect {
     this.updateValue.emit({ name: this.name, value });
   };
 
+  @logger()
   render() {
     return (
       <select name={this.name} required={this.required} onChange={this.onChangeHandler}>

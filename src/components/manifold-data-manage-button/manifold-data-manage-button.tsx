@@ -4,6 +4,7 @@ import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -120,6 +121,7 @@ export class ManifoldDataManageButton {
     }
   }
 
+  @logger()
   render() {
     return (
       <button type="button" onClick={() => this.update()}>

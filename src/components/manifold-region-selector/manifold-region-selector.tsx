@@ -5,6 +5,7 @@ import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-region-selector' })
 export class ManifoldRegionSelector {
@@ -81,6 +82,7 @@ export class ManifoldRegionSelector {
     return `${platform.replace('digital-ocean', 'do')}-${location}`;
   }
 
+  @logger()
   render() {
     const regions = this.filterRegions(this.regions || []);
 

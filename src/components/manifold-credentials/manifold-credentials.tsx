@@ -4,6 +4,7 @@ import { Marketplace } from '../../types/marketplace';
 import ConnectionTunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
@@ -66,6 +67,7 @@ export class ManifoldCredentials {
     this.fetchCredentials();
   };
 
+  @logger()
   render() {
     return (
       <manifold-resource-credentials-view

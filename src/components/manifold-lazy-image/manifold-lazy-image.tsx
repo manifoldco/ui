@@ -1,4 +1,5 @@
 import { h, Component, Prop, State } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-lazy-image' })
 export class ManifoldLazyImage {
@@ -37,6 +38,7 @@ export class ManifoldLazyImage {
     }
   };
 
+  @logger()
   render() {
     // TODO reimplement lazy loading and ensure it works on search in manifold-marketplace
     return (

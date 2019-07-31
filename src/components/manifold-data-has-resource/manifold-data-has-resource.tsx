@@ -4,6 +4,7 @@ import { Marketplace } from '../../types/marketplace';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import Tunnel from '../../data/connection';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-has-resource', shadow: true })
 export class ManifoldDataHasResource {
@@ -57,6 +58,7 @@ export class ManifoldDataHasResource {
     }
   }
 
+  @logger()
   render() {
     return <slot name={this.hasResources ? 'has-resource' : 'no-resource'} />;
   }

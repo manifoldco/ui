@@ -1,4 +1,5 @@
 import { h, Component, Element, Prop } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-icon',
@@ -39,6 +40,7 @@ export class ManifoldIcon {
     });
   }
 
+  @logger()
   render() {
     return (
       <svg
