@@ -199,9 +199,9 @@ export namespace Components {
     */
     'productLabel'?: string;
     /**
-    * Region to provision (complete name), omit for all region
+    * Region to provision (ID)
     */
-    'regionName'?: string;
+    'regionId'?: string;
     /**
     * The label of the resource to provision
     */
@@ -614,6 +614,7 @@ export namespace Components {
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
+    'productName'?: string;
     'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView {
@@ -1292,9 +1293,9 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
     /**
-    * Region to provision (complete name), omit for all region
+    * Region to provision (ID)
     */
-    'regionName'?: string;
+    'regionId'?: string;
     /**
     * The label of the resource to provision
     */
@@ -1734,6 +1735,7 @@ declare namespace LocalJSX {
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
+    'productName'?: string;
     'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {
