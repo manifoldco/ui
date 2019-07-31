@@ -3,6 +3,7 @@ import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {
@@ -65,6 +66,7 @@ export class ManifoldPlan {
     this.plan = response[0]; // eslint-disable-line prefer-destructuring
   }
 
+  @logger()
   render() {
     return <manifold-plan-details scrollLocked={false} plan={this.plan} product={this.product} />;
   }

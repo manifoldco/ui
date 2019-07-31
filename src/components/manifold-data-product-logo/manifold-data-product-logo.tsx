@@ -4,6 +4,7 @@ import { gql } from '@manifoldco/gql-zero';
 import { GraphqlResponseBody, GraphqlRequestBody } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
+import logger from '../../utils/logger';
 
 const query = gql`
   query PRODUCT_LOGO($productLabel: String!) {
@@ -48,6 +49,7 @@ export class ManifoldDataProductLogo {
     this.product = data.product;
   };
 
+  @logger()
   render() {
     if (this.resourceLabel) {
       console.warn('DEPRECATION WARNING: Use `manifold-data-resource-logo` instead.');

@@ -3,6 +3,7 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { Gateway } from '../../types/gateway';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
@@ -70,6 +71,7 @@ export class ManifoldResourceCard {
     }
   }
 
+  @logger()
   render() {
     return this.resource ? (
       <manifold-resource-card-view

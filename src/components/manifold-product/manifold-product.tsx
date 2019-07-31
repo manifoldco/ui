@@ -3,6 +3,7 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
@@ -54,6 +55,7 @@ export class ManifoldProduct {
     this.provider = providerResp;
   };
 
+  @logger()
   render() {
     return (
       <manifold-product-page product={this.product} provider={this.provider}>

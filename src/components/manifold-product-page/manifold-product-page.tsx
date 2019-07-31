@@ -3,6 +3,7 @@ import { arrow_up_right, book, life_buoy } from '@manifoldco/icons';
 import { Catalog } from '../../types/catalog';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-product-page',
@@ -22,6 +23,7 @@ export class ManifoldProductPage {
     );
   }
 
+  @logger()
   render() {
     if (this.product) {
       const { documentation_url, support_email, name, label, logo_url, tags } = this.product.body;

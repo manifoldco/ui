@@ -5,6 +5,7 @@ import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
@@ -60,6 +61,7 @@ export class ManifoldDataResourceLogo {
     this.product = newProduct as Product;
   };
 
+  @logger()
   render() {
     return this.product ? (
       <img src={this.product.logoUrl} alt={this.alt || this.product.displayName} />

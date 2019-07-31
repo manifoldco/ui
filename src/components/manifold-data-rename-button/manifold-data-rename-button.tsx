@@ -3,6 +3,7 @@ import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stenci
 import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -166,6 +167,7 @@ export class ManifoldDataRenameButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
+  @logger()
   render() {
     return (
       <button

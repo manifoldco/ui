@@ -3,6 +3,7 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-has-resource', shadow: true })
 export class ManifoldDataHasResource {
@@ -60,6 +61,7 @@ export class ManifoldDataHasResource {
     }
   }
 
+  @logger()
   render() {
     return <slot name={this.hasResources ? 'has-resource' : 'no-resource'} />;
   }

@@ -5,6 +5,7 @@ import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -125,6 +126,7 @@ export class ManifoldDataManageButton {
     this.success.emit(success);
   }
 
+  @logger()
   render() {
     return (
       <button type="button" onClick={() => this.update()}>

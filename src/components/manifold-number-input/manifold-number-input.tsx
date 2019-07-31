@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { minus, plus } from '@manifoldco/icons';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-number-input',
@@ -62,6 +63,7 @@ export class ManifoldNumberInput {
     this.value = value;
   };
 
+  @logger()
   render() {
     return (
       <div class="container" data-error={this.outOfBound}>

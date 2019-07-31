@@ -2,6 +2,7 @@ import { h, Component, Prop, Watch, Event, EventEmitter } from '@stencil/core';
 import { AuthToken } from '@manifoldco/shadowcat';
 import Tunnel from '../../data/connection';
 import { isExpired } from '../../utils/auth';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
@@ -33,6 +34,7 @@ export class ManifoldAuthToken {
     }
   };
 
+  @logger()
   render() {
     return (
       <manifold-oauth onReceiveManifoldToken={this.setInternalToken} oauthUrl={this.oauthUrl} />

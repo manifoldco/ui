@@ -4,6 +4,7 @@ import { refresh_cw } from '@manifoldco/icons';
 import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   resourceId?: string;
@@ -103,6 +104,7 @@ export class ManifoldResourceCardView {
     }
   };
 
+  @logger()
   render() {
     return !this.loading && this.resourceId ? (
       <a

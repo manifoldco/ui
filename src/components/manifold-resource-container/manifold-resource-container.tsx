@@ -4,6 +4,7 @@ import { Gateway } from '../../types/gateway';
 import ConnectionTunnel from '../../data/connection';
 import ResourceTunnel from '../../data/resource';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
@@ -44,6 +45,7 @@ export class ManifoldResourceContainer {
     this.loading = false;
   };
 
+  @logger()
   render() {
     return (
       <ResourceTunnel.Provider state={{ data: this.resource, loading: this.loading }}>

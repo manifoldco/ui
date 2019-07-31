@@ -3,6 +3,7 @@ import { h, Component, Element, State, Prop, Event, EventEmitter, Watch } from '
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   productId?: string;
@@ -143,6 +144,7 @@ export class ManifoldServiceCard {
     }
   };
 
+  @logger()
   render() {
     return !this.skeleton && !this.loading && this.product ? (
       <a

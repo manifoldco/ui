@@ -1,5 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
+import logger from '../../utils/logger';
 
 const AVAILABLE = 'available';
 const OFFLINE = 'offline';
@@ -37,6 +38,7 @@ export class ManifoldResourceStatusView {
     return message[OFFLINE];
   }
 
+  @logger()
   render() {
     if (this.loading) {
       return (

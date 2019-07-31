@@ -4,6 +4,7 @@ import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { Connector } from '../../types/connector';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -126,6 +127,7 @@ export class ManifoldDataSsoButton {
     this.resourceId = resources[0].id;
   }
 
+  @logger()
   render() {
     return (
       <button type="submit" onClick={() => this.sso()} disabled={!this.resourceId && !this.loading}>

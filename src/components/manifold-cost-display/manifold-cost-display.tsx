@@ -2,6 +2,7 @@ import { h, JSX, Component, Element, Prop } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { $ } from '../../utils/currency';
 import { numberFeatureMeasurableDisplayValue } from '../../utils/plan';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-cost-display', styleUrl: 'manifold-cost-display.css', shadow: true })
 export class ManifoldCostDisplay {
@@ -55,6 +56,7 @@ export class ManifoldCostDisplay {
     return output;
   }
 
+  @logger()
   render() {
     if (typeof this.baseCost !== 'number') {
       return <div class="cost" />;

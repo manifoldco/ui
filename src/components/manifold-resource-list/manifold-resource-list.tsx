@@ -5,6 +5,7 @@ import { Catalog } from '../../types/catalog';
 import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 interface FoundResource {
   id: string;
@@ -167,6 +168,7 @@ export class ManifoldResourceList {
     }
   }
 
+  @logger()
   render() {
     if (Array.isArray(this.resources) && !this.resources.length) {
       return <slot name="no-resources" />;

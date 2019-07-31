@@ -7,6 +7,7 @@ import { globalRegion } from '../../data/region';
 import { Catalog } from '../../types/catalog';
 import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -209,6 +210,7 @@ export class ManifoldDataProvisionButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
+  @logger()
   render() {
     return (
       <button

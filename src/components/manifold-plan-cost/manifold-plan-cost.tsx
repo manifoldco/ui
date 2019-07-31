@@ -5,6 +5,7 @@ import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
@@ -81,6 +82,7 @@ export class ManifoldPlanCost {
     });
   }
 
+  @logger()
   render() {
     return (
       <manifold-cost-display

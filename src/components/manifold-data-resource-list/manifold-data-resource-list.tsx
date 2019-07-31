@@ -3,6 +3,7 @@ import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stenci
 import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   ownerId?: string;
@@ -97,6 +98,7 @@ export class ManifoldDataResourceList {
     );
   }
 
+  @logger()
   render() {
     if (!Array.isArray(this.resources)) {
       return null;

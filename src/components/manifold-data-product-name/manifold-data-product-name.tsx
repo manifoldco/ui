@@ -4,6 +4,7 @@ import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
@@ -73,6 +74,7 @@ export class ManifoldDataProductName {
     this.productName = resource.product && resource.product.name;
   };
 
+  @logger()
   render() {
     return this.productName || null;
   }

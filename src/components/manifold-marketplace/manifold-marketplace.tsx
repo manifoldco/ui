@@ -3,6 +3,7 @@ import { h, Component, Prop, State, Element } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
@@ -72,6 +73,7 @@ export class ManifoldMarketplace {
     }
   }
 
+  @logger()
   render() {
     return (
       <manifold-marketplace-grid

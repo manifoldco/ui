@@ -3,6 +3,7 @@ import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { Marketplace } from '../../types/marketplace';
 import ConnectionTunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
@@ -73,6 +74,7 @@ export class ManifoldCredentials {
     this.fetchCredentials();
   };
 
+  @logger()
   render() {
     return (
       <manifold-resource-credentials-view

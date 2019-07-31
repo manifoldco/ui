@@ -46,6 +46,7 @@
     "now-build": "npm run build-storybook",
     "postinstall": "cd docs && npm i",
     "prepare": "stencil build",
+    "profile": "stencil build && npx bundlesize",
     "publish": "node scripts/publish",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
@@ -55,6 +56,23 @@
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll"
   },
+  "bundlesize": [
+    {
+      "path": "./dist/esm/loader.mjs",
+      "maxSize": "15 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/manifold-!(mock)*.js",
+      "maxSize": "32 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/chunk-*.js",
+      "maxSize": "66 kB",
+      "compression": "none"
+    }
+  ],
   "dependencies": {
     "@manifoldco/gql-zero": "^0.2.0",
     "@manifoldco/shadowcat": "^0.1.5",
@@ -65,15 +83,15 @@
     "@graphql-codegen/introspection": "^1.4.0",
     "@graphql-codegen/typescript": "^1.4.0",
     "@graphql-codegen/typescript-operations": "^1.3.1",
-    "@manifoldco/eslint-plugin-stencil": "^0.2.1",
+    "@manifoldco/eslint-plugin-stencil": "^0.4.1",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
-    "@stencil/core": "^1.2.2",
+    "@stencil/core": "^1.2.3",
     "@stencil/postcss": "^1.0.1",
-    "@storybook/addons": "^5.1.9",
+    "@storybook/addons": "^5.1.10",
     "@storybook/html": "^5.1.9",
     "@types/fetch-mock": "^7.3.1",
-    "@types/jest": "24.0.15",
+    "@types/jest": "24.0.16",
     "@types/puppeteer": "1.19.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
