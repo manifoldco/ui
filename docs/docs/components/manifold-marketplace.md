@@ -86,8 +86,8 @@ when it updates. To listen to those events, add an event listener either on
 the component itself, or `document`:
 
 ```js
-document.addEventListener('manifold-marketplace-click', { detail: { productLabel } } => {
-  alert(`You clicked the card for ${productLabel}`);
+document.addEventListener('manifold-marketplace-click', { detail: { productName } } => {
+  alert(`You clicked the card for ${productName}`);
 });
 ```
 
@@ -95,7 +95,7 @@ The following events are emitted:
 
 | Event Name                   | Description                                                                                              | Data                        |
 | :--------------------------- | :------------------------------------------------------------------------------------------------------- | :-------------------------- |
-| `manifold-marketplace-click` | Fires whenever a user has clicked on a product.                                                          | `productId`, `productLabel` |
+| `manifold-marketplace-click` | Fires whenever a user has clicked on a product.                                                          | `productId`, `productLabel`, `productName` |
 | `manifold-template-click`    | Fires whenever a user has clicked on a custom template (assuming it’s not hidden with `hide-templates`). | `category`                  |
 
 ## Navigation
