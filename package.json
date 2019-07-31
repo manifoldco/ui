@@ -88,7 +88,7 @@
     "@reach/observe-rect": "^1.0.3",
     "@stencil/core": "^1.2.2",
     "@stencil/postcss": "^1.0.1",
-    "@storybook/addons": "^5.1.9",
+    "@storybook/addons": "^5.1.10",
     "@storybook/html": "^5.1.9",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "24.0.16",
