@@ -1,17 +1,15 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
 import { Gateway } from '../../types/gateway';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
   @Element() el: HTMLElement;
-  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
 
   @Prop() resourceId?: string;
   @Prop() label?: string;
@@ -35,30 +33,41 @@ export class ManifoldResourceCard {
   }
 
   async fetchResourceId(resourceId: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const response = await fetch(
-      `${this.connection.gateway}/resources/${resourceId}`,
-      withAuth(this.authToken)
-    );
-    this.resource = await response.json();
+    const response = await this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/resources/${resourceId}`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.resource = response;
   }
 
   async fetchResourceLabel(resourceName: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const response = await fetch(
-      `${this.connection.gateway}/resources/me/${resourceName}`,
-      withAuth(this.authToken)
-    );
-    const resources: Gateway.Resource[] = await response.json();
-    if (resources.length) {
+    const response = await this.restFetch<Gateway.Resource[]>({
+      service: 'gateway',
+      endpoint: `/resources/me/${resourceName}`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    if (response.length) {
       // eslint-disable-next-line prefer-destructuring
-      this.resource = resources[0];
+      this.resource = response[0];
     }
   }
 
@@ -81,4 +90,4 @@ export class ManifoldResourceCard {
   }
 }
 
-Tunnel.injectProps(ManifoldResourceCard, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldResourceCard, ['restFetch']);

@@ -2,16 +2,13 @@ import { h, Component, Prop, State, Watch } from '@stencil/core';
 
 import { Marketplace } from '../../types/marketplace';
 import ConnectionTunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   @Prop() resourceLabel: string = '';
   @Prop({ mutable: true }) resourceId?: string = '';
   @State() loading?: boolean = false;
@@ -30,33 +27,43 @@ export class ManifoldCredentials {
   }
 
   fetchCredentials = async () => {
-    if (!this.connection || !this.resourceId) {
+    if (!this.restFetch || !this.resourceId) {
       return;
     }
 
     this.loading = true;
-    const { marketplace } = this.connection;
-    const response = await fetch(
-      `${marketplace}/credentials/?resource_id=${this.resourceId}`,
-      withAuth(this.authToken)
-    );
-    this.credentials = await response.json();
+    const response = await this.restFetch<Marketplace.Credential[]>({
+      service: 'marketplace',
+      endpoint: `/credentials/?resource_id=${this.resourceId}`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    this.credentials = response;
     this.loading = false;
   };
 
   async fetchResourceId(resourceLabel: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const resourceResp = await fetch(
-      `${this.connection.marketplace}/resources/?me&label=${resourceLabel}`,
-      withAuth(this.authToken)
-    );
-    const resources: Marketplace.Resource[] = await resourceResp.json();
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+    const resources: Marketplace.Resource[] = response;
 
     if (!Array.isArray(resources) || !resources.length) {
-      console.error(`${resourceLabel} product not found`);
+      console.error(`${resourceLabel} resource not found`);
       return;
     }
 
@@ -80,4 +87,4 @@ export class ManifoldCredentials {
   }
 }
 
-ConnectionTunnel.injectProps(ManifoldCredentials, ['connection', 'authToken']);
+ConnectionTunnel.injectProps(ManifoldCredentials, ['restFetch']);

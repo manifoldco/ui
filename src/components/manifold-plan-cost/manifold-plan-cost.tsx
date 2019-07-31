@@ -1,17 +1,17 @@
 import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
+
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
-import { Connection, connections } from '../../utils/connections';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
-  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
   @Prop() compact?: boolean = false;
   @Prop() customizable?: boolean = false;
@@ -54,7 +54,7 @@ export class ManifoldPlanCost {
   }
 
   calculateCost() {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return null;
     }
 
@@ -72,15 +72,11 @@ export class ManifoldPlanCost {
     this.controller = new AbortController();
 
     // Returning the promise is necessary for componentWillLoad()
-    return planCost(
-      this.connection,
-      {
-        planID: this.planId,
-        features: allFeatures,
-        init: { signal: this.controller.signal },
-      },
-      this.authToken
-    ).then(({ cost }: Gateway.Price) => {
+    return planCost(this.restFetch, {
+      planID: this.planId,
+      features: allFeatures,
+      init: { signal: this.controller.signal },
+    }).then(({ cost }: Gateway.Price) => {
       this.baseCost = cost || 0;
       this.controller = undefined; // Request finished, so signal no longer needed
     });
@@ -99,4 +95,4 @@ export class ManifoldPlanCost {
   }
 }
 
-Tunnel.injectProps(ManifoldPlanCost, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldPlanCost, ['restFetch']);

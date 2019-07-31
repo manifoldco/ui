@@ -7,6 +7,23 @@ import { Provisioning } from '../../types/provisioning';
 import { Resource } from '../../spec/mock/marketplace';
 import { Product } from '../../spec/mock/catalog';
 import { connections } from '../../utils/connections';
+import { createRestFetch } from '../../utils/restFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldResourceList.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 const resources: Marketplace.Resource[] = [
   {
@@ -110,13 +127,23 @@ describe('<manifold-resource-list>', () => {
       .mock(`${connections.prod.catalog}/products`, [Product])
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
-    const resourceList = new ManifoldResourceList();
-    resourceList.connection = connections.prod;
+    const page = await newSpecPage({
+      components: [ManifoldResourceList],
+      html: `
+          <manifold-resource-list paused=""></manifold-resource-list>
+        `,
+    });
 
-    await resourceList.fetchResources();
+    const instance = page.rootInstance as ManifoldResourceList;
 
-    expect(resourceList.resources).toHaveLength(1);
-    expect(resourceList.resources).toEqual([
+    expect(fetchMock.called(`${connections.prod.marketplace}/resources/?me`)).toBe(true);
+    expect(fetchMock.called(`${connections.prod.catalog}/products`)).toBe(true);
+    expect(fetchMock.called(`${connections.prod.provisioning}/operations/?is_deleted=false`)).toBe(
+      true
+    );
+
+    expect(instance.resources).toHaveLength(1);
+    expect(instance.resources).toEqual([
       {
         id: Resource.id,
         name: Resource.body.name,

@@ -13,8 +13,8 @@ import {
   Gateway,
 } from './types/gateway';
 import {
-  Connection,
-} from './utils/connections';
+  RestFetch,
+} from './utils/restFetch';
 import {
   GraphqlRequestBody,
   GraphqlResponseBody,
@@ -65,6 +65,10 @@ export namespace Components {
     * _(optional)_ Specify `env="stage"` for staging
     */
     'env': 'local' | 'stage' | 'prod';
+    /**
+    * _(optional)_ Wait time for the fetch calls before it times out
+    */
+    'waitTime': number;
   }
   interface ManifoldCostDisplay {
     'baseCost'?: number;
@@ -73,56 +77,36 @@ export namespace Components {
     'measuredFeatures': Catalog.ExpandedFeature[];
   }
   interface ManifoldCredentials {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'resourceId'?: string;
     'resourceLabel': string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataDeprovisionButton {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'loading'?: boolean;
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataHasResource {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataManageButton {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'features'?: Gateway.FeatureMap;
     'planId'?: string;
     'productId'?: string;
@@ -131,20 +115,16 @@ export namespace Components {
     * Name of resource
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProductLogo {
     /**
     * _(optional)_ `alt` attribute
     */
     'alt'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -160,14 +140,6 @@ export namespace Components {
   }
   interface ManifoldDataProductName {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -175,16 +147,12 @@ export namespace Components {
     * Look up product name from resource
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProvisionButton {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -206,16 +174,12 @@ export namespace Components {
     * The label of the resource to provision
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -229,16 +193,12 @@ export namespace Components {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * Disable auto-updates?
     */
@@ -251,6 +211,10 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceLogo {
     /**
@@ -258,27 +222,15 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * Look up product logo from resource
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataSsoButton {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'loading'?: boolean;
     /**
     * The id of the resource to rename, will be fetched if not set
@@ -288,6 +240,10 @@ export namespace Components {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
@@ -325,14 +281,6 @@ export namespace Components {
   }
   interface ManifoldMarketplace {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * Comma-separated list of hidden products (labels)
     */
     'excludes'?: string;
@@ -364,6 +312,10 @@ export namespace Components {
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
     /**
     * Template format structure, with `:product` placeholder
     */
@@ -397,14 +349,6 @@ export namespace Components {
   }
   interface ManifoldPlan {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * URL-friendly slug (e.g. `"kitefin"`)
     */
     'planLabel'?: string;
@@ -412,17 +356,20 @@ export namespace Components {
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
-  }
-  interface ManifoldPlanCost {
-    'allFeatures': Catalog.ExpandedFeature[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'authToken'?: string;
+    'restFetch'?: RestFetch;
+  }
+  interface ManifoldPlanCost {
+    'allFeatures': Catalog.ExpandedFeature[];
     'compact'?: boolean;
-    'connection'?: Connection;
     'customizable'?: boolean;
     'planId': string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
     'selectedFeatures': Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
@@ -441,14 +388,6 @@ export namespace Components {
   }
   interface ManifoldPlanSelector {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -460,20 +399,20 @@ export namespace Components {
     * Is this tied to an existing resource?
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProductDetails {
     'product'?: Catalog.Product;
@@ -485,32 +424,26 @@ export namespace Components {
   interface ManifoldRegionSelector {
     'allowedRegions': string[];
     'ariaLabel': string;
+    'name': string;
+    'preferredRegions'?: string[];
+    'regions'?: Catalog.Region[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'authToken'?: string;
-    'connection'?: Connection;
-    'name': string;
-    'preferredRegions'?: string[];
+    'restFetch'?: RestFetch;
     'value'?: string;
   }
   interface ManifoldResourceCard {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
     'label'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-  }
-  interface ManifoldResourceCardView {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'authToken'?: string;
-    'connection'?: Connection;
+    'restFetch'?: RestFetch;
+  }
+  interface ManifoldResourceCardView {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
@@ -519,20 +452,20 @@ export namespace Components {
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * Which resource does this belong to?
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials {}
   interface ManifoldResourceCredentialsView {
@@ -550,14 +483,6 @@ export namespace Components {
   }
   interface ManifoldResourceList {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
@@ -569,6 +494,10 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
@@ -603,17 +532,16 @@ export namespace Components {
     'required'?: boolean;
   }
   interface ManifoldServiceCard {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
     'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView {
@@ -1148,6 +1076,10 @@ declare namespace LocalJSX {
     * _(optional)_ Specify `env="stage"` for staging
     */
     'env'?: 'local' | 'stage' | 'prod';
+    /**
+    * _(optional)_ Wait time for the fetch calls before it times out
+    */
+    'waitTime'?: number;
   }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
@@ -1156,26 +1088,14 @@ declare namespace LocalJSX {
     'measuredFeatures'?: Catalog.ExpandedFeature[];
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'resourceId'?: string;
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'loading'?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
@@ -1185,30 +1105,22 @@ declare namespace LocalJSX {
     * The label of the resource to deprovision
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'features'?: Gateway.FeatureMap;
     'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-manageButton-error'?: (event: CustomEvent<any>) => void;
@@ -1220,20 +1132,16 @@ declare namespace LocalJSX {
     * Name of resource
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
     /**
     * _(optional)_ `alt` attribute
     */
     'alt'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1249,14 +1157,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -1264,16 +1164,12 @@ declare namespace LocalJSX {
     * Look up product name from resource
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1299,16 +1195,12 @@ declare namespace LocalJSX {
     * The label of the resource to provision
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1326,16 +1218,12 @@ declare namespace LocalJSX {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
     /**
     * Disable auto-updates?
@@ -1349,6 +1237,10 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement> {
     /**
@@ -1356,27 +1248,15 @@ declare namespace LocalJSX {
     */
     'alt'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * Look up product logo from resource
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldDataSsoButton extends JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     'loading'?: boolean;
     'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
@@ -1389,6 +1269,10 @@ declare namespace LocalJSX {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
   interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
@@ -1427,14 +1311,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * Comma-separated list of hidden products (labels)
     */
     'excludes'?: string;
@@ -1466,6 +1342,10 @@ declare namespace LocalJSX {
     * Comma-separated list of shown products (labels)
     */
     'products'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
     /**
     * Template format structure, with `:product` placeholder
     */
@@ -1500,14 +1380,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * URL-friendly slug (e.g. `"kitefin"`)
     */
     'planLabel'?: string;
@@ -1515,17 +1387,20 @@ declare namespace LocalJSX {
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
-  }
-  interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
-    'allFeatures'?: Catalog.ExpandedFeature[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'authToken'?: string;
+    'restFetch'?: RestFetch;
+  }
+  interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
+    'allFeatures'?: Catalog.ExpandedFeature[];
     'compact'?: boolean;
-    'connection'?: Connection;
     'customizable'?: boolean;
     'planId'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {
@@ -1546,14 +1421,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlanSelector extends JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -1565,20 +1432,20 @@ declare namespace LocalJSX {
     * Is this tied to an existing resource?
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
     'product'?: Catalog.Product;
@@ -1590,33 +1457,27 @@ declare namespace LocalJSX {
   interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
     'allowedRegions'?: string[];
     'ariaLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
     'preferredRegions'?: string[];
-    'value'?: string;
-  }
-  interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
+    'regions'?: Catalog.Region[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'authToken'?: string;
-    'connection'?: Connection;
+    'restFetch'?: RestFetch;
+    'value'?: string;
+  }
+  interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
     'label'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-  }
-  interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'authToken'?: string;
-    'connection'?: Connection;
+    'restFetch'?: RestFetch;
+  }
+  interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
@@ -1626,20 +1487,20 @@ declare namespace LocalJSX {
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
     /**
     * Which resource does this belong to?
     */
     'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
   interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
@@ -1661,14 +1522,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'connection'?: Connection;
-    /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
@@ -1680,6 +1533,10 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
@@ -1722,11 +1579,6 @@ declare namespace LocalJSX {
     'required'?: boolean;
   }
   interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    'connection'?: Connection;
     'isFeatured'?: boolean;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
@@ -1734,6 +1586,10 @@ declare namespace LocalJSX {
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
     'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {

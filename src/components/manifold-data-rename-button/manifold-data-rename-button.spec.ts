@@ -3,8 +3,24 @@ import fetchMock from 'fetch-mock';
 
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
-
 import { ManifoldDataRenameButton } from './manifold-data-rename-button';
+import { createRestFetch } from '../../utils/restFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldDataRenameButton.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 describe('<manifold-data-rename-button>', () => {
   it('fetches the resource id on load if not set', () => {
@@ -83,7 +99,7 @@ describe('<manifold-data-rename-button>', () => {
     it('will do nothing on a fetch error', async () => {
       const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&name=${resourceLabel}`, []);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataRenameButton],
@@ -178,12 +194,15 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     it('will do nothing if still loading', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+      fetchMock
+        .mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200)
+        .mock(`${connections.prod.marketplace}/resources/?me&label=test`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataRenameButton],
         html: `
           <manifold-data-rename-button
+            loading=""
             resource-label="test"
           >Provision</manifold-data-rename-button>
         `,
@@ -200,7 +219,9 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     it('will do nothing if no resourceId is provided', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+      fetchMock
+        .mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200)
+        .mock(`${connections.prod.marketplace}/resources/?me&label=test`, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataRenameButton],

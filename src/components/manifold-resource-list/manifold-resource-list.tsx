@@ -4,8 +4,7 @@ import { Marketplace } from '../../types/marketplace';
 import { Catalog } from '../../types/catalog';
 import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 interface FoundResource {
@@ -33,9 +32,7 @@ interface RealResourceBody extends Marketplace.ResourceBody {
 export class ManifoldResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -97,37 +94,48 @@ export class ManifoldResourceList {
   }
 
   async fetchResources() {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
-    const resourcesResp = await fetch(
-      `${this.connection.marketplace}/resources/?me`,
-      withAuth(this.authToken)
-    );
-    const resources: Marketplace.Resource[] = await resourcesResp.json();
+    const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
 
-    if (Array.isArray(resources)) {
-      const productsResp = await fetch(
-        `${this.connection.catalog}/products`,
-        withAuth(this.authToken)
-      );
-      const products: Catalog.Product[] = await productsResp.json();
+    if (resourcesResp instanceof Error) {
+      console.error(resourcesResp);
+      return;
+    }
 
-      const operationsResp = await fetch(
-        `${this.connection.provisioning}/operations/?is_deleted=false`,
-        withAuth(this.authToken)
-      );
-      const operations: Provisioning.Operation[] = await operationsResp.json();
+    if (Array.isArray(resourcesResp)) {
+      const productsResp = await this.restFetch<Catalog.Product[]>({
+        service: 'catalog',
+        endpoint: `/products`,
+      });
+
+      if (productsResp instanceof Error) {
+        return;
+      }
+
+      const operationsResp = await this.restFetch<Provisioning.Operation[]>({
+        service: 'provisioning',
+        endpoint: `/operations/?is_deleted=false`,
+      });
+
+      if (operationsResp instanceof Error) {
+        console.error(operationsResp);
+        return;
+      }
 
       this.resources = ManifoldResourceList.userResources(
-        [...resources].sort((a, b) => a.body.label.localeCompare(b.body.label))
+        [...resourcesResp].sort((a, b) => a.body.label.localeCompare(b.body.label))
       ).map(
         (resource: Marketplace.Resource): FoundResource => {
-          const product = products.find(
+          const product = productsResp.find(
             (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
           );
-          const operation = operations
+          const operation = operationsResp
             .filter((op: Provisioning.Operation) =>
               ['provision', 'resize', 'transfer', 'deprovision'].includes(op.body.type)
             )
@@ -185,4 +193,4 @@ export class ManifoldResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldResourceList, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldResourceList, ['restFetch']);

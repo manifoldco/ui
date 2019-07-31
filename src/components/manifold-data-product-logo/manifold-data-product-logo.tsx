@@ -1,9 +1,9 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
+
 import { GraphqlResponseBody, GraphqlRequestBody } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { Connection, connections } from '../../utils/connections';
 import logger from '../../utils/logger';
 
 const query = gql`
@@ -19,10 +19,6 @@ const query = gql`
 export class ManifoldDataProductLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod; // Provided by manifold-connection
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -66,4 +62,4 @@ export class ManifoldDataProductLogo {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProductLogo, ['connection', 'authToken', 'graphqlFetch']);
+Tunnel.injectProps(ManifoldDataProductLogo, ['graphqlFetch']);

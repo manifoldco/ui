@@ -2,9 +2,8 @@ import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stenci
 import { refresh_cw } from '@manifoldco/icons';
 
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
-import { Gateway } from '../../types/gateway';
+import { Marketplace } from '../../types/marketplace';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 interface EventDetail {
@@ -25,9 +24,8 @@ const OFFLINE = 'offline';
 })
 export class ManifoldResourceCardView {
   @Element() el: HTMLElement;
-  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
 
   @Prop() label?: string;
   @Prop() name?: string;
@@ -70,20 +68,28 @@ export class ManifoldResourceCardView {
     return OFFLINE;
   }
 
-  async fetchResourceId(resourceName: string) {
-    if (!this.connection) {
+  async fetchResourceId(resourceLabel: string) {
+    if (!this.restFetch) {
       return;
     }
-    const { gateway } = this.connection;
-    const response = await fetch(
-      `${gateway}/resources/me/${resourceName}`,
-      withAuth(this.authToken)
-    );
 
-    const resource: Gateway.Resource = await response.json();
-    if (resource.id) {
-      this.resourceId = resource.id;
+    const response = await this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me&label=${resourceLabel}`,
+    });
+
+    if (response instanceof Error) {
+      console.error(response);
+      return;
     }
+    const resources: Marketplace.Resource[] = response;
+
+    if (!Array.isArray(resources) || !resources.length) {
+      console.error(`${resourceLabel} resource not found`);
+      return;
+    }
+
+    this.resourceId = resources[0].id;
   }
 
   onClick = (e: Event): void => {
@@ -144,4 +150,4 @@ export class ManifoldResourceCardView {
   }
 }
 
-Tunnel.injectProps(ManifoldResourceCardView, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldResourceCardView, ['restFetch']);

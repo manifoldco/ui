@@ -1,0 +1,393 @@
+[
+  {
+    "body": {
+      "location": "us-west-2",
+      "name": "Google Cloud - US  West 2",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235gpteq8z5tfk76f8vxhft8b2yap",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "lon1",
+      "name": "DigitalOcean - London 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235gyw8hbev5jy5j3tdzdtpcnzaau",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "eu-central-1",
+      "name": "AWS - EU Central 1 (Frankfurt)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235h6mbrrafzbhc4pau7mfm6f1c12",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "eu-west-1",
+      "name": "Google Cloud - Europe  West 1",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235hnmde7fybzbbyugqkqjjpf4r78",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "tor1",
+      "name": "DigitalOcean - Toronto 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235htn96a2v1w1vzey5k49uvqatvc",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "fra1",
+      "name": "DigitalOcean - Frankfurt 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235hw0j1561jp0qnarhnubmwjp2tj",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "nyc1",
+      "name": "DigitalOcean - New York 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235j17hyc3kw0bd5bgh799xdugq7a",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "nyc3",
+      "name": "DigitalOcean - New York 3",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235jkamf0aptkmjaauzd6f73ttk7j",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "sa-east-1",
+      "name": "AWS - South America East 1 (Sao Paulo)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235jkr4nn8437aq9hy3ed7kt32uay",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ap-northeast-2",
+      "name": "AWS - Asia Pacific Northeast 2 (Seoul)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235k1hqjt37duqn6tmgtb3cw8tm2p",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "dallas-1",
+      "name": "Rackspace - Dallas 1",
+      "platform": "rackspace",
+      "priority": 0
+    },
+    "id": "235kmne2kdkf7gdwjw8z5ekvjpugu",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-east-2",
+      "name": "AWS - US East 2 (Ohio)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235krnd90mb51mu21rgf634vyyvnw",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "nyc2",
+      "name": "DigitalOcean - New York 2",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235kwrqmb2jfecj6dk9v06y6eqqpu",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "eu-west-1",
+      "name": "AWS - EU West 1 (Ireland)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235m2c51y0625vvtk6ptf55bhpkty",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-east-1",
+      "name": "AWS - US East 1 (N. Virginia)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235mhkk15ky7ha9qpu4gazrqjt2gr",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ap-south-1",
+      "name": "AWS - Asia South 1 (Mumbai)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235muac09p0qf9hwqcfbv6kw9at94",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ap-northeast-1",
+      "name": "AWS - Asia Pacific Northeast 1 (Tokyo)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235n0zubj5zv0h67cfqd6nemktr72",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": { "location": "global", "name": "All Regions", "platform": "all", "priority": 0 },
+    "id": "235n4f9pxf8eyraj3y159x89z6jer",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-west-1",
+      "name": "AWS - US West 1 (N. California)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235nu2c0z73hq1f9qby444nnnq1fu",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-central-1",
+      "name": "Google Cloud - US  Central 1",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235p16bz8n7qkjtvqyg599qtqa9ur",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ap-southeast-1",
+      "name": "AWS - Asia Pacific Southeast 1 (Singapore)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235pczj6ej834n25rm4c5atnwh3py",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "sgp1",
+      "name": "DigitalOcean - Singapore 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235qxr0g6akn861dqxw0yfkykg0hw",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ap-southeast-2",
+      "name": "AWS - Asia Pacific Southeast 2 (Sydney)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235rtvbtj2xr3hn5ghtkab5m0bxrm",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-west-2",
+      "name": "AWS - US West 2 (Oregon)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235t4e0xt86hrgefbvyzh6f5dr7n4",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "eu-west-2",
+      "name": "AWS - EU West 2 (London)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235tzgr871feggvepe7jmkm1x4r40",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "sfo1",
+      "name": "DigitalOcean - San Francisco 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235u04aer2rrcw4zf15zehy63x546",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-east-4",
+      "name": "Google Cloud - US  East 4",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235u7nm47cknwjyjdyqwxg070zfmm",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-west-1",
+      "name": "Google Cloud - US  West 1",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235uxnm8fnf6d2wbzthz60e347rje",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "blr1",
+      "name": "DigitalOcean - Bangalore 1",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235uyvbx6qvvar88hdwku19nck34e",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "eu-west-2",
+      "name": "Google Cloud - Europe  West 2",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235v09pa9uhr2jzpf2j07pyqb771p",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "eu-west-3",
+      "name": "Google Cloud - Europe  West 3",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235vjynwbkcww95jw7q4d0ypve94m",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ams3",
+      "name": "DigitalOcean - Amsterdam 3",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235wf6yejbydr3vndv4rndqxhrjm0",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "us-east-1",
+      "name": "Google Cloud - US  East 1",
+      "platform": "gcp",
+      "priority": 0
+    },
+    "id": "235wy26njfzf53k1d050k2eg9f5ey",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ca-central-1",
+      "name": "AWS - CA Central 1 (Canada Central)",
+      "platform": "aws",
+      "priority": 0
+    },
+    "id": "235x70bffdftggtpxxp3ar601j2qa",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "ams2",
+      "name": "DigitalOcean - Amsterdam 2",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235xzuww5zhppnnxxg4xt6wkjjn0r",
+    "type": "region",
+    "version": 1
+  },
+  {
+    "body": {
+      "location": "sfo2",
+      "name": "DigitalOcean - San Francisco 2",
+      "platform": "digital-ocean",
+      "priority": 0
+    },
+    "id": "235z9fptp2za794z7yxn0aft1krza",
+    "type": "region",
+    "version": 1
+  }
+]

@@ -1,8 +1,11 @@
 import { storiesOf } from '@storybook/html';
+
 import markdown from '../docs/docs/components/manifold-service-card.md';
+import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Service card', module)
   .addParameters({ readme: { sidebar: markdown } })
+  .addDecorator(manifoldConnectionDecorator)
   .add(
     'JawsDB',
     () => `

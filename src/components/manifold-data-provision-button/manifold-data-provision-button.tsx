@@ -4,10 +4,9 @@ import { gql } from '@manifoldco/gql-zero';
 import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
 import { Catalog } from '../../types/catalog';
 import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
@@ -44,9 +43,7 @@ const query = gql`
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() connection?: Connection = connections.prod;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
   /** Product to provision (slug) */
@@ -60,13 +57,10 @@ export class ManifoldDataProvisionButton {
   @Prop() regionId?: string = globalRegion.id;
   @State() planId?: string = '';
   @State() productId?: string = '';
-  @Event({ eventName: 'manifold-provisionButton-click', bubbles: true })
-  clickEvent: EventEmitter;
-  @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true })
-  invalidEvent: EventEmitter;
-  @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) errorEvent: EventEmitter;
-  @Event({ eventName: 'manifold-provisionButton-success', bubbles: true })
-  successEvent: EventEmitter;
+  @Event({ eventName: 'manifold-provisionButton-click', bubbles: true }) click: EventEmitter;
+  @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true }) invalid: EventEmitter;
+  @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) error: EventEmitter;
+  @Event({ eventName: 'manifold-provisionButton-success', bubbles: true }) success: EventEmitter;
 
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductPlanId(newProduct, this.planLabel);
@@ -87,7 +81,7 @@ export class ManifoldDataProvisionButton {
   }
 
   async provision() {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
@@ -97,14 +91,14 @@ export class ManifoldDataProvisionButton {
     }
 
     if (this.resourceLabel && this.resourceLabel.length < 3) {
-      this.invalidEvent.emit({
+      this.invalid.emit({
         message: 'Must be at least 3 characters.',
         resourceLabel: this.resourceLabel,
       });
       return;
     }
     if (this.resourceLabel && !this.validate(this.resourceLabel)) {
-      this.invalidEvent.emit({
+      this.invalid.emit({
         message:
           'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
         resourceLabel: this.resourceLabel,
@@ -113,7 +107,7 @@ export class ManifoldDataProvisionButton {
     }
 
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
-    this.clickEvent.emit({
+    this.click.emit({
       resourceLabel: this.resourceLabel,
     });
 
@@ -130,61 +124,66 @@ export class ManifoldDataProvisionButton {
       features: {},
     };
 
-    const response = await fetch(
-      `${this.connection.gateway}/resource/`,
-      withAuth(this.authToken, {
+    const response = await this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/resource/`,
+      body: req,
+      options: {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(req),
-      })
-    );
+      },
+    });
 
-    const body = await response.json();
-
-    // If successful, this will return 200 and stop here
-    if (response.status >= 200 && response.status < 300) {
-      const success: SuccessMessage = {
-        createdAt: body.created_at,
-        message: `${this.resourceLabel} successfully provisioned`,
-        resourceId: body.id,
-        resourceLabel: body.label,
-      };
-      this.successEvent.emit(success);
-    } else {
-      // Sometimes messages are an array, sometimes they aren’t. Different strokes!
-      const message = Array.isArray(body) ? body[0].message : body.message;
+    if (response instanceof Error) {
       const error: ErrorMessage = {
-        message,
+        message: response.message,
         resourceLabel: this.resourceLabel,
       };
-      this.errorEvent.emit(error);
+      this.error.emit(error);
+      return;
     }
+
+    const success: SuccessMessage = {
+      createdAt: response.created_at,
+      message: `${this.resourceLabel} successfully provisioned`,
+      resourceId: response.id || '',
+      resourceLabel: response.label,
+    };
+    this.success.emit(success);
   }
 
   async fetchProductPlanId(productLabel: string, planLabel?: string) {
     // TODO: Add region fetching too
-    if (!productLabel || !this.connection) {
+    if (!productLabel || !this.restFetch) {
       return;
     }
 
-    const productResp = await fetch(
-      `${this.connection.catalog}/products/?label=${productLabel}`,
-      withAuth(this.authToken)
-    );
-    const products: Catalog.Product[] = await productResp.json();
+    const productResp = await this.restFetch<Catalog.Product[]>({
+      service: 'catalog',
+      endpoint: `/products/?label=${productLabel}`,
+    });
+
+    if (productResp instanceof Error) {
+      console.error(productResp);
+      return;
+    }
+    const products: Catalog.Product[] = await productResp;
 
     if (!Array.isArray(products) || !products.length) {
       console.error(`${productLabel} product not found`);
       return;
     }
 
-    const planResp = await fetch(
-      `${this.connection.catalog}/plans/?product_id=${products[0].id}${
-        planLabel ? `&label=${planLabel}` : ''
-      }`,
-      withAuth(this.authToken)
-    );
-    const plans: Catalog.Plan[] = await planResp.json();
+    const planResp = await this.restFetch<Catalog.Plan[]>({
+      service: 'catalog',
+      endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
+    });
+
+    if (planResp instanceof Error) {
+      console.error(planResp);
+      return;
+    }
+    const plans: Catalog.Plan[] = await planResp;
 
     if (!Array.isArray(plans) || !plans.length) {
       console.error(`${productLabel} plans not found`);
@@ -201,7 +200,6 @@ export class ManifoldDataProvisionButton {
     }
 
     const { data } = await this.graphqlFetch<ProfileMessage>({ query });
-    console.log(data);
 
     if (data) {
       this.ownerId = data.profile.id;
@@ -226,4 +224,4 @@ export class ManifoldDataProvisionButton {
   }
 }
 
-Tunnel.injectProps(ManifoldDataProvisionButton, ['connection', 'authToken', 'graphqlFetch']);
+Tunnel.injectProps(ManifoldDataProvisionButton, ['restFetch', 'graphqlFetch']);

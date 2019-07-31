@@ -5,10 +5,27 @@ import { ManifoldDataHasResource } from './manifold-data-has-resource';
 import { Marketplace } from '../../types/marketplace';
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
+import { createRestFetch } from '../../utils/restFetch';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldDataHasResource.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
 
 const resources: Marketplace.Resource[] = [Resource];
 
-describe('<manifold-resource-list>', () => {
+describe('<manifold-data-has-resource>', () => {
   afterEach(() => {
     fetchMock.restore();
   });

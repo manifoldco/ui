@@ -2,8 +2,7 @@ import { h, Component, Element, State, Prop, Event, EventEmitter, Watch } from '
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
-import { withAuth } from '../../utils/auth';
-import { Connection, connections } from '../../utils/connections';
+import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 interface EventDetail {
@@ -14,9 +13,8 @@ interface EventDetail {
 @Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
-  @Prop() connection?: Connection = connections.prod;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() authToken?: string;
+  @Prop() restFetch?: RestFetch;
   @Prop() skeleton?: boolean = false;
   @Prop() productId?: string;
   @Prop() productLabel?: string;
@@ -66,7 +64,7 @@ export class ManifoldServiceCard {
   }
 
   async fetchProduct(productLabel?: string, productId?: string) {
-    if (!this.connection) {
+    if (!this.restFetch) {
       return;
     }
 
@@ -79,22 +77,34 @@ export class ManifoldServiceCard {
     }
 
     if (productId) {
-      const response = await fetch(
-        `${this.connection.catalog}/products/${productId}`,
-        withAuth(this.authToken)
-      );
-      this.product = await response.json();
+      this.product = undefined;
+      const productResp = await this.restFetch<Catalog.ExpandedProduct>({
+        service: 'catalog',
+        endpoint: `/products/${productId}`,
+      });
+
+      if (productResp instanceof Error) {
+        console.error(productResp);
+        return;
+      }
+
+      this.product = productResp;
 
       await this.fetchIsFree();
     } else if (productLabel) {
-      const response = await fetch(
-        `${this.connection.catalog}/products/?label=${productLabel}`,
-        withAuth(this.authToken)
-      );
-      const products: Catalog.Product[] = await response.json();
-      if (products.length) {
+      const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
+        service: 'catalog',
+        endpoint: `/products/?label=${productLabel}`,
+      });
+
+      if (productResp instanceof Error) {
+        console.error(productResp);
+        return;
+      }
+
+      if (productResp.length) {
         // eslint-disable-next-line prefer-destructuring
-        this.product = products[0];
+        this.product = productResp[0];
 
         await this.fetchIsFree();
       }
@@ -104,17 +114,21 @@ export class ManifoldServiceCard {
   }
 
   async fetchIsFree() {
-    if (!this.connection || !this.product) {
+    if (!this.restFetch || !this.product) {
       return;
     }
 
-    const response = await fetch(
-      `${this.connection.catalog}/plans/?product_id=${this.product.id}`,
-      withAuth(this.authToken)
-    );
+    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
+      service: 'catalog',
+      endpoint: `/plans/?product_id=${this.product.id}`,
+    });
 
-    const plans: Catalog.ExpandedPlan[] = await response.json();
-    if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
+    if (response instanceof Error) {
+      console.error(response);
+      return;
+    }
+
+    if (Array.isArray(response) && response.find(plan => plan.body.free === true)) {
       this.isFree = true;
     }
   }
@@ -167,4 +181,4 @@ export class ManifoldServiceCard {
   }
 }
 
-Tunnel.injectProps(ManifoldServiceCard, ['connection', 'authToken']);
+Tunnel.injectProps(ManifoldServiceCard, ['restFetch']);
