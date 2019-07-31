@@ -1,4 +1,5 @@
 import { h, Component, Prop, Watch, Event, EventEmitter } from '@stencil/core';
+
 import { AuthToken } from '@manifoldco/shadowcat';
 import Tunnel from '../../data/connection';
 import { isExpired } from '../../utils/auth';
