@@ -356,23 +356,10 @@ export namespace Components {
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
-<<<<<<< HEAD
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-  }
-  interface ManifoldPlanCost {
-    'allFeatures': Catalog.ExpandedFeature[];
-    'compact'?: boolean;
-    'customizable'?: boolean;
-    'planId': string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    'selectedFeatures': Gateway.FeatureMap;
-=======
   }
   interface ManifoldPlanCost {
     /**
@@ -380,14 +367,9 @@ export namespace Components {
     */
     'allFeatures': Catalog.ExpandedFeature[];
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    'connection'?: Connection;
     /**
     * Plan default cost
     */
@@ -397,10 +379,13 @@ export namespace Components {
     */
     'planId'?: string;
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
+    /**
     * User-selected plan features (needed only for customizable)
     */
     'selectedFeatures'?: Gateway.FeatureMap;
->>>>>>> Don’t use cost API unless necessary
   }
   interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
@@ -1417,22 +1402,10 @@ declare namespace LocalJSX {
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
-<<<<<<< HEAD
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-  }
-  interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
-    'allFeatures'?: Catalog.ExpandedFeature[];
-    'compact'?: boolean;
-    'customizable'?: boolean;
-    'planId'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-=======
   }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
     /**
@@ -1440,14 +1413,9 @@ declare namespace LocalJSX {
     */
     'allFeatures'?: Catalog.ExpandedFeature[];
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'authToken'?: string;
-    /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    'connection'?: Connection;
     /**
     * Plan default cost
     */
@@ -1457,9 +1425,12 @@ declare namespace LocalJSX {
     */
     'planId'?: string;
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
+    /**
     * User-selected plan features (needed only for customizable)
     */
->>>>>>> Don’t use cost API unless necessary
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {

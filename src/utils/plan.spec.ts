@@ -146,9 +146,31 @@ describe('plan sort function', () => {
   const expensivePlan = {
     body: { defaultCost: 1000, cost: 1000, free: false },
   } as Catalog.ExpandedPlan;
+  const customizableCheapPlan = {
+    body: { defaultCost: 5, cost: 5, customizable: true },
+  } as Catalog.ExpandedPlan;
+  const customizableExpensivePlan = {
+    body: { defaultCost: 1000, cost: 1000, customizable: true },
+  } as Catalog.ExpandedPlan;
 
-  const wrongOrder = [highDefaultCost, fauxFreePlan, expensivePlan, cheapPlan, freePlan];
-  const rightOrder = [freePlan, fauxFreePlan, cheapPlan, highDefaultCost, expensivePlan];
+  const wrongOrder = [
+    highDefaultCost,
+    fauxFreePlan, // faux free plan before actual free plan
+    customizableExpensivePlan, // expensive custom plan first
+    customizableCheapPlan,
+    expensivePlan, // expensive plan before cheap plan
+    cheapPlan,
+    freePlan,
+  ];
+  const rightOrder = [
+    freePlan,
+    fauxFreePlan,
+    cheapPlan,
+    highDefaultCost,
+    expensivePlan,
+    customizableCheapPlan, // at the end custom plans should sort by cost
+    customizableExpensivePlan,
+  ];
 
   it('sorts plans correctly', () => {
     expect(planSort(wrongOrder)).toEqual(rightOrder);
