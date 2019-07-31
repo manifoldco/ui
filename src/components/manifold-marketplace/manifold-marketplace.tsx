@@ -70,18 +70,22 @@ export class ManifoldMarketplace {
       this.services.map(
         ({ id }) =>
           new Promise(async resolve => {
-            if (!this.connection) {
+            if (!this.restFetch) {
               resolve();
               return;
             }
 
-            const response = await fetch(
-              `${this.connection.catalog}/plans/?product_id=${id}`,
-              withAuth(this.authToken)
-            );
+            const plansResp = await this.restFetch<Catalog.ExpandedPlan[]>({
+              service: 'catalog',
+              endpoint: `/plans/?product_id=${id}`,
+            });
 
-            const plans: Catalog.ExpandedPlan[] = await response.json();
-            if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
+            if (plansResp instanceof Error) {
+              console.error(plansResp);
+              return;
+            }
+
+            if (Array.isArray(plansResp) && plansResp.find(plan => plan.body.free === true)) {
               freeProducts.push(id);
             }
             resolve();
