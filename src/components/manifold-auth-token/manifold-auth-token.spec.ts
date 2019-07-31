@@ -8,7 +8,7 @@ describe('<manifold-auth-token>', () => {
     const expirySeconds = unixTime.toString();
 
     it('calls the set auth token on load', () => {
-      const token = `test.${expirySeconds}`;
+      const token = `test|${expirySeconds}`;
 
       const provisionButton = new ManifoldAuthToken();
       provisionButton.setAuthToken = jest.fn();
@@ -31,5 +31,23 @@ describe('<manifold-auth-token>', () => {
     provisionButton.tokenChange(newToken);
 
     expect(provisionButton.setAuthToken).toHaveBeenCalledWith(newToken);
+  });
+
+  describe('when the token is expired', () => {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() - 1);
+    const expiryUTC = expiry.toUTCString();
+
+    it('does not call the set auth token on load', () => {
+      const token = `test|${expiryUTC}`;
+
+      const provisionButton = new ManifoldAuthToken();
+      provisionButton.setAuthToken = jest.fn();
+
+      provisionButton.token = token;
+      provisionButton.componentWillLoad();
+
+      expect(provisionButton.setAuthToken).not.toHaveBeenCalled();
+    });
   });
 });

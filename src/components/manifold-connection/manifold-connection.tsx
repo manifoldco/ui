@@ -6,17 +6,7 @@ import { createGraphqlFetch } from '../../utils/graphqlFetch';
 import { createRestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
-const TOKEN_KEY = 'manifold_api_token';
 const baseWait = 15000;
-
-function getDefaultToken() {
-  const token = localStorage.getItem(TOKEN_KEY);
-  if (token) {
-    return token;
-  }
-
-  return undefined;
-}
 
 @Component({ tag: 'manifold-connection' })
 export class ManiTunnel {
@@ -25,18 +15,18 @@ export class ManiTunnel {
   /** _(optional)_ Wait time for the fetch calls before it times out */
   @Prop() waitTime: number = baseWait;
 
-  @State() authToken?: string = getDefaultToken();
+  @State() authToken?: string;
 
   setAuthToken = (token: string) => {
     this.authToken = token;
-    localStorage.setItem(TOKEN_KEY, token);
   };
 
   getAuthToken = () => this.accessToken;
 
   get accessToken() {
     if (this.authToken) {
-      return this.authToken;
+      const [token] = this.authToken.split('|');
+      return token;
     }
 
     return undefined;

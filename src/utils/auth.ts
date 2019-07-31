@@ -22,3 +22,20 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
     },
   };
 }
+
+export function isExpired(token: string) {
+  try {
+    const [, expiry] = token.split('|');
+    const numericExpiry = parseInt(expiry, 10);
+    if (Number.isNaN(numericExpiry)) {
+      // We have no expiry information, or it's badly formatted. Consider this expired.
+      return true;
+    }
+
+    const d = new Date(numericExpiry * 1000);
+    return d < new Date();
+  } catch {
+    // Not a valid unix timestamp. Consider this expired.
+    return true;
+  }
+}
