@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element } from '@stencil/core';
+import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
@@ -28,10 +28,15 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
+  @State() freeProducts: string[] = [];
   @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
   @State() services: Catalog.Product[] = [];
+
+  @Watch('services') servicesUpdated() {
+    this.fetchFreeProducts();
+  }
 
   componentWillLoad() {
     this.parseProps();
@@ -57,6 +62,36 @@ export class ManifoldMarketplace {
     this.services = [...response].sort((a, b) => a.body.name.localeCompare(b.body.name));
   };
 
+  // fetch free products once, then save
+  fetchFreeProducts = async () => {
+    const freeProducts: string[] = [];
+
+    await Promise.all(
+      this.services.map(
+        ({ id }) =>
+          new Promise(async resolve => {
+            if (!this.connection) {
+              resolve();
+              return;
+            }
+
+            const response = await fetch(
+              `${this.connection.catalog}/plans/?product_id=${id}`,
+              withAuth(this.authToken)
+            );
+
+            const plans: Catalog.ExpandedPlan[] = await response.json();
+            if (Array.isArray(plans) && plans.find(plan => plan.body.free === true)) {
+              freeProducts.push(id);
+            }
+            resolve();
+          })
+      )
+    );
+
+    this.freeProducts = freeProducts; // don’t update state until all requests finish
+  };
+
   private parse(list: string): string[] {
     return list.split(',').map(item => item.trim());
   }
@@ -79,6 +114,7 @@ export class ManifoldMarketplace {
       <manifold-marketplace-grid
         excludes={this.parsedExcludes}
         featured={this.parsedFeatured}
+        freeProducts={this.freeProducts}
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}

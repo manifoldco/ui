@@ -16,45 +16,51 @@ export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
-  @Prop() skeleton?: boolean = false;
+  @Prop({ reflect: true }) isFeatured?: boolean;
+  @Prop({ mutable: true }) isFree: boolean = false;
+  @Prop({ mutable: true }) product?: Catalog.Product;
   @Prop() productId?: string;
   @Prop() productLabel?: string;
   @Prop() productName?: string;
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
-  @Prop({ reflect: true }) isFeatured?: boolean;
-  @Prop({ mutable: true }) product?: Catalog.Product;
-  @State() isFree: boolean = false;
+  @Prop() skeleton?: boolean = false;
   @State() loading: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
 
+  @Watch('product') productChange(newProduct: Catalog.Product) {
+    if (newProduct) {
+      this.fetchIsFree(); // if product has changed, re-fetch free
+    }
+  }
+
   @Watch('skeleton') skeletonChange(newSkeleton: boolean) {
-    if (!newSkeleton) {
-      this.fetchProduct(this.productLabel, this.productId);
+    if (newSkeleton !== true) {
+      this.fetchProduct({ id: this.productId, label: this.productLabel });
     }
   }
 
   @Watch('productId') productIdChange(newProductId: string) {
-    if (!this.skeleton) {
-      this.fetchProduct(undefined, newProductId);
+    if (this.skeleton !== true) {
+      this.fetchProduct({ id: newProductId });
     }
   }
 
   @Watch('productLabel') productLabelChange(newProductLabel: string) {
-    if (!this.skeleton) {
-      this.fetchProduct(newProductLabel);
+    if (this.skeleton !== true) {
+      this.fetchProduct({ label: newProductLabel });
     }
   }
 
   componentWillLoad() {
-    if (this.skeleton) {
-      return;
+    if (this.skeleton === true || typeof this.product === 'object') {
+      return; // if skeleton UI or it’s passed a product, don’t fetch anything
     }
 
     if (this.productId) {
-      this.fetchProduct(undefined, this.productId);
+      this.fetchProduct({ id: this.productId });
     } else if (this.productLabel) {
-      this.fetchProduct(this.productLabel);
+      this.fetchProduct({ label: this.productLabel });
     }
   }
 
@@ -65,24 +71,18 @@ export class ManifoldServiceCard {
     return this.productLinkFormat.replace(/:product/gi, this.productLabel);
   }
 
-  async fetchProduct(productLabel?: string, productId?: string) {
+  async fetchProduct({ id, label }: { id?: string; label?: string }) {
     if (!this.restFetch) {
       return;
     }
 
     this.loading = true;
-    if (this.product) {
-      // Only fetch is free if the product is provided
-      await this.fetchIsFree();
-      this.loading = false;
-      return;
-    }
 
-    if (productId) {
+    if (id) {
       this.product = undefined;
       const productResp = await this.restFetch<Catalog.ExpandedProduct>({
         service: 'catalog',
-        endpoint: `/products/${productId}`,
+        endpoint: `/products/${id}`,
       });
 
       if (productResp instanceof Error) {
@@ -91,12 +91,11 @@ export class ManifoldServiceCard {
       }
 
       this.product = productResp;
-
-      await this.fetchIsFree();
-    } else if (productLabel) {
+    } else if (label) {
+      this.product = undefined;
       const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
         service: 'catalog',
-        endpoint: `/products/?label=${productLabel}`,
+        endpoint: `/products/?label=${label}`,
       });
 
       if (productResp instanceof Error) {
@@ -105,10 +104,7 @@ export class ManifoldServiceCard {
       }
 
       if (productResp.length) {
-        // eslint-disable-next-line prefer-destructuring
-        this.product = productResp[0];
-
-        await this.fetchIsFree();
+        this.product = productResp[0]; // eslint-disable-line prefer-destructuring
       }
     }
 

@@ -40,15 +40,6 @@ describe('<manifold-service-card>', () => {
     });
   });
 
-  it('formats links correctly', () => {
-    const serviceCard = new ManifoldServiceCard();
-    serviceCard.productLabel = Product.body.label;
-    serviceCard.productId = Product.id;
-    serviceCard.productLinkFormat = '/product/:product';
-
-    expect(serviceCard.href).toBe(`/product/${Product.body.label}`);
-  });
-
   it('fetches product by id on load', () => {
     const productId = '1234';
 
@@ -56,17 +47,17 @@ describe('<manifold-service-card>', () => {
     provisionButton.fetchProduct = jest.fn();
     provisionButton.productId = productId;
     provisionButton.componentWillLoad();
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(undefined, productId);
+    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ id: productId });
   });
 
-  it('fetches product by label  on load', () => {
+  it('fetches product by label on load', () => {
     const productLabel = 'test-product';
 
     const provisionButton = new ManifoldServiceCard();
     provisionButton.fetchProduct = jest.fn();
     provisionButton.productLabel = productLabel;
     provisionButton.componentWillLoad();
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(productLabel);
+    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ label: productLabel });
   });
 
   it('fetches product by id on id change', () => {
@@ -77,7 +68,7 @@ describe('<manifold-service-card>', () => {
     provisionButton.productId = '1234';
 
     provisionButton.productIdChange(newProduct);
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(undefined, newProduct);
+    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ id: newProduct });
   });
 
   it('fetches product by label on label change', () => {
@@ -88,7 +79,7 @@ describe('<manifold-service-card>', () => {
     provisionButton.productLabel = 'old-product';
 
     provisionButton.productLabelChange(newProduct);
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(newProduct);
+    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ label: newProduct });
   });
 
   describe('when created with a product label', () => {
