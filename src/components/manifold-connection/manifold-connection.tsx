@@ -3,7 +3,6 @@ import { h, Component, Prop, State } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { connections } from '../../utils/connections';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
-import { isExpired } from '../../utils/auth';
 import { createRestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
@@ -12,7 +11,7 @@ const baseWait = 15000;
 
 function getDefaultToken() {
   const token = localStorage.getItem(TOKEN_KEY);
-  if (token && !isExpired(token)) {
+  if (token) {
     return token;
   }
 
@@ -33,13 +32,11 @@ export class ManiTunnel {
     localStorage.setItem(TOKEN_KEY, token);
   };
 
-  getAuthToken = () =>
-    this.authToken && !isExpired(this.authToken) ? this.accessToken : undefined;
+  getAuthToken = () => this.accessToken;
 
   get accessToken() {
     if (this.authToken) {
-      const [token] = this.authToken.split('.');
-      return token;
+      return this.authToken;
     }
 
     return undefined;

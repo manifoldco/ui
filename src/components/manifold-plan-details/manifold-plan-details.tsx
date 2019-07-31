@@ -299,7 +299,6 @@ export class ManifoldPlanDetails {
           </header>
           <br />
           <manifold-skeleton-text>Features features features features</manifold-skeleton-text>
-          {this.regionSelector}
           <footer class="footer">
             <manifold-skeleton-text>Free</manifold-skeleton-text>
           </footer>
