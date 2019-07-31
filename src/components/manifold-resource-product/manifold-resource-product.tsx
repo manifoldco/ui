@@ -13,7 +13,7 @@ export class ManifoldResourceProduct {
   @logger()
   render() {
     return this.data && this.data.product ? (
-      <manifold-service-view
+      <manifold-service-card-view
         name={this.data.product.name}
         description={this.data.product.tagline}
         label={this.data.product.label}
@@ -24,10 +24,10 @@ export class ManifoldResourceProduct {
         <manifold-forward-slot slot="cta">
           <slot name="cta" />
         </manifold-forward-slot>
-      </manifold-service-view>
+      </manifold-service-card-view>
     ) : (
       // ☠
-      <manifold-service-view
+      <manifold-service-card-view
         loading={true}
         name="loading..."
         description="This is a loading product..."
