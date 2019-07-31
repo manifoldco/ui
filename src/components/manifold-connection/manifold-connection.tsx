@@ -3,14 +3,13 @@ import { h, Component, Prop, State } from '@stencil/core';
 import Tunnel from '../../data/connection';
 import { connections } from '../../utils/connections';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
-import { isExpired } from '../../utils/auth';
 import logger from '../../utils/logger';
 
 const TOKEN_KEY = 'manifold_api_token';
 
 function getDefaultToken() {
   const token = localStorage.getItem(TOKEN_KEY);
-  if (token && !isExpired(token)) {
+  if (token) {
     return token;
   }
 
