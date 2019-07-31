@@ -12,7 +12,7 @@ interface RestFetchArguments {
   service: keyof Connection;
   endpoint: string;
   body?: object;
-  options?: object;
+  options?: Omit<RequestInit, 'body'>;
 }
 
 export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Error>;
