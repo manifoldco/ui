@@ -1,7 +1,6 @@
 import { h, Component, Prop, Watch, Event, EventEmitter } from '@stencil/core';
 import { AuthToken } from '@manifoldco/shadowcat';
 import Tunnel from '../../data/connection';
-import { isExpired } from '../../utils/auth';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-auth-token' })
@@ -20,17 +19,14 @@ export class ManifoldAuthToken {
 
   componentWillLoad() {
     if (this.token) {
-      if (!isExpired(this.token)) {
-        this.setAuthToken(this.token);
-      }
+      this.setAuthToken(this.token);
     }
   }
 
   setInternalToken = (e: CustomEvent) => {
     const payload = e.detail as AuthToken;
     if (!payload.error && payload.expiry) {
-      const expiry = payload.expiry.toString();
-      this.token = `${payload.token}.${expiry}`;
+      this.token = `${payload.token}`;
     }
   };
 
