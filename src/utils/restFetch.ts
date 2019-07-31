@@ -31,12 +31,10 @@ export const createRestFetch = ({
     await new Promise(resolve => setTimeout(resolve, 2000));
   }
 
-  debugger;
   if (!getAuthToken()) {
     return new Error('No auth token given');
   }
   try {
-    debugger;
     const response = await fetch(url as string, {
       ...withAuth(getAuthToken(), args.options),
       body: JSON.stringify(args.body),
