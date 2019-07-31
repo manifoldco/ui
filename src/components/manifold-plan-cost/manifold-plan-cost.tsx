@@ -4,6 +4,7 @@ import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { Connection, connections } from '../../utils/connections';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
@@ -85,6 +86,7 @@ export class ManifoldPlanCost {
     });
   }
 
+  @logger()
   render() {
     return (
       <manifold-cost-display

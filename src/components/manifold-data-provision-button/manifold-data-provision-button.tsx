@@ -8,6 +8,7 @@ import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import { Catalog } from '../../types/catalog';
 import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -211,6 +212,7 @@ export class ManifoldDataProvisionButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
+  @logger()
   render() {
     return (
       <button

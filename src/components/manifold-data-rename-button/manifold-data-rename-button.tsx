@@ -4,6 +4,7 @@ import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import { Marketplace } from '../../types/marketplace';
+import logger from '../../utils/logger';
 
 /* eslint-disable no-console */
 
@@ -166,6 +167,7 @@ export class ManifoldDataRenameButton {
     return /^[a-z][a-z0-9]*/.test(input);
   }
 
+  @logger()
   render() {
     return (
       <button

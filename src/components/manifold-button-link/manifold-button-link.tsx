@@ -1,4 +1,5 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   href?: string;
@@ -32,6 +33,7 @@ export class ManifoldButtonLink {
     }
   };
 
+  @logger()
   render() {
     return (
       <a

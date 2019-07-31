@@ -1,6 +1,7 @@
 import { h, Component, Prop, FunctionalComponent } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 import { Catalog } from '../../types/catalog';
+import logger from '../../utils/logger';
 
 const PlanButton: FunctionalComponent<{
   checked?: boolean;
@@ -40,6 +41,7 @@ export class ManifoldPlanMenu {
     });
   }
 
+  @logger()
   render() {
     if (this.plans) {
       const plans = this.sortPlans(this.plans);

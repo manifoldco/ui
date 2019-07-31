@@ -4,6 +4,7 @@ import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
@@ -63,6 +64,7 @@ export class ManifoldDataProductName {
     this.productName = resource.product && resource.product.name;
   };
 
+  @logger()
   render() {
     return this.productName || null;
   }

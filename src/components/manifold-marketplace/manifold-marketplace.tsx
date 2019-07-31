@@ -4,6 +4,7 @@ import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
@@ -68,6 +69,7 @@ export class ManifoldMarketplace {
     }
   }
 
+  @logger()
   render() {
     return (
       <manifold-marketplace-grid

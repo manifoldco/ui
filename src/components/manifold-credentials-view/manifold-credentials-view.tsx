@@ -2,6 +2,7 @@ import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
 
 import { Marketplace } from '../../types/marketplace';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-resource-credentials-view',
@@ -34,6 +35,7 @@ export class ManifoldResourceCredentials {
     this.credentialsRequested.emit();
   };
 
+  @logger()
   render() {
     return [
       <menu class="secrets-menu" data-showing={!!this.credentials}>

@@ -1,4 +1,5 @@
 import { h, Component, Element, Prop } from '@stencil/core';
+import logger from '../../utils/logger';
 
 @Component({
   tag: 'manifold-service-card-view',
@@ -18,6 +19,7 @@ export class ManifoldServiceView {
   @Prop() asCard?: boolean = true;
   @Prop() hideTags?: boolean = false;
 
+  @logger()
   render() {
     return !this.loading ? (
       <div class={this.asCard ? 'card-wrapper' : 'wrapper'}>

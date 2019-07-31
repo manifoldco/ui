@@ -1,6 +1,7 @@
 import { h, Component, State, Prop } from '@stencil/core';
 import { Gateway } from '../../types/gateway';
 import ResourceTunnel from '../../data/resource';
+import logger from '../../utils/logger';
 
 const ResourceMock: Gateway.Resource = {
   id: '1',
@@ -951,6 +952,7 @@ export class ManifoldMockResource {
     }, 2000);
   }
 
+  @logger()
   render() {
     return (
       <ResourceTunnel.Provider state={{ data: this.resource, loading: this.loading }}>

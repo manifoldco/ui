@@ -29,6 +29,7 @@ module.exports = {
   },
   rules: {
     '@manifoldco/stencil/component-prefix': ['error', { prefix: 'manifold-' }],
+    '@manifoldco/stencil/require-render-decorator': ['error'],
     '@manifoldco/stencil/restrict-required-props': 'error',
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -55,7 +56,7 @@ module.exports = {
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
     'object-curly-newline': 'off', // let Prettier decide,
-    "curly": ["error", "all"],
+    curly: ['error', 'all'],
     'prettier/prettier': 'error',
   },
 };

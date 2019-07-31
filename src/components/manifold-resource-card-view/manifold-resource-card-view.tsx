@@ -5,6 +5,7 @@ import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
 import { Gateway } from '../../types/gateway';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   resourceId?: string;
@@ -97,6 +98,7 @@ export class ManifoldResourceCardView {
     }
   };
 
+  @logger()
   render() {
     return !this.loading && this.resourceId ? (
       <a

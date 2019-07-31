@@ -2,6 +2,7 @@ import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import { Gateway } from '../../types/gateway';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-deprovision' })
 export class ManifoldResourceDeprovision {
@@ -11,6 +12,7 @@ export class ManifoldResourceDeprovision {
   @Event({ eventName: 'manifold-deprovisionButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-deprovisionButton-success', bubbles: true }) success: EventEmitter;
 
+  @logger()
   render() {
     return (
       <manifold-data-deprovision-button

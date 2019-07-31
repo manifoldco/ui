@@ -4,6 +4,7 @@ import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
@@ -106,6 +107,7 @@ export class ManifoldPlanSelector {
     return regions.split(',').map(region => region.trim().toLowerCase());
   }
 
+  @logger()
   render() {
     return (
       <manifold-active-plan

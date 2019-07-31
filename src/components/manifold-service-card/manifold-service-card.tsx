@@ -4,6 +4,7 @@ import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   productId?: string;
@@ -129,6 +130,7 @@ export class ManifoldServiceCard {
     }
   };
 
+  @logger()
   render() {
     return !this.skeleton && !this.loading && this.product ? (
       <a

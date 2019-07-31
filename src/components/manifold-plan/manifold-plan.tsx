@@ -3,6 +3,7 @@ import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {
@@ -63,6 +64,7 @@ export class ManifoldPlan {
     this.plan = plans[0]; // eslint-disable-line prefer-destructuring
   }
 
+  @logger()
   render() {
     return <manifold-plan-details scrollLocked={false} plan={this.plan} product={this.product} />;
   }

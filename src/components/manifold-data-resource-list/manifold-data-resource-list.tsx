@@ -3,6 +3,7 @@ import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
 import { withAuth } from '../../utils/auth';
 import { Connection, connections } from '../../utils/connections';
+import logger from '../../utils/logger';
 
 interface EventDetail {
   ownerId?: string;
@@ -92,6 +93,7 @@ export class ManifoldDataResourceList {
     );
   }
 
+  @logger()
   render() {
     if (!Array.isArray(this.resources)) {
       return null;
