@@ -8,7 +8,7 @@ describe('<manifold-auth-token>', () => {
     const expirySeconds = unixTime.toString();
 
     it('calls the set auth token on load', () => {
-      const token = `test.${expirySeconds}`;
+      const token = `test|${expirySeconds}`;
 
       const provisionButton = new ManifoldAuthToken();
       provisionButton.setAuthToken = jest.fn();
@@ -18,18 +18,46 @@ describe('<manifold-auth-token>', () => {
 
       expect(provisionButton.setAuthToken).toHaveBeenCalledWith(token);
     });
+
+    it('calls the set auth token on change', () => {
+      const newToken = `test-new|${expirySeconds}`;
+
+      const provisionButton = new ManifoldAuthToken();
+      provisionButton.setAuthToken = jest.fn();
+
+      provisionButton.tokenChange(newToken);
+
+      expect(provisionButton.setAuthToken).toHaveBeenCalledWith(newToken);
+    });
   });
 
-  it('calls the set auth token on change', () => {
-    const token = 'test';
-    const newToken = 'test-new';
+  describe('when the token is expired', () => {
+    const expiry = new Date();
+    expiry.setDate(expiry.getDate() - 1);
+    const unixTime = Math.floor(expiry.getTime() / 1000);
+    const expirySeconds = unixTime.toString();
 
-    const provisionButton = new ManifoldAuthToken();
-    provisionButton.setAuthToken = jest.fn();
+    it('does not call the set auth token on load', () => {
+      const token = `test|${expirySeconds}`;
 
-    provisionButton.token = token;
-    provisionButton.tokenChange(newToken);
+      const provisionButton = new ManifoldAuthToken();
+      provisionButton.setAuthToken = jest.fn();
 
-    expect(provisionButton.setAuthToken).toHaveBeenCalledWith(newToken);
+      provisionButton.token = token;
+      provisionButton.componentWillLoad();
+
+      expect(provisionButton.setAuthToken).not.toHaveBeenCalled();
+    });
+
+    it('does not call the set auth token on change', () => {
+      const newToken = `test-new${expirySeconds}`;
+
+      const provisionButton = new ManifoldAuthToken();
+      provisionButton.setAuthToken = jest.fn();
+
+      provisionButton.tokenChange(newToken);
+
+      expect(provisionButton.setAuthToken).not.toHaveBeenCalledWith();
+    });
   });
 });
