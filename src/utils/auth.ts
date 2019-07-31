@@ -25,7 +25,7 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
 
 export function isExpired(token: string) {
   try {
-    const expiry = token.split('.').pop() || '';
+    const expiry = token.split('|').pop() || '';
     const decodedExpiry = parseInt(expiry, 10);
     if (Number.isNaN(decodedExpiry)) {
       throw new Error('Expiry not a number.');

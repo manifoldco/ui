@@ -32,11 +32,12 @@ export class ManiTunnel {
     localStorage.setItem(TOKEN_KEY, token);
   };
 
-  getAuthToken = () => (this.authToken && !isExpired(this.authToken) ? this.authToken : undefined);
+  getAuthToken = () =>
+    this.authToken && !isExpired(this.authToken) ? this.accessToken : undefined;
 
   get accessToken() {
     if (this.authToken) {
-      const [token] = this.authToken.split('.');
+      const [token] = this.authToken.split('|');
       return token;
     }
 
