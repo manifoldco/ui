@@ -35,25 +35,25 @@ export class ManifoldServiceCard {
   }
 
   @Watch('skeleton') skeletonChange(newSkeleton: boolean) {
-    if (newSkeleton !== true) {
+    if (!newSkeleton) {
       this.fetchProduct({ id: this.productId, label: this.productLabel });
     }
   }
 
   @Watch('productId') productIdChange(newProductId: string) {
-    if (this.skeleton !== true) {
+    if (!this.skeleton) {
       this.fetchProduct({ id: newProductId });
     }
   }
 
   @Watch('productLabel') productLabelChange(newProductLabel: string) {
-    if (this.skeleton !== true) {
+    if (!this.skeleton) {
       this.fetchProduct({ label: newProductLabel });
     }
   }
 
   componentWillLoad() {
-    if (this.skeleton === true || typeof this.product === 'object') {
+    if (this.skeleton || typeof this.product === 'object') {
       return; // if skeleton UI or it’s passed a product, don’t fetch anything
     }
 
