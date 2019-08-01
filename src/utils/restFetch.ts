@@ -26,7 +26,7 @@ export const createRestFetch = ({
   const url = `${endpoints[args.service]}${args.endpoint}`;
   const start = new Date();
 
-  while (!getAuthToken() && new Date().getTime() - start.getTime()  <= wait) {
+  while (!getAuthToken() && new Date().getTime() - start.getTime() <= wait) {
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, 2000));
   }
