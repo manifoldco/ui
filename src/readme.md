@@ -171,11 +171,11 @@ PRs that will result in a release, follow the following steps:
   <img src="../.github/semver.svg" alt="npm semver" width="600" height="235" />
 </p>
 
-| Increment | Description                                                                                                                                                                                                             |
-| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Patch** | There are **no breaking changes** in this release; this is just a bugfix or minor quality improvement that can safely be pushed to every platform.                                                                      |
-| **Minor** | There are **some breaking changes** in this release that are well-documented in the [CHANGELOG][changelog]. Large bugs, or bigger improvements are shipped in this version, but the overall structure remains the same. |
-| **Major** | Huge, sweeping changes were made with **many breaking changes** that are documented in the [CHANGELOG][changelog]. This could even mean a full rewrite. This should be installed with caution and plenty of time.       |
+| Increment | Description                                                                                                                                                                         |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Patch** | Bugfix. There are **no breaking changes** in this release (past `v1.0.0`; expect breaking changes until then).                                                                      |
+| **Minor** | New functionality is added. There are also **no breaking changes** in this release, either (past `v1.0.0`; expect breaking changes until then).                                     |
+| **Major** | New features (and maybe bugfixes) introduced **with breaking changes** that are documented in the [CHANGELOG][changelog]. This should be installed with caution and plenty of time. |
 
 💁 semver is not a true decimal system (if it wasn’t already apparent from 2
 decimals), so each part can go past `.9`. If you’re at `v0.9.0`, the next
