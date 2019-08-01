@@ -273,8 +273,10 @@ document.querySelector('[type=text]').getAttribute('value');
 // ""
 ```
 
-In the DOM, `value=""` didn’t update, but as the user typed, the node’s
-`.value property updated to reflect the user’s status.
+In the DOM, the `value` _attribute_ didn’t update, but as the user typed, the
+node’s `.value` _property_ did. The difference between attributes and
+properties are that properties exist in the browser’s memory, and attributes
+exist in the DOM.
 
 #### Applying it to Stencil
 
@@ -282,25 +284,33 @@ Stencil treats attributes & properties very differently, especially within
 JSX. Consider the two **in JSX**:
 
 ```jsx
+// Stencil JSX
+
 <user-card user-info={user} /> // 🚫
 <user-card userInfo={user} /> // ✅
 ```
 
-Of the two, the `kebab-case` one is an HTML attribute. As such, Stencil will
-do its best to try and figure out what you meant, but this isn’t meant for
-nested objects, and **it won’t receive updates.**
+Within Stencil, `user-info` is the attribute, `userInfo` the property. Use
+`user-info` if you’d like to treat it as HTML (strings only), or `userInfo`
+if you’d like it to be executed as JavaScript (objects, arrays, numbers,
+booleans only supported in this way).
 
 However, when dealing with HTML, it’s totally different—only attributes are
 supported (this means only strings!):
 
 ```jsx
+// HTML
+
 <user-card user-info={user} /> // ✅
 <user-card userInfo={user} /> // 🚫
 ```
 
-In this example, `userInfo` is actually converted to `userinfo` (HTML is
-case-insensitive), so it’s a different prop. Also, if you want to set
-non-strings, you’ll have to do so [via JS][stencil-properties].
+Outside Stencil, `user-info` and `userInfo` are **both attributes**, and can
+only handle strings. However, because HTML is case-insensitive, `userInfo`
+will be treated as `userinfo` (no hyphen).
+
+To use non-strings outside of Stencil, you’ll have to do so [via
+JS][stencil-properties].
 
 **TL;DR use `camelCase` in JSX; `kebab-case` in HTML.**
 
