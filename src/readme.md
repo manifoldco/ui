@@ -204,18 +204,6 @@ Prereleases **will not** be downloaded when a user runs `npm install @manifoldco
 
 💁 Remember: **don’t use `-latest` as a tag!** That’s the only reserved tag on npm.
 
-#### Releasing locally
-
-For faster publishing, or to avoid Travis, you can choose to publish from
-your computer by running:
-
-```bash
-npm run publish
-```
-
-You’ll still have to tag your prerelease in Git locally, but you don’t have
-to push that tag to GitHub and wait for Travis.
-
 ### Step 2: testing
 
 Install `@manifoldco/ui@mytag` in the client you’re consuming it in **while your PR
