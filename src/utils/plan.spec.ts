@@ -12,6 +12,7 @@ import {
   StringFeatureCustom,
   BooleanFeatureCustom,
 } from '../spec/mock/catalog';
+import { Catalog } from '../types/catalog';
 import {
   booleanFeatureDefaultValue,
   booleanFeatureDisplayValue,
@@ -27,6 +28,7 @@ import {
   pricingTiers,
   stringFeatureDefaultValue,
   stringFeatureDisplayValue,
+  planSort,
 } from './plan';
 
 describe('default value methods', () => {
@@ -132,4 +134,51 @@ describe('other plan methods', () => {
     ).toBe(true));
   it('features return price descriptions when present', () =>
     expect(featureDescription(NumberFeatureStatic.value)).toBe('Free'));
+});
+
+describe('plan sort function', () => {
+  const freePlan = { body: { cost: 0, free: true } } as Catalog.ExpandedPlan;
+  const fauxFreePlan = { body: { cost: 0, free: false } } as Catalog.ExpandedPlan;
+  const cheapPlan = { body: { cost: 50, defaultCost: 50, free: false } } as Catalog.ExpandedPlan;
+  const highDefaultCost = {
+    body: { defaultCost: 100, cost: 0, free: false },
+  } as Catalog.ExpandedPlan;
+  const expensivePlan = {
+    body: { defaultCost: 1000, cost: 1000, free: false },
+  } as Catalog.ExpandedPlan;
+  const customizableCheapPlan = {
+    body: { defaultCost: 5, cost: 5, customizable: true },
+  } as Catalog.ExpandedPlan;
+  const customizableExpensivePlan = {
+    body: { defaultCost: 1000, cost: 1000, customizable: true },
+  } as Catalog.ExpandedPlan;
+
+  const wrongOrder = [
+    highDefaultCost,
+    fauxFreePlan, // faux free plan before actual free plan
+    customizableExpensivePlan, // expensive custom plan first
+    customizableCheapPlan,
+    expensivePlan, // expensive plan before cheap plan
+    cheapPlan,
+    freePlan,
+  ];
+  const rightOrder = [
+    freePlan,
+    fauxFreePlan,
+    cheapPlan,
+    highDefaultCost,
+    expensivePlan,
+    customizableCheapPlan, // at the end custom plans should sort by cost
+    customizableExpensivePlan,
+  ];
+
+  it('sorts plans correctly', () => {
+    expect(planSort(wrongOrder)).toEqual(rightOrder);
+  });
+
+  it('sort() doesn’t reorder original reference', () => {
+    const clone = [...wrongOrder];
+    planSort(clone);
+    expect(clone).toEqual(wrongOrder);
+  });
 });

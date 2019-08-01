@@ -9,8 +9,8 @@ export class ManifoldCostDisplay {
   @Element() el: HTMLElement;
   @Prop() baseCost?: number;
   @Prop() compact?: boolean = false;
-  @Prop() isCustomizable?: boolean = false;
   @Prop() measuredFeatures: Catalog.ExpandedFeature[] = [];
+  @Prop() startingAt?: boolean = false;
 
   get isFreeMonthly() {
     return this.baseCost === 0;
@@ -63,7 +63,7 @@ export class ManifoldCostDisplay {
     }
 
     // Show “starting at” either if customizable, or too many metered features to display
-    const startingAt = (this.compact && this.isCustomizable) || this.measuredFeatures.length > 1;
+    const startingAt = (this.compact && this.startingAt) || this.measuredFeatures.length > 1;
 
     return (
       <div class="cost" data-compact={this.compact}>

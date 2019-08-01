@@ -6,6 +6,7 @@ import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import { planSort } from '../../utils/plan';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
@@ -83,7 +84,7 @@ export class ManifoldPlanSelector {
       return;
     }
 
-    this.plans = [...response].sort((a, b) => a.body.cost - b.body.cost);
+    this.plans = planSort(response);
   }
 
   async fetchResource(resourceLabel: string) {

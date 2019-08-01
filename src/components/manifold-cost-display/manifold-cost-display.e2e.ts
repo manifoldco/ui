@@ -129,7 +129,7 @@ describe('<manifold-plan-cost>', () => {
     await page.$eval('manifold-cost-display', (elm: any) => {
       elm.baseCost = 400;
       elm.compact = true;
-      elm.isCustomizable = true;
+      elm.startingAt = true;
     });
     await page.waitForChanges();
     const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
@@ -144,7 +144,7 @@ describe('<manifold-plan-cost>', () => {
     const page = await newE2EPage({ html: `<manifold-cost-display />` });
     await page.$eval('manifold-cost-display', (elm: any) => {
       elm.baseCost = 400;
-      elm.isCustomizable = true;
+      elm.startingAt = true;
     });
     await page.waitForChanges();
     const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
