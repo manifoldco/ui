@@ -163,7 +163,7 @@ PRs that will result in a release, follow the following steps:
   <li>Once no bugs can be found, publish a <strong>final release</strong> from <code>master</code></li>
 </ol>
 
-### Step 1: prerelease
+### Step 1: Prerelease
 
 #### Anatomy of a semver tag
 
@@ -187,9 +187,10 @@ numbers.
 
 **⚠️ Always publish a prerelease before a release!**
 
-Tagging a prerelease is a vital part of testing. Use tagged prereleases both
-for release candidates as well as experimental releases. Releasing in this
-way is highly-encouraged, and poses no risk to our partners.
+A prerelease is a semver with a **tag** (the `alpha` in `v1.2.3-alpha.0`).
+Prereleases are a vital part of testing, used for both release candidates as
+well as experimental releases. Releasing in this way is highly-encouraged,
+and poses no risk to our partners.
 
 Here are some commonly-used tags that are good for test releases, but you may
 alternately use any word you’d like as long as it’s **not `latest`** (that’s
@@ -204,7 +205,7 @@ Prereleases **will not** be downloaded when a user runs `npm install @manifoldco
 
 💁 Remember: **don’t use `-latest` as a tag!** That’s the only reserved tag on npm.
 
-### Step 2: testing
+### Step 2: Testing
 
 Install `@manifoldco/ui@mytag` in the client you’re consuming it in **while your PR
 is still open.** Ask yourself:
@@ -225,7 +226,7 @@ and other CI tools.
 
 **Only once the CHANGELOG is updated may you merge your PR.**
 
-### Step 4: final release
+### Step 4: Final release
 
 1. Decide what the version will be (see [anatomy of a semver tag][anatomy] above). The following steps assume that you’ve chosen `v1.2.3` for your new version.
 1. [Release `v1.2.3-rc.0`][releases], and **test it fully**
