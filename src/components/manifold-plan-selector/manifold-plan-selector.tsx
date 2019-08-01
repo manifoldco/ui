@@ -22,6 +22,15 @@ export class ManifoldPlanSelector {
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
+  @Watch('restFetch') fetchChanged(newFetch: RestFetch) {
+    if (!this.restFetch && newFetch) {
+      if (this.productLabel) {
+        this.fetchProductByLabel(this.productLabel);
+      } else if (this.resourceLabel) {
+        this.fetchResource(this.resourceLabel);
+      }
+    }
+  }
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductByLabel(newProduct);
   }
