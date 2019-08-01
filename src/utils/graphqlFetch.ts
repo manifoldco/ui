@@ -33,7 +33,7 @@ export const createGraphqlFetch = ({
 ): Promise<GraphqlResponseBody<T>> => {
   const start = new Date();
 
-  while (!getAuthToken() && start.getTime() - new Date().getTime() <= wait) {
+  while (!getAuthToken() && new Date().getTime() - start.getTime() <= wait) {
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, 2000));
   }

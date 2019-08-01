@@ -2,11 +2,9 @@
 title: Service Card
 path: '/components/manifold-service-card'
 example: |
-  <manifold-service-view
-    logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
-    name="LogDNA"
-    description="The best logging service you will ever use">
-  </manifold-service-view>
+  <manifold-service-card
+    product-id="234qkjvrptpy3thna4qttwt7m2nf6"
+  </manifold-service-card>
 ---
 
 # Service Card

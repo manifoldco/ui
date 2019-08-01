@@ -2,10 +2,7 @@
 title: Product Logo
 path: /data/product-logo
 example: |
-  <manifold-connection>
-  <manifold-data-product-logo product-label="aiven-redis">
-  </manifold-data-product-logo>
-  </manifold-connection>
+  <manifold-data-product-logo product-label="aiven-redis"></manifold-data-product-logo>
 ---
 
 <manifold-toast alert-type="warning">

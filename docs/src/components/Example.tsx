@@ -39,7 +39,18 @@ interface ExampleProps {
 const Example: React.FunctionComponent<ExampleProps> = ({ html }) => (
   <Wrapper>
     <h3>Example</h3>
-    <Inner className="example-inner" dangerouslySetInnerHTML={{ __html: html }} />
+    <Inner
+      className="example-inner"
+      dangerouslySetInnerHTML={{
+        __html: `
+          <manifold-connection>
+            <manifold-auth-token token="1234|${new Date(
+              Date.now() + 6.04e8
+            ).getTime()}" oauth-url="/oauth"></manifold-auth-token>
+            ${html}
+          </manifold-connection>`,
+      }}
+    />
   </Wrapper>
 );
 

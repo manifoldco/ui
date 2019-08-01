@@ -1,6 +1,6 @@
 ---
 title: Resource Details View
-path: /resource-details
+path: /advanced/resource-details
 ---
 
 # Creating a resource details view
