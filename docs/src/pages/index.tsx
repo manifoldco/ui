@@ -46,7 +46,6 @@ function HomePage({ data }: HomePageProps) {
     return link;
   });
 
-  fetchMock.restore();
   const catalogProviders = providers.edges.map(prod => prod.node.data);
   const catalogProducts = products.edges.map(prod => prod.node.data);
   const catalogPlans = plans.edges.map(prod => prod.node.data);
