@@ -538,6 +538,7 @@ export namespace Components {
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
+    'productName'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1586,6 +1587,7 @@ declare namespace LocalJSX {
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
+    'productName'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */

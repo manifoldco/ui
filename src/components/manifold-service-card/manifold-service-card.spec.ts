@@ -27,6 +27,7 @@ describe('<manifold-service-card>', () => {
     const serviceCard = new ManifoldServiceCard();
     serviceCard.productLabel = Product.body.label;
     serviceCard.productId = Product.id;
+    serviceCard.productName = Product.body.name;
 
     const mock = { emit: jest.fn() };
     serviceCard.marketplaceClick = mock;
@@ -35,6 +36,7 @@ describe('<manifold-service-card>', () => {
     expect(mock.emit).toHaveBeenCalledWith({
       productId: Product.id,
       productLabel: Product.body.label,
+      productName: Product.body.name,
     });
   });
 

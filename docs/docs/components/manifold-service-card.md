@@ -75,8 +75,8 @@ when it updates. To listen to those events, add an event listener either on
 the component itself, or `document`:
 
 ```js
-document.addEventListener('manifold-marketplace-click', ({ detail: { productLabel } }) => {
-  alert(`You clicked the card for ${productLabel}`);
+document.addEventListener('manifold-marketplace-click', { detail } => {
+  console.log(detail); // { productLabel: "jawsdb-mysql", productName: "JawsDB MySQL", productId: "234w1jyaum5j0aqe3g3bmbqjgf20p" }
 });
 ```
 
@@ -84,4 +84,4 @@ The following events are emitted:
 
 | Event Name                   | Description                                     | Data                        |
 | :--------------------------- | :---------------------------------------------- | :-------------------------- |
-| `manifold-marketplace-click` | Fires whenever a user has clicked on a product. | `productId`, `productLabel` |
+| `manifold-marketplace-click` | Fires whenever a user has clicked on a product. | `productId`, `productLabel`, `productName` |
