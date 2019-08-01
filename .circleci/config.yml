@@ -6,9 +6,25 @@ defaults: &defaults
   docker:
     - image: circleci/node:10.16.0
 
-commands:
-  # Install & cache node_modules
-  npm-install:
+jobs:
+  # Deploy version to npm
+  npm-publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
+      - run: npm version from-git
+      - run: npm run buil
+      - run: npm publish
+  # Run bundlesize
+  bundlesize:
+    <<: *defaults
+    steps:
+      - run: npm run bundlesize
+  # Prepare CircleCI for things
+  setup:
+    <<: *defaults
     steps:
       - checkout
       - restore_cache:
@@ -20,30 +36,11 @@ commands:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-jobs:
-  # Deploy version to npm
-  npm-publish:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/project
-      - npm-install
-      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
-      - run: npm version from-git
-      - run: npm run buil
-      - run: npm publish
-  # Run bundlesize
-  bundlesize:
-    <<: *defaults
-    steps:
-      - npm-install
-      - run: npm run bundlesize
+      - run: npm run prepare-docs
   # Lint & test
   test:
     <<: *defaults
     steps:
-      - npm-install
       - run: npm run lint && npm test
 
 workflows:
@@ -52,16 +49,23 @@ workflows:
   # Normal workflow for untagged PRs
   untagged:
     jobs:
+      - setup
       - test
       - bundlesize
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   tagged_prerelease:
     jobs:
+      - setup:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/ # tag filters are required for all jobs
       - test:
           filters:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - setup
       - bundlesize:
           filters:
             tags:
@@ -78,10 +82,16 @@ workflows:
   # Final release (only fires on master, and if Git tag is a stable release)
   tagged_release:
     jobs:
+      - setup:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/ # tag filters are required for all jobs
       - test:
           filters:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - setup
       - bundlesize:
           filters:
             tags:
