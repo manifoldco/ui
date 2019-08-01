@@ -22,15 +22,6 @@ export class ManifoldPlanSelector {
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
-  @Watch('restFetch') fetchChanged(newFetch: RestFetch) {
-    if (!this.restFetch && newFetch) {
-      if (this.productLabel) {
-        this.fetchProductByLabel(this.productLabel);
-      } else if (this.resourceLabel) {
-        this.fetchResource(this.resourceLabel);
-      }
-    }
-  }
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductByLabel(newProduct);
   }
@@ -43,12 +34,14 @@ export class ManifoldPlanSelector {
     }
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.productLabel) {
-      this.fetchProductByLabel(this.productLabel);
-    } else if (this.resourceLabel) {
-      this.fetchResource(this.resourceLabel);
+      return this.fetchProductByLabel(this.productLabel);
     }
+    if (this.resourceLabel) {
+      return this.fetchResource(this.resourceLabel);
+    }
+    return null;
   }
 
   async fetchProductByLabel(productLabel: string) {
