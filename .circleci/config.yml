@@ -1,0 +1,100 @@
+# Javascript Node CircleCI 2.0 configuration file
+
+version: 2.1
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:10.16.0
+
+commands:
+  # Install & cache node_modules
+  npm-install:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+jobs:
+  # Deploy version to npm
+  npm-publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - npm-install
+      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
+      - run: npm version from-git
+      - run: npm run buil
+      - run: npm publish
+  # Run bundlesize
+  bundlesize:
+    <<: *defaults
+    steps:
+      - npm-install
+      - run: npm run bundlesize
+  # Lint & test
+  test:
+    <<: *defaults
+    steps:
+      - npm-install
+      - run: npm run lint && npm test
+
+workflows:
+  version: 2
+
+  # Normal workflow for untagged PRs
+  untagged:
+    jobs:
+      - test
+      - bundlesize
+
+  # Prerelease (only fires if Git tag contains hyphen + npm tag)
+  tagged_prerelease:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+      - bundlesize:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - test
+      - npm-publish:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
+
+  # Final release (only fires on master, and if Git tag is a stable release)
+  tagged_release:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - bundlesize:
+          filters:
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - test
+      - npm-publish:
+          type: approval
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
