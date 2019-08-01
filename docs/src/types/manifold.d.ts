@@ -19,6 +19,7 @@ namespace Manifold {
   export interface PlanBody {
     label: string;
     product_id: string;
+    cost: number;
   }
 
   export interface RegionBody {
