@@ -23,13 +23,14 @@ export class ManifoldDataProductName {
     this.fetchResource(newResource);
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.productLabel) {
-      this.fetchProduct(this.productLabel);
+      return this.fetchProduct(this.productLabel);
     }
     if (this.resourceLabel) {
-      this.fetchResource(this.resourceLabel);
+      return this.fetchResource(this.resourceLabel);
     }
+    return null;
   }
 
   fetchProduct = async (productLabel: string) => {

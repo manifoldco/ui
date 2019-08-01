@@ -29,7 +29,7 @@ export class ManifoldPlanCost {
     this.calculateCost();
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     return this.calculateCost();
   }
 

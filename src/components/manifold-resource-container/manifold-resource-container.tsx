@@ -19,10 +19,11 @@ export class ManifoldResourceContainer {
     this.fetchResource(newName);
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.resourceLabel) {
-      this.fetchResource(this.resourceLabel);
+      return this.fetchResource(this.resourceLabel);
     }
+    return null;
   }
 
   fetchResource = async (resourceLabel: string) => {

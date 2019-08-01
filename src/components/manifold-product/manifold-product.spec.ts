@@ -7,7 +7,7 @@ describe('<manifold-product>', () => {
     const product = new ManifoldProduct();
     product.fetchProduct = jest.fn();
     product.productLabel = productLabel;
-    product.componentWillLoad();
+    product.componentDidLoad();
     expect(product.fetchProduct).toHaveBeenCalledWith(productLabel);
   });
 

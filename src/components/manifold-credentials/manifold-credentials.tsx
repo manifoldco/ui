@@ -20,10 +20,11 @@ export class ManifoldCredentials {
     }
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel);
+      return this.fetchResourceId(this.resourceLabel);
     }
+    return null;
   }
 
   fetchCredentials = async () => {

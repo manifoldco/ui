@@ -57,10 +57,11 @@ export class ManifoldDataRenameButton {
     }
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel);
+      return this.fetchResourceId(this.resourceLabel);
     }
+    return null;
   }
 
   async rename() {

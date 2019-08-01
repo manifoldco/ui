@@ -7,7 +7,7 @@ describe('<manifold-data-product-logo>', () => {
     const productLogo = new ManifoldDataProductLogo();
     productLogo.fetchProduct = jest.fn();
     productLogo.productLabel = productLabel;
-    productLogo.componentWillLoad();
+    productLogo.componentDidLoad();
     expect(productLogo.fetchProduct).toHaveBeenCalledWith(productLabel);
   });
 

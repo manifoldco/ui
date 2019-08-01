@@ -44,15 +44,18 @@ export class ManifoldServiceCard {
     }
   }
 
-  componentWillLoad() {
+  componentWillLoad() {}
+
+  async componentDidLoad() {
     if (this.skeleton) {
       return;
     }
 
     if (this.productId) {
-      this.fetchProduct(undefined, this.productId);
-    } else if (this.productLabel) {
-      this.fetchProduct(this.productLabel);
+      await this.fetchProduct(undefined, this.productId);
+    }
+    if (this.productLabel) {
+      await this.fetchProduct(this.productLabel);
     }
   }
 

@@ -12,9 +12,9 @@ import { createGraphqlFetch } from '../../utils/graphqlFetch';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const graphqlEndpoint = 'http://test.com/graphql';
 const proto = ManifoldDataProvisionButton.prototype as any;
-const oldCallback = proto.componentWillLoad;
+const oldCallback = proto.componentDidLoad;
 
-proto.componentWillLoad = function() {
+proto.componentDidLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,
@@ -42,7 +42,7 @@ describe('<manifold-data-provision-button>', () => {
     provisionButton.fetchProfileId = jest.fn();
     provisionButton.productLabel = productLabel;
     provisionButton.planLabel = planLabel;
-    provisionButton.componentWillLoad();
+    provisionButton.componentDidLoad();
     expect(provisionButton.fetchProductPlanId).toHaveBeenCalledWith(productLabel, planLabel);
     expect(provisionButton.fetchProfileId).toHaveBeenCalled();
   });
@@ -51,7 +51,7 @@ describe('<manifold-data-provision-button>', () => {
     const provisionButton = new ManifoldDataProvisionButton();
     provisionButton.fetchProfileId = jest.fn();
     provisionButton.ownerId = '1234';
-    provisionButton.componentWillLoad();
+    provisionButton.componentDidLoad();
 
     expect(provisionButton.fetchProfileId).not.toHaveBeenCalled();
   });

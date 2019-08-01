@@ -43,10 +43,11 @@ export class ManifoldResourceCardView {
     }
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (!this.loading && !this.resourceId && this.label) {
-      this.fetchResourceId(this.label);
+      return this.fetchResourceId(this.label);
     }
+    return null;
   }
 
   get href() {

@@ -18,10 +18,11 @@ export class ManifoldProduct {
     this.fetchProduct(newLabel);
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.productLabel) {
-      this.fetchProduct(this.productLabel);
+      return this.fetchProduct(this.productLabel);
     }
+    return null;
   }
 
   fetchProduct = async (productLabel: string) => {

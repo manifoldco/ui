@@ -7,7 +7,7 @@ describe('<manifold-data-manage-button>', () => {
     const manageButton = new ManifoldDataManageButton();
     manageButton.fetchResourceId = jest.fn();
     manageButton.resourceLabel = resourceName;
-    manageButton.componentWillLoad();
+    manageButton.componentDidLoad();
     expect(manageButton.fetchResourceId).toHaveBeenCalledWith(resourceName);
   });
 

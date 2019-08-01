@@ -9,9 +9,9 @@ import { createRestFetch } from '../../utils/restFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proto = ManifoldDataSsoButton.prototype as any;
-const oldCallback = proto.componentWillLoad;
+const oldCallback = proto.componentDidLoad;
 
-proto.componentWillLoad = function() {
+proto.componentDidLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,
@@ -30,7 +30,7 @@ describe('<manifold-data-sso-button>', () => {
     const provisionButton = new ManifoldDataSsoButton();
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = resourceLabel;
-    provisionButton.componentWillLoad();
+    provisionButton.componentDidLoad();
     expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
@@ -41,7 +41,7 @@ describe('<manifold-data-sso-button>', () => {
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = resourceLabel;
     provisionButton.resourceId = resourceLabel;
-    provisionButton.componentWillLoad();
+    provisionButton.componentDidLoad();
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 

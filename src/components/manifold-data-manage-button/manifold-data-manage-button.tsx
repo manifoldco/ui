@@ -43,10 +43,11 @@ export class ManifoldDataManageButton {
     this.fetchResourceId(newResource);
   }
 
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.resourceLabel) {
-      this.fetchResourceId(this.resourceLabel);
+      return this.fetchResourceId(this.resourceLabel);
     }
+    return null;
   }
 
   async fetchResourceId(resourceLabel: string) {

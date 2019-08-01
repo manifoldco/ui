@@ -8,9 +8,9 @@ import { createRestFetch } from '../../utils/restFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proto = ManifoldDataDeprovisionButton.prototype as any;
-const oldCallback = proto.componentWillLoad;
+const oldCallback = proto.componentDidLoad;
 
-proto.componentWillLoad = function() {
+proto.componentDidLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,
@@ -29,7 +29,7 @@ describe('<manifold-data-deprovision-button>', () => {
     const provisionButton = new ManifoldDataDeprovisionButton();
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = resourceLabel;
-    provisionButton.componentWillLoad();
+    provisionButton.componentDidLoad();
     expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
@@ -40,7 +40,7 @@ describe('<manifold-data-deprovision-button>', () => {
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = resourceLabel;
     provisionButton.resourceId = resourceLabel;
-    provisionButton.componentWillLoad();
+    provisionButton.componentDidLoad();
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 

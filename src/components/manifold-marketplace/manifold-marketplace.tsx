@@ -33,9 +33,9 @@ export class ManifoldMarketplace {
   @State() parsedProducts: string[] = [];
   @State() services: Catalog.Product[] = [];
 
-  componentWillLoad() {
+  componentDidLoad() {
     this.parseProps();
-    this.fetchProducts();
+    return this.fetchProducts();
   }
 
   fetchProducts = async () => {
