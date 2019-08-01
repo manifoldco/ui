@@ -149,40 +149,117 @@ hot reload, however it will break if you don’t add a `path` in
 
 ## 🚀 Deploying
 
-To publish to npm, tag it in Git with a valid [npm-semver][npm-semver].
+Not every PR will warrant a release—it’s fine to create & merge PRs into
+`master` with the intent that multiple will comprise a release later. But for
+PRs that will result in a release, follow the following steps:
 
-### Unstable release
+<ol>
+  <li>
+    Tag a <strong>prerelease</strong> tag in GitHub with a valid <strong>semver</strong> like so:
+    <img src="../.github/git-tag.png" alt="Git tag" width="882" height="64" />
+  </li>
+  <li>Test your prerelease <strong>before merging</strong></li>
+  <li>Update the <a href="../CHANGELOG.md">CHANGELOG</a>, then <strong>merge</strong></li>
+  <li>Once no bugs can be found, publish a <strong>final release</strong> from <code>master</code></li>
+</ol>
 
-**Tagging a release version with a hyphen (`-`)** will publish a test release.
-Use this for both release candidates as well as experimental releases.
-Releasing in this way is highly-encouraged, and poses no risk to our
-partners.
+### Step 1: prerelease
 
+#### Anatomy of a semver tag
+
+<p align="center">
+  <img src="../.github/semver.svg" alt="npm semver" width="600" height="235" />
+</p>
+
+| Increment | Description                                                                                                                                                                                                             |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Patch** | There are **no breaking changes** in this release; this is just a bugfix or minor quality improvement that can safely be pushed to every platform.                                                                      |
+| **Minor** | There are **some breaking changes** in this release that are well-documented in the [CHANGELOG][changelog]. Large bugs, or bigger improvements are shipped in this version, but the overall structure remains the same. |
+| **Major** | Huge, sweeping changes were made with **many breaking changes** that are documented in the [CHANGELOG][changelog]. This could even mean a full rewrite. This should be installed with caution and plenty of time.       |
+
+💁 semver is not a true decimal system (if it wasn’t already apparent from 2
+decimals), so each part can go past `.9`. If you’re at `v0.9.0`, the next
+logical version **is `v0.10.0`, NOT `v1.0.0`**. Feel free to do into the
+double-digits for both minor and patch versions! Also, don’t zero-pad any
+numbers.
+
+#### Prelease tagging
+
+**⚠️ Always publish a prerelease before a release!**
+
+Tagging a prerelease is a vital part of testing. Use tagged prereleases both
+for release candidates as well as experimental releases. Releasing in this
+way is highly-encouraged, and poses no risk to our partners.
+
+Here are some commonly-used tags that are good for test releases, but you may
+alternately use any word you’d like as long as it’s **not `latest`** (that’s
+the tag npm reserves for final version):
+
+| Tag              | Description                                                                                   |
+| :--------------- | :-------------------------------------------------------------------------------------------- |
+| `v1.2.3‑alpha.0` | **alpha** is an experimental version that may not ever be shipped, but we’re using it to test |
+| `v1.2.3‑rc.0`    | This is a **release candidate** that is 99.99% complete; we’re just testing before release    |
+
+Prereleases **will not** be downloaded when a user runs `npm install @manifoldco/ui`. It can only be installed by either specifying `npm install @manifoldco/ui@1.0.0-mytag.0` or `npm install @manifoldco/ui@mytag`.
+
+💁 Remember: **don’t use `-latest` as a tag!** That’s the only reserved tag on npm.
+
+#### Releasing locally
+
+For faster publishing, or to avoid Travis, you can choose to publish from
+your computer by running:
+
+```bash
+npm run publish
 ```
-v1.0.0-rc.0      # first release candidate
-v1.0.0-rc.1      # second release candidate
-v1.1.0-alpha.0   # buggy version, published for testing
-```
 
-Unlike stable releases, these won’t be downloaded unless someone specifically
-requests the flag (e.g.: `npm i --save @manifoldco/ui@rc` or `npm i --save @manifoldco/ui@alpha`).
+You’ll still have to tag your prerelease in Git locally, but you don’t have
+to push that tag to GitHub and wait for Travis.
 
-### Stable release
+### Step 2: testing
 
-**⚠️ Don’t publish a stable version without publishing a release candidate first (above)!**
+Install `@manifoldco/ui@mytag` in the client you’re consuming it in **while your PR
+is still open.** Ask yourself:
 
-If you’re releasing a stable release after it’s been fully tested, create a
-semver [Git tag][git-tag], starting with `v`:
+- [ ] Did all dependencies install correctly?
+- [ ] Is the change I made working after installing the built package from npm?
+- [ ] Are the [docs][docs] up-to-date?
+- [ ] Do any [Storybook][storybook] stories need to be written?
+- [ ] Do any [Happo tests][happo] need to be written?
 
-```
-v1.0.0
-```
+If everything looks good and works as expected, **don’t merge your PR yet**!
+Update the CHANGELOG (below).
 
-This will be accessible for download at `npm i --save @manifoldco/ui`.
+### Step 3. CHANGELOG
 
+Our [CHANGELOG][changelog] is important to keep up-to-date for dependabot,
+and other CI tools.
+
+**Only once the CHANGELOG is updated may you merge your PR.**
+
+### Step 4: final release
+
+1. Decide what the version will be (see [anatomy of a semver tag][anatomy] above).
+1. Pretend we’ve decided `v1.2.3` will be the new version.
+1. Publish `v1.2.3-rc.0` to npm, and **test it fully**
+   1. **Bug?** Create a PR, merge, publish `v1.2.3-rc.1`.
+   1. Repeat as many times as necessary, incrementing the tag version (`-rc.2`, `-rc.3`, …), until there are no bugs.
+1. Once you’re positive there are no bugs or changes needed, **make sure all relevant PRs are merged into `master`** and tag `master` in GitHub with `v1.2.3`.
+
+Once tagged, this will be accessible for download at `npm install @manifoldco/ui`.
+
+👹 Be warned that **this is now publicly-available!** If any bugs are shipped
+in this version, all our partners sites’ may be broken. Be prepared to deal
+with that before publishing a final release.
+
+[anatomy]: #anatomy-of-a-semver-tag
+[changelog]: ../CHANGELOG.md
+[docs]: #️-editing-documentation
 [git-tag]: https://help.github.com/en/articles/working-with-tags
+[happo]: #️-visual-regression-testing
 [npm-semver]: https://docs.npmjs.com/misc/semver
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
+[storybook]: https://ui.manifold.now.sh
 [swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts
 
 ## 💁 Tips
