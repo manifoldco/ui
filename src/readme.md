@@ -155,7 +155,7 @@ PRs that will result in a release, follow the following steps:
 
 <ol>
   <li>
-    Tag a <strong>prerelease</strong> tag in GitHub with a valid <strong>semver</strong> like so:
+    <a href="https://github.com/manifoldco/ui/releases">Tag a <strong>prerelease</strong> in GitHub</a> with a valid <strong>semver</strong> like so:
     <img src="../.github/git-tag.png" alt="Git tag" width="882" height="64" />
   </li>
   <li>Test your prerelease <strong>before merging</strong></li>
@@ -227,11 +227,10 @@ and other CI tools.
 
 ### Step 4: final release
 
-1. Decide what the version will be (see [anatomy of a semver tag][anatomy] above).
-1. Pretend we’ve decided `v1.2.3` will be the new version.
-1. Publish `v1.2.3-rc.0` to npm, and **test it fully**
-   1. **Bug?** Create a PR, merge, publish `v1.2.3-rc.1`.
-   1. Repeat as many times as necessary, incrementing the tag version (`-rc.2`, `-rc.3`, …), until there are no bugs.
+1. Decide what the version will be (see [anatomy of a semver tag][anatomy] above). The following steps assume that you’ve chosen `v1.2.3` for your new version.
+1. [Release `v1.2.3-rc.0`][releases], and **test it fully**
+   1. **Bug?** Create a PR, merge, and [release][releases] the next version: `v1.2.3-rc.1`
+   1. Rinse and repeat (`-rc.2`, `-rc.3`, …) until there are no bugs.
 1. Once you’re positive there are no bugs or changes needed, **make sure all relevant PRs are merged into `master`** and tag `master` in GitHub with `v1.2.3`.
 
 Once tagged, this will be accessible for download at `npm install @manifoldco/ui`.
@@ -246,6 +245,7 @@ with that before publishing a final release.
 [git-tag]: https://help.github.com/en/articles/working-with-tags
 [happo]: #️-visual-regression-testing
 [npm-semver]: https://docs.npmjs.com/misc/semver
+[releases]: https://github.com/manifoldco/ui/releases
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
 [storybook]: https://ui.manifold.now.sh
 [swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts
