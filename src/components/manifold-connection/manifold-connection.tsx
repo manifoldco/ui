@@ -1,9 +1,6 @@
-import { h, Component, Prop, State } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
 import Tunnel from '../../data/connection';
-import { connections } from '../../utils/connections';
-import { createGraphqlFetch } from '../../utils/graphqlFetch';
-import { createRestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 const baseWait = 15000;
@@ -15,45 +12,23 @@ export class ManiTunnel {
   /** _(optional)_ Wait time for the fetch calls before it times out */
   @Prop() waitTime: number = baseWait;
 
-  @State() authToken?: string;
+  /** _(hidden)_ Passed by the state tunnel */
+  @Prop() setEnv?: (env: 'local' | 'stage' | 'prod') => void;
+  @Prop() setWaitTime?: (waitTime: number) => void;
 
-  setAuthToken = (token: string) => {
-    this.authToken = token;
-  };
-
-  getAuthToken = () => this.accessToken;
-
-  get accessToken() {
-    if (this.authToken) {
-      const [token] = this.authToken.split('|');
-      return token;
+  componentWillLoad() {
+    if (this.setEnv) {
+      this.setEnv(this.env);
     }
-
-    return undefined;
+    if (this.setWaitTime) {
+      this.setWaitTime(this.waitTime);
+    }
   }
 
   @logger()
   render() {
-    return (
-      <Tunnel.Provider
-        state={{
-          setAuthToken: this.setAuthToken,
-          restFetch: createRestFetch({
-            endpoints: connections[this.env],
-            getAuthToken: this.getAuthToken,
-            setAuthToken: this.setAuthToken,
-            wait: this.waitTime,
-          }),
-          graphqlFetch: createGraphqlFetch({
-            getAuthToken: this.getAuthToken,
-            setAuthToken: this.setAuthToken,
-            endpoint: connections[this.env].graphql,
-            wait: this.waitTime,
-          }),
-        }}
-      >
-        <slot />
-      </Tunnel.Provider>
-    );
+    return <slot />;
   }
 }
+
+Tunnel.injectProps(ManiTunnel, ['setEnv', 'setWaitTime']);
