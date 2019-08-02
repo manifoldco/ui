@@ -1,5 +1,8 @@
 import fetchMock from 'fetch-mock';
 
+// @ts-ignore
+const realFetch = fetch;
+
 export const mockProviders = (providers: Manifold.ManifoldNode[]) => {
   fetchMock.mock('express:/v1/providers/:id', url => {
     const result = /v1\/providers\/([^/]+?)(?:\/)?$/i.exec(url);
@@ -136,23 +139,19 @@ export const mockPlans = (plans: Manifold.ManifoldNode[]) => {
       body: validPlans,
     };
   });
-  fetchMock.mock('express:/v1/id/plan/:id/cost', url => {
-    const result = /v1\/id\/plan\/([^/]+?)\/cost(?:\/)?$/i.exec(url);
-    if (result) {
-      const id = result[1];
-
-      const found = plans.find(node => node.id === id);
-      if (found) {
-        return {
-          status: 200,
-          body: {
-            cost: (found.body as Manifold.PlanBody).cost,
-            currency: 'USD',
-          },
-        };
-      }
-    }
-    return 404;
+  fetchMock.mock('express:/v1/id/plan/:id/cost', async (url, opts) => {
+    const { headers } = opts;
+    // @ts-ignore
+    delete headers.authorization;
+    const result = await realFetch(url, {
+      ...opts,
+      headers,
+    });
+    const price = await result.json();
+    return {
+      status: result.status,
+      body: price,
+    };
   });
 };
 
