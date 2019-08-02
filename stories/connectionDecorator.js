@@ -1,3 +1,5 @@
+// Creates a fake token provider and manifold connection that adds the api token from localstorage
+// with an expiriy date a week from when it is created. 6.04e8 is a week in miliseconds.
 export const manifoldConnectionDecorator = storyFn => `
   <manifold-connection>
     <manifold-auth-token token="${localStorage.manifold_api_token}|${new Date(
