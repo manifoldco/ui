@@ -64,14 +64,20 @@ workflows:
     jobs:
       - test:
           filters: # filters are required for all jobs here
+            branches:
+              ignore: /.*/ # ignore all branches by default; override with tag
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
       - bundlesize:
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
       - npm-publish: # no approval needed for prerelease
           filters:
+            branches:
+              ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
