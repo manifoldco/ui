@@ -137,6 +137,7 @@ describe('<manifold-data-sso-button>', () => {
       element.querySelector('button').click();
       await page.waitForChanges();
       // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
+      // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
@@ -180,6 +181,7 @@ describe('<manifold-data-sso-button>', () => {
       element.querySelector('button').click();
       await page.waitForChanges();
       // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
+      // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
