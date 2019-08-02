@@ -66,6 +66,11 @@ export namespace Components {
     */
     'env': 'local' | 'stage' | 'prod';
     /**
+    * _(hidden)_ Passed by the state tunnel
+    */
+    'setEnv'?: (env: 'local' | 'stage' | 'prod') => void;
+    'setWaitTime'?: (waitTime: number) => void;
+    /**
     * _(optional)_ Wait time for the fetch calls before it times out
     */
     'waitTime': number;
@@ -1092,6 +1097,11 @@ declare namespace LocalJSX {
     * _(optional)_ Specify `env="stage"` for staging
     */
     'env'?: 'local' | 'stage' | 'prod';
+    /**
+    * _(hidden)_ Passed by the state tunnel
+    */
+    'setEnv'?: (env: 'local' | 'stage' | 'prod') => void;
+    'setWaitTime'?: (waitTime: number) => void;
     /**
     * _(optional)_ Wait time for the fetch calls before it times out
     */

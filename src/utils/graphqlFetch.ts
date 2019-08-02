@@ -1,3 +1,5 @@
+import { hasExpired } from './expiry';
+
 interface CreateGraphqlFetch {
   endpoint?: string;
   wait?: number;
@@ -33,7 +35,7 @@ export const createGraphqlFetch = ({
 ): Promise<GraphqlResponseBody<T>> => {
   const start = new Date();
 
-  while (!getAuthToken() && start.getTime() - new Date().getTime() <= wait) {
+  while (!getAuthToken() && !hasExpired(start, wait)) {
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, 2000));
   }

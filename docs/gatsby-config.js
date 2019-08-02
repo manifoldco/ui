@@ -36,5 +36,41 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: 'gatsby-source-mayflower',
+      options: {
+        sources: [
+          {
+            source: 'https://api.catalog.manifold.co/v1',
+            name: 'catalog',
+            endpoints: [
+              'regions',
+              {
+                endpoint: 'providers',
+              },
+              {
+                endpoint: 'products',
+                relationships: {
+                  providers: 'provider_id',
+                },
+              },
+              {
+                endpoint: 'plans',
+                relationships: {
+                  products: 'product_id',
+                  providers: 'provider_id',
+                },
+                requires: {
+                  products: {
+                    param: 'product_id',
+                    field: 'id',
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
   ],
 };
