@@ -1,5 +1,6 @@
 import { Connection, connections } from './connections';
 import { withAuth } from './auth';
+import { hasExpired } from './expiry';
 
 interface CreateRestFetch {
   endpoints?: Connection;
@@ -26,7 +27,7 @@ export const createRestFetch = ({
   const url = `${endpoints[args.service]}${args.endpoint}`;
   const start = new Date();
 
-  while (!getAuthToken() && new Date().getTime() - start.getTime() <= wait) {
+  while (!getAuthToken() && !hasExpired(start, wait)) {
     // eslint-disable-next-line no-await-in-loop
     await new Promise(resolve => setTimeout(resolve, 2000));
   }
