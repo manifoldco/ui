@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added graphqlFetch to `manifold-connection`.
 - Converted `manifold-data-product-logo` to use GraphQL.
 - Changed the provision button so it fetches the owner ID automatically if not set.
+- Added `productName` to `manifold-marketplace-click` event in the `manifold-service-card` component.
 
 ## [v0.5.0]
 ### Added

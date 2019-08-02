@@ -73,8 +73,8 @@ export namespace Components {
   interface ManifoldCostDisplay {
     'baseCost'?: number;
     'compact'?: boolean;
-    'isCustomizable'?: boolean;
     'measuredFeatures': Catalog.ExpandedFeature[];
+    'startingAt'?: boolean;
   }
   interface ManifoldCredentials {
     'resourceId'?: string;
@@ -362,15 +362,30 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldPlanCost {
+    /**
+    * All plan features
+    */
     'allFeatures': Catalog.ExpandedFeature[];
+    /**
+    * Compact mode (for plan selector sidebar)
+    */
     'compact'?: boolean;
-    'customizable'?: boolean;
-    'planId': string;
+    /**
+    * Plan default cost
+    */
+    'defaultCost'?: number;
+    /**
+    * Plan ID
+    */
+    'planId'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'selectedFeatures': Gateway.FeatureMap;
+    /**
+    * User-selected plan features (needed only for customizable)
+    */
+    'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
@@ -1085,8 +1100,8 @@ declare namespace LocalJSX {
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
     'compact'?: boolean;
-    'isCustomizable'?: boolean;
     'measuredFeatures'?: Catalog.ExpandedFeature[];
+    'startingAt'?: boolean;
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
     'resourceId'?: string;
@@ -1394,14 +1409,29 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
+    /**
+    * All plan features
+    */
     'allFeatures'?: Catalog.ExpandedFeature[];
+    /**
+    * Compact mode (for plan selector sidebar)
+    */
     'compact'?: boolean;
-    'customizable'?: boolean;
+    /**
+    * Plan default cost
+    */
+    'defaultCost'?: number;
+    /**
+    * Plan ID
+    */
     'planId'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * User-selected plan features (needed only for customizable)
+    */
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {

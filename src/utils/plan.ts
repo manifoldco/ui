@@ -272,6 +272,32 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
 }
 
 /**
+ * Sort plans
+ */
+export function planSort(plans: Catalog.ExpandedPlan[]): Catalog.ExpandedPlan[] {
+  // Clone array to prevent accidental mutation with sort()
+  return [...plans].sort((a, b) => {
+    // If comparing 2 free plans, they both cost 0 anyway so don’t reorder
+    if (a.body.free === true && b.body.free === true) {
+      return 0;
+    }
+    // Move free plan to beginning
+    if (a.body.free === true || b.body.free === true) {
+      return a.body.free === true ? -1 : 1;
+    }
+    // Move custom plan to end (but once at the end, sort by cost)
+    if (
+      (a.body.customizable === true || b.body.customizable === true) &&
+      a.body.customizable !== b.body.customizable // if both custom, skip to cost sorting below
+    ) {
+      return a.body.customizable === true ? 1 : -1;
+    }
+    // By default, sort by cost
+    return (a.body.defaultCost || a.body.cost) - (b.body.defaultCost || b.body.cost);
+  });
+}
+
+/**
  * Fetch cost from our API
  */
 export function planCost(

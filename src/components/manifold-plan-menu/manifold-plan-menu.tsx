@@ -33,25 +33,15 @@ export class ManifoldPlanMenu {
   @Prop() selectedPlanId?: string;
   @Prop() selectPlan: Function = () => {};
 
-  sortPlans(plans: Catalog.ExpandedPlan[]) {
-    return [...plans].sort((a, b) => {
-      const aIndex = a.body.customizable ? plans.length : 0;
-      const bIndex = b.body.customizable ? plans.length : 0;
-      return aIndex - bIndex;
-    });
-  }
-
   @logger()
   render() {
     if (this.plans) {
-      const plans = this.sortPlans(this.plans);
-
       return (
         <ul class="plan-list">
-          {plans.map(
+          {this.plans.map(
             ({
               id,
-              body: { name, customizable, expanded_features = [] },
+              body: { name, customizable, cost, defaultCost, expanded_features = [] },
             }: Catalog.ExpandedPlan) => (
               <PlanButton
                 checked={this.selectedPlanId === id}
@@ -61,7 +51,12 @@ export class ManifoldPlanMenu {
               >
                 {name}
                 <div class="cost">
-                  <manifold-plan-cost allFeatures={expanded_features} planId={id} compact={true} />
+                  <manifold-plan-cost
+                    allFeatures={expanded_features}
+                    defaultCost={defaultCost || cost}
+                    planId={id}
+                    compact={true}
+                  />
                 </div>
               </PlanButton>
             )
