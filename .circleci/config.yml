@@ -5,6 +5,8 @@ version: 2.1
 defaults: &defaults
   docker:
     - image: circleci/node:10.16.0
+  environment:
+    - NODE_ENV: development # CircleCI needs devDeps
 
 commands:
   # npm install
@@ -61,14 +63,14 @@ workflows:
   tagged_prerelease:
     jobs:
       - test:
-          filters:
+          filters: # filters are required for all jobs here
             tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/ # tag filters are required for all jobs
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
       - bundlesize:
           filters:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-      - npm-publish:
+      - npm-publish: # no approval needed for prerelease
           filters:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
@@ -80,12 +82,12 @@ workflows:
   tagged_release:
     jobs:
       - test:
-          filters:
+          filters: # filters are required for all jobs here
             branches:
               only:
                 - master
             tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/ # tag filters are required for all jobs
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - bundlesize:
           filters:
             branches:
@@ -94,7 +96,7 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - npm-publish:
-          type: approval
+          type: approval # manual approval step mandatory for final release
           filters:
             branches:
               only:
