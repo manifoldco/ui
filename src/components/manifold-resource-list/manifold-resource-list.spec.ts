@@ -11,9 +11,9 @@ import { createRestFetch } from '../../utils/restFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proto = ManifoldResourceList.prototype as any;
-const oldCallback = proto.componentDidLoad;
+const oldCallback = proto.componentWillLoad;
 
-proto.componentDidLoad = function() {
+proto.componentWillLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,

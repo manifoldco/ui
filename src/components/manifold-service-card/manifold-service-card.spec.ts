@@ -6,11 +6,28 @@ import { Product, ExpandedFreePlan, ExpandedPlan } from '../../spec/mock/catalog
 import { connections } from '../../utils/connections';
 import { createRestFetch } from '../../utils/restFetch';
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const proto = ManifoldServiceCard.prototype as any;
+const oldCallback = proto.componentWillLoad;
+
+proto.componentWillLoad = function() {
+  (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  if (oldCallback) {
+    oldCallback.call(this);
+  }
+};
+
 describe('<manifold-service-card>', () => {
   it('dispatches click event', () => {
     const serviceCard = new ManifoldServiceCard();
     serviceCard.productLabel = Product.body.label;
     serviceCard.productId = Product.id;
+    serviceCard.productName = Product.body.name;
 
     const mock = { emit: jest.fn() };
     serviceCard.marketplaceClick = mock;
@@ -19,6 +36,7 @@ describe('<manifold-service-card>', () => {
     expect(mock.emit).toHaveBeenCalledWith({
       productId: Product.id,
       productLabel: Product.body.label,
+      productName: Product.body.name,
     });
   });
 
@@ -37,7 +55,7 @@ describe('<manifold-service-card>', () => {
     const provisionButton = new ManifoldServiceCard();
     provisionButton.fetchProduct = jest.fn();
     provisionButton.productId = productId;
-    provisionButton.componentDidLoad();
+    provisionButton.componentWillLoad();
     expect(provisionButton.fetchProduct).toHaveBeenCalledWith(undefined, productId);
   });
 
@@ -47,7 +65,7 @@ describe('<manifold-service-card>', () => {
     const provisionButton = new ManifoldServiceCard();
     provisionButton.fetchProduct = jest.fn();
     provisionButton.productLabel = productLabel;
-    provisionButton.componentDidLoad();
+    provisionButton.componentWillLoad();
     expect(provisionButton.fetchProduct).toHaveBeenCalledWith(productLabel);
   });
 
@@ -74,32 +92,8 @@ describe('<manifold-service-card>', () => {
   });
 
   describe('when created with a product label', () => {
-    const oldDidLoad = ManifoldServiceCard.prototype.componentDidLoad;
-
     afterEach(() => {
       fetchMock.restore();
-      // @ts-ignore
-      ManifoldServiceCard.prototype.componentDidLoad = oldDidLoad;
-    });
-
-    beforeEach(async () => {
-      // @ts-ignore
-      const oldWillLoad = ManifoldServiceCard.prototype.componentWillLoad;
-      // @ts-ignore
-      ManifoldServiceCard.prototype.componentWillLoad = async () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (this as any).restFetch = createRestFetch({
-          getAuthToken: jest.fn(() => '1234'),
-          wait: 10,
-          setAuthToken: jest.fn(),
-        });
-        await oldDidLoad.call(this);
-        if (oldWillLoad) {
-          oldWillLoad.call(this);
-        }
-      };
-      // @ts-ignore
-      ManifoldServiceCard.prototype.componentDidLoad = () => {};
     });
 
     it('will fetch the products', async () => {

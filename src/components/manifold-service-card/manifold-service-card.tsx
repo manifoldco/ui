@@ -8,6 +8,7 @@ import logger from '../../utils/logger';
 interface EventDetail {
   productId?: string;
   productLabel?: string;
+  productName?: string;
 }
 
 @Component({ tag: 'manifold-service-card' })
@@ -18,6 +19,7 @@ export class ManifoldServiceCard {
   @Prop() skeleton?: boolean = false;
   @Prop() productId?: string;
   @Prop() productLabel?: string;
+  @Prop() productName?: string;
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @Prop({ reflect: true }) isFeatured?: boolean;
@@ -44,18 +46,15 @@ export class ManifoldServiceCard {
     }
   }
 
-  componentWillLoad() {}
-
-  async componentDidLoad() {
+  componentWillLoad() {
     if (this.skeleton) {
       return;
     }
 
     if (this.productId) {
-      await this.fetchProduct(undefined, this.productId);
-    }
-    if (this.productLabel) {
-      await this.fetchProduct(this.productLabel);
+      this.fetchProduct(undefined, this.productId);
+    } else if (this.productLabel) {
+      this.fetchProduct(this.productLabel);
     }
   }
 
@@ -142,6 +141,7 @@ export class ManifoldServiceCard {
       const detail: EventDetail = {
         productId: this.product ? this.product.id : this.productId,
         productLabel: this.product ? this.product.body.label : this.productLabel,
+        productName: this.product ? this.product.body.name : this.productName,
       };
       this.marketplaceClick.emit(detail);
     }

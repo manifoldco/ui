@@ -23,11 +23,11 @@ export class ManifoldDataHasResource {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
+    this.fetchResources();
     if (!this.paused) {
       this.makeInterval();
     }
-    return this.fetchResources();
   }
 
   componentDidUnload() {

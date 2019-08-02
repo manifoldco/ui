@@ -34,14 +34,12 @@ export class ManifoldPlanSelector {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     if (this.productLabel) {
-      return this.fetchProductByLabel(this.productLabel);
+      this.fetchProductByLabel(this.productLabel);
+    } else if (this.resourceLabel) {
+      this.fetchResource(this.resourceLabel);
     }
-    if (this.resourceLabel) {
-      return this.fetchResource(this.resourceLabel);
-    }
-    return null;
   }
 
   async fetchProductByLabel(productLabel: string) {

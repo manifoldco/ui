@@ -33,8 +33,8 @@ export class ManifoldDataProductLogo {
     this.fetchProduct(newProduct);
   }
 
-  componentDidLoad() {
-    return this.fetchProduct(this.productLabel);
+  componentWillLoad() {
+    this.fetchProduct(this.productLabel);
   }
 
   fetchProduct = async (productLabel?: string) => {

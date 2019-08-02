@@ -14,7 +14,7 @@ describe('<manifold-auth-token>', () => {
       provisionButton.setAuthToken = jest.fn();
 
       provisionButton.token = token;
-      provisionButton.componentDidLoad();
+      provisionButton.componentWillLoad();
 
       expect(provisionButton.setAuthToken).toHaveBeenCalledWith(token);
     });
@@ -44,7 +44,7 @@ describe('<manifold-auth-token>', () => {
       provisionButton.setAuthToken = jest.fn();
 
       provisionButton.token = token;
-      provisionButton.componentDidLoad();
+      provisionButton.componentWillLoad();
 
       expect(provisionButton.setAuthToken).not.toHaveBeenCalled();
     });

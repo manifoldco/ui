@@ -36,11 +36,11 @@ export class ManifoldDataResourceList {
   @State() resources?: Marketplace.Resource[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
-  componentDidLoad() {
+  componentWillLoad() {
+    this.fetchResources();
     if (!this.paused) {
       this.interval = window.setInterval(() => this.fetchResources(), 3000);
     }
-    return this.fetchResources();
   }
 
   componentDidUnload() {

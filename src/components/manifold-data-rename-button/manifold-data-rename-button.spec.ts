@@ -8,9 +8,9 @@ import { createRestFetch } from '../../utils/restFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proto = ManifoldDataRenameButton.prototype as any;
-const oldCallback = proto.componentDidLoad;
+const oldCallback = proto.componentWillLoad;
 
-proto.componentDidLoad = function() {
+proto.componentWillLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,
@@ -29,7 +29,7 @@ describe('<manifold-data-rename-button>', () => {
     const provisionButton = new ManifoldDataRenameButton();
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = resourceLabel;
-    provisionButton.componentDidLoad();
+    provisionButton.componentWillLoad();
     expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
   });
 
@@ -40,7 +40,7 @@ describe('<manifold-data-rename-button>', () => {
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = resourceLabel;
     provisionButton.resourceId = resourceLabel;
-    provisionButton.componentDidLoad();
+    provisionButton.componentWillLoad();
     expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
   });
 

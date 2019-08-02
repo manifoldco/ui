@@ -7,7 +7,7 @@ describe('<manifold-plan-selector>', () => {
     const planSelector = new ManifoldPlanSelector();
     planSelector.fetchProductByLabel = jest.fn();
     planSelector.productLabel = productLabel;
-    planSelector.componentDidLoad();
+    planSelector.componentWillLoad();
     expect(planSelector.fetchProductByLabel).toHaveBeenCalledWith(productLabel);
   });
 
@@ -27,7 +27,7 @@ describe('<manifold-plan-selector>', () => {
     const planSelector = new ManifoldPlanSelector();
     planSelector.fetchResource = jest.fn();
     planSelector.resourceLabel = resourceLabel;
-    planSelector.componentDidLoad();
+    planSelector.componentWillLoad();
     expect(planSelector.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 

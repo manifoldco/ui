@@ -18,7 +18,7 @@ export class ManifoldAuthToken {
     this.setExternalToken(newToken);
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.setExternalToken(this.token);
   }
 

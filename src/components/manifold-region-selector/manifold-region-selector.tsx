@@ -21,7 +21,7 @@ export class ManifoldRegionSelector {
   @State() globalRegion: Catalog.Region = globalRegion;
   @Event() updateValue: EventEmitter;
 
-  async componentDidLoad() {
+  async componentWillLoad() {
     if (!this.restFetch) {
       return;
     }

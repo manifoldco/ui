@@ -7,7 +7,7 @@ describe('<manifold-resource-credentials>', () => {
     const resourceCreds = new ManifoldResourceContainer();
     resourceCreds.fetchResource = jest.fn();
     resourceCreds.resourceLabel = resourceLabel;
-    resourceCreds.componentDidLoad();
+    resourceCreds.componentWillLoad();
     expect(resourceCreds.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 

@@ -50,11 +50,11 @@ export class ManifoldResourceList {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
+    this.fetchResources();
     if (!this.paused) {
       this.interval = window.setInterval(() => this.fetchResources(), 3000);
     }
-    return this.fetchResources();
   }
 
   componentDidUnload() {

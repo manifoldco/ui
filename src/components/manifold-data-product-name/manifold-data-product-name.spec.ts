@@ -7,7 +7,7 @@ describe('<manifold-data-product-name>', () => {
     const productName = new ManifoldDataProductName();
     productName.fetchProduct = jest.fn();
     productName.productLabel = productLabel;
-    productName.componentDidLoad();
+    productName.componentWillLoad();
     expect(productName.fetchProduct).toHaveBeenCalledWith(productLabel);
   });
 
@@ -27,7 +27,7 @@ describe('<manifold-data-product-name>', () => {
     const productName = new ManifoldDataProductName();
     productName.fetchResource = jest.fn();
     productName.resourceLabel = resourceLabel;
-    productName.componentDidLoad();
+    productName.componentWillLoad();
     expect(productName.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 

@@ -21,8 +21,8 @@ export class ManifoldDataResourceLogo {
     this.fetchResource(newResource);
   }
 
-  componentDidLoad() {
-    return this.fetchResource(this.resourceLabel);
+  componentWillLoad() {
+    this.fetchResource(this.resourceLabel);
   }
 
   fetchResource = async (resourceLabel?: string) => {

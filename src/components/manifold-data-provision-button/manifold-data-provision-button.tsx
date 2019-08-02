@@ -71,14 +71,13 @@ export class ManifoldDataProvisionButton {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
+    if (this.productLabel) {
+      this.fetchProductPlanId(this.productLabel, this.planLabel);
+    }
     if (!this.ownerId) {
       this.fetchProfileId();
     }
-    if (this.productLabel) {
-      return this.fetchProductPlanId(this.productLabel, this.planLabel);
-    }
-    return null;
   }
 
   async provision() {

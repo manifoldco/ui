@@ -9,7 +9,7 @@ describe('<manifold-plan>', () => {
     planSelector.fetchProductAndPlan = jest.fn();
     planSelector.productLabel = productLabel;
     planSelector.planLabel = planLabel;
-    planSelector.componentDidLoad();
+    planSelector.componentWillLoad();
     expect(planSelector.fetchProductAndPlan).toHaveBeenCalledWith(productLabel, planLabel);
   });
 

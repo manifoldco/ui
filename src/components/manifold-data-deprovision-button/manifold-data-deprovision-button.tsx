@@ -38,11 +38,10 @@ export class ManifoldDataDeprovisionButton {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     if (this.resourceLabel && !this.resourceId) {
-      return this.fetchResourceId(this.resourceLabel);
+      this.fetchResourceId(this.resourceLabel);
     }
-    return null;
   }
 
   async deprovision() {

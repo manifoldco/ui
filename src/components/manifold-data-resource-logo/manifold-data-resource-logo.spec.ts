@@ -7,7 +7,7 @@ describe('<manifold-data-resource-logo>', () => {
     const productLogo = new ManifoldDataResourceLogo();
     productLogo.fetchResource = jest.fn();
     productLogo.resourceLabel = resourceLabel;
-    productLogo.componentDidLoad();
+    productLogo.componentWillLoad();
     expect(productLogo.fetchResource).toHaveBeenCalledWith(resourceLabel);
   });
 

@@ -24,14 +24,12 @@ export class ManifoldResourceCard {
     this.fetchResourceLabel(newlabel);
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     if (this.resourceId) {
-      return this.fetchResourceId(this.resourceId);
+      this.fetchResourceId(this.resourceId);
+    } else if (this.label) {
+      this.fetchResourceLabel(this.label);
     }
-    if (this.label) {
-      return this.fetchResourceLabel(this.label);
-    }
-    return null;
   }
 
   async fetchResourceId(resourceId: string) {

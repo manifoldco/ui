@@ -23,8 +23,8 @@ export class ManifoldPlan {
     this.fetchProductAndPlan(this.productLabel, newPlan);
   }
 
-  componentDidLoad() {
-    return this.fetchProductAndPlan(this.productLabel, this.planLabel);
+  componentWillLoad() {
+    this.fetchProductAndPlan(this.productLabel, this.planLabel);
   }
 
   async fetchProductAndPlan(productLabel?: string, planLabel?: string) {
