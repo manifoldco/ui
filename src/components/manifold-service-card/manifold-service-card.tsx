@@ -41,13 +41,22 @@ export class ManifoldServiceCard {
   }
 
   @Watch('productId') productIdChange(newProductId: string) {
-    if (!this.skeleton) {
+    if (this.skeleton) {
+      return;
+    }
+    // don’t re-fetch same product
+    if (!this.product || (this.product && this.product.id !== newProductId)) {
       this.fetchProduct({ id: newProductId });
     }
   }
 
   @Watch('productLabel') productLabelChange(newProductLabel: string) {
-    if (!this.skeleton) {
+    if (this.skeleton) {
+      return;
+    }
+
+    // don’t re-fetch same product
+    if (!this.product || (this.product && this.product.body.label !== newProductLabel)) {
       this.fetchProduct({ label: newProductLabel });
     }
   }
@@ -65,10 +74,11 @@ export class ManifoldServiceCard {
   }
 
   get href() {
-    if (!this.productLinkFormat || !this.productLabel) {
+    // if no format, or product is loading, don’t calculate href
+    if (!this.productLinkFormat || !this.product) {
       return '';
     }
-    return this.productLinkFormat.replace(/:product/gi, this.productLabel);
+    return this.productLinkFormat.replace(/:product/gi, this.product.body.label);
   }
 
   async fetchProduct({ id, label }: { id?: string; label?: string }) {

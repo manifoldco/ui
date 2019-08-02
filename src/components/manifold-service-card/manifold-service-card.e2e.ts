@@ -12,14 +12,15 @@ describe('<manifold-service-card>', () => {
     expect(loading).toBe(true);
   });
 
-  it('formats links correctly', async () => {
+  it('formats links from products', async () => {
     const page = await newE2EPage({
-      html: `<manifold-service-card product-id="${Product.id}" product-label="${Product.body.label}" product-link-format="/product/:product"></manifold-service-card>`,
+      html: `<manifold-service-card></manifold-service-card>`,
     });
     await page.$eval(
       'manifold-service-card',
       (elm: any, props: any) => {
         elm.product = props.product;
+        elm.productLinkFormat = '/product/:product';
       },
       { product: Product }
     );
@@ -32,7 +33,7 @@ describe('<manifold-service-card>', () => {
 
   it('displays a free badge if marked as free', async () => {
     const page = await newE2EPage({
-      html: `<manifold-service-card product-id="${Product.id}" product-label="${Product.body.label}"></manifold-service-card>`,
+      html: `<manifold-service-card></manifold-service-card>`,
     });
     await page.$eval(
       'manifold-service-card',
