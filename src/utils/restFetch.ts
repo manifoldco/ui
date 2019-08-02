@@ -41,6 +41,10 @@ export const createRestFetch = ({
       body: JSON.stringify(args.body),
     });
 
+    if ([202, 203, 204].includes(response.status)) {
+      return {};
+    }
+
     const body = await response.json();
     if (response.status >= 200 && response.status < 300) {
       return body;

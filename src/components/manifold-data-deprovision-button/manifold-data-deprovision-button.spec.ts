@@ -130,8 +130,7 @@ describe('<manifold-data-deprovision-button>', () => {
 
     it('will trigger a dom event on successful deprovision', async () => {
       fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, {
-        status: 200,
-        body: Resource,
+        status: 202,
       });
 
       const page = await newSpecPage({
