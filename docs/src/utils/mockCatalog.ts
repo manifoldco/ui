@@ -1,7 +1,10 @@
 import fetchMock from 'fetch-mock';
 
-// @ts-ignore
-const realFetch = fetch;
+let realFetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
+if (typeof window !== 'undefined') {
+  // @ts-ignore
+  realFetch = fetch;
+}
 
 export const mockProviders = (providers: Manifold.ManifoldNode[]) => {
   fetchMock.mock('express:/v1/providers/:id', url => {
