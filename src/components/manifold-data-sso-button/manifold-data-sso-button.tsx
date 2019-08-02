@@ -130,7 +130,12 @@ export class ManifoldDataSsoButton {
   @logger()
   render() {
     return (
-      <button type="submit" onClick={() => this.sso()} disabled={!this.resourceId && !this.loading}>
+      <button
+        type="submit"
+        onClick={() => this.sso()}
+        disabled={!this.resourceId && !this.loading}
+        data-resource-id={this.resourceId}
+      >
         <slot />
       </button>
     );

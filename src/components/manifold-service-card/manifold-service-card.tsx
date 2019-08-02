@@ -59,10 +59,10 @@ export class ManifoldServiceCard {
   }
 
   get href() {
-    if (!this.productLinkFormat || !this.productLabel) {
+    if (!this.productLinkFormat || !this.product) {
       return '';
     }
-    return this.productLinkFormat.replace(/:product/gi, this.productLabel);
+    return this.productLinkFormat.replace(/:product/gi, this.product.body.label);
   }
 
   async fetchProduct(productLabel?: string, productId?: string) {
@@ -163,10 +163,10 @@ export class ManifoldServiceCard {
           description={this.product.body.tagline}
           isFeatured={this.isFeatured}
           isFree={this.isFree}
-          label={this.productLabel}
+          label={this.product.body.label}
           logo={this.product.body.logo_url}
           name={this.product.body.name}
-          productId={this.productId}
+          productId={this.product.id}
         >
           <manifold-forward-ref slot="cta">
             <slot name="cta" />
