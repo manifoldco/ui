@@ -79,7 +79,7 @@ describe('<manifold-resource-credentials>', () => {
   it('will refetch the resource after load if given an invalid resource', async () => {
     const resourceLabel = 'test-resource';
     // @ts-ignore
-    window.setTimeout = jest.fn(call => call());
+    page.win.setTimeout = jest.fn(call => call());
 
     fetchMock
       .once(`${connections.prod.gateway}/resources/me/${resourceLabel}`, {})
@@ -100,7 +100,7 @@ describe('<manifold-resource-credentials>', () => {
   it('will refetch the resource after load if it received an error', async () => {
     const resourceLabel = 'test-resource';
     // @ts-ignore
-    window.setTimeout = jest.fn(call => call());
+    page.win.setTimeout = jest.fn(call => call());
 
     fetchMock
       .once(`${connections.prod.gateway}/resources/me/${resourceLabel}`, 404)
