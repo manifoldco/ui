@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@manifoldco/icons": "0.0.3",
-    "@manifoldco/ui": "file:../",
+    "@manifoldco/ui": "file:../pkg",
     "@reach/router": "^1.2.1",
     "fetch-mock": "^7.3.9",
     "gatsby": "^2.9.0",

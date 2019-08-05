@@ -15,10 +15,7 @@
   "author": "manifoldco",
   "license": "BSD",
   "files": [
-    "CHANGELOG.md",
-    "dist/",
-    "package.json",
-    "readme.md"
+    "dist/"
   ],
   "main": "dist/index.js",
   "esnext": "dist/esm",
@@ -45,11 +42,12 @@
     "happo": "npm run build && cp .manifold-ci.yml .manifold.yml && manifold run -- happo run",
     "happo-ci-travis": "stencil build && happo-ci-travis",
     "heroku-postbuild": "npm run build:docs",
-    "lint": "npm run lint:js && npm run lint:css && cd docs && npm run lint",
+    "lint": "npm run lint:js && npm run lint:css && cd docs && npm i && npm run lint",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",
-    "prepare:docs": "npm run build && cd docs && npm i && rm -rf node_modules/@manifoldco/ui && mkdir node_modules/@manifoldco/ui && cp -r ../{dist,package.json} node_modules/@manifoldco/ui",
+    "prepare:docs": "npm run build && mkdir -p pkg && cp -r dist pkg && cp package.json pkg/package.json",
+    "publish": "npm run test && npm run bundlesize && node scripts/publish",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",

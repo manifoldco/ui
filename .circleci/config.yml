@@ -15,14 +15,16 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - node_modules-{{ checksum "package.json" }}
-            - node_modules-
+            - node_modules-{{ .Branch }}-{{ checksum "package.json" }}
+            - node_modules-{{ .Branch }}-
       - run: npm install
+      - run: npm run prepare:docs
+      - run: cd docs && npm i
       - save_cache:
           paths:
             - node_modules
-          key: node_modules-{{ checksum "package.json" }}
-      - run: npm run prepare:docs
+            - docs/node_modules
+          key: node_modules-{{ .Branch }}-{{ checksum "package.json" }}
 
 jobs:
   # Deploy version to npm
@@ -33,9 +35,7 @@ jobs:
           at: ~/project
       - setup
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
-      - run: npm version from-git
-      - run: npm run build
-      - run: npm publish
+      - run: npm run publish
   # Run bundlesize
   bundlesize:
     <<: *defaults
@@ -62,45 +62,16 @@ workflows:
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   tagged_prerelease:
     jobs:
-      - test:
-          filters: # filters are required for all jobs here
-            branches:
-              ignore: /.*/ # ignore all branches by default; override with tag
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-      - bundlesize:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
       - npm-publish: # no approval needed for prerelease
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-          requires:
-            - test
-            - bundlesize
 
   # Final release (only fires on master, and if Git tag is a stable release)
   tagged_release:
     jobs:
-      - test:
-          filters: # filters are required for all jobs here
-            branches:
-              only:
-                - master
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-      - bundlesize:
-          filters:
-            branches:
-              only:
-                - master
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - npm-publish:
           type: approval # manual approval step mandatory for final release
           filters:
@@ -109,6 +80,3 @@ workflows:
                 - master
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-          requires:
-            - test
-            - bundlesize
