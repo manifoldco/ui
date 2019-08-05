@@ -114,7 +114,7 @@
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.18.2",
     "puppeteer": "1.17.0",
-    "storybook-readme": "^5.0.5",
+    "storybook-readme": "^5.0.6",
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
     "stylelint-config-rational-order": "^0.1.2",
