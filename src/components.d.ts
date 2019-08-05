@@ -329,6 +329,7 @@ export namespace Components {
   interface ManifoldMarketplaceGrid {
     'excludes'?: string[];
     'featured'?: string[];
+    'freeProducts': string[];
     'hideCategories'?: boolean;
     'hideSearch'?: boolean;
     'hideTemplates'?: boolean;
@@ -553,6 +554,7 @@ export namespace Components {
   }
   interface ManifoldServiceCard {
     'isFeatured'?: boolean;
+    'isFree': boolean;
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'productId'?: string;
@@ -1380,6 +1382,7 @@ declare namespace LocalJSX {
   interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
     'excludes'?: string[];
     'featured'?: string[];
+    'freeProducts'?: string[];
     'hideCategories'?: boolean;
     'hideSearch'?: boolean;
     'hideTemplates'?: boolean;
@@ -1621,6 +1624,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
     'isFeatured'?: boolean;
+    'isFree'?: boolean;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;

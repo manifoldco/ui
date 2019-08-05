@@ -121,6 +121,6 @@
     "stylelint-config-standard": "^18.3.0",
     "ts-loader": "^6.0.4",
     "wait-on": "^3.3.0",
-    "webpack": "^4.38.0"
+    "webpack": "^4.39.1"
   }
 }

@@ -35,7 +35,7 @@ describe('<manifold-service-card>', () => {
     provisionButton.productId = '1234';
 
     provisionButton.productIdChange(newProduct);
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(undefined, newProduct);
+    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ id: newProduct });
   });
 
   it('fetches product by label on label change', () => {
@@ -46,7 +46,7 @@ describe('<manifold-service-card>', () => {
     provisionButton.productLabel = 'old-product';
 
     provisionButton.productLabelChange(newProduct);
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(newProduct);
+    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ label: newProduct });
   });
 
   describe('when created with a product label', () => {

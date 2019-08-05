@@ -149,40 +149,106 @@ hot reload, however it will break if you don’t add a `path` in
 
 ## 🚀 Deploying
 
-To publish to npm, tag it in Git with a valid [npm-semver][npm-semver].
+Not every PR will warrant a release—it’s fine to create & merge PRs into
+`master` with the intent that multiple will comprise a release later. But for
+PRs that will result in a release, follow the following steps:
 
-### Unstable release
+<ol>
+  <li>
+    <a href="https://github.com/manifoldco/ui/releases">Tag a <strong>prerelease</strong> in GitHub</a> with a valid <strong>semver</strong> like so:
+    <img src="../.github/git-tag.png" alt="Git tag" width="882" height="64" />
+  </li>
+  <li>Test your prerelease <strong>before merging</strong></li>
+  <li>Update the <a href="../CHANGELOG.md">CHANGELOG</a>, then <strong>merge</strong></li>
+  <li>Once no bugs can be found, publish a <strong>final release</strong> from <code>master</code></li>
+</ol>
 
-**Tagging a release version with a hyphen (`-`)** will publish a test release.
-Use this for both release candidates as well as experimental releases.
-Releasing in this way is highly-encouraged, and poses no risk to our
-partners.
+### Step 1: Prerelease
 
-```
-v1.0.0-rc.0      # first release candidate
-v1.0.0-rc.1      # second release candidate
-v1.1.0-alpha.0   # buggy version, published for testing
-```
+#### Anatomy of a semver tag
 
-Unlike stable releases, these won’t be downloaded unless someone specifically
-requests the flag (e.g.: `npm i --save @manifoldco/ui@rc` or `npm i --save @manifoldco/ui@alpha`).
+<p align="center">
+  <img src="../.github/semver.svg" alt="npm semver" width="600" height="235" />
+</p>
 
-### Stable release
+| Increment | Description                                                                                                                                                                         |
+| :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Patch** | Bugfix. There are **no breaking changes** in this release (past `v1.0.0`; expect breaking changes until then).                                                                      |
+| **Minor** | New functionality is added. There are also **no breaking changes** in this release, either (past `v1.0.0`; expect breaking changes until then).                                     |
+| **Major** | New features (and maybe bugfixes) introduced **with breaking changes** that are documented in the [CHANGELOG][changelog]. This should be installed with caution and plenty of time. |
 
-**⚠️ Don’t publish a stable version without publishing a release candidate first (above)!**
+💁 semver is not a true decimal system (if it wasn’t already apparent from 2
+decimals), so each part can go past `.9`. If you’re at `v0.9.0`, the next
+logical version **is `v0.10.0`, NOT `v1.0.0`**. Feel free to do into the
+double-digits for both minor and patch versions! Also, don’t zero-pad any
+numbers.
 
-If you’re releasing a stable release after it’s been fully tested, create a
-semver [Git tag][git-tag], starting with `v`:
+#### Prelease tagging
 
-```
-v1.0.0
-```
+**⚠️ Always publish a prerelease before a release!**
 
-This will be accessible for download at `npm i --save @manifoldco/ui`.
+A prerelease is a semver with a **tag** (the `alpha` in `v1.2.3-alpha.0`).
+Prereleases are a vital part of testing, used for both release candidates as
+well as experimental releases. Releasing in this way is highly-encouraged,
+and poses no risk to our partners.
 
+Here are some commonly-used tags that are good for test releases, but you may
+alternately use any word you’d like as long as it’s **not `latest`** (that’s
+the tag npm reserves for final version):
+
+| Tag              | Description                                                                                   |
+| :--------------- | :-------------------------------------------------------------------------------------------- |
+| `v1.2.3‑alpha.0` | **alpha** is an experimental version that may not ever be shipped, but we’re using it to test |
+| `v1.2.3‑rc.0`    | This is a **release candidate** that is 99.99% complete; we’re just testing before release    |
+
+Prereleases **will not** be downloaded when a user runs `npm install @manifoldco/ui`. It can only be installed by either specifying `npm install @manifoldco/ui@1.0.0-mytag.0` or `npm install @manifoldco/ui@mytag`.
+
+💁 Remember: **don’t use `-latest` as a tag!** That’s the only reserved tag on npm.
+
+### Step 2: Testing
+
+Install `@manifoldco/ui@mytag` in the client you’re consuming it in **while your PR
+is still open.** Ask yourself:
+
+- [ ] Did all dependencies install correctly?
+- [ ] Is the change I made working after installing the built package from npm?
+- [ ] Are the [docs][docs] up-to-date?
+- [ ] Do any [Storybook][storybook] stories need to be written?
+- [ ] Do any [Happo tests][happo] need to be written?
+
+If everything looks good and works as expected, **don’t merge your PR yet**!
+Update the CHANGELOG (below).
+
+### Step 3. CHANGELOG
+
+Our [CHANGELOG][changelog] is important to keep up-to-date for dependabot,
+and other CI tools.
+
+**Only once the CHANGELOG is updated may you merge your PR.**
+
+### Step 4: Final release
+
+1. Decide what the version will be (see [anatomy of a semver tag][anatomy] above). The following steps assume that you’ve chosen `v1.2.3` for your new version.
+1. [Release `v1.2.3-rc.0`][releases], and **test it fully**
+   1. **Bug?** Create a PR, merge, and [release][releases] the next version: `v1.2.3-rc.1`
+   1. Rinse and repeat (`-rc.2`, `-rc.3`, …) until there are no bugs.
+1. Once you’re positive there are no bugs or changes needed, **make sure all relevant PRs are merged into `master`** and tag `master` in GitHub with `v1.2.3`.
+
+Once tagged, this will be accessible for download at `npm install @manifoldco/ui`.
+
+👹 Be warned that **this is now publicly-available!** If any bugs are shipped
+in this version, all our partners sites’ may be broken. Be prepared to deal
+with that before publishing a final release.
+
+[anatomy]: #anatomy-of-a-semver-tag
+[changelog]: ../CHANGELOG.md
+[docs]: #️-editing-documentation
 [git-tag]: https://help.github.com/en/articles/working-with-tags
+[happo]: #️-visual-regression-testing
 [npm-semver]: https://docs.npmjs.com/misc/semver
+[releases]: https://github.com/manifoldco/ui/releases
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
+[storybook]: https://ui.manifold.now.sh
 [swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts
 
 ## 💁 Tips
@@ -207,8 +273,10 @@ document.querySelector('[type=text]').getAttribute('value');
 // ""
 ```
 
-In the DOM, `value=""` didn’t update, but as the user typed, the node’s
-`.value property updated to reflect the user’s status.
+In the DOM, the `value` _attribute_ didn’t update, but as the user typed, the
+node’s `.value` _property_ did. The difference between attributes and
+properties are that properties exist in the browser’s memory, and attributes
+exist in the DOM.
 
 #### Applying it to Stencil
 
@@ -216,25 +284,33 @@ Stencil treats attributes & properties very differently, especially within
 JSX. Consider the two **in JSX**:
 
 ```jsx
+// Stencil JSX
+
 <user-card user-info={user} /> // 🚫
 <user-card userInfo={user} /> // ✅
 ```
 
-Of the two, the `kebab-case` one is an HTML attribute. As such, Stencil will
-do its best to try and figure out what you meant, but this isn’t meant for
-nested objects, and **it won’t receive updates.**
+Within Stencil, `user-info` is the attribute, `userInfo` the property. Use
+`user-info` if you’d like to treat it as HTML (strings only), or `userInfo`
+if you’d like it to be executed as JavaScript (objects, arrays, numbers,
+booleans only supported in this way).
 
 However, when dealing with HTML, it’s totally different—only attributes are
 supported (this means only strings!):
 
 ```jsx
+// HTML
+
 <user-card user-info={user} /> // ✅
 <user-card userInfo={user} /> // 🚫
 ```
 
-In this example, `userInfo` is actually converted to `userinfo` (HTML is
-case-insensitive), so it’s a different prop. Also, if you want to set
-non-strings, you’ll have to do so [via JS][stencil-properties].
+Outside Stencil, `user-info` and `userInfo` are **both attributes**, and can
+only handle strings. However, because HTML is case-insensitive, `userInfo`
+will be treated as `userinfo` (no hyphen).
+
+To use non-strings outside of Stencil, you’ll have to do so [via
+JS][stencil-properties].
 
 **TL;DR use `camelCase` in JSX; `kebab-case` in HTML.**
 
