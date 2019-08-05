@@ -24,6 +24,11 @@ interface RealResourceBody extends Marketplace.ResourceBody {
   user_id?: string;
 }
 
+const PROVISION = 'provision';
+const RESIZE = 'resize';
+const DEPROVISION = 'deprovision';
+const TRANSFER = 'transfer';
+
 @Component({
   tag: 'manifold-resource-list',
   styleUrl: 'manifold-resource-list.css',
@@ -64,26 +69,19 @@ export class ManifoldResourceList {
   }
 
   static opStateToStatus(operation: Provisioning.Operation): string {
-    switch (operation.body.type) {
-      case 'provision':
-        return (operation.body as Provisioning.provision).state === 'done'
-          ? 'available'
-          : operation.body.type;
-      case 'resize':
-        return (operation.body as Provisioning.resize).state === 'done'
-          ? 'available'
-          : operation.body.type;
-      case 'transfer':
-        return (operation.body as Provisioning.transfer).state === 'done'
-          ? 'available'
-          : operation.body.type;
-      case 'deprovision':
-        return (operation.body as Provisioning.deprovision).state === 'done'
-          ? 'unavailable'
-          : operation.body.type;
-      default:
-        return 'unavailable';
+    if (![PROVISION, RESIZE, TRANSFER, DEPROVISION].includes(operation.body.type)) {
+      return 'unavailable';
     }
+    const opBody:
+      | Provisioning.provision
+      | Provisioning.resize
+      | Provisioning.transfer
+      | Provisioning.deprovision = operation.body;
+
+    if (opBody.state === 'done') {
+      return 'available';
+    }
+    return operation.body.type;
   }
 
   static userResources(resources: RealResource[]) {
@@ -128,51 +126,34 @@ export class ManifoldResourceList {
         console.error(resourcesResp);
         return;
       }
-      const resources = ManifoldResourceList.userResources(resourcesResp);
+      const userResource = ManifoldResourceList.userResources(resourcesResp);
 
-      this.resources = [];
+      const resources: FoundResource[] = [];
       // First, do a run through of the operations to add any resource not covered by one or in the process of being modified by one
       operationsResp
         .filter((op: Provisioning.Operation) =>
-          ['provision', 'resize', 'transfer', 'deprovision'].includes(op.body.type)
+          [PROVISION, RESIZE, TRANSFER, DEPROVISION].includes(op.body.type)
         )
         .forEach((operation: Provisioning.Operation) => {
-          let opBody:
+          const opBody:
             | Provisioning.provision
             | Provisioning.resize
             | Provisioning.transfer
-            | Provisioning.deprovision;
-          switch (operation.body.type) {
-            case 'provision':
-              opBody = operation.body as Provisioning.provision;
-              break;
-            case 'resize':
-              opBody = operation.body as Provisioning.resize;
-              break;
-            case 'transfer':
-              opBody = operation.body as Provisioning.transfer;
-              break;
-            case 'deprovision':
-              opBody = operation.body as Provisioning.deprovision;
-              break;
-            default:
-              return;
-          }
+            | Provisioning.deprovision = operation.body;
+
           // Don't run this code is the operation is done, fallback to the simpler resource code.
           if (opBody.state === 'done') {
             return;
           }
 
-          const resource = resources.find((res: RealResource) => opBody.resource_id === res.id);
+          const resource = userResource.find((res: RealResource) => opBody.resource_id === res.id);
 
           if (resource) {
             const product = productsResp.find(
               (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
             );
 
-            // Ignoring because we set `this.resource` to an empty array above
-            // @ts-ignore
-            this.resources.push({
+            resources.push({
               id: resource.id,
               label: resource.body.label,
               name: resource.body.name,
@@ -181,7 +162,7 @@ export class ManifoldResourceList {
             });
             return;
           }
-          if (operation.body.type !== 'provision') {
+          if (operation.body.type !== PROVISION) {
             // Only provision operation without a resource should be processed
             return;
           }
@@ -189,9 +170,7 @@ export class ManifoldResourceList {
             (prod: Catalog.Product): boolean =>
               prod.id === (opBody as Provisioning.provision).product_id
           );
-          // Ignoring because we set `this.resource` to an empty array above
-          // @ts-ignore
-          this.resources.push({
+          resources.push({
             id: opBody.resource_id || '',
             // Only the provision operation has this info
             label: (opBody as Provisioning.provision).label || '',
@@ -202,19 +181,15 @@ export class ManifoldResourceList {
         });
 
       // Then run through all the real resource and add them as available if they weren't added by an operation
-      resources.forEach((resource: RealResource) => {
-        // Ignoring because we set `this.resource` to an empty array above
-        // @ts-ignore
-        if (this.resources.find((res: FoundResource) => res.id === resource.id)) {
+      userResource.forEach((resource: RealResource) => {
+        if (resources.find((res: FoundResource) => res.id === resource.id)) {
           return;
         }
 
         const product = productsResp.find(
           (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
         );
-        // Ignoring because we set `this.resource` to an empty array above
-        // @ts-ignore
-        this.resources.push({
+        resources.push({
           id: resource.id,
           label: resource.body.label,
           name: resource.body.name,
@@ -223,7 +198,7 @@ export class ManifoldResourceList {
         });
       });
 
-      this.resources.sort((a, b) => a.label.localeCompare(b.label));
+      this.resources = resources.sort((a, b) => a.label.localeCompare(b.label));
     } else {
       this.resources = [];
     }

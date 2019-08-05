@@ -21,7 +21,13 @@ example: |
           label="my-resource-3" 
           logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" 
           resource-id="1234" 
-          resource-status="unavailable"
+          resource-status="resize"
+        ></manifold-resource-card-view>
+        <manifold-resource-card-view
+          label="my-resource-4" 
+          logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" 
+          resource-id="1234" 
+          resource-status="deprovision"
         ></manifold-resource-card-view>
       </div>
     </manifold-resource-list>

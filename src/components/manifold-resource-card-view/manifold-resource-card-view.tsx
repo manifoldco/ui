@@ -68,10 +68,7 @@ export class ManifoldResourceCardView {
   get status() {
     if (
       this.resourceStatus &&
-      (this.resourceStatus === AVAILABLE ||
-        this.resourceStatus === PROVISIONING ||
-        this.resourceStatus === RESIZING ||
-        this.resourceStatus === DEPROVISION)
+      [AVAILABLE, PROVISIONING, RESIZING, DEPROVISION].includes(this.resourceStatus)
     ) {
       return this.resourceStatus;
     }
