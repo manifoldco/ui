@@ -8,6 +8,9 @@ defaults: &defaults
   environment:
     - NODE_ENV: development # CircleCI needs devDeps
 
+orbs:
+  happo: happo/happo@2.0.0
+
 commands:
   # npm install
   setup:
@@ -15,8 +18,8 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - node_modules-{{ .Branch }}-{{ checksum "package.json" }}
-            - node_modules-{{ .Branch }}-
+            - npmcache-{{ .Branch }}-{{ checksum "package.json" }}
+            - npmcache-{{ .Branch }}-
       - run: npm install
       - run: npm run prepare:docs
       - run: cd docs && npm i
@@ -24,9 +27,16 @@ commands:
           paths:
             - node_modules
             - docs/node_modules
-          key: node_modules-{{ .Branch }}-{{ checksum "package.json" }}
+          key: npmcache-{{ .Branch }}-{{ checksum "package.json" }}
 
 jobs:
+  # Run bundlesize
+  bundlesize:
+    <<: *defaults
+    steps:
+      - setup
+      - run: npm run bundlesize
+
   # Deploy version to npm
   npm-publish:
     <<: *defaults
@@ -36,12 +46,6 @@ jobs:
       - setup
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
       - run: npm run publish
-  # Run bundlesize
-  bundlesize:
-    <<: *defaults
-    steps:
-      - setup
-      - run: npm run bundlesize
 
   # Lint & test
   test:
@@ -50,17 +54,25 @@ jobs:
       - setup
       - run: npm run lint && npm test
 
+  # Run visual regression tests
+  vrt:
+    <<: *defaults
+    steps:
+      - setup
+      - happo/run_happo
+
 workflows:
   version: 2
 
   # Normal workflow for untagged PRs
-  untagged:
+  branch:
     jobs:
       - test
       - bundlesize
+      - vrt
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
-  tagged_prerelease:
+  prerelease:
     jobs:
       - npm-publish: # no approval needed for prerelease
           filters:
@@ -70,7 +82,7 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
 
   # Final release (only fires on master, and if Git tag is a stable release)
-  tagged_release:
+  release:
     jobs:
       - npm-publish:
           type: approval # manual approval step mandatory for final release
