@@ -45,6 +45,9 @@ a `manifold-resource-container` component with access to the resource label.
   <manifold-resource-credentials></manifold-resource-credentials>
 </resource-mock-resource>
 
+## Refetching until the resource is valid
+The `refetch-until-valid` property on the `resource-container` can be used to force the container to refetch the resource until it has found one and the status of that resource is available. This is useful for reloading the page until the resource has finished resizing or provisioning for example.
+
 ## The resource credentials
 
 The [`manifold-credentials`](/components/credentials) component can be used inside the container without any attribute by

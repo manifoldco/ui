@@ -480,6 +480,10 @@ export namespace Components {
   }
   interface ManifoldResourceContainer {
     /**
+    * Set whether or not to refetch the resource from the api until it is in an available and valid state
+    */
+    'refetchUntilValid': boolean;
+    /**
     * Which resource does this belong to?
     */
     'resourceLabel'?: string;
@@ -539,6 +543,8 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldResourceStatus {
+    'data'?: Gateway.Resource;
+    'loading': boolean;
     'size'?: 'small' | 'medium';
   }
   interface ManifoldResourceStatusView {
@@ -1538,6 +1544,10 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
     /**
+    * Set whether or not to refetch the resource from the api until it is in an available and valid state
+    */
+    'refetchUntilValid'?: boolean;
+    /**
     * Which resource does this belong to?
     */
     'resourceLabel'?: string;
@@ -1608,6 +1618,8 @@ declare namespace LocalJSX {
     'onManifold-ssoButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
+    'data'?: Gateway.Resource;
+    'loading'?: boolean;
     'size'?: 'small' | 'medium';
   }
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
