@@ -94,6 +94,27 @@ describe('<manifold-resource-credentials>', () => {
     expect(fetchMock.called(`${connections.prod.gateway}/resources/me/${resourceLabel}`)).toBe(
       true
     );
-    expect(window.setTimeout).toHaveBeenCalled();
+    expect(window.setTimeout).toHaveBeenCalledTimes(1);
+  });
+
+  it('will refetch the resource after load if it received an error', async () => {
+    const resourceLabel = 'test-resource';
+    // @ts-ignore
+    window.setTimeout = jest.fn(call => call());
+
+    fetchMock
+      .once(`${connections.prod.gateway}/resources/me/${resourceLabel}`, 404)
+      .once(`${connections.prod.gateway}/resources/me/${resourceLabel}`, GatewayResource);
+
+    const root = page.root as HTMLElement;
+    element.resourceLabel = resourceLabel;
+    element.refetchUntilValid = true;
+    root.appendChild(element);
+    await page.waitForChanges();
+
+    expect(fetchMock.called(`${connections.prod.gateway}/resources/me/${resourceLabel}`)).toBe(
+      true
+    );
+    expect(window.setTimeout).toHaveBeenCalledTimes(1);
   });
 });
