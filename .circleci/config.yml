@@ -4,7 +4,7 @@ version: 2.1
 
 defaults: &defaults
   docker:
-    - image: circleci/node:10.16.0
+    - image: circleci/node:10.16.1
   environment:
     - NODE_ENV: development # CircleCI needs devDeps
 
@@ -22,7 +22,7 @@ commands:
           paths:
             - node_modules
           key: node_modules-{{ checksum "package.json" }}
-      - run: npm run prepare-docs
+      - run: npm run prepare:docs
 
 jobs:
   # Deploy version to npm
