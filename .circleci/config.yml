@@ -15,13 +15,13 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
+            - node_modules-{{ checksum "package.json" }}
+            - node_modules-
       - run: npm install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: node_modules-{{ checksum "package.json" }}
       - run: npm run prepare-docs
 
 jobs:
