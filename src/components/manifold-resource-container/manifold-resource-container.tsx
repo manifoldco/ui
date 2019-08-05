@@ -49,6 +49,11 @@ export class ManifoldResourceContainer {
     });
 
     if (response instanceof Error) {
+      // In case we actually want to keep fetching on an error
+      if (this.refetchUntilValid) {
+        this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
+      }
+
       console.error(response);
       return;
     }
