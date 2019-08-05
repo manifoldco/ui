@@ -23,10 +23,14 @@ export class ManifoldResourceContainer {
     this.fetchResource(newName);
   }
 
-  componentWillLoad() {
-    if (this.resourceLabel) {
+  @Watch('refetchUntilValid') refreshChange(newRefresh: boolean) {
+    if (newRefresh && (!this.resource || this.resource.state !== 'available')) {
       this.fetchResource(this.resourceLabel);
     }
+  }
+
+  componentWillLoad() {
+    return this.fetchResource(this.resourceLabel);
   }
 
   componentDidUnload() {
@@ -34,7 +38,7 @@ export class ManifoldResourceContainer {
   }
 
   fetchResource = async (resourceLabel?: string) => {
-    if (!this.restFetch || this.resourceLabel) {
+    if (!this.restFetch || !this.resourceLabel) {
       return;
     }
 
