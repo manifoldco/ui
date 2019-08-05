@@ -12,7 +12,6 @@ export class ManifoldResourceStatus {
 
   @logger()
   render() {
-    console.log('resource status', this.loading);
     return (
       <manifold-resource-status-view
         size={this.size}
