@@ -14,8 +14,17 @@ interface EventDetail {
 
 const AVAILABLE = 'available';
 const PROVISIONING = 'provision';
-const DEGRADED = 'degraded';
+const RESIZING = 'resize';
+const DEPROVISION = 'deprovision';
 const OFFLINE = 'offline';
+
+const statusToText = {
+  [AVAILABLE]: 'Available',
+  [PROVISIONING]: 'Provisioning',
+  [RESIZING]: 'Resizing',
+  [DEPROVISION]: 'Deprovisioning',
+  [OFFLINE]: 'Offline',
+};
 
 @Component({
   tag: 'manifold-resource-card-view',
@@ -56,16 +65,32 @@ export class ManifoldResourceCardView {
     return this.resourceLinkFormat.replace(/:resource/gi, this.label);
   }
 
-  get status(): string {
+  get status() {
     if (
       this.resourceStatus &&
       (this.resourceStatus === AVAILABLE ||
         this.resourceStatus === PROVISIONING ||
-        this.resourceStatus === DEGRADED)
+        this.resourceStatus === RESIZING ||
+        this.resourceStatus === DEPROVISION)
     ) {
       return this.resourceStatus;
     }
     return OFFLINE;
+  }
+
+  get statusText() {
+    switch (this.resourceStatus) {
+      case AVAILABLE:
+        return statusToText[AVAILABLE];
+      case PROVISIONING:
+        return statusToText[PROVISIONING];
+      case RESIZING:
+        return statusToText[RESIZING];
+      case DEPROVISION:
+        return statusToText[DEPROVISION];
+      default:
+        return statusToText[OFFLINE];
+    }
   }
 
   async fetchResourceId(resourceLabel: string) {
@@ -122,7 +147,7 @@ export class ManifoldResourceCardView {
         <div class="status-box">
           <div class="status" data-status={this.status}>
             <div class="inner" itemprop="status">
-              {this.status[0].toUpperCase() + this.status.slice(1)}
+              {this.statusText}
             </div>
           </div>
         </div>

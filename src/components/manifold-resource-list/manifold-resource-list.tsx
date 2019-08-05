@@ -98,17 +98,18 @@ export class ManifoldResourceList {
       return;
     }
 
-    const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me`,
+    // TODO: All this will be removed when graphql comes in
+    const operationsResp = await this.restFetch<Provisioning.Operation[]>({
+      service: 'provisioning',
+      endpoint: `/operations/?is_deleted=false`,
     });
 
-    if (resourcesResp instanceof Error) {
-      console.error(resourcesResp);
+    if (operationsResp instanceof Error) {
+      console.error(operationsResp);
       return;
     }
 
-    if (Array.isArray(resourcesResp)) {
+    if (Array.isArray(operationsResp)) {
       const productsResp = await this.restFetch<Catalog.Product[]>({
         service: 'catalog',
         endpoint: `/products`,
@@ -118,51 +119,111 @@ export class ManifoldResourceList {
         return;
       }
 
-      const operationsResp = await this.restFetch<Provisioning.Operation[]>({
-        service: 'provisioning',
-        endpoint: `/operations/?is_deleted=false`,
+      const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
+        service: 'marketplace',
+        endpoint: `/resources/?me`,
       });
 
-      if (operationsResp instanceof Error) {
-        console.error(operationsResp);
+      if (resourcesResp instanceof Error) {
+        console.error(resourcesResp);
         return;
       }
+      const resources = ManifoldResourceList.userResources(resourcesResp);
 
-      this.resources = ManifoldResourceList.userResources(
-        [...resourcesResp].sort((a, b) => a.body.label.localeCompare(b.body.label))
-      ).map(
-        (resource: Marketplace.Resource): FoundResource => {
-          const product = productsResp.find(
-            (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
-          );
-          const operation = operationsResp
-            .filter((op: Provisioning.Operation) =>
-              ['provision', 'resize', 'transfer', 'deprovision'].includes(op.body.type)
-            )
-            .find((op: Provisioning.Operation) => {
-              switch (op.body.type) {
-                case 'provision':
-                  return (op.body as Provisioning.provision).resource_id === resource.id;
-                case 'resize':
-                  return (op.body as Provisioning.resize).resource_id === resource.id;
-                case 'transfer':
-                  return (op.body as Provisioning.transfer).resource_id === resource.id;
-                case 'deprovision':
-                  return (op.body as Provisioning.deprovision).resource_id === resource.id;
-                default:
-                  return false;
-              }
+      this.resources = [];
+      // First, do a run through of the operations to add any resource not covered by one or in the process of being modified by one
+      operationsResp
+        .filter((op: Provisioning.Operation) =>
+          ['provision', 'resize', 'transfer', 'deprovision'].includes(op.body.type)
+        )
+        .forEach((operation: Provisioning.Operation) => {
+          let opBody:
+            | Provisioning.provision
+            | Provisioning.resize
+            | Provisioning.transfer
+            | Provisioning.deprovision;
+          switch (operation.body.type) {
+            case 'provision':
+              opBody = operation.body as Provisioning.provision;
+              break;
+            case 'resize':
+              opBody = operation.body as Provisioning.resize;
+              break;
+            case 'transfer':
+              opBody = operation.body as Provisioning.transfer;
+              break;
+            case 'deprovision':
+              opBody = operation.body as Provisioning.deprovision;
+              break;
+            default:
+              return;
+          }
+          // Don't run this code is the operation is done, fallback to the simpler resource code.
+          if (opBody.state === 'done') {
+            return;
+          }
+
+          const resource = resources.find((res: RealResource) => opBody.resource_id === res.id);
+
+          if (resource) {
+            const product = productsResp.find(
+              (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
+            );
+
+            // Ignoring because we set `this.resource` to an empty array above
+            // @ts-ignore
+            this.resources.push({
+              id: resource.id,
+              label: resource.body.label,
+              name: resource.body.name,
+              logo: product && product.body.logo_url,
+              status: ManifoldResourceList.opStateToStatus(operation),
             });
-
-          return {
-            id: resource.id,
-            label: resource.body.label,
-            name: resource.body.name,
+            return;
+          }
+          if (operation.body.type !== 'provision') {
+            // Only provision operation without a resource should be processed
+            return;
+          }
+          const product = productsResp.find(
+            (prod: Catalog.Product): boolean =>
+              prod.id === (opBody as Provisioning.provision).product_id
+          );
+          // Ignoring because we set `this.resource` to an empty array above
+          // @ts-ignore
+          this.resources.push({
+            id: opBody.resource_id || '',
+            // Only the provision operation has this info
+            label: (opBody as Provisioning.provision).label || '',
+            name: (opBody as Provisioning.provision).name || '',
             logo: product && product.body.logo_url,
-            status: operation ? ManifoldResourceList.opStateToStatus(operation) : 'available',
-          };
+            status: ManifoldResourceList.opStateToStatus(operation),
+          });
+        });
+
+      // Then run through all the real resource and add them as available if they weren't added by an operation
+      resources.forEach((resource: RealResource) => {
+        // Ignoring because we set `this.resource` to an empty array above
+        // @ts-ignore
+        if (this.resources.find((res: FoundResource) => res.id === resource.id)) {
+          return;
         }
-      );
+
+        const product = productsResp.find(
+          (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
+        );
+        // Ignoring because we set `this.resource` to an empty array above
+        // @ts-ignore
+        this.resources.push({
+          id: resource.id,
+          label: resource.body.label,
+          name: resource.body.name,
+          logo: product && product.body.logo_url,
+          status: 'available',
+        });
+      });
+
+      this.resources.sort((a, b) => a.label.localeCompare(b.label));
     } else {
       this.resources = [];
     }
