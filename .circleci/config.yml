@@ -18,8 +18,8 @@ commands:
       - checkout
       - restore_cache:
           keys:
-            - npmcache-{{ .Branch }}-{{ checksum "package.json" }}
-            - npmcache-{{ .Branch }}-
+            - npmcache-{{ checksum "package.json" }}
+            - npmcache-
       - run: npm install
       - run: npm run prepare:docs
       - run: cd docs && npm i
@@ -27,7 +27,7 @@ commands:
           paths:
             - node_modules
             - docs/node_modules
-          key: npmcache-{{ .Branch }}-{{ checksum "package.json" }}
+          key: npmcache-{{ checksum "package.json" }}
 
 jobs:
   # Run bundlesize
