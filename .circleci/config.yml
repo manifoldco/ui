@@ -45,6 +45,15 @@ jobs:
       - setup
       - run: npm run bundlesize
 
+  # Lint
+  lint:
+    <<: *defaults
+    steps:
+      - setup
+      - run: npm run prepare:docs
+      - run: cd docs && npm i
+      - run: npm run lint
+
   # Deploy version to npm
   npm-publish:
     <<: *defaults
@@ -55,15 +64,12 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
       - run: npm run publish
 
-  # Lint & test
+  # Test
   test:
     <<: *defaults
     steps:
       - setup
       - setup-puppeteer
-      - run: npm run prepare:docs
-      - run: cd docs && npm i
-      - run: npm run lint
       - run: npm test
 
   # Run visual regression tests
@@ -79,6 +85,7 @@ workflows:
   # Normal workflow for untagged PRs
   branch:
     jobs:
+      - lint
       - test
       - bundlesize
       - vrt
