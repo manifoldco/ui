@@ -13,6 +13,8 @@ export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
+  /** (TEMPORARY) Which platform is this for? */
+  @Prop() platform?: 'do';
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
@@ -84,7 +86,8 @@ export class ManifoldPlanSelector {
       return;
     }
 
-    this.plans = planSort(response);
+    // TODO: remove “platform” that is filtering plans, and replace with API call
+    this.plans = planSort(response, { platform: this.platform });
   }
 
   async fetchResource(resourceLabel: string) {

@@ -274,9 +274,12 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
 /**
  * Sort plans
  */
-export function planSort(plans: Catalog.ExpandedPlan[]): Catalog.ExpandedPlan[] {
+export function planSort(
+  plans: Catalog.ExpandedPlan[],
+  options?: { platform?: 'do' }
+): Catalog.ExpandedPlan[] {
   // Clone array to prevent accidental mutation with sort()
-  return [...plans].sort((a, b) => {
+  const sorted = [...plans].sort((a, b) => {
     // If comparing 2 free plans, they both cost 0 anyway so don’t reorder
     if (a.body.free === true && b.body.free === true) {
       return 0;
@@ -295,6 +298,16 @@ export function planSort(plans: Catalog.ExpandedPlan[]): Catalog.ExpandedPlan[] 
     // By default, sort by cost
     return (a.body.defaultCost || a.body.cost) - (b.body.defaultCost || b.body.cost);
   });
+
+  // TODO: remove this platform-specific filtering, and handle via API
+  if (options && options.platform === 'do') {
+    return plans.filter(
+      ({ body }) =>
+        body.free === true || body.defaultCost === 0 || (!body.defaultCost && body.cost === 0)
+    );
+  }
+
+  return sorted;
 }
 
 /**

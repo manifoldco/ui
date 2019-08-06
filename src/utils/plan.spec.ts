@@ -181,4 +181,8 @@ describe('plan sort function', () => {
     planSort(clone);
     expect(clone).toEqual(wrongOrder);
   });
+
+  it('sort() handles temporary platform designation', () => {
+    expect(planSort(rightOrder, { platform: 'do' })).toEqual([freePlan, fauxFreePlan]);
+  });
 });
