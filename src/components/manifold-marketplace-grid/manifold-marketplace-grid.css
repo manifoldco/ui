@@ -103,8 +103,8 @@
   top: 0;
   left: 0;
   z-index: var(--manifold-layer-hover);
-  grid-column: 1 / -1; /* always start new row, and span full row */
   display: flex;
+  grid-column: 1 / -1; /* always start new row, and span full row */
   align-items: center;
   box-sizing: border-box;
   width: 100%;
@@ -117,8 +117,8 @@
   font-size: 1em;
   font-family: var(--font-family-heading);
   text-transform: capitalize;
-  border-bottom: var(--heading-border);
   background: var(--heading-background);
+  border-bottom: var(--heading-border);
 
   @media (--viewport-s) {
     position: static;

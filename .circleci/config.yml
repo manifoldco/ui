@@ -58,8 +58,6 @@ jobs:
     <<: *defaults
     steps:
       - setup
-      - run: npm run prepare:docs
-      - run: cd docs && npm i
       - run: npm run lint
 
   # Deploy version to npm
