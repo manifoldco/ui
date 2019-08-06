@@ -12,6 +12,16 @@ orbs:
   happo: happo/happo@2.0.0
 
 commands:
+  # cache Stencil if npm run build is run
+  save-build:
+    steps:
+      - save_cache:
+          paths:
+            - .stencil
+            - dist
+            - pkg
+          key: stencilcache-{{ .Revision }}
+
   # npm install
   setup:
     steps:
@@ -20,19 +30,15 @@ commands:
           keys:
             - npmcache-{{ checksum "package.json" }}
             - npmcache-
-            - stencilcache-{{ .Branch }}-{{ .Revision }}
       - run: npm install
       - save_cache:
           paths:
             - node_modules
           key: npmcache-{{ checksum "package.json" }}
-      - run: npm run build
-      - save_cache:
-          paths:
-            - .stencil
-            - dist
-            - pkg
-          key: stencilcache-{{ .Branch }}-{{ .Revision }}
+      - restore_cache: # Restore Stencil cache if exists
+          keys:
+            - stencilcache-{{ .Revision }}
+            - stencilcache-
 
   # Puppeteer deps (based on https://circleci.com/orbs/registry/orb/threetreeslight/puppeteer)
   setup-puppeteer:
@@ -46,14 +52,15 @@ commands:
           fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
 jobs:
-  # Run bundlesize
+  # Run bundlesize (Stencil build: ✅)
   bundlesize:
     <<: *defaults
     steps:
       - setup
       - run: npm run bundlesize
+      - save-build
 
-  # Lint
+  # Lint (Stencil build: 🚫)
   lint:
     <<: *defaults
     steps:
@@ -70,20 +77,22 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
       - run: npm run publish
 
-  # Test
+  # Test (Stencil build: ✅)
   test:
     <<: *defaults
     steps:
       - setup
       - setup-puppeteer
       - run: npm test
+      - save-build
 
-  # Run visual regression tests
+  # Run visual regression tests (Stencil build: ✅)
   vrt:
     <<: *defaults
     steps:
       - setup
       - happo/run_happo
+      - save-build
 
 workflows:
   version: 2
