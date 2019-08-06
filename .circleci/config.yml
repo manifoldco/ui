@@ -20,11 +20,19 @@ commands:
           keys:
             - npmcache-{{ checksum "package.json" }}
             - npmcache-
+            - stencilcache-{{ .Branch }}-{{ .Revision }}
       - run: npm install
       - save_cache:
           paths:
             - node_modules
           key: npmcache-{{ checksum "package.json" }}
+      - run: npm run build
+      - save_cache:
+          paths:
+            - .stencil
+            - dist
+            - pkg
+          key: stencilcache-{{ .Branch }}-{{ .Revision }}
 
   # Puppeteer deps (based on https://circleci.com/orbs/registry/orb/threetreeslight/puppeteer)
   setup-puppeteer:
@@ -85,14 +93,10 @@ workflows:
   # Normal workflow for untagged PRs
   branch:
     jobs:
-      - lint
       - bundlesize
+      - lint
+      - test
       - vrt
-      - test:
-          requires: # run “test” last because Jest needs all the memory
-            - lint
-            - bundlesize
-            - vrt
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   prerelease:
