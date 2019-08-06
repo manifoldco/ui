@@ -132,7 +132,7 @@ export class ManifoldDataSsoButton {
     return (
       <button
         type="submit"
-        onClick={() => this.sso()}
+        onClick={this.sso}
         disabled={!this.resourceId && !this.loading}
         data-resource-id={this.resourceId}
       >
