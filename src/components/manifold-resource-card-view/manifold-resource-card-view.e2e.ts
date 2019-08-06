@@ -40,6 +40,6 @@ describe('<manifold-resource-card>', () => {
     });
     const el = await page.find('manifold-resource-card-view >>> [itemprop="status"]');
 
-    expect(el.innerText).toBe('Provision');
+    expect(el.innerText).toBe('Provisioning');
   });
 });
