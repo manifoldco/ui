@@ -86,9 +86,13 @@ workflows:
   branch:
     jobs:
       - lint
-      - test
       - bundlesize
       - vrt
+      - test:
+          requires: # run “test” last because Jest needs all the memory
+            - lint
+            - bundlesize
+            - vrt
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   prerelease:
