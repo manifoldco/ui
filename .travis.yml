@@ -18,9 +18,9 @@ jobs:
       script: npm run test:coverage
     - stage: test
       name: '🔭 Run visual regression tests'
-      script: PREVIOUS_SHA=$(git rev-parse master) npm run happo-ci-travis
+      script: npm run happo-ci-travis
     - stage: test
       name: '📦 bundlesize'
-      script: npm run profile
+      script: npm run bundlesize
 after_success:
   - npx codecov

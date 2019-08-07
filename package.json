@@ -40,6 +40,7 @@
     "generate:specs:provisioning": "npx @manifoldco/swagger-to-ts src/spec/provisioning/v1.yaml -w 'export namespace Provisioning' -o src/types/provisioning.ts",
     "generate:specs:connector": "npx @manifoldco/swagger-to-ts src/spec/connector/v1.yaml -w 'export namespace Connector' -o src/types/connector.ts",
     "happo": "npm run build && cp .manifold-ci.yml .manifold.yml && manifold run -- happo run",
+    "happo-ci-travisci": "npm run build && happo-ci-travis",
     "happo-ci-circleci": "npm run build && happo-ci-circleci",
     "heroku-postbuild": "npm run build:docs",
     "lint": "npm run lint:js && npm run lint:css && npm run prepare:docs && cd docs && npm i && npm run lint",
