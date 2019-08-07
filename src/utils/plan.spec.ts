@@ -183,6 +183,6 @@ describe('plan sort function', () => {
   });
 
   it('sort() handles temporary platform designation', () => {
-    expect(planSort(rightOrder, { platform: 'do' })).toEqual([freePlan, fauxFreePlan]);
+    expect(planSort(rightOrder, { free: true })).toEqual([freePlan, fauxFreePlan]);
   });
 });

@@ -276,7 +276,7 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
  */
 export function planSort(
   plans: Catalog.ExpandedPlan[],
-  options?: { platform?: 'do' }
+  options?: { free?: boolean }
 ): Catalog.ExpandedPlan[] {
   // Clone array to prevent accidental mutation with sort()
   const sorted = [...plans].sort((a, b) => {
@@ -299,8 +299,8 @@ export function planSort(
     return (a.body.defaultCost || a.body.cost) - (b.body.defaultCost || b.body.cost);
   });
 
-  // TODO: remove this platform-specific filtering, and handle via API
-  if (options && options.platform === 'do') {
+  // TODO: return only free plans
+  if (options && options.free === true) {
     return plans.filter(
       ({ body }) =>
         body.free === true || body.defaultCost === 0 || (!body.defaultCost && body.cost === 0)
