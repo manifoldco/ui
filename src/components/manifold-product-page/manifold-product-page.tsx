@@ -1,5 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
-import { arrow_up_right, book, life_buoy } from '@manifoldco/icons';
+import { arrow_up_right, book, life_buoy, file_text } from '@manifoldco/icons';
 import { Catalog } from '../../types/catalog';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
@@ -26,7 +26,15 @@ export class ManifoldProductPage {
   @logger()
   render() {
     if (this.product) {
-      const { documentation_url, support_email, name, label, logo_url, tags } = this.product.body;
+      const {
+        documentation_url,
+        support_email,
+        name,
+        label,
+        logo_url,
+        tags,
+        terms,
+      } = this.product.body;
       const gradient = `var(--manifold-g-${label}, var(--manifold-g-default))`;
 
       return (
@@ -81,6 +89,19 @@ export class ManifoldProductPage {
                       <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
                     </a>
                   </div>
+                  {terms.provided && (
+                    <div class="provider-link">
+                      <a href={terms.url} target="_blank" rel="noopener noreferrer">
+                        <manifold-icon icon={file_text} margin-right />
+                        Terms of service
+                        <manifold-icon
+                          class="external-link-icon"
+                          icon={arrow_up_right}
+                          margin-left
+                        />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             </aside>
