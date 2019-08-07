@@ -145,43 +145,43 @@ workflows:
             - test
             - vrt
 
-  # Final release (only fires on master, and if Git tag is a stable release)
+  # Final release (only fires if Git tag is a stable release)
   release:
     jobs:
       - bundlesize:
           filters: # the same filters are required on ALL jobs here
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - lint:
           filters:
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - test:
           filters:
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - vrt:
           filters:
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
@@ -192,8 +192,8 @@ workflows:
       - npm-publish:
           filters:
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
