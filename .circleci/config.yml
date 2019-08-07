@@ -74,7 +74,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - setup
-      - run: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/project
+      - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm run publish
 
   # Test (Stencil build: ✅)
