@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added a `refetch-until-valid` property on the `resource-container` component to allow users to reload this component until the found resource exists and is of state `available`.
+- Added the terms of service to the product page component.
 
 ## [v0.5.2]
 ### Added
