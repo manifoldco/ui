@@ -11,8 +11,8 @@ storiesOf('Plan Selector', module)
     () => '<manifold-plan-selector product-label="blitline"></manifold-plan-selector>'
   )
   .add(
-    'DO filtering',
-    () => '<manifold-plan-selector product-label="logdna" platform="do"></manifold-plan-selector>'
+    'LogDNA (free plan)',
+    () => '<manifold-plan-selector product-label="logdna" free-plans></manifold-plan-selector>'
   )
   .add('LogDNA', () => '<manifold-plan-selector product-label="logdna"></manifold-plan-selector>')
   .add('Mailgun', () => '<manifold-plan-selector product-label="mailgun"></manifold-plan-selector>')

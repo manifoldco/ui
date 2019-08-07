@@ -409,9 +409,9 @@ export namespace Components {
   }
   interface ManifoldPlanSelector {
     /**
-    * (TEMPORARY) Which platform is this for?
+    * Show only free plans?
     */
-    'platform'?: 'do';
+    'freePlans'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1475,9 +1475,9 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlanSelector extends JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement> {
     /**
-    * (TEMPORARY) Which platform is this for?
+    * Show only free plans?
     */
-    'platform'?: 'do';
+    'freePlans'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
