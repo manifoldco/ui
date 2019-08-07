@@ -299,7 +299,7 @@ export function planSort(
     return (a.body.defaultCost || a.body.cost) - (b.body.defaultCost || b.body.cost);
   });
 
-  // TODO: return only free plans
+  // TODO: remove when we have API-level filtering
   if (options && options.free === true) {
     return plans.filter(
       ({ body }) =>
