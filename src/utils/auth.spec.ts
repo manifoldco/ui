@@ -18,4 +18,9 @@ describe('withAuth method', () => {
   it('doesn’t submit auth token if empty string', () => {
     expect(withAuth('')).toBe(undefined);
   });
+
+  it('doesn’t submit auth token if “undefined”', () => {
+    // Yes this is actually a very important test
+    expect(withAuth('undefined')).toBe(undefined);
+  });
 });
