@@ -176,7 +176,7 @@ workflows:
                 - master
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-      - npm-publish:
+      - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
             branches:
@@ -189,3 +189,12 @@ workflows:
             - lint
             - test
             - vrt
+      - npm-publish:
+          filters:
+            branches:
+              only:
+                - master
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - confirm
