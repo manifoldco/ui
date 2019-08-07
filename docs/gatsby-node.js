@@ -34,7 +34,7 @@ exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
       module: {
         rules: [
           {
-            test: /@manifoldco\/ui/,
+            test: /(@manifoldco\/ui|pkg)/,
             use: loaders.null(),
           },
         ],

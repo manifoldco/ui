@@ -23,6 +23,11 @@ export const config: Config = {
     }),
   ],
   testing: {
-    testPathIgnorePatterns: ['/node_modules/', '/docs/'],
+    testPathIgnorePatterns: [
+      '<rootDir>/dist/',
+      '<rootDir>/docs/',
+      '<rootDir>/pkg/',
+      '/node_modules/',
+    ],
   },
 };
