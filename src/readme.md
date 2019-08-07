@@ -155,7 +155,8 @@ PRs that will result in a release, follow the following steps:
 
 <ol>
   <li>
-    <a href="https://github.com/manifoldco/ui/releases">Tag a <strong>prerelease</strong> in GitHub</a> with a valid <strong>semver</strong> like so:
+    <strong>Tag</strong> a <a href="#step-1-prerelease">prerelease</a>:
+    <br />
     <img src="../.github/git-tag.png" alt="Git tag" width="882" height="64" />
   </li>
   <li>Test your prerelease <strong>before merging</strong></li>
@@ -187,28 +188,38 @@ numbers.
 
 **⚠️ Always publish a prerelease before a release!**
 
-A prerelease is a semver with a **tag** (the `alpha` in `v1.2.3-alpha.0`).
-Prereleases are a vital part of testing, used for both release candidates as
-well as experimental releases. Releasing in this way is highly-encouraged,
-and poses no risk to our partners.
+A prerelease is a semver with an **npm tag** (the `alpha` in
+`v1.2.3-alpha.0`). Prereleases are a vital part of testing, used for both
+release candidates as well as experimental releases. Releasing in this way is
+highly-encouraged, and poses no risk to our partners.
 
 Here are some commonly-used tags that are good for test releases, but you may
 alternately use any word you’d like as long as it’s **not `latest`** (that’s
 the tag npm reserves for final version):
 
-| Tag              | Description                                                                                   |
-| :--------------- | :-------------------------------------------------------------------------------------------- |
-| `v1.2.3‑alpha.0` | **alpha** is an experimental version that may not ever be shipped, but we’re using it to test |
-| `v1.2.3‑rc.0`    | This is a **release candidate** that is 99.99% complete; we’re just testing before release    |
+| Tag             | Description                                                                                   |
+| :-------------- | :-------------------------------------------------------------------------------------------- |
+| `v1.2.3-beta.0` | **beta** introduces new features, but there may be some bugs                                  |
+| `v1.2.3‑rc.0`   | **release candidate**s are 99.99% ready for stable release; we’re just testing before release |
 
 Prereleases **will not** be downloaded when a user runs `npm install @manifoldco/ui`. It can only be installed by either specifying `npm install @manifoldco/ui@1.0.0-mytag.0` or `npm install @manifoldco/ui@mytag`.
 
-💁 Remember: **don’t use `-latest` as a tag!** That’s the only reserved tag on npm.
+To create a prerelease, either tag a commit on `origin` [in Git][tag-git] or
+[in GitHub][tag-github].
+
+##### 💁 Prerelease tips
+
+- Don’t use `-latest` as a tag. That’s the only reserved tag on npm.
+- The `Pre-release` checkbox on [GitHub Releases][releases] doesn’t do
+  anything; as stated above, only the trailing `-tag` at the end of a version
+  will designate a prerelease on npm
+- Don’t tag something as `-rc` unless you’re almost ready to release it.
+  Don’t use `-rc.1` and `-rc.2` to add new features; only fix bugs.
 
 ### Step 2: Testing
 
-Install `@manifoldco/ui@mytag` in the client you’re consuming it in **while your PR
-is still open.** Ask yourself:
+In a test app, run `npm install @manifoldco/ui@beta` (or whatever tag you
+used) **while your PR is still open.** Ask yourself:
 
 - [ ] Did all dependencies install correctly?
 - [ ] Is the change I made working after installing the built package from npm?
@@ -228,17 +239,53 @@ and other CI tools.
 
 ### Step 4: Final release
 
-1. Decide what the version will be (see [anatomy of a semver tag][anatomy] above). The following steps assume that you’ve chosen `v1.2.3` for your new version.
-1. [Release `v1.2.3-rc.0`][releases], and **test it fully**
-   1. **Bug?** Create a PR, merge, and [release][releases] the next version: `v1.2.3-rc.1`
-   1. Rinse and repeat (`-rc.2`, `-rc.3`, …) until there are no bugs.
-1. Once you’re positive there are no bugs or changes needed, **make sure all relevant PRs are merged into `master`** and tag `master` in GitHub with `v1.2.3`.
+<ol>
+  <li>
+    Decide what the version will be (see <a
+    href="#anatomy-of-a-semver-tag">anatomy of a semver tag</a> above). The
+    following steps assume that you’ve chosen <code>v1.2.3</code> for your
+    new version.
+  </li>
+  <li>
+    Release <code>v1.2.3-rc.0</code>, and <strong>test it fully</strong>
+   <ol>
+     <li><strong>Bug?</strong> Create a PR, merge, and release the next version: <code>v1.2.3-rc.1</code></li>
+     <li>Rinse and repeat (<code>-rc.2</code>, <code>-rc.3</code>, …) until there are no bugs.</li>
+    </ol>
+  </li>
+  <li>
+    Once you’re positive there are no bugs or changes needed, <strong>make
+    sure all relevant PRs are merged into <code>master</code></strong> and
+    tag <code>master</code> with <code>v1.2.3</code>.
+  </li>
+  <li>
+    In CircleCI, navigate to your running jobs and find the
+    <code>release</code> job. Click on the word <code>release</code>.
+    <br />
+    <br />
+    <img src="../.github/circleci-release.png" alt="CircleCI release workflow" width="850" height="229" />
+  </li>
+  <li>
+    You’ll be brought to an approval screen. Click <kbd>confirm</kbd> to
+    ensure you want to publish your version (verify the version, too, on that
+    screen).
+    <br />
+    <br />
+    <img src="../.github/circleci-confirm.png" alt="CircleCI release confirm"  width="850" height="579" />
+  </li>
+</ol>
 
-Once tagged, this will be accessible for download at `npm install @manifoldco/ui`.
+##### 💁 Release tips
 
-👹 Be warned that **this is now publicly-available!** If any bugs are shipped
-in this version, all our partners sites’ may be broken. Be prepared to deal
-with that before publishing a final release.
+- New releases are available for download at `npm install @manifoldco/ui` (no
+  tag). If the user doesn’t specify a version, they’ll download the most recent
+  release.
+- Once published, **you can’t unpublish a version;** it’ll be available at
+  that version forever. The only way to fix something is to push a new patch
+  version.
+- 👹 Be warned that **this is now publicly-available!** If any bugs are shipped
+  in this version, all our partners sites’ may be broken. Be prepared to deal
+  with that before publishing a final release.
 
 [anatomy]: #anatomy-of-a-semver-tag
 [changelog]: ../CHANGELOG.md
@@ -249,6 +296,8 @@ with that before publishing a final release.
 [releases]: https://github.com/manifoldco/ui/releases
 [specs]: https://github.com/manifoldco/marketplace/tree/master/specs
 [storybook]: https://ui.manifold.now.sh
+[tag-git]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+[tag-github]: https://github.com/manifoldco/ui/releases
 [swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts
 
 ## 💁 Tips
