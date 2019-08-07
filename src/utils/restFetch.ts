@@ -20,14 +20,14 @@ interface RestFetchArguments {
 
 type Success = undefined;
 
-export type RestFetch = <T>(args: RestFetchArguments) => Promise<T>;
+export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
 
 export function createRestFetch({
   endpoints = connections.prod,
   wait = 15000,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
-}: CreateRestFetch) {
+}: CreateRestFetch): RestFetch {
   return async function restFetch<T>(args: RestFetchArguments): Promise<T | Success> {
     const start = new Date();
 

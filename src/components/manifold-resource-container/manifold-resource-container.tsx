@@ -43,27 +43,27 @@ export class ManifoldResourceContainer {
     }
 
     this.loading = true;
-    const response = await this.restFetch<Gateway.Resource>({
-      service: 'gateway',
-      endpoint: `/resources/me/${resourceLabel}`,
-    });
+    try {
+      const response = await this.restFetch<Gateway.Resource>({
+        service: 'gateway',
+        endpoint: `/resources/me/${resourceLabel}`,
+      });
 
-    if (response instanceof Error) {
+      if (this.refetchUntilValid && (!response || response.state !== 'available')) {
+        this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
+      }
+
+      this.resource = response;
+      this.loading = false;
+    } catch (error) {
       // In case we actually want to keep fetching on an error
       if (this.refetchUntilValid) {
         this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
       }
 
-      console.error(response);
+      console.error(error);
       return;
     }
-
-    if (this.refetchUntilValid && (!response || response.state !== 'available')) {
-      this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
-    }
-
-    this.resource = response;
-    this.loading = false;
   };
 
   @logger()

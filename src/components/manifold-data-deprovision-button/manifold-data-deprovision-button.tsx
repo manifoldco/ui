@@ -16,7 +16,7 @@ interface SuccessMessage {
 interface ErrorMessage {
   message: string;
   resourceLabel: string;
-  resourceId: string;
+  resourceId?: string;
 }
 
 @Component({ tag: 'manifold-data-deprovision-button' })
@@ -60,21 +60,19 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    const response = await this.restFetch({
+    await this.restFetch({
       service: 'gateway',
       endpoint: `/id/resource/${this.resourceId}`,
       options: { method: 'DELETE' },
-    });
-
-    if (response instanceof Error) {
+    }).catch(e => {
       const error: ErrorMessage = {
-        message: response.message,
+        message: e.message,
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
       this.error.emit(error);
       return;
-    }
+    });
 
     const success: SuccessMessage = {
       message: `${this.resourceLabel} successfully deprovisioned`,
@@ -94,18 +92,12 @@ export class ManifoldDataDeprovisionButton {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!Array.isArray(response) || !response.length) {
       console.error(`${resourceLabel} product not found`);
       return;
     }
 
-    this.resourceId = resources[0].id;
+    this.resourceId = response[0].id;
   }
 
   @logger()
