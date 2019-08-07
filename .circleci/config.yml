@@ -85,7 +85,7 @@ jobs:
       - setup-puppeteer
       - run: npm run test:coverage
       - save-build
-      - npx codecov
+      - run: npx codecov
 
   # Run visual regression tests (Stencil build: ✅)
   vrt:
