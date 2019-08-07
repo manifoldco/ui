@@ -41,7 +41,7 @@ describe('The fetcher created by createRestFetch', () => {
     expect(result).toEqual(body);
   });
 
-  it('Will reset the auth token on an error', async () => {
+  it('Will reset the auth token on an error', () => {
     const setAuthToken = jest.fn();
     const fetcher = createRestFetch({
       getAuthToken: () => '1234',
@@ -53,16 +53,16 @@ describe('The fetcher created by createRestFetch', () => {
       body: {},
     });
 
-    await fetcher({
+    return fetcher({
       endpoint: '/test',
       service: 'marketplace',
+    }).catch(() => {
+      expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+      expect(setAuthToken).toHaveBeenCalledWith('');
     });
-
-    expect(fetchMock.called('path:/v1/test')).toBeTruthy();
-    expect(setAuthToken).toHaveBeenCalledWith('');
   });
 
-  it('Will return an error if the fetch returned one', async () => {
+  it('Will return an error if the fetch returned one', () => {
     const body = {
       message: 'oops',
     };
@@ -75,16 +75,16 @@ describe('The fetcher created by createRestFetch', () => {
       body,
     });
 
-    const result: Error = await fetcher({
+    return fetcher({
       endpoint: '/test',
       service: 'marketplace',
+    }).catch(result => {
+      expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+      expect(result.message).toEqual(body.message);
     });
-
-    expect(fetchMock.called('path:/v1/test')).toBeTruthy();
-    expect(result.message).toEqual(body.message);
   });
 
-  it('Will return the an error if the fetch triggered one', async () => {
+  it('Will return the an error if the fetch triggered one', () => {
     const err = new Error('ohnoes');
     const fetcher = createRestFetch({
       getAuthToken: () => '1234',
@@ -92,18 +92,16 @@ describe('The fetcher created by createRestFetch', () => {
 
     fetchMock.mock('path:/v1/test', { throws: err });
 
-    const result: Error = await fetcher({
+    return fetcher({
       endpoint: '/test',
       service: 'marketplace',
+    }).catch(result => {
+      expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+      expect(result).toEqual(err);
     });
-
-    expect(fetchMock.called('path:/v1/test')).toBeTruthy();
-    expect(result).toEqual(err);
   });
 
-  it('Will return the an error if auth token request expired', async () => {
-    // @ts-ignore
-    global.setTimeout = jest.fn(call => call());
+  it('Will return the an error if auth token request expired', () => {
     const fetcher = createRestFetch({
       wait: 1,
       getAuthToken: () => undefined,
@@ -111,13 +109,15 @@ describe('The fetcher created by createRestFetch', () => {
 
     fetchMock.mock('path:/v1/test', 200);
 
-    const result: Error = await fetcher({
+    const result = fetcher({
       endpoint: '/test',
       service: 'marketplace',
     });
 
-    expect(fetchMock.called('path:/v1/test')).toBeFalsy();
-    expect(result.message).toEqual('No auth token given');
+    return result.catch(result => {
+      expect(fetchMock.called('path:/v1/test')).toBeFalsy();
+      expect(result.message).toEqual('No auth token given');
+    });
   });
 
   it('auths for everything but catalog', () =>
@@ -147,7 +147,7 @@ describe('The fetcher created by createRestFetch', () => {
 
   // TODO: add catalog auth in the future, but STILL KEEP ability for unauth’d reqs
   it('doesn’t auth for catalog if token is absent', async () => {
-    const fetcher = createRestFetch(/* no token */);
+    const fetcher = createRestFetch({} /* no token */);
     fetchMock.mock('path:/v1/test', 200);
     await fetcher({ endpoint: '/test', service: 'catalog' });
     const [, req] = fetchMock.lastCall() as any;
