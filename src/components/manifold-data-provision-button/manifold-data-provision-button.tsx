@@ -132,16 +132,14 @@ export class ManifoldDataProvisionButton {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       },
-    });
-
-    if (response instanceof Error) {
-      const error: ErrorMessage = {
-        message: response.message,
+    }).catch(error => {
+      const e: ErrorMessage = {
+        message: error.message,
         resourceLabel: this.resourceLabel,
       };
-      this.error.emit(error);
-      return;
-    }
+      this.error.emit(e);
+      return Promise.reject(e);
+    });
 
     const success: SuccessMessage = {
       createdAt: response.created_at,
