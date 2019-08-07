@@ -27,7 +27,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "stencil build",
-    "build:docs": "npm run prepare:docs && cd docs && npm run build",
+    "build:docs": "npm run prepare:docs && cd docs && npm i && npm run build",
     "build:storybook": "npm run build && build-storybook",
     "bundlesize": "npm run build && npx bundlesize",
     "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && cp .manifold-local.yml .manifold.yml && manifold run -- npm run storybook'",
