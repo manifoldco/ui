@@ -54,18 +54,12 @@ export class ManifoldDataManageButton {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
+    const resources = await this.restFetch<Marketplace.Resource[]>({
       service: 'marketplace',
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!resources || !resources.length) {
       console.error(`${resourceLabel} product not found`);
       return;
     }
@@ -94,36 +88,38 @@ export class ManifoldDataManageButton {
       req.features = this.features;
     }
 
-    const response = await this.restFetch<Gateway.Resource>({
-      service: 'gateway',
-      endpoint: `/id/resource/${this.resourceId}`,
-      body: req,
-      options: {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-      },
-    });
+    try {
+      const response = await this.restFetch<Gateway.Resource>({
+        service: 'gateway',
+        endpoint: `/id/resource/${this.resourceId}`,
+        body: req,
+        options: {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+        },
+      });
 
-    if (response instanceof Error) {
+      if (response) {
+        const planName = response.plan && response.plan.name;
+        const success: SuccessMessage = {
+          message: `${this.resourceLabel} successfully updated to ${planName}`,
+          resourceLabel: this.resourceLabel || '',
+          resourceId: this.resourceId,
+          planName,
+          features: response.features,
+        };
+        this.success.emit(success);
+      }
+    } catch (e) {
       const error: ErrorMessage = {
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
-        message: response.message,
+        message: e.message,
         features: this.features,
       };
       this.error.emit(error);
-      return;
+      throw error;
     }
-
-    const planName = response.plan && response.plan.name;
-    const success: SuccessMessage = {
-      message: `${this.resourceLabel} successfully updated to ${planName}`,
-      resourceLabel: this.resourceLabel || '',
-      resourceId: this.resourceId,
-      planName,
-      features: response.features,
-    };
-    this.success.emit(success);
   }
 
   @logger()

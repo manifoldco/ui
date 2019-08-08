@@ -31,17 +31,14 @@ export class ManifoldRegionSelector {
       endpoint: `/regions`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-
-    // Sorting is important, otherwise the region selector is in a different order every plan
-    this.regions = this.sortRegions(response, this.preferredRegions);
-    // Set global region (the one in src/data is just a fallback; we should always grab live)
-    const global = this.regions.find(({ body: { location } }) => location === 'global');
-    if (global) {
-      this.globalRegion = global;
+    if (response) {
+      // Sorting is important, otherwise the region selector is in a different order every plan
+      this.regions = this.sortRegions(response, this.preferredRegions);
+      // Set global region (the one in src/data is just a fallback; we should always grab live)
+      const global = this.regions.find(({ body: { location } }) => location === 'global');
+      if (global) {
+        this.globalRegion = global;
+      }
     }
   }
 

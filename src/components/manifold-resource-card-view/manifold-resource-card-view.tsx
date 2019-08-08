@@ -100,18 +100,12 @@ export class ManifoldResourceCardView {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!response || !response.length) {
       console.error(`${resourceLabel} resource not found`);
       return;
     }
 
-    this.resourceId = resources[0].id;
+    this.resourceId = response[0].id;
   }
 
   onClick = (e: Event): void => {

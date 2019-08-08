@@ -313,10 +313,7 @@ export function planSort(
 /**
  * Fetch cost from our API
  */
-export function planCost(
-  restFetch: RestFetch,
-  { planID, features, init }: PlanCostOptions
-): Promise<Gateway.Price | Error> {
+export function planCost(restFetch: RestFetch, { planID, features, init }: PlanCostOptions) {
   return restFetch<Gateway.Price>({
     service: 'gateway',
     endpoint: `/id/plan/${planID}/cost`,

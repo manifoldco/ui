@@ -60,13 +60,10 @@ export class ManifoldPlanSelector {
       endpoint: `/products/?label=${productLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (response && response.length) {
+      this.product = response[0]; // eslint-disable-line prefer-destructuring
+      this.fetchPlans(this.product.id);
     }
-
-    this.product = response[0]; // eslint-disable-line prefer-destructuring
-    this.fetchPlans(response[0].id);
   }
 
   async fetchPlans(productId: string) {
@@ -81,12 +78,9 @@ export class ManifoldPlanSelector {
       endpoint: `/plans/?product_id=${productId}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (response) {
+      this.plans = planSort(response, { free: this.freePlans });
     }
-
-    this.plans = planSort(response, { free: this.freePlans });
   }
 
   async fetchResource(resourceLabel: string) {
@@ -101,18 +95,15 @@ export class ManifoldPlanSelector {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
+    if (response && response.length) {
+      const resource = response[0];
+      if (!resource.body.product_id) {
+        console.error('No resource found');
+        return;
+      }
 
-    const resource = response[0];
-    if (!resource || !resource.body.product_id) {
-      console.error('No resource found');
-      return;
+      this.fetchPlans(resource.body.product_id);
     }
-
-    this.fetchPlans(resource.body.product_id);
   }
 
   parseRegions(regions: string) {

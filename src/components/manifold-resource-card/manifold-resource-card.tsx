@@ -60,12 +60,7 @@ export class ManifoldResourceCard {
       endpoint: `/resources/me/${resourceName}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-
-    if (response.length) {
+    if (response && response.length) {
       // eslint-disable-next-line prefer-destructuring
       this.resource = response[0];
     }
