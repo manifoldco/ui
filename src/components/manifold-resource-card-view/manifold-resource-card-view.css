@@ -154,7 +154,7 @@
     width: 0.75rem;
     height: 0.75rem;
     margin-right: 0.75rem;
-    transform-origin: 50% 40%;
+    transform-origin: 50% 50%;
     animation-name: spin;
     animation-duration: 1s;
     animation-timing-function: linear;
