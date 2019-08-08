@@ -126,7 +126,6 @@ export class ManifoldServiceCard {
     if (!this.restFetch || !this.product || typeof this.isFree !== 'undefined') {
       return;
     }
-    console.log('fetching isfree', typeof this.isFree);
 
     this.loading = true;
 

@@ -12,6 +12,7 @@ export const skeleton = () => {
 export const allProducts = () => {
   const grid = document.createElement('manifold-marketplace-grid');
   grid.services = fromJSON(products);
+  grid.freeProducts = [];
 
   document.body.appendChild(grid);
 
