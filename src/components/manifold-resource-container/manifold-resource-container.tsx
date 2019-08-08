@@ -62,7 +62,6 @@ export class ManifoldResourceContainer {
       }
 
       console.error(error);
-      return;
     }
   };
 

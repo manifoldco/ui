@@ -100,8 +100,8 @@ export class ManifoldDataSsoButton {
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
+
       this.error.emit(error);
-      return;
     }
   };
 

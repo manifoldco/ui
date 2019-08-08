@@ -114,9 +114,9 @@ describe('The fetcher created by createRestFetch', () => {
       service: 'marketplace',
     });
 
-    return result.catch(result => {
+    return result.catch(err => {
       expect(fetchMock.called('path:/v1/test')).toBeFalsy();
-      expect(result.message).toEqual('No auth token given');
+      expect(err.message).toEqual('No auth token given');
     });
   });
 

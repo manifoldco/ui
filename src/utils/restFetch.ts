@@ -59,7 +59,7 @@ export function createRestFetch({
     });
 
     if ([202, 203, 204].includes(response.status)) {
-      return;
+      return undefined;
     }
 
     const body = await response.json();

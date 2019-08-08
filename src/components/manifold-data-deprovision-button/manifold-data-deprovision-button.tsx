@@ -70,8 +70,8 @@ export class ManifoldDataDeprovisionButton {
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
+
       this.error.emit(error);
-      return;
     });
 
     const success: SuccessMessage = {
