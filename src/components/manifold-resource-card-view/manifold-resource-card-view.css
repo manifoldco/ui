@@ -118,11 +118,11 @@
     --status-color: var(--manifold-color-info);
   }
 
-  &[data-status='degraded'] {
+  &[data-status='resize'] {
     --status-color: var(--manifold-color-warn);
   }
 
-  &[data-status='offline'] {
+  &[data-status='deprovision'], &[data-status='offline'] {
     --status-color: var(--manifold-color-error);
   }
 }

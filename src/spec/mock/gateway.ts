@@ -42,6 +42,7 @@ export const GatewayResource: Gateway.Resource = {
   id: Resource.id,
   ...Resource.body,
   type: 'resource',
+  state: 'available',
   owner: {
     id: '1',
     name: 'test',

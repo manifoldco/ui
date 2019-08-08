@@ -1,6 +1,7 @@
 __mocks__
 dist/
-www/
+pkg/
+storybook-static/
 
 .stencil/
 .idea/

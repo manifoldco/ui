@@ -117,8 +117,8 @@
 .info {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   grid-area: info;
+  justify-content: space-between;
   padding-top: 0.25rem;
 
   @media (--viewport-m) {

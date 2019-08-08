@@ -12,21 +12,33 @@ export class ManifoldResourceContainer {
   @Prop() restFetch?: RestFetch;
   /** Which resource does this belong to? */
   @Prop() resourceLabel?: string;
+  /** Set whether or not to refetch the resource from the api until it is in an available and valid state */
+  @Prop() refetchUntilValid: boolean = false;
   @State() resource?: Gateway.Resource;
   @State() loading: boolean = false;
+  @State() timeout?: number;
 
   @Watch('resourceLabel') resourceChange(newName: string) {
+    clearTimeout(this.timeout);
     this.fetchResource(newName);
   }
 
-  componentWillLoad() {
-    if (this.resourceLabel) {
+  @Watch('refetchUntilValid') refreshChange(newRefresh: boolean) {
+    if (newRefresh && (!this.resource || this.resource.state !== 'available')) {
       this.fetchResource(this.resourceLabel);
     }
   }
 
-  fetchResource = async (resourceLabel: string) => {
-    if (!this.restFetch) {
+  componentWillLoad() {
+    return this.fetchResource(this.resourceLabel);
+  }
+
+  componentDidUnload() {
+    clearTimeout(this.timeout);
+  }
+
+  fetchResource = async (resourceLabel?: string) => {
+    if (!this.restFetch || !this.resourceLabel) {
       return;
     }
 
@@ -37,8 +49,17 @@ export class ManifoldResourceContainer {
     });
 
     if (response instanceof Error) {
+      // In case we actually want to keep fetching on an error
+      if (this.refetchUntilValid) {
+        this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
+      }
+
       console.error(response);
       return;
+    }
+
+    if (this.refetchUntilValid && (!response || response.state !== 'available')) {
+      this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
     }
 
     this.resource = response;

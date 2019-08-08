@@ -1,0 +1,200 @@
+# Javascript Node CircleCI 2.0 configuration file
+
+version: 2.1
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:12
+  environment:
+    - NODE_ENV: development # CircleCI needs devDeps
+
+orbs:
+  happo: happo/happo@2.0.0
+
+commands:
+  # cache Stencil if npm run build is run
+  save-build:
+    steps:
+      - save_cache:
+          paths:
+            - .stencil
+            - dist
+            - pkg
+          key: stencilcache-{{ .Revision }}
+
+  # npm install
+  setup:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - npmcache-{{ checksum "package.json" }}
+            - npmcache-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: npmcache-{{ checksum "package.json" }}
+      - restore_cache: # Restore Stencil cache if exists
+          keys:
+            - stencilcache-{{ .Revision }}
+            - stencilcache-
+
+  # Puppeteer deps (based on https://circleci.com/orbs/registry/orb/threetreeslight/puppeteer)
+  setup-puppeteer:
+    steps:
+      - run: |
+          sudo apt-get install -yq \
+          gconf-service libasound2 libatk1.0-0 libatk-bridge2.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
+          libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+          libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
+          libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+          fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+
+jobs:
+  # Run bundlesize (Stencil build: ✅)
+  bundlesize:
+    <<: *defaults
+    steps:
+      - setup
+      - run: npm run bundlesize
+      - save-build
+
+  # Lint (Stencil build: 🚫)
+  lint:
+    <<: *defaults
+    steps:
+      - setup
+      - run: npm run lint
+
+  # Deploy version to npm
+  npm-publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - setup
+      - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+      - run: npm run publish
+
+  # Test (Stencil build: ✅)
+  test:
+    <<: *defaults
+    steps:
+      - setup
+      - setup-puppeteer
+      - run: npm run test:coverage
+      - save-build
+      - run: npx codecov
+
+  # Run visual regression tests (Stencil build: ✅)
+  vrt:
+    <<: *defaults
+    steps:
+      - setup
+      - happo/run_happo
+      - save-build
+
+workflows:
+  version: 2
+
+  # Normal workflow for untagged PRs
+  branch:
+    jobs:
+      - bundlesize
+      - lint
+      - test
+      - vrt
+
+  # Prerelease (only fires if Git tag contains hyphen + npm tag)
+  prerelease:
+    jobs:
+      - bundlesize:
+          filters: # the same filters are required on ALL jobs here
+            branches:
+              ignore: /.*/ # this is necessary along with tags for some reason
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+      - lint:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+      - test:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+      - vrt:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+      - npm-publish: # no approval needed for prerelease
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
+            - lint
+            - test
+            - vrt
+
+  # Final release (only fires if Git tag is a stable release)
+  release:
+    jobs:
+      - bundlesize:
+          filters: # the same filters are required on ALL jobs here
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - test:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - vrt:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - confirm:
+          type: approval # manual approval step mandatory for final release
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
+            - lint
+            - test
+            - vrt
+      - npm-publish:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - confirm
