@@ -329,7 +329,7 @@ export namespace Components {
   interface ManifoldMarketplaceGrid {
     'excludes'?: string[];
     'featured'?: string[];
-    'freeProducts': string[];
+    'freeProducts'?: string[];
     'hideCategories'?: boolean;
     'hideSearch'?: boolean;
     'hideTemplates'?: boolean;
@@ -564,7 +564,7 @@ export namespace Components {
   }
   interface ManifoldServiceCard {
     'isFeatured'?: boolean;
-    'isFree': boolean;
+    'isFree'?: boolean;
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'productId'?: string;

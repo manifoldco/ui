@@ -28,7 +28,7 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
-  @State() freeProducts: string[] = [];
+  @State() freeProducts?: string[];
   @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
@@ -40,7 +40,7 @@ export class ManifoldMarketplace {
 
   componentWillLoad() {
     this.parseProps();
-    this.fetchProducts();
+    return this.fetchProducts();
   }
 
   fetchProducts = async () => {

@@ -48,6 +48,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
       },
       { services }
     );
@@ -62,6 +63,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
       },
       { services }
     );
@@ -80,6 +82,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.hideTemplates = true;
       },
       { services }
@@ -97,6 +100,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.excludes = props.excludes;
       },
       { services, excludes }
@@ -121,6 +125,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.products = props.products;
       },
       { services, products }
@@ -141,6 +146,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.featured = props.featured;
       },
       { services, featured }
@@ -158,6 +164,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
       },
       { services }
     );
@@ -173,6 +180,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.hideCategories = true;
       },
       { services }
@@ -192,6 +200,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.hideCategories = true;
       },
       { services }
@@ -218,6 +227,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
       },
       { services }
     );
@@ -232,6 +242,7 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
+        elm.freeProducts = [];
         elm.hideSearch = true;
       },
       { services }

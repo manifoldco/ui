@@ -21,7 +21,7 @@ export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
   @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];
-  @Prop() freeProducts: string[] = [];
+  @Prop() freeProducts?: string[];
   @Prop() hideCategories?: boolean = false;
   @Prop() hideSearch?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
@@ -37,7 +37,13 @@ export class ManifoldMarketplaceGrid {
   @State() search: string = '';
 
   @Watch('services') servicesLoaded(services: Catalog.Product[]) {
-    if (services.length) {
+    if (services.length && this.freeProducts) {
+      this.skeleton = false;
+    }
+  }
+
+  @Watch('freeProducts') freeProductsLoaded(freeProducts?: string[]) {
+    if (this.services && this.services.length && freeProducts) {
       this.skeleton = false;
     }
   }
@@ -98,7 +104,7 @@ export class ManifoldMarketplaceGrid {
 
   get filteredServices(): Catalog.Product[] {
     // While services are loading, display skeleton cards
-    if (!this.services || !this.services.length) {
+    if (!this.services || !this.services.length || !this.freeProducts) {
       this.skeleton = true;
       return skeletonProducts;
     }
@@ -217,7 +223,7 @@ export class ManifoldMarketplaceGrid {
       data-label={product.body.label}
       data-featured={this.featured && this.featured.includes(product.body.label)}
       isFeatured={this.featured && this.featured.includes(product.body.label)}
-      isFree={this.freeProducts.includes(product.id)}
+      isFree={this.freeProducts && this.freeProducts.includes(product.id)}
       product={product}
       skeleton={this.skeleton}
     />

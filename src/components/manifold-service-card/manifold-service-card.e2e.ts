@@ -14,7 +14,7 @@ describe('<manifold-service-card>', () => {
 
   it('formats links from products', async () => {
     const page = await newE2EPage({
-      html: `<manifold-service-card></manifold-service-card>`,
+      html: `<manifold-service-card is-free="false"></manifold-service-card>`,
     });
     await page.$eval(
       'manifold-service-card',

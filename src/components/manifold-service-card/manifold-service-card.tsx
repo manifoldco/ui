@@ -17,7 +17,7 @@ export class ManifoldServiceCard {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   @Prop({ reflect: true }) isFeatured?: boolean;
-  @Prop({ mutable: true }) isFree: boolean = false;
+  @Prop() isFree?: boolean;
   @Prop({ mutable: true }) product?: Catalog.Product;
   @Prop() productId?: string;
   @Prop() productLabel?: string;
@@ -26,12 +26,17 @@ export class ManifoldServiceCard {
   @Prop() preserveEvent?: boolean = false;
   @Prop() skeleton?: boolean = false;
   @State() loading: boolean = false;
+  @State() free: boolean = false;
   @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
 
   @Watch('product') productChange(newProduct: Catalog.Product) {
     if (newProduct) {
       this.fetchIsFree(); // if product has changed, re-fetch free
     }
+  }
+
+  @Watch('isFree') isFreeChange(newFree: boolean) {
+    this.free = newFree;
   }
 
   @Watch('skeleton') skeletonChange(newSkeleton: boolean) {
@@ -118,9 +123,10 @@ export class ManifoldServiceCard {
   }
 
   async fetchIsFree() {
-    if (!this.restFetch || !this.product) {
+    if (!this.restFetch || !this.product || typeof this.isFree !== 'undefined') {
       return;
     }
+    console.log('fetching isfree', typeof this.isFree);
 
     this.loading = true;
 
@@ -135,7 +141,7 @@ export class ManifoldServiceCard {
     }
 
     if (Array.isArray(response) && response.find(plan => plan.body.free === true)) {
-      this.isFree = true;
+      this.free = true;
     }
 
     this.loading = false;
@@ -168,7 +174,7 @@ export class ManifoldServiceCard {
         <manifold-service-card-view
           description={this.product.body.tagline}
           isFeatured={this.isFeatured}
-          isFree={this.isFree}
+          isFree={this.free}
           label={this.product.body.label}
           logo={this.product.body.logo_url}
           name={this.product.body.name}
