@@ -9,7 +9,7 @@ defaults: &defaults
     - NODE_ENV: development # CircleCI needs devDeps
 
 orbs:
-  happo: happo/happo@latest
+  happo: happo/happo@2.0.0
 
 commands:
   # cache Stencil if npm run build is run
