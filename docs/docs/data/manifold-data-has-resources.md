@@ -19,7 +19,7 @@ By default, this component will subscribe to updates from the server. To
 disable that, pass the `paused` attribute:
 
 ```html
-<manifold-data-has-resource paused />
+<manifold-data-has-resource paused></manifold-data-has-resource>
 ```
 
 ## Has one or more resources

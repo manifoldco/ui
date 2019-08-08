@@ -21,7 +21,7 @@ example: |
 Creates an unstyled, unordered list with `<a>` tags.
 
 ```html
-<manifold-data-resource-list />
+<manifold-data-resource-list></manifold-data-resource-list>
 ```
 
 ## Events
@@ -29,7 +29,7 @@ Creates an unstyled, unordered list with `<a>` tags.
 Navigating client-side happens via the `manifold-resourceList-click` custom event.
 
 | Name                          | Details                    | Data                                          |
-| :---------------------------- | :------------------------- | :-------------------------------------------- |
+|-------------------------------|----------------------------|-----------------------------------------------|
 | `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName`, `resourceLabel` |
 
 ## Link format
@@ -38,7 +38,7 @@ To navigate using a traditional `<a>` tag, specify a `resource-link-format`
 attribute, using `:resource` as a placeholder:
 
 ```html
-<manifold-data-resource-list resource-link-format="/resource/:resource" />
+<manifold-data-resource-list resource-link-format="/resource/:resource"></manifold-data-resource-list>
 ```
 
 Note that this will disable the custom event unless `preserve-event` is
@@ -50,5 +50,5 @@ By default, this component will subscribe to updates from the server. To
 disable that, pass the `paused` attribute:
 
 ```html
-<manifold-data-resource-list paused />
+<manifold-data-resource-list paused></manifold-data-resource-list>
 ```
