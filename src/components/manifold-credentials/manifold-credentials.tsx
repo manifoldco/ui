@@ -51,7 +51,7 @@ export class ManifoldCredentials {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!resources || !resources.length) {
       console.error(`${resourceLabel} resource not found`);
       return;
     }

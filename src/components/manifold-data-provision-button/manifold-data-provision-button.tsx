@@ -175,7 +175,7 @@ export class ManifoldDataProvisionButton {
       endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
     });
 
-    if (!Array.isArray(plans) || !plans.length) {
+    if (!plans || !plans.length) {
       console.error(`${productLabel} plans not found`);
       return;
     }

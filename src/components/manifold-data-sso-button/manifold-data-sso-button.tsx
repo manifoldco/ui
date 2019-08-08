@@ -116,7 +116,7 @@ export class ManifoldDataSsoButton {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (!Array.isArray(response) || !response.length) {
+    if (!response || !response.length) {
       console.error(`${resourceLabel} resource not found`);
       return;
     }

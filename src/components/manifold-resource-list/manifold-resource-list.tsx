@@ -102,12 +102,7 @@ export class ManifoldResourceList {
       endpoint: `/operations/?is_deleted=false`,
     });
 
-    if (operationsResp instanceof Error) {
-      console.error(operationsResp);
-      return;
-    }
-
-    if (Array.isArray(operationsResp)) {
+    if (operationsResp) {
       const productsResp = await this.restFetch<Catalog.Product[]>({
         service: 'catalog',
         endpoint: `/products`,
@@ -118,7 +113,7 @@ export class ManifoldResourceList {
         endpoint: `/resources/?me`,
       });
 
-      if (Array.isArray(resourcesResp) && Array.isArray(productsResp)) {
+      if (resourcesResp && Array.isArray(productsResp)) {
         const userResource = ManifoldResourceList.userResources(resourcesResp);
 
         const resources: FoundResource[] = [];

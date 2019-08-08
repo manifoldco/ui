@@ -60,11 +60,19 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    await this.restFetch({
-      service: 'gateway',
-      endpoint: `/id/resource/${this.resourceId}`,
-      options: { method: 'DELETE' },
-    }).catch(e => {
+    try {
+      await this.restFetch({
+        service: 'gateway',
+        endpoint: `/id/resource/${this.resourceId}`,
+        options: { method: 'DELETE' },
+      });
+      const success: SuccessMessage = {
+        message: `${this.resourceLabel} successfully deprovisioned`,
+        resourceLabel: this.resourceLabel || '',
+        resourceId: this.resourceId,
+      };
+      this.success.emit(success);
+    } catch (e) {
       const error: ErrorMessage = {
         message: e.message,
         resourceLabel: this.resourceLabel || '',
@@ -72,14 +80,8 @@ export class ManifoldDataDeprovisionButton {
       };
 
       this.error.emit(error);
-    });
-
-    const success: SuccessMessage = {
-      message: `${this.resourceLabel} successfully deprovisioned`,
-      resourceLabel: this.resourceLabel || '',
-      resourceId: this.resourceId,
-    };
-    this.success.emit(success);
+      throw error;
+    }
   }
 
   async fetchResourceId(resourceLabel: string) {
@@ -92,7 +94,7 @@ export class ManifoldDataDeprovisionButton {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (!Array.isArray(response) || !response.length) {
+    if (!response || !response.length) {
       console.error(`${resourceLabel} product not found`);
       return;
     }
