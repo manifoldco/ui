@@ -72,5 +72,20 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        typeName: 'ManifoldAPI',
+        fieldName: 'manifoldApi',
+        // Url to query from
+        url: 'https://api.manifold.co/graphql',
+        // HTTP headers
+        headers: {
+          authorization: `Bearer ${process.env.MANIFOLD_API_TOKEN}`,
+        },
+        // Additional options to pass to node-fetch
+        fetchOptions: {},
+      },
+    },
   ],
 };
