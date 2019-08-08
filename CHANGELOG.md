@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the resource list not showing the status of provisioning or deprovisioning resources.
 - Fixed the resource card loading indicator - for a lack of a better word - wobbling around like its life depended on it.
 - Fixed the title of the `service-card` taking a dynamic amount of space and making the description look misaligned.
+- Fixed the service card loading the free badge after rendering, which caused a jumpy UI.
 
 ### Added
 
