@@ -1,6 +1,15 @@
 import fetchMock from 'fetch-mock';
 
 import { createRestFetch } from './restFetch';
+import { connections } from './connections';
+
+const nonCatalogServices: (keyof typeof connections.prod)[] = [
+  'billing',
+  'connector',
+  'gateway',
+  'marketplace',
+  'provisioning',
+];
 
 describe('The fetcher created by createRestFetch', () => {
   const oldSetTimeout = setTimeout;
@@ -25,7 +34,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     const result = await fetcher({
       endpoint: '/test',
-      service: 'catalog',
+      service: 'marketplace',
     });
 
     expect(fetchMock.called('path:/v1/test')).toBeTruthy();
@@ -46,7 +55,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     await fetcher({
       endpoint: '/test',
-      service: 'catalog',
+      service: 'marketplace',
     });
 
     expect(fetchMock.called('path:/v1/test')).toBeTruthy();
@@ -68,7 +77,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     const result: Error = await fetcher({
       endpoint: '/test',
-      service: 'catalog',
+      service: 'marketplace',
     });
 
     expect(fetchMock.called('path:/v1/test')).toBeTruthy();
@@ -85,7 +94,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     const result: Error = await fetcher({
       endpoint: '/test',
-      service: 'catalog',
+      service: 'marketplace',
     });
 
     expect(fetchMock.called('path:/v1/test')).toBeTruthy();
@@ -104,10 +113,34 @@ describe('The fetcher created by createRestFetch', () => {
 
     const result: Error = await fetcher({
       endpoint: '/test',
-      service: 'catalog',
+      service: 'marketplace',
     });
 
     expect(fetchMock.called('path:/v1/test')).toBeFalsy();
     expect(result.message).toEqual('No auth token given');
+  });
+
+  it('auths for everything but catalog', () =>
+    nonCatalogServices.forEach(async service => {
+      const fetcher = createRestFetch({
+        wait: 1,
+        getAuthToken: () => '1234',
+      });
+      fetchMock.mock('path:/v1/test', 200);
+      await fetcher({ endpoint: '/test', service });
+      const [, req] = fetchMock.lastCall() as any;
+      return expect(req.headers).toEqual({ authorization: 'Bearer 1234' });
+    }));
+
+  // TODO: add catalog auth in the future, but STILL KEEP ability for unauth’d reqs
+  it('doesn’t auth for catalog', async () => {
+    const fetcher = createRestFetch({
+      wait: 1,
+      getAuthToken: () => '1234',
+    });
+    fetchMock.mock('path:/v1/test', 200);
+    await fetcher({ endpoint: '/test', service: 'catalog' });
+    const [, req] = fetchMock.lastCall() as any;
+    expect(req.headers).toBe(undefined);
   });
 });

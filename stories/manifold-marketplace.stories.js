@@ -1,11 +1,9 @@
 import { storiesOf } from '@storybook/html';
 
 import markdown from '../docs/docs/components/manifold-marketplace.md';
-import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Marketplace', module)
   .addParameters({ readme: { sidebar: markdown } })
-  .addDecorator(manifoldConnectionDecorator)
   .add(
     'default',
     () =>

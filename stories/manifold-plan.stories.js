@@ -8,7 +8,8 @@ storiesOf('Plan', module)
   .addDecorator(manifoldConnectionDecorator)
   .add(
     'ElegantCMS Free',
-    () => '<manifold-plan product-label="elegant-cms" plan-label="manifold-developer"></manifold-plan>'
+    () =>
+      '<manifold-plan product-label="elegant-cms" plan-label="manifold-developer"></manifold-plan>'
   )
   .add(
     'JawsDB Kitefin',
