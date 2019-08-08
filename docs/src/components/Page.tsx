@@ -13,7 +13,7 @@ interface PageProps {
 function Page({ currentPage, links }: PageProps) {
   return (
     <>
-      <SEO title={`${currentPage.frontmatter.title} | Manifold UI`} />
+      <SEO title={currentPage.frontmatter.title} />
       <Sidebar pages={links} />
       <Main role="main">
         <Entry html={currentPage.html} />

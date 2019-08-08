@@ -2,7 +2,7 @@
 title: Plan
 path: /components/plan
 example: |
-  <manifold-plan product-label="jawsdb-mysql" plan-label="kitefin" />
+  <manifold-plan product-label="jawsdb-mysql" plan-label="kitefin"></manifold-plan>
 ---
 
 # Product
@@ -10,7 +10,7 @@ example: |
 Display the details for an individual plan.
 
 ```html
-<manifold-plan product-label="jawsdb-mysql" plan-label="kitefin" />
+<manifold-plan product-label="jawsdb-mysql" plan-label="kitefin"></manifold-plan>
 ```
 
 ## Product Label
