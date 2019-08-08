@@ -52,7 +52,8 @@ export class ManifoldDataSsoButton {
     }
   }
 
-  async sso() {
+  sso = async () => {
+    console.log('Attempting to SSO', this.restFetch, this.loading);
     if (!this.restFetch || this.loading) {
       return;
     }
@@ -101,13 +102,14 @@ export class ManifoldDataSsoButton {
       redirectUrl: response.body.redirect_uri,
     };
     this.success.emit(success);
-  }
+  };
 
   async fetchResourceId(resourceLabel: string) {
     if (!this.restFetch) {
       return;
     }
 
+    this.loading = true;
     const response = await this.restFetch<Marketplace.Resource[]>({
       service: 'marketplace',
       endpoint: `/resources/?me&label=${resourceLabel}`,
@@ -124,6 +126,7 @@ export class ManifoldDataSsoButton {
       return;
     }
 
+    this.loading = false;
     this.resourceId = resources[0].id;
   }
 
@@ -133,7 +136,7 @@ export class ManifoldDataSsoButton {
       <button
         type="submit"
         onClick={this.sso}
-        disabled={!this.resourceId && !this.loading}
+        disabled={!this.resourceId || this.loading}
         data-resource-id={this.resourceId}
       >
         <slot />

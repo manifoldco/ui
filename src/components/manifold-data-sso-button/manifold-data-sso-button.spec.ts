@@ -132,9 +132,11 @@ describe('<manifold-data-sso-button>', () => {
 
       element.addEventListener('manifold-ssoButton-click', onClick);
       element.addEventListener('manifold-ssoButton-success', onSuccess);
-      expect(element.querySelector('button')).toBeDefined();
-      // @ts-ignore
-      element.querySelector('button').click();
+
+      const button = element.querySelector('button') as HTMLElement;
+      expect(button).toBeDefined();
+
+      button.click();
       await page.waitForChanges();
       // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
       // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
@@ -176,9 +178,10 @@ describe('<manifold-data-sso-button>', () => {
       await page.waitForChanges();
 
       element.addEventListener('manifold-ssoButton-error', onError);
-      expect(element.querySelector('button')).toBeDefined();
-      // @ts-ignore
-      element.querySelector('button').click();
+      const button = element.querySelector('button') as HTMLElement;
+      expect(button).toBeDefined();
+
+      button.click();
       await page.waitForChanges();
       // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
       // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
