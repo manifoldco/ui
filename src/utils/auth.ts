@@ -14,9 +14,8 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
 
   const isNotString = typeof token !== 'string';
   const isEmpty = token === '';
-  const isUndefined = typeof token === 'string' && token.toLowerCase() === 'undefined';
 
-  if (isNotString || isEmpty || isUndefined) {
+  if (isNotString || isEmpty) {
     return options;
   }
 
