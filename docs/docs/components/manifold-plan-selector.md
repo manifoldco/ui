@@ -12,7 +12,7 @@ example: |
 Display the plans for a product.
 
 ```html
-<manifold-plan-selector product-label="jawsdb-mysql" />
+<manifold-plan-selector product-label="jawsdb-mysql"></manifold-plan-selector>
 ```
 
 You can find the `:product` label for each at
@@ -53,6 +53,12 @@ The following events are emitted:
 | `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
 | `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
 
+## Free plans only
+
+```html
+<manifold-plan-selector free-plans></manifold-plan-selector>
+```
+
 ## Regions
 
 Most of our products are regionless, but some plans let users specify the
@@ -60,7 +66,9 @@ region. In this case, you may optionally want to order the regions with the
 `regions` attribute:
 
 ```html
-<manifold-plan-selector regions="aws-eu-west-1,aws-eu-west-2,aws-us-east-1,aws-us-east-2" />
+<manifold-plan-selector
+  regions="aws-eu-west-1,aws-eu-west-2,aws-us-east-1,aws-us-east-2"
+></manifold-plan-selector>
 ```
 
 Regions will be ordered in the order specified. Any regions not mentioned

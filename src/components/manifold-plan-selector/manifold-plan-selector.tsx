@@ -11,6 +11,8 @@ import { planSort } from '../../utils/plan';
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
+  /** Show only free plans? */
+  @Prop() freePlans?: boolean = false;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -84,7 +86,7 @@ export class ManifoldPlanSelector {
       return;
     }
 
-    this.plans = planSort(response);
+    this.plans = planSort(response, { free: this.freePlans });
   }
 
   async fetchResource(resourceLabel: string) {

@@ -176,9 +176,13 @@ describe('plan sort function', () => {
     expect(planSort(wrongOrder)).toEqual(rightOrder);
   });
 
-  it('sort() doesn’t reorder original reference', () => {
+  it('doesn’t reorder original reference', () => {
     const clone = [...wrongOrder];
     planSort(clone);
     expect(clone).toEqual(wrongOrder);
+  });
+
+  it('filters to free-only plans', () => {
+    expect(planSort(rightOrder, { free: true })).toEqual([freePlan, fauxFreePlan]);
   });
 });
