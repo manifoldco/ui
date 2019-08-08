@@ -35,7 +35,7 @@ export class ManifoldServiceCard {
   }
 
   @Watch('skeleton') skeletonChange(newSkeleton: boolean) {
-    if (!newSkeleton) {
+    if (!newSkeleton && !this.product) {
       this.fetchProduct({ id: this.productId, label: this.productLabel });
     }
   }
@@ -62,15 +62,11 @@ export class ManifoldServiceCard {
   }
 
   componentWillLoad() {
-    if (this.skeleton || typeof this.product === 'object') {
-      return; // if skeleton UI or it’s passed a product, don’t fetch anything
+    if (this.skeleton || this.product) {
+      return null; // if skeleton UI or it’s passed a product, don’t fetch anything
     }
 
-    if (this.productId) {
-      this.fetchProduct({ id: this.productId });
-    } else if (this.productLabel) {
-      this.fetchProduct({ label: this.productLabel });
-    }
+    return this.fetchProduct({ id: this.productId, label: this.productLabel });
   }
 
   get href() {
@@ -126,6 +122,8 @@ export class ManifoldServiceCard {
       return;
     }
 
+    this.loading = true;
+
     const response = await this.restFetch<Catalog.ExpandedPlan[]>({
       service: 'catalog',
       endpoint: `/plans/?product_id=${this.product.id}`,
@@ -139,6 +137,8 @@ export class ManifoldServiceCard {
     if (Array.isArray(response) && response.find(plan => plan.body.free === true)) {
       this.isFree = true;
     }
+
+    this.loading = false;
   }
 
   onClick = (e: Event): void => {
