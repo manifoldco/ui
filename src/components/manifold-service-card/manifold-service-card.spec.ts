@@ -1,4 +1,4 @@
-import { newSpecPage } from '@stencil/core/testing';
+import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldServiceCard } from './manifold-service-card';
@@ -6,58 +6,25 @@ import { Product, ExpandedFreePlan, ExpandedPlan } from '../../spec/mock/catalog
 import { connections } from '../../utils/connections';
 import { createRestFetch } from '../../utils/restFetch';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const proto = ManifoldServiceCard.prototype as any;
-const oldCallback = proto.componentWillLoad;
-
-proto.componentWillLoad = function() {
-  (this as any).restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  });
-
-  if (oldCallback) {
-    oldCallback.call(this);
-  }
-};
-
 describe('<manifold-service-card>', () => {
-  it('dispatches click event', () => {
-    const serviceCard = new ManifoldServiceCard();
-    serviceCard.productLabel = Product.body.label;
-    serviceCard.productId = Product.id;
-    serviceCard.productName = Product.body.name;
+  let page: SpecPage;
+  let card: HTMLManifoldServiceCardElement;
 
-    const mock = { emit: jest.fn() };
-    serviceCard.marketplaceClick = mock;
-
-    serviceCard.onClick(new Event('click'));
-    expect(mock.emit).toHaveBeenCalledWith({
-      productId: Product.id,
-      productLabel: Product.body.label,
-      productName: Product.body.name,
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [ManifoldServiceCard],
+      html: `<div></div>`,
+    });
+    card = page.doc.createElement('manifold-service-card');
+    card.restFetch = createRestFetch({
+      getAuthToken: jest.fn(() => '1234'),
+      wait: 10,
+      setAuthToken: jest.fn(),
     });
   });
 
-  it('fetches product by id on load', () => {
-    const productId = '1234';
-
-    const provisionButton = new ManifoldServiceCard();
-    provisionButton.fetchProduct = jest.fn();
-    provisionButton.productId = productId;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ id: productId });
-  });
-
-  it('fetches product by label on load', () => {
-    const productLabel = 'test-product';
-
-    const provisionButton = new ManifoldServiceCard();
-    provisionButton.fetchProduct = jest.fn();
-    provisionButton.productLabel = productLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith({ label: productLabel });
+  afterEach(() => {
+    fetchMock.restore();
   });
 
   it('fetches product by id on id change', () => {
@@ -83,10 +50,6 @@ describe('<manifold-service-card>', () => {
   });
 
   describe('when created with a product label', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
     it('will fetch the products', async () => {
       const productLabel = 'test-product';
 
@@ -97,42 +60,53 @@ describe('<manifold-service-card>', () => {
           ExpandedFreePlan,
         ]);
 
-      const page = await newSpecPage({
-        components: [ManifoldServiceCard],
-        html: `
-          <manifold-service-card
-            product-label="${productLabel}"
-          ></manifold-service-card>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      card.productLabel = productLabel;
+      card.productLinkFormat = '/product/:product';
+      root.appendChild(card);
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
         true
       );
 
-      const root = page.rootInstance as ManifoldServiceCard;
-      expect(root.product).toEqual(Product);
+      expect(card.querySelectorAll('a')).toHaveLength(1);
+      expect(card.querySelector('a')).toEqualHtml(`
+        <a
+          role="button"
+          itemscope
+          itemtype="https://schema.org/Product"
+          itemprop="url"
+          href="/product/${Product.body.label}"
+          style="text-decoration: none"
+        >
+          <manifold-service-card-view
+            description="${Product.body.tagline}"
+            isfree=""
+            label="${Product.body.label}"
+            productid="${Product.id}"
+            logo="${Product.body.logo_url}"
+            name="${Product.body.name}"
+          >
+            <manifold-forward-ref slot="cta"></manifold-forward-ref>
+          </manifold-service-card-view>
+        </a>
+      `);
     });
 
     it('will do nothing if no product label is given', async () => {
       fetchMock.mock(`${connections.prod.catalog}/products/`, [Product]);
 
-      await newSpecPage({
-        components: [ManifoldServiceCard],
-        html: `
-          <manifold-service-card></manifold-service-card>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      root.appendChild(card);
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/`)).toBe(false);
+      expect(card.querySelector('a')).toBe(null);
     });
   });
 
   describe('when created with a product id', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
     it('will fetch the products', async () => {
       const productId = '1234';
 
@@ -143,40 +117,51 @@ describe('<manifold-service-card>', () => {
           ExpandedFreePlan,
         ]);
 
-      const page = await newSpecPage({
-        components: [ManifoldServiceCard],
-        html: `
-          <manifold-service-card
-            product-id="${productId}"
-          ></manifold-service-card>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      card.productId = productId;
+      card.productLinkFormat = '/product/:product';
+      root.appendChild(card);
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/${productId}`)).toBe(true);
 
-      const root = page.rootInstance as ManifoldServiceCard;
-      expect(root.product).toEqual(Product);
+      expect(card.querySelectorAll('a')).toHaveLength(1);
+      expect(card.querySelector('a')).toEqualHtml(`
+        <a
+          role="button"
+          itemscope
+          itemtype="https://schema.org/Product"
+          itemprop="url"
+          href="/product/${Product.body.label}"
+          style="text-decoration: none"
+        >
+          <manifold-service-card-view
+            description="${Product.body.tagline}"
+            isfree=""
+            label="${Product.body.label}"
+            productid="${Product.id}"
+            logo="${Product.body.logo_url}"
+            name="${Product.body.name}"
+          >
+            <manifold-forward-ref slot="cta"></manifold-forward-ref>
+          </manifold-service-card-view>
+        </a>
+      `);
     });
 
     it('will do nothing if no product id is given', async () => {
       fetchMock.mock(`${connections.prod.catalog}/products/undefined`, [Product]);
 
-      await newSpecPage({
-        components: [ManifoldServiceCard],
-        html: `
-          <manifold-service-card></manifold-service-card>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      root.appendChild(card);
+      await page.waitForChanges();
 
-      expect(fetchMock.called(`${connections.prod.catalog}/products/undefined`)).toBe(false);
+      expect(fetchMock.called(`${connections.prod.catalog}/products/`)).toBe(false);
+      expect(card.querySelector('a')).toBe(null);
     });
   });
 
   describe('when fetching if the product is free', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
     it('will fetch the plans after the product has been fetched', async () => {
       fetchMock
         .mock(`${connections.prod.catalog}/products/${Product.id}`, Product)
@@ -185,21 +170,17 @@ describe('<manifold-service-card>', () => {
           ExpandedFreePlan,
         ]);
 
-      const page = await newSpecPage({
-        components: [ManifoldServiceCard],
-        html: `
-          <manifold-service-card
-            product-id="${Product.id}"
-          ></manifold-service-card>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      card.productId = Product.id;
+      root.appendChild(card);
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
         true
       );
 
-      const root = page.rootInstance as ManifoldServiceCard;
-      expect(root.isFree).toEqual(true);
+      const rendered = card.querySelector('manifold-service-card-view');
+      expect(rendered && rendered.attributes.getNamedItem('isfree')).toBeDefined();
     });
 
     it('will set is free to false if no free plan is found', async () => {
@@ -207,21 +188,17 @@ describe('<manifold-service-card>', () => {
         .mock(`${connections.prod.catalog}/products/${Product.id}`, Product)
         .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [ExpandedPlan]);
 
-      const page = await newSpecPage({
-        components: [ManifoldServiceCard],
-        html: `
-          <manifold-service-card
-            product-id="${Product.id}"
-          ></manifold-service-card>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      card.productId = Product.id;
+      root.appendChild(card);
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
         true
       );
 
-      const root = page.rootInstance as ManifoldServiceCard;
-      expect(root.isFree).toEqual(false);
+      const rendered = card.querySelector('manifold-service-card-view');
+      expect(rendered && rendered.attributes.getNamedItem('isfree')).toBe(null);
     });
   });
 });

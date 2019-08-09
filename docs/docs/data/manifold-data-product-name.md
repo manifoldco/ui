@@ -21,7 +21,7 @@ component.
 ## Usage
 
 ```html
-<manifold-data-product-name product-label="piio" />
+<manifold-data-product-name product-label="piio"></manifold-data-product-name>
 <!-- Piio -->
 ```
 
@@ -32,5 +32,5 @@ The loading slot supports text as well as HTML elements.
 You can look up a logo by resource label by passing `resource-label`:
 
 ```html
-<manifold-data-product-logo resource-label="my-resource" />
+<manifold-data-product-logo resource-label="my-resource"></manifold-data-product-name>
 ```

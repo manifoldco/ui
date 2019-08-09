@@ -43,7 +43,7 @@ example: |
 Creates a list of resource cards that lists all the resources the user owns directly.
 
 ```html
-<manifold-resource-list />
+<manifold-resource-list></manifold-resource-list>
 ```
 
 ## Link format
@@ -52,7 +52,7 @@ To navigate using a traditional `<a>` tag, specify a `resource-link-format`
 attribute, using `:resource` as a placeholder:
 
 ```html
-<manifold-data-resource-list resource-link-format="/resource/:resource" />
+<manifold-data-resource-list resource-link-format="/resource/:resource"></manifold-data-resource-list>
 ```
 
 Note that this will disable the custom event unless `preserve-event` is
@@ -64,7 +64,7 @@ By default, this component will subscribe to updates from the server. To
 disable that, pass the `paused` attribute:
 
 ```html
-<manifold-data-resource-list paused />
+<manifold-data-resource-list paused></manifold-data-resource-list>
 ```
 
 ## Loading state
@@ -75,7 +75,7 @@ slots][slot].
 
 ```jsx
 <manifold-resource-list>
-  <manifold-resource-card-view loading="" label="loading" slot="loading" />
+  <manifold-resource-card-view loading="" label="loading" slot="loading"></manifold-resource-card-view>
 </manifold-resource-list>
 ```
 

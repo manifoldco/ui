@@ -79,7 +79,7 @@ For validation, error, and success messages, it will emit custom events.
 
 ```js
 document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
-  console.info(`⌛ Derovisioning ${resourceLabel} …`)
+  console.info(`⌛ Deprovisioning ${resourceLabel} …`)
 );
 document.addEventListener(
   'manifold-deprovisionButton-success',
@@ -89,10 +89,10 @@ document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => co
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}
 ```
 
-| Name                               |                       Returns                        | Description                                                                                                                 |
-| :--------------------------------- | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-deprovisionButton-click`   |                    `resourceLabel`                 | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-deprovisionButton-success` |     `message`, `resourceId`, `resourceLabel`       | Successful deprovision. Returns a resource ID and resource Label.                                                                              |
+| Name                                 | Returns                                  | Description                                                                                                                 |
+|--------------------------------------|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `manifold-deprovisionButton-click`   | `resourceLabel`                          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-deprovisionButton-success` | `message`, `resourceId`, `resourceLabel` | Successful deprovision. Returns a resource ID and resource Label.                                                           |
 | `manifold-deprovisionButton-error`   |     `message`, `resourceId`, `resourceLabel`       | Erred provision, along with information on what went wrong.     
 
 ## The resource rename Button
@@ -126,11 +126,11 @@ document.addEventListener('manifold-renameButton-invalid', ({ detail }) => conso
 // {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
 ```
 
-| Name                            |                       Returns                            | Description                                                                                                                 |
-| :-------------------------------| :------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-renameButton-click`   |       `resourceId`, `resourceLabel`, `newLabel`          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-renameButton-success` |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
-| `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Erred rename, along with information on what went wrong.                                                                    |
+| Name                            | Returns                                              | Description                                                                                                                 |
+|---------------------------------|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `manifold-renameButton-click`   | `resourceId`, `resourceLabel`, `newLabel`            | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-renameButton-success` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
+| `manifold-renameButton-error`   | `message`, `resourceId`, `resourceLabel`, `newLabel` | Erred rename, along with information on what went wrong.                                                                    |
 | `manifold-renameButton-error`   |   `message`, `resourceId`, `resourceLabel`, `newLabel`   | Invalid renaming, along with information on what went wrong. 
 
 ## The resource sso Button
@@ -162,11 +162,11 @@ document.addEventListener('manifold-ssoButton-error', ({ detail }) => console.lo
 // {type: "not_found", message: "no_found: Resource not found", resourceid: "1234", resourceLabel: "my-resource"}
 ```
 
-| Name                         |                       Returns                               | Description                                                                                                                 |
-| :----------------------------| :---------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-ssoButton-click`   |              `resourceId`, `resourceLabel`                  | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-ssoButton-success` |   `message`, `resourceId`, `resourceLabel`, `redirectUrl`   | Successful sso. Returns a resource ID, resource Label and the redirect_url for the product's dashboard.                     |
-| `manifold-ssoButton-error`   |           `message`, `resourceId`, `resourceLabel`          | Erred sso, along with information on what went wrong.                                                                       |
+| Name                         | Returns                                                 | Description                                                                                                                 |
+|------------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `manifold-ssoButton-click`   | `resourceId`, `resourceLabel`                           | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-ssoButton-success` | `message`, `resourceId`, `resourceLabel`, `redirectUrl` | Successful sso. Returns a resource ID, resource Label and the redirect_url for the product's dashboard.                     |
+| `manifold-ssoButton-error`   | `message`, `resourceId`, `resourceLabel`                | Erred sso, along with information on what went wrong.                                                                       |
 
 ## The resource product details
 

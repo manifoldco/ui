@@ -1,4 +1,4 @@
-import { newSpecPage } from '@stencil/core/testing';
+import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { Resource } from '../../spec/mock/marketplace';
@@ -7,42 +7,25 @@ import { Connector } from '../../types/connector';
 import { ManifoldDataSsoButton } from './manifold-data-sso-button';
 import { createRestFetch } from '../../utils/restFetch';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const proto = ManifoldDataSsoButton.prototype as any;
-const oldCallback = proto.componentWillLoad;
-
-proto.componentWillLoad = function() {
-  (this as any).restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  });
-
-  if (oldCallback) {
-    oldCallback.call(this);
-  }
-};
-
 describe('<manifold-data-sso-button>', () => {
-  it('fetches the resource id on load if not set', () => {
-    const resourceLabel = 'test-resource';
+  let page: SpecPage;
+  let element: HTMLManifoldDataSsoButtonElement;
 
-    const provisionButton = new ManifoldDataSsoButton();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = resourceLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [ManifoldDataSsoButton],
+      html: `<div></div>`,
+    });
+    element = page.doc.createElement('manifold-data-sso-button');
+    element.restFetch = createRestFetch({
+      getAuthToken: jest.fn(() => '1234'),
+      wait: 10,
+      setAuthToken: jest.fn(),
+    });
   });
 
-  it('does not fetch the resource id on load if set', () => {
-    const resourceLabel = 'test-resource';
-
-    const provisionButton = new ManifoldDataSsoButton();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = resourceLabel;
-    provisionButton.resourceId = resourceLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
+  afterEach(() => {
+    fetchMock.restore();
   });
 
   it('fetches resource id on change if not set', () => {
@@ -69,10 +52,6 @@ describe('<manifold-data-sso-button>', () => {
   });
 
   describe('when created without a resource ID', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
     it('will fetch the resource id', async () => {
       const resourceLabel = 'new-resource';
 
@@ -80,21 +59,19 @@ describe('<manifold-data-sso-button>', () => {
         Resource,
       ]);
 
-      const page = await newSpecPage({
-        components: [ManifoldDataSsoButton],
-        html: `
-          <manifold-data-sso-button
-            resource-label="${resourceLabel}"
-          >SSO</manifold-data-sso-button>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      element.resourceLabel = resourceLabel;
+      root.appendChild(element);
+      await page.waitForChanges();
 
       expect(
         fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
-      const root = page.rootInstance as ManifoldDataSsoButton;
-      expect(root.resourceId).toEqual(Resource.id);
+      expect(element.querySelectorAll('button')).toHaveLength(1);
+      expect(element.querySelector('button')).toEqualHtml(`
+        <button type="submit" data-resource-id="${Resource.id}"></button>
+      `);
     });
 
     it('will do nothing on a fetch error', async () => {
@@ -102,21 +79,19 @@ describe('<manifold-data-sso-button>', () => {
 
       fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
 
-      const page = await newSpecPage({
-        components: [ManifoldDataSsoButton],
-        html: `
-          <manifold-data-sso-button
-            resource-label="${resourceLabel}"
-          >SSO</manifold-data-sso-button>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      element.resourceLabel = resourceLabel;
+      root.appendChild(element);
+      await page.waitForChanges();
 
       expect(
         fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
       ).toBe(true);
 
-      const root = page.rootInstance as ManifoldDataSsoButton;
-      expect(root.resourceId).not.toEqual(Resource.id);
+      expect(element.querySelectorAll('button')).toHaveLength(1);
+      expect(element.querySelector('button')).toEqualHtml(`
+        <button type="submit" disabled="" data-resource-id></button>
+      `);
     });
   });
 
@@ -145,33 +120,51 @@ describe('<manifold-data-sso-button>', () => {
       },
     };
 
-    it('will trigger a dom event on successful rename', async () => {
+    it('will trigger a dom event on successful sso', async () => {
+      const onClick = jest.fn();
+      const onSuccess = jest.fn();
       fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
 
-      const page = await newSpecPage({
-        components: [ManifoldDataSsoButton],
-        html: `
-          <manifold-data-sso-button
-            resource-label="${Resource.body.label}"
-          >SSO</manifold-data-sso-button>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      element.resourceLabel = Resource.body.label;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const instance = page.rootInstance as ManifoldDataSsoButton;
-      instance.success.emit = jest.fn();
+      element.addEventListener('manifold-ssoButton-click', onClick);
+      element.addEventListener('manifold-ssoButton-success', onSuccess);
 
-      await instance.sso();
+      const button = element.querySelector('button') as HTMLElement;
+      expect(button).toBeDefined();
+
+      button.click();
+      await page.waitForChanges();
+      // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
+      // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
-      expect(instance.success.emit).toHaveBeenCalledWith({
-        message: `${Resource.body.label} successfully ssoed`,
-        resourceLabel: Resource.body.label,
-        resourceId: Resource.id,
-        redirectUrl: authCode.body.redirect_uri,
-      });
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            resourceLabel: Resource.body.label,
+            resourceId: Resource.id,
+          },
+        })
+      );
+      expect(onSuccess).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: `${Resource.body.label} successfully ssoed`,
+            resourceLabel: Resource.body.label,
+            resourceId: Resource.id,
+            redirectUrl: authCode.body.redirect_uri,
+          },
+        })
+      );
     });
 
-    it('will trigger a dom event on failed rename', async () => {
+    it('will trigger a dom event on failed sso', async () => {
+      const onError = jest.fn();
       fetchMock.mock(`${connections.prod.connector}/sso`, {
         status: 500,
         body: {
@@ -179,27 +172,31 @@ describe('<manifold-data-sso-button>', () => {
         },
       });
 
-      const page = await newSpecPage({
-        components: [ManifoldDataSsoButton],
-        html: `
-          <manifold-data-sso-button
-            resource-label="${Resource.body.label}"
-            new-label="test2"
-          >SSO</manifold-data-sso-button>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      element.resourceLabel = Resource.body.label;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const instance = page.rootInstance as ManifoldDataSsoButton;
-      instance.error.emit = jest.fn();
+      element.addEventListener('manifold-ssoButton-error', onError);
+      const button = element.querySelector('button') as HTMLElement;
+      expect(button).toBeDefined();
 
-      await instance.sso();
+      button.click();
+      await page.waitForChanges();
+      // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
+      // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
-      expect(instance.error.emit).toHaveBeenCalledWith({
-        message: 'ohnoes',
-        resourceLabel: Resource.body.label,
-        resourceId: Resource.id,
-      });
+      expect(onError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: 'ohnoes',
+            resourceLabel: Resource.body.label,
+            resourceId: Resource.id,
+          },
+        })
+      );
     });
 
     it('will do nothing if still loading', async () => {
@@ -207,20 +204,15 @@ describe('<manifold-data-sso-button>', () => {
         .mock(`${connections.prod.marketplace}/resources/?me&label=test`, [])
         .mock(`${connections.prod.connector}/sso`, 200);
 
-      const page = await newSpecPage({
-        components: [ManifoldDataSsoButton],
-        html: `
-          <manifold-data-sso-button
-            loading=""
-            resource-label="test"
-          >SSO</manifold-data-sso-button>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      element.resourceLabel = 'test';
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const instance = page.rootInstance as ManifoldDataSsoButton;
-      instance.loading = true;
-
-      await instance.sso();
+      expect(element.querySelector('button')).toBeDefined();
+      // @ts-ignore
+      element.querySelector('button').click();
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(false);
     });
@@ -230,19 +222,16 @@ describe('<manifold-data-sso-button>', () => {
         .mock(`${connections.prod.marketplace}/resources/?me&label=test`, [])
         .mock(`${connections.prod.connector}/sso`, 200);
 
-      const page = await newSpecPage({
-        components: [ManifoldDataSsoButton],
-        html: `
-          <manifold-data-sso-button
-            resource-label="test"
-          >SSO</manifold-data-sso-button>
-        `,
-      });
+      const root = page.root as HTMLElement;
+      element.resourceLabel = Resource.body.label;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const instance = page.rootInstance as ManifoldDataSsoButton;
-      instance.resourceId = undefined;
-
-      await instance.sso();
+      element.resourceId = undefined;
+      expect(element.querySelector('button')).toBeDefined();
+      // @ts-ignore
+      element.querySelector('button').click();
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(false);
     });

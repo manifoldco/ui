@@ -56,7 +56,7 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 `product-link-format`:
 
 ```html
-<manifold-service-card product-label="jawsdb-mysql" product-link-format="/product/:product" />
+<manifold-service-card product-label="jawsdb-mysql" product-link-format="/product/:product"></manifold-service-card>
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
@@ -80,6 +80,6 @@ document.addEventListener('manifold-marketplace-click', { detail } => {
 
 The following events are emitted:
 
-| Event Name                   | Description                                     | Data                        |
-| :--------------------------- | :---------------------------------------------- | :-------------------------- |
+| Event Name                   | Description                                     | Data                                       |
+|------------------------------|-------------------------------------------------|--------------------------------------------|
 | `manifold-marketplace-click` | Fires whenever a user has clicked on a product. | `productId`, `productLabel`, `productName` |

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed the deprovision button failing because the code expected a JSON return value.
 - Fixed the resource list not showing the status of provisioning or deprovisioning resources.
+- Fixed the resource card loading indicator - for a lack of a better word - wobbling around like its life depended on it.
 
 ### Added
 - Added a `refetch-until-valid` property on the `resource-container` component to allow users to reload this component until the found resource exists and is of state `available`.

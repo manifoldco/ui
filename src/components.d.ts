@@ -409,6 +409,10 @@ export namespace Components {
   }
   interface ManifoldPlanSelector {
     /**
+    * Show only free plans?
+    */
+    'freePlans'?: boolean;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -1470,6 +1474,10 @@ declare namespace LocalJSX {
     'selectedPlanId'?: string;
   }
   interface ManifoldPlanSelector extends JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement> {
+    /**
+    * Show only free plans?
+    */
+    'freePlans'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
