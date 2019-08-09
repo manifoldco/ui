@@ -1,11 +1,9 @@
 import { storiesOf } from '@storybook/html';
 
 import markdown from '../docs/docs/components/manifold-plan-selector.md';
-import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Plan Selector', module)
   .addParameters({ readme: { sidebar: markdown } })
-  .addDecorator(manifoldConnectionDecorator)
   .add(
     'Blitline',
     () => '<manifold-plan-selector product-label="blitline"></manifold-plan-selector>'

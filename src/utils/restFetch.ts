@@ -27,14 +27,21 @@ export const createRestFetch = ({
   const url = `${endpoints[args.service]}${args.endpoint}`;
   const start = new Date();
 
-  while (!getAuthToken() && !hasExpired(start, wait)) {
-    // eslint-disable-next-line no-await-in-loop
-    await new Promise(resolve => setTimeout(resolve, 2000));
+  // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
+  // but this prevents the ability for it to auth altogether. We need both!
+  const isCatalog = args.service === 'catalog';
+
+  if (!isCatalog) {
+    while (!getAuthToken() && !hasExpired(start, wait)) {
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+
+    if (!getAuthToken()) {
+      return new Error('No auth token given');
+    }
   }
 
-  if (!getAuthToken()) {
-    return new Error('No auth token given');
-  }
   try {
     const response = await fetch(url as string, {
       ...withAuth(getAuthToken(), args.options),

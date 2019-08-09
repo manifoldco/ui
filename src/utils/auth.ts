@@ -11,9 +11,14 @@ export function withAuth(authToken?: string, options?: RequestInit): RequestInit
    * working.
    */
   const token = authToken || localStorage.getItem('manifold_api_token');
-  if (!token) {
+
+  const isNotString = typeof token !== 'string';
+  const isEmpty = token === '';
+
+  if (isNotString || isEmpty) {
     return options;
   }
+
   return {
     ...(options || {}),
     headers: {
