@@ -19,7 +19,6 @@ export const jawsDB = async () => {
       const selector = details.shadowRoot.querySelector('manifold-region-selector');
       if (selector) {
         selector.regions = fromJSON(regions);
-        selector.restFetch = () => Promise.resolve(undefined);
 
         document.body.appendChild(plan);
 
