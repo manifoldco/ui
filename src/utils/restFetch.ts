@@ -53,11 +53,12 @@ export function createRestFetch({
       ...withAuth(getAuthToken(), args.options),
       body: JSON.stringify(args.body),
     }).catch((e: Response) => {
-      // 5xx errors will land here
+      /* Handle unexpected errors */
       report(e);
       return Promise.reject(e);
     });
 
+    /* Handle successful responses */
     if ([202, 203, 204].includes(response.status)) {
       return undefined;
     }
@@ -67,6 +68,7 @@ export function createRestFetch({
       return body;
     }
 
+    /* Handle expected errors */
     if (response.status === 401) {
       setAuthToken('');
       report(response);
@@ -74,8 +76,8 @@ export function createRestFetch({
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!
+    report(response);
     const message = Array.isArray(body) ? body[0].message : body.message;
-    // This is an expected error, it doesn't need to be reported
     throw new Error(message);
   };
 }
