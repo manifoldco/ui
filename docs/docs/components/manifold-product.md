@@ -14,7 +14,7 @@ example: |
 Display the details for an individual product.
 
 ```html
-<manifold-product product-label="iron_mq" />
+<manifold-product product-label="iron_mq"></manifold-product>
 ```
 
 ## Product Label

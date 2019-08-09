@@ -11,7 +11,7 @@ example: |
 A list of all Manifold services.
 
 ```html
-<manifold-marketplace />
+<manifold-marketplace></manifold-marketplace>
 ```
 
 ## Catalog curation
@@ -27,7 +27,7 @@ Excludes will start with **all products**, but let you specify which ones
 you’d like to hide:
 
 ```html
-<manifold-marketplace excludes="manifold-provider" />
+<manifold-marketplace excludes="manifold-provider"></manifold-marketplace>
 ```
 
 #### Products
@@ -38,7 +38,7 @@ let you manually specify every product that should be shown.
 A common usecase is using `products` in conjuction with `hide-categories` (below).
 
 ```html
-<manifold-marketplace products="aiven-redis,cloudamqp,iron_cache,iron_mq,memcachier-cache" />
+<manifold-marketplace products="aiven-redis,cloudamqp,iron_cache,iron_mq,memcachier-cache"></manifold-marketplace>
 ```
 
 ## Hide categories
@@ -48,7 +48,7 @@ recommended to use this if you’re only displaying a few products via
 `products` (above):
 
 ```html
-<manifold-marketplace hide-categories />
+<manifold-marketplace hide-categories></manifold-marketplace>
 ```
 
 ## Hide search
@@ -56,7 +56,7 @@ recommended to use this if you’re only displaying a few products via
 This hides the search bar (always shown by default).
 
 ```html
-<manifold-marketplace hide-search />
+<manifold-marketplace hide-search></manifold-marketplace>
 ```
 
 ## Hide template cards
@@ -66,7 +66,7 @@ Add the `hide-templates` attribute to hide external service template cards
 other products are using them.
 
 ```html
-<manifold-marketplace hide-templates />
+<manifold-marketplace hide-templates></manifold-marketplace>
 ```
 
 ## Featuring products
@@ -75,7 +75,7 @@ You can add a “Featured” tag to select products by specifing a
 comma-separated list:
 
 ```html
-<manifold-marketplace featured="piio,zerosix" />
+<manifold-marketplace featured="piio,zerosix"></manifold-marketplace>
 ```
 
 ## Events
@@ -93,10 +93,10 @@ document.addEventListener('manifold-marketplace-click', { detail } => {
 
 The following events are emitted:
 
-| Event Name                   | Description                                                                                              | Data                        |
-| :--------------------------- | :------------------------------------------------------------------------------------------------------- | :-------------------------- |
+| Event Name                   | Description                                                                                              | Data                                       |
+|------------------------------|----------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | `manifold-marketplace-click` | Fires whenever a user has clicked on a product.                                                          | `productId`, `productLabel`, `productName` |
-| `manifold-template-click`    | Fires whenever a user has clicked on a custom template (assuming it’s not hidden with `hide-templates`). | `category`                  |
+| `manifold-template-click`    | Fires whenever a user has clicked on a custom template (assuming it’s not hidden with `hide-templates`). | `category`                                 |
 
 ## Navigation
 
@@ -108,7 +108,7 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 <manifold-marketplace
   product-link-format="/product/:product"
   template-link-format="/template/:template"
-/>
+></manifold-marketplace>
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
