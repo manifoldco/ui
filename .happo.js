@@ -14,7 +14,6 @@ module.exports = {
   type: 'plain',
   prerender: false,
   setupScript: path.resolve(__dirname, 'happoSetup.js'),
-  renderWrapperModule: path.resolve(__dirname, 'happoRender.js'),
   stylesheets: [path.join(__dirname, 'dist/manifold/manifold.css')],
   plugins: [happoPluginTypeScript()],
 };
