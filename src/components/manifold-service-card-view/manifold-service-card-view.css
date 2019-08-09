@@ -35,8 +35,9 @@
     'logo name'
     'info info'
     'tags tags';
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: var(--manifold-product-logo-s) auto;
+  align-items: start;
   box-sizing: border-box;
   height: 100%;
   padding: var(--padding);
@@ -66,8 +67,9 @@
     'logo name'
     'info info'
     'tags tags';
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: var(--manifold-product-logo-s) auto;
+  align-items: start;
   box-sizing: border-box;
   height: 100%;
   padding: var(--padding);

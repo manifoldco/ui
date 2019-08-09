@@ -21,4 +21,9 @@ storiesOf('Marketplace', module)
     'compact',
     () =>
       '<manifold-marketplace hide-categories hide-search products="iron_cache,iron_mq,jawsdb-mysql,jawsdb-postgres,mailgun,logdna,iron_worker,zerosix"></manifold-marketplace>'
+  )
+  .add(
+    'curated',
+    () =>
+      '<manifold-marketplace hide-templates="" hide-search="" hide-categories="" products="logdna,scoutapp,timber-logging,cloudcube"></manifold-marketplace>'
   );
