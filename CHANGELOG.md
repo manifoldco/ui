@@ -30,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the title of the `service-card` taking a dynamic amount of space and making the description look misaligned.
 - Fixed the appearance of “free“ badges on product cards in `<manifold-marketplace>`
 
+### Changed
+- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-received` and documented that event.
+
 ### Added
 
 - Added a `refetch-until-valid` property on the `resource-container` component to allow users to reload this component until the found resource exists and is of state `available`.

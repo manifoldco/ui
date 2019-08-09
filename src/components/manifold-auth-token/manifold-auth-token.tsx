@@ -12,7 +12,8 @@ export class ManifoldAuthToken {
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
   @Prop() oauthUrl?: string;
-  @Event() manifoldOauthTokenChange: EventEmitter;
+  @Event({ eventName: 'manifold-token-received', bubbles: true })
+  manifoldOauthTokenChange: EventEmitter;
 
   @Watch('token') tokenChange(newToken?: string) {
     this.setExternalToken(newToken);
@@ -35,7 +36,7 @@ export class ManifoldAuthToken {
     if (!payload.error && payload.expiry) {
       const formattedToken = `${payload.token}|${payload.expiry}`;
       this.setAuthToken(formattedToken);
-      this.manifoldOauthTokenChange.emit(formattedToken);
+      this.manifoldOauthTokenChange.emit({ token: formattedToken });
     }
   };
 
