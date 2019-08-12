@@ -11,14 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed the service card loading the free badge after rendering, which caused a jumpy UI.
 - Simplied `<manifold-service-card>` (data) and `<manifold-service-card-view>` (“dumb” view)
-
-### Fixed
-
 - Added the ability to specify a slot on the `manifold-credentials` with a default manifold button if not set.
 
 ### Changed
 
 - Updated Stencil to v1.2.5
+- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-receive` and documented that event.
 
 ## [v0.5.3]
 
@@ -29,9 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the resource card loading indicator - for a lack of a better word - wobbling around like its life depended on it.
 - Fixed the title of the `service-card` taking a dynamic amount of space and making the description look misaligned.
 - Fixed the appearance of “free“ badges on product cards in `<manifold-marketplace>`
-
-### Changed
-- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-receive` and documented that event.
 
 ### Added
 
