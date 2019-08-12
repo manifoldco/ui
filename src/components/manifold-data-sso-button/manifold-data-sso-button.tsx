@@ -6,8 +6,6 @@ import { Connector } from '../../types/connector';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
-/* eslint-disable no-console */
-
 interface ClickMessage {
   resourceLabel: string;
   resourceId: string;
@@ -53,7 +51,6 @@ export class ManifoldDataSsoButton {
   }
 
   sso = async () => {
-    console.log('Attempting to SSO', this.restFetch, this.loading);
     if (!this.restFetch || this.loading) {
       return;
     }
