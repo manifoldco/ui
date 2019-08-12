@@ -2,7 +2,7 @@ import credentials from '../../spec/mock/cms-stage/credentials.json';
 import fromJSON from '../../spec/mock/fromJSON';
 
 export const credsHidden = () => {
-  const creds = document.createElement('manifold-resource-credentials-view');
+  const creds = document.createElement('manifold-credentials-view');
   creds.resourceLabel = 'test';
 
   document.body.appendChild(creds);
@@ -11,7 +11,7 @@ export const credsHidden = () => {
 };
 
 export const credsShown = () => {
-  const creds = document.createElement('manifold-resource-credentials-view');
+  const creds = document.createElement('manifold-credentials-view');
   creds.resourceLabel = 'test';
   creds.credentials = fromJSON(credentials);
 
@@ -21,7 +21,7 @@ export const credsShown = () => {
 };
 
 export const resourceLoading = () => {
-  const creds = document.createElement('manifold-resource-credentials-view');
+  const creds = document.createElement('manifold-credentials-view');
   creds.loading = true;
 
   document.body.appendChild(creds);
