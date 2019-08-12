@@ -1,6 +1,8 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import logger from '../../utils/logger';
 
+export type buttonColors = 'black' | 'gray' | 'orange' | 'pink' | 'white';
+
 @Component({
   tag: 'manifold-button',
   styleUrl: 'manifold-button.css',

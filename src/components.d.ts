@@ -16,6 +16,9 @@ import {
   RestFetch,
 } from './utils/restFetch';
 import {
+  buttonColors,
+} from './components/manifold-button/manifold-button';
+import {
   GraphqlRequestBody,
   GraphqlResponseBody,
 } from './utils/graphqlFetch';
@@ -82,12 +85,14 @@ export namespace Components {
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials {
+    'hideButtonColor': buttonColors;
     'resourceId'?: string;
     'resourceLabel': string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    'showButtonColor': buttonColors;
   }
   interface ManifoldDataDeprovisionButton {
     'loading'?: boolean;
@@ -497,11 +502,18 @@ export namespace Components {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldResourceCredentials {}
+  interface ManifoldResourceCredentials {
+    'data'?: Gateway.Resource;
+    'hideButtonColor': buttonColors;
+    'loading': boolean;
+    'showButtonColor': buttonColors;
+  }
   interface ManifoldResourceCredentialsView {
     'credentials'?: Marketplace.Credential[];
+    'hideButtonColor': buttonColors;
     'loading': boolean;
     'resourceLabel': string;
+    'showButtonColor': buttonColors;
   }
   interface ManifoldResourceDeprovision {
     'data'?: Gateway.Resource;
@@ -1104,12 +1116,14 @@ declare namespace LocalJSX {
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
+    'hideButtonColor'?: buttonColors;
     'resourceId'?: string;
     'resourceLabel'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    'showButtonColor'?: buttonColors;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     'loading'?: boolean;
@@ -1543,12 +1557,19 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {}
+  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
+    'data'?: Gateway.Resource;
+    'hideButtonColor'?: buttonColors;
+    'loading'?: boolean;
+    'showButtonColor'?: buttonColors;
+  }
   interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
     'credentials'?: Marketplace.Credential[];
+    'hideButtonColor'?: buttonColors;
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceLabel'?: string;
+    'showButtonColor'?: buttonColors;
   }
   interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
     'data'?: Gateway.Resource;
