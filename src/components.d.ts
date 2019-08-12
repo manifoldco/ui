@@ -19,12 +19,12 @@ import {
   buttonColors,
 } from './components/manifold-button/manifold-button';
 import {
+  Marketplace,
+} from './types/marketplace';
+import {
   GraphqlRequestBody,
   GraphqlResponseBody,
 } from './utils/graphqlFetch';
-import {
-  Marketplace,
-} from './types/marketplace';
 import {
   Option,
 } from './types/Select';
@@ -92,6 +92,13 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    'showButtonColor': buttonColors;
+  }
+  interface ManifoldCredentialsView {
+    'credentials'?: Marketplace.Credential[];
+    'hideButtonColor': buttonColors;
+    'loading': boolean;
+    'resourceLabel': string;
     'showButtonColor': buttonColors;
   }
   interface ManifoldDataDeprovisionButton {
@@ -508,13 +515,6 @@ export namespace Components {
     'loading': boolean;
     'showButtonColor': buttonColors;
   }
-  interface ManifoldResourceCredentialsView {
-    'credentials'?: Marketplace.Credential[];
-    'hideButtonColor': buttonColors;
-    'loading': boolean;
-    'resourceLabel': string;
-    'showButtonColor': buttonColors;
-  }
   interface ManifoldResourceDeprovision {
     'data'?: Gateway.Resource;
     'loading': boolean;
@@ -680,6 +680,12 @@ declare global {
   var HTMLManifoldCredentialsElement: {
     prototype: HTMLManifoldCredentialsElement;
     new (): HTMLManifoldCredentialsElement;
+  };
+
+  interface HTMLManifoldCredentialsViewElement extends Components.ManifoldCredentialsView, HTMLStencilElement {}
+  var HTMLManifoldCredentialsViewElement: {
+    prototype: HTMLManifoldCredentialsViewElement;
+    new (): HTMLManifoldCredentialsViewElement;
   };
 
   interface HTMLManifoldDataDeprovisionButtonElement extends Components.ManifoldDataDeprovisionButton, HTMLStencilElement {}
@@ -874,12 +880,6 @@ declare global {
     new (): HTMLManifoldResourceCredentialsElement;
   };
 
-  interface HTMLManifoldResourceCredentialsViewElement extends Components.ManifoldResourceCredentialsView, HTMLStencilElement {}
-  var HTMLManifoldResourceCredentialsViewElement: {
-    prototype: HTMLManifoldResourceCredentialsViewElement;
-    new (): HTMLManifoldResourceCredentialsViewElement;
-  };
-
   interface HTMLManifoldResourceDeprovisionElement extends Components.ManifoldResourceDeprovision, HTMLStencilElement {}
   var HTMLManifoldResourceDeprovisionElement: {
     prototype: HTMLManifoldResourceDeprovisionElement;
@@ -1002,6 +1002,7 @@ declare global {
     'manifold-connection': HTMLManifoldConnectionElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-credentials': HTMLManifoldCredentialsElement;
+    'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
     'manifold-data-deprovision-button': HTMLManifoldDataDeprovisionButtonElement;
     'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
@@ -1034,7 +1035,6 @@ declare global {
     'manifold-resource-card-view': HTMLManifoldResourceCardViewElement;
     'manifold-resource-container': HTMLManifoldResourceContainerElement;
     'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement;
-    'manifold-resource-credentials-view': HTMLManifoldResourceCredentialsViewElement;
     'manifold-resource-deprovision': HTMLManifoldResourceDeprovisionElement;
     'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-resource-details-view': HTMLManifoldResourceDetailsViewElement;
@@ -1123,6 +1123,14 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    'showButtonColor'?: buttonColors;
+  }
+  interface ManifoldCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsViewElement> {
+    'credentials'?: Marketplace.Credential[];
+    'hideButtonColor'?: buttonColors;
+    'loading'?: boolean;
+    'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
+    'resourceLabel'?: string;
     'showButtonColor'?: buttonColors;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
@@ -1563,14 +1571,6 @@ declare namespace LocalJSX {
     'loading'?: boolean;
     'showButtonColor'?: buttonColors;
   }
-  interface ManifoldResourceCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsViewElement> {
-    'credentials'?: Marketplace.Credential[];
-    'hideButtonColor'?: buttonColors;
-    'loading'?: boolean;
-    'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceLabel'?: string;
-    'showButtonColor'?: buttonColors;
-  }
   interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
@@ -1709,6 +1709,7 @@ declare namespace LocalJSX {
     'manifold-connection': ManifoldConnection;
     'manifold-cost-display': ManifoldCostDisplay;
     'manifold-credentials': ManifoldCredentials;
+    'manifold-credentials-view': ManifoldCredentialsView;
     'manifold-data-deprovision-button': ManifoldDataDeprovisionButton;
     'manifold-data-has-resource': ManifoldDataHasResource;
     'manifold-data-manage-button': ManifoldDataManageButton;
@@ -1741,7 +1742,6 @@ declare namespace LocalJSX {
     'manifold-resource-card-view': ManifoldResourceCardView;
     'manifold-resource-container': ManifoldResourceContainer;
     'manifold-resource-credentials': ManifoldResourceCredentials;
-    'manifold-resource-credentials-view': ManifoldResourceCredentialsView;
     'manifold-resource-deprovision': ManifoldResourceDeprovision;
     'manifold-resource-details': ManifoldResourceDetails;
     'manifold-resource-details-view': ManifoldResourceDetailsView;

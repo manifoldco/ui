@@ -6,7 +6,7 @@ import logger from '../../utils/logger';
 import { buttonColors } from '../manifold-button/manifold-button';
 
 @Component({
-  tag: 'manifold-resource-credentials-view',
+  tag: 'manifold-credentials-view',
   styleUrl: 'manifold-credentials-view.css',
   shadow: true,
 })

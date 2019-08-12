@@ -17,7 +17,7 @@ export class ManifoldResourceCredentials {
     return (
       <manifold-credentials
         showButtonColor={this.showButtonColor}
-        hideButtonColor={this.showButtonColor}
+        hideButtonColor={this.hideButtonColor}
         resourceLabel={this.data && this.data.label}
         resourceId={this.data && this.data.id}
       />

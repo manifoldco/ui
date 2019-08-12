@@ -69,9 +69,9 @@ export class ManifoldCredentials {
   @logger()
   render() {
     return (
-      <manifold-resource-credentials-view
+      <manifold-credentials-view
         showButtonColor={this.showButtonColor}
-        hideButtonColor={this.showButtonColor}
+        hideButtonColor={this.hideButtonColor}
         loading={this.loading}
         resourceLabel={this.resourceLabel}
         credentials={this.credentials}
