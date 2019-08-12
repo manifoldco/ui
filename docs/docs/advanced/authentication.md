@@ -1,12 +1,12 @@
 ---
 title: Auth token provider
-path: /component/auth-token
+path: /advanced/authentication
 ---
 
-# Auth Token Provider
+# Authenticate users
 
-Data component that allows a developer to receive or provide the required bearer auth token for
-accessing data locked (🔒) behind authentication. The component will render the
+To allow a user to access data locked (🔒) behind authentication, the `manifold-auth-token`
+component can be used. The component will render the
 [shadowcat](https://github.com/manifoldco/shadowcat) authentication iframe and attempt to log in the
 currently logged in user for your platform using oauth. See the shadowcat documentation for more
 information.
@@ -41,3 +41,29 @@ request to finish.
 ```html
 <manifold-auth-token token="new-token"></manifold-auth-token>
 ```
+
+## Invalid token
+
+If the token given to the component is invalid, endpoints will return a 401 error and the token will
+be removed from the `manifold-connection`. Use the [error handling capabilities](/advanced/errors)
+of our web components to detect and act on such errors.
+
+## Authenticated requests tiemout
+
+Any requests requiring authentication - which are sent by components locked (🔒) behind
+authentication - will wait on a valid token for up to 15 seconds. If this component does not inject
+a token into the connection after that time, an authentication error will be thrown.
+
+This timeout duration can be customized on the `manifold-connection` component.
+
+```html
+<manifold-connection wait-time="time-in-ms">
+  <!-- Application -->
+</manifold-connection>
+```
+
+## Token expiration
+
+The tokens expiration is encoded in the token string the `manifold-token-receive` gives you. If the
+token is set as expired, it will automatically be refreshed with a new token using the shadowcat
+oauth iframe.
