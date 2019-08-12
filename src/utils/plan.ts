@@ -320,6 +320,7 @@ export function planCost(
   return restFetch<Gateway.Price>({
     service: 'gateway',
     endpoint: `/id/plan/${planID}/cost`,
+    isPublic: true,
     body: { features },
     options: {
       method: 'POST',

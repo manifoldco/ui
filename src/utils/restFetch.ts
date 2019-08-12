@@ -14,6 +14,7 @@ interface RestFetchArguments {
   endpoint: string;
   body?: object;
   options?: Omit<RequestInit, 'body'>;
+  isPublic?: boolean;
 }
 
 export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Error>;
@@ -30,8 +31,9 @@ export const createRestFetch = ({
   // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
   // but this prevents the ability for it to auth altogether. We need both!
   const isCatalog = args.service === 'catalog';
+  const isPublic = isCatalog || args.isPublic;
 
-  if (!isCatalog) {
+  if (!isPublic) {
     while (!getAuthToken() && !hasExpired(start, wait)) {
       // eslint-disable-next-line no-await-in-loop
       await new Promise(resolve => setTimeout(resolve, 2000));
