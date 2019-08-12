@@ -35,7 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the appearance of “free“ badges on product cards in `<manifold-marketplace>`
 
 ### Changed
-- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-received` and documented that event.
+- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-receive` and documented that event.
 
 ### Added
 
