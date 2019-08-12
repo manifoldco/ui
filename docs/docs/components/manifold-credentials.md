@@ -14,13 +14,18 @@ The resource label needs to be provided for the component to be able to fetch th
 <manifold-credentials resource-label="my-resource"></manifold-credentials>
 ```
 
-## Button colors
+## Customizing the buttons
 
-The component supports all the colors available to the [`manifold-button`](/internal/manifold-button) component for the two buttons it renders.
+You can pass in your own button or link for the show and hide buttons of the component by passing in any element with `slot="show-button"` and `slot="hide-button"` as an attribute respectively. [Read more about slots][slot].
 
-Use the `showButtonColor` property for the color of the button during the default state and the `hideButtonColor` property for the color of the button once the credentials are shown.
-
-```html
-<manifold-credentials resource-label="my-resource" showButtonColor="orange" hideButtonColor="pink"></manifold-credentials>
+```jsx
+<manifold-credentials resource-label="my-resource">
+  <MyButton slot="show-button">
+    Show credentials
+  </MyButton>
+  <MyButton slot="hide-button">
+    Hide credentials
+  </MyButton>
+</manifold-credentials>
 ```
 

@@ -16,9 +16,6 @@ import {
   RestFetch,
 } from './utils/restFetch';
 import {
-  buttonColors,
-} from './components/manifold-button/manifold-button';
-import {
   Marketplace,
 } from './types/marketplace';
 import {
@@ -85,21 +82,17 @@ export namespace Components {
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials {
-    'hideButtonColor': buttonColors;
     'resourceId'?: string;
     'resourceLabel': string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'showButtonColor': buttonColors;
   }
   interface ManifoldCredentialsView {
     'credentials'?: Marketplace.Credential[];
-    'hideButtonColor': buttonColors;
     'loading': boolean;
     'resourceLabel': string;
-    'showButtonColor': buttonColors;
   }
   interface ManifoldDataDeprovisionButton {
     'loading'?: boolean;
@@ -511,9 +504,7 @@ export namespace Components {
   }
   interface ManifoldResourceCredentials {
     'data'?: Gateway.Resource;
-    'hideButtonColor': buttonColors;
     'loading': boolean;
-    'showButtonColor': buttonColors;
   }
   interface ManifoldResourceDeprovision {
     'data'?: Gateway.Resource;
@@ -1116,22 +1107,18 @@ declare namespace LocalJSX {
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
-    'hideButtonColor'?: buttonColors;
     'resourceId'?: string;
     'resourceLabel'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'showButtonColor'?: buttonColors;
   }
   interface ManifoldCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsViewElement> {
     'credentials'?: Marketplace.Credential[];
-    'hideButtonColor'?: buttonColors;
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceLabel'?: string;
-    'showButtonColor'?: buttonColors;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     'loading'?: boolean;
@@ -1567,9 +1554,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
     'data'?: Gateway.Resource;
-    'hideButtonColor'?: buttonColors;
     'loading'?: boolean;
-    'showButtonColor'?: buttonColors;
   }
   interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
     'data'?: Gateway.Resource;

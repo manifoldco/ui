@@ -4,15 +4,12 @@ import { Marketplace } from '../../types/marketplace';
 import ConnectionTunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
-import { buttonColors } from '../manifold-button/manifold-button';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   @Prop() resourceLabel: string = '';
-  @Prop() showButtonColor: buttonColors = 'black';
-  @Prop() hideButtonColor: buttonColors = 'white';
   @Prop({ mutable: true }) resourceId?: string = '';
   @State() loading?: boolean = false;
   @State() credentials?: Marketplace.Credential[];
@@ -70,13 +67,18 @@ export class ManifoldCredentials {
   render() {
     return (
       <manifold-credentials-view
-        showButtonColor={this.showButtonColor}
-        hideButtonColor={this.hideButtonColor}
         loading={this.loading}
         resourceLabel={this.resourceLabel}
         credentials={this.credentials}
         onCredentialsRequested={this.credentialsRequested}
-      />
+      >
+        <manifold-forward-slot slot="show-button">
+          <slot name="show-button" />
+        </manifold-forward-slot>
+        <manifold-forward-slot slot="hide-button">
+          <slot name="hide-button" />
+        </manifold-forward-slot>
+      </manifold-credentials-view>
     );
   }
 }

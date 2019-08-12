@@ -1,6 +1,5 @@
 import credentials from '../../spec/mock/cms-stage/credentials.json';
 import fromJSON from '../../spec/mock/fromJSON';
-import { buttonColors } from '../manifold-button/manifold-button';
 
 export const credsHidden = () => {
   const creds = document.createElement('manifold-credentials-view');
@@ -30,41 +29,41 @@ export const resourceLoading = () => {
   return creds.componentOnReady();
 };
 
-export const credsHiddenWithCustomColor = () => {
+export const credsHiddenWithCustomButton = () => {
+  const creds = document.createElement('manifold-credentials-view');
+  creds.resourceLabel = 'test';
+
+  const button = document.createElement('manifold-button');
+  button.color = 'orange';
+  button.title = 'Show credentials';
+  button.appendChild(document.createTextNode('Show credentials'));
+
   const container = document.createElement('div');
-  const promises = Promise.all(
-    ['black', 'gray', 'orange', 'pink', 'white'].map(color => {
-      const creds = document.createElement('manifold-credentials-view');
-      creds.resourceLabel = 'test';
-      creds.showButtonColor = color as buttonColors;
+  container.slot = 'show-button';
+  container.appendChild(button);
 
-      container.appendChild(creds);
+  creds.appendChild(container);
+  document.body.appendChild(creds);
 
-      return creds.componentOnReady();
-    })
-  );
-
-  document.body.appendChild(container);
-
-  return promises;
+  return creds.componentOnReady();
 };
 
-export const credsShownWithCustomColor = () => {
+export const credsShownWithCustomButton = () => {
+  const creds = document.createElement('manifold-credentials-view');
+  creds.resourceLabel = 'test';
+  creds.credentials = fromJSON(credentials);
+
+  const button = document.createElement('manifold-button');
+  button.color = 'orange';
+  button.title = 'Hide credentials';
+  button.appendChild(document.createTextNode('Show credentials'));
+
   const container = document.createElement('div');
-  const promises = Promise.all(
-    ['black', 'gray', 'orange', 'pink', 'white'].map(color => {
-      const creds = document.createElement('manifold-credentials-view');
-      creds.resourceLabel = 'test';
-      creds.credentials = fromJSON(credentials);
-      creds.hideButtonColor = color as buttonColors;
+  container.slot = 'hide-button';
+  container.appendChild(button);
 
-      container.appendChild(creds);
+  creds.appendChild(container);
+  document.body.appendChild(creds);
 
-      return creds.componentOnReady();
-    })
-  );
-
-  document.body.appendChild(container);
-
-  return promises;
+  return creds.componentOnReady();
 };
