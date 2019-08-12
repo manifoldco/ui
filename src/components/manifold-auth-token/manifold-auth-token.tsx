@@ -12,7 +12,7 @@ export class ManifoldAuthToken {
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
   @Prop() oauthUrl?: string;
-  @Event({ eventName: 'manifold-token-received', bubbles: true })
+  @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter;
 
   @Watch('token') tokenChange(newToken?: string) {
