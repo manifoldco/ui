@@ -113,7 +113,7 @@
     "jest-cli": "24.8.0",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.18.2",
-    "puppeteer": "1.17.0",
+    "puppeteer": "1.19.0",
     "storybook-readme": "^5.0.8",
     "stylelint": "^10.1.0",
     "stylelint-config-prettier": "^5.2.0",
