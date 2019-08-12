@@ -139,7 +139,7 @@ describe('The fetcher created by createRestFetch', () => {
       wait: 1,
       getAuthToken: () => '1234',
     });
-    fetchMock.mock('path:/v1/test', 200);
+    fetchMock.mock('path:/v1/test', {});
     await fetcher({ endpoint: '/test', service: 'catalog' });
     const [, req] = fetchMock.lastCall() as any;
     expect(req.headers).toEqual({ authorization: 'Bearer 1234' });
@@ -148,7 +148,7 @@ describe('The fetcher created by createRestFetch', () => {
   // TODO: add catalog auth in the future, but STILL KEEP ability for unauth’d reqs
   it('doesn’t auth for catalog if token is absent', async () => {
     const fetcher = createRestFetch({} /* no token */);
-    fetchMock.mock('path:/v1/test', 200);
+    fetchMock.mock('path:/v1/test', {});
     await fetcher({ endpoint: '/test', service: 'catalog' });
     const [, req] = fetchMock.lastCall() as any;
     expect(req.headers).toBe(undefined);
