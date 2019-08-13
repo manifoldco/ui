@@ -1,10 +1,12 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import { Marketplace } from '../../types/marketplace';
-import { Catalog } from '../../types/catalog';
 import { Provisioning } from '../../types/provisioning';
+import { ProductEdge, ProductConnection, Query } from '../../types/graphql';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 interface FoundResource {
@@ -38,6 +40,8 @@ export class ManifoldResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -92,7 +96,7 @@ export class ManifoldResourceList {
   }
 
   async fetchResources() {
-    if (!this.restFetch) {
+    if (!this.restFetch || !this.graphqlFetch) {
       return;
     }
 
@@ -108,14 +112,26 @@ export class ManifoldResourceList {
     }
 
     if (Array.isArray(operationsResp)) {
-      const productsResp = await this.restFetch<Catalog.Product[]>({
-        service: 'catalog',
-        endpoint: `/products`,
+      const { data, errors } = await this.graphqlFetch<Query>({
+        query: gql`
+          query PRODUCT_LOGOS {
+            products(first: 500) {
+              edges {
+                node {
+                  label
+                  logoUrl
+                }
+              }
+            }
+          }
+        `,
       });
 
-      if (productsResp instanceof Error) {
+      if (errors) {
         return;
       }
+
+      const products = (data && data.products && (data.products as ProductConnection).edges) || [];
 
       const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
         service: 'marketplace',
@@ -149,15 +165,15 @@ export class ManifoldResourceList {
           const resource = userResource.find((res: RealResource) => opBody.resource_id === res.id);
 
           if (resource) {
-            const product = productsResp.find(
-              (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
+            const product = products.find(
+              (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
             );
 
             resources.push({
               id: resource.id,
               label: resource.body.label,
               name: resource.body.name,
-              logo: product && product.body.logo_url,
+              logo: product ? product.node.logoUrl : undefined,
               status: ManifoldResourceList.opStateToStatus(operation),
             });
             return;
@@ -166,16 +182,16 @@ export class ManifoldResourceList {
             // Only provision operation without a resource should be processed
             return;
           }
-          const product = productsResp.find(
-            (prod: Catalog.Product): boolean =>
-              prod.id === (opBody as Provisioning.provision).product_id
+          const product = products.find(
+            (prod: ProductEdge): boolean =>
+              prod.node.id === (opBody as Provisioning.provision).product_id
           );
           resources.push({
             id: opBody.resource_id || '',
             // Only the provision operation has this info
             label: (opBody as Provisioning.provision).label || '',
             name: (opBody as Provisioning.provision).name || '',
-            logo: product && product.body.logo_url,
+            logo: product && product.node.logoUrl,
             status: ManifoldResourceList.opStateToStatus(operation),
           });
         });
@@ -186,14 +202,14 @@ export class ManifoldResourceList {
           return;
         }
 
-        const product = productsResp.find(
-          (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
+        const product = products.find(
+          (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
         );
         resources.push({
           id: resource.id,
           label: resource.body.label,
           name: resource.body.name,
-          logo: product && product.body.logo_url,
+          logo: product && product.node.logoUrl,
           status: 'available',
         });
       });
@@ -229,4 +245,4 @@ export class ManifoldResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldResourceList, ['restFetch']);
+Tunnel.injectProps(ManifoldResourceList, ['restFetch', 'graphqlFetch']);

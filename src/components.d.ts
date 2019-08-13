@@ -16,6 +16,7 @@ import {
   RestFetch,
 } from './utils/restFetch';
 import {
+  GraphqlFetch,
   GraphqlRequestBody,
   GraphqlResponseBody,
 } from './utils/graphqlFetch';
@@ -511,6 +512,10 @@ export namespace Components {
     'data'?: Gateway.Resource;
   }
   interface ManifoldResourceList {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Disable auto-updates?
     */
@@ -1583,6 +1588,10 @@ declare namespace LocalJSX {
     'data'?: Gateway.Resource;
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Disable auto-updates?
     */

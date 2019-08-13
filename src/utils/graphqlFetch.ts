@@ -23,6 +23,8 @@ export interface GraphqlResponseBody<T> {
   errors?: GraphqlError[];
 }
 
+export type GraphqlFetch = <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+
 export const createGraphqlFetch = ({
   endpoint = 'https://api.manifold.co/graphql',
   wait = 15000,
