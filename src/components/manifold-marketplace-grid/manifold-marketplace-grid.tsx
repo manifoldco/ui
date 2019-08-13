@@ -1,8 +1,7 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element } from '@stencil/core';
 import observeRect from '@reach/observe-rect';
 
 import { Catalog } from '../../types/catalog';
-import skeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
 import {
   categories,
@@ -21,7 +20,7 @@ export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
   @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];
-  @Prop() freeProducts: string[] = [];
+  @Prop() freeProducts?: string[] = [];
   @Prop() hideCategories?: boolean = false;
   @Prop() hideSearch?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
@@ -29,18 +28,12 @@ export class ManifoldMarketplaceGrid {
   @Prop() productLinkFormat?: string;
   @Prop() products?: string[] = [];
   @Prop() services?: Catalog.Product[];
+  @Prop() skeleton?: boolean = false;
   @Prop() templateLinkFormat?: string;
   @State() filter: string | null;
   @State() activeCategory?: string;
   @State() scrollToCategory: string | null;
-  @State() skeleton: boolean = false;
   @State() search: string = '';
-
-  @Watch('services') servicesLoaded(services: Catalog.Product[]) {
-    if (services.length) {
-      this.skeleton = false;
-    }
-  }
 
   componentDidLoad() {
     this.activeCategory = this.categories[0]; // eslint-disable-line prefer-destructuring
@@ -97,17 +90,11 @@ export class ManifoldMarketplaceGrid {
   }
 
   get filteredServices(): Catalog.Product[] {
-    // While services are loading, display skeleton cards
-    if (!this.services || !this.services.length) {
-      this.skeleton = true;
-      return skeletonProducts;
-    }
-
     let services: Catalog.Product[] = [];
 
     // If not including, start out with all services
     if (this.products && !this.products.length) {
-      services = this.services; // eslint-disable-line prefer-destructuring
+      services = this.services || []; // eslint-disable-line prefer-destructuring
     }
 
     // Handle includes
@@ -213,12 +200,16 @@ export class ManifoldMarketplaceGrid {
   };
 
   private renderServiceCard = (product: Catalog.Product) => (
-    <manifold-service-card
-      data-label={product.body.label}
-      data-featured={this.featured && this.featured.includes(product.body.label)}
+    <manifold-service-card-view
+      description={product.body.tagline}
       isFeatured={this.featured && this.featured.includes(product.body.label)}
-      isFree={this.freeProducts.includes(product.id)}
-      product={product}
+      isFree={this.freeProducts && this.freeProducts.includes(product.id)}
+      logo={product.body.logo_url}
+      name={product.body.name}
+      preserveEvent={this.preserveEvent}
+      productId={product.id}
+      productLabel={product.body.label}
+      productLinkFormat={this.productLinkFormat}
       skeleton={this.skeleton}
     />
   );

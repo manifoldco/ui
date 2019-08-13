@@ -70,31 +70,22 @@ describe('<manifold-service-card>', () => {
         true
       );
 
-      expect(card.querySelectorAll('a')).toHaveLength(1);
-      expect(card.querySelector('a')).toEqualHtml(`
-        <a
-          role="button"
-          itemscope
-          itemtype="https://schema.org/Product"
-          itemprop="url"
-          href="/product/${Product.body.label}"
-          style="text-decoration: none"
+      expect(card.querySelector('manifold-service-card-view')).toEqualHtml(`
+        <manifold-service-card-view
+          description="${Product.body.tagline}"
+          isfree=""
+          logo="${Product.body.logo_url}"
+          name="${Product.body.name}"
+          productid="${Product.id}"
+          productlabel="${Product.body.label}"
+          productlinkformat="${card.productLinkFormat}"
         >
-          <manifold-service-card-view
-            description="${Product.body.tagline}"
-            isfree=""
-            label="${Product.body.label}"
-            productid="${Product.id}"
-            logo="${Product.body.logo_url}"
-            name="${Product.body.name}"
-          >
-            <manifold-forward-ref slot="cta"></manifold-forward-ref>
-          </manifold-service-card-view>
-        </a>
+          <manifold-forward-ref slot="cta"></manifold-forward-ref>
+        </manifold-service-card-view>
       `);
     });
 
-    it('will do nothing if no product label is given', async () => {
+    it('will show loading state if no product label is given', async () => {
       fetchMock.mock(`${connections.prod.catalog}/products/`, [Product]);
 
       const root = page.root as HTMLElement;
@@ -102,7 +93,14 @@ describe('<manifold-service-card>', () => {
       await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/`)).toBe(false);
-      expect(card.querySelector('a')).toBe(null);
+      expect(card.querySelector('manifold-service-card-view')).toEqualHtml(`
+        <manifold-service-card-view
+          description="Awesome product description"
+          logo="product.jpg"
+          name="Awesome product"
+          skeleton=""
+        ></manifold-service-card-view>
+      `);
     });
   });
 
@@ -125,27 +123,18 @@ describe('<manifold-service-card>', () => {
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/${productId}`)).toBe(true);
 
-      expect(card.querySelectorAll('a')).toHaveLength(1);
-      expect(card.querySelector('a')).toEqualHtml(`
-        <a
-          role="button"
-          itemscope
-          itemtype="https://schema.org/Product"
-          itemprop="url"
-          href="/product/${Product.body.label}"
-          style="text-decoration: none"
+      expect(card.querySelector('manifold-service-card-view')).toEqualHtml(`
+        <manifold-service-card-view
+          description="${Product.body.tagline}"
+          isfree=""
+          productid="${Product.id}"
+          productlabel="${Product.body.label}"
+          productlinkformat="${card.productLinkFormat}"
+          logo="${Product.body.logo_url}"
+          name="${Product.body.name}"
         >
-          <manifold-service-card-view
-            description="${Product.body.tagline}"
-            isfree=""
-            label="${Product.body.label}"
-            productid="${Product.id}"
-            logo="${Product.body.logo_url}"
-            name="${Product.body.name}"
-          >
-            <manifold-forward-ref slot="cta"></manifold-forward-ref>
-          </manifold-service-card-view>
-        </a>
+          <manifold-forward-ref slot="cta"></manifold-forward-ref>
+        </manifold-service-card-view>
       `);
     });
 

@@ -329,7 +329,7 @@ export namespace Components {
   interface ManifoldMarketplaceGrid {
     'excludes'?: string[];
     'featured'?: string[];
-    'freeProducts': string[];
+    'freeProducts'?: string[];
     'hideCategories'?: boolean;
     'hideSearch'?: boolean;
     'hideTemplates'?: boolean;
@@ -337,6 +337,7 @@ export namespace Components {
     'productLinkFormat'?: string;
     'products'?: string[];
     'services'?: Catalog.Product[];
+    'skeleton'?: boolean;
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
@@ -530,7 +531,6 @@ export namespace Components {
   }
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
-    'asCard'?: boolean;
     'data'?: Gateway.Resource;
     'loading': boolean;
   }
@@ -564,42 +564,27 @@ export namespace Components {
   }
   interface ManifoldServiceCard {
     'isFeatured'?: boolean;
-    'isFree': boolean;
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
-    'productName'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView {
-    'asCard'?: boolean;
     'description'?: string;
-    'hideTags'?: boolean;
     'isFeatured'?: boolean;
     'isFree'?: boolean;
-    'label'?: string;
-    'loading'?: boolean;
     'logo'?: string;
     'name'?: string;
+    'preserveEvent'?: boolean;
     'productId'?: string;
-  }
-  interface ManifoldServiceView {
-    'asCard'?: boolean;
-    'description'?: string;
-    'hideTags'?: boolean;
-    'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'label'?: string;
-    'loading'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'productId'?: string;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+    'skeleton'?: boolean;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
@@ -961,12 +946,6 @@ declare global {
     new (): HTMLManifoldServiceCardViewElement;
   };
 
-  interface HTMLManifoldServiceViewElement extends Components.ManifoldServiceView, HTMLStencilElement {}
-  var HTMLManifoldServiceViewElement: {
-    prototype: HTMLManifoldServiceViewElement;
-    new (): HTMLManifoldServiceViewElement;
-  };
-
   interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
   var HTMLManifoldSkeletonImgElement: {
     prototype: HTMLManifoldSkeletonImgElement;
@@ -1057,7 +1036,6 @@ declare global {
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-service-card-view': HTMLManifoldServiceCardViewElement;
-    'manifold-service-view': HTMLManifoldServiceViewElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
@@ -1400,6 +1378,7 @@ declare namespace LocalJSX {
     'productLinkFormat'?: string;
     'products'?: string[];
     'services'?: Catalog.Product[];
+    'skeleton'?: boolean;
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {
@@ -1602,7 +1581,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
-    'asCard'?: boolean;
     'data'?: Gateway.Resource;
     'loading'?: boolean;
   }
@@ -1644,43 +1622,28 @@ declare namespace LocalJSX {
   }
   interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
     'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
     'product'?: Catalog.Product;
     'productId'?: string;
     'productLabel'?: string;
     'productLinkFormat'?: string;
-    'productName'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'skeleton'?: boolean;
   }
   interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {
-    'asCard'?: boolean;
     'description'?: string;
-    'hideTags'?: boolean;
     'isFeatured'?: boolean;
     'isFree'?: boolean;
-    'label'?: string;
-    'loading'?: boolean;
     'logo'?: string;
     'name'?: string;
+    'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
     'productId'?: string;
-  }
-  interface ManifoldServiceView extends JSXBase.HTMLAttributes<HTMLManifoldServiceViewElement> {
-    'asCard'?: boolean;
-    'description'?: string;
-    'hideTags'?: boolean;
-    'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'label'?: string;
-    'loading'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'productId'?: string;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+    'skeleton'?: boolean;
   }
   interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement> {}
   interface ManifoldSkeletonText extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement> {}
@@ -1771,7 +1734,6 @@ declare namespace LocalJSX {
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
     'manifold-service-card-view': ManifoldServiceCardView;
-    'manifold-service-view': ManifoldServiceView;
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
     'manifold-template-card': ManifoldTemplateCard;
