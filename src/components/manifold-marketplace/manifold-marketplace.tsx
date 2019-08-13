@@ -68,6 +68,7 @@ export class ManifoldMarketplace {
     await Promise.all(
       this.services.map(
         ({ id }) =>
+          // eslint-disable-next-line no-async-promise-executor
           new Promise(async resolve => {
             if (!this.restFetch) {
               resolve();
