@@ -39,18 +39,14 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const response = await this.restFetch<Catalog.Product[]>({
+    const products = await this.restFetch<Catalog.Product[]>({
       service: 'catalog',
       endpoint: `/products?label=${productLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (products) {
+      this.productName = products[0].body.name; // eslint-disable-line prefer-destructuring
     }
-
-    const products: Catalog.Product[] = await response;
-    this.productName = products[0].body.name; // eslint-disable-line prefer-destructuring
   };
 
   fetchResource = async (resourceName: string) => {
@@ -60,18 +56,14 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const response = await this.restFetch<Gateway.Resource>({
+    const resource = await this.restFetch<Gateway.Resource>({
       service: 'gateway',
       endpoint: `/resources/me/${resourceName}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (resource) {
+      this.productName = resource.product && resource.product.name;
     }
-
-    const resource: Gateway.Resource = await response;
-    this.productName = resource.product && resource.product.name;
   };
 
   @logger()

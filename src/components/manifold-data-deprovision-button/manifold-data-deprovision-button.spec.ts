@@ -175,13 +175,16 @@ describe('<manifold-data-deprovision-button>', () => {
       const instance = page.rootInstance as ManifoldDataDeprovisionButton;
       instance.error.emit = jest.fn();
 
-      await instance.deprovision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
-      expect(instance.error.emit).toHaveBeenCalledWith({
-        message: 'ohnoes',
-        resourceLabel: 'test',
-        resourceId: Resource.id,
+      expect.assertions(2);
+      return instance.deprovision().catch(() => {
+        expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
+          true
+        );
+        expect(instance.error.emit).toHaveBeenCalledWith({
+          message: 'ohnoes',
+          resourceLabel: 'test',
+          resourceId: Resource.id,
+        });
       });
     });
 

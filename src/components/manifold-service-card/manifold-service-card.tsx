@@ -108,12 +108,7 @@ export class ManifoldServiceCard {
         endpoint: `/products/?label=${label}`,
       });
 
-      if (productResp instanceof Error) {
-        console.error(productResp);
-        return;
-      }
-
-      if (productResp.length) {
+      if (Array.isArray(productResp) && productResp.length) {
         this.product = productResp[0]; // eslint-disable-line prefer-destructuring
       }
     }

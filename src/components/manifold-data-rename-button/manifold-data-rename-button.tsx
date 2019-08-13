@@ -29,7 +29,7 @@ interface ErrorMessage {
   message: string;
   newLabel: string;
   resourceLabel: string;
-  resourceId: string;
+  resourceId?: string;
 }
 
 @Component({ tag: 'manifold-data-rename-button' })
@@ -107,7 +107,7 @@ export class ManifoldDataRenameButton {
       },
     };
 
-    const response = await this.restFetch({
+    await this.restFetch({
       service: 'marketplace',
       endpoint: `/resources/${this.resourceId}`,
       body,
@@ -115,18 +115,16 @@ export class ManifoldDataRenameButton {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
       },
-    });
-
-    if (response instanceof Error) {
+    }).catch(e => {
       const error: ErrorMessage = {
-        message: response.message,
+        message: e.message,
         resourceLabel: this.resourceLabel || '',
         newLabel: this.newLabel,
         resourceId: this.resourceId,
       };
       this.error.emit(error);
-      return;
-    }
+      return Promise.reject(error);
+    });
 
     const success: SuccessMessage = {
       message: `${this.resourceLabel} successfully renamed`,
@@ -147,18 +145,12 @@ export class ManifoldDataRenameButton {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!Array.isArray(response) || !response.length) {
       console.error(`${resourceLabel} product not found`);
       return;
     }
 
-    this.resourceId = resources[0].id;
+    this.resourceId = response[0].id;
   }
 
   validate(input: string) {

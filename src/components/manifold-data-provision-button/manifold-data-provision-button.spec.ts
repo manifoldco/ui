@@ -326,12 +326,13 @@ describe('<manifold-data-provision-button>', () => {
       const instance = page.rootInstance as ManifoldDataProvisionButton;
       instance.error.emit = jest.fn();
 
-      await instance.provision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-      expect(instance.error.emit).toHaveBeenCalledWith({
-        message: 'ohnoes',
-        resourceLabel: 'test',
+      expect.assertions(2);
+      return instance.provision().catch(() => {
+        expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
+        expect(instance.error.emit).toHaveBeenCalledWith({
+          message: 'ohnoes',
+          resourceLabel: 'test',
+        });
       });
     });
 

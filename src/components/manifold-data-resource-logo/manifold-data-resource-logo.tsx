@@ -36,29 +36,23 @@ export class ManifoldDataResourceLogo {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (resourceResp instanceof Error) {
-      console.error(resourceResp);
-      return;
+    if (resourceResp && resourceResp.length) {
+      const resource: Marketplace.Resource = resourceResp[0];
+      const productId = resource.body.product_id;
+      const productResp = await this.restFetch<Catalog.Product>({
+        service: 'catalog',
+        endpoint: `/products/${productId}`,
+      });
+
+      if (productResp) {
+        // NOTE: Temporary util GraphQL supports resources
+        const newProduct = {
+          displayName: productResp.body.name,
+          logoUrl: productResp.body.logo_url,
+        };
+        this.product = newProduct as Product;
+      }
     }
-
-    const resource: Marketplace.Resource = resourceResp[0];
-    const productId = resource.body.product_id;
-    const productResp = await this.restFetch<Catalog.Product>({
-      service: 'catalog',
-      endpoint: `/products/${productId}`,
-    });
-
-    if (productResp instanceof Error) {
-      console.error(productResp);
-      return;
-    }
-
-    // NOTE: Temporary util GraphQL supports resources
-    const newProduct = {
-      displayName: productResp.body.name,
-      logoUrl: productResp.body.logo_url,
-    };
-    this.product = newProduct as Product;
   };
 
   @logger()

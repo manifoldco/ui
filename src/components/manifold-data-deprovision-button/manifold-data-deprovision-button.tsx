@@ -14,7 +14,7 @@ interface SuccessMessage {
 interface ErrorMessage {
   message: string;
   resourceLabel: string;
-  resourceId: string;
+  resourceId?: string;
 }
 
 @Component({ tag: 'manifold-data-deprovision-button' })
@@ -58,28 +58,28 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    const response = await this.restFetch({
-      service: 'gateway',
-      endpoint: `/id/resource/${this.resourceId}`,
-      options: { method: 'DELETE' },
-    });
-
-    if (response instanceof Error) {
-      const error: ErrorMessage = {
-        message: response.message,
+    try {
+      await this.restFetch({
+        service: 'gateway',
+        endpoint: `/id/resource/${this.resourceId}`,
+        options: { method: 'DELETE' },
+      });
+      const success: SuccessMessage = {
+        message: `${this.resourceLabel} successfully deprovisioned`,
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
-      this.error.emit(error);
-      return;
-    }
+      this.success.emit(success);
+    } catch (e) {
+      const error: ErrorMessage = {
+        message: e.message,
+        resourceLabel: this.resourceLabel || '',
+        resourceId: this.resourceId,
+      };
 
-    const success: SuccessMessage = {
-      message: `${this.resourceLabel} successfully deprovisioned`,
-      resourceLabel: this.resourceLabel || '',
-      resourceId: this.resourceId,
-    };
-    this.success.emit(success);
+      this.error.emit(error);
+      throw error;
+    }
   }
 
   async fetchResourceId(resourceLabel: string) {
@@ -92,18 +92,12 @@ export class ManifoldDataDeprovisionButton {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!response || !response.length) {
       console.error(`${resourceLabel} product not found`);
       return;
     }
 
-    this.resourceId = resources[0].id;
+    this.resourceId = response[0].id;
   }
 
   @logger()

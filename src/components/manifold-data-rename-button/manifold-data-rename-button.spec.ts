@@ -180,17 +180,19 @@ describe('<manifold-data-rename-button>', () => {
       const instance = page.rootInstance as ManifoldDataRenameButton;
       instance.error.emit = jest.fn();
 
-      await instance.rename();
-
-      expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(
-        true
-      );
-      expect(instance.error.emit).toHaveBeenCalledWith({
-        message: 'ohnoes',
-        resourceLabel: Resource.body.label,
-        newLabel: 'test2',
-        resourceId: Resource.id,
-      });
+      try {
+        await instance.rename();
+      } catch {
+        expect(fetchMock.called(`${connections.prod.marketplace}/resources/${Resource.id}`)).toBe(
+          true
+        );
+        expect(instance.error.emit).toHaveBeenCalledWith({
+          message: 'ohnoes',
+          resourceLabel: Resource.body.label,
+          newLabel: 'test2',
+          resourceId: Resource.id,
+        });
+      }
     });
 
     it('will do nothing if still loading', async () => {

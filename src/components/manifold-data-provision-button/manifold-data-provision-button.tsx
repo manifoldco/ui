@@ -122,32 +122,34 @@ export class ManifoldDataProvisionButton {
       features: {},
     };
 
-    const response = await this.restFetch<Gateway.Resource>({
-      service: 'gateway',
-      endpoint: `/resource/`,
-      body: req,
-      options: {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      },
-    });
+    try {
+      const response = await this.restFetch<Gateway.Resource>({
+        service: 'gateway',
+        endpoint: `/resource/`,
+        body: req,
+        options: {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        },
+      });
 
-    if (response instanceof Error) {
-      const error: ErrorMessage = {
-        message: response.message,
+      if (response) {
+        const success: SuccessMessage = {
+          createdAt: response.created_at,
+          message: `${this.resourceLabel} successfully provisioned`,
+          resourceId: response.id || '',
+          resourceLabel: response.label,
+        };
+        this.success.emit(success);
+      }
+    } catch (error) {
+      const e: ErrorMessage = {
+        message: error.message,
         resourceLabel: this.resourceLabel,
       };
-      this.error.emit(error);
-      return;
+      this.error.emit(e);
+      throw e;
     }
-
-    const success: SuccessMessage = {
-      createdAt: response.created_at,
-      message: `${this.resourceLabel} successfully provisioned`,
-      resourceId: response.id || '',
-      resourceLabel: response.label,
-    };
-    this.success.emit(success);
   }
 
   async fetchProductPlanId(productLabel: string, planLabel?: string) {
@@ -156,34 +158,22 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const productResp = await this.restFetch<Catalog.Product[]>({
+    const products = await this.restFetch<Catalog.Product[]>({
       service: 'catalog',
       endpoint: `/products/?label=${productLabel}`,
     });
 
-    if (productResp instanceof Error) {
-      console.error(productResp);
-      return;
-    }
-    const products: Catalog.Product[] = await productResp;
-
-    if (!Array.isArray(products) || !products.length) {
+    if (!products || !products.length) {
       console.error(`${productLabel} product not found`);
       return;
     }
 
-    const planResp = await this.restFetch<Catalog.Plan[]>({
+    const plans = await this.restFetch<Catalog.Plan[]>({
       service: 'catalog',
       endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
     });
 
-    if (planResp instanceof Error) {
-      console.error(planResp);
-      return;
-    }
-    const plans: Catalog.Plan[] = await planResp;
-
-    if (!Array.isArray(plans) || !plans.length) {
+    if (!plans || !plans.length) {
       console.error(`${productLabel} plans not found`);
       return;
     }

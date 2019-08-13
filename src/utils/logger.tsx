@@ -1,4 +1,5 @@
 import { h } from '@stencil/core';
+import { report } from './errorReport';
 
 interface ErrorDetail {
   component?: string;
@@ -25,13 +26,11 @@ export default function logger<T>() {
       try {
         return originalMethod.apply(this); // attempt to call render()
       } catch (e) {
-        console.error(e); // report error (Rollbar, Datadog, etc.)
         const detail: ErrorDetail = {
           component: target.constructor.name,
           error: e.message,
         };
-        const evt = new CustomEvent('manifold-error', { bubbles: true, detail });
-        document.dispatchEvent(evt); // dispatch custom event
+        report(detail);
         return <manifold-toast alert-type="error">{e.message}</manifold-toast>; // show error to user
       }
     };

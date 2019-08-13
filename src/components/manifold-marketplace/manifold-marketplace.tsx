@@ -53,13 +53,10 @@ export class ManifoldMarketplace {
       endpoint: `/products`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (response) {
+      // Alphabetize once, then don’t worry about it
+      this.services = [...response].sort((a, b) => a.body.name.localeCompare(b.body.name));
     }
-
-    // Alphabetize once, then don’t worry about it
-    this.services = [...response].sort((a, b) => a.body.name.localeCompare(b.body.name));
   };
 
   // fetch free products once, then save
