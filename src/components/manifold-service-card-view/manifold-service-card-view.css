@@ -40,7 +40,7 @@
   box-shadow: var(--card-shadow);
   transition: border-color 150ms linear, box-shadow 150ms linear;
 
-  & [href] {
+  &[href] {
     cursor: pointer;
 
     &:focus,
