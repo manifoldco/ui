@@ -66,12 +66,19 @@ export class ManifoldCredentials {
   @logger()
   render() {
     return (
-      <manifold-resource-credentials-view
+      <manifold-credentials-view
         loading={this.loading}
         resourceLabel={this.resourceLabel}
         credentials={this.credentials}
         onCredentialsRequested={this.credentialsRequested}
-      />
+      >
+        <manifold-forward-slot slot="show-button">
+          <slot name="show-button" />
+        </manifold-forward-slot>
+        <manifold-forward-slot slot="hide-button">
+          <slot name="hide-button" />
+        </manifold-forward-slot>
+      </manifold-credentials-view>
     );
   }
 }

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed the service card loading the free badge after rendering, which caused a jumpy UI.
 - Simplied `<manifold-service-card>` (data) and `<manifold-service-card-view>` (“dumb” view)
+- Added the ability to specify a slot on the `manifold-credentials` with a default manifold button if not set.
 
 ## [v0.5.3]
 
