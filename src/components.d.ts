@@ -578,7 +578,6 @@ export namespace Components {
     'description'?: string;
     'isFeatured'?: boolean;
     'isFree'?: boolean;
-    'label'?: string;
     'logo'?: string;
     'name'?: string;
     'preserveEvent'?: boolean;
@@ -1637,7 +1636,6 @@ declare namespace LocalJSX {
     'description'?: string;
     'isFeatured'?: boolean;
     'isFree'?: boolean;
-    'label'?: string;
     'logo'?: string;
     'name'?: string;
     'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;

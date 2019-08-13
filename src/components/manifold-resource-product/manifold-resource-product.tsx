@@ -14,10 +14,10 @@ export class ManifoldResourceProduct {
     return this.data && this.data.product ? (
       <manifold-service-card-view
         description={this.data.product.tagline}
-        label={this.data.product.label}
         logo={this.data.product.logo_url}
         name={this.data.product.name}
         productId={this.data.product.id}
+        productLabel={this.data.product.label}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

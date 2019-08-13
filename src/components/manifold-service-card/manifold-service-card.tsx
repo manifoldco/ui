@@ -116,7 +116,6 @@ export class ManifoldServiceCard {
         description={this.product.body.tagline}
         isFeatured={this.isFeatured}
         isFree={this.free}
-        label={this.product.body.label}
         logo={this.product.body.logo_url}
         name={this.product.body.name}
         preserveEvent={this.preserveEvent}

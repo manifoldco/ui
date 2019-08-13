@@ -15,7 +15,6 @@ interface EventDetail {
 export class ManifoldServiceCardView {
   @Prop() description?: string;
   @Prop() isFree?: boolean = false;
-  @Prop() label?: string;
   @Prop() logo?: string;
   @Prop() name?: string;
   @Prop() preserveEvent?: boolean = false;
