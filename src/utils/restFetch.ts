@@ -49,8 +49,7 @@ export function createRestFetch({
     }
 
     const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
-    const url = `${endpoints[args.service]}${args.endpoint}`;
-    const response = await fetch(url as string, {
+    const response = await fetch(`${endpoints[args.service]}${args.endpoint}`, {
       ...options,
       body: JSON.stringify(args.body),
     }).catch((e: Response) => {

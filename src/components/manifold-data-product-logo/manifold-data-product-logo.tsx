@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { GraphqlResponseBody, GraphqlRequestBody } from '../../utils/graphqlFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
 import logger from '../../utils/logger';
@@ -20,7 +20,7 @@ export class ManifoldDataProductLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** _(Deprecated)_ Look up product logo from resource */

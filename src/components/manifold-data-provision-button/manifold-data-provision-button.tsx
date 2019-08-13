@@ -5,7 +5,7 @@ import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { Catalog } from '../../types/catalog';
-import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
@@ -43,7 +43,7 @@ export class ManifoldDataProvisionButton {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */

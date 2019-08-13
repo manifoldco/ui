@@ -19,8 +19,7 @@ import {
   Marketplace,
 } from './types/marketplace';
 import {
-  GraphqlRequestBody,
-  GraphqlResponseBody,
+  GraphqlFetch,
 } from './utils/graphqlFetch';
 import {
   Option,
@@ -138,7 +137,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -166,7 +165,7 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+    'graphqlFetch'?: GraphqlFetch;
     'ownerId'?: string;
     /**
     * Plan to provision (slug)
@@ -1170,7 +1169,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1198,7 +1197,7 @@ declare namespace LocalJSX {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'graphqlFetch'?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+    'graphqlFetch'?: GraphqlFetch;
     'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
