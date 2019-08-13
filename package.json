@@ -67,11 +67,6 @@
       "path": "./dist/esm/manifold-!(mock)*.js",
       "maxSize": "32 kB",
       "compression": "none"
-    },
-    {
-      "path": "./dist/esm/chunk-*.js",
-      "maxSize": "66 kB",
-      "compression": "none"
     }
   ],
   "dependencies": {
@@ -87,7 +82,7 @@
     "@manifoldco/eslint-plugin-stencil": "^0.4.1",
     "@manifoldco/icons": "0.0.3",
     "@reach/observe-rect": "^1.0.3",
-    "@stencil/core": "^1.2.3",
+    "@stencil/core": "^1.2.5",
     "@stencil/postcss": "^1.0.1",
     "@storybook/addons": "^5.1.11",
     "@storybook/html": "^5.1.11",
