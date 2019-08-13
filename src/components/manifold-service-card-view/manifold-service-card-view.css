@@ -25,6 +25,9 @@
   --card-heading-font-family: var(--manifold-font-family-heading);
   --card-heading-font-weight: var(--manifold-font-weight-heading);
   --card-heading-text-color: var(--manifold-text-color-heading);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .wrapper {

@@ -20,11 +20,15 @@ describe('<manifold-service-card-view-view>', () => {
       return;
     }
     link.click();
-    expect(mockClick.mock.calls[0][0].detail).toEqual({
-      productLabel: 'product-label',
-      productName: 'product-name',
-      productId: 'product-id',
-    });
+    expect(mockClick).toBeCalledWith(
+      expect.objectContaining({
+        detail: {
+          productLabel: 'product-label',
+          productName: 'product-name',
+          productId: 'product-id',
+        },
+      })
+    );
   });
 
   it('doesn’t emit events on click if given product-link-format', async () => {

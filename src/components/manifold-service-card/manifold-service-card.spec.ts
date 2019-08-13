@@ -74,7 +74,6 @@ describe('<manifold-service-card>', () => {
         <manifold-service-card-view
           description="${Product.body.tagline}"
           isfree=""
-          label="${Product.body.label}"
           logo="${Product.body.logo_url}"
           name="${Product.body.name}"
           productid="${Product.id}"
@@ -128,7 +127,6 @@ describe('<manifold-service-card>', () => {
         <manifold-service-card-view
           description="${Product.body.tagline}"
           isfree=""
-          label="${Product.body.label}"
           productid="${Product.id}"
           productlabel="${Product.body.label}"
           productlinkformat="${card.productLinkFormat}"
