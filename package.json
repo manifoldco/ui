@@ -90,7 +90,7 @@
     "@stencil/core": "^1.2.3",
     "@stencil/postcss": "^1.0.1",
     "@storybook/addons": "^5.1.10",
-    "@storybook/html": "^5.1.10",
+    "@storybook/html": "^5.1.11",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "24.0.17",
     "@types/puppeteer": "1.19.0",
