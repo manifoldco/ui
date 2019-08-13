@@ -53,6 +53,7 @@ describe('The fetcher created by createRestFetch', () => {
       body: {},
     });
 
+    expect.assertions(2);
     return fetcher({
       endpoint: '/test',
       service: 'marketplace',
@@ -75,6 +76,7 @@ describe('The fetcher created by createRestFetch', () => {
       body,
     });
 
+    expect.assertions(2);
     return fetcher({
       endpoint: '/test',
       service: 'marketplace',
@@ -92,6 +94,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     fetchMock.mock('path:/v1/test', { throws: err });
 
+    expect.assertions(2);
     return fetcher({
       endpoint: '/test',
       service: 'marketplace',
@@ -114,6 +117,7 @@ describe('The fetcher created by createRestFetch', () => {
       service: 'marketplace',
     });
 
+    expect.assertions(2);
     return result.catch(err => {
       expect(fetchMock.called('path:/v1/test')).toBeFalsy();
       expect(err.message).toEqual('No auth token given');

@@ -175,6 +175,7 @@ describe('<manifold-data-deprovision-button>', () => {
       const instance = page.rootInstance as ManifoldDataDeprovisionButton;
       instance.error.emit = jest.fn();
 
+      expect.assertions(2);
       return instance.deprovision().catch(() => {
         expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
           true
