@@ -3,7 +3,7 @@ import { withAuth } from './auth';
 import { hasExpired } from './expiry';
 import { report } from './errorReport';
 
-interface CreateRestFetch {
+export interface CreateRestFetch {
   endpoints?: Connection;
   wait?: number;
   getAuthToken?: () => string | undefined;
