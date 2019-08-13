@@ -2,6 +2,7 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
+import skeletonProducts from '../../data/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
@@ -40,7 +41,7 @@ export class ManifoldMarketplace {
 
   componentWillLoad() {
     this.parseProps();
-    return this.fetchProducts();
+    this.fetchProducts(); // don’t wait on product fetch
   }
 
   fetchProducts = async () => {
@@ -66,6 +67,7 @@ export class ManifoldMarketplace {
   fetchFreeProducts = async () => {
     const freeProducts: string[] = [];
 
+    // Fetch all plans in parallel
     await Promise.all(
       this.services.map(
         ({ id }) =>
@@ -114,6 +116,8 @@ export class ManifoldMarketplace {
 
   @logger()
   render() {
+    const isLoading = !this.services.length || !this.freeProducts; // wait for free calls to finish
+
     return (
       <manifold-marketplace-grid
         excludes={this.parsedExcludes}
@@ -125,7 +129,8 @@ export class ManifoldMarketplace {
         preserveEvent={this.preserveEvent}
         productLinkFormat={this.productLinkFormat}
         products={this.parsedProducts}
-        services={this.services}
+        skeleton={isLoading}
+        services={isLoading ? skeletonProducts : this.services}
         templateLinkFormat={this.templateLinkFormat}
       />
     );

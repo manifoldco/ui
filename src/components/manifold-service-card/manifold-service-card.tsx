@@ -1,15 +1,9 @@
-import { h, Component, Element, State, Prop, Event, EventEmitter, Watch } from '@stencil/core';
+import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
-
-interface EventDetail {
-  productId?: string;
-  productLabel?: string;
-  productName?: string;
-}
 
 @Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
@@ -17,17 +11,12 @@ export class ManifoldServiceCard {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   @Prop({ reflect: true }) isFeatured?: boolean;
-  @Prop() isFree?: boolean;
   @Prop({ mutable: true }) product?: Catalog.Product;
   @Prop() productId?: string;
   @Prop() productLabel?: string;
-  @Prop() productName?: string;
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
-  @Prop() skeleton?: boolean = false;
-  @State() loading: boolean = false;
   @State() free: boolean = false;
-  @Event({ eventName: 'manifold-marketplace-click', bubbles: true }) marketplaceClick: EventEmitter;
 
   @Watch('product') productChange(newProduct: Catalog.Product) {
     if (newProduct) {
@@ -39,55 +28,33 @@ export class ManifoldServiceCard {
     this.free = newFree;
   }
 
-  @Watch('skeleton') skeletonChange(newSkeleton: boolean) {
-    if (!newSkeleton && !this.product) {
-      this.fetchProduct({ id: this.productId, label: this.productLabel });
-    }
-  }
-
   @Watch('productId') productIdChange(newProductId: string) {
-    if (this.skeleton) {
-      return;
-    }
-    // don’t re-fetch same product
     if (!this.product || (this.product && this.product.id !== newProductId)) {
       this.fetchProduct({ id: newProductId });
     }
   }
 
   @Watch('productLabel') productLabelChange(newProductLabel: string) {
-    if (this.skeleton) {
-      return;
-    }
-
-    // don’t re-fetch same product
     if (!this.product || (this.product && this.product.body.label !== newProductLabel)) {
       this.fetchProduct({ label: newProductLabel });
     }
   }
 
   componentWillLoad() {
-    if (this.skeleton || this.product) {
-      return null; // if skeleton UI or it’s passed a product, don’t fetch anything
-    }
-
-    return this.fetchProduct({ id: this.productId, label: this.productLabel });
+    this.fetchProduct({ id: this.productId, label: this.productLabel });
   }
 
   get href() {
-    // if no format, or product is loading, don’t calculate href
-    if (!this.productLinkFormat || !this.product) {
-      return '';
+    if (this.productLinkFormat && this.product) {
+      return this.productLinkFormat.replace(/:product/gi, this.product.body.label);
     }
-    return this.productLinkFormat.replace(/:product/gi, this.product.body.label);
+    return ''; // if no format, or product is loading, don’t calculate href
   }
 
   async fetchProduct({ id, label }: { id?: string; label?: string }) {
     if (!this.restFetch) {
       return;
     }
-
-    this.loading = true;
 
     if (id) {
       this.product = undefined;
@@ -118,16 +85,12 @@ export class ManifoldServiceCard {
         this.product = productResp[0]; // eslint-disable-line prefer-destructuring
       }
     }
-
-    this.loading = false;
   }
 
   async fetchIsFree() {
-    if (!this.restFetch || !this.product || typeof this.isFree !== 'undefined') {
+    if (!this.restFetch || !this.product) {
       return;
     }
-
-    this.loading = true;
 
     const response = await this.restFetch<Catalog.ExpandedPlan[]>({
       service: 'catalog',
@@ -141,55 +104,37 @@ export class ManifoldServiceCard {
 
     if (Array.isArray(response) && response.find(plan => plan.body.free === true)) {
       this.free = true;
+    } else {
+      this.free = false;
     }
-
-    this.loading = false;
   }
-
-  onClick = (e: Event): void => {
-    if (!this.productLinkFormat || this.preserveEvent) {
-      e.preventDefault();
-      const detail: EventDetail = {
-        productId: this.product ? this.product.id : this.productId,
-        productLabel: this.product ? this.product.body.label : this.productLabel,
-        productName: this.product ? this.product.body.name : this.productName,
-      };
-      this.marketplaceClick.emit(detail);
-    }
-  };
 
   @logger()
   render() {
-    return !this.skeleton && !this.loading && this.product ? (
-      <a
-        role="button"
-        itemscope
-        itemtype="https://schema.org/Product"
-        itemprop="url"
-        href={this.href}
-        onClick={this.onClick}
-        style={{ textDecoration: 'none' }}
+    return this.product && typeof this.free === 'boolean' ? (
+      <manifold-service-card-view
+        description={this.product.body.tagline}
+        isFeatured={this.isFeatured}
+        isFree={this.free}
+        label={this.product.body.label}
+        logo={this.product.body.logo_url}
+        name={this.product.body.name}
+        preserveEvent={this.preserveEvent}
+        productId={this.product.id}
+        productLabel={this.product.body.label}
+        productLinkFormat={this.productLinkFormat}
       >
-        <manifold-service-card-view
-          description={this.product.body.tagline}
-          isFeatured={this.isFeatured}
-          isFree={this.free}
-          label={this.product.body.label}
-          logo={this.product.body.logo_url}
-          name={this.product.body.name}
-          productId={this.product.id}
-        >
-          <manifold-forward-ref slot="cta">
-            <slot name="cta" />
-          </manifold-forward-ref>
-        </manifold-service-card-view>
-      </a>
+        <manifold-forward-ref slot="cta">
+          <slot name="cta" />
+        </manifold-forward-ref>
+      </manifold-service-card-view>
     ) : (
       // ☠
       <manifold-service-card-view
-        loading={true}
-        name="Awesome product"
+        skeleton={true}
         description="Awesome product description"
+        logo="product.jpg"
+        name="Awesome product"
       />
     );
   }

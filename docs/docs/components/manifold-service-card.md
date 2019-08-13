@@ -12,11 +12,7 @@ example: |
 Compact view of a Manifold Product. Available as a self-fetching component or a view component.
 
 ```html
-<manifold-service-card-view
-  logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
-  name="LogDNA"
-  description="The best logging service you will ever use"
-></manifold-service-card-view>
+<manifold-service-card product-label="jawsdb-mysql"></manifold-service-card>
 ```
 
 ## CTA
@@ -27,9 +23,7 @@ slots][slot].
 
 ```jsx
 <manifold-service-card product-label="jawsdb-mysql">
-  <div slot="cta">
-    BUY ME!
-  </div>
+  <div slot="cta">BUY ME!</div>
 </manifold-service-card>
 ```
 
@@ -56,7 +50,10 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 `product-link-format`:
 
 ```html
-<manifold-service-card product-label="jawsdb-mysql" product-link-format="/product/:product"></manifold-service-card>
+<manifold-service-card
+  product-label="jawsdb-mysql"
+  product-link-format="/product/:product"
+></manifold-service-card>
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 
@@ -81,5 +78,5 @@ document.addEventListener('manifold-marketplace-click', { detail } => {
 The following events are emitted:
 
 | Event Name                   | Description                                     | Data                                       |
-|------------------------------|-------------------------------------------------|--------------------------------------------|
+| ---------------------------- | ----------------------------------------------- | ------------------------------------------ |
 | `manifold-marketplace-click` | Fires whenever a user has clicked on a product. | `productId`, `productLabel`, `productName` |
