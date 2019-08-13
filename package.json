@@ -93,7 +93,7 @@
     "@storybook/html": "^5.1.11",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "24.0.17",
-    "@types/puppeteer": "1.19.0",
+    "@types/puppeteer": "1.19.1",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-loader": "^8.0.6",
