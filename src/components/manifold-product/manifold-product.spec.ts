@@ -47,4 +47,27 @@ describe('<manifold-product>', () => {
       fetchMock.called(`${connections.prod.catalog}/providers/${Product.body.provider_id}`)
     ).toBe(true);
   });
+
+  it('fetches the product by label on change', async () => {
+    const productLabel = 'product-label';
+    fetchMock.once('*', []);
+
+    const { component, page } = await setup(productLabel);
+
+    const newLabel = 'new-product-label';
+    fetchMock.mock(`${connections.prod.catalog}/products/?label=${newLabel}`, [Product]);
+    fetchMock.mock(`${connections.prod.catalog}/providers/${Product.body.provider_id}`, [
+      Provider,
+    ]);
+
+    component.productLabel = newLabel;
+    await page.waitForChanges();
+
+    expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${newLabel}`)).toBe(
+      true
+    );
+    expect(
+      fetchMock.called(`${connections.prod.catalog}/providers/${Product.body.provider_id}`)
+    ).toBe(true);
+  });
 });

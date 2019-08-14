@@ -35,7 +35,7 @@ export class ManifoldProduct {
       endpoint: `/products/?label=${productLabel}`,
     });
 
-    if (productResp) {
+    if (productResp && productResp.length) {
       this.product = productResp[0]; // eslint-disable-line prefer-destructuring
 
       this.provider = await this.restFetch<Catalog.Provider>({
