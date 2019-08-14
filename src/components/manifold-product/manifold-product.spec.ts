@@ -34,9 +34,7 @@ describe('<manifold-product>', () => {
   it('fetches the product by label on load', async () => {
     const productLabel = 'product-label';
     fetchMock.mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product]);
-    fetchMock.mock(`${connections.prod.catalog}/providers/${Product.body.provider_id}`, [
-      Provider,
-    ]);
+    fetchMock.mock(`${connections.prod.catalog}/providers/${Product.body.provider_id}`, [Provider]);
 
     await setup(productLabel);
 
@@ -56,16 +54,12 @@ describe('<manifold-product>', () => {
 
     const newLabel = 'new-product-label';
     fetchMock.mock(`${connections.prod.catalog}/products/?label=${newLabel}`, [Product]);
-    fetchMock.mock(`${connections.prod.catalog}/providers/${Product.body.provider_id}`, [
-      Provider,
-    ]);
+    fetchMock.mock(`${connections.prod.catalog}/providers/${Product.body.provider_id}`, [Provider]);
 
     component.productLabel = newLabel;
     await page.waitForChanges();
 
-    expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${newLabel}`)).toBe(
-      true
-    );
+    expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${newLabel}`)).toBe(true);
     expect(
       fetchMock.called(`${connections.prod.catalog}/providers/${Product.body.provider_id}`)
     ).toBe(true);

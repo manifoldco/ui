@@ -31,20 +31,22 @@ describe('<manifold-data-resource-logo>', () => {
   afterEach(() => {
     fetchMock.restore();
   });
-  
+
   it('fetches resource on load', async () => {
     const resourceLabel = 'my-resource';
-    fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [Resource]);
+    fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
+      Resource,
+    ]);
     fetchMock.mock(`${connections.prod.catalog}/products/${Resource.body.product_id}`, [Product]);
 
     await setup(resourceLabel);
 
-    expect(fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)).toBe(
-      true
-    );
-    expect(fetchMock.called(`${connections.prod.catalog}/products/${Resource.body.product_id}`)).toBe(
-      true
-    );
+    expect(
+      fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
+    ).toBe(true);
+    expect(
+      fetchMock.called(`${connections.prod.catalog}/products/${Resource.body.product_id}`)
+    ).toBe(true);
   });
 
   it('fetches resource on change', async () => {
@@ -54,18 +56,19 @@ describe('<manifold-data-resource-logo>', () => {
     const { page, component } = await setup(resourceLabel);
 
     const newResourceLabel = 'new-resource';
-    fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${newResourceLabel}`, [Resource]);
+    fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${newResourceLabel}`, [
+      Resource,
+    ]);
     fetchMock.mock(`${connections.prod.catalog}/products/${Resource.body.product_id}`, [Product]);
 
     component.resourceLabel = newResourceLabel;
     await page.waitForChanges();
 
-
-    expect(fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${newResourceLabel}`)).toBe(
-      true
-    );
-    expect(fetchMock.called(`${connections.prod.catalog}/products/${Resource.body.product_id}`)).toBe(
-      true
-    );
+    expect(
+      fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${newResourceLabel}`)
+    ).toBe(true);
+    expect(
+      fetchMock.called(`${connections.prod.catalog}/products/${Resource.body.product_id}`)
+    ).toBe(true);
   });
 });
