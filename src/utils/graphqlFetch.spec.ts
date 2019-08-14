@@ -1,11 +1,10 @@
 import fetchMock from 'fetch-mock';
 
-import { createGraphqlFetch } from './graphqlFetch';
-
 const errorReporter = jest.fn();
-jest.mock('./errorReport', () => ({
-  report: errorReporter,
-}));
+jest.mock('./errorReport', () => ({ report: errorReporter }));
+
+// eslint-disable-next-line import/first
+import { createGraphqlFetch } from './graphqlFetch';
 
 describe('graphqlFetch', () => {
   const oldSetTimeout = setTimeout;
@@ -52,7 +51,7 @@ describe('graphqlFetch', () => {
       expect(result).toEqual(body);
     });
 
-    it('Will return the an error if the fetch triggered one', () => {
+    it('throws if the fetch errored', () => {
       const err = new Error('ohnoes');
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
@@ -89,7 +88,7 @@ describe('graphqlFetch', () => {
     });
 
     it('reports server errors', async () => {
-      const error = { message: 'bad request' };
+      const error = { message: ['bad request'] };
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
@@ -98,23 +97,25 @@ describe('graphqlFetch', () => {
       fetchMock.mock(graphqlEndpoint, { status: 422, body: error });
 
       await fetcher({ query: '' });
-      expect(errorReporter).toHaveBeenCalledWith(error);
+      // graphql format
+      expect(errorReporter).toHaveBeenCalledWith([{ message: error.message[0] }]);
     });
 
     it('reports API errors', async () => {
-      const errors = [{ message: 'bad request' }];
+      const error = { message: ['unexpected error'] };
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 500, body: {} });
+      fetchMock.mock(graphqlEndpoint, { status: 500, body: error });
 
       await fetcher({ query: '' });
-      expect(errorReporter).toHaveBeenCalledWith(errors);
+      // graphql format
+      expect(errorReporter).toHaveBeenCalledWith([{ message: error.message[0] }]);
     });
 
-    it('reports server errors', async () => {
+    it('reports unknown errors', async () => {
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
@@ -123,11 +124,12 @@ describe('graphqlFetch', () => {
       fetchMock.mock(graphqlEndpoint, { status: 500, body: {} });
 
       await fetcher({ query: '' });
-      expect(errorReporter).toHaveBeenCalledWith('Internal Server Error');
+      // graphql format
+      expect(errorReporter).toHaveBeenCalledWith([{ message: 'Internal Server Error' }]);
     });
 
     it('reports auth errors', async () => {
-      const errors = [{ message: 'unauthorized' }];
+      const errors = [{ message: 'Unauthorized' }];
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
@@ -159,7 +161,7 @@ describe('graphqlFetch', () => {
       });
     });
 
-    it('resets token on error', () => {
+    it('resets token on error', async () => {
       const setAuthToken = jest.fn();
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
@@ -167,22 +169,15 @@ describe('graphqlFetch', () => {
         setAuthToken,
       });
 
-      fetchMock.mock(graphqlEndpoint, {
-        status: 401,
-        body: {},
-      });
+      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
 
-      expect.assertions(3);
-
-      return fetcher({ query: '' }).catch(result => {
-        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-        expect(setAuthToken).toHaveBeenCalledWith('');
-        expect(result).toEqual(new Error('Auth token expired'));
-      });
+      await fetcher({ query: '' });
+      expect(setAuthToken).toHaveBeenCalledWith('');
     });
   });
 
-  describe('status codes', () => {
+  // Note: we’re testing status codes ahead-of-time, to ensure handling of them doesn’t change
+  describe('responses by status codes', () => {
     it('200: OK', async () => {
       const body = {
         data: null,
