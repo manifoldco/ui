@@ -37,7 +37,7 @@ describe('<manifold-data-resource-logo>', () => {
     fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
       Resource,
     ]);
-    fetchMock.mock(`${connections.prod.catalog}/products/${Resource.body.product_id}`, [Product]);
+    fetchMock.mock(`${connections.prod.catalog}/products/${Resource.body.product_id}`, Product);
 
     await setup(resourceLabel);
 
@@ -59,7 +59,7 @@ describe('<manifold-data-resource-logo>', () => {
     fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${newResourceLabel}`, [
       Resource,
     ]);
-    fetchMock.mock(`${connections.prod.catalog}/products/${Resource.body.product_id}`, [Product]);
+    fetchMock.mock(`${connections.prod.catalog}/products/${Resource.body.product_id}`, Product);
 
     component.resourceLabel = newResourceLabel;
     await page.waitForChanges();
