@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../docs/docs/components/manifold-auth-token.md';
+import markdown from '../docs/docs/advanced/authentication.md';
 
 function withVeryFakeExpiry(token) {
   /* During the ui transition from REST calls to GraphQL and PUMA,
