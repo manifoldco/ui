@@ -21,9 +21,10 @@ The component can be placed anywhere in the DOM tree as long as it exists within
 ## Receiving the token
 
 The component makes no decision as to how you should save the token on your side. As such, when the
-token is received from the iframe, an event is triggered that will give you the token. The token will be
-stored in the connection for use in subsequent API requests, but this event gives you the opportunity to
-save the token to prevent delays on the next page load [as described in the next section](#setting-the-cached-token).
+token is received from the iframe, an event is triggered that will give you the token. The token
+will be stored in the connection for use in subsequent API requests, but this event gives you the
+opportunity to save the token to prevent delays on the next page load as described in **Setting the
+cached token**.
 
 ```js
 document.addEventListener('manifold-token-receive', ({ detail: { token } }) => {
