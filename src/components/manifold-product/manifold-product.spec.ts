@@ -27,11 +27,14 @@ async function setup(productLabel: string) {
 }
 
 describe('<manifold-product>', () => {
+  afterEach(() => {
+    fetchMock.restore();
+  });
+
   it('fetches the product by label on load', async () => {
     const productLabel = 'product-label';
     fetchMock.mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product]);
     fetchMock.mock(`${connections.prod.catalog}/providers/${Product.body.provider_id}`, [
-      Product,
       Provider,
     ]);
 

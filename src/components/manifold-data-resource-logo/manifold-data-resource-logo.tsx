@@ -45,7 +45,7 @@ export class ManifoldDataResourceLogo {
       });
 
       if (productResp) {
-        // NOTE: Temporary util GraphQL supports resources
+        // NOTE: Temporary until GraphQL supports resources
         const newProduct = {
           displayName: productResp.body.name,
           logoUrl: productResp.body.logo_url,
