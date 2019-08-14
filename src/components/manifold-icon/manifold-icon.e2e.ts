@@ -23,7 +23,6 @@ describe('<manifold-icon>', () => {
 
     const el = await page.find('manifold-icon >>> path');
     expect(el.getAttribute('d')).toBe(activity);
-    expect(el.getAttribute('d')).toBeTruthy();
   });
 
   it('displays the icon (solid color)', async () => {
@@ -45,6 +44,5 @@ describe('<manifold-icon>', () => {
 
     const el = await page.find('manifold-icon >>> path');
     expect(el.getAttribute('d')).toBe(activity);
-    expect(el.getAttribute('d')).toBeTruthy();
   });
 });

@@ -63,16 +63,16 @@ export function createRestFetch({
       return undefined;
     }
 
-    const body = await response.json();
-    if (response.status >= 200 && response.status < 300) {
-      return body;
-    }
-
     /* Handle expected errors */
     if (response.status === 401) {
       setAuthToken('');
       report(response);
       throw new Error('Auth token expired');
+    }
+
+    const body = await response.json();
+    if (response.status >= 200 && response.status < 300) {
+      return body;
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!

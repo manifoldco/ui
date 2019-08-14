@@ -14,11 +14,11 @@ type graphqlArgs =
 
 interface GraphqlError {
   message: string;
-  type: string;
+  locations?: { line: number; column: number }[];
 }
 
 export interface GraphqlResponseBody<T> {
-  data?: T;
+  data: T | null;
   errors?: GraphqlError[];
 }
 
@@ -55,29 +55,48 @@ export function createGraphqlFetch({
       },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
-      /* Handle unexpected errors */
+      // handle unexpected errors
       report(e);
       return Promise.reject(e);
     });
 
-    // Don’t handle success; we always need data returned
+    const body: GraphqlResponseBody<T> = await response.json();
 
-    const body = await response.json();
-    if (response.status >= 200 && response.status < 300) {
-      return body;
-    }
-
-    /* Handle expected errors */
+    // handle unauthenticated error
     if (response.status === 401) {
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
-      report(response);
-      throw new Error('Auth token expired');
     }
 
-    // Sometimes messages are an array, sometimes they aren’t. Different strokes!
-    report(response);
-    const message = Array.isArray(body) ? body[0].message : body.message;
-    throw new Error(message);
+    // handle non-GQL responses from errors
+    if (!body.data && !Array.isArray(body.errors)) {
+      const anyResponse = body as any;
+      let errors = [];
+      // handle all the many different types of fun errors
+      const message = typeof anyResponse === 'object' && anyResponse.message;
+      if (message) {
+        if (Array.isArray(message)) {
+          errors = message.map(err => ({ message: err })) as GraphqlError[];
+        } else {
+          errors = [{ message }] as GraphqlError[];
+        }
+      } else {
+        errors = [{ message: response.statusText }] as GraphqlError[];
+      }
+
+      report(errors);
+
+      return {
+        data: null,
+        errors,
+      };
+    }
+
+    // report errors if any, but still return them to user
+    if (body.errors) {
+      report(body.errors);
+    }
+
+    return body;
   };
 }

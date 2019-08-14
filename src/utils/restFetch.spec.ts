@@ -37,7 +37,7 @@ describe('The fetcher created by createRestFetch', () => {
       service: 'marketplace',
     });
 
-    expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+    expect(fetchMock.called('path:/v1/test')).toBe(true);
     expect(result).toEqual(body);
   });
 
@@ -58,7 +58,7 @@ describe('The fetcher created by createRestFetch', () => {
       endpoint: '/test',
       service: 'marketplace',
     }).catch(() => {
-      expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+      expect(fetchMock.called('path:/v1/test')).toBe(true);
       expect(setAuthToken).toHaveBeenCalledWith('');
     });
   });
@@ -81,7 +81,7 @@ describe('The fetcher created by createRestFetch', () => {
       endpoint: '/test',
       service: 'marketplace',
     }).catch(result => {
-      expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+      expect(fetchMock.called('path:/v1/test')).toBe(true);
       expect(result.message).toEqual(body.message);
     });
   });
@@ -99,7 +99,7 @@ describe('The fetcher created by createRestFetch', () => {
       endpoint: '/test',
       service: 'marketplace',
     }).catch(result => {
-      expect(fetchMock.called('path:/v1/test')).toBeTruthy();
+      expect(fetchMock.called('path:/v1/test')).toBe(true);
       expect(result).toEqual(err);
     });
   });
@@ -119,7 +119,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     expect.assertions(2);
     return result.catch(err => {
-      expect(fetchMock.called('path:/v1/test')).toBeFalsy();
+      expect(fetchMock.called('path:/v1/test')).toBe(false);
       expect(err.message).toEqual('No auth token given');
     });
   });
