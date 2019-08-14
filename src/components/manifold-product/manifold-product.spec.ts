@@ -3,17 +3,30 @@ import fetchMock from 'fetch-mock';
 import { ManifoldProduct } from './manifold-product';
 import { connections } from '../../utils/connections';
 import { Product, Provider } from '../../spec/mock/catalog';
-import { stub } from '../../../test-utils/stub-rest-fetch';
+import { createRestFetch } from '../../utils/restFetch';
 
-describe('<manifold-product>', () => {
-  beforeEach(() => {
-    stub(ManifoldProduct, {
-      getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
-      setAuthToken: jest.fn(),
-    });
+async function setup(productLabel: string) {
+  const page = await newSpecPage({
+    components: [ManifoldProduct],
+    html: '<div></div>',
   });
 
+  const component = page.doc.createElement('manifold-product');
+  component.productLabel = productLabel;
+  component.restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
+
+describe('<manifold-product>', () => {
   it('fetches the product by label on load', async () => {
     const productLabel = 'product-label';
     fetchMock.mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product]);
@@ -22,14 +35,7 @@ describe('<manifold-product>', () => {
       Provider,
     ]);
 
-    await newSpecPage({
-      components: [ManifoldProduct],
-      html: `
-        <manifold-product
-          product-label="${productLabel}"
-        ></manifold-product>
-      `,
-    });
+    await setup(productLabel);
 
     expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
       true
