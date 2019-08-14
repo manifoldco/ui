@@ -39,16 +39,17 @@ export class ManifoldDataResourceLogo {
     if (resourceResp && resourceResp.length) {
       const resource: Marketplace.Resource = resourceResp[0];
       const productId = resource.body.product_id;
-      const productResp = await this.restFetch<Catalog.Product>({
+      const productResp = await this.restFetch<Catalog.Product[]>({
         service: 'catalog',
         endpoint: `/products/${productId}`,
       });
 
       if (productResp) {
         // NOTE: Temporary until GraphQL supports resources
+        const product = productResp[0];
         const newProduct = {
-          displayName: productResp.body.name,
-          logoUrl: productResp.body.logo_url,
+          displayName: product.body.name,
+          logoUrl: product.body.logo_url,
         };
         this.product = newProduct as Product;
       }
