@@ -54,6 +54,10 @@ export function createGraphqlFetch({
         ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
       },
       body: JSON.stringify(request),
+    }).catch((e: Response) => {
+      /* Handle unexpected errors */
+      report(e);
+      return Promise.reject(e);
     });
 
     // Don’t handle success; we always need data returned
