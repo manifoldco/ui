@@ -8,7 +8,7 @@ path: /advanced/authentication
 To allow a user to access data locked (🔒) behind authentication, the `manifold-auth-token`
 component can be used. The component will render the
 [shadowcat](https://github.com/manifoldco/shadowcat) authentication iframe and attempt to log in the
-currently logged in user for your platform using oauth. See the shadowcat documentation for more
+currently logged in user for your platform using OAuth. See the shadowcat documentation for more
 information.
 
 ```html
@@ -34,9 +34,9 @@ document.addEventListener('manifold-token-receive', ({ detail: { token } }) => {
 
 ## Setting the cached token
 
-The component can receive a token previously saved from an oauth request to speed up all requests
-made by our components. If this token is provided, the oauth request will still happen in order to
-refresh the token, but any fetch calls happening in our web components will not wait for that oauth
+The component can receive a token previously saved from an OAuth request to speed up all requests
+made by our components. If this token is provided, the OAuth request will still happen in order to
+refresh the token, but any fetch calls happening in our web components will not wait for that OAuth
 request to finish.
 
 ```html
@@ -49,7 +49,7 @@ If the token given to the component is invalid, endpoints will return a 401 erro
 be removed from the `manifold-connection`. Use the [error handling capabilities](/advanced/errors)
 of our web components to detect and act on such errors.
 
-## Authenticated requests tiemout
+## Authenticated requests timeout
 
 Any requests requiring authentication - which are sent by components locked (🔒) behind
 authentication - will wait on a valid token for up to 15 seconds. If this component does not inject
@@ -65,6 +65,6 @@ This timeout duration can be customized on the `manifold-connection` component.
 
 ## Token expiration
 
-The tokens expiration is encoded in the token string the `manifold-token-receive` gives you. If the
-token is set as expired, it will automatically be refreshed with a new token using the shadowcat
-oauth iframe.
+The token's expiration is encoded in the token string that the `manifold-token-receive` gives you.
+If the token is set as expired, it will automatically be refreshed with a new token using the
+shadowcat OAuth iframe.
