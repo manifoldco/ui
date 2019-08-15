@@ -144,7 +144,7 @@ describe('The fetcher created by createRestFetch', () => {
       getAuthToken: () => '1234',
     });
     fetchMock.mock('path:/v1/test', {});
-    await fetcher({ endpoint: '/test', service: 'catalog' });
+    await fetcher({ endpoint: '/test', service: 'catalog', isPublic: false });
     const [, req] = fetchMock.lastCall() as any;
     expect(req.headers).toEqual({ authorization: 'Bearer 1234' });
   });
