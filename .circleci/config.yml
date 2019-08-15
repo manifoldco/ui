@@ -29,7 +29,6 @@ commands:
       - restore_cache:
           keys:
             - npmcache-{{ checksum "package.json" }}
-            - npmcache-
       - run: npm install
       - save_cache:
           paths:
