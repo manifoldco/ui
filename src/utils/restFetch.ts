@@ -34,7 +34,7 @@ export function createRestFetch({
     // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
     // but this prevents the ability for it to auth altogether. We need both!
     const isCatalog = args.service === 'catalog';
-    const isPublic = isCatalog || args.isPublic;
+    const isPublic = (isCatalog && args.isPublic !== false) || args.isPublic;
 
     if (!isPublic) {
       while (!getAuthToken() && !hasExpired(start, wait)) {
@@ -48,9 +48,10 @@ export function createRestFetch({
       }
     }
 
+    const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
     const url = `${endpoints[args.service]}${args.endpoint}`;
     const response = await fetch(url as string, {
-      ...withAuth(getAuthToken(), args.options),
+      ...options,
       body: JSON.stringify(args.body),
     }).catch((e: Response) => {
       /* Handle unexpected errors */
