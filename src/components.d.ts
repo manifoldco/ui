@@ -551,12 +551,12 @@ export namespace Components {
   interface ManifoldResourceStatus {
     'data'?: Gateway.Resource;
     'loading': boolean;
-    'size'?: 'small' | 'medium';
+    'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldResourceStatusView {
     'loading'?: boolean;
     'resourceState'?: string;
-    'size'?: 'small' | 'medium';
+    'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
@@ -1611,12 +1611,12 @@ declare namespace LocalJSX {
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
-    'size'?: 'small' | 'medium';
+    'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
     'loading'?: boolean;
     'resourceState'?: string;
-    'size'?: 'small' | 'medium';
+    'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldSelect extends JSXBase.HTMLAttributes<HTMLManifoldSelectElement> {
     'defaultValue'?: string;

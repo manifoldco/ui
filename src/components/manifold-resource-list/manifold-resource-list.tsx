@@ -208,15 +208,27 @@ export class ManifoldResourceList {
             label={resource.label}
             name={resource.name}
             logo={resource.logo}
-            resource-id={resource.id}
-            resource-status={resource.status}
-            resource-link-format={this.resourceLinkFormat}
-            preserve-event={this.preserveEvent}
+            resourceId={resource.id}
+            resourceStatus={resource.status}
+            resourceLinkFormat={this.resourceLinkFormat}
+            preserveEvent={this.preserveEvent}
           />
         ))}
       </div>
     ) : (
-      <slot name="loading" />
+      [
+        <div class="wrapper">
+          {[1, 2, 3, 4].map(() => (
+            <manifold-resource-card-view
+              label="my-loading-resource"
+              loading={true}
+              logo="myresource.png"
+              name="my-loading-resource"
+            />
+          ))}
+        </div>,
+        <slot name="loading" />,
+      ]
     );
   }
 }

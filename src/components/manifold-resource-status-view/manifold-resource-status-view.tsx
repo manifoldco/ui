@@ -22,7 +22,7 @@ const message: { [s: string]: string } = {
 export class ManifoldResourceStatusView {
   @Prop() loading?: boolean = false;
   @Prop() resourceState?: string = OFFLINE;
-  @Prop() size?: 'small' | 'medium' = 'medium';
+  @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
   status(resourceState = this.resourceState) {
     if (resourceState && message[resourceState]) {
