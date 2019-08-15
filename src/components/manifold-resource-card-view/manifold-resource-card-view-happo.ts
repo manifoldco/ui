@@ -1,9 +1,9 @@
 export const skeleton = async () => {
   const card = document.createElement('manifold-resource-card-view');
-  card.label = 'my-resource';
+  card.label = 'loading';
   card.loading = true;
   card.logo = 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png';
-  card.name = 'my-resource';
+  card.name = 'loading';
 
   document.body.appendChild(card);
 
@@ -12,9 +12,11 @@ export const skeleton = async () => {
 
 export const logDNA = async () => {
   const card = document.createElement('manifold-resource-card-view');
-  card.label = 'my-resource';
+  card.label = 'custom-resource';
   card.logo = 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png';
-  card.name = 'my-resource';
+  card.name = 'logging';
+  card.resourceId = 'test';
+  card.resourceStatus = 'available';
 
   document.body.appendChild(card);
 
@@ -23,8 +25,10 @@ export const logDNA = async () => {
 
 export const logoPlaceholder = async () => {
   const card = document.createElement('manifold-resource-card-view');
-  card.label = 'my-resource';
-  card.name = 'my-resource';
+  card.label = 'custom-resource';
+  card.name = 'custom-resource';
+  card.resourceId = 'test';
+  card.resourceStatus = 'available';
 
   document.body.appendChild(card);
 
