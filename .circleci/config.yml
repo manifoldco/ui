@@ -38,7 +38,6 @@ commands:
       - restore_cache: # Restore Stencil cache if exists
           keys:
             - stencilcache-{{ .Revision }}
-            - stencilcache-
 
   # Puppeteer deps (based on https://circleci.com/orbs/registry/orb/threetreeslight/puppeteer)
   setup-puppeteer:
