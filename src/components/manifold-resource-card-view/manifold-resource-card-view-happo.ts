@@ -10,7 +10,7 @@ export const skeleton = async () => {
   return card.componentOnReady();
 };
 
-export const loaded = async () => {
+export const logDNA = async () => {
   const card = document.createElement('manifold-resource-card-view');
   card.label = 'my-resource';
   card.logo = 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png';
@@ -21,7 +21,7 @@ export const loaded = async () => {
   return card.componentOnReady();
 };
 
-export const noLogo = async () => {
+export const logoPlaceholder = async () => {
   const card = document.createElement('manifold-resource-card-view');
   card.label = 'my-resource';
   card.name = 'my-resource';

@@ -50,7 +50,7 @@ commands:
           fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
 jobs:
-  # Run bundlesize
+  # Run bundlesize (generally the fastest, so this runs first)
   bundlesize:
     <<: *defaults
     steps:
@@ -99,51 +99,27 @@ workflows:
   # Normal workflow for untagged PRs
   branch:
     jobs:
-      - lint
-      - bundlesize:
+      - bundlesize
+      - lint:
           requires:
-            - lint
+            - bundlesize
       - test:
           requires:
-            - lint
+            - bundlesize
       - vrt:
           requires:
-            - lint
+            - bundlesize
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   prerelease:
     jobs:
-      - lint:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
       - bundlesize:
           filters: # the same filters are required on ALL jobs here
             branches:
               ignore: /.*/ # this is necessary along with tags for some reason
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-          requires:
-            - lint
-      - test:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-          requires:
-            - lint
-      - vrt:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-          requires:
-            - lint
-      - npm-publish: # no approval needed for prerelease
+      - lint:
           filters:
             branches:
               ignore: /.*/
@@ -151,19 +127,36 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - bundlesize
+      - test:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
+      - vrt:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
+      - npm-publish: # no approval needed for prerelease
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - lint
             - test
             - vrt
 
   # Final release (only fires if Git tag is a stable release)
   release:
     jobs:
-      - lint:
-          filters:
-            branches:
-              ignore:
-                - /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - bundlesize:
           filters: # the same filters are required on ALL jobs here
             branches:
@@ -171,8 +164,15 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - lint:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
-            - lint
+            - bundlesize
       - test:
           filters:
             branches:
@@ -181,7 +181,7 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
-            - lint
+            - bundlesize
       - vrt:
           filters:
             branches:
@@ -190,7 +190,7 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
-            - lint
+            - bundlesize
       - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
@@ -200,7 +200,7 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
-            - bundlesize
+            - lint
             - test
             - vrt
       - npm-publish:

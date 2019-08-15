@@ -46,7 +46,9 @@ export class ManifoldResourceStatusView {
         <div class="icon">
           {this.loading ? <manifold-icon icon={refresh_cw} /> : <div class="icon-status" />}
         </div>
-        {this.loading ? 'Loading' : this.statusMessage(this.resourceState)}
+        <span role="status">
+          {this.loading ? 'Loading' : this.statusMessage(this.resourceState)}
+        </span>
       </div>
     );
   }

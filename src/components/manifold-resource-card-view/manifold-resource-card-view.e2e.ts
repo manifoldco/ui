@@ -1,45 +1,27 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
-const label = 'my-resource';
-const name = 'my resource';
-const logo = 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png';
+/**
+ * Tests not covered in this file:
+ * - Loading view (Happo VRT)
+ * - Name/Label/Logo (Happo VRT)
+ */
 
-describe('<manifold-resource-card>', () => {
-  it('displays name', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-resource-card-view label="${label}" name="${name}" resource-id="test" />`,
+describe('<manifold-resource-card-view>', () => {
+  describe('v0 API', () => {
+    it('[resource-status]: displays status', async () => {
+      const page = await newE2EPage({
+        html: `<manifold-resource-card-view></manifold-resource-card-view>`,
+      });
+      page.$eval('manifold-resource-card-view', (elm: any) => {
+        elm.resourceStatus = 'provision';
+        elm.resourceId = 'test';
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-resource-card-view >>> manifold-resource-status-view');
+      const status = el.shadowRoot.querySelector('[role="status"]');
+      expect(status && status.innerHTML).toBe('Provision');
     });
-    const el = await page.find('manifold-resource-card-view >>> [itemprop="name"]');
-
-    expect(el.innerText).toBe(name);
-  });
-
-  it('displays label', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-resource-card-view label="${label}" resource-id="test" />`,
-    });
-    const el = await page.find('manifold-resource-card-view >>> [itemprop="name"]');
-
-    expect(el.innerText).toBe(label);
-  });
-
-  it('displays logo', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-resource-card-view logo="${logo}" resource-id="test" />`,
-    });
-    const el = await page.find('manifold-resource-card-view >>> manifold-lazy-image');
-    const src = await el.getProperty('src');
-    expect(src).toBe(logo);
-  });
-
-  it('displays the given status', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-resource-card-view resource-status="provision" resource-id="test" />`,
-    });
-    const el = await page.find('manifold-resource-card-view >>> [itemprop="status"]');
-
-    expect(el.innerText).toBe('Provisioning');
   });
 });

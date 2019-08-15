@@ -26,9 +26,9 @@
   display: block;
   width: 0.625rem;
   height: 0.625rem;
-  content: '';
-  border-radius: 50%;
   background: var(--status-color);
+  border-radius: 50%;
+  content: '';
 }
 
 .status {
@@ -59,13 +59,13 @@
   color: var(--manifold-grayscale-60);
 
   &::before {
-    border-radius: var(--manifold-tag-radius, var(--manifold-radius));
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     background: var(--status-color);
+    border-radius: var(--manifold-tag-radius, var(--manifold-radius));
     opacity: 0.1;
     content: '';
   }
@@ -93,8 +93,8 @@
 
   &[data-size='xsmall'] {
     height: 1.5rem;
-    padding-left: 0;
     padding-right: 0;
+    padding-left: 0;
     font-size: var(--manifold-font-d1);
 
     &::before {
