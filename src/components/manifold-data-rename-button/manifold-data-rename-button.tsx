@@ -130,7 +130,7 @@ export class ManifoldDataRenameButton {
     const { restFetch } = this;
     await new Promise(resolve => {
       const interval = window.setInterval(async () => {
-        const renamedResource: [Marketplace.Resource] | undefined = await restFetch({
+        const renamedResource = await restFetch<Marketplace.Resource[]>({
           service: 'marketplace',
           endpoint: `/resources/?me&label=${this.newLabel}`,
         });
