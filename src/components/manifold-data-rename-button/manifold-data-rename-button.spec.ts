@@ -132,6 +132,14 @@ describe('<manifold-data-rename-button>', () => {
 
     it('will trigger a dom event on successful rename', async () => {
       fetchMock.mock(`${connections.prod.marketplace}/resources/${Resource.id}`, Resource);
+      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=test2`, [
+        {
+          ...Resource,
+          body: {
+            label: 'test2',
+          },
+        },
+      ]);
 
       const page = await newSpecPage({
         components: [ManifoldDataRenameButton],
