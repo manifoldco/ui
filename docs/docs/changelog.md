@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Stencil to v1.2.5
 
+### Fixed
+
+- Fixed issue where success event of `manifold-data-rename-resource` was emitted before renamed resource was ready.
+
 ## [v0.5.3]
 
 ### Fixed
