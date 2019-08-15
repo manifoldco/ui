@@ -201,34 +201,30 @@ export class ManifoldResourceList {
       return <slot name="no-resources" />;
     }
 
-    return Array.isArray(this.resources) ? (
+    return (
       <div class="wrapper">
-        {this.resources.map(resource => (
-          <manifold-resource-card-view
-            label={resource.label}
-            name={resource.name}
-            logo={resource.logo}
-            resourceId={resource.id}
-            resourceStatus={resource.status}
-            resourceLinkFormat={this.resourceLinkFormat}
-            preserveEvent={this.preserveEvent}
-          />
-        ))}
+        {Array.isArray(this.resources)
+          ? this.resources.map(resource => (
+              <manifold-resource-card-view
+                label={resource.label}
+                name={resource.name}
+                logo={resource.logo}
+                resourceId={resource.id}
+                resourceStatus={resource.status}
+                resourceLinkFormat={this.resourceLinkFormat}
+                preserveEvent={this.preserveEvent}
+              />
+            ))
+          : [1, 2, 3, 4].map(() => (
+              <manifold-resource-card-view
+                label="my-loading-resource"
+                loading={true}
+                logo="myresource.png"
+                name="my-loading-resource"
+              />
+            ))}
+        {!Array.isArray(this.resources) && <slot name="loading" />}
       </div>
-    ) : (
-      [
-        <div class="wrapper">
-          {[1, 2, 3, 4].map(() => (
-            <manifold-resource-card-view
-              label="my-loading-resource"
-              loading={true}
-              logo="myresource.png"
-              name="my-loading-resource"
-            />
-          ))}
-        </div>,
-        <slot name="loading" />,
-      ]
     );
   }
 }

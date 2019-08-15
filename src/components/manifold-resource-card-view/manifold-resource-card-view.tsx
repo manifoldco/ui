@@ -12,20 +12,6 @@ interface EventDetail {
   resourceName?: string;
 }
 
-const AVAILABLE = 'available';
-const PROVISIONING = 'provision';
-const RESIZING = 'resize';
-const DEPROVISION = 'deprovision';
-const OFFLINE = 'offline';
-
-const statusToText = {
-  [AVAILABLE]: 'Available',
-  [PROVISIONING]: 'Provisioning',
-  [RESIZING]: 'Resizing',
-  [DEPROVISION]: 'Deprovisioning',
-  [OFFLINE]: 'Offline',
-};
-
 @Component({
   tag: 'manifold-resource-card-view',
   styleUrl: 'manifold-resource-card-view.css',
@@ -129,7 +115,7 @@ export class ManifoldResourceCardView {
         <h3 class="name">
           <manifold-skeleton-text>{this.label}</manifold-skeleton-text>
         </h3>
-        <div class="status-box">
+        <div class="status">
           <manifold-skeleton-text>Loading resource</manifold-skeleton-text>
         </div>
         <div class="logo">
