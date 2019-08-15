@@ -71,7 +71,7 @@ describe('graphqlFetch', () => {
   });
 
   describe('error reporting', () => {
-    it('reports GraphQL errors', async () => {
+    it('reports db errors', async () => {
       const errors = [{ message: 'bad query', locations: [] }];
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
@@ -87,32 +87,23 @@ describe('graphqlFetch', () => {
       expect(errorReporter).toHaveBeenCalledWith(errors);
     });
 
-    it('reports server errors', async () => {
-      const error = { message: ['bad request'] };
+    it('reports GraphQL errors', async () => {
+      const body = {
+        data: null,
+        errors: [
+          { message: 'User does not have permission to access the resource', path: ['resources'] },
+        ],
+      };
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 422, body: error });
+      fetchMock.mock(graphqlEndpoint, { status: 422, body });
 
       await fetcher({ query: '' });
       // graphql format
-      expect(errorReporter).toHaveBeenCalledWith([{ message: error.message[0] }]);
-    });
-
-    it('reports API errors', async () => {
-      const error = { message: ['unexpected error'] };
-      const fetcher = createGraphqlFetch({
-        endpoint: graphqlEndpoint,
-        getAuthToken: () => '1234',
-      });
-
-      fetchMock.mock(graphqlEndpoint, { status: 500, body: error });
-
-      await fetcher({ query: '' });
-      // graphql format
-      expect(errorReporter).toHaveBeenCalledWith([{ message: error.message[0] }]);
+      expect(errorReporter).toHaveBeenCalledWith(body.errors);
     });
 
     it('reports unknown errors', async () => {
@@ -129,16 +120,21 @@ describe('graphqlFetch', () => {
     });
 
     it('reports auth errors', async () => {
-      const errors = [{ message: 'Unauthorized' }];
+      const body = {
+        data: null,
+        errors: [
+          { message: 'User does not have permission to access the resource', path: ['resources'] },
+        ],
+      };
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 401, body: errors });
+      fetchMock.mock(graphqlEndpoint, { status: 401, body });
 
       await fetcher({ query: '' });
-      expect(errorReporter).toHaveBeenCalledWith(errors);
+      expect(errorReporter).toHaveBeenCalledWith(body.errors);
     });
   });
 
@@ -201,9 +197,12 @@ describe('graphqlFetch', () => {
 
     it('401: unauthorized (token expired)', async () => {
       const body = {
-        type: 'unauthorized',
-        message: ['unauthenticated for invalid credentials'],
+        data: null,
+        errors: [
+          { message: 'User does not have permission to access the resource', path: ['resources'] },
+        ],
       };
+
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
@@ -213,16 +212,13 @@ describe('graphqlFetch', () => {
 
       const result = await fetcher({ query: '' });
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-      expect(result).toEqual({
-        data: null,
-        errors: [{ message: body.message[0] }],
-      });
+      expect(result).toEqual(body);
     });
 
     it('422: should return (bad gql query)', async () => {
       const body = {
         data: null,
-        errors: [{ message: 'bad query', locations: [] }],
+        errors: [{ message: 'illegal base32 data at input byte 4', path: ['product'] }],
       };
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
@@ -234,30 +230,6 @@ describe('graphqlFetch', () => {
       const result = await fetcher({ query: '' });
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(result).toEqual(body);
-    });
-
-    it('500: returns error message if given', async () => {
-      const body = {
-        type: 'error',
-        message: ['An unexpected error occurred'],
-      };
-
-      const fetcher = createGraphqlFetch({
-        endpoint: graphqlEndpoint,
-        getAuthToken: () => '1234',
-      });
-
-      fetchMock.mock(graphqlEndpoint, {
-        status: 500, // error code for something that went wrong
-        body,
-      });
-
-      const result = await fetcher({ query: '' });
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-      expect(result).toEqual({
-        data: null,
-        errors: [{ message: body.message[0] }],
-      });
     });
 
     it('500: returns generic message if none given', async () => {

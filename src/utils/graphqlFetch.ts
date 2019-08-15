@@ -15,6 +15,7 @@ type graphqlArgs =
 interface GraphqlError {
   message: string;
   locations?: { line: number; column: number }[];
+  path?: string;
 }
 
 export interface GraphqlResponseBody<T> {
@@ -66,23 +67,12 @@ export function createGraphqlFetch({
     if (response.status === 401) {
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
+      report(response); // report unauthenticated
     }
 
     // handle non-GQL responses from errors
     if (!body.data && !Array.isArray(body.errors)) {
-      const anyResponse = body as any;
-      let errors = [];
-      // handle all the many different types of fun errors
-      const message = typeof anyResponse === 'object' && anyResponse.message;
-      if (message) {
-        if (Array.isArray(message)) {
-          errors = message.map(err => ({ message: err })) as GraphqlError[];
-        } else {
-          errors = [{ message }] as GraphqlError[];
-        }
-      } else {
-        errors = [{ message: response.statusText }] as GraphqlError[];
-      }
+      const errors = [{ message: response.statusText }] as GraphqlError[];
 
       report(errors);
 
@@ -92,11 +82,12 @@ export function createGraphqlFetch({
       };
     }
 
-    // report errors if any, but still return them to user
+    // report errors if any, but continue
     if (body.errors) {
       report(body.errors);
     }
 
+    // return everything to the user
     return body;
   };
 }
