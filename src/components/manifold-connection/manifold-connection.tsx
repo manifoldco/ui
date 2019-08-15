@@ -6,7 +6,7 @@ import logger from '../../utils/logger';
 const baseWait = 15000;
 
 @Component({ tag: 'manifold-connection' })
-export class ManiTunnel {
+export class ManifoldConnection {
   /** _(optional)_ Specify `env="stage"` for staging */
   @Prop() env: 'local' | 'stage' | 'prod' = 'prod';
   /** _(optional)_ Wait time for the fetch calls before it times out */
@@ -31,4 +31,4 @@ export class ManiTunnel {
   }
 }
 
-Tunnel.injectProps(ManiTunnel, ['setEnv', 'setWaitTime']);
+Tunnel.injectProps(ManifoldConnection, ['setEnv', 'setWaitTime']);
