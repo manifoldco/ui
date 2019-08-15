@@ -126,6 +126,21 @@ export class ManifoldDataRenameButton {
       return Promise.reject(error);
     });
 
+    // Poll until rename complete
+    const { restFetch } = this;
+    await new Promise(resolve => {
+      const interval = window.setInterval(async () => {
+        const renamedResource = await restFetch<Marketplace.Resource[]>({
+          service: 'marketplace',
+          endpoint: `/resources/?me&label=${this.newLabel}`,
+        });
+        if (renamedResource && renamedResource.length) {
+          window.clearInterval(interval);
+          resolve();
+        }
+      }, 100);
+    });
+
     const success: SuccessMessage = {
       message: `${this.resourceLabel} successfully renamed`,
       resourceLabel: this.resourceLabel || '',
