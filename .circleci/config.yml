@@ -50,7 +50,7 @@ commands:
           fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
 jobs:
-  # Run bundlesize (Stencil build: ✅)
+  # Run bundlesize
   bundlesize:
     <<: *defaults
     steps:
@@ -58,7 +58,7 @@ jobs:
       - run: npm run bundlesize
       - save-build
 
-  # Lint (Stencil build: 🚫)
+  # Lint
   lint:
     <<: *defaults
     steps:
@@ -75,7 +75,7 @@ jobs:
       - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm run publish
 
-  # Test (Stencil build: ✅)
+  # Test
   test:
     <<: *defaults
     steps:
@@ -85,7 +85,7 @@ jobs:
       - save-build
       - run: npx codecov
 
-  # Run visual regression tests (Stencil build: ✅)
+  # Run visual regression tests
   vrt:
     <<: *defaults
     steps:
@@ -99,38 +99,50 @@ workflows:
   # Normal workflow for untagged PRs
   branch:
     jobs:
-      - bundlesize
       - lint
-      - test
-      - vrt
+      - bundlesize:
+          requires:
+            - lint
+      - test:
+          requires:
+            - lint
+      - vrt:
+          requires:
+            - lint
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   prerelease:
     jobs:
-      - bundlesize:
-          filters: # the same filters are required on ALL jobs here
-            branches:
-              ignore: /.*/ # this is necessary along with tags for some reason
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
       - lint:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+      - bundlesize:
+          filters: # the same filters are required on ALL jobs here
+            branches:
+              ignore: /.*/ # this is necessary along with tags for some reason
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - lint
       - test:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - lint
       - vrt:
           filters:
             branches:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - lint
       - npm-publish: # no approval needed for prerelease
           filters:
             branches:
@@ -139,20 +151,12 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - bundlesize
-            - lint
             - test
             - vrt
 
   # Final release (only fires if Git tag is a stable release)
   release:
     jobs:
-      - bundlesize:
-          filters: # the same filters are required on ALL jobs here
-            branches:
-              ignore:
-                - /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
       - lint:
           filters:
             branches:
@@ -160,6 +164,15 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+      - bundlesize:
+          filters: # the same filters are required on ALL jobs here
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - lint
       - test:
           filters:
             branches:
@@ -167,6 +180,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - lint
       - vrt:
           filters:
             branches:
@@ -174,6 +189,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - lint
       - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
@@ -184,7 +201,6 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
             - bundlesize
-            - lint
             - test
             - vrt
       - npm-publish:
