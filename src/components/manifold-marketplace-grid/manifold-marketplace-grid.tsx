@@ -95,8 +95,8 @@ export class ManifoldMarketplaceGrid {
 
     const services = this.products.length
       ? this.products.reduce<Catalog.Product[]>((all, p) => {
-          const s = this.services.find(s => s.body.label === p);
-          return s ? all.concat(s) : all;
+          const service = this.services.find(s => s.body.label === p);
+          return service ? all.concat(service) : all;
         }, [])
       : this.services;
 
