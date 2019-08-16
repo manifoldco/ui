@@ -11,22 +11,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.5]
+
+### Fixed
+
+- Stability improvements for GraphQL queries (#376)
+- Improved loading state for `<manifold-resource-list>` (#382)
+- Fixed public endpoints trying to authenticate (#383)
+- Fixed “no services“ flash on `<manifold-marketplace>` (#390)
+
 ## [v0.5.4]
 
 ### Fixed
 
-- Fixed the service card loading the free badge after rendering, which caused a jumpy UI.
-- Simplied `<manifold-service-card>` (data) and `<manifold-service-card-view>` (“dumb” view)
-- Added the ability to specify a slot on the `manifold-credentials` with a default manifold button if not set.
+- Fixed the service card loading the free badge after rendering, which caused a jumpy UI. (#355)
+- Added the ability to specify a slot on the `manifold-credentials` with a default manifold button if not set. (#362)
 
 ### Changed
 
-- Updated Stencil to v1.2.5
-- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-receive` and documented that event.
+- Updated Stencil to v1.2.5 (#375)
+- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-receive` and documented that event. (#360)
+- View component `<manifold-service-card-view>` no longer fetches data, is it should (#355)
 
 ### Fixed
 
-- Fixed issue where success event of `manifold-data-rename-resource` was emitted before renamed resource was ready.
+- Fixed issue where success event of `manifold-data-rename-resource` was emitted before renamed resource was ready. (#380)
 
 ## [v0.5.3]
 
