@@ -93,36 +93,6 @@ describe('<manifold-marketplace-grid>', () => {
   });
 
   describe('v0 API', () => {
-    it('[excludes] accepts exclusion list of products', async () => {
-      const excludes = ['service-messaging', 'service-optimization'];
-
-      const page = await newE2EPage({
-        html: `<manifold-marketplace-grid></manifold-marketplace-grid>`,
-      });
-      await page.$eval(
-        'manifold-marketplace-grid',
-        (elm: any, props: any) => {
-          elm.services = props.services;
-          elm.excludes = props.excludes;
-        },
-        { services, excludes }
-      );
-      await page.waitForChanges();
-
-      const notExcluded = testCategories
-        .map(category => `service-${category}`)
-        .filter(category => !excludes.includes(category));
-
-      const serviceCards = await page.findAll(
-        `manifold-marketplace-grid >>> manifold-service-card-view`
-      );
-      const productLabels = await Promise.all(
-        serviceCards.map(card => card.getProperty('productLabel'))
-      );
-
-      expect(productLabels).toEqual(notExcluded);
-    });
-
     it('[featured] features specified products', async () => {
       const featured = ['service-database', 'service-logging'];
 
