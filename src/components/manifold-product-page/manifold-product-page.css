@@ -119,7 +119,7 @@
 
 .sidebar-inner {
   position: sticky;
-  top: 3rem;
+  top: var(--overlap);
 }
 
 .sidebar-section {
@@ -225,8 +225,4 @@
       }
     }
   }
-}
-
-.wrapper {
-  padding-top: var(--overlap);
 }
