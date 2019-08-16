@@ -76,7 +76,7 @@
     "@stencil/state-tunnel": "^1.0.1"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^1.5.0",
+    "@graphql-codegen/cli": "^1.6.1",
     "@graphql-codegen/introspection": "^1.6.0",
     "@graphql-codegen/typescript": "^1.6.1",
     "@graphql-codegen/typescript-operations": "^1.5.0",
