@@ -1,6 +1,6 @@
+import { EventEmitter } from '@stencil/core';
 import { hasExpired } from './expiry';
 import { report } from './errorReport';
-import { EventEmitter } from '@stencil/core';
 
 interface CreateGraphqlFetch {
   endpoint?: string;
