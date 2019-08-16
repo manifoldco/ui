@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improved loading state for `<manifold-resource-list>`
 - Stability improvements for GraphQL queries
+- Fixed “no services“ flash on `<manifold-marketplace>`
 
 ## [v0.5.4]
 
