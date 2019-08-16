@@ -54,74 +54,7 @@ describe('<manifold-resource-list>', () => {
     fetchMock.restore();
   });
 
-  describe('The two slots for the state of the components', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
-    it('The "no-resources" slot is rendered if no resources are found.', async () => {
-      fetchMock
-        .mock(`${connections.prod.marketplace}/resources/?me`, [])
-        .mock(`${connections.prod.catalog}/products`, [])
-        .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
-
-      const page = await newSpecPage({
-        components: [ManifoldResourceList],
-        html: `
-          <manifold-resource-list paused="">
-            <div data-test="no-resources" slot="no-resources"></div>
-          </manifold-resource-list>
-        `,
-      });
-
-      // @ts-ignore
-      expect(page.root.querySelector('[data-test="no-resources"]')).toBeTruthy();
-    });
-
-    it('The "loading" state is rendered if still loading.', async () => {
-      fetchMock
-        .mock(`${connections.prod.marketplace}/resources/?me`, {})
-        .mock(`${connections.prod.catalog}/products`, [])
-        .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
-
-      const page = await newSpecPage({
-        components: [ManifoldResourceList],
-        html: `
-          <manifold-resource-list paused="">
-            <div data-test="loading" slot="loading"></div>
-          </manifold-resource-list>
-        `,
-      });
-
-      // @ts-ignore
-      expect(page.root.querySelector('[data-test="loading"]')).toBeTruthy();
-    });
-
-    it('The resources list are rendered if given.', async () => {
-      fetchMock
-        .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-        .mock(`${connections.prod.catalog}/products`, [Product])
-        .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [
-          provisionOperation,
-        ]);
-
-      const page = await newSpecPage({
-        components: [ManifoldResourceList],
-        html: `
-          <manifold-resource-list paused=""></manifold-resource-list>
-        `,
-      });
-
-      // TODO: Add a test that will test that the resources are rendered with their various states
-      // to replace the 'processes resources properly' here.
-      // @ts-ignore
-      expect(page.root.shadowRoot.querySelector('.wrapper')).toBeTruthy();
-      // @ts-ignore
-      expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(1);
-    });
-  });
-
-  it('processes resources properly', async () => {
+  it('The resources list are rendered if given.', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
       .mock(`${connections.prod.catalog}/products`, [Product])
@@ -132,6 +65,27 @@ describe('<manifold-resource-list>', () => {
       html: `
           <manifold-resource-list paused=""></manifold-resource-list>
         `,
+    });
+
+    if (!page.root || !page.root.shadowRoot) {
+      throw new Error('<manifold-resource-list> not found in document');
+    }
+
+    // TODO: Add a test that will test that the resources are rendered with their various states
+    // to replace the 'processes resources properly' here.
+    expect(page.root.shadowRoot.querySelector('.wrapper')).toBeTruthy();
+    expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(1);
+  });
+
+  it('processes resources properly', async () => {
+    fetchMock
+      .mock(`${connections.prod.marketplace}/resources/?me`, resources)
+      .mock(`${connections.prod.catalog}/products`, [Product])
+      .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
+
+    const page = await newSpecPage({
+      components: [ManifoldResourceList],
+      html: `<manifold-resource-list paused=""></manifold-resource-list>`,
     });
 
     const instance = page.rootInstance as ManifoldResourceList;
@@ -154,21 +108,59 @@ describe('<manifold-resource-list>', () => {
     ]);
   });
 
-  it('changing the paused attribute to true leads to a removal of the interval', () => {
-    window.clearInterval = jest.fn();
+  describe('v0 API', () => {
+    it('[paused]: true stops interval', () => {
+      window.clearInterval = jest.fn();
 
-    const resourceList = new ManifoldResourceList();
-    resourceList.pausedChange(true);
+      const resourceList = new ManifoldResourceList();
+      resourceList.pausedChange(true);
 
-    expect(window.clearInterval).toHaveBeenCalled();
-  });
+      expect(window.clearInterval).toHaveBeenCalled();
+    });
 
-  it('changing the paused attribute to false leads to a creation of the interval', () => {
-    window.setInterval = jest.fn();
+    it('[paused]: false creates interval', () => {
+      window.setInterval = jest.fn();
 
-    const resourceList = new ManifoldResourceList();
-    resourceList.pausedChange(false);
+      const resourceList = new ManifoldResourceList();
+      resourceList.pausedChange(false);
 
-    expect(window.setInterval).toHaveBeenCalled();
+      expect(window.setInterval).toHaveBeenCalled();
+    });
+
+    it('slot="loading" is rendered if still loading.', async () => {
+      fetchMock
+        .mock(`${connections.prod.marketplace}/resources/?me`, {})
+        .mock(`${connections.prod.catalog}/products`, [])
+        .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
+
+      const page = await newSpecPage({
+        components: [ManifoldResourceList],
+        html: `
+            <manifold-resource-list paused="">
+              <div data-test="loading" slot="loading"></div>
+            </manifold-resource-list>
+          `,
+      });
+
+      expect(page.root && page.root.querySelector('[data-test="loading"]')).toBeTruthy();
+    });
+
+    it('slot="no-resources" is rendered if no resources are found.', async () => {
+      fetchMock
+        .mock(`${connections.prod.marketplace}/resources/?me`, [])
+        .mock(`${connections.prod.catalog}/products`, [])
+        .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
+
+      const page = await newSpecPage({
+        components: [ManifoldResourceList],
+        html: `
+          <manifold-resource-list paused="">
+            <div data-test="no-resources" slot="no-resources"></div>
+          </manifold-resource-list>
+        `,
+      });
+
+      expect(page.root && page.root.querySelector('[data-test="no-resources"]')).toBeTruthy();
+    });
   });
 });

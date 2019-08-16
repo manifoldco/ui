@@ -14,8 +14,6 @@ Displays an availability tag for a resource. Can be used standalone without any 
 
 ## Resource states
 
-You can use one of the four available resource states to display various statuses.
-
 ```html
   <manifold-resource-status-view state="available"></manifold-resource-product>
   <manifold-resource-status-view state="provision"></manifold-resource-product>
@@ -23,19 +21,16 @@ You can use one of the four available resource states to display various statuse
   <manifold-resource-status-view state="offline"></manifold-resource-product>
 ```
 
-## Different sizes
-
-The component is available in two different sizes, `small` and `medium`. Use the `size` attribute to set the component size.
+## Sizes
 
 ```html
+  <manifold-resource-status-view size="xsmall" state="available"></manifold-resource-product>
   <manifold-resource-status-view size="small" state="available"></manifold-resource-product>
+  <manifold-resource-status-view size="medium" state="available"></manifold-resource-product>
 ```
 
-## Loading
-
-The component can be set to a loading state.
+## Loading state
 
 ```html
-  <manifold-resource-status-view loading=""></manifold-resource-product>
+  <manifold-resource-status-view loading></manifold-resource-product>
 ```
-

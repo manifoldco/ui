@@ -22,7 +22,7 @@ const message: { [s: string]: string } = {
 export class ManifoldResourceStatusView {
   @Prop() loading?: boolean = false;
   @Prop() resourceState?: string = OFFLINE;
-  @Prop() size?: 'small' | 'medium' = 'medium';
+  @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
   status(resourceState = this.resourceState) {
     if (resourceState && message[resourceState]) {
@@ -40,18 +40,15 @@ export class ManifoldResourceStatusView {
 
   @logger()
   render() {
-    if (this.loading) {
-      return (
-        <div class="loading" data-size={this.size} data-status={this.status(this.resourceState)}>
-          <manifold-icon icon={refresh_cw} />
-          Loading
-        </div>
-      );
-    }
-
+    const status = this.loading ? 'loading' : this.status(this.resourceState);
     return (
-      <div class="status" data-size={this.size} data-status={this.status(this.resourceState)}>
-        <div class="inner">{this.statusMessage(this.resourceState)}</div>
+      <div class="status" data-size={this.size} data-status={status}>
+        <div class="icon">
+          {this.loading ? <manifold-icon icon={refresh_cw} /> : <div class="icon-status" />}
+        </div>
+        <span role="status">
+          {this.loading ? 'Loading' : this.statusMessage(this.resourceState)}
+        </span>
       </div>
     );
   }

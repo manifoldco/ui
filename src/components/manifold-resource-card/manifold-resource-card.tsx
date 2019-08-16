@@ -18,51 +18,42 @@ export class ManifoldResourceCard {
   @State() resource?: Gateway.Resource;
 
   @Watch('resourceId') resourceIdChange(newResourceId: string) {
-    this.fetchResourceId(newResourceId);
+    this.fetchResource({ id: newResourceId });
   }
   @Watch('label') resourceLabelChange(newlabel: string) {
-    this.fetchResourceLabel(newlabel);
+    this.fetchResource({ label: newlabel });
   }
 
   componentWillLoad() {
-    if (this.resourceId) {
-      this.fetchResourceId(this.resourceId);
-    } else if (this.label) {
-      this.fetchResourceLabel(this.label);
-    }
+    this.fetchResource({ id: this.resourceId, label: this.label });
   }
 
-  async fetchResourceId(resourceId: string) {
+  async fetchResource({ id, label }: { id?: string; label?: string }) {
     if (!this.restFetch) {
       return;
     }
 
-    const response = await this.restFetch<Gateway.Resource>({
-      service: 'gateway',
-      endpoint: `/resources/${resourceId}`,
-    });
+    if (id) {
+      const response = await this.restFetch<Gateway.Resource>({
+        service: 'gateway',
+        endpoint: `/resources/${id}`,
+      });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
+      if (response instanceof Error) {
+        console.error(response);
+        return;
+      }
+      this.resource = response;
+    } else if (label) {
+      const response = await this.restFetch<Gateway.Resource[]>({
+        service: 'gateway',
+        endpoint: `/resources/me/${label}`,
+      });
 
-    this.resource = response;
-  }
-
-  async fetchResourceLabel(resourceName: string) {
-    if (!this.restFetch) {
-      return;
-    }
-
-    const response = await this.restFetch<Gateway.Resource[]>({
-      service: 'gateway',
-      endpoint: `/resources/me/${resourceName}`,
-    });
-
-    if (response && response.length) {
-      // eslint-disable-next-line prefer-destructuring
-      this.resource = response[0];
+      if (response && response.length) {
+        // eslint-disable-next-line prefer-destructuring
+        this.resource = response[0];
+      }
     }
   }
 

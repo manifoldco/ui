@@ -50,7 +50,7 @@ commands:
           fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
 jobs:
-  # Run bundlesize (Stencil build: ✅)
+  # Run bundlesize (generally the fastest, so this runs first)
   bundlesize:
     <<: *defaults
     steps:
@@ -58,7 +58,7 @@ jobs:
       - run: npm run bundlesize
       - save-build
 
-  # Lint (Stencil build: 🚫)
+  # Lint
   lint:
     <<: *defaults
     steps:
@@ -75,7 +75,7 @@ jobs:
       - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm run publish
 
-  # Test (Stencil build: ✅)
+  # Test
   test:
     <<: *defaults
     steps:
@@ -85,7 +85,7 @@ jobs:
       - save-build
       - run: npx codecov
 
-  # Run visual regression tests (Stencil build: ✅)
+  # Run visual regression tests
   vrt:
     <<: *defaults
     steps:
@@ -100,9 +100,15 @@ workflows:
   branch:
     jobs:
       - bundlesize
-      - lint
-      - test
-      - vrt
+      - lint:
+          requires:
+            - bundlesize
+      - test:
+          requires:
+            - bundlesize
+      - vrt:
+          requires:
+            - bundlesize
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   prerelease:
@@ -119,19 +125,9 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
       - test:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-      - vrt:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-      - npm-publish: # no approval needed for prerelease
           filters:
             branches:
               ignore: /.*/
@@ -139,6 +135,21 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - bundlesize
+      - vrt:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
+      - npm-publish: # no approval needed for prerelease
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
             - lint
             - test
             - vrt
@@ -160,6 +171,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - test:
           filters:
             branches:
@@ -167,6 +180,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - vrt:
           filters:
             branches:
@@ -174,6 +189,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
@@ -183,7 +200,6 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
-            - bundlesize
             - lint
             - test
             - vrt

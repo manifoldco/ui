@@ -3,25 +3,23 @@ import { storiesOf } from '@storybook/html';
 import markdown from '../docs/docs/components/manifold-resource-list.md';
 import { manifoldConnectionDecorator } from './connectionDecorator';
 
-storiesOf('Resource list 🔒', module)
+storiesOf('Resource List 🔒', module)
   .addParameters({ readme: { sidebar: markdown } })
   .addDecorator(manifoldConnectionDecorator)
   .add(
-    'Listing all resources',
+    'default',
     () => `
-      <manifold-resource-list />
+      <manifold-resource-list paused />
     `
   )
   .add(
-    'Loading resources',
+    'loading',
     () => `
-      <manifold-resource-list paused="">
-        <manifold-resource-card-view loading="" label="loading" slot="loading" />
-      </manifold-resource-list>
+      <manifold-resource-list paused></manifold-resource-list>
     `
   )
   .add(
-    'No resources',
+    'empty',
     () => `
       <manifold-resource-list label-filter="i-do-not-exists">
         <div slot="no-resources">
