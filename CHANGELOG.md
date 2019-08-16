@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Improved loading state for `<manifold-resource-list>`
+- Stability improvements for GraphQL queries
+
 ## [v0.5.4]
 
 ### Fixed
