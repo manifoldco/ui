@@ -242,7 +242,7 @@ describe('<manifold-data-provision-button>', () => {
       const root = page.rootInstance as ManifoldDataProvisionButton;
 
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-      expect(root.ownerId).toEqual(profile.profile.id);
+      expect(root.ownerId).toBe(profile.profile.id);
     });
 
     it('will do nothing if the owner id is set', async () => {

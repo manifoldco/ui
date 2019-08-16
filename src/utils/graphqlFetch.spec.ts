@@ -1,109 +1,254 @@
 import fetchMock from 'fetch-mock';
 
+const errorReporter = jest.fn();
+jest.mock('./errorReport', () => ({ report: errorReporter }));
+
+// eslint-disable-next-line import/first
 import { createGraphqlFetch } from './graphqlFetch';
 
-describe('The fetcher created by createGraphqlFetch', () => {
+describe('graphqlFetch', () => {
   const oldSetTimeout = setTimeout;
   const graphqlEndpoint = 'http://test.test/graphql';
 
   beforeEach(() => {
     global.setTimeout = oldSetTimeout;
+    errorReporter.mockReset();
     fetchMock.restore();
   });
 
-  it('Will return the result of the fetch function if given everything it needs', async () => {
-    const body = {
-      test: 1,
-    };
-    const fetcher = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
-      getAuthToken: () => '1234',
+  describe('general', () => {
+    it('defaults to api.manifold.co/graphql', async () => {
+      const fetcher = createGraphqlFetch({
+        /* no endpoint */
+      });
+      fetchMock.mock('https://api.manifold.co/graphql', {
+        status: 200,
+        body: { data: {} },
+      });
+      await fetcher({ query: '', isPublic: true });
+      expect(fetchMock.called('https://api.manifold.co/graphql')).toBe(true);
     });
 
-    fetchMock.mock(graphqlEndpoint, {
-      status: 200,
-      body,
+    it('returns data from server', async () => {
+      const body = {
+        data: {
+          test: 1,
+        },
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, {
+        status: 200,
+        body,
+      });
+
+      const result = await fetcher({ query: '' });
+
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(result).toEqual(body);
     });
 
-    const result = await fetcher({});
+    it('throws if the fetch errored', () => {
+      const err = new Error('ohnoes');
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
 
-    expect(fetchMock.called(graphqlEndpoint)).toBeTruthy();
-    expect(result).toEqual(body);
+      fetchMock.mock(graphqlEndpoint, { throws: err });
+
+      expect.assertions(2);
+      return fetcher({
+        query: 'myQuery',
+      }).catch(result => {
+        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+        expect(result).toEqual(err);
+      });
+    });
   });
 
-  it('Will reset the auth token on an error', async () => {
-    const body = {
-      errors: [
-        {
-          type: 'unauthorized',
-        },
-      ],
-    };
-    const setAuthToken = jest.fn();
-    const fetcher = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
-      getAuthToken: () => '1234',
-      setAuthToken,
+  describe('error reporting', () => {
+    it('reports db errors', async () => {
+      const errors = [{ message: 'bad query', locations: [] }];
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, {
+        status: 200, // error code for malformed query
+        body: { data: null, errors },
+      });
+
+      await fetcher({ query: '' });
+      expect(errorReporter).toHaveBeenCalledWith(errors);
     });
 
-    fetchMock.mock(graphqlEndpoint, {
-      status: 200,
-      body,
+    it('reports GraphQL errors', async () => {
+      const body = {
+        data: null,
+        errors: [
+          { message: 'User does not have permission to access the resource', path: ['resources'] },
+        ],
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, { status: 422, body });
+
+      await fetcher({ query: '' });
+      // graphql format
+      expect(errorReporter).toHaveBeenCalledWith(body.errors);
     });
 
-    const result = await fetcher({});
+    it('reports unknown errors', async () => {
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
 
-    expect(fetchMock.called(graphqlEndpoint)).toBeTruthy();
-    expect(setAuthToken).toHaveBeenCalledWith('');
-    expect(result).toEqual(body);
+      fetchMock.mock(graphqlEndpoint, { status: 500, body: {} });
+
+      await fetcher({ query: '' });
+      // graphql format
+      expect(errorReporter).toHaveBeenCalledWith([{ message: 'Internal Server Error' }]);
+    });
+
+    it('reports auth errors', async () => {
+      const body = {
+        data: null,
+        errors: [
+          { message: 'User does not have permission to access the resource', path: ['resources'] },
+        ],
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, { status: 401, body });
+
+      await fetcher({ query: '' });
+      expect(errorReporter).toHaveBeenCalledWith(body.errors);
+    });
   });
 
-  it('Will return an error if the fetch returned one', async () => {
-    const body = {
-      errors: [
-        {
-          type: 'internal',
-          message: 'oops',
-        },
-      ],
-    };
-    const fetcher = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
-      getAuthToken: () => '1234',
+  describe('auth', () => {
+    it('throws when expired', () => {
+      // @ts-ignore
+      global.setTimeout = jest.fn(call => call());
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        wait: 1,
+        getAuthToken: () => undefined,
+      });
+
+      fetchMock.mock(graphqlEndpoint, 200);
+
+      expect.assertions(2);
+      return fetcher({ query: '' }).catch(result => {
+        expect(fetchMock.called(graphqlEndpoint)).toBe(false);
+        expect(result).toEqual(new Error('No auth token given'));
+      });
     });
 
-    fetchMock.mock(graphqlEndpoint, {
-      status: 200,
-      body,
+    it('resets token on error', async () => {
+      const setAuthToken = jest.fn();
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+        setAuthToken,
+      });
+
+      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+
+      await fetcher({ query: '' });
+      expect(setAuthToken).toHaveBeenCalledWith('');
     });
-
-    const result = await fetcher({});
-
-    expect(fetchMock.called(graphqlEndpoint)).toBeTruthy();
-    expect(result).toEqual(body);
   });
 
-  it('Will return the an error if auth token request expired', async () => {
-    // @ts-ignore
-    global.setTimeout = jest.fn(call => call());
-    const fetcher = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
-      wait: 1,
-      getAuthToken: () => undefined,
+  // Note: we’re testing status codes ahead-of-time, to ensure handling of them doesn’t change
+  describe('responses by status codes', () => {
+    it('200: OK', async () => {
+      const body = {
+        data: null,
+        errors: [{ message: 'no results', locations: [] }],
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, {
+        status: 200, // error code for DB error (e.g. nothing returned)
+        body,
+      });
+
+      const result = await fetcher({ query: '' });
+
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(result).toEqual(body);
     });
 
-    fetchMock.mock(graphqlEndpoint, 200);
+    it('401: unauthorized (token expired)', async () => {
+      const body = {
+        data: null,
+        errors: [
+          { message: 'User does not have permission to access the resource', path: ['resources'] },
+        ],
+      };
 
-    const result = await fetcher({});
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
 
-    expect(fetchMock.called(graphqlEndpoint)).toBeFalsy();
-    expect(result).toEqual({
-      errors: [
-        {
-          type: 'unauthorized',
-          message: 'No auth token given',
-        },
-      ],
+      fetchMock.mock(graphqlEndpoint, { status: 401, body });
+
+      const result = await fetcher({ query: '' });
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(result).toEqual(body);
+    });
+
+    it('422: should return (bad gql query)', async () => {
+      const body = {
+        data: null,
+        errors: [{ message: 'illegal base32 data at input byte 4', path: ['product'] }],
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, { status: 422, body });
+
+      const result = await fetcher({ query: '' });
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(result).toEqual(body);
+    });
+
+    it('500: returns generic message if none given', async () => {
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, {
+        status: 500, // error code for something that went wrong
+        body: {},
+      });
+
+      const result = await fetcher({ query: '' });
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(result).toEqual({
+        data: null,
+        errors: [{ message: 'Internal Server Error' }],
+      });
     });
   });
 });
