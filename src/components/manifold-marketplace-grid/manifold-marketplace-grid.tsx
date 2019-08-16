@@ -94,7 +94,10 @@ export class ManifoldMarketplaceGrid {
     }
 
     const services = this.products.length
-      ? this.services.filter(s => this.products.includes(s.body.label))
+      ? this.products.reduce<Catalog.Product[]>((all, p) => {
+          const s = this.services.find(s => s.body.label === p);
+          return s ? all.concat(s) : all;
+        }, [])
       : this.services;
 
     // Handle search
