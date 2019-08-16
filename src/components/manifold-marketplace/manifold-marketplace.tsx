@@ -11,8 +11,6 @@ export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
-  /** Comma-separated list of hidden products (labels) */
-  @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   /** Hide categories & side menu? */
@@ -30,7 +28,6 @@ export class ManifoldMarketplace {
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
   @State() freeProducts?: string[];
-  @State() parsedExcludes: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
   @State() services: Catalog.Product[] = [];
@@ -104,9 +101,6 @@ export class ManifoldMarketplace {
     if (typeof this.featured === 'string') {
       this.parsedFeatured = this.parse(this.featured);
     }
-    if (typeof this.excludes === 'string') {
-      this.parsedExcludes = this.parse(this.excludes);
-    }
     if (typeof this.products === 'string') {
       this.parsedProducts = this.parse(this.products);
     }
@@ -118,7 +112,6 @@ export class ManifoldMarketplace {
 
     return (
       <manifold-marketplace-grid
-        excludes={this.parsedExcludes}
         featured={this.parsedFeatured}
         freeProducts={this.freeProducts}
         hideCategories={this.hideCategories}

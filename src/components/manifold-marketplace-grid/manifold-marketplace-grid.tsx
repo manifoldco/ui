@@ -18,7 +18,6 @@ import logger from '../../utils/logger';
 })
 export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
-  @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];
   @Prop() freeProducts?: string[] = [];
   @Prop() hideCategories?: boolean = false;
@@ -26,8 +25,8 @@ export class ManifoldMarketplaceGrid {
   @Prop() hideTemplates?: boolean = false;
   @Prop() preserveEvent: boolean = false;
   @Prop() productLinkFormat?: string;
-  @Prop() products?: string[] = [];
-  @Prop() services?: Catalog.Product[];
+  @Prop() products: string[] = [];
+  @Prop() services: Catalog.Product[] = [];
   @Prop() skeleton?: boolean = false;
   @Prop() templateLinkFormat?: string;
   @State() filter: string | null;
@@ -90,34 +89,17 @@ export class ManifoldMarketplaceGrid {
   }
 
   get filteredServices(): Catalog.Product[] {
-    let services: Catalog.Product[] = [];
-
-    // If not including, start out with all services
-    if (this.products && !this.products.length) {
-      services = this.services || []; // eslint-disable-line prefer-destructuring
+    if (this.skeleton) {
+      return this.services;
     }
 
-    // Handle includes
-    if (Array.isArray(this.products)) {
-      this.products.forEach(product => {
-        const service =
-          this.services && this.services.find(({ body: { label } }) => label === product);
-        if (service) {
-          services.push(service);
-        }
-      });
-    }
-
-    // Handle excludes
-    if (Array.isArray(this.excludes)) {
-      services = services.filter(
-        ({ body: { label } }) => this.excludes && !this.excludes.includes(label)
-      );
-    }
+    const services = this.products.length
+      ? this.services.filter(s => this.products.includes(s.body.label))
+      : this.services;
 
     // Handle search
     if (this.filter && this.filter.length) {
-      services = filteredServices(this.filter, services);
+      return filteredServices(this.filter, services);
     }
 
     return services;

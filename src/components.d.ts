@@ -290,10 +290,6 @@ export namespace Components {
   }
   interface ManifoldMarketplace {
     /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'excludes'?: string;
-    /**
     * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
@@ -331,7 +327,6 @@ export namespace Components {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMarketplaceGrid {
-    'excludes'?: string[];
     'featured'?: string[];
     'freeProducts'?: string[];
     'hideCategories'?: boolean;
@@ -339,8 +334,8 @@ export namespace Components {
     'hideTemplates'?: boolean;
     'preserveEvent': boolean;
     'productLinkFormat'?: string;
-    'products'?: string[];
-    'services'?: Catalog.Product[];
+    'products': string[];
+    'services': Catalog.Product[];
     'skeleton'?: boolean;
     'templateLinkFormat'?: string;
   }
@@ -1335,10 +1330,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
     /**
-    * Comma-separated list of hidden products (labels)
-    */
-    'excludes'?: string;
-    /**
     * Comma-separated list of featured products (labels)
     */
     'featured'?: string;
@@ -1376,7 +1367,6 @@ declare namespace LocalJSX {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
-    'excludes'?: string[];
     'featured'?: string[];
     'freeProducts'?: string[];
     'hideCategories'?: boolean;
