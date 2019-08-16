@@ -1,5 +1,6 @@
 import { hasExpired } from './expiry';
 import { report } from './errorReport';
+import { EventEmitter } from '@stencil/core';
 
 interface CreateGraphqlFetch {
   endpoint?: string;
@@ -9,8 +10,8 @@ interface CreateGraphqlFetch {
 }
 
 type graphqlArgs =
-  | { mutation: string; variables?: object; isPublic?: boolean }
-  | { query: string; variables?: object; isPublic?: boolean }; // require query or mutation, but not both
+  | { mutation: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }
+  | { query: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }; // require query or mutation, but not both
 
 interface GraphqlError {
   message: string;
@@ -33,7 +34,7 @@ export function createGraphqlFetch({
 }: CreateGraphqlFetch): GraphqlFetch {
   return async function graphqlFetch<T>(args: graphqlArgs): Promise<GraphqlResponseBody<T>> {
     const start = new Date();
-    const { isPublic, ...request } = args;
+    const { isPublic, emitter, ...request } = args;
 
     if (!isPublic) {
       while (!getAuthToken() && !hasExpired(start, wait)) {
@@ -85,6 +86,21 @@ export function createGraphqlFetch({
     // report errors if any, but continue
     if (body.errors) {
       report(body.errors);
+    }
+
+    const fetchDuration = new Date().getTime() - start.getTime();
+    if (emitter) {
+      emitter.emit({
+        type: 'graphql-fetch-duration',
+        request,
+        duration: fetchDuration,
+      });
+    } else {
+      document.dispatchEvent(
+        new CustomEvent('graphql-fetch-duration', {
+          detail: { request, duration: fetchDuration },
+        })
+      );
     }
 
     // return everything to the user

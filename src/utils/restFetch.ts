@@ -1,3 +1,4 @@
+import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
 import { withAuth } from './auth';
 import { hasExpired } from './expiry';
@@ -16,6 +17,7 @@ interface RestFetchArguments {
   body?: object;
   options?: Omit<RequestInit, 'body'>;
   isPublic?: boolean;
+  emitter?: EventEmitter;
 }
 
 type Success = undefined;
@@ -72,6 +74,20 @@ export function createRestFetch({
 
     const body = await response.json();
     if (response.status >= 200 && response.status < 300) {
+      const fetchDuration = new Date().getTime() - start.getTime();
+      if (args.emitter) {
+        args.emitter.emit({
+          type: 'rest-fetch-duration',
+          endpoint: args.endpoint,
+          duration: fetchDuration,
+        });
+      } else {
+        document.dispatchEvent(
+          new CustomEvent('rest-fetch-duration', {
+            detail: { endpoint: args.endpoint, duration: fetchDuration },
+          })
+        );
+      }
       return body;
     }
 
