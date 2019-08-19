@@ -101,8 +101,8 @@
 
 .sidebar {
   position: relative;
-  max-width: 20rem;
   top: var(--overlap);
+  max-width: 20rem;
   margin-right: auto;
   margin-left: auto;
 }
