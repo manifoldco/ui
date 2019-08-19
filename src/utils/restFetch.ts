@@ -32,6 +32,7 @@ export function createRestFetch({
 }: CreateRestFetch): RestFetch {
   return async function restFetch<T>(args: RestFetchArguments): Promise<T | Success> {
     const start = new Date();
+    const rttStart = performance.now();
 
     // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
     // but this prevents the ability for it to auth altogether. We need both!
@@ -74,7 +75,7 @@ export function createRestFetch({
 
     const body = await response.json();
     if (response.status >= 200 && response.status < 300) {
-      const fetchDuration = new Date().getTime() - start.getTime();
+      const fetchDuration = performance.now() - rttStart;
       if (args.emitter) {
         args.emitter.emit({
           type: 'rest-fetch-duration',
@@ -84,6 +85,7 @@ export function createRestFetch({
       } else {
         document.dispatchEvent(
           new CustomEvent('rest-fetch-duration', {
+            bubbles: true,
             detail: { endpoint: args.endpoint, duration: fetchDuration },
           })
         );

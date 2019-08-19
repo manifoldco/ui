@@ -34,6 +34,7 @@ export function createGraphqlFetch({
 }: CreateGraphqlFetch): GraphqlFetch {
   return async function graphqlFetch<T>(args: graphqlArgs): Promise<GraphqlResponseBody<T>> {
     const start = new Date();
+    const rttStart = performance.now();
     const { isPublic, emitter, ...request } = args;
 
     if (!isPublic) {
@@ -88,7 +89,7 @@ export function createGraphqlFetch({
       report(body.errors);
     }
 
-    const fetchDuration = new Date().getTime() - start.getTime();
+    const fetchDuration = performance.now() - rttStart;
     if (emitter) {
       emitter.emit({
         type: 'graphql-fetch-duration',
@@ -98,6 +99,7 @@ export function createGraphqlFetch({
     } else {
       document.dispatchEvent(
         new CustomEvent('graphql-fetch-duration', {
+          bubbles: true,
           detail: { request, duration: fetchDuration },
         })
       );

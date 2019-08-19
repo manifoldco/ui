@@ -1,3 +1,4 @@
+import { EventEmitter } from '@stencil/core';
 import fetchMock from 'fetch-mock';
 
 const errorReporter = jest.fn();
@@ -248,6 +249,55 @@ describe('graphqlFetch', () => {
       expect(result).toEqual({
         data: null,
         errors: [{ message: 'Internal Server Error' }],
+      });
+    });
+  });
+  describe('metrics', () => {
+    it('emits a metrics event from document when no EventEmitter supplied', async () => {
+      const body = {
+        data: null,
+        errors: [{ message: 'no results', locations: [] }],
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, {
+        status: 200, // error code for DB error (e.g. nothing returned)
+        body,
+      });
+
+      let event: CustomEvent | undefined;
+      addEventListener('graphql-fetch-duration', e => {
+        event = e as CustomEvent;
+      });
+
+      await fetcher({ query: '' });
+      event && event.detail && expect(event.detail.duration).toBeDefined;
+    });
+    it('emits a metrics event from an EventEmitter when supplied', async () => {
+      const body = {
+        data: null,
+        errors: [{ message: 'no results', locations: [] }],
+      };
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+
+      fetchMock.mock(graphqlEndpoint, {
+        status: 200, // error code for DB error (e.g. nothing returned)
+        body,
+      });
+
+      let emitter: EventEmitter = {
+        emit: jest.fn(),
+      };
+
+      await fetcher({ query: '', emitter });
+      expect((emitter.emit as jest.Mock).mock.calls[0][0]).toMatchObject({
+        type: 'graphql-fetch-duration',
       });
     });
   });
