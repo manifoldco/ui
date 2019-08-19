@@ -64,3 +64,12 @@ Stencil’s web components work for more browsers than even have web component
 support [via a polyfill][stencil-browsers]. It’s great to have built-in
 support, but sometimes webpack can accidentally bundle the polyfill when it
 doesn’t need to. We’ve found the best fix to be **code splitting** (above).
+
+## Metrics
+
+RTT of endpoint calls are calculated and emitted as events - either from
+`document` or from an `EventEmitter` supplied by the component calling the
+endpoint.
+
+A solution to listen for and log these events is currently left as an
+implementation detail on the platform side.
