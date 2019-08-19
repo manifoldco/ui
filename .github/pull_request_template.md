@@ -17,7 +17,7 @@
 
 <!-- are all the steps completed? -->
 
-- [ ] **CHANGELOG**: The **Unreleased** section of CHANGELOG was updated (and `npm run copy-changelog` was run)
+- [ ] **CHANGELOG**: The **Unreleased** section of CHANGELOG was updated
 - [ ] **Prop changes**: [docs][docs] were updated
 - [ ] **Prop changes**: E2E tests were updated, testing from the highest level possible
 
