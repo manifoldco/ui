@@ -39,6 +39,7 @@ big payoffs.
 [fmp]: https://developers.google.com/web/tools/lighthouse/audits/first-meaningful-paint
 [import]: https://webpack.js.org/guides/code-splitting/#dynamic-imports
 [stencil-browsers]: https://stenciljs.com/docs/browser-support
+[rtt]: https://developer.mozilla.org/en-US/docs/Glossary/Round_Trip_Time_(RTT)
 
 ## Other Gotchas
 
@@ -64,3 +65,18 @@ Stencil’s web components work for more browsers than even have web component
 support [via a polyfill][stencil-browsers]. It’s great to have built-in
 support, but sometimes webpack can accidentally bundle the polyfill when it
 doesn’t need to. We’ve found the best fix to be **code splitting** (above).
+
+## Metrics
+
+[RTT][rtt] of endpoint calls are calculated and emitted as events - either from
+`document` or from an `EventEmitter` supplied by the component calling the
+endpoint.
+
+A solution to listen for and log these events is currently left as an
+implementation detail on the platform side:
+
+```js
+document.addEventListener('manifold-rest-fetch-duration', { detail } => {
+  console.log(detail); // { endpoint: "/catalog/products", duration: 95 }
+});
+```

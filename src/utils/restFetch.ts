@@ -1,3 +1,4 @@
+import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
 import { withAuth } from './auth';
 import { hasExpired } from './expiry';
@@ -16,6 +17,7 @@ interface RestFetchArguments {
   body?: object;
   options?: Omit<RequestInit, 'body'>;
   isPublic?: boolean;
+  emitter?: EventEmitter;
 }
 
 type Success = undefined;
@@ -30,6 +32,7 @@ export function createRestFetch({
 }: CreateRestFetch): RestFetch {
   return async function restFetch<T>(args: RestFetchArguments): Promise<T | Success> {
     const start = new Date();
+    const rttStart = performance.now();
 
     // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
     // but this prevents the ability for it to auth altogether. We need both!
@@ -72,6 +75,21 @@ export function createRestFetch({
 
     const body = await response.json();
     if (response.status >= 200 && response.status < 300) {
+      const fetchDuration = performance.now() - rttStart;
+      if (args.emitter) {
+        args.emitter.emit({
+          type: 'manifold-rest-fetch-duration',
+          endpoint: args.endpoint,
+          duration: fetchDuration,
+        });
+      } else {
+        document.dispatchEvent(
+          new CustomEvent('manifold-rest-fetch-duration', {
+            bubbles: true,
+            detail: { endpoint: args.endpoint, duration: fetchDuration },
+          })
+        );
+      }
       return body;
     }
 

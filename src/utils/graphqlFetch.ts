@@ -1,3 +1,4 @@
+import { EventEmitter } from '@stencil/core';
 import { hasExpired } from './expiry';
 import { report } from './errorReport';
 
@@ -9,8 +10,8 @@ interface CreateGraphqlFetch {
 }
 
 type graphqlArgs =
-  | { mutation: string; variables?: object; isPublic?: boolean }
-  | { query: string; variables?: object; isPublic?: boolean }; // require query or mutation, but not both
+  | { mutation: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }
+  | { query: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }; // require query or mutation, but not both
 
 interface GraphqlError {
   message: string;
@@ -33,7 +34,8 @@ export function createGraphqlFetch({
 }: CreateGraphqlFetch): GraphqlFetch {
   return async function graphqlFetch<T>(args: graphqlArgs): Promise<GraphqlResponseBody<T>> {
     const start = new Date();
-    const { isPublic, ...request } = args;
+    const rttStart = performance.now();
+    const { isPublic, emitter, ...request } = args;
 
     if (!isPublic) {
       while (!getAuthToken() && !hasExpired(start, wait)) {
@@ -85,6 +87,22 @@ export function createGraphqlFetch({
     // report errors if any, but continue
     if (body.errors) {
       report(body.errors);
+    }
+
+    const fetchDuration = performance.now() - rttStart;
+    if (emitter) {
+      emitter.emit({
+        type: 'manifold-graphql-fetch-duration',
+        request,
+        duration: fetchDuration,
+      });
+    } else {
+      document.dispatchEvent(
+        new CustomEvent('manifold-graphql-fetch-duration', {
+          bubbles: true,
+          detail: { request, duration: fetchDuration },
+        })
+      );
     }
 
     // return everything to the user
