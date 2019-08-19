@@ -166,7 +166,7 @@ describe('The fetcher created by createRestFetch', () => {
     fetchMock.mock('path:/v1/test', {});
 
     let event: CustomEvent | undefined;
-    window.addEventListener('rest-fetch-duration', e => {
+    window.addEventListener('manifold-rest-fetch-duration', e => {
       event = e as CustomEvent;
     });
 
@@ -186,7 +186,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     await fetcher({ endpoint: '/test', service: 'marketplace', emitter });
     expect((emitter.emit as jest.Mock).mock.calls[0][0]).toMatchObject({
-      type: 'rest-fetch-duration',
+      type: 'manifold-rest-fetch-duration',
     });
   });
 });

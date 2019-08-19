@@ -78,13 +78,13 @@ export function createRestFetch({
       const fetchDuration = performance.now() - rttStart;
       if (args.emitter) {
         args.emitter.emit({
-          type: 'rest-fetch-duration',
+          type: 'manifold-rest-fetch-duration',
           endpoint: args.endpoint,
           duration: fetchDuration,
         });
       } else {
         document.dispatchEvent(
-          new CustomEvent('rest-fetch-duration', {
+          new CustomEvent('manifold-rest-fetch-duration', {
             bubbles: true,
             detail: { endpoint: args.endpoint, duration: fetchDuration },
           })

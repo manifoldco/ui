@@ -269,7 +269,7 @@ describe('graphqlFetch', () => {
       });
 
       let event: CustomEvent | undefined;
-      window.addEventListener('graphql-fetch-duration', e => {
+      window.addEventListener('manifold-graphql-fetch-duration', e => {
         event = e as CustomEvent;
       });
 
@@ -297,7 +297,7 @@ describe('graphqlFetch', () => {
 
       await fetcher({ query: '', emitter });
       expect((emitter.emit as jest.Mock).mock.calls[0][0]).toMatchObject({
-        type: 'graphql-fetch-duration',
+        type: 'manifold-graphql-fetch-duration',
       });
     });
   });

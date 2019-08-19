@@ -92,13 +92,13 @@ export function createGraphqlFetch({
     const fetchDuration = performance.now() - rttStart;
     if (emitter) {
       emitter.emit({
-        type: 'graphql-fetch-duration',
+        type: 'manifold-graphql-fetch-duration',
         request,
         duration: fetchDuration,
       });
     } else {
       document.dispatchEvent(
-        new CustomEvent('graphql-fetch-duration', {
+        new CustomEvent('manifold-graphql-fetch-duration', {
           bubbles: true,
           detail: { request, duration: fetchDuration },
         })
