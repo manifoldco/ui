@@ -100,11 +100,10 @@
 }
 
 .sidebar {
-  position: relative;
-  top: var(--overlap);
   max-width: 20rem;
   margin-right: auto;
   margin-left: auto;
+  padding-top: var(--overlap);
 }
 
 .sidebar-cta {
@@ -116,10 +115,6 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.sidebar-inner {
-  position: sticky;
 }
 
 .sidebar-section {
