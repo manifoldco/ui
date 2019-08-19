@@ -166,12 +166,12 @@ describe('The fetcher created by createRestFetch', () => {
     fetchMock.mock('path:/v1/test', {});
 
     let event: CustomEvent | undefined;
-    addEventListener('rest-fetch-duration', e => {
+    window.addEventListener('rest-fetch-duration', e => {
       event = e as CustomEvent;
     });
 
     await fetcher({ endpoint: '/test', service: 'marketplace' });
-    event && event.detail && expect(event.detail.duration).toBeDefined;
+    expect(event && event.detail && event.detail.duration).toBeDefined();
   });
   it('emits a metrics event from an EventEmitter when supplied', async () => {
     const fetcher = createRestFetch({
@@ -180,7 +180,7 @@ describe('The fetcher created by createRestFetch', () => {
 
     fetchMock.mock('path:/v1/test', {});
 
-    let emitter: EventEmitter = {
+    const emitter: EventEmitter = {
       emit: jest.fn(),
     };
 

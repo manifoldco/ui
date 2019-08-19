@@ -269,12 +269,12 @@ describe('graphqlFetch', () => {
       });
 
       let event: CustomEvent | undefined;
-      addEventListener('graphql-fetch-duration', e => {
+      window.addEventListener('graphql-fetch-duration', e => {
         event = e as CustomEvent;
       });
 
       await fetcher({ query: '' });
-      event && event.detail && expect(event.detail.duration).toBeDefined;
+      expect(event && event.detail && event.detail.duration).toBeDefined();
     });
     it('emits a metrics event from an EventEmitter when supplied', async () => {
       const body = {
@@ -291,7 +291,7 @@ describe('graphqlFetch', () => {
         body,
       });
 
-      let emitter: EventEmitter = {
+      const emitter: EventEmitter = {
         emit: jest.fn(),
       };
 
