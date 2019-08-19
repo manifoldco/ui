@@ -102,9 +102,9 @@
 .sidebar {
   position: relative;
   max-width: 20rem;
+  top: var(--overlap);
   margin-right: auto;
   margin-left: auto;
-  top: var(--overlap);
 }
 
 .sidebar-cta {
