@@ -22,10 +22,8 @@ describe('<manifold-data-sso-button>', () => {
       wait: 10,
       setAuthToken: jest.fn(),
     });
-  });
 
-  afterEach(() => {
-    fetchMock.restore();
+    fetchMock.reset();
   });
 
   it('fetches resource id on change if not set', () => {
@@ -96,109 +94,6 @@ describe('<manifold-data-sso-button>', () => {
   });
 
   describe('When sending a request to sso', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
-    beforeEach(() => {
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${Resource.body.label}`, [
-        Resource,
-      ]);
-    });
-
-    const authCode: Connector.AuthorizationCode = {
-      id: '1',
-      type: 'authorization_code',
-      version: '1',
-      body: {
-        code: '1234',
-        redirect_uri: 'http://test.test',
-        user_id: '1',
-        resource_id: Resource.id,
-        created_at: '2019-04-25T22:11:06.691Z',
-        expires_at: '2019-04-25T22:11:06.691Z',
-      },
-    };
-
-    it('will trigger a dom event on successful sso', async () => {
-      const onClick = jest.fn();
-      const onSuccess = jest.fn();
-      fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
-
-      const root = page.root as HTMLElement;
-      element.resourceLabel = Resource.body.label;
-      root.appendChild(element);
-      await page.waitForChanges();
-
-      element.addEventListener('manifold-ssoButton-click', onClick);
-      element.addEventListener('manifold-ssoButton-success', onSuccess);
-
-      const button = element.querySelector('button') as HTMLElement;
-      expect(button).toBeDefined();
-
-      button.click();
-      await page.waitForChanges();
-      // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
-      // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
-      expect(onClick).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: {
-            resourceLabel: Resource.body.label,
-            resourceId: Resource.id,
-          },
-        })
-      );
-      expect(onSuccess).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: {
-            message: `${Resource.body.label} successfully ssoed`,
-            resourceLabel: Resource.body.label,
-            resourceId: Resource.id,
-            redirectUrl: authCode.body.redirect_uri,
-          },
-        })
-      );
-    });
-
-    it('will trigger a dom event on failed sso', async () => {
-      const onError = jest.fn();
-      fetchMock.mock(`${connections.prod.connector}/sso`, {
-        status: 500,
-        body: {
-          message: 'ohnoes',
-        },
-      });
-
-      const root = page.root as HTMLElement;
-      element.resourceLabel = Resource.body.label;
-      root.appendChild(element);
-      await page.waitForChanges();
-
-      element.addEventListener('manifold-ssoButton-error', onError);
-      const button = element.querySelector('button') as HTMLElement;
-      expect(button).toBeDefined();
-
-      button.click();
-      await page.waitForChanges();
-      // TODO: wait for changes does not wait for all events to finish emitting.... WHYYYYYYY
-      // TODO: Wait on this: https://github.com/ionic-team/stencil/issues/1781
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
-      expect(onError).toHaveBeenCalledWith(
-        expect.objectContaining({
-          detail: {
-            message: 'ohnoes',
-            resourceLabel: Resource.body.label,
-            resourceId: Resource.id,
-          },
-        })
-      );
-    });
-
     it('will do nothing if still loading', async () => {
       fetchMock
         .mock(`${connections.prod.marketplace}/resources/?me&label=test`, [])
@@ -234,6 +129,112 @@ describe('<manifold-data-sso-button>', () => {
       await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(false);
+    });
+  });
+
+  describe('events', () => {
+    beforeEach(() => fetchMock.mock(/\/resources\//, [Resource]));
+
+    const authCode: Connector.AuthorizationCode = {
+      id: '1',
+      type: 'authorization_code',
+      version: '1',
+      body: {
+        code: '1234',
+        redirect_uri: 'http://test.test',
+        user_id: '1',
+        resource_id: Resource.id,
+        created_at: '2019-04-25T22:11:06.691Z',
+        expires_at: '2019-04-25T22:11:06.691Z',
+      },
+    };
+
+    it('click', async () => {
+      fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
+
+      const resourceLabel = 'click-label';
+      element.resourceLabel = resourceLabel;
+      page.root.appendChild(element);
+      await page.waitForChanges();
+
+      const onClick = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        onClick.mockImplementation(() => resolve());
+        element.addEventListener('manifold-ssoButton-click', onClick);
+        element.querySelector('button').click();
+      });
+
+      expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
+      expect(onClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            resourceLabel,
+            resourceId: Resource.id,
+          },
+        })
+      );
+    });
+
+    it('error', async () => {
+      const message = 'ohnoes';
+      fetchMock.mock(`${connections.prod.connector}/sso`, {
+        status: 500,
+        body: { message },
+      });
+
+      const resourceLabel = 'error-label';
+      element.resourceLabel = resourceLabel;
+      page.root.appendChild(element);
+      await page.waitForChanges();
+
+      const onError = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        onError.mockImplementation(() => resolve());
+        element.addEventListener('manifold-ssoButton-error', onError);
+        element.querySelector('button').click();
+      });
+
+      expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
+      expect(onError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message,
+            resourceLabel,
+            resourceId: Resource.id,
+          },
+        })
+      );
+    });
+
+    it('success', async () => {
+      fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
+
+      const resourceLabel = 'success-label';
+      element.resourceLabel = resourceLabel;
+      page.root.appendChild(element);
+      await page.waitForChanges();
+
+      const onSuccess = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        onSuccess.mockImplementation(() => resolve());
+        element.addEventListener('manifold-ssoButton-success', onSuccess);
+        element.querySelector('button').click();
+      });
+
+      expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
+      expect(onSuccess).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: `${resourceLabel} successfully ssoed`,
+            resourceLabel,
+            resourceId: Resource.id,
+            redirectUrl: authCode.body.redirect_uri,
+          },
+        })
+      );
     });
   });
 });
