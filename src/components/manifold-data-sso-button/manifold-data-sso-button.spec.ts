@@ -152,17 +152,22 @@ describe('<manifold-data-sso-button>', () => {
     it('click', async () => {
       fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
 
+      if (!page.root) throw new Error('<manifold-sso-button> not found in document');
+
       const resourceLabel = 'click-label';
       element.resourceLabel = resourceLabel;
       page.root.appendChild(element);
       await page.waitForChanges();
+
+      const button = element.querySelector('button');
+      if (!button) throw new Error('button not found in document');
 
       const onClick = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         onClick.mockImplementation(() => resolve());
         element.addEventListener('manifold-ssoButton-click', onClick);
-        element.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
@@ -183,17 +188,22 @@ describe('<manifold-data-sso-button>', () => {
         body: { message },
       });
 
+      if (!page.root) throw new Error('<manifold-sso-button> not found in document');
+
       const resourceLabel = 'error-label';
       element.resourceLabel = resourceLabel;
       page.root.appendChild(element);
       await page.waitForChanges();
+
+      const button = element.querySelector('button');
+      if (!button) throw new Error('button not found in document');
 
       const onError = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         onError.mockImplementation(() => resolve());
         element.addEventListener('manifold-ssoButton-error', onError);
-        element.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);
@@ -211,17 +221,22 @@ describe('<manifold-data-sso-button>', () => {
     it('success', async () => {
       fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
 
+      if (!page.root) throw new Error('<manifold-sso-button> not found in document');
+
       const resourceLabel = 'success-label';
       element.resourceLabel = resourceLabel;
       page.root.appendChild(element);
       await page.waitForChanges();
+
+      const button = element.querySelector('button');
+      if (!button) throw new Error('button not found in document');
 
       const onSuccess = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         onSuccess.mockImplementation(() => resolve());
         element.addEventListener('manifold-ssoButton-success', onSuccess);
-        element.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.connector}/sso`)).toBe(true);

@@ -176,9 +176,12 @@ describe('<manifold-data-rename-button>', () => {
             ></manifold-service-card-view>`,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       // listen for event and fire
       page.doc.addEventListener('manifold-renameButton-click', mockClick);
-      page.root.querySelector('button').click();
+      button.click();
 
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({ detail: { newLabel, resourceLabel, resourceId } })
@@ -200,10 +203,13 @@ describe('<manifold-data-rename-button>', () => {
             ></manifold-service-card-view>`,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       // listen for event and fire
       const mockClick = jest.fn();
       page.doc.addEventListener('manifold-renameButton-invalid', mockClick);
-      page.root.querySelector('button').click();
+      button.click();
 
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({
@@ -232,10 +238,13 @@ describe('<manifold-data-rename-button>', () => {
             ></manifold-service-card-view>`,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       // listen for event and fire
       const mockClick = jest.fn();
       page.doc.addEventListener('manifold-renameButton-invalid', mockClick);
-      page.root.querySelector('button').click();
+      button.click();
 
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({
@@ -266,12 +275,15 @@ describe('<manifold-data-rename-button>', () => {
         `,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       const mockClick = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         mockClick.mockImplementation(() => resolve());
         page.doc.addEventListener('manifold-renameButton-error', mockClick);
-        page.root.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.marketplace}/resources/${resourceId}`)).toBe(
@@ -300,12 +312,15 @@ describe('<manifold-data-rename-button>', () => {
         `,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       const mockClick = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         mockClick.mockImplementation(() => resolve());
         page.doc.addEventListener('manifold-renameButton-success', mockClick);
-        page.root.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.marketplace}/resources/${resourceId}`)).toBe(

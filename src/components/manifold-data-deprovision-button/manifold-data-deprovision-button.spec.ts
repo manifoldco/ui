@@ -193,10 +193,13 @@ describe('<manifold-data-deprovision-button>', () => {
         `,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       // listen for event and fire
       const mockClick = jest.fn();
       page.doc.addEventListener('manifold-deprovisionButton-click', mockClick);
-      page.root.querySelector('button').click();
+      button.click();
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
       expect(mockClick).toHaveBeenCalledWith(
@@ -224,12 +227,15 @@ describe('<manifold-data-deprovision-button>', () => {
         `,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       const mockClick = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         mockClick.mockImplementation(() => resolve());
         page.doc.addEventListener('manifold-deprovisionButton-error', mockClick);
-        page.root.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
@@ -257,12 +263,15 @@ describe('<manifold-data-deprovision-button>', () => {
         `,
       });
 
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
       const mockClick = jest.fn();
       await new Promise(resolve => {
         // listen for event and fire
         mockClick.mockImplementation(() => resolve());
         page.doc.addEventListener('manifold-deprovisionButton-success', mockClick);
-        page.root.querySelector('button').click();
+        button.click();
       });
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
