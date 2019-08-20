@@ -1548,9 +1548,6 @@ declare namespace LocalJSX {
   interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
-    'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
@@ -1586,17 +1583,10 @@ declare namespace LocalJSX {
     * The new label to give to the resource
     */
     'newLabel'?: string;
-    'onManifold-renameButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
-    'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceSso extends JSXBase.HTMLAttributes<HTMLManifoldResourceSsoElement> {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
-    'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-ssoButton-success'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
     'data'?: Gateway.Resource;

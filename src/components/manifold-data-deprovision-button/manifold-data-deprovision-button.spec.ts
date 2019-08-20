@@ -75,9 +75,7 @@ describe('<manifold-data-deprovision-button>', () => {
     it('will fetch the resource id', async () => {
       const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
-        Resource,
-      ]);
+      fetchMock.mock(/\/resources\/\?me/, [Resource]);
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
@@ -99,7 +97,7 @@ describe('<manifold-data-deprovision-button>', () => {
     it('will do nothing on a fetch error', async () => {
       const resourceLabel = 'new-resource';
 
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
+      fetchMock.mock(/\/resources\/\?me/, []);
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
@@ -128,10 +126,8 @@ describe('<manifold-data-deprovision-button>', () => {
       fetchMock.mock('path:/v1/resources/', [Resource]);
     });
 
-    it('will trigger a dom event on successful deprovision', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, {
-        status: 202,
-      });
+    it('will do nothing if still loading', async () => {
+      fetchMock.mock(/\/id\/resource\//, 200);
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
@@ -139,64 +135,6 @@ describe('<manifold-data-deprovision-button>', () => {
           <manifold-data-deprovision-button
             resource-label="test"
           >Deprovision</manifold-data-deprovision-button>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.success.emit = jest.fn();
-
-      await instance.deprovision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
-      expect(instance.success.emit).toHaveBeenCalledWith({
-        message: 'test successfully deprovisioned',
-        resourceLabel: 'test',
-        resourceId: Resource.id,
-      });
-    });
-
-    it('will trigger a dom event on failed deprovision', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, {
-        status: 500,
-        body: {
-          message: 'ohnoes',
-        },
-      });
-
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="test"
-          >Provision</manifold-data-deprovision-button>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.error.emit = jest.fn();
-
-      expect.assertions(2);
-      return instance.deprovision().catch(() => {
-        expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
-          true
-        );
-        expect(instance.error.emit).toHaveBeenCalledWith({
-          message: 'ohnoes',
-          resourceLabel: 'test',
-          resourceId: Resource.id,
-        });
-      });
-    });
-
-    it('will do nothing if still loading', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="test"
-          >Provision</manifold-data-deprovision-button>
         `,
       });
 
@@ -211,14 +149,14 @@ describe('<manifold-data-deprovision-button>', () => {
     });
 
     it('will do nothing if no resourceId is provided', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/id/resource/${Resource.id}`, 200);
+      fetchMock.mock(/\/id\/resource\//, 200);
 
       const page = await newSpecPage({
         components: [ManifoldDataDeprovisionButton],
         html: `
           <manifold-data-deprovision-button
             resource-label="test"
-          >Provision</manifold-data-deprovision-button>
+          >Deprovision</manifold-data-deprovision-button>
         `,
       });
 
@@ -229,6 +167,122 @@ describe('<manifold-data-deprovision-button>', () => {
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
         false
+      );
+    });
+  });
+
+  describe('events', () => {
+    beforeEach(() => {
+      fetchMock.mock(/\/resources\/\?me/, [Resource]);
+    });
+    afterEach(() => {
+      fetchMock.restore();
+    });
+
+    it('click', async () => {
+      fetchMock.mock(/\/id\/resource\//, 202);
+
+      const resourceLabel = 'click-label';
+
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="${resourceLabel}"
+          >Deprovision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      // listen for event and fire
+      const mockClick = jest.fn();
+      page.doc.addEventListener('manifold-deprovisionButton-click', mockClick);
+      button.click();
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
+      expect(mockClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            resourceLabel,
+            resourceId: Resource.id,
+          },
+        })
+      );
+    });
+
+    it('error', async () => {
+      const message = 'ohnoes';
+
+      fetchMock.mock(/\/id\/resource\//, { status: 500, body: { message } });
+
+      const resourceLabel = 'error-label';
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="${resourceLabel}"
+          >Deprovision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      const mockClick = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        mockClick.mockImplementation(() => resolve());
+        page.doc.addEventListener('manifold-deprovisionButton-error', mockClick);
+        button.click();
+      });
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
+      expect(mockClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message,
+            resourceLabel,
+            resourceId: Resource.id,
+          },
+        })
+      );
+    });
+
+    it('success', async () => {
+      fetchMock.mock(/\/id\/resource\//, 202);
+
+      const resourceLabel = 'success-label';
+      const page = await newSpecPage({
+        components: [ManifoldDataDeprovisionButton],
+        html: `
+          <manifold-data-deprovision-button
+            resource-label="${resourceLabel}"
+          >Deprovision</manifold-data-deprovision-button>
+        `,
+      });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      const mockClick = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        mockClick.mockImplementation(() => resolve());
+        page.doc.addEventListener('manifold-deprovisionButton-success', mockClick);
+        button.click();
+      });
+
+      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
+      expect(mockClick).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: `${resourceLabel} successfully deprovisioned`,
+            resourceLabel,
+            resourceId: Resource.id,
+          },
+        })
       );
     });
   });
