@@ -25,6 +25,7 @@ describe('isExpired method', () => {
   console.log(`TZ: ${process.env.TZ}`);
 
   const oneDay = 60 * 60 * 24 * 1000;
+  // Use Date.now() to test this because it’s timezone-independent
   const tomorrow = (Date.now() + oneDay) / 1000;
   const yesterday = (Date.now() - oneDay) / 1000;
 
