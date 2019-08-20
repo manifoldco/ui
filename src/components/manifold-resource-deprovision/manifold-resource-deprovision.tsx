@@ -17,9 +17,7 @@ export class ManifoldResourceDeprovision {
         resourceLabel={this.data && this.data.label}
         loading={this.loading}
       >
-        <manifold-forward-slot>
-          <slot />
-        </manifold-forward-slot>
+        <slot />
       </manifold-data-deprovision-button>
     );
   }
