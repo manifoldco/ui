@@ -572,6 +572,7 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldServiceCardView {
+    'borderDisabled'?: boolean;
     'description'?: string;
     'isFeatured'?: boolean;
     'isFree'?: boolean;
@@ -1628,6 +1629,7 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {
+    'borderDisabled'?: boolean;
     'description'?: string;
     'isFeatured'?: boolean;
     'isFree'?: boolean;

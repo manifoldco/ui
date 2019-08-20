@@ -52,6 +52,21 @@
       box-shadow: var(--card-shadow-hover);
     }
   }
+
+  &[data-border-disabled] {
+    &,
+    &:focus,
+    &:hover {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    & .grid {
+      padding: 0;
+    }
+  }
 }
 
 .description {
@@ -70,21 +85,13 @@
 .grid {
   display: grid;
   grid-column-gap: var(--padding);
-  grid-template-areas:
-    'logo name'
-    'info info'
-    'tags tags';
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr;
   grid-template-columns: var(--manifold-product-logo-s) auto;
   align-items: start;
   padding: var(--padding);
   border-radius: var(--card-radius);
 
   @media (--viewport-s) {
-    grid-template-areas:
-      'logo name'
-      'logo info'
-      'tags tags';
     grid-template-columns: var(--manifold-product-logo-m) auto auto;
   }
 
@@ -94,25 +101,9 @@
   }
 }
 
-.info {
-  display: flex;
-  flex-direction: row;
-  grid-area: info;
-  justify-content: space-between;
-  padding-top: 0.25rem;
-
-  @media (--viewport-m) {
-    padding-top: 0;
-  }
-
-  @media (--viewport-l) {
-    padding-left: 0;
-  }
-}
-
 .logo {
-  grid-area: logo;
   align-content: start;
+  grid-row: 1 / span 2;
 
   & img {
     box-sizing: border-box;
@@ -143,11 +134,9 @@
 }
 
 .name {
-  grid-area: name;
   align-self: start;
   margin-top: 0;
   margin-bottom: 0;
-  padding-right: 1em;
   color: var(--card-heading-text-color);
   font-weight: var(--card-heading-font-weight);
   font-size: 1em;
@@ -159,10 +148,33 @@
   }
 }
 
+.info {
+  display: flex;
+  grid-row: 2 / span 1;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+
+  @media (--viewport-m) {
+    padding-top: 0;
+  }
+}
+
+.cta {
+  grid-column: 2;
+
+  @media (--viewport-s) {
+    justify-self: end;
+    grid-column: -1;
+    grid-row: 1 / span 2;
+  }
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
-  grid-area: tags;
+  grid-row: -1 / span 1;
+  grid-column: 2 / -1;
   align-items: center;
   justify-content: flex-end;
   margin-top: 0.375rem;
