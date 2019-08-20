@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed events firing twice for `<manifold-resource-rename>`, `<manifold-resource-sso>`, and `<manifold-resource-deprovision>` (#401)
+
 ### Changed
 
-- Removed padding above `<manifold-product-page>`
-- Adjusted positioning for CTA slot in `manifold-service-card-view`.
+- Removed padding above `<manifold-product-page>` (#399)
+- Adjusted positioning for CTA slot in `manifold-service-card-view`. (#404)
 
 ## [v0.5.5]
 
