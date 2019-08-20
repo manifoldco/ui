@@ -74,7 +74,7 @@
 }
 
 .logo {
-  grid-row: 1 / -1;
+  grid-row: 1 / span 3;
   align-content: start;
 
   & img {
