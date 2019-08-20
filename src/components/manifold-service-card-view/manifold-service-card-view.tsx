@@ -1,4 +1,4 @@
-import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import logger from '../../utils/logger';
 
 interface EventDetail {
@@ -13,6 +13,7 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldServiceCardView {
+  @Element() el?: HTMLElement;
   @Prop() description?: string;
   @Prop() isFree?: boolean = false;
   @Prop() logo?: string;
@@ -44,6 +45,8 @@ export class ManifoldServiceCardView {
         ? this.productLinkFormat.replace(/:product/gi, this.productLabel)
         : ''; // if no format, or product is loading, don’t calculate href
 
+    const slots = this.el ? Array.from(this.el.children).map(child => child.slot) : [];
+
     return !this.skeleton ? (
       <a
         class="wrapper"
@@ -61,18 +64,20 @@ export class ManifoldServiceCardView {
           <h3 class="name" itemprop="name">
             {this.name}
           </h3>
-          <div class="info">
-            <p class="description" itemprop="description">
-              {this.description}
-            </p>
-          </div>
-          <div class="cta">
-            <slot name="cta" />
-          </div>
-          <div class="tags">
-            {this.isFeatured && <manifold-badge data-tag="featured">Featured</manifold-badge>}
-            {this.isFree && <manifold-badge data-tag="free">Free</manifold-badge>}
-          </div>
+          <p class="description" itemprop="description">
+            {this.description}
+          </p>
+          {slots.includes('cta') && (
+            <div class="cta">
+              <slot name="cta" />
+            </div>
+          )}
+          {(this.isFeatured || this.isFree) && (
+            <div class="tags">
+              {this.isFeatured && <manifold-badge data-tag="featured">Featured</manifold-badge>}
+              {this.isFree && <manifold-badge data-tag="free">Free</manifold-badge>}
+            </div>
+          )}
         </div>
       </a>
     ) : (
