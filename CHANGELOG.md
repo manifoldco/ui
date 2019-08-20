@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Removed padding above `<manifold-product-page>`
+- Adjusted positioning for CTA slot in `manifold-service-card-view`.
 
 ## [v0.5.5]
 

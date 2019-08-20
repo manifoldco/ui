@@ -65,9 +65,9 @@ export class ManifoldServiceCardView {
             <p class="description" itemprop="description">
               {this.description}
             </p>
-            <div class="cta">
-              <slot name="cta" />
-            </div>
+          </div>
+          <div class="cta">
+            <slot name="cta" />
           </div>
           <div class="tags">
             {this.isFeatured && <manifold-badge data-tag="featured">Featured</manifold-badge>}
