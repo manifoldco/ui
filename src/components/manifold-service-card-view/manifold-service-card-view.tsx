@@ -13,7 +13,6 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldServiceCardView {
-  @Prop() borderDisabled?: boolean = false;
   @Prop() description?: string;
   @Prop() isFree?: boolean = false;
   @Prop() logo?: string;
@@ -54,7 +53,6 @@ export class ManifoldServiceCardView {
         itemtype="https://schema.org/Product"
         onClick={this.onClick}
         role="button"
-        data-border-disabled={this.borderDisabled}
       >
         <div class="grid">
           <div class="logo">
@@ -79,7 +77,7 @@ export class ManifoldServiceCardView {
       </a>
     ) : (
       // ☠
-      <div class="wrapper" data-border-disabled={this.borderDisabled}>
+      <div class="wrapper">
         <div class="grid">
           <div class="logo">
             <manifold-skeleton-img />

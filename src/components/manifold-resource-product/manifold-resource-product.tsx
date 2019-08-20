@@ -6,7 +6,6 @@ import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-product' })
 export class ManifoldResourceProduct {
-  @Prop() asCard?: boolean = false;
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;
 
@@ -19,7 +18,6 @@ export class ManifoldResourceProduct {
         name={this.data.product.name}
         productId={this.data.product.id}
         productLabel={this.data.product.label}
-        borderDisabled={!this.asCard}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

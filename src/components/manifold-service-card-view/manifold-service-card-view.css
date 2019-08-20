@@ -52,21 +52,6 @@
       box-shadow: var(--card-shadow-hover);
     }
   }
-
-  &[data-border-disabled] {
-    &,
-    &:focus,
-    &:hover {
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-    }
-
-    & .grid {
-      padding: 0;
-    }
-  }
 }
 
 .description {

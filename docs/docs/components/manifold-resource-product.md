@@ -20,14 +20,3 @@ View of a resource's product card. 🔒 Requires authentication and needs to be 
     <manifold-resource-product></manifold-resource-product>
   </manifold-resource-container>
 ```
-
-## Render as a card
-
-The product view is rendered as a wrapper by default. Using the `as-card` attribute, the product can be displayed
-as a card, similar to how it is displayed on the marketplace.
-
-```html
-  <manifold-resource-container resource-label="my-resource">
-    <manifold-resource-product as-card=""></manifold-resource-product>
-  </manifold-resource-container>
-```

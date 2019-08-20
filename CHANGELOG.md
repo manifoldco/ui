@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Fixed
 
-- `as-card` prop to `manifold-resource-product` to optionally remove card styling.
+- Adjusted positioning for CTA slot in `manifold-service-card-view`.
 
 ## [v0.5.5]
 
