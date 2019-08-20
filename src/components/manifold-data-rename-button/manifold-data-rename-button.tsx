@@ -71,42 +71,38 @@ export class ManifoldDataRenameButton {
       return;
     }
 
+    const resourceDetails = {
+      resourceLabel: this.resourceLabel || '',
+      newLabel: this.newLabel,
+      resourceId: this.resourceId,
+    };
+
     if (this.newLabel.length < 3) {
       const message: InvalidMessage = {
-        message: 'Must be at least 3 characters.',
-        resourceLabel: this.resourceLabel || '',
-        newLabel: this.newLabel,
-        resourceId: this.resourceId,
+        ...resourceDetails,
+        message: 'Must be at least 3 characters',
       };
       this.invalid.emit(message);
       return;
     }
     if (!this.validate(this.newLabel)) {
       const message: InvalidMessage = {
-        message:
-          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-        resourceLabel: this.resourceLabel || '',
-        newLabel: this.newLabel,
-        resourceId: this.resourceId,
+        ...resourceDetails,
+        message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
       };
       this.invalid.emit(message);
       return;
     }
 
-    const clickMessage: ClickMessage = {
-      resourceLabel: this.resourceLabel || '',
-      newLabel: this.newLabel,
-      resourceId: this.resourceId,
-    };
+    // fire click event
+    const clickMessage: ClickMessage = { ...resourceDetails };
     this.click.emit(clickMessage);
 
     const body: Marketplace.PublicUpdateResource = {
-      body: {
-        name: this.newLabel,
-        label: this.newLabel,
-      },
+      body: { name: this.newLabel, label: this.newLabel },
     };
 
+    // rename
     await this.restFetch({
       service: 'marketplace',
       endpoint: `/resources/${this.resourceId}`,
@@ -116,38 +112,23 @@ export class ManifoldDataRenameButton {
         headers: { 'Content-Type': 'application/json' },
       },
     }).catch(e => {
-      const error: ErrorMessage = {
+      const errorMessage: ErrorMessage = {
+        ...resourceDetails,
         message: e.message,
-        resourceLabel: this.resourceLabel || '',
-        newLabel: this.newLabel,
-        resourceId: this.resourceId,
       };
-      this.error.emit(error);
-      return Promise.reject(error);
+      this.error.emit(errorMessage);
+      return Promise.reject(errorMessage);
     });
 
     // Poll until rename complete
-    const { restFetch } = this;
-    await new Promise(resolve => {
-      const interval = window.setInterval(async () => {
-        const renamedResource = await restFetch<Marketplace.Resource[]>({
-          service: 'marketplace',
-          endpoint: `/resources/?me&label=${this.newLabel}`,
-        });
-        if (renamedResource && renamedResource.length) {
-          window.clearInterval(interval);
-          resolve();
-        }
-      }, 100);
-    });
+    await this.pollRename();
 
-    const success: SuccessMessage = {
-      message: `${this.resourceLabel} successfully renamed`,
-      resourceLabel: this.resourceLabel || '',
-      newLabel: this.newLabel,
-      resourceId: this.resourceId,
+    const successMessage: SuccessMessage = {
+      ...resourceDetails,
+      message: `${this.resourceLabel} renamed to ${this.newLabel}`,
     };
-    this.success.emit(success);
+
+    this.success.emit(successMessage);
   }
 
   async fetchResourceId(resourceLabel: string) {
@@ -166,6 +147,29 @@ export class ManifoldDataRenameButton {
     }
 
     this.resourceId = response[0].id;
+  }
+
+  async pollRename() {
+    const pollInterval = 300;
+
+    return new Promise((resolve, reject) => {
+      if (this.restFetch) {
+        const start = performance.now();
+        return this.restFetch<Marketplace.Resource[]>({
+          service: 'marketplace',
+          endpoint: `/resources/?me&label=${this.newLabel}`,
+        }).then(renamedResource => {
+          if (Array.isArray(renamedResource) && renamedResource.length) {
+            resolve();
+          } else {
+            // wait till interval has passed at least to continue
+            const diff = Math.round(performance.now() - start - pollInterval);
+            setTimeout(() => this.pollRename(), Math.max(diff, 0));
+          }
+        });
+      }
+      return reject();
+    });
   }
 
   validate(input: string) {
