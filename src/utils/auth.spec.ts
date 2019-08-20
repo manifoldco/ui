@@ -21,6 +21,9 @@ describe('withAuth method', () => {
 });
 
 describe('isExpired method', () => {
+  // eslint-disable-next-line no-console
+  console.log(`TZ: ${process.env.TZ}`);
+
   const oneDay = 60 * 60 * 24 * 1000;
   const tomorrow = (Date.now() + oneDay) / 1000;
   const yesterday = (Date.now() - oneDay) / 1000;
