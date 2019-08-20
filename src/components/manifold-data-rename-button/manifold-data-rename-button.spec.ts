@@ -124,7 +124,7 @@ describe('<manifold-data-rename-button>', () => {
           <manifold-data-rename-button
             loading=""
             resource-label="test-label"
-          >Provision</manifold-data-rename-button>
+          >Rename</manifold-data-rename-button>
         `,
       });
 
@@ -144,7 +144,7 @@ describe('<manifold-data-rename-button>', () => {
         html: `
           <manifold-data-rename-button
             resource-label="test-label"
-          >Provision</manifold-data-rename-button>
+          >Rename</manifold-data-rename-button>
         `,
       });
 
@@ -271,7 +271,7 @@ describe('<manifold-data-rename-button>', () => {
             new-label="${newLabel}"
             resource-id="${resourceId}"
             resource-label="${resourceLabel}"
-          >Provision</manifold-data-rename-button>
+          >Rename</manifold-data-rename-button>
         `,
       });
 
@@ -308,7 +308,7 @@ describe('<manifold-data-rename-button>', () => {
             new-label="${newLabel}"
             resource-id="${resourceId}"
             resource-label="${resourceLabel}"
-          >Provision</manifold-data-rename-button>
+          >Rename</manifold-data-rename-button>
         `,
       });
 

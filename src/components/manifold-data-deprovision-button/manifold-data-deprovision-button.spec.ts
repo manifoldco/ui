@@ -134,7 +134,7 @@ describe('<manifold-data-deprovision-button>', () => {
         html: `
           <manifold-data-deprovision-button
             resource-label="test"
-          >Provision</manifold-data-deprovision-button>
+          >Deprovision</manifold-data-deprovision-button>
         `,
       });
 
@@ -156,7 +156,7 @@ describe('<manifold-data-deprovision-button>', () => {
         html: `
           <manifold-data-deprovision-button
             resource-label="test"
-          >Provision</manifold-data-deprovision-button>
+          >Deprovision</manifold-data-deprovision-button>
         `,
       });
 
@@ -223,7 +223,7 @@ describe('<manifold-data-deprovision-button>', () => {
         html: `
           <manifold-data-deprovision-button
             resource-label="${resourceLabel}"
-          >Provision</manifold-data-deprovision-button>
+          >Deprovision</manifold-data-deprovision-button>
         `,
       });
 
