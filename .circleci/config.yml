@@ -96,13 +96,22 @@ jobs:
   # Publish packages to js.cdn.manifold.co
   # this is always run after npm-publish so the ./pkg file will be available.
   cdn-publish: 
+    parameters:
+      latest:
+        type: string
+        default: ""
     docker:
      - image: google/cloud-sdk
     steps:
       - attach_workspace:
           at: ~/project
       - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run: gsutil -m cp -r pkg gs://manifold-js/@manifoldco/ui/${CIRCLE_TAG}
+      - run: gsutil -m cp -r pkg gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - when:
+         condition:
+           latest: <<parameters.latest>>
+         steps:
+          - run: gsutil -m cp -r pkg gs://manifold-js/@manifoldco/ui
 
 workflows:
   version: 2
@@ -233,6 +242,7 @@ workflows:
           requires:
             - confirm
       - cdn-publish:
+          latest: "true"
           context: gcp-cdn-auth
           filters:
             branches:
