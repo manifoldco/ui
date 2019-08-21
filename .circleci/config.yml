@@ -121,7 +121,6 @@ jobs:
           condition:
             latest: <<parameters.latest>>
           steps:
-            - run: gsutil -m rm -r gs://manifold-js/@manifoldco/ui
             - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui
             - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui
 
