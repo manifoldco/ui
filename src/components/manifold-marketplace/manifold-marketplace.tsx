@@ -25,6 +25,8 @@ export class ManifoldMarketplace {
   @Prop() productLinkFormat?: string;
   /** Comma-separated list of shown products (labels) */
   @Prop() products?: string;
+  /** Use auth? */
+  @Prop() useAuth?: boolean = false;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
   @State() freeProducts?: string[];
@@ -49,6 +51,7 @@ export class ManifoldMarketplace {
     const response = await this.restFetch<Catalog.ExpandedProduct[]>({
       service: 'catalog',
       endpoint: `/products`,
+      isPublic: !this.useAuth,
     });
 
     if (response) {
@@ -75,6 +78,7 @@ export class ManifoldMarketplace {
             const plansResp = await this.restFetch<Catalog.ExpandedPlan[]>({
               service: 'catalog',
               endpoint: `/plans/?product_id=${id}`,
+              isPublic: !this.useAuth,
             });
 
             if (plansResp instanceof Error) {
