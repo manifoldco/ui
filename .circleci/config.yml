@@ -26,7 +26,7 @@ commands:
     steps:
       - save_cache:
           paths:
-            - project/pkg
+            - pkg
           key: npmpkgcache-{{ .Revision }}
 
   # npm install
