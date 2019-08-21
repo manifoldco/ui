@@ -114,19 +114,16 @@ jobs:
       - restore_cache:
           keys:
             - npmpkgcache-{{ .Revision }}
-      - run: cd /home/circleci/project/ # this is the directory we restored from the cache
       - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
-      - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
-      - run: gsutil -m cp *.md pkg gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
       - when:
           condition:
             latest: <<parameters.latest>>
           steps:
             - run: gsutil -m rm -r gs://manifold-js/@manifoldco/ui
-            - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui
-            - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui
-            - run: gsutil -m cp *.md gs://manifold-js/@manifoldco/ui
+            - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui
+            - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui
 
 workflows:
   version: 2
