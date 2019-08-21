@@ -6,7 +6,21 @@ import { Product, ExpandedPlan } from '../../spec/mock/catalog';
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
 
-async function setup(productLabel?: string, resourceLabel?: string) {
+async function setup({
+  productLabel,
+  resourceLabel,
+  restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  }),
+  useAuth = false,
+}: {
+  productLabel?: string;
+  resourceLabel?: string;
+  restFetch?: any;
+  useAuth?: boolean;
+}) {
   const page = await newSpecPage({
     components: [ManifoldPlanSelector],
     html: '<div></div>',
@@ -15,11 +29,8 @@ async function setup(productLabel?: string, resourceLabel?: string) {
   const component = page.doc.createElement('manifold-plan-selector');
   component.productLabel = productLabel;
   component.resourceLabel = resourceLabel;
-  component.restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  });
+  component.restFetch = restFetch;
+  component.useAuth = useAuth;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -38,7 +49,7 @@ describe('<manifold-plan-selector>', () => {
     fetchMock.mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product]);
     fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [ExpandedPlan]);
 
-    await setup(productLabel);
+    await setup({ productLabel });
 
     expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
       true
@@ -52,7 +63,7 @@ describe('<manifold-plan-selector>', () => {
     const newProduct = 'new-product';
     fetchMock.once('*', []);
 
-    const { component, page } = await setup('old-product');
+    const { component, page } = await setup({ productLabel: 'old-product' });
 
     fetchMock.mock(`${connections.prod.catalog}/products/?label=${newProduct}`, [Product]);
     fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [ExpandedPlan]);
@@ -76,7 +87,7 @@ describe('<manifold-plan-selector>', () => {
       ExpandedPlan,
     ]);
 
-    await setup(undefined, resourceLabel);
+    await setup({ resourceLabel });
 
     expect(
       fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
@@ -90,7 +101,7 @@ describe('<manifold-plan-selector>', () => {
     const newResource = 'new-resource';
     fetchMock.once('*', []);
 
-    const { component, page } = await setup(undefined, 'old-resource');
+    const { component, page } = await setup({ resourceLabel: 'old-resource' });
 
     fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${newResource}`, [
       Resource,
@@ -107,5 +118,19 @@ describe('<manifold-plan-selector>', () => {
     expect(
       fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Resource.body.product_id}`)
     ).toBe(true);
+  });
+
+  describe('v0 API', () => {
+    it('[use-auth]: uses auth if specified', async () => {
+      const restFetch = jest.fn();
+      await setup({ productLabel: 'auth-product', useAuth: true, restFetch });
+      expect(restFetch).toHaveBeenCalledWith(expect.objectContaining({ isPublic: false }));
+    });
+
+    it('[use-auth]: skips auth by default', async () => {
+      const restFetch = jest.fn();
+      await setup({ productLabel: 'public-product', restFetch });
+      expect(restFetch).toHaveBeenCalledWith(expect.objectContaining({ isPublic: true }));
+    });
   });
 });

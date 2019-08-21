@@ -1,8 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import { Product, ExpandedPlan, ZiggeoPlan } from '../../spec/mock/catalog';
-import { GatewayResource } from '../../spec/mock/gateway';
+import { Product, ExpandedPlan } from '../../spec/mock/catalog';
 import { connections } from '../../utils/connections';
 
 import { ManifoldDataProvisionButton } from './manifold-data-provision-button';
@@ -11,128 +10,109 @@ import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const graphqlEndpoint = 'http://test.com/graphql';
-const proto = ManifoldDataProvisionButton.prototype as any;
-const oldCallback = proto.componentWillLoad;
 
-proto.componentWillLoad = function() {
-  (this as any).restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  });
-  (this as any).graphqlFetch = createGraphqlFetch({
+async function setup({
+  graphqlFetch = createGraphqlFetch({
     endpoint: graphqlEndpoint,
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,
     setAuthToken: jest.fn(),
+  }),
+  ownerId,
+  planLabel,
+  productLabel,
+  restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  }),
+  resourceLabel,
+  useAuth = false,
+}: {
+  ownerId?: string;
+  productLabel?: string;
+  planLabel?: string;
+  graphqlFetch?: any;
+  resourceLabel?: string;
+  restFetch?: any;
+  useAuth?: boolean;
+}) {
+  const page = await newSpecPage({
+    components: [ManifoldDataProvisionButton],
+    html: '<div></div>',
   });
 
-  if (oldCallback) {
-    oldCallback.call(this);
-  }
-};
+  const component = page.doc.createElement('manifold-data-provision-button');
+  if (ownerId) component.ownerId = ownerId;
+  component.graphqlFetch = graphqlFetch;
+  component.planLabel = planLabel;
+  component.productLabel = productLabel;
+  component.resourceLabel = resourceLabel;
+  component.restFetch = restFetch;
+  component.useAuth = useAuth;
+
+  if (!page.root) throw new Error('<manifold-data-provision-button> not found in document');
+  page.root.appendChild(component);
+  await page.waitForChanges();
+  return { page, component };
+}
 
 describe('<manifold-data-provision-button>', () => {
-  it('fetches product, plan and profile id on load', () => {
-    const productLabel = 'test-product';
-    const planLabel = 'test-plan';
+  const profile = { profile: { id: '1234' } };
+  const resourceId = 'abcdefghijklmnopqrstuvwxyz123';
 
-    const provisionButton = new ManifoldDataProvisionButton();
-    provisionButton.fetchProductPlanId = jest.fn();
-    provisionButton.fetchProfileId = jest.fn();
-    provisionButton.productLabel = productLabel;
-    provisionButton.planLabel = planLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchProductPlanId).toHaveBeenCalledWith(productLabel, planLabel);
-    expect(provisionButton.fetchProfileId).toHaveBeenCalled();
+  fetchMock.mock(graphqlEndpoint, { data: { profile } });
+  fetchMock.mock(/\/products\//, [Product]);
+  fetchMock.mock(/\/plans\//, [ExpandedPlan]);
+  fetchMock.mock(/\/resource\//, (_: any, req) => {
+    const { label } = JSON.parse(req.body as string);
+    return label.includes('error')
+      ? { status: 500, body: { message: 'provision failed' } }
+      : {
+          status: 200,
+          body: {
+            created_at: '2019-01-01 00:00:00',
+            id: resourceId,
+            label,
+          },
+        };
   });
 
-  it('does not fetch the profile id if set on load', () => {
-    const provisionButton = new ManifoldDataProvisionButton();
-    provisionButton.fetchProfileId = jest.fn();
-    provisionButton.ownerId = '1234';
-    provisionButton.componentWillLoad();
+  beforeEach(() => fetchMock.resetHistory());
 
-    expect(provisionButton.fetchProfileId).not.toHaveBeenCalled();
-  });
-
-  it('fetches product and plan id on change', () => {
-    const newProduct = 'new-product';
-    const newPlan = 'new-plan';
-
-    const provisionButton = new ManifoldDataProvisionButton();
-    provisionButton.fetchProductPlanId = jest.fn();
-    provisionButton.productLabel = 'old-product';
-    provisionButton.planLabel = 'old-plan';
-
-    provisionButton.productChange(newProduct);
-    expect(provisionButton.fetchProductPlanId).toHaveBeenCalledWith(newProduct, 'old-plan');
-
-    provisionButton.planChange(newPlan);
-    expect(provisionButton.fetchProductPlanId).toHaveBeenCalledWith('old-product', newPlan);
-  });
-
-  describe('when created with product and plans labels', () => {
-    afterEach(() => {
-      fetchMock.restore();
+  describe('v0 API', () => {
+    it('[owner-id]: fetches if missing', async () => {
+      await setup({ productLabel: 'test', planLabel: 'test' });
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
     });
 
-    beforeEach(() => {
-      fetchMock.mock(graphqlEndpoint, { data: { profile: { id: '1234' } } });
+    it('[owner-id]: doesn’t fetch if set', async () => {
+      const { page } = await setup({ ownerId: '5678', productLabel: 'test', planLabel: 'test' });
+      const provisionButton =
+        page.root && page.root.querySelector('manifold-data-provision-button');
+      if (!provisionButton) throw new Error('provision button not found');
+
+      expect(fetchMock.called(graphqlEndpoint)).toBe(false);
+      expect(provisionButton.ownerId).toEqual('5678');
     });
 
-    it('will fetch the products and find the plan', async () => {
-      const productLabel = 'test-product';
+    it('[plan-label]: fetches by plan label if specified', async () => {
       const planLabel = 'test-plan';
+      await setup({ ownerId: 'test-owner', productLabel: 'test-product', planLabel });
 
-      fetchMock
-        .mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product])
-        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}&label=${planLabel}`, [
-          ExpandedPlan,
-        ]);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="${productLabel}"
-            plan-label="${planLabel}"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
-
-      expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
-        true
-      );
       expect(
         fetchMock.called(
           `${connections.prod.catalog}/plans/?product_id=${Product.id}&label=${planLabel}`
         )
       ).toBe(true);
-
-      const root = page.rootInstance as ManifoldDataProvisionButton;
-      expect(root.productId).toEqual(Product.id);
-      expect(root.planId).toEqual(ExpandedPlan.id);
     });
 
-    it('will fetch the products and find the plan even without a plan label', async () => {
+    it('[product-label]: fetches product by label', async () => {
       const productLabel = 'test-product';
-
-      fetchMock
-        .mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product])
-        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [
-          ExpandedPlan,
-          ZiggeoPlan,
-        ]);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="${productLabel}"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
+      const { page } = await setup({ productLabel });
+      const provisionButton =
+        page.root && page.root.querySelector('manifold-data-provision-button');
+      if (!provisionButton) throw new Error('provision button not found');
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
         true
@@ -140,236 +120,163 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
         true
       );
-
-      const root = page.rootInstance as ManifoldDataProvisionButton;
-      expect(root.productId).toEqual(Product.id);
-      expect(root.planId).toEqual(ExpandedPlan.id);
     });
 
-    it('will do nothing if no product label is given', async () => {
-      fetchMock.mock(`${connections.prod.catalog}/products/`, [Product]);
-
-      await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button>Provision</manifold-data-provision-button>
-        `,
-      });
-
-      expect(fetchMock.called(`${connections.prod.catalog}/products/`)).toBe(false);
+    it('[product-label]: doesn’t fetch if missing', async () => {
+      await setup({});
+      expect(fetchMock.called(/\/products\//)).toBe(false);
     });
 
-    it('will do nothing if the products return an invalid value', async () => {
-      const productLabel = 'test-product';
-
-      fetchMock
-        .mock(`${connections.prod.catalog}/products/?label=${productLabel}`, {})
-        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, {});
-
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="${productLabel}"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
-
-      expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
-        true
-      );
-
-      const root = page.rootInstance as ManifoldDataProvisionButton;
-      expect(root.productId).toEqual('');
+    it('[use-auth]: uses auth if specified', async () => {
+      const restFetch = jest.fn();
+      await setup({ productLabel: 'auth-product', useAuth: true, restFetch });
+      expect(restFetch).toHaveBeenCalledWith(expect.objectContaining({ isPublic: false }));
     });
 
-    it('will do nothing if the products return an invalid value', async () => {
-      const productLabel = 'test-product';
-
-      fetchMock
-        .mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product])
-        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, {});
-
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="${productLabel}"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
-
-      expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
-        true
-      );
-      expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
-        true
-      );
-
-      const root = page.rootInstance as ManifoldDataProvisionButton;
-      expect(root.productId).toEqual('');
-      expect(root.planId).toEqual('');
+    it('[use-auth]: skips auth by default', async () => {
+      const restFetch = jest.fn();
+      await setup({ productLabel: 'public-product', restFetch });
+      expect(restFetch).toHaveBeenCalledWith(expect.objectContaining({ isPublic: true }));
     });
   });
 
-  describe('when created with no owner ID', () => {
-    afterEach(() => {
-      fetchMock.restore();
+  describe('events', () => {
+    it('click', async () => {
+      const productLabel = 'click-product';
+      const resourceLabel = 'click-resource';
+
+      const mockClick = jest.fn();
+      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      // listen for event and fire
+      page.doc.addEventListener('manifold-provisionButton-click', mockClick);
+      button.click();
+
+      expect(mockClick).toBeCalledWith(
+        expect.objectContaining({
+          detail: {
+            planId: ExpandedPlan.id,
+            productLabel,
+            resourceLabel,
+          },
+        })
+      );
     });
 
-    const profile = { profile: { id: '1234' } };
+    it('invalid: too short', async () => {
+      const productLabel = 'click-product';
+      const resourceLabel = 'x';
 
-    beforeEach(() => {
-      fetchMock
-        .mock(`${connections.prod.catalog}/products/?label=test`, [Product])
-        .mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}&label=test`, [
-          ExpandedPlan,
-        ])
-        .mock(graphqlEndpoint, { data: profile });
+      const mockClick = jest.fn();
+      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      // listen for event and fire
+      page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
+      button.click();
+
+      expect(mockClick).toBeCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: 'Must be at least 3 characters',
+            planId: ExpandedPlan.id,
+            productLabel,
+            resourceLabel,
+          },
+        })
+      );
     });
 
-    it('will fetch the owner id on load', async () => {
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="test"
-            plan-label="test"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
+    it('invalid: bad characters', async () => {
+      const resourceLabel = '🦞🦞🦞';
+      const productLabel = 'click-product';
 
-      const root = page.rootInstance as ManifoldDataProvisionButton;
+      const mockClick = jest.fn();
+      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
 
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-      expect(root.ownerId).toBe(profile.profile.id);
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      // listen for event and fire
+      page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
+      button.click();
+
+      expect(mockClick).toBeCalledWith(
+        expect.objectContaining({
+          detail: {
+            message:
+              'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
+            planId: ExpandedPlan.id,
+            productLabel,
+            resourceLabel,
+          },
+        })
+      );
     });
 
-    it('will do nothing if the owner id is set', async () => {
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="test"
-            plan-label="test"
-            owner-id="5678"
-          >Provision</manifold-data-provision-button>
-        `,
+    it('error', async () => {
+      const resourceLabel = 'error-resource';
+      const productLabel = 'error-product';
+
+      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      const mockClick = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        mockClick.mockImplementation(() => resolve());
+        page.doc.addEventListener('manifold-provisionButton-error', mockClick);
+        button.click();
       });
 
-      const root = page.rootInstance as ManifoldDataProvisionButton;
-
-      expect(fetchMock.called(graphqlEndpoint)).toBe(false);
-      expect(root.ownerId).toEqual('5678');
-    });
-  });
-
-  describe('When sending a request to provision', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
-    beforeEach(() => {
-      fetchMock
-        .mock(/.*\/products\/.*/, [Product])
-        .mock(/.*\/plans\/.*/, [ExpandedPlan])
-        .mock(graphqlEndpoint, { data: { profile: { id: '1234' } } });
+      expect(mockClick).toBeCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: 'provision failed',
+            planId: ExpandedPlan.id,
+            productLabel,
+            resourceLabel,
+          },
+        })
+      );
     });
 
-    it('will trigger a dom event on successful provision', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/resource/`, GatewayResource);
+    it('success', async () => {
+      const resourceLabel = 'success-resource';
+      const productLabel = 'success-product';
 
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="test"
-            owner-id="1234"
-            resource-label="test"
-          >Provision</manifold-data-provision-button>
-        `,
+      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+
+      const button = page.root && page.root.querySelector('button');
+      if (!button) throw new Error('button not found in document');
+
+      const mockClick = jest.fn();
+      await new Promise(resolve => {
+        // listen for event and fire
+        mockClick.mockImplementation(() => resolve());
+        page.doc.addEventListener('manifold-provisionButton-success', mockClick);
+        button.click();
       });
 
-      const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.success.emit = jest.fn();
-
-      await instance.provision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-      expect(instance.success.emit).toHaveBeenCalledWith({
-        createdAt: GatewayResource.created_at,
-        message: 'test successfully provisioned',
-        resourceId: GatewayResource.id,
-        resourceLabel: GatewayResource.label,
-      });
-    });
-
-    it('will trigger a dom event on failed provision', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/resource/`, {
-        status: 500,
-        body: {
-          message: 'ohnoes',
-        },
-      });
-
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="test"
-            owner-id="1234"
-            resource-label="test"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.error.emit = jest.fn();
-
-      expect.assertions(2);
-      return instance.provision().catch(() => {
-        expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-        expect(instance.error.emit).toHaveBeenCalledWith({
-          message: 'ohnoes',
-          resourceLabel: 'test',
-        });
-      });
-    });
-
-    it('will trigger a dom event on an invalid resource name', async () => {
-      fetchMock.mock(`${connections.prod.gateway}/resource/`, 500);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataProvisionButton],
-        html: `
-          <manifold-data-provision-button
-            product-label="test"
-            owner-id="1234"
-            resource-label="t"
-          >Provision</manifold-data-provision-button>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.invalid.emit = jest.fn();
-
-      await instance.provision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(false);
-      expect(instance.invalid.emit).toHaveBeenCalledWith({
-        message: 'Must be at least 3 characters.',
-        resourceLabel: 't',
-      });
-
-      instance.resourceLabel = 'Test';
-      await instance.provision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(false);
-      expect(instance.invalid.emit).toHaveBeenCalledWith({
-        message:
-          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-        resourceLabel: 'Test',
-      });
+      expect(mockClick).toBeCalledWith(
+        expect.objectContaining({
+          detail: {
+            createdAt: '2019-01-01 00:00:00',
+            message: `${resourceLabel} successfully provisioned`,
+            planId: ExpandedPlan.id,
+            productLabel,
+            resourceId,
+            resourceLabel,
+          },
+        })
+      );
     });
   });
 });

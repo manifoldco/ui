@@ -63,10 +63,8 @@ You can add a “Featured” tag to select products by specifing a comma-separat
 
 ## Events
 
-This component emits
-[custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) when it
-updates. To listen to those events, add an event listener either on the component itself, or
-`document`:
+This component emits [custom events][custom-events] when it updates. To listen to those events, add
+an event listener either on the component itself, or `document`:
 
 ```js
 document.addEventListener('manifold-marketplace-click', { detail } => {
@@ -98,3 +96,15 @@ also be turned into an `<a>` tag by specifying `product-link-format` and `templa
 custom resource templates.
 
 Note that this will disable the custom events unless `preserve-event` is passed as well.
+
+## Authentication
+
+By default, `<manifold-marketplace>` is a public component. However, when used in conjunction with
+[Authentication][auth], you can request to authenticate with `with-auth`:
+
+```html
+<manifold-marketplace with-auth></manifold-marketplace>
+```
+
+[auth]: /advanced/authentication
+[custom-events]: (https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent

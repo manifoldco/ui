@@ -160,6 +160,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldDataProvisionButton {
     /**
@@ -187,6 +191,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldDataRenameButton {
     'loading'?: boolean;
@@ -325,6 +333,10 @@ export namespace Components {
     * Template format structure, with `:product` placeholder
     */
     'templateLinkFormat'?: string;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldMarketplaceGrid {
     'featured'?: string[];
@@ -428,6 +440,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldProduct {
     /**
@@ -438,6 +454,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldProductDetails {
     'product'?: Catalog.Product;
@@ -1187,6 +1207,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
     /**
@@ -1218,6 +1242,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
     'loading'?: boolean;
@@ -1365,6 +1393,10 @@ declare namespace LocalJSX {
     * Template format structure, with `:product` placeholder
     */
     'templateLinkFormat'?: string;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
     'featured'?: string[];
@@ -1471,6 +1503,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
@@ -1481,6 +1517,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
     'product'?: Catalog.Product;

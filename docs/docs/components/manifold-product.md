@@ -23,9 +23,8 @@ You can find the `:product` label for each at `https://manifold.co/services/:pro
 
 ## CTA
 
-You can pass in your own button or link in left sidebar of the component
-by passing in any element with `slot="cta"` as an attribute. [Read more about
-slots][slot].
+You can pass in your own button or link in left sidebar of the component by passing in any element
+with `slot="cta"` as an attribute. [Read more about slots][slot].
 
 ```html
 <manifold-product product-label="jawsdb-mysql">
@@ -33,4 +32,15 @@ slots][slot].
 </manifold-product>
 ```
 
+## Authentication
+
+By default, `<manifold-product>` is a public component. However, when used in conjunction with
+[Authentication][auth], you can request to authenticate with `with-auth`:
+
+```html
+<manifold-product with-auth></manifold-product>
+```
+
+[auth]: /advanced/authentication
+[custom-events]: (https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
 [slot]: https://stenciljs.com/docs/templating-jsx/

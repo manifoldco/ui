@@ -14,9 +14,8 @@ example: |
 
 Retrieve a product’s full name from a `:productLabel` as an unstyled text node.
 
-Can’t remember a product’s capitalization? Want to receive automatic updates
-if a service rebrands? We’ve got you covered with a simple name web
-component.
+Can’t remember a product’s capitalization? Want to receive automatic updates if a service rebrands?
+We’ve got you covered with a simple name web component.
 
 ## Usage
 
@@ -34,3 +33,14 @@ You can look up a logo by resource label by passing `resource-label`:
 ```html
 <manifold-data-product-logo resource-label="my-resource"></manifold-data-product-name>
 ```
+
+## Authentication
+
+By default, `<manifold-data-product-name>` is a public component. However, when used in conjunction
+with [Authentication][auth], you can request to authenticate with `with-auth`:
+
+```html
+<manifold-data-product-name with-auth></manifold-data-product-name>
+```
+
+[auth]: /advanced/authentication

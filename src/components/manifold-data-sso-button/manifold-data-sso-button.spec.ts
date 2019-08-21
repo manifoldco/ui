@@ -150,7 +150,7 @@ describe('<manifold-data-sso-button>', () => {
     };
 
     it('click', async () => {
-      fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
+      fetchMock.mock(/\/sso\//, authCode);
 
       if (!page.root) throw new Error('<manifold-sso-button> not found in document');
 
@@ -183,10 +183,7 @@ describe('<manifold-data-sso-button>', () => {
 
     it('error', async () => {
       const message = 'ohnoes';
-      fetchMock.mock(`${connections.prod.connector}/sso`, {
-        status: 500,
-        body: { message },
-      });
+      fetchMock.mock(/\/sso\//, { status: 500, body: { message } });
 
       if (!page.root) throw new Error('<manifold-sso-button> not found in document');
 
@@ -219,7 +216,7 @@ describe('<manifold-data-sso-button>', () => {
     });
 
     it('success', async () => {
-      fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
+      fetchMock.mock(/\/sso\//, authCode);
 
       if (!page.root) throw new Error('<manifold-sso-button> not found in document');
 

@@ -21,6 +21,8 @@ export class ManifoldPlanSelector {
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceLabel?: string;
+  /** Use auth? */
+  @Prop() useAuth?: boolean = false;
   @State() product?: Catalog.Product;
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
@@ -58,6 +60,7 @@ export class ManifoldPlanSelector {
     const response = await this.restFetch<Catalog.ExpandedProduct[]>({
       service: 'catalog',
       endpoint: `/products/?label=${productLabel}`,
+      isPublic: !this.useAuth,
     });
 
     if (response && response.length) {
@@ -76,6 +79,7 @@ export class ManifoldPlanSelector {
     const response = await this.restFetch<Catalog.ExpandedPlan[]>({
       service: 'catalog',
       endpoint: `/plans/?product_id=${productId}`,
+      isPublic: !this.useAuth,
     });
 
     if (response) {

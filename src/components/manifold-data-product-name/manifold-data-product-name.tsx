@@ -15,6 +15,8 @@ export class ManifoldDataProductName {
   @Prop() productLabel?: string;
   /** Look up product name from resource */
   @Prop() resourceLabel?: string;
+  /** Use auth? */
+  @Prop() useAuth?: boolean = false;
   @State() productName?: string;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
@@ -42,6 +44,7 @@ export class ManifoldDataProductName {
     const products = await this.restFetch<Catalog.Product[]>({
       service: 'catalog',
       endpoint: `/products?label=${productLabel}`,
+      isPublic: !this.useAuth,
     });
 
     if (products) {

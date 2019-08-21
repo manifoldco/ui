@@ -12,6 +12,8 @@ export class ManifoldProduct {
   @Prop() restFetch?: RestFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
+  /** Use auth? */
+  @Prop() useAuth?: boolean = false;
   @State() product?: Catalog.Product;
   @State() provider?: Catalog.Provider;
   @Watch('productLabel') productChange(newLabel: string) {
@@ -33,6 +35,7 @@ export class ManifoldProduct {
     const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
       service: 'catalog',
       endpoint: `/products/?label=${productLabel}`,
+      isPublic: !this.useAuth,
     });
 
     if (productResp && productResp.length) {
@@ -41,6 +44,7 @@ export class ManifoldProduct {
       this.provider = await this.restFetch<Catalog.Provider>({
         service: 'catalog',
         endpoint: `/providers/${this.product.body.provider_id}`,
+        isPublic: !this.useAuth,
       });
     }
   };

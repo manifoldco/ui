@@ -9,16 +9,33 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
+interface ClickMessage {
+  planId: string;
+  productLabel: string;
+  resourceLabel: string;
+}
+
 interface SuccessMessage {
   createdAt: string;
-  resourceLabel: string;
-  resourceId: string;
   message: string;
+  planId: string;
+  productLabel: string;
+  resourceId: string;
+  resourceLabel: string;
+}
+
+interface InvalidMessage {
+  message: string;
+  planId: string;
+  productLabel: string;
+  resourceLabel: string;
 }
 
 interface ErrorMessage {
   message: string;
-  resourceLabel?: string;
+  planId: string;
+  productLabel: string;
+  resourceLabel: string;
 }
 
 interface Profile {
@@ -50,6 +67,9 @@ export class ManifoldDataProvisionButton {
   @Prop() planLabel?: string;
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
+  /** Use auth? */
+  @Prop() useAuth?: boolean = false;
+  /** Owner ID */
   @Prop({ mutable: true }) ownerId?: string = '';
   /** Region to provision (ID) */
   @Prop() regionId?: string = globalRegion.id;
@@ -88,27 +108,38 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    if (this.resourceLabel && this.resourceLabel.length < 3) {
-      this.invalid.emit({
-        message: 'Must be at least 3 characters.',
-        resourceLabel: this.resourceLabel,
-      });
+    const detail = {
+      planId: this.planId as string,
+      productLabel: this.productLabel as string,
+      resourceLabel: this.resourceLabel as string,
+    };
+
+    const clickMessage: ClickMessage = { ...detail };
+    this.click.emit(clickMessage);
+
+    if (!this.resourceLabel) {
+      console.error('Property “resourceLabel” is missing');
       return;
     }
-    if (this.resourceLabel && !this.validate(this.resourceLabel)) {
-      this.invalid.emit({
-        message:
-          'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens.',
-        resourceLabel: this.resourceLabel,
-      });
+
+    if (this.resourceLabel.length < 3) {
+      const message: InvalidMessage = {
+        ...detail,
+        message: 'Must be at least 3 characters',
+      };
+      this.invalid.emit(message);
+      return;
+    }
+    if (!this.validate(this.resourceLabel)) {
+      const message: InvalidMessage = {
+        ...detail,
+        message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
+      };
+      this.invalid.emit(message);
       return;
     }
 
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
-    this.click.emit({
-      resourceLabel: this.resourceLabel,
-    });
-
     const req: Gateway.ResourceCreateRequest = {
       label: this.resourceLabel,
       owner: {
@@ -122,34 +153,30 @@ export class ManifoldDataProvisionButton {
       features: {},
     };
 
-    try {
-      const response = await this.restFetch<Gateway.Resource>({
-        service: 'gateway',
-        endpoint: `/resource/`,
-        body: req,
-        options: {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        },
-      });
-
-      if (response) {
+    this.restFetch<Gateway.Resource>({
+      service: 'gateway',
+      endpoint: `/resource/`,
+      body: req,
+      options: {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      },
+    })
+      .then((response: Gateway.Resource) => {
+        const label = response.label || (this.resourceLabel as string);
         const success: SuccessMessage = {
+          ...detail,
           createdAt: response.created_at,
-          message: `${this.resourceLabel} successfully provisioned`,
+          message: `${label} successfully provisioned`,
           resourceId: response.id || '',
-          resourceLabel: response.label,
+          resourceLabel: label,
         };
         this.success.emit(success);
-      }
-    } catch (error) {
-      const e: ErrorMessage = {
-        message: error.message,
-        resourceLabel: this.resourceLabel,
-      };
-      this.error.emit(e);
-      throw e;
-    }
+      })
+      .catch(error => {
+        const e: ErrorMessage = { ...detail, message: error.message };
+        this.error.emit(e);
+      });
   }
 
   async fetchProductPlanId(productLabel: string, planLabel?: string) {
@@ -161,6 +188,7 @@ export class ManifoldDataProvisionButton {
     const products = await this.restFetch<Catalog.Product[]>({
       service: 'catalog',
       endpoint: `/products/?label=${productLabel}`,
+      isPublic: !this.useAuth,
     });
 
     if (!products || !products.length) {
@@ -171,6 +199,7 @@ export class ManifoldDataProvisionButton {
     const plans = await this.restFetch<Catalog.Plan[]>({
       service: 'catalog',
       endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
+      isPublic: !this.useAuth,
     });
 
     if (!plans || !plans.length) {
