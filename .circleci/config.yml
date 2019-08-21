@@ -74,6 +74,7 @@ jobs:
       - setup
       - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm run publish
+      - save-build
 
   # Test
   test:
@@ -106,6 +107,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
+      - setup
       - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
       - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
       - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
