@@ -106,8 +106,8 @@ jobs:
   cdn-publish:
     parameters:
       latest:
-        type: string
-        default: ""
+        type: boolean
+        default: false
     docker:
       - image: google/cloud-sdk
     steps:
@@ -252,7 +252,7 @@ workflows:
           requires:
             - confirm
       - cdn-publish:
-          latest: "true"
+          latest: true
           context: gcp-cdn-auth
           filters:
             branches:
