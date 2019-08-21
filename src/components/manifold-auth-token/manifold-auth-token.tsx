@@ -24,10 +24,8 @@ export class ManifoldAuthToken {
   }
 
   setExternalToken(token?: string) {
-    if (token) {
-      if (!isExpired(token)) {
-        this.setAuthToken(token);
-      }
+    if (token && !isExpired(token)) {
+      this.setAuthToken(token);
     }
   }
 

@@ -8,7 +8,7 @@ export interface CreateRestFetch {
   endpoints?: Connection;
   wait?: number;
   getAuthToken?: () => string | undefined;
-  setAuthToken?: (token: string) => void;
+  setAuthToken?: (token: string | null) => void;
 }
 
 interface RestFetchArguments {
@@ -68,9 +68,8 @@ export function createRestFetch({
 
     /* Handle expected errors */
     if (response.status === 401) {
-      setAuthToken('');
+      setAuthToken(null); // this will re-request a new token
       report(response);
-      throw new Error('Auth token expired');
     }
 
     const body = await response.json();

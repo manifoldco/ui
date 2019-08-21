@@ -6,7 +6,7 @@ interface CreateGraphqlFetch {
   endpoint?: string;
   wait?: number;
   getAuthToken?: () => string | undefined;
-  setAuthToken?: (token: string) => void;
+  setAuthToken?: (token: string | null) => void;
 }
 
 type graphqlArgs =
@@ -67,8 +67,7 @@ export function createGraphqlFetch({
 
     // handle unauthenticated error
     if (response.status === 401) {
-      // TODO trigger token refresh for manifold-auth-token
-      setAuthToken('');
+      setAuthToken(null); // this will re-request a new token
       report(response); // report unauthenticated
     }
 
