@@ -107,7 +107,9 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/project
-      - setup
+      - restore_cache: # Restore Stencil cache if exists
+          keys:
+            - stencilcache-{{ .Revision }}
       - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
       - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
       - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
