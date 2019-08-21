@@ -92,6 +92,32 @@ jobs:
       - setup
       - happo/run_happo
       - save-build
+  
+
+  # Publish packages to js.cdn.manifold.co
+  # this is always run after npm-publish so the ./pkg file will be available.
+  cdn-publish: 
+    parameters:
+      latest:
+        type: string
+        default: ""
+    docker:
+     - image: google/cloud-sdk
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+      - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - run: gsutil -m cp *.md pkg gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - when:
+         condition:
+           latest: <<parameters.latest>>
+         steps:
+          - run: gsutil -m rm -r gs://manifold-js/@manifoldco/ui
+          - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui
+          - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui
+          - run: gsutil -m cp *.md gs://manifold-js/@manifoldco/ui
 
 workflows:
   version: 2
@@ -153,6 +179,15 @@ workflows:
             - lint
             - test
             - vrt
+      - cdn-publish:
+          context: gcp-cdn-auth
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - npm-publish
 
   # Final release (only fires if Git tag is a stable release)
   release:
@@ -212,3 +247,13 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
             - confirm
+      - cdn-publish:
+          latest: "true"
+          context: gcp-cdn-auth
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - npm-publish
