@@ -1,9 +1,11 @@
 import { storiesOf } from '@storybook/html';
 
 import markdown from '../docs/docs/components/manifold-marketplace.md';
+import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Marketplace', module)
   .addParameters({ readme: { sidebar: markdown } })
+  .addDecorator(manifoldConnectionDecorator)
   .add(
     'default',
     () =>
@@ -39,10 +41,12 @@ storiesOf('Marketplace', module)
   .add(
     'curated',
     () => `
-      <manifold-marketplace
-        hide-templates
-        hide-search
-        hide-categories
-        products="logdna,scoutapp,timber-logging,cloudcube"
-      ></manifold-marketplace>`
-  );
+        <manifold-marketplace
+          hide-templates
+          hide-search
+          hide-categories
+          products="logdna,scoutapp,timber-logging,cloudcube"
+        ></manifold-marketplace>
+      `
+  )
+  .add('with auth', () => `<manifold-marketplace with-auth></manifold-marketplace>`);

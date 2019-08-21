@@ -325,6 +325,10 @@ export namespace Components {
     * Template format structure, with `:product` placeholder
     */
     'templateLinkFormat'?: string;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldMarketplaceGrid {
     'featured'?: string[];
@@ -1365,6 +1369,10 @@ declare namespace LocalJSX {
     * Template format structure, with `:product` placeholder
     */
     'templateLinkFormat'?: string;
+    /**
+    * Use auth?
+    */
+    'useAuth'?: boolean;
   }
   interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
     'featured'?: string[];
