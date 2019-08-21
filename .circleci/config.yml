@@ -22,6 +22,13 @@ commands:
             - pkg
           key: stencilcache-{{ .Revision }}
 
+  save-pkg-build:
+    steps:
+      - save_cache:
+          paths:
+            - pkg
+          key: npmpkgcache-{{ .Revision }}
+
   # npm install
   setup:
     steps:
@@ -74,7 +81,7 @@ jobs:
       - setup
       - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm run publish
-      - save-build
+      - save-pkg-build
 
   # Test
   test:
@@ -93,33 +100,19 @@ jobs:
       - setup
       - happo/run_happo
       - save-build
-  
 
   # Publish packages to js.cdn.manifold.co
   # this is always run after npm-publish so the ./pkg file will be available.
-  cdn-publish: 
-    parameters:
-      latest:
-        type: string
-        default: ""
+  cdn-publish:
     docker:
-     - image: google/cloud-sdk
+      - image: google/cloud-sdk
     steps:
-      - attach_workspace:
-          at: ~/project
-      - setup
+      - restore_cache:
+          keys:
+            - npmpkgcache-{{ .Revision }}
       - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
-      - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
-      - run: gsutil -m cp *.md pkg gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
-      - when:
-         condition:
-           latest: <<parameters.latest>>
-         steps:
-          - run: gsutil -m rm -r gs://manifold-js/@manifoldco/ui
-          - run: gsutil -m cp pkg/* gs://manifold-js/@manifoldco/ui
-          - run: gsutil -m cp -r pkg/dist gs://manifold-js/@manifoldco/ui
-          - run: gsutil -m cp *.md gs://manifold-js/@manifoldco/ui
+      - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
 
 workflows:
   version: 2
@@ -250,7 +243,6 @@ workflows:
           requires:
             - confirm
       - cdn-publish:
-          latest: "true"
           context: gcp-cdn-auth
           filters:
             branches:
