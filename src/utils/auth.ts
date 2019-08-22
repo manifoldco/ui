@@ -37,8 +37,8 @@ export function isExpired(token: string) {
       return true;
     }
 
-    const d = new Date(numericExpiry * 1000);
-    return d < new Date();
+    const tokenExpiration = new Date(numericExpiry * 1000);
+    return tokenExpiration < new Date();
   } catch {
     // Not a valid unix timestamp. Consider this expired.
     return true;
