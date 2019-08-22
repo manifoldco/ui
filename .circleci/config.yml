@@ -115,12 +115,12 @@ jobs:
           keys:
             - npmpkgcache-{{ .Revision }}
       - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-      - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
-      - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG}
+      - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v}
+      - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v}
       - when:
           condition: << parameters.latest >>
           steps:
-            - run: gsutil -m rsync -r gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG} gs://manifold-js/@manifoldco/ui
+            - run: gsutil -m rsync -r gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v} gs://manifold-js/@manifoldco/ui
 
 workflows:
   version: 2
