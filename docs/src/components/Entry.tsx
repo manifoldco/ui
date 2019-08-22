@@ -104,6 +104,14 @@ const Readme = styled.div`
     line-height: 1.5;
   }
 
+  & ul,
+  & ol {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    padding-left: 0;
+    font-size: 14px;
+  }
+
   /* highlight.js */
 
   & .hljs {
