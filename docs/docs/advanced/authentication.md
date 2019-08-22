@@ -1,55 +1,148 @@
 ---
-title: Auth token provider
+title: Authentication
 path: /advanced/authentication
 ---
 
-# Authenticate users
+# Authentication
 
-To allow a user to access data locked (🔒) behind authentication, the `manifold-auth-token`
-component can be used. The component will render the
-[shadowcat](https://github.com/manifoldco/shadowcat) authentication iframe and attempt to log in the
-currently logged in user for your platform using OAuth. See the shadowcat documentation for more
-information.
+As a cloud service marketplace, most of Manifold UI grants access to user-specific service
+instances. Of course, sensitive data requires—you guessed it—_authentication_!
+
+## Public components
+
+To start, it’s helpful to distinguish the components that _don’t_ need auth. Our product data (we
+usually refer to it as ”catalog”) is freely-available and great for use on both marketing pages as
+well as internal Dashboards (for the latter, we don’t submit user info in the request). Examples of
+components which never need auth are:
+
+- [Marketplace](#)
+- [Product](#)
+- [Plan Selector](#)
+- [Product Name](#)
+- [Product Logo](#)
+
+Everything else, though, will require auth. This guide will cover setting that up with your app.
+
+## Setting up auth
+
+Everything else not related to product data—user provisions, user resources, account
+credentials—need auth. Follow these steps to set up auth for your app.
+
+### Step 1: `<manifold-auth-token>`
+
+To make our side of it easy, we provide a special token—`<manifold-auth-token>`—that handles the
+first part of the OAuth dance. It should be placed inside the [Connection][connection] component. It
+may appear anywhere in your app (but the higher it the DOM tree it appears, the better, so it can
+load sooner):
 
 ```html
-<manifold-auth-token></manifold-auth-token>
+<manifold-connection>
+  <manifold-auth-token></manifold-auth-token>
+  <!-- rest of your HTML -->
+</manifold-connection>
 ```
 
-The component can be placed anywhere in the DOM tree as long as it exists within a
-`<manifold-connection>` component.
+In addition to loading this as soon as possible, we also recommend **only loading this once** to
+prevent unnecessary token requests (another reason for only having this be near the root of your
+HTML).
 
-## Receiving the token
+### Step 2: your app
 
-The component makes no decision as to how you should save the token on your side. As such, when the
-token is received from the iframe, an event is triggered that will give you the token. The token
-will be stored in the connection for use in subsequent API requests, but this event gives you the
-opportunity to save the token to prevent delays on the next page load as described in **Setting the
-cached token**.
+The `<manifold-auth-token>` in the background will open an `<iframe>` which will redirect
+internally, and request a token from Manifold’s end. That same `<iframe>` will then redirect back to
+the URL it was called from with the first part of the [OAuth2][oauth2] flow:
+
+```
+/login/oauth/authorize?access_type=online&client_id=[client_id]&redirect_uri=[redirect_uri]&response_type=code&state=[state]
+```
+
+This is what you’ll **receive**:
+
+| Param           | Description                                                         |
+| :-------------- | :------------------------------------------------------------------ |
+| `state`         | Temporary user token to be used for this session.                   |
+| `client_id`     | This code identifies the request is coming from Manifold            |
+| `redirect_uri`  | The redirect URL on Manifold’s side that will receive your response |
+| `response_type` | This will be `code`                                                 |
+| `access_type`   | This will be `online`                                               |
+
+This is what you should **send** back to the `redirect_uri`:
+
+```
+[redirect_uri]?code=[code]&state=[state]
+```
+
+| Param   | Description                                                                                                          |
+| :------ | :------------------------------------------------------------------------------------------------------------------- |
+| `code`  | Temporary user session token on your end. Subsequent Manifold requests will send this `code` back to your endpoints. |
+| `state` | The same `state` sent to you in the previous step                                                                    |
+
+Once that’s been received, we’ll send the token back to `<manifold-auth-token>` for our own
+endpoints to use. The `manifold-token-receive` event will also be triggered if you’d like to store
+the token anywhere (covered under **Events**).
+
+## Caching
+
+Beyond the basic flow, you can speed up requests by caching tokens. Whenever a token is received,
+you can store it anywhere (doesn’t have to be `localStorage`; this is just an example):
 
 ```js
-document.addEventListener('manifold-token-receive', ({ detail: { token } }) => {
-  // create a cookie or localstorage value with the token
+document.addEventListener('manifold-token-receive', ({ detail }) => {
+  if (detail.token) {
+    // set new token if received
+    localStorage.setItem('my-token', detail.token);
+  } else {
+    // if there was an error, clear saved token
+    localStorage.removeItem('my-token');
+  }
 });
 ```
 
-## Setting the cached token
-
-The component can receive a token previously saved from an OAuth request to speed up all requests
-made by our components. If this token is provided, the OAuth request will still happen in order to
-refresh the token, but any fetch calls happening in our web components will not wait for that OAuth
-request to finish.
+And feed the token back to `<manifold-auth-token>` on page reload:
 
 ```html
-<manifold-auth-token token="new-token"></manifold-auth-token>
+<!-- Server-side -->
+<manifold-auth-token token="<? $token ?>"></manifold-auth-token>
+<!-- JSX -->
+<manifold-auth-token token={localStorage.getItem('my-token')} />
 ```
 
-## Invalid token
+This will then try to re-use an existing token, which can speed up the user experience by saving an
+OAuth dance.
+
+In the case of an expired token, the component will try, silently fail, request a new one, and
+trigger the `manifold-token-receive` event which should update anything listening without any
+interruption on the user side.
+
+## Events
+
+The following custom events are emitted to `document`. You can listen for events like so:
+
+```js
+document.addEventListener('manifold-token-receive', ({ detail }) => {
+  console.log(detail);
+  // {
+  //   duration: 1450,
+  //   error: null,
+  //   expiry: 86400000,
+  //   token: "eyJhbGciOiJFUzI1NiI…"
+  // }
+});
+```
+
+| Event Name               | Description                              | Data                                   |
+| :----------------------- | :--------------------------------------- | :------------------------------------- |
+| `manifold-token-receive` | Emitted whenever a new token is received | `token`, `expiry`, `error`, `duration` |
+
+## Troubleshooting
+
+### Invalid token
 
 If the token given to the component is invalid, endpoints will return a 401 error and the token will
 be removed from the `manifold-connection`. Use the [error handling capabilities](/advanced/errors)
 of our web components to detect and act on such errors.
 
-## Authenticated requests timeout
+### Authenticated requests timeout
 
 Any requests requiring authentication - which are sent by components locked (🔒) behind
 authentication - will wait on a valid token for up to 15 seconds. If this component does not inject
@@ -63,8 +156,17 @@ This timeout duration can be customized on the `manifold-connection` component.
 </manifold-connection>
 ```
 
-## Token expiration
+### Token expiration
 
-The token's expiration is encoded in the token string that the `manifold-token-receive` gives you.
-If the token is set as expired, it will automatically be refreshed with a new token using the
-shadowcat OAuth iframe.
+For the `manifold-token-receive` event (**Events** section), the `expiry` is the Unix timestamp when
+the token will expire. On our end, we’ll automatically refresh tokens with no action on your part,
+and with no interruption to the user (other than a slightly-slowed-down request while the token
+refreshes).
+
+But for your needs, the `manifold-token-receive` event allows you to preemptively do anything you’d
+like to (such as, say, not passing the token to `<manifold-auth-token>` which could result in a
+minor performance boost for users by skipping what will be a `401` request before the token is
+refreshed).
+
+[connection]: /connection
+[oauth2]: https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request
