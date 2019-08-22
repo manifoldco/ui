@@ -52,7 +52,9 @@ export class ManifoldPerformance {
       <script
         type="text/javascript"
         src="https://www.datadoghq-browser-agent.com/datadog-logs-us.js"
-        ref={(el: HTMLScriptElement) => (this.ddScript = el)}
+        ref={(el: HTMLScriptElement) => {
+          this.ddScript = el;
+        }}
       ></script>
     );
   }
