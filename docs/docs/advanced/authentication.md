@@ -37,9 +37,10 @@ here’s a general summary of how it works with UI, and what to expect:
 
 ### Step 1: `<manifold-auth-token>`
 
-To make it easy, we provide a special component—`<manifold-auth-token>`—that handles the first part
-of the OAuth dance. It should be placed inside the [Connection][connection] component. It may appear
-anywhere in your app (but the higher it the DOM tree it appears, the better, so it can load sooner):
+To make it easy, we provide a special component—`<manifold-auth-token>`—that handles the first step
+of the OAuth dance necessary for platform users to authenticate with Manifold. It should be placed
+inside the [Connection][connection] component. It may appear anywhere in your app (but the higher it
+the DOM tree it appears, the better, so it can load sooner):
 
 ```html
 <manifold-connection>
@@ -178,8 +179,7 @@ refreshes).
 
 But for your needs, the `manifold-token-receive` event allows you to preemptively do anything you’d
 like to (such as, say, not passing the token to `<manifold-auth-token>` which could result in a
-minor performance boost for users by skipping what will be a `401` request before the token is
-refreshed).
+minor performance boost for users by skipping what will be a `401` before the token is refreshed).
 
 [authentication]: https://docs.manifold.co/docs/platforms-auth-AzsO1HvPT1Hnojsrsb10L
 [connection]: /connection
