@@ -11,12 +11,21 @@ export class ManifoldAuthToken {
   @Prop() setAuthToken: (s: string) => void = () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
+  @Prop() accessToken?: string;
   @Prop() oauthUrl?: string;
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter;
 
   @Watch('token') tokenChange(newToken?: string) {
     this.setExternalToken(newToken);
+  }
+
+  @Watch('accessToken') internalTokenChange(newToken?: string) {
+    if (this.accessToken && !newToken && this.oauthUrl) {
+      const url = new URL(this.oauthUrl);
+      url.searchParams.set('ts', new Date().getTime().toString());
+      this.oauthUrl = url.href;
+    }
   }
 
   componentWillLoad() {
@@ -48,4 +57,4 @@ export class ManifoldAuthToken {
   }
 }
 
-Tunnel.injectProps(ManifoldAuthToken, ['setAuthToken']);
+Tunnel.injectProps(ManifoldAuthToken, ['setAuthToken', 'accessToken']);
