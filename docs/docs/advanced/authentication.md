@@ -25,8 +25,15 @@ Everything else, though, will require auth. This guide will cover setting that u
 
 ## Setting up auth
 
+<manifold-toast>
+  <div>
+    View the complete authentication guide at <a href="https://docs.manifold.co/docs/platforms-auth-AzsO1HvPT1Hnojsrsb10L">docs.manifold.co</a>
+  </div>
+</manifold-toast>
+
 Everything else not related to product data—user provisions, user resources, account
-credentials—need auth. Follow these steps to set up auth for your app.
+credentials—need auth. The full auth docs can be found at [docs.manifold.co][authentication], but
+here’s a general summary of how it works with UI, and what to expect:
 
 ### Step 1: `<manifold-auth-token>`
 
@@ -80,6 +87,10 @@ This is what you should **send** back to the `redirect_uri`:
 Once that’s been received, we’ll send the token back to `<manifold-auth-token>` for our own
 endpoints to use. The `manifold-token-receive` event will also be triggered if you’d like to store
 the token anywhere (covered under **Events**).
+
+### Full guide
+
+To see our complete guide on authenticating with Manifold, see [docs.manifold.co][authentication].
 
 ## Caching
 
@@ -168,5 +179,6 @@ like to (such as, say, not passing the token to `<manifold-auth-token>` which co
 minor performance boost for users by skipping what will be a `401` request before the token is
 refreshed).
 
+[authentication]: https://docs.manifold.co/docs/platforms-auth-AzsO1HvPT1Hnojsrsb10L
 [connection]: /connection
 [oauth2]: https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request
