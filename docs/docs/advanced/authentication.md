@@ -113,7 +113,7 @@ And feed the token back to `<manifold-auth-token>` on page reload:
 
 ```html
 <!-- Server-side -->
-<manifold-auth-token token="<? $token ?>"></manifold-auth-token>
+<manifold-auth-token token="<?= $token ?>"></manifold-auth-token>
 <!-- JSX -->
 <manifold-auth-token token={localStorage.getItem('my-token')} />
 ```
