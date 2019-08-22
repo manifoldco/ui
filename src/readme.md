@@ -280,6 +280,7 @@ and other CI tools.
 - New releases are available for download at `npm install @manifoldco/ui` (no
   tag). If the user doesn’t specify a version, they’ll download the most recent
   release.
+- New releases are also available on our cdn @ `https://js.cdn.manifold.co/@manifoldco/ui` If the user doesn’t specify a version such as `https://js.cdn.manifold.co/@manifoldco/ui@0.5.7`, they’ll download the most recent release.
 - Once published, **you can’t unpublish a version;** it’ll be available at
   that version forever. The only way to fix something is to push a new patch
   version.
@@ -299,6 +300,17 @@ and other CI tools.
 [tag-git]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [tag-github]: https://github.com/manifoldco/ui/releases
 [swagger-to-ts]: https://www.npmjs.com/package/@manifoldco/swagger-to-ts
+
+### CDN
+
+We publish our UI package to our CDN: `https://js.cdn.manifold.co`.
+
+In any setup, you can use our CDN for UI:
+```
+https://js.cdn.manifold.co/@manifoldco/ui/       # latest (beware of breaking changes!)
+https://js.cdn.manifold.co/@manifoldco/ui@0.5.7/ # specific version
+https://js.cdn.manifold.co/@manifoldco/ui@0.5.7-alpha.0/ # specific version for alpha
+```
 
 ## 💁 Tips
 
