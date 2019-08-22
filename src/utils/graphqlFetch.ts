@@ -70,6 +70,7 @@ export function createGraphqlFetch({
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
       report(response); // report unauthenticated
+      return graphqlFetch(args);
     }
 
     // handle non-GQL responses from errors

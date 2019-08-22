@@ -70,7 +70,7 @@ export function createRestFetch({
     if (response.status === 401) {
       setAuthToken('');
       report(response);
-      throw new Error('Auth token expired');
+      return restFetch(args);
     }
 
     const body = await response.json();
