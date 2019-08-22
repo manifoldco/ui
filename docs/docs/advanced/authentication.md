@@ -152,9 +152,9 @@ document.addEventListener('manifold-token-receive', ({ detail }) => {
 
 ### Invalid token
 
-If the token given to the component is invalid, endpoints will return a 401 error and the token will
-be removed from the `manifold-connection`. Use the [error handling capabilities](/advanced/errors)
-of our web components to detect and act on such errors.
+If the token given to the component is invalid, endpoints will return a `401` error and the token
+will be refreshed automatically. Use the [error handling capabilities](/advanced/errors) of our web
+components to detect and act on such errors.
 
 ### OAuth timeout
 
