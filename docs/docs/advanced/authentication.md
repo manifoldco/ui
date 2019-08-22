@@ -142,16 +142,16 @@ If the token given to the component is invalid, endpoints will return a 401 erro
 be removed from the `manifold-connection`. Use the [error handling capabilities](/advanced/errors)
 of our web components to detect and act on such errors.
 
-### Authenticated requests timeout
+### OAuth timeout
 
-Any requests requiring authentication - which are sent by components locked (🔒) behind
-authentication - will wait on a valid token for up to 15 seconds. If this component does not inject
-a token into the connection after that time, an authentication error will be thrown.
+Any requests requiring authentication will wait on a valid token for up to 15 seconds. If this
+component does not inject a token into the connection after that time, an authentication error will
+be thrown.
 
-This timeout duration can be customized on the `manifold-connection` component.
+This timeout duration can be changed on the `manifold-connection` component:
 
 ```html
-<manifold-connection wait-time="time-in-ms">
+<manifold-connection wait-time="10000">
   <!-- Application -->
 </manifold-connection>
 ```
