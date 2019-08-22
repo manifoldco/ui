@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.5.7]
+
 ### Added
 
 - We now release and publish our components to our CDN @ `https://js.cdn.manifold.co/@manifoldco/ui`. (#408, #418)
