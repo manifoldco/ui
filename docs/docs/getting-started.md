@@ -21,10 +21,12 @@ modern framework like React, Vue, or Angular.
 
 In any setup, you can use our CDN for UI:
 
+```html
 <!-- latest (beware of breaking changes!) -->
 <script src="https://js.cdn.manifold.co/@manifoldco/ui/dist/manifold.js"></script>
 <!-- specific version -->
 <script src="https://js.cdn.manifold.co/@manifoldco/ui@0.6.0/dist/manifold.js"></script>
+```
 
 ### HTML (ES Modules)
 
