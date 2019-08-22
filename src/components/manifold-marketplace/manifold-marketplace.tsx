@@ -52,8 +52,14 @@ export class ManifoldMarketplace {
     });
 
     if (response) {
-      // Alphabetize once, then don’t worry about it
-      this.services = [...response].sort((a, b) => a.body.name.localeCompare(b.body.name));
+      this.services = [...response]
+        // filter products if list is specified
+        .filter(
+          service =>
+            this.parsedProducts.length === 0 || this.parsedProducts.includes(service.body.label)
+        )
+        // Alphabetize once, then don’t worry about it
+        .sort((a, b) => a.body.name.localeCompare(b.body.name));
     }
   };
 
