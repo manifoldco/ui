@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed events firing twice for `<manifold-resource-rename>`, `<manifold-resource-sso>`, and `<manifold-resource-deprovision>` (#401)
+- Performance optimizations for network calls in `manifold-marketplace` (#424)
 - Prevent provision button from being clicked multiple times.
 
 ### Changed
