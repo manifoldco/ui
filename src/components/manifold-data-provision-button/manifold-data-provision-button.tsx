@@ -55,6 +55,7 @@ export class ManifoldDataProvisionButton {
   @Prop() regionId?: string = globalRegion.id;
   @State() planId?: string = '';
   @State() productId?: string = '';
+  @State() provisioning: boolean = false;
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true }) invalid: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) error: EventEmitter;
@@ -123,6 +124,7 @@ export class ManifoldDataProvisionButton {
     };
 
     try {
+      this.provisioning = true;
       const response = await this.restFetch<Gateway.Resource>({
         service: 'gateway',
         endpoint: `/resource/`,
@@ -141,8 +143,10 @@ export class ManifoldDataProvisionButton {
           resourceLabel: response.label,
         };
         this.success.emit(success);
+        this.provisioning = false;
       }
     } catch (error) {
+      this.provisioning = false;
       const e: ErrorMessage = {
         message: error.message,
         resourceLabel: this.resourceLabel,
@@ -204,7 +208,7 @@ export class ManifoldDataProvisionButton {
       <button
         type="submit"
         onClick={() => this.provision()}
-        disabled={!this.planId || !this.productId}
+        disabled={!this.planId || !this.productId || this.provisioning}
       >
         <slot />
       </button>
