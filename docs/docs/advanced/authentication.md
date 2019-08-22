@@ -37,10 +37,9 @@ here’s a general summary of how it works with UI, and what to expect:
 
 ### Step 1: `<manifold-auth-token>`
 
-To make our side of it easy, we provide a special token—`<manifold-auth-token>`—that handles the
-first part of the OAuth dance. It should be placed inside the [Connection][connection] component. It
-may appear anywhere in your app (but the higher it the DOM tree it appears, the better, so it can
-load sooner):
+To make it easy, we provide a special component—`<manifold-auth-token>`—that handles the first part
+of the OAuth dance. It should be placed inside the [Connection][connection] component. It may appear
+anywhere in your app (but the higher it the DOM tree it appears, the better, so it can load sooner):
 
 ```html
 <manifold-connection>
@@ -92,10 +91,13 @@ the token anywhere (covered under **Events**).
 
 To see our complete guide on authenticating with Manifold, see [docs.manifold.co][authentication].
 
-## Caching
+## Caching for performance
 
-Beyond the basic flow, you can speed up requests by caching tokens. Whenever a token is received,
-you can store it anywhere (doesn’t have to be `localStorage`; this is just an example):
+Sometimes the OAuth dance can take a couple seconds to complete. In that light, we strongly
+recommend caching the token somewhere so that new tokens are only requested when necessary.
+
+Tokens are set using the `manifold-token-receive` event (in this example we’re using `localStorage`,
+but you may place this anywhere that persists)
 
 ```js
 document.addEventListener('manifold-token-receive', ({ detail }) => {
@@ -109,21 +111,21 @@ document.addEventListener('manifold-token-receive', ({ detail }) => {
 });
 ```
 
-And feed the token back to `<manifold-auth-token>` on page reload:
+Once we have a token stored somewhere, we can pass it back to the `<manifold-auth-token>` component
+on page reload:
 
-```html
+```jsx
 <!-- Server-side -->
 <manifold-auth-token token="<?= $token ?>"></manifold-auth-token>
 <!-- JSX -->
 <manifold-auth-token token={localStorage.getItem('my-token')} />
 ```
 
-This will then try to re-use an existing token, which can speed up the user experience by saving an
-OAuth dance.
-
 In the case of an expired token, the component will try, silently fail, request a new one, and
 trigger the `manifold-token-receive` event which should update anything listening without any
-interruption on the user side.
+interruption on the user side. Nothing is required on your part for an expired token; if you have
+caching set up via the `manifold-token-receive` event listener, your cache will be updated whenever
+new tokens are received.
 
 ## Events
 
