@@ -117,3 +117,9 @@ please refer to Stencil’s [docs on integration][stencil-framework].
 [tsconfig]: https://www.typescriptlang.org/docs/handbook/tsconfig-json.htm
 [ts-fix]: https://github.com/Microsoft/TypeScript/pull/26797
 [web-components]: https://www.webcomponents.org/introduction
+
+### Using our CDN
+
+Manifold UI is available at `https://js.cdn.manifold.co/@manifoldco/ui` on a highly available, fast CDN. We publish all our package versions there for fast and safe distribution.
+
+If you intend to use our CDN, please use a specific version such as: https://js.cdn.manifold.co/@manifoldco/ui@0.5.7
