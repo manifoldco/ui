@@ -42,7 +42,7 @@ describe('The fetcher created by createRestFetch', () => {
     expect(result).toEqual(body);
   });
 
-  it('Will reset the auth token on an error', () => {
+  it('Will reset the auth token on a 401 error', () => {
     const setAuthToken = jest.fn();
     const fetcher = createRestFetch({
       getAuthToken: () => '1234',
@@ -64,6 +64,27 @@ describe('The fetcher created by createRestFetch', () => {
     });
   });
 
+  it('Can retry on a 401 error', () => {
+    const setAuthToken = jest.fn();
+    const fetcher = createRestFetch({
+      getAuthToken: () => '1234',
+      setAuthToken,
+      retries: 1,
+    });
+
+    fetchMock.mock('path:/v1/test', {
+      status: 401,
+      body: {},
+    });
+
+    expect.assertions(1);
+    return fetcher({
+      endpoint: '/test',
+      service: 'marketplace',
+    }).catch(() => {
+      expect(fetchMock.calls.length).toEqual(2);
+    });
+  });
   it('Will return an error if the fetch returned one', () => {
     const body = {
       message: 'oops',
