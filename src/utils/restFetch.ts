@@ -1,7 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
 import { withAuth } from './auth';
-import { hasExpired } from './expiry';
 import { report } from './errorReport';
 
 export interface CreateRestFetch {
@@ -33,7 +32,6 @@ export function createRestFetch({
   setAuthToken = () => {},
 }: CreateRestFetch): RestFetch {
   async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
-    const start = new Date();
     const rttStart = performance.now();
 
     // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
@@ -41,16 +39,24 @@ export function createRestFetch({
     const isCatalog = args.service === 'catalog';
     const isPublic = (isCatalog && args.isPublic !== false) || args.isPublic;
 
-    if (!isPublic) {
-      while (!getAuthToken() && !hasExpired(start, wait)) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-      if (!getAuthToken()) {
-        const detail = { message: 'No auth token given' };
-        report(detail);
-        throw new Error(detail.message);
-      }
+    if (!isPublic && !getAuthToken()) {
+      return new Promise((resolve, reject) => {
+        const success = () => {
+          document.removeEventListener('manifold-token-receive', success);
+          resolve(restFetch(args, attempts));
+        };
+
+        document.addEventListener('manifold-token-receive', success);
+
+        setTimeout(() => {
+          if (!getAuthToken()) {
+            document.removeEventListener('manifold-token-receive', success);
+            const detail = { message: 'No auth token given' };
+            report(detail);
+            reject(detail.message);
+          }
+        }, wait);
+      });
     }
 
     const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
