@@ -60,12 +60,12 @@
   grid-template-rows: auto 1fr auto;
   grid-template-columns: var(--manifold-product-logo-s) auto;
   align-items: start;
-  min-height: 6rem;
   padding: var(--padding);
   border-radius: var(--card-radius);
 
   @media (--viewport-s) {
     grid-template-columns: var(--manifold-product-logo-m) auto auto;
+    min-height: 6rem;
   }
 
   @media (--viewport-m) {
