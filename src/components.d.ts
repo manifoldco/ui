@@ -37,7 +37,7 @@ export namespace Components {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken {
-    'oauthUrl': string;
+    'oauthUrl'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
