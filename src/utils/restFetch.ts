@@ -53,7 +53,7 @@ export function createRestFetch({
             document.removeEventListener('manifold-token-receive', success);
             const detail = { message: 'No auth token given' };
             report(detail);
-            reject(detail.message);
+            reject(new Error(detail.message));
           }
         }, wait);
       });
