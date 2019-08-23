@@ -8,8 +8,7 @@ example: '<manifold-credentials resource-name="cms-stage"></manifold-credentials
 
 Display credentials for a resource. 🔒 Requires authentication.
 
-The resource label needs to be provided for the component to be able to fetch the resource's
-credentials on demand.
+The resource label needs to be provided for the component to be able to fetch the resource's credentials on demand.
 
 ```html
 <manifold-credentials resource-label="my-resource"></manifold-credentials>
@@ -17,13 +16,16 @@ credentials on demand.
 
 ## Customizing the buttons
 
-You can pass in your own button or link for the show and hide buttons of the component by passing in
-any element with `slot="show-button"` and `slot="hide-button"` as an attribute respectively. [Read
-more about slots][slot].
+You can pass in your own button or link for the show and hide buttons of the component by passing in any element with `slot="show-button"` and `slot="hide-button"` as an attribute respectively. [Read more about slots][slot].
 
 ```jsx
 <manifold-credentials resource-label="my-resource">
-  <MyButton slot="show-button">Show credentials</MyButton>
-  <MyButton slot="hide-button">Hide credentials</MyButton>
+  <MyButton slot="show-button">
+    Show credentials
+  </MyButton>
+  <MyButton slot="hide-button">
+    Hide credentials
+  </MyButton>
 </manifold-credentials>
 ```
+
