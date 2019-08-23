@@ -90,6 +90,9 @@ export class ManifoldServiceCardView {
           <h3 class="name">
             <manifold-skeleton-text>{this.name}</manifold-skeleton-text>
           </h3>
+          <div class="loading-cta">
+            <slot name="cta" />
+          </div>
           <div class="info">
             <p class="description">
               <manifold-skeleton-text>{this.description}</manifold-skeleton-text>

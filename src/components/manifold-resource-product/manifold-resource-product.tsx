@@ -30,7 +30,11 @@ export class ManifoldResourceProduct {
         description="This is a loading product..."
         logo="loading.jpg"
         name="loading..."
-      />
+      >
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
+      </manifold-service-card-view>
     );
   }
 }
