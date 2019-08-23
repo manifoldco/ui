@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import logger from '../../utils/logger';
 
 declare global {
@@ -15,18 +15,22 @@ const loggableEvents = [
 
 @Component({ tag: 'manifold-performance' })
 export class ManifoldPerformance {
+  @Prop({ mutable: true }) ddLogs?: any;
   private ddScript: HTMLScriptElement;
 
   ddLoadListener = () => {
-    window.DD_LOGS.init({
+    if (window.DD_LOGS) {
+      this.ddLogs = window.DD_LOGS;
+    }
+    this.ddLogs.init({
       clientToken: '<@DATADOG_CLIENT_TOKEN@>',
       forwardErrorsToLogs: false,
     });
-    window.DD_LOGS.addLoggerGlobalContext('browser-source', 'manifold-ui');
+    this.ddLogs.addLoggerGlobalContext('browser-source', 'manifold-ui');
   };
 
   logMetric = (e: CustomEvent) => {
-    window.DD_LOGS.logger.info(e.type, e.detail);
+    this.ddLogs.logger.info(e.type, e.detail);
   };
 
   componentDidLoad() {
@@ -40,8 +44,8 @@ export class ManifoldPerformance {
   }
 
   componentDidRender() {
-    this.ddScript.addEventListener('load', () => this.ddLoadListener);
-    if (window.DD_LOGS) {
+    this.ddScript.addEventListener('load', this.ddLoadListener);
+    if (window.DD_LOGS || this.ddLogs) {
       this.ddLoadListener();
     }
   }

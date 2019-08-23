@@ -353,7 +353,9 @@ export namespace Components {
     'suffix': string;
     'value': number;
   }
-  interface ManifoldPerformance {}
+  interface ManifoldPerformance {
+    'ddLogs'?: any;
+  }
   interface ManifoldPlan {
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
@@ -1402,7 +1404,9 @@ declare namespace LocalJSX {
     'suffix'?: string;
     'value'?: number;
   }
-  interface ManifoldPerformance extends JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement> {}
+  interface ManifoldPerformance extends JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement> {
+    'ddLogs'?: any;
+  }
   interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
