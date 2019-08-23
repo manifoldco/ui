@@ -65,6 +65,7 @@
 
   @media (--viewport-s) {
     grid-template-columns: var(--manifold-product-logo-m) auto auto;
+    min-height: 6rem;
   }
 
   @media (--viewport-m) {
