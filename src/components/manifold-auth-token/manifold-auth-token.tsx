@@ -14,7 +14,7 @@ export class ManifoldAuthToken {
   @Prop() subscribe: (s: Subscriber) => () => void = () => () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
-  @Prop() oauthUrl: string = 'https://login.manifold.co/signin/oauth/web';
+  @Prop() oauthUrl?: string = 'https://login.manifold.co/signin/oauth/web';
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter;
 
