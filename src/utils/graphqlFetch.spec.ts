@@ -171,6 +171,21 @@ describe('graphqlFetch', () => {
       await fetcher({ query: '' });
       expect(setAuthToken).toHaveBeenCalledWith('');
     });
+
+    it('can retry on error', async () => {
+      const setAuthToken = jest.fn();
+      const fetcher = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: () => '1234',
+        setAuthToken,
+        retries: 1,
+      });
+
+      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+
+      await fetcher({ query: '' });
+      expect(fetchMock.calls.length).toBe(2);
+    });
   });
 
   // Note: we’re testing status codes ahead-of-time, to ensure handling of them doesn’t change

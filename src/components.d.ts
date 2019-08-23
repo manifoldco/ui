@@ -13,6 +13,9 @@ import {
   Gateway,
 } from './types/gateway';
 import {
+  Subscriber,
+} from './state/connection';
+import {
   RestFetch,
 } from './utils/restFetch';
 import {
@@ -39,6 +42,10 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'setAuthToken': (s: string) => void;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'subscribe': (s: Subscriber) => () => void;
     'token'?: string;
   }
   interface ManifoldBadge {}
@@ -1057,6 +1064,10 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'setAuthToken'?: (s: string) => void;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'subscribe'?: (s: Subscriber) => () => void;
     'token'?: string;
   }
   interface ManifoldBadge extends JSXBase.HTMLAttributes<HTMLManifoldBadgeElement> {}
