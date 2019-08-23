@@ -10,7 +10,7 @@ interface CreateGraphqlFetch {
   setAuthToken?: (token: string) => void;
 }
 
-type graphqlArgs =
+type GraphqlArgs =
   | { mutation: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }
   | { query: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }; // require query or mutation, but not both
 
@@ -25,7 +25,7 @@ export interface GraphqlResponseBody<T> {
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T>(args: graphqlArgs) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   endpoint = 'https://api.manifold.co/graphql',
@@ -34,9 +34,9 @@ export function createGraphqlFetch({
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateGraphqlFetch): GraphqlFetch {
-  return async function graphqlFetch<T>(
-    args: graphqlArgs,
-    attempts: number = 0
+  async function graphqlFetch<T>(
+    args: GraphqlArgs,
+    attempts: number
   ): Promise<GraphqlResponseBody<T>> {
     const start = new Date();
     const rttStart = performance.now();
@@ -115,5 +115,9 @@ export function createGraphqlFetch({
 
     // return everything to the user
     return body;
+  }
+
+  return function(args: GraphqlArgs) {
+    return graphqlFetch(args, 0);
   };
 }

@@ -32,10 +32,7 @@ export function createRestFetch({
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateRestFetch): RestFetch {
-  return async function restFetch<T>(
-    args: RestFetchArguments,
-    attempts: number = 0
-  ): Promise<T | Success> {
+  async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
     const start = new Date();
     const rttStart = performance.now();
 
@@ -106,5 +103,9 @@ export function createRestFetch({
     report(response);
     const message = Array.isArray(body) ? body[0].message : body.message;
     throw new Error(message);
+  }
+
+  return function(args: RestFetchArguments) {
+    return restFetch(args, 0);
   };
 }
