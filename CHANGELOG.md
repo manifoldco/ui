@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed resource card CTA slot from flashing while loading (#438)
+
 ### Added
 
 - When an expired auth token causes an API call to respond with a 401, the token will now refresh and
