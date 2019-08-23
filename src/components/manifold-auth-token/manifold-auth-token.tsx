@@ -29,7 +29,7 @@ export class ManifoldAuthToken {
     if (this.subscribe) {
       this.unsubscribe = this.subscribe((oldToken?: string, newToken?: string) => {
         if (oldToken && !newToken && this.oauthUrl) {
-          const url = new URL(this.oauthUrl);
+          const url = new URL(this.oauthUrl, window.location.href);
           url.searchParams.set('ts', new Date().getTime().toString());
           this.oauthUrl = url.href;
         }
