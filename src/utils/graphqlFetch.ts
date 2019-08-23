@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
-import { hasExpired } from './expiry';
 import { report } from './errorReport';
+import { waitForAuthToken } from './auth';
 
 interface CreateGraphqlFetch {
   endpoint?: string;
@@ -38,21 +38,11 @@ export function createGraphqlFetch({
     args: GraphqlArgs,
     attempts: number
   ): Promise<GraphqlResponseBody<T>> {
-    const start = new Date();
     const rttStart = performance.now();
     const { isPublic, emitter, ...request } = args;
 
-    if (!isPublic) {
-      while (!getAuthToken() && !hasExpired(start, wait)) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-
-      if (!getAuthToken()) {
-        const detail = { message: 'No auth token given' };
-        report(detail);
-        throw new Error(detail.message);
-      }
+    if (!isPublic && !getAuthToken()) {
+      return waitForAuthToken(getAuthToken, wait, () => graphqlFetch(args, attempts));
     }
 
     const response = await fetch(endpoint, {

@@ -1,3 +1,5 @@
+import { report } from './errorReport';
+
 /**
  * This grabs the manifold_api_token from local storage, and sets the auth header in requests.
  * You may also pass through any other fetch options you’d like.
@@ -43,4 +45,28 @@ export function isExpired(token: string) {
     // Not a valid unix timestamp. Consider this expired.
     return true;
   }
+}
+
+export function waitForAuthToken<T>(
+  getAuthToken: () => string | undefined,
+  wait: number,
+  resume: () => Promise<T>
+): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const success = () => {
+      document.removeEventListener('manifold-token-receive', success);
+      resolve(resume());
+    };
+
+    document.addEventListener('manifold-token-receive', success);
+
+    setTimeout(() => {
+      if (!getAuthToken()) {
+        document.removeEventListener('manifold-token-receive', success);
+        const detail = { message: 'No auth token given' };
+        report(detail);
+        reject(new Error(detail.message));
+      }
+    }, wait);
+  });
 }

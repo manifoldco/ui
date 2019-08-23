@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
-import { withAuth } from './auth';
+import { withAuth, waitForAuthToken } from './auth';
 import { report } from './errorReport';
 
 export interface CreateRestFetch {
@@ -40,23 +40,7 @@ export function createRestFetch({
     const isPublic = (isCatalog && args.isPublic !== false) || args.isPublic;
 
     if (!isPublic && !getAuthToken()) {
-      return new Promise((resolve, reject) => {
-        const success = () => {
-          document.removeEventListener('manifold-token-receive', success);
-          resolve(restFetch(args, attempts));
-        };
-
-        document.addEventListener('manifold-token-receive', success);
-
-        setTimeout(() => {
-          if (!getAuthToken()) {
-            document.removeEventListener('manifold-token-receive', success);
-            const detail = { message: 'No auth token given' };
-            report(detail);
-            reject(new Error(detail.message));
-          }
-        }, wait);
-      });
+      return waitForAuthToken(getAuthToken, wait, () => restFetch(args, attempts));
     }
 
     const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
