@@ -3,34 +3,7 @@ title: 🔒 Resource List
 path: /components/resource-list
 example: |
   <manifold-connection>
-    <manifold-resource-list paused>
-      <div slot="loading" style="display: grid;grid-area: services;grid-gap: var(--grid-s);grid-template-columns: repeat(2, 1fr);">
-        <manifold-resource-card-view
-          label="my-resource"
-          logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
-          resource-id="1234"
-          resource-status="available"
-        ></manifold-resource-card-view>
-        <manifold-resource-card-view
-          label="my-resource-2"
-          logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
-          resource-id="1234"
-          resource-status="provision"
-        ></manifold-resource-card-view>
-        <manifold-resource-card-view
-          label="my-resource-3"
-          logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
-          resource-id="1234"
-          resource-status="resize"
-        ></manifold-resource-card-view>
-        <manifold-resource-card-view
-          label="my-resource-4"
-          logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
-          resource-id="1234"
-          resource-status="deprovision"
-        ></manifold-resource-card-view>
-      </div>
-    </manifold-resource-list>
+    <manifold-resource-list paused></manifold-resource-list>
   </manifold-connection>
 ---
 
