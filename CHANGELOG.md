@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- When an expired auth token causes an API call to respond with a 401, the token will now refresh and
+  the API call will retry.
+
 ## [v0.5.7]
 
 ### Added
