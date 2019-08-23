@@ -99,7 +99,9 @@ describe('<manifold-service-card>', () => {
           logo="product.jpg"
           name="Awesome product"
           skeleton=""
-        ></manifold-service-card-view>
+        >
+          <manifold-forward-slot slot="cta"></manifold-forward-slot>
+        </manifold-service-card-view>
       `);
     });
   });
