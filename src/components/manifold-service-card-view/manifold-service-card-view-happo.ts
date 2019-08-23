@@ -57,3 +57,32 @@ export const featured = async () => {
 
   return card.componentOnReady();
 };
+
+export const cta = async () => {
+  const card = document.createElement('manifold-service-card-view');
+  card.description = body.tagline;
+  card.logo = body.logo_url;
+  card.productId = id;
+  card.name = body.name;
+  card.productLabel = body.label;
+  card.innerHTML = `<button slot="cta">CTA Slot</button>`;
+
+  document.body.appendChild(card);
+
+  return card.componentOnReady();
+};
+
+export const skeletonWithCTA = async () => {
+  const card = document.createElement('manifold-service-card-view');
+  card.description = body.tagline;
+  card.logo = body.logo_url;
+  card.productId = id;
+  card.name = body.name;
+  card.productLabel = body.label;
+  card.skeleton = true;
+  card.innerHTML = `<button slot="cta">CTA Slot</button>`;
+
+  document.body.appendChild(card);
+
+  return card.componentOnReady();
+};
