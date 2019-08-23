@@ -31,7 +31,7 @@
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
     "bundlesize": "npm run build && npx bundlesize",
     "copy-changelog": "node scripts/copy-changelog",
-    "dev": "npm run copy-changelog && concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && cp .manifold-local.yml .manifold.yml && manifold run -- npm run storybook'",
+    "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && cp .manifold-local.yml .manifold.yml && manifold run -- npm run storybook'",
     "docs": "npm run prepare:docs && cd docs && npm start",
     "generate:gql": "graphql-codegen --config codegen.yml",
     "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace && npm run generate:specs:provisioning && npm run generate:specs:connector",
