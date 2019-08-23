@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When an expired auth token causes an API call to respond with a 401, the token will now refresh and
   the API call will retry.
 
+### Changed
+
+- Enforce standard height on product cards for more consistency
+
 ## [v0.5.7]
 
 ### Added
