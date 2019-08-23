@@ -34,13 +34,12 @@ export class ManifoldPerformance {
   };
 
   componentDidLoad() {
-    loggableEvents.forEach(eventType =>
-      window.addEventListener(eventType, (e: CustomEvent) => this.logMetric(e))
-    );
+    loggableEvents.forEach(eventType => window.addEventListener(eventType, this.logMetric));
   }
 
   componentDidUnload() {
     this.ddScript.removeEventListener('load', this.ddLoadListener);
+    loggableEvents.forEach(eventType => window.removeEventListener(eventType, this.logMetric));
   }
 
   componentDidRender() {
