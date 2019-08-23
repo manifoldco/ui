@@ -7,6 +7,7 @@ import { report } from './errorReport';
 export interface CreateRestFetch {
   endpoints?: Connection;
   wait?: number;
+  retries?: number;
   getAuthToken?: () => string | undefined;
   setAuthToken?: (token: string) => void;
 }
@@ -27,10 +28,14 @@ export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
 export function createRestFetch({
   endpoints = connections.prod,
   wait = 15000,
+  retries = 0,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateRestFetch): RestFetch {
-  return async function restFetch<T>(args: RestFetchArguments): Promise<T | Success> {
+  return async function restFetch<T>(
+    args: RestFetchArguments,
+    attempts: number = 0
+  ): Promise<T | Success> {
     const start = new Date();
     const rttStart = performance.now();
 
@@ -70,7 +75,11 @@ export function createRestFetch({
     if (response.status === 401) {
       setAuthToken('');
       report(response);
-      return restFetch(args);
+      if (attempts < retries) {
+        return restFetch(args, attempts + 1);
+      }
+
+      throw new Error('Auth token expired');
     }
 
     const body = await response.json();

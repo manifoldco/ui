@@ -53,6 +53,7 @@ export class ConnectionState {
     getAuthToken: this.getAuthToken,
     setAuthToken: this.setAuthToken,
     wait: this.waitTime,
+    retries: 1,
   });
 
   graphqlFetch = createGraphqlFetch({
@@ -60,5 +61,6 @@ export class ConnectionState {
     setAuthToken: this.setAuthToken,
     endpoint: connections[this.env].graphql,
     wait: this.waitTime,
+    retries: 1,
   });
 }

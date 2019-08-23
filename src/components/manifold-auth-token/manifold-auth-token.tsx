@@ -11,7 +11,7 @@ export class ManifoldAuthToken {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() setAuthToken: (s: string) => void = () => {};
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() subscribe: (s: Subscriber) => () => void;
+  @Prop() subscribe: (s: Subscriber) => () => void = () => () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
   @Prop() oauthUrl: string = 'https://login.manifold.co/signin/oauth/web';

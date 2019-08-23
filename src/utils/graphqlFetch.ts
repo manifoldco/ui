@@ -5,6 +5,7 @@ import { report } from './errorReport';
 interface CreateGraphqlFetch {
   endpoint?: string;
   wait?: number;
+  retries?: number;
   getAuthToken?: () => string | undefined;
   setAuthToken?: (token: string) => void;
 }
@@ -29,10 +30,14 @@ export type GraphqlFetch = <T>(args: graphqlArgs) => Promise<GraphqlResponseBody
 export function createGraphqlFetch({
   endpoint = 'https://api.manifold.co/graphql',
   wait = 15000,
+  retries = 0,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateGraphqlFetch): GraphqlFetch {
-  return async function graphqlFetch<T>(args: graphqlArgs): Promise<GraphqlResponseBody<T>> {
+  return async function graphqlFetch<T>(
+    args: graphqlArgs,
+    attempts: number = 0
+  ): Promise<GraphqlResponseBody<T>> {
     const start = new Date();
     const rttStart = performance.now();
     const { isPublic, emitter, ...request } = args;
@@ -70,7 +75,9 @@ export function createGraphqlFetch({
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
       report(response); // report unauthenticated
-      return graphqlFetch(args);
+      if (attempts < retries) {
+        return graphqlFetch(args, attempts + 1);
+      }
     }
 
     // handle non-GQL responses from errors
