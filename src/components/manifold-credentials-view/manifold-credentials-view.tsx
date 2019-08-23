@@ -1,4 +1,4 @@
-import { h, Component, Prop, Event, EventEmitter, Element } from '@stencil/core';
+import { h, Component, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
 
 import { Marketplace } from '../../types/marketplace';
@@ -14,6 +14,7 @@ export class ManifoldResourceCredentials {
   @Prop() credentials?: Marketplace.Credential[];
   @Prop() resourceLabel: string = '';
   @Prop() loading: boolean = false;
+  @State() shouldTransition: boolean = false;
   @Event() credentialsRequested: EventEmitter;
 
   showButtonEl?: Element;
@@ -22,6 +23,13 @@ export class ManifoldResourceCredentials {
   componentWillLoad() {
     this.findNodes();
     this.addListeners();
+  }
+
+  componentDidLoad() {
+    // hack to prevent “Hide credentials” from being visible on load in Firefox
+    setTimeout(() => {
+      this.shouldTransition = true;
+    }, 250);
   }
 
   componentDidUpdate() {
@@ -95,7 +103,11 @@ export class ManifoldResourceCredentials {
     );
 
     return [
-      <menu class="secrets-menu" data-showing={!!this.credentials}>
+      <menu
+        class="secrets-menu"
+        data-showing={!!this.credentials || undefined}
+        data-transitions={this.shouldTransition || undefined}
+      >
         {this.hideButtonEl ? (
           <slot name="hide-button" />
         ) : (
