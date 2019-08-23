@@ -145,6 +145,11 @@
   }
 }
 
+.loading-cta {
+  /* hide slot until not loaded */
+  display: none;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;

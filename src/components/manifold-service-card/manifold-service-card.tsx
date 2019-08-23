@@ -118,9 +118,9 @@ export class ManifoldServiceCard {
         productLabel={this.product.body.label}
         productLinkFormat={this.productLinkFormat}
       >
-        <manifold-forward-ref slot="cta">
+        <manifold-forward-slot slot="cta">
           <slot name="cta" />
-        </manifold-forward-ref>
+        </manifold-forward-slot>
       </manifold-service-card-view>
     ) : (
       // ☠
@@ -129,7 +129,11 @@ export class ManifoldServiceCard {
         description="Awesome product description"
         logo="product.jpg"
         name="Awesome product"
-      />
+      >
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
+      </manifold-service-card-view>
     );
   }
 }

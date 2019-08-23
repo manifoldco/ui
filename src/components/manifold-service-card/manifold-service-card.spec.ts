@@ -80,7 +80,7 @@ describe('<manifold-service-card>', () => {
           productlabel="${Product.body.label}"
           productlinkformat="${card.productLinkFormat}"
         >
-          <manifold-forward-ref slot="cta"></manifold-forward-ref>
+          <manifold-forward-slot slot="cta"></manifold-forward-slot>
         </manifold-service-card-view>
       `);
     });
@@ -99,7 +99,9 @@ describe('<manifold-service-card>', () => {
           logo="product.jpg"
           name="Awesome product"
           skeleton=""
-        ></manifold-service-card-view>
+        >
+          <manifold-forward-slot slot="cta"></manifold-forward-slot>
+        </manifold-service-card-view>
       `);
     });
   });
@@ -133,7 +135,7 @@ describe('<manifold-service-card>', () => {
           logo="${Product.body.logo_url}"
           name="${Product.body.name}"
         >
-          <manifold-forward-ref slot="cta"></manifold-forward-ref>
+          <manifold-forward-slot slot="cta"></manifold-forward-slot>
         </manifold-service-card-view>
       `);
     });
