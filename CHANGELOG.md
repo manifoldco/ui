@@ -39,6 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed padding above `<manifold-product-page>` (#399)
 - Adjusted positioning for CTA slot in `manifold-service-card-view`. (#404)
 
+### Added
+
+- `<manifold-performance>` component for partners to add opt-in metrics collection to their implementation (#427)
+
 ## [v0.5.5]
 
 ### Fixed

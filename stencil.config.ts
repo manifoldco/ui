@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 import { postcss } from '@stencil/postcss';
 import postCSSPresetEnv from 'postcss-preset-env';
+import replace from "rollup-plugin-replace";
 
 // https://stenciljs.com/docs/config
 
@@ -21,6 +22,13 @@ export const config: Config = {
         }),
       ],
     }),
+    replace({
+      exclude: "node_modules/**",
+      delimiters: ["<@", "@>"],
+      values: {
+        DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN
+      }
+    })
   ],
   testing: {
     testPathIgnorePatterns: [

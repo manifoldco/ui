@@ -360,6 +360,9 @@ export namespace Components {
     'suffix': string;
     'value': number;
   }
+  interface ManifoldPerformance {
+    'ddLogs'?: any;
+  }
   interface ManifoldPlan {
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
@@ -794,6 +797,12 @@ declare global {
     new (): HTMLManifoldNumberInputElement;
   };
 
+  interface HTMLManifoldPerformanceElement extends Components.ManifoldPerformance, HTMLStencilElement {}
+  var HTMLManifoldPerformanceElement: {
+    prototype: HTMLManifoldPerformanceElement;
+    new (): HTMLManifoldPerformanceElement;
+  };
+
   interface HTMLManifoldPlanElement extends Components.ManifoldPlan, HTMLStencilElement {}
   var HTMLManifoldPlanElement: {
     prototype: HTMLManifoldPlanElement;
@@ -1014,6 +1023,7 @@ declare global {
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-mock-resource': HTMLManifoldMockResourceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
+    'manifold-performance': HTMLManifoldPerformanceElement;
     'manifold-plan': HTMLManifoldPlanElement;
     'manifold-plan-cost': HTMLManifoldPlanCostElement;
     'manifold-plan-details': HTMLManifoldPlanDetailsElement;
@@ -1405,6 +1415,9 @@ declare namespace LocalJSX {
     'suffix'?: string;
     'value'?: number;
   }
+  interface ManifoldPerformance extends JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement> {
+    'ddLogs'?: any;
+  }
   interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
     /**
     * URL-friendly slug (e.g. `"kitefin"`)
@@ -1704,6 +1717,7 @@ declare namespace LocalJSX {
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
     'manifold-mock-resource': ManifoldMockResource;
     'manifold-number-input': ManifoldNumberInput;
+    'manifold-performance': ManifoldPerformance;
     'manifold-plan': ManifoldPlan;
     'manifold-plan-cost': ManifoldPlanCost;
     'manifold-plan-details': ManifoldPlanDetails;
