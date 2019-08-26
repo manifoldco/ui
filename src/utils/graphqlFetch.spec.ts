@@ -30,7 +30,7 @@ describe('graphqlFetch', () => {
         status: 200,
         body: { data: {} },
       });
-      await fetcher({ query: '', isPublic: true });
+      await fetcher({ query: '' });
       expect(fetchMock.called('https://api.manifold.co/graphql')).toBe(true);
     });
 
@@ -136,10 +136,12 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 401, body });
+      const response = { status: 401, body };
+      fetchMock.mock(graphqlEndpoint, response);
 
-      await fetcher({ query: '' });
-      expect(errorReporter).toHaveBeenCalledWith(body.errors);
+      return fetcher({ query: '' }).catch(() => {
+        expect(errorReporter).toHaveBeenCalledWith(body);
+      });
     });
   });
 
@@ -147,16 +149,16 @@ describe('graphqlFetch', () => {
     it('throws when expired', () => {
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
-        wait: 1,
+        wait: 0,
         getAuthToken: () => undefined,
       });
 
-      fetchMock.mock(graphqlEndpoint, 200);
+      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
 
       expect.assertions(2);
       return fetcher({ query: '' }).catch(result => {
-        expect(fetchMock.called(graphqlEndpoint)).toBe(false);
-        expect(result).toEqual(new Error('No auth token given'));
+        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+        expect(result).toEqual(new Error('Auth token expired'));
       });
     });
 
@@ -170,23 +172,28 @@ describe('graphqlFetch', () => {
 
       fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
 
-      await fetcher({ query: '' });
-      expect(setAuthToken).toHaveBeenCalledWith('');
+      expect.assertions(1);
+      return fetcher({ query: '' }).catch(() => {
+        expect(setAuthToken).toHaveBeenCalledWith('');
+      });
     });
 
     it('can retry on error', async () => {
       const setAuthToken = jest.fn();
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
-        getAuthToken: () => '1234',
+        getAuthToken: () => undefined,
         setAuthToken,
         retries: 1,
       });
 
       fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
 
-      await fetcher({ query: '' });
-      expect(fetchMock.calls.length).toBe(2);
+      expect.assertions(2);
+      return fetcher({ query: '' }).catch(err => {
+        expect(fetchMock.calls.length).toBe(2);
+        expect(err.message).toEqual('No auth token given');
+      });
     });
   });
 
@@ -228,9 +235,13 @@ describe('graphqlFetch', () => {
 
       fetchMock.mock(graphqlEndpoint, { status: 401, body });
 
-      const result = await fetcher({ query: '' });
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-      expect(result).toEqual(body);
+      expect.assertions(2);
+      return fetcher({
+        query: '',
+      }).catch(e => {
+        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+        expect(e.message).toEqual('Auth token expired');
+      });
     });
 
     it('422: should return (bad gql query)', async () => {

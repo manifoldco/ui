@@ -11,8 +11,8 @@ interface CreateGraphqlFetch {
 }
 
 type GraphqlArgs =
-  | { mutation: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }
-  | { query: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }; // require query or mutation, but not both
+  | { mutation: string; variables?: object; emitter?: EventEmitter }
+  | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
 
 interface GraphqlError {
   message: string;
@@ -39,11 +39,7 @@ export function createGraphqlFetch({
     attempts: number
   ): Promise<GraphqlResponseBody<T>> {
     const rttStart = performance.now();
-    const { isPublic, emitter, ...request } = args;
-
-    if (!isPublic && !getAuthToken()) {
-      return waitForAuthToken(getAuthToken, wait, () => graphqlFetch(args, attempts));
-    }
+    const { emitter, ...request } = args;
 
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -64,10 +60,12 @@ export function createGraphqlFetch({
     if (response.status === 401) {
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
-      report(response); // report unauthenticated
+      report(body); // report unauthenticated
       if (attempts < retries) {
-        return graphqlFetch(args, attempts + 1);
+        return waitForAuthToken(getAuthToken, wait, () => graphqlFetch(args, attempts + 1));
       }
+
+      throw new Error('Auth token expired');
     }
 
     // handle non-GQL responses from errors
