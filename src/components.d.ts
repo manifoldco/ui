@@ -479,6 +479,7 @@ export namespace Components {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
+    'logoLabel'?: string;
     'name'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
@@ -1531,6 +1532,7 @@ declare namespace LocalJSX {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
+    'logoLabel'?: string;
     'name'?: string;
     'onManifold-resource-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;

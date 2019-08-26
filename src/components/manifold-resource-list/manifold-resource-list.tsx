@@ -14,6 +14,7 @@ interface FoundResource {
   label: string;
   name: string;
   logo?: string;
+  logoLabel?: string;
   status: string;
 }
 
@@ -119,7 +120,7 @@ export class ManifoldResourceList {
               edges {
                 node {
                   id
-                  label
+                  displayName
                   logoUrl
                 }
               }
@@ -169,6 +170,7 @@ export class ManifoldResourceList {
                 label: resource.body.label,
                 name: resource.body.name,
                 logo: product ? product.node.logoUrl : undefined,
+                logoLabel: product ? product.node.displayName : undefined,
                 status: ManifoldResourceList.opStateToStatus(operation),
               });
               return;
@@ -188,6 +190,7 @@ export class ManifoldResourceList {
               label: (opBody as Provisioning.provision).label || '',
               name: (opBody as Provisioning.provision).name || '',
               logo: product ? product.node.logoUrl : undefined,
+              logoLabel: product ? product.node.displayName : undefined,
               status: ManifoldResourceList.opStateToStatus(operation),
             });
           });
@@ -207,6 +210,7 @@ export class ManifoldResourceList {
             label: resource.body.label,
             name: resource.body.name,
             logo: product ? product.node.logoUrl : undefined,
+            logoLabel: product ? product.node.displayName : undefined,
             status: 'available',
           });
         });
@@ -232,6 +236,7 @@ export class ManifoldResourceList {
                 label={resource.label}
                 name={resource.name}
                 logo={resource.logo}
+                logoLabel={resource.logoLabel}
                 resourceId={resource.id}
                 resourceStatus={resource.status}
                 resourceLinkFormat={this.resourceLinkFormat}
