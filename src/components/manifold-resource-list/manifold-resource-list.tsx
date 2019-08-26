@@ -118,6 +118,7 @@ export class ManifoldResourceList {
             products(first: 500) {
               edges {
                 node {
+                  id
                   label
                   logoUrl
                 }
@@ -180,6 +181,7 @@ export class ManifoldResourceList {
               (prod: ProductEdge): boolean =>
                 prod.node.id === (opBody as Provisioning.provision).product_id
             );
+
             resources.push({
               id: opBody.resource_id || '',
               // Only the provision operation has this info
@@ -199,6 +201,7 @@ export class ManifoldResourceList {
           const product = products.find(
             (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
           );
+
           resources.push({
             id: resource.id,
             label: resource.body.label,
