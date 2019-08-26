@@ -517,6 +517,10 @@ export namespace Components {
   }
   interface ManifoldResourceList {
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
@@ -1565,6 +1569,10 @@ declare namespace LocalJSX {
     'data'?: Gateway.Resource;
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Disable auto-updates?
     */
