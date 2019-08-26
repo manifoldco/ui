@@ -9,7 +9,9 @@
       "config": { "distDir": "storybook-static" }
     }
   ],
-  "env": {
-    "DATADOG_CLIENT_TOKEN": "@datadog-client-token"
+  "build": {
+    "env": {
+      "DATADOG_CLIENT_TOKEN": "@datadog-client-token"
+    }
   }
 }
