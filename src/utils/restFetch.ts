@@ -16,7 +16,6 @@ interface RestFetchArguments {
   endpoint: string;
   body?: object;
   options?: Omit<RequestInit, 'body'>;
-  isPublic?: boolean;
   emitter?: EventEmitter;
 }
 
@@ -34,16 +33,9 @@ export function createRestFetch({
   async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
     const rttStart = performance.now();
 
-    // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
-    // but this prevents the ability for it to auth altogether. We need both!
-    const isCatalog = args.service === 'catalog';
-    const isPublic = (isCatalog && args.isPublic !== false) || args.isPublic;
+    const token = getAuthToken();
+    const options = token ? withAuth(getAuthToken(), args.options) : args.options;
 
-    if (!isPublic && !getAuthToken()) {
-      return waitForAuthToken(getAuthToken, wait, () => restFetch(args, attempts));
-    }
-
-    const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
     const response = await fetch(`${endpoints[args.service]}${args.endpoint}`, {
       ...options,
       body: JSON.stringify(args.body),
@@ -63,7 +55,7 @@ export function createRestFetch({
       setAuthToken('');
       report(response);
       if (attempts < retries) {
-        return restFetch(args, attempts + 1);
+        return waitForAuthToken(getAuthToken, wait, () => restFetch(args, attempts + 1));
       }
 
       throw new Error('Auth token expired');

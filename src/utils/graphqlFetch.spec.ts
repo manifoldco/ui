@@ -12,6 +12,10 @@ describe('graphqlFetch', () => {
   const graphqlEndpoint = 'http://test.test/graphql';
 
   beforeEach(() => {
+    global.setTimeout = (callback: Function, _wait: number) => callback();
+  });
+
+  afterEach(() => {
     global.setTimeout = oldSetTimeout;
     errorReporter.mockReset();
     fetchMock.restore();
@@ -141,8 +145,6 @@ describe('graphqlFetch', () => {
 
   describe('auth', () => {
     it('throws when expired', () => {
-      // @ts-ignore
-      global.setTimeout = jest.fn(call => call());
       const fetcher = createGraphqlFetch({
         endpoint: graphqlEndpoint,
         wait: 1,

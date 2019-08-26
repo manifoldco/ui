@@ -60,7 +60,9 @@ export function waitForAuthToken<T>(
 
     document.addEventListener('manifold-token-receive', success);
 
+    debugger;
     setTimeout(() => {
+      debugger;
       if (!getAuthToken()) {
         document.removeEventListener('manifold-token-receive', success);
         const detail = { message: 'No auth token given' };
