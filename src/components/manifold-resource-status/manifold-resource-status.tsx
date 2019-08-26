@@ -8,7 +8,7 @@ import { Gateway } from '../../types/gateway';
 export class ManifoldResourceStatus {
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;
-  @Prop() size?: 'small' | 'medium' = 'medium';
+  @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
   @logger()
   render() {

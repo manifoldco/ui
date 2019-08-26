@@ -38,71 +38,62 @@ export class ManifoldProductPage {
       const gradient = `var(--manifold-g-${label}, var(--manifold-g-default))`;
 
       return (
-        <div class="wrapper" itemscope itemtype="http://schema.org/Product">
+        <div itemscope itemtype="http://schema.org/Product">
           <section class="grid">
             <aside class="sidebar">
-              <div class="sidebar-inner">
-                <div class="sidebar-card" style={{ '--background-gradient': gradient }}>
-                  <div class="product-logo">
-                    <img src={logo_url} alt={name} itemprop="logo" />
-                  </div>
-                  <h2 class="product-name" itemprop="name">
-                    {name}
-                  </h2>
-                  <p class="provider-name">
-                    {this.providerName && <span itemprop="brand">from {this.providerName}</span>}
-                  </p>
+              <div class="sidebar-card" style={{ '--background-gradient': gradient }}>
+                <div class="product-logo">
+                  <img src={logo_url} alt={name} itemprop="logo" />
                 </div>
-                <div class="sidebar-cta">
-                  <slot name="cta" />
+                <h2 class="product-name" itemprop="name">
+                  {name}
+                </h2>
+                <p class="provider-name">
+                  {this.providerName && <span itemprop="brand">from {this.providerName}</span>}
+                </p>
+              </div>
+              <div class="sidebar-cta">
+                <slot name="cta" />
+              </div>
+              {tags && (
+                <div class="sidebar-section">
+                  <h4>Category</h4>
+                  {tags.map(tag => (
+                    <div class="category" style={{ '--categoryColor': `var(--manifold-c-${tag})` }}>
+                      <manifold-icon
+                        icon={categoryIcon[tag] || categoryIcon.uncategorized}
+                        margin-right
+                      />
+                      {tag}
+                    </div>
+                  ))}
                 </div>
-                {tags && (
-                  <div class="sidebar-section">
-                    <h4>Category</h4>
-                    {tags.map(tag => (
-                      <div
-                        class="category"
-                        style={{ '--categoryColor': `var(--manifold-c-${tag})` }}
-                      >
-                        <manifold-icon
-                          icon={categoryIcon[tag] || categoryIcon.uncategorized}
-                          margin-right
-                        />
-                        {tag}
-                      </div>
-                    ))}
+              )}
+              <div class="sidebar-section">
+                <h4>Links</h4>
+                <div class="provider-link">
+                  <a href={documentation_url} target="_blank" rel="noopener noreferrer">
+                    <manifold-icon icon={book} margin-right />
+                    Docs
+                    <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
+                  </a>
+                </div>
+                <div class="provider-link">
+                  <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
+                    <manifold-icon icon={life_buoy} margin-right />
+                    Support
+                    <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
+                  </a>
+                </div>
+                {terms.provided && (
+                  <div class="provider-link">
+                    <a href={terms.url} target="_blank" rel="noopener noreferrer">
+                      <manifold-icon icon={file_text} margin-right />
+                      Terms of service
+                      <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
+                    </a>
                   </div>
                 )}
-                <div class="sidebar-section">
-                  <h4>Links</h4>
-                  <div class="provider-link">
-                    <a href={documentation_url} target="_blank" rel="noopener noreferrer">
-                      <manifold-icon icon={book} margin-right />
-                      Docs
-                      <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
-                    </a>
-                  </div>
-                  <div class="provider-link">
-                    <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
-                      <manifold-icon icon={life_buoy} margin-right />
-                      Support
-                      <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
-                    </a>
-                  </div>
-                  {terms.provided && (
-                    <div class="provider-link">
-                      <a href={terms.url} target="_blank" rel="noopener noreferrer">
-                        <manifold-icon icon={file_text} margin-right />
-                        Terms of service
-                        <manifold-icon
-                          class="external-link-icon"
-                          icon={arrow_up_right}
-                          margin-left
-                        />
-                      </a>
-                    </div>
-                  )}
-                </div>
               </div>
             </aside>
             <manifold-product-details product={this.product} />
@@ -117,32 +108,28 @@ export class ManifoldProductPage {
     } = skeletonProduct;
 
     return (
-      <div class="wrapper">
-        <section class="grid">
-          <aside class="sidebar">
-            <div class="sidebar-inner">
-              <div
-                class="sidebar-card"
-                style={{ '--background-gradient': 'var(--manifold-g-default)' }}
-              >
-                <div class="product-logo">
-                  <manifold-skeleton-img />
-                </div>
-                <h2 class="product-name" itemprop="name">
-                  <manifold-skeleton-text>{name}</manifold-skeleton-text>
-                </h2>
-              </div>
-              <div class="sidebar-section">
-                <h4>Category</h4>
-                <div class="category">
-                  <manifold-skeleton-text>Database</manifold-skeleton-text>
-                </div>
-              </div>
+      <section class="grid">
+        <aside class="sidebar">
+          <div
+            class="sidebar-card"
+            style={{ '--background-gradient': 'var(--manifold-g-default)' }}
+          >
+            <div class="product-logo">
+              <manifold-skeleton-img />
             </div>
-          </aside>
-          <manifold-product-details />
-        </section>
-      </div>
+            <h2 class="product-name" itemprop="name">
+              <manifold-skeleton-text>{name}</manifold-skeleton-text>
+            </h2>
+          </div>
+          <div class="sidebar-section">
+            <h4>Category</h4>
+            <div class="category">
+              <manifold-skeleton-text>Database</manifold-skeleton-text>
+            </div>
+          </div>
+        </aside>
+        <manifold-product-details />
+      </section>
     );
   }
 }

@@ -37,11 +37,6 @@ export class ManifoldCredentials {
       endpoint: `/credentials/?resource_id=${this.resourceId}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-
     this.credentials = response;
     this.loading = false;
   };
@@ -51,18 +46,12 @@ export class ManifoldCredentials {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
+    const resources = await this.restFetch<Marketplace.Resource[]>({
       service: 'marketplace',
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!resources || !resources.length) {
       console.error(`${resourceLabel} resource not found`);
       return;
     }
@@ -77,12 +66,19 @@ export class ManifoldCredentials {
   @logger()
   render() {
     return (
-      <manifold-resource-credentials-view
+      <manifold-credentials-view
         loading={this.loading}
         resourceLabel={this.resourceLabel}
         credentials={this.credentials}
         onCredentialsRequested={this.credentialsRequested}
-      />
+      >
+        <manifold-forward-slot slot="show-button">
+          <slot name="show-button" />
+        </manifold-forward-slot>
+        <manifold-forward-slot slot="hide-button">
+          <slot name="hide-button" />
+        </manifold-forward-slot>
+      </manifold-credentials-view>
     );
   }
 }

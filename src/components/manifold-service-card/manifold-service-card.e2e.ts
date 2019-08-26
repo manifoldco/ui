@@ -8,11 +8,19 @@ describe('<manifold-service-card>', () => {
     const page = await newE2EPage({ html: `<manifold-service-card></manifold-service-card>` });
     await page.waitForChanges();
     const card = await page.find('manifold-service-card-view');
-    const loading = await card.getProperty('loading');
-    expect(loading).toBe(true);
+    const isSkeleton = await card.getProperty('skeleton');
+    expect(isSkeleton).toBe(true);
   });
 
-  it('formats links from products', async () => {
+  it('passes down product props to service card view', async () => {
+    const requiredProps = {
+      description: Product.body.tagline,
+      logo: Product.body.logo_url,
+      name: Product.body.name,
+      productId: Product.id,
+      productLabel: Product.body.label,
+    };
+
     const page = await newE2EPage({
       html: `<manifold-service-card></manifold-service-card>`,
     });
@@ -20,32 +28,55 @@ describe('<manifold-service-card>', () => {
       'manifold-service-card',
       (elm: any, props: any) => {
         elm.product = props.product;
-        elm.productLinkFormat = '/product/:product';
       },
       { product: Product }
     );
     await page.waitForChanges();
+    const card = await page.find('manifold-service-card-view');
 
-    const link = await page.find('a');
-    const href = await link.getAttribute('href');
-    expect(href).toBe(`/product/${Product.body.label}`);
+    Object.entries(requiredProps).forEach(async ([prop, expectedValue]) => {
+      const passedValue = await card.getProperty(prop);
+      expect(passedValue).toBe(expectedValue);
+    });
   });
 
-  it('displays a free badge if marked as free', async () => {
-    const page = await newE2EPage({
-      html: `<manifold-service-card></manifold-service-card>`,
-    });
-    await page.$eval(
-      'manifold-service-card',
-      (elm: any, props: any) => {
-        elm.isFree = true;
-        elm.product = props.product;
-      },
-      { product: Product }
-    );
-    await page.waitForChanges();
+  describe('v0 API', () => {
+    it('[product-link-format]: it formats links correctly', async () => {
+      const page = await newE2EPage({
+        html: `<manifold-service-card></manifold-service-card>`,
+      });
+      await page.$eval(
+        'manifold-service-card',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.productLinkFormat = `/product/:product`;
+        },
+        { product: Product }
+      );
+      await page.waitForChanges();
 
-    const tag = await page.find('manifold-service-card-view >>> [data-tag="free"]');
-    expect(tag).not.toBeNull();
+      const link = await page.find('manifold-service-card-view >>> a');
+      const href = link.getAttribute('href');
+      expect(href).toBe(`/product/${Product.body.label}`);
+    });
+
+    it('[preserve-event]: it passes result to child', async () => {
+      const page = await newE2EPage({
+        html: `<manifold-service-card></manifold-service-card>`,
+      });
+      await page.$eval(
+        'manifold-service-card',
+        (elm: any, props: any) => {
+          elm.product = props.product;
+          elm.preserveEvent = true;
+        },
+        { product: Product }
+      );
+      await page.waitForChanges();
+
+      const card = await page.find('manifold-service-card-view');
+      const preserveEvent = await card.getProperty('preserveEvent');
+      expect(preserveEvent).toBe(true);
+    });
   });
 });

@@ -37,5 +37,5 @@
   display: grid;
   grid-area: services;
   grid-gap: var(--grid-s);
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
 }

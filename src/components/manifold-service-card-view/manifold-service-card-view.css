@@ -25,115 +25,57 @@
   --card-heading-font-family: var(--manifold-font-family-heading);
   --card-heading-font-weight: var(--manifold-font-weight-heading);
   --card-heading-text-color: var(--manifold-text-color-heading);
+
+  color: var(--manifold-text-color);
+  font-family: var(--manifold-font-family);
 }
 
 .wrapper {
-  position: relative;
   display: grid;
-  grid-column-gap: var(--padding);
-  grid-template-areas:
-    'logo name'
-    'info info'
-    'tags tags';
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: var(--manifold-product-logo-s) auto;
-  align-items: start;
   box-sizing: border-box;
   height: 100%;
-  padding: var(--padding);
-  color: var(--card-text-color);
-  text-decoration: none;
-  cursor: pointer;
-
-  @media (--viewport-s) {
-    grid-template-areas:
-      'logo name'
-      'logo info'
-      'tags tags';
-    grid-template-columns: var(--manifold-product-logo-m) auto auto;
-  }
-
-  @media (--viewport-m) {
-    grid-template-columns: var(--manifold-product-logo-l) auto;
-    padding: 0.875rem;
-  }
-}
-
-.card-wrapper {
-  position: relative;
-  display: grid;
-  grid-column-gap: var(--padding);
-  grid-template-areas:
-    'logo name'
-    'info info'
-    'tags tags';
-  grid-template-rows: auto 1fr auto;
-  grid-template-columns: var(--manifold-product-logo-s) auto;
-  align-items: start;
-  box-sizing: border-box;
-  height: 100%;
-  padding: var(--padding);
   color: var(--card-text-color);
   text-decoration: none;
   background: var(--card-background);
   border: var(--card-border, 1px solid #d3d3d4);
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
-  cursor: pointer;
   transition: border-color 150ms linear, box-shadow 150ms linear;
 
+  &[href] {
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+      background: var(--card-background-hover);
+      border: var(--card-border-hover);
+      box-shadow: var(--card-shadow-hover);
+    }
+  }
+}
+
+.grid {
+  display: grid;
+  grid-column-gap: var(--padding);
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: var(--manifold-product-logo-s) auto;
+  align-items: start;
+  padding: var(--padding);
+  border-radius: var(--card-radius);
+
   @media (--viewport-s) {
-    grid-template-areas:
-      'logo name'
-      'logo info'
-      'tags tags';
-    grid-template-columns: var(--manifold-product-logo-m) auto;
+    grid-template-columns: var(--manifold-product-logo-m) auto auto;
+    min-height: 6rem;
   }
 
   @media (--viewport-m) {
     grid-template-columns: var(--manifold-product-logo-l) auto;
     padding: 0.875rem;
   }
-
-  &:focus,
-  &:hover {
-    background: var(--card-background-hover);
-    border: var(--card-border-hover);
-    box-shadow: var(--card-shadow-hover);
-  }
-}
-
-.description {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-weight: 400;
-  font-size: var(--manifold-font-d1);
-  line-height: 1.4;
-  opacity: 0.6;
-
-  @media (--viewport-m) {
-    margin-top: 0.375rem;
-  }
-}
-
-.info {
-  display: flex;
-  flex-direction: row;
-  grid-area: info;
-  justify-content: space-between;
-  padding-top: 0.25rem;
-
-  @media (--viewport-m) {
-    padding-top: 0;
-  }
-
-  @media (--viewport-l) {
-    padding-left: 0;
-  }
 }
 
 .logo {
-  grid-area: logo;
+  grid-row: 1 / span 3;
   align-content: start;
 
   & img {
@@ -165,11 +107,9 @@
 }
 
 .name {
-  grid-area: name;
   align-self: start;
   margin-top: 0;
   margin-bottom: 0;
-  padding-right: 1em;
   color: var(--card-heading-text-color);
   font-weight: var(--card-heading-font-weight);
   font-size: 1em;
@@ -181,10 +121,39 @@
   }
 }
 
+.description {
+  grid-row: 2;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: var(--manifold-font-d1);
+  line-height: 1.4;
+  opacity: 0.6;
+
+  @media (--viewport-m) {
+    margin-top: 0.375rem;
+  }
+}
+
+.cta {
+  grid-column: 2;
+
+  @media (--viewport-s) {
+    grid-row: 1 / span 2;
+    grid-column: -1;
+    justify-self: end;
+  }
+}
+
+.loading-cta {
+  /* hide slot until not loaded */
+  display: none;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
-  grid-area: tags;
+  grid-column: 2 / span 2;
   align-items: center;
   justify-content: flex-end;
   margin-top: 0.375rem;

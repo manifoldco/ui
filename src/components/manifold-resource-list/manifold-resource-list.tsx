@@ -1,12 +1,10 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import { Marketplace } from '../../types/marketplace';
+import { Catalog } from '../../types/catalog';
 import { Provisioning } from '../../types/provisioning';
-import { ProductEdge, ProductConnection, Query } from '../../types/graphql';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 interface FoundResource {
@@ -40,8 +38,6 @@ export class ManifoldResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -96,7 +92,7 @@ export class ManifoldResourceList {
   }
 
   async fetchResources() {
-    if (!this.restFetch || !this.graphqlFetch) {
+    if (!this.restFetch) {
       return;
     }
 
@@ -106,115 +102,94 @@ export class ManifoldResourceList {
       endpoint: `/operations/?is_deleted=false`,
     });
 
-    if (operationsResp instanceof Error) {
-      console.error(operationsResp);
-      return;
-    }
-
-    if (Array.isArray(operationsResp)) {
-      const { data, errors } = await this.graphqlFetch<Query>({
-        query: gql`
-          query PRODUCT_LOGOS {
-            products(first: 500) {
-              edges {
-                node {
-                  label
-                  logoUrl
-                }
-              }
-            }
-          }
-        `,
+    if (operationsResp) {
+      const productsResp = await this.restFetch<Catalog.Product[]>({
+        service: 'catalog',
+        endpoint: `/products`,
       });
-
-      if (errors) {
-        return;
-      }
-
-      const products = (data && data.products && (data.products as ProductConnection).edges) || [];
 
       const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
         service: 'marketplace',
         endpoint: `/resources/?me`,
       });
 
-      if (resourcesResp instanceof Error) {
-        console.error(resourcesResp);
-        return;
-      }
-      const userResource = ManifoldResourceList.userResources(resourcesResp);
+      if (resourcesResp && Array.isArray(productsResp)) {
+        const userResource = ManifoldResourceList.userResources(resourcesResp);
 
-      const resources: FoundResource[] = [];
-      // First, do a run through of the operations to add any resource not covered by one or in the process of being modified by one
-      operationsResp
-        .filter((op: Provisioning.Operation) =>
-          [PROVISION, RESIZE, TRANSFER, DEPROVISION].includes(op.body.type)
-        )
-        .forEach((operation: Provisioning.Operation) => {
-          const opBody:
-            | Provisioning.provision
-            | Provisioning.resize
-            | Provisioning.transfer
-            | Provisioning.deprovision = operation.body;
+        const resources: FoundResource[] = [];
+        // First, do a run through of the operations to add any resource not covered by one or in the process of being modified by one
+        operationsResp
+          .filter((op: Provisioning.Operation) =>
+            [PROVISION, RESIZE, TRANSFER, DEPROVISION].includes(op.body.type)
+          )
+          .forEach((operation: Provisioning.Operation) => {
+            const opBody:
+              | Provisioning.provision
+              | Provisioning.resize
+              | Provisioning.transfer
+              | Provisioning.deprovision = operation.body;
 
-          // Don't run this code is the operation is done, fallback to the simpler resource code.
-          if (opBody.state === 'done') {
-            return;
-          }
+            // Don't run this code is the operation is done, fallback to the simpler resource code.
+            if (opBody.state === 'done') {
+              return;
+            }
 
-          const resource = userResource.find((res: RealResource) => opBody.resource_id === res.id);
-
-          if (resource) {
-            const product = products.find(
-              (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
+            const resource = userResource.find(
+              (res: RealResource) => opBody.resource_id === res.id
             );
 
+            if (resource) {
+              const product = productsResp.find(
+                (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
+              );
+
+              resources.push({
+                id: resource.id,
+                label: resource.body.label,
+                name: resource.body.name,
+                logo: product && product.body.logo_url,
+                status: ManifoldResourceList.opStateToStatus(operation),
+              });
+              return;
+            }
+            if (operation.body.type !== PROVISION) {
+              // Only provision operation without a resource should be processed
+              return;
+            }
+            const product = productsResp.find(
+              (prod: Catalog.Product): boolean =>
+                prod.id === (opBody as Provisioning.provision).product_id
+            );
             resources.push({
-              id: resource.id,
-              label: resource.body.label,
-              name: resource.body.name,
-              logo: product ? product.node.logoUrl : undefined,
+              id: opBody.resource_id || '',
+              // Only the provision operation has this info
+              label: (opBody as Provisioning.provision).label || '',
+              name: (opBody as Provisioning.provision).name || '',
+              logo: product && product.body.logo_url,
               status: ManifoldResourceList.opStateToStatus(operation),
             });
+          });
+
+        // Then run through all the real resource and add them as available if they weren't added by an operation
+        userResource.forEach((resource: RealResource) => {
+          if (resources.find((res: FoundResource) => res.id === resource.id)) {
             return;
           }
-          if (operation.body.type !== PROVISION) {
-            // Only provision operation without a resource should be processed
-            return;
-          }
-          const product = products.find(
-            (prod: ProductEdge): boolean =>
-              prod.node.id === (opBody as Provisioning.provision).product_id
+
+          const product = productsResp.find(
+            (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
           );
           resources.push({
-            id: opBody.resource_id || '',
-            // Only the provision operation has this info
-            label: (opBody as Provisioning.provision).label || '',
-            name: (opBody as Provisioning.provision).name || '',
-            logo: product && product.node.logoUrl,
-            status: ManifoldResourceList.opStateToStatus(operation),
+            id: resource.id,
+            label: resource.body.label,
+            name: resource.body.name,
+            logo: product && product.body.logo_url,
+            status: 'available',
           });
         });
 
-      // Then run through all the real resource and add them as available if they weren't added by an operation
-      userResource.forEach((resource: RealResource) => {
-        if (resources.find((res: FoundResource) => res.id === resource.id)) {
-          return;
-        }
-
-        const product = products.find(
-          (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
-        );
-        resources.push({
-          id: resource.id,
-          label: resource.body.label,
-          name: resource.body.name,
-          logo: product && product.node.logoUrl,
-          status: 'available',
-        });
-      });
-
-      this.resources = resources.sort((a, b) => a.label.localeCompare(b.label));
+        this.resources = resources.sort((a, b) => a.label.localeCompare(b.label));
+      }
     } else {
       this.resources = [];
     }
@@ -226,23 +201,31 @@ export class ManifoldResourceList {
       return <slot name="no-resources" />;
     }
 
-    return Array.isArray(this.resources) ? (
+    return (
       <div class="wrapper">
-        {this.resources.map(resource => (
-          <manifold-resource-card-view
-            label={resource.label}
-            name={resource.name}
-            logo={resource.logo}
-            resource-id={resource.id}
-            resource-status={resource.status}
-            resource-link-format={this.resourceLinkFormat}
-            preserve-event={this.preserveEvent}
-          />
-        ))}
+        {Array.isArray(this.resources)
+          ? this.resources.map(resource => (
+              <manifold-resource-card-view
+                label={resource.label}
+                name={resource.name}
+                logo={resource.logo}
+                resourceId={resource.id}
+                resourceStatus={resource.status}
+                resourceLinkFormat={this.resourceLinkFormat}
+                preserveEvent={this.preserveEvent}
+              />
+            ))
+          : [1, 2, 3, 4].map(() => (
+              <manifold-resource-card-view
+                label="my-loading-resource"
+                loading={true}
+                logo="myresource.png"
+                name="my-loading-resource"
+              />
+            ))}
+        {!Array.isArray(this.resources) && <slot name="loading" />}
       </div>
-    ) : (
-      <slot name="loading" />
     );
   }
 }
-Tunnel.injectProps(ManifoldResourceList, ['restFetch', 'graphqlFetch']);
+Tunnel.injectProps(ManifoldResourceList, ['restFetch']);

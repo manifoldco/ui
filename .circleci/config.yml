@@ -22,6 +22,13 @@ commands:
             - pkg
           key: stencilcache-{{ .Revision }}
 
+  save-pkg-build:
+    steps:
+      - save_cache:
+          paths:
+            - pkg
+          key: npmpkgcache-{{ .Revision }}
+
   # npm install
   setup:
     steps:
@@ -29,7 +36,6 @@ commands:
       - restore_cache:
           keys:
             - npmcache-{{ checksum "package.json" }}
-            - npmcache-
       - run: npm install
       - save_cache:
           paths:
@@ -38,7 +44,6 @@ commands:
       - restore_cache: # Restore Stencil cache if exists
           keys:
             - stencilcache-{{ .Revision }}
-            - stencilcache-
 
   # Puppeteer deps (based on https://circleci.com/orbs/registry/orb/threetreeslight/puppeteer)
   setup-puppeteer:
@@ -52,7 +57,7 @@ commands:
           fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 
 jobs:
-  # Run bundlesize (Stencil build: ✅)
+  # Run bundlesize (generally the fastest, so this runs first)
   bundlesize:
     <<: *defaults
     steps:
@@ -60,7 +65,7 @@ jobs:
       - run: npm run bundlesize
       - save-build
 
-  # Lint (Stencil build: 🚫)
+  # Lint
   lint:
     <<: *defaults
     steps:
@@ -76,8 +81,9 @@ jobs:
       - setup
       - run: npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
       - run: npm run publish
+      - save-pkg-build
 
-  # Test (Stencil build: ✅)
+  # Test
   test:
     <<: *defaults
     steps:
@@ -87,13 +93,34 @@ jobs:
       - save-build
       - run: npx codecov
 
-  # Run visual regression tests (Stencil build: ✅)
+  # Run visual regression tests
   vrt:
     <<: *defaults
     steps:
       - setup
       - happo/run_happo
       - save-build
+
+  # Publish packages to js.cdn.manifold.co
+  # this is always run after npm-publish so the ./pkg file will be available.
+  cdn-publish:
+    parameters:
+      latest:
+        type: boolean
+        default: false
+    docker:
+      - image: google/cloud-sdk
+    steps:
+      - restore_cache:
+          keys:
+            - npmpkgcache-{{ .Revision }}
+      - run: echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+      - run: gsutil -m cp /home/circleci/project/pkg/* gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v}
+      - run: gsutil -m cp -r /home/circleci/project/pkg/dist gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v}
+      - when:
+          condition: << parameters.latest >>
+          steps:
+            - run: gsutil -m rsync -r gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v} gs://manifold-js/@manifoldco/ui
 
 workflows:
   version: 2
@@ -102,9 +129,15 @@ workflows:
   branch:
     jobs:
       - bundlesize
-      - lint
-      - test
-      - vrt
+      - lint:
+          requires:
+            - bundlesize
+      - test:
+          requires:
+            - bundlesize
+      - vrt:
+          requires:
+            - bundlesize
 
   # Prerelease (only fires if Git tag contains hyphen + npm tag)
   prerelease:
@@ -121,19 +154,9 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
       - test:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-      - vrt:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-      - npm-publish: # no approval needed for prerelease
           filters:
             branches:
               ignore: /.*/
@@ -141,9 +164,34 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - bundlesize
+      - vrt:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
+      - npm-publish: # no approval needed for prerelease
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
             - lint
             - test
             - vrt
+      - cdn-publish:
+          latest: false
+          context: gcp-cdn-auth
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - npm-publish
 
   # Final release (only fires if Git tag is a stable release)
   release:
@@ -162,6 +210,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - test:
           filters:
             branches:
@@ -169,6 +219,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - vrt:
           filters:
             branches:
@@ -176,6 +228,8 @@ workflows:
                 - /.*/
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
@@ -185,7 +239,6 @@ workflows:
             tags:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
-            - bundlesize
             - lint
             - test
             - vrt
@@ -198,3 +251,13 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
             - confirm
+      - cdn-publish:
+          latest: true
+          context: gcp-cdn-auth
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - npm-publish

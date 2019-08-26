@@ -7,6 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- When an expired auth token causes an API call to respond with a 401, the token will now refresh and
+  the API call will retry.
+
+### Fixed
+
+- Fixed resource card CTA slot from flashing while loading (#438)
+- Hide credentials button no longer flashes when credentials component loads (#434)
+
+### Changed
+
+- Enforce standard height on product cards for more consistency
+
+## [v0.5.7]
+
+### Added
+
+- We now release and publish our components to our CDN @ `https://js.cdn.manifold.co/@manifoldco/ui`. (#408, #418)
+
+### Fixed
+
+- Fixed events firing twice for `<manifold-resource-rename>`, `<manifold-resource-sso>`, and `<manifold-resource-deprovision>` (#401)
+- Performance optimizations for network calls in `manifold-marketplace` (#424)
+- Prevent provision button from being clicked multiple times.
+- Fixed a bug in Firefox with `<manifold-auth-token> (#429)`
+
+### Changed
+
+- Removed padding above `<manifold-product-page>` (#399)
+- Adjusted positioning for CTA slot in `manifold-service-card-view`. (#404)
+
+## [v0.5.5]
+
+### Fixed
+
+- Stability improvements for GraphQL queries (#376)
+- Improved loading state for `<manifold-resource-list>` (#382)
+- Fixed public endpoints trying to authenticate (#383)
+- Fixed “no services“ flash on `<manifold-marketplace>` (#390)
+
+## [v0.5.4]
+
+### Fixed
+
+- Fixed the service card loading the free badge after rendering, which caused a jumpy UI. (#355)
+- Added the ability to specify a slot on the `manifold-credentials` with a default manifold button if not set. (#362)
+
+### Changed
+
+- Updated Stencil to v1.2.5 (#375)
+- Changed the event name for the `manifold-auth-token` component from the stencil auto-generated name to `manifold-token-receive` and documented that event. (#360)
+- View component `<manifold-service-card-view>` no longer fetches data, is it should (#355)
+
+### Fixed
+
+- Fixed issue where success event of `manifold-data-rename-resource` was emitted before renamed resource was ready. (#380)
+
 ## [v0.5.3]
 
 ### Fixed
@@ -15,6 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the resource list not showing the status of provisioning or deprovisioning resources.
 - Fixed the resource card loading indicator - for a lack of a better word - wobbling around like its life depended on it.
 - Fixed the title of the `service-card` taking a dynamic amount of space and making the description look misaligned.
+- Fixed the appearance of “free“ badges on product cards in `<manifold-marketplace>`
 
 ### Added
 
@@ -33,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed name for `manifold-service-view` to be `manifold-service-card-view` to match documentation.
 - Added missing support for theme variable `--manifold-tag-free-text-color`.
 - Fixed region selector so that it properly emits a `manifold-planSelector-change` event when the region changes.
+- Fixed scroll highlight for `<manifold-marketplace>` sidebar
 
 ### Deprecated
 

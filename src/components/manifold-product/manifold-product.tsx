@@ -35,24 +35,14 @@ export class ManifoldProduct {
       endpoint: `/products/?label=${productLabel}`,
     });
 
-    if (productResp instanceof Error) {
-      console.error(productResp);
-      return;
+    if (productResp && productResp.length) {
+      this.product = productResp[0]; // eslint-disable-line prefer-destructuring
+
+      this.provider = await this.restFetch<Catalog.Provider>({
+        service: 'catalog',
+        endpoint: `/providers/${this.product.body.provider_id}`,
+      });
     }
-
-    this.product = productResp[0]; // eslint-disable-line prefer-destructuring
-
-    const providerResp = await this.restFetch<Catalog.Provider>({
-      service: 'catalog',
-      endpoint: `/providers/${productResp[0].body.provider_id}`,
-    });
-
-    if (providerResp instanceof Error) {
-      console.error(providerResp);
-      return;
-    }
-
-    this.provider = providerResp;
   };
 
   @logger()

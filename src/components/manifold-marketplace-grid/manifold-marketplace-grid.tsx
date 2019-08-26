@@ -1,8 +1,7 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element } from '@stencil/core';
 import observeRect from '@reach/observe-rect';
 
 import { Catalog } from '../../types/catalog';
-import skeletonProducts from '../../data/marketplace';
 import serviceTemplates from '../../data/templates';
 import {
   categories,
@@ -19,28 +18,21 @@ import logger from '../../utils/logger';
 })
 export class ManifoldMarketplaceGrid {
   @Element() el: HTMLElement;
-  @Prop() excludes?: string[] = [];
   @Prop() featured?: string[] = [];
-  @Prop() freeProducts: string[] = [];
+  @Prop() freeProducts?: string[] = [];
   @Prop() hideCategories?: boolean = false;
   @Prop() hideSearch?: boolean = false;
   @Prop() hideTemplates?: boolean = false;
   @Prop() preserveEvent: boolean = false;
   @Prop() productLinkFormat?: string;
-  @Prop() products?: string[] = [];
-  @Prop() services?: Catalog.Product[];
+  @Prop() products: string[] = [];
+  @Prop() services: Catalog.Product[] = [];
+  @Prop() skeleton?: boolean = false;
   @Prop() templateLinkFormat?: string;
   @State() filter: string | null;
   @State() activeCategory?: string;
   @State() scrollToCategory: string | null;
-  @State() skeleton: boolean = false;
   @State() search: string = '';
-
-  @Watch('services') servicesLoaded(services: Catalog.Product[]) {
-    if (services.length) {
-      this.skeleton = false;
-    }
-  }
 
   componentDidLoad() {
     this.activeCategory = this.categories[0]; // eslint-disable-line prefer-destructuring
@@ -97,40 +89,20 @@ export class ManifoldMarketplaceGrid {
   }
 
   get filteredServices(): Catalog.Product[] {
-    // While services are loading, display skeleton cards
-    if (!this.services || !this.services.length) {
-      this.skeleton = true;
-      return skeletonProducts;
+    if (this.skeleton) {
+      return this.services;
     }
 
-    let services: Catalog.Product[] = [];
-
-    // If not including, start out with all services
-    if (this.products && !this.products.length) {
-      services = this.services; // eslint-disable-line prefer-destructuring
-    }
-
-    // Handle includes
-    if (Array.isArray(this.products)) {
-      this.products.forEach(product => {
-        const service =
-          this.services && this.services.find(({ body: { label } }) => label === product);
-        if (service) {
-          services.push(service);
-        }
-      });
-    }
-
-    // Handle excludes
-    if (Array.isArray(this.excludes)) {
-      services = services.filter(
-        ({ body: { label } }) => this.excludes && !this.excludes.includes(label)
-      );
-    }
+    const services = this.products.length
+      ? this.products.reduce<Catalog.Product[]>((all, p) => {
+          const service = this.services.find(s => s.body.label === p);
+          return service ? all.concat(service) : all;
+        }, [])
+      : this.services;
 
     // Handle search
     if (this.filter && this.filter.length) {
-      services = filteredServices(this.filter, services);
+      return filteredServices(this.filter, services);
     }
 
     return services;
@@ -213,12 +185,16 @@ export class ManifoldMarketplaceGrid {
   };
 
   private renderServiceCard = (product: Catalog.Product) => (
-    <manifold-service-card
-      data-label={product.body.label}
-      data-featured={this.featured && this.featured.includes(product.body.label)}
+    <manifold-service-card-view
+      description={product.body.tagline}
       isFeatured={this.featured && this.featured.includes(product.body.label)}
-      isFree={this.freeProducts.includes(product.id)}
-      product={product}
+      isFree={this.freeProducts && this.freeProducts.includes(product.id)}
+      logo={product.body.logo_url}
+      name={product.body.name}
+      preserveEvent={this.preserveEvent}
+      productId={product.id}
+      productLabel={product.body.label}
+      productLinkFormat={this.productLinkFormat}
       skeleton={this.skeleton}
     />
   );

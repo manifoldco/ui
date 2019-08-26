@@ -10,12 +10,4 @@ storiesOf('Resource Product Details 🔒', module)
         <manifold-resource-product></manifold-resource-product>
       </manifold-mock-resource>
     `
-  )
-  .add(
-    'With a card wrapper',
-    () => `
-      <manifold-mock-resource>
-        <manifold-resource-product as-card=""></manifold-resource-product>
-      </manifold-mock-resource>
-    `
   );

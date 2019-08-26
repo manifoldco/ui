@@ -5,7 +5,7 @@ import { Gateway } from '../../types/gateway';
 import Tunnel from '../../data/connection';
 import { globalRegion } from '../../data/region';
 import { Catalog } from '../../types/catalog';
-import { GraphqlRequestBody, GraphqlResponseBody } from '../../utils/graphqlFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
@@ -43,7 +43,7 @@ export class ManifoldDataProvisionButton {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: <T>(body: GraphqlRequestBody) => GraphqlResponseBody<T>;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
@@ -55,6 +55,7 @@ export class ManifoldDataProvisionButton {
   @Prop() regionId?: string = globalRegion.id;
   @State() planId?: string = '';
   @State() productId?: string = '';
+  @State() provisioning: boolean = false;
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true }) invalid: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) error: EventEmitter;
@@ -122,32 +123,37 @@ export class ManifoldDataProvisionButton {
       features: {},
     };
 
-    const response = await this.restFetch<Gateway.Resource>({
-      service: 'gateway',
-      endpoint: `/resource/`,
-      body: req,
-      options: {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      },
-    });
+    try {
+      this.provisioning = true;
+      const response = await this.restFetch<Gateway.Resource>({
+        service: 'gateway',
+        endpoint: `/resource/`,
+        body: req,
+        options: {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        },
+      });
 
-    if (response instanceof Error) {
-      const error: ErrorMessage = {
-        message: response.message,
+      if (response) {
+        const success: SuccessMessage = {
+          createdAt: response.created_at,
+          message: `${this.resourceLabel} successfully provisioned`,
+          resourceId: response.id || '',
+          resourceLabel: response.label,
+        };
+        this.success.emit(success);
+        this.provisioning = false;
+      }
+    } catch (error) {
+      this.provisioning = false;
+      const e: ErrorMessage = {
+        message: error.message,
         resourceLabel: this.resourceLabel,
       };
-      this.error.emit(error);
-      return;
+      this.error.emit(e);
+      throw e;
     }
-
-    const success: SuccessMessage = {
-      createdAt: response.created_at,
-      message: `${this.resourceLabel} successfully provisioned`,
-      resourceId: response.id || '',
-      resourceLabel: response.label,
-    };
-    this.success.emit(success);
   }
 
   async fetchProductPlanId(productLabel: string, planLabel?: string) {
@@ -156,34 +162,22 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const productResp = await this.restFetch<Catalog.Product[]>({
+    const products = await this.restFetch<Catalog.Product[]>({
       service: 'catalog',
       endpoint: `/products/?label=${productLabel}`,
     });
 
-    if (productResp instanceof Error) {
-      console.error(productResp);
-      return;
-    }
-    const products: Catalog.Product[] = await productResp;
-
-    if (!Array.isArray(products) || !products.length) {
+    if (!products || !products.length) {
       console.error(`${productLabel} product not found`);
       return;
     }
 
-    const planResp = await this.restFetch<Catalog.Plan[]>({
+    const plans = await this.restFetch<Catalog.Plan[]>({
       service: 'catalog',
       endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
     });
 
-    if (planResp instanceof Error) {
-      console.error(planResp);
-      return;
-    }
-    const plans: Catalog.Plan[] = await planResp;
-
-    if (!Array.isArray(plans) || !plans.length) {
+    if (!plans || !plans.length) {
       console.error(`${productLabel} plans not found`);
       return;
     }
@@ -214,7 +208,7 @@ export class ManifoldDataProvisionButton {
       <button
         type="submit"
         onClick={() => this.provision()}
-        disabled={!this.planId || !this.productId}
+        disabled={!this.planId || !this.productId || this.provisioning}
       >
         <slot />
       </button>

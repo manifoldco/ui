@@ -17,6 +17,16 @@ export const availableSmall = () => {
   return status.componentOnReady();
 };
 
+export const availableXSmall = () => {
+  const status = document.createElement('manifold-resource-status-view');
+  status.resourceState = 'available';
+  status.size = 'xsmall';
+
+  document.body.appendChild(status);
+
+  return status.componentOnReady();
+};
+
 export const offline = () => {
   const status = document.createElement('manifold-resource-status-view');
 

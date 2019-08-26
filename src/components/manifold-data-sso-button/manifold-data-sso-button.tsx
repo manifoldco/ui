@@ -72,33 +72,34 @@ export class ManifoldDataSsoButton {
       },
     };
 
-    const response = await this.restFetch<Connector.AuthorizationCode>({
-      service: 'connector',
-      endpoint: `/sso`,
-      body,
-      options: {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      },
-    });
+    try {
+      const response = await this.restFetch<Connector.AuthorizationCode>({
+        service: 'connector',
+        endpoint: `/sso`,
+        body,
+        options: {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        },
+      });
 
-    if (response instanceof Error) {
+      const success: SuccessMessage = {
+        message: `${this.resourceLabel} successfully ssoed`,
+        resourceLabel: this.resourceLabel || '',
+        resourceId: this.resourceId,
+        redirectUrl: response ? response.body.redirect_uri : '',
+      };
+
+      this.success.emit(success);
+    } catch (e) {
       const error: ErrorMessage = {
-        message: response.message,
+        message: e.message,
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
-      this.error.emit(error);
-      return;
-    }
 
-    const success: SuccessMessage = {
-      message: `${this.resourceLabel} successfully ssoed`,
-      resourceLabel: this.resourceLabel || '',
-      resourceId: this.resourceId,
-      redirectUrl: response.body.redirect_uri,
-    };
-    this.success.emit(success);
+      this.error.emit(error);
+    }
   };
 
   async fetchResourceId(resourceLabel: string) {
@@ -112,19 +113,13 @@ export class ManifoldDataSsoButton {
       endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-    const resources: Marketplace.Resource[] = response;
-
-    if (!Array.isArray(resources) || !resources.length) {
+    if (!response || !response.length) {
       console.error(`${resourceLabel} resource not found`);
       return;
     }
 
     this.loading = false;
-    this.resourceId = resources[0].id;
+    this.resourceId = response[0].id;
   }
 
   @logger()

@@ -38,13 +38,10 @@ export class ManifoldPlan {
       endpoint: `/products/?label=${productLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (response && response.length) {
+      this.product = response[0]; // eslint-disable-line prefer-destructuring
+      await this.fetchPlan(response[0].id, planLabel);
     }
-
-    this.product = response[0]; // eslint-disable-line prefer-destructuring
-    await this.fetchPlan(response[0].id, planLabel);
   }
 
   async fetchPlan(productId: string, planLabel: string) {
@@ -58,12 +55,9 @@ export class ManifoldPlan {
       endpoint: `/plans/?product_id=${productId}&label=${planLabel}`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
+    if (response) {
+      this.plan = response[0]; // eslint-disable-line prefer-destructuring
     }
-
-    this.plan = response[0]; // eslint-disable-line prefer-destructuring
   }
 
   @logger()

@@ -45,18 +45,12 @@ export class ManifoldDataHasResource {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
+    const resources = await this.restFetch<Marketplace.Resource[]>({
       service: 'marketplace',
       endpoint: `/resources/?me`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-
-    const resources: Marketplace.Resource[] = await response;
-    if (Array.isArray(resources) && resources.length) {
+    if (resources && resources.length) {
       this.hasResources = true;
     }
   }

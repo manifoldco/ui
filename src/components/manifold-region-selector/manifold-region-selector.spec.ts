@@ -1,8 +1,40 @@
+import fetchMock from 'fetch-mock';
+import { newSpecPage } from '@stencil/core/testing';
 import { Catalog } from '../../types/catalog';
 import { ManifoldRegionSelector } from './manifold-region-selector';
 import { Regions } from '../../spec/mock/catalog';
+import { createRestFetch } from '../../utils/restFetch';
+import { connections } from '../../utils/connections';
+
+async function setup() {
+  const page = await newSpecPage({
+    components: [ManifoldRegionSelector],
+    html: '<div></div>',
+  });
+
+  const component = page.doc.createElement('manifold-region-selector');
+  component.restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
 
 describe('<manifold-region-selector>', () => {
+  it('fetches regions on load', async () => {
+    fetchMock.mock(`${connections.prod.catalog}/regions`, Regions);
+
+    await setup();
+
+    expect(fetchMock.called(`${connections.prod.catalog}/regions`)).toBe(true);
+  });
+
   it('filters regions and returns them in region order', () => {
     const regionSelector = new ManifoldRegionSelector();
     regionSelector.regions = Regions;

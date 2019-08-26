@@ -1,13 +1,13 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../docs/docs/data/manifold-auth-token.md';
+import markdown from '../docs/docs/advanced/authentication.md';
 
 function withVeryFakeExpiry(token) {
   /* During the ui transition from REST calls to GraphQL and PUMA,
   this component needs to be able to consume several types of tokens
   to account for the demo apps that already exist and the testing of
   tokens with expirations set. This fake expiry allows the resources to
-  become visible in testing, which means the actual token may expire 
-  without the component being aware - if so it will return a 401 and 
+  become visible in testing, which means the actual token may expire
+  without the component being aware - if so it will return a 401 and
   should be changed for a fresh one. */
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + 1);

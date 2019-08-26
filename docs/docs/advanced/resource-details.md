@@ -40,7 +40,7 @@ a `manifold-resource-container` component with access to the resource label.
       </manifold-resource-deprovision>
     </div>
   </div>
-  <manifold-resource-product style="margin-bottom: 1em" as-card=""></manifold-resource-product>
+  <manifold-resource-product style="margin-bottom: 1em"></manifold-resource-product>
   <manifold-resource-plan style="margin-bottom: 1em"></manifold-resource-plan>
   <manifold-resource-credentials></manifold-resource-credentials>
 </resource-mock-resource>

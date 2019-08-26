@@ -242,7 +242,7 @@ describe('<manifold-data-provision-button>', () => {
       const root = page.rootInstance as ManifoldDataProvisionButton;
 
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-      expect(root.ownerId).toEqual(profile.profile.id);
+      expect(root.ownerId).toBe(profile.profile.id);
     });
 
     it('will do nothing if the owner id is set', async () => {
@@ -290,18 +290,24 @@ describe('<manifold-data-provision-button>', () => {
         `,
       });
 
-      const instance = page.rootInstance as ManifoldDataProvisionButton;
-      instance.success.emit = jest.fn();
+      const success = jest.fn();
+      page.doc.addEventListener('manifold-provisionButton-success', success);
 
-      await instance.provision();
+      const button = page.doc.querySelector('button[type=submit]') as HTMLButtonElement;
+      button.click();
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-      expect(instance.success.emit).toHaveBeenCalledWith({
-        createdAt: GatewayResource.created_at,
-        message: 'test successfully provisioned',
-        resourceId: GatewayResource.id,
-        resourceLabel: GatewayResource.label,
-      });
+      expect(success).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            createdAt: GatewayResource.created_at,
+            message: 'test successfully provisioned',
+            resourceId: GatewayResource.id,
+            resourceLabel: GatewayResource.label,
+          },
+        })
+      );
     });
 
     it('will trigger a dom event on failed provision', async () => {
@@ -326,12 +332,13 @@ describe('<manifold-data-provision-button>', () => {
       const instance = page.rootInstance as ManifoldDataProvisionButton;
       instance.error.emit = jest.fn();
 
-      await instance.provision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
-      expect(instance.error.emit).toHaveBeenCalledWith({
-        message: 'ohnoes',
-        resourceLabel: 'test',
+      expect.assertions(2);
+      return instance.provision().catch(() => {
+        expect(fetchMock.called(`${connections.prod.gateway}/resource/`)).toBe(true);
+        expect(instance.error.emit).toHaveBeenCalledWith({
+          message: 'ohnoes',
+          resourceLabel: 'test',
+        });
       });
     });
 

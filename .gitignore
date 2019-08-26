@@ -42,3 +42,4 @@ storybook-static
 # Gatsby
 .cache
 docs/public
+docs/docs/changelog.md

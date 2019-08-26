@@ -2,6 +2,7 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
+import skeletonProducts from '../../data/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
@@ -10,8 +11,6 @@ export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
-  /** Comma-separated list of hidden products (labels) */
-  @Prop() excludes?: string;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   /** Hide categories & side menu? */
@@ -28,8 +27,7 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
-  @State() freeProducts: string[] = [];
-  @State() parsedExcludes: string[] = [];
+  @State() freeProducts?: string[];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
   @State() services: Catalog.Product[] = [];
@@ -40,7 +38,7 @@ export class ManifoldMarketplace {
 
   componentWillLoad() {
     this.parseProps();
-    this.fetchProducts();
+    this.fetchProducts(); // don’t wait on product fetch
   }
 
   fetchProducts = async () => {
@@ -53,22 +51,27 @@ export class ManifoldMarketplace {
       endpoint: `/products`,
     });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
+    if (response) {
+      // filter services if list is specified
+      const services =
+        this.parsedProducts.length > 0
+          ? response.filter(service => this.parsedProducts.includes(service.body.label))
+          : response;
 
-    // Alphabetize once, then don’t worry about it
-    this.services = [...response].sort((a, b) => a.body.name.localeCompare(b.body.name));
+      // Alphabetize once, then don’t worry about it
+      this.services = [...services].sort((a, b) => a.body.name.localeCompare(b.body.name));
+    }
   };
 
   // fetch free products once, then save
   fetchFreeProducts = async () => {
     const freeProducts: string[] = [];
 
+    // Fetch all plans in parallel
     await Promise.all(
       this.services.map(
         ({ id }) =>
+          // eslint-disable-next-line no-async-promise-executor
           new Promise(async resolve => {
             if (!this.restFetch) {
               resolve();
@@ -104,9 +107,6 @@ export class ManifoldMarketplace {
     if (typeof this.featured === 'string') {
       this.parsedFeatured = this.parse(this.featured);
     }
-    if (typeof this.excludes === 'string') {
-      this.parsedExcludes = this.parse(this.excludes);
-    }
     if (typeof this.products === 'string') {
       this.parsedProducts = this.parse(this.products);
     }
@@ -114,9 +114,10 @@ export class ManifoldMarketplace {
 
   @logger()
   render() {
+    const isLoading = !this.services.length || !this.freeProducts; // wait for free calls to finish
+
     return (
       <manifold-marketplace-grid
-        excludes={this.parsedExcludes}
         featured={this.parsedFeatured}
         freeProducts={this.freeProducts}
         hideCategories={this.hideCategories}
@@ -125,7 +126,8 @@ export class ManifoldMarketplace {
         preserveEvent={this.preserveEvent}
         productLinkFormat={this.productLinkFormat}
         products={this.parsedProducts}
-        services={this.services}
+        skeleton={isLoading}
+        services={isLoading ? skeletonProducts : this.services}
         templateLinkFormat={this.templateLinkFormat}
       />
     );

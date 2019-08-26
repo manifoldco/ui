@@ -1,10 +1,13 @@
+import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
 import { withAuth } from './auth';
 import { hasExpired } from './expiry';
+import { report } from './errorReport';
 
-interface CreateRestFetch {
+export interface CreateRestFetch {
   endpoints?: Connection;
   wait?: number;
+  retries?: number;
   getAuthToken?: () => string | undefined;
   setAuthToken?: (token: string) => void;
 }
@@ -15,57 +18,94 @@ interface RestFetchArguments {
   body?: object;
   options?: Omit<RequestInit, 'body'>;
   isPublic?: boolean;
+  emitter?: EventEmitter;
 }
 
-export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Error>;
+type Success = undefined;
 
-export const createRestFetch = ({
+export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
+
+export function createRestFetch({
   endpoints = connections.prod,
   wait = 15000,
+  retries = 0,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
-}: CreateRestFetch = {}): RestFetch => async (args: RestFetchArguments) => {
-  const url = `${endpoints[args.service]}${args.endpoint}`;
-  const start = new Date();
+}: CreateRestFetch): RestFetch {
+  async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
+    const start = new Date();
+    const rttStart = performance.now();
 
-  // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
-  // but this prevents the ability for it to auth altogether. We need both!
-  const isCatalog = args.service === 'catalog';
-  const isPublic = isCatalog || args.isPublic;
+    // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
+    // but this prevents the ability for it to auth altogether. We need both!
+    const isCatalog = args.service === 'catalog';
+    const isPublic = (isCatalog && args.isPublic !== false) || args.isPublic;
 
-  if (!isPublic) {
-    while (!getAuthToken() && !hasExpired(start, wait)) {
-      // eslint-disable-next-line no-await-in-loop
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    if (!isPublic) {
+      while (!getAuthToken() && !hasExpired(start, wait)) {
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
+      if (!getAuthToken()) {
+        const detail = { message: 'No auth token given' };
+        report(detail);
+        throw new Error(detail.message);
+      }
     }
 
-    if (!getAuthToken()) {
-      return new Error('No auth token given');
-    }
-  }
-
-  try {
-    const response = await fetch(url as string, {
-      ...withAuth(getAuthToken(), args.options),
+    const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
+    const response = await fetch(`${endpoints[args.service]}${args.endpoint}`, {
+      ...options,
       body: JSON.stringify(args.body),
+    }).catch((e: Response) => {
+      /* Handle unexpected errors */
+      report(e);
+      return Promise.reject(e);
     });
 
+    /* Handle successful responses */
     if ([202, 203, 204].includes(response.status)) {
-      return {};
+      return undefined;
+    }
+
+    /* Handle expected errors */
+    if (response.status === 401) {
+      setAuthToken('');
+      report(response);
+      if (attempts < retries) {
+        return restFetch(args, attempts + 1);
+      }
+
+      throw new Error('Auth token expired');
     }
 
     const body = await response.json();
     if (response.status >= 200 && response.status < 300) {
+      const fetchDuration = performance.now() - rttStart;
+      if (args.emitter) {
+        args.emitter.emit({
+          type: 'manifold-rest-fetch-duration',
+          endpoint: args.endpoint,
+          duration: fetchDuration,
+        });
+      } else {
+        document.dispatchEvent(
+          new CustomEvent('manifold-rest-fetch-duration', {
+            bubbles: true,
+            detail: { endpoint: args.endpoint, duration: fetchDuration },
+          })
+        );
+      }
       return body;
-    }
-    if (response.status === 401) {
-      setAuthToken('');
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!
+    report(response);
     const message = Array.isArray(body) ? body[0].message : body.message;
-    return new Error(message);
-  } catch (e) {
-    return e;
+    throw new Error(message);
   }
-};
+
+  return function(args: RestFetchArguments) {
+    return restFetch(args, 0);
+  };
+}

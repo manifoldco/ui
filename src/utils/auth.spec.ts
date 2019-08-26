@@ -1,4 +1,4 @@
-import { withAuth } from './auth';
+import { withAuth, isExpired } from './auth';
 
 describe('withAuth method', () => {
   it('passes objects through', () => {
@@ -17,5 +17,27 @@ describe('withAuth method', () => {
 
   it('doesn’t submit auth token if empty string', () => {
     expect(withAuth('')).toBe(undefined);
+  });
+});
+
+describe('isExpired method', () => {
+  // eslint-disable-next-line no-console
+  console.log(`TZ: ${process.env.TZ}`);
+
+  const oneDay = 60 * 60 * 24 * 1000;
+  // Use Date.now() to test this because it’s timezone-independent
+  const tomorrow = (Date.now() + oneDay) / 1000;
+  const yesterday = (Date.now() - oneDay) / 1000;
+
+  it('not expired: false', () => {
+    expect(isExpired(`token|${tomorrow}`)).toBe(false);
+  });
+
+  it('expired: true', () => {
+    expect(isExpired(`token|${yesterday}`)).toBe(true);
+  });
+
+  it('invalid: true', () => {
+    expect(isExpired(`token|Tue, 1 Jan 2030 00:00:00 GMT`)).toBe(true);
   });
 });
