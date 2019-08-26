@@ -5,17 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Added
-
-- When an expired auth token causes an API call to respond with a 401, the token will now refresh and
-  the API call will retry.
+## [v0.5.8]
 
 ### Fixed
 
 - Fixed resource card CTA slot from flashing while loading (#438)
 - Hide credentials button no longer flashes when credentials component loads (#434)
+- When an expired auth token causes an API call to respond with a 401, the token will now refresh and
+  the API call will retry.
 
 ### Changed
 
