@@ -31,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed a typo in manifold-data-deprovision-button documentation (#457)
 - Upgraded `@manifoldco/shadowcat` to feature the latest security patches. (#477)
 
+### Added
+- Added a new `manifold-data-get-credentials-button` component to fetch the credentials of a resource on click. Those credentials are passed as a dom event.
+
 ### Changed
 
 - Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs. (#450)

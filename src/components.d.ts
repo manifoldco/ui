@@ -100,6 +100,21 @@ export namespace Components {
     */
     'restFetch'?: RestFetch;
   }
+  interface ManifoldDataGetCredentialsButton {
+    'loading'?: boolean;
+    /**
+    * The id of the resource to fetch credentials for
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to fetch credentials for
+    */
+    'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
+  }
   interface ManifoldDataHasResource {
     /**
     * Disable auto-updates?
@@ -682,6 +697,12 @@ declare global {
     new (): HTMLManifoldDataDeprovisionButtonElement;
   };
 
+  interface HTMLManifoldDataGetCredentialsButtonElement extends Components.ManifoldDataGetCredentialsButton, HTMLStencilElement {}
+  var HTMLManifoldDataGetCredentialsButtonElement: {
+    prototype: HTMLManifoldDataGetCredentialsButtonElement;
+    new (): HTMLManifoldDataGetCredentialsButtonElement;
+  };
+
   interface HTMLManifoldDataHasResourceElement extends Components.ManifoldDataHasResource, HTMLStencilElement {}
   var HTMLManifoldDataHasResourceElement: {
     prototype: HTMLManifoldDataHasResourceElement;
@@ -998,6 +1019,7 @@ declare global {
     'manifold-credentials': HTMLManifoldCredentialsElement;
     'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
     'manifold-data-deprovision-button': HTMLManifoldDataDeprovisionButtonElement;
+    'manifold-data-get-credentials-button': HTMLManifoldDataGetCredentialsButtonElement;
     'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
@@ -1121,6 +1143,24 @@ declare namespace LocalJSX {
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
+    */
+    'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
+  }
+  interface ManifoldDataGetCredentialsButton extends JSXBase.HTMLAttributes<HTMLManifoldDataGetCredentialsButtonElement> {
+    'loading'?: boolean;
+    'onManifold-getCredentialsButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-getCredentialsButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-getCredentialsButton-success'?: (event: CustomEvent<any>) => void;
+    /**
+    * The id of the resource to fetch credentials for
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to fetch credentials for
     */
     'resourceLabel'?: string;
     /**
@@ -1682,6 +1722,7 @@ declare namespace LocalJSX {
     'manifold-credentials': ManifoldCredentials;
     'manifold-credentials-view': ManifoldCredentialsView;
     'manifold-data-deprovision-button': ManifoldDataDeprovisionButton;
+    'manifold-data-get-credentials-button': ManifoldDataGetCredentialsButton;
     'manifold-data-has-resource': ManifoldDataHasResource;
     'manifold-data-manage-button': ManifoldDataManageButton;
     'manifold-data-product-logo': ManifoldDataProductLogo;
