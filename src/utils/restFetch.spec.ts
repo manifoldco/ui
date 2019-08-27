@@ -13,14 +13,7 @@ const nonCatalogServices: (keyof typeof connections.prod)[] = [
 ];
 
 describe('The fetcher created by createRestFetch', () => {
-  const oldSetTimeout = setTimeout;
-
-  beforeEach(() => {
-    global.setTimeout = (callback: Function, _wait: number) => callback();
-  });
-
   afterEach(() => {
-    global.setTimeout = oldSetTimeout;
     fetchMock.restore();
   });
 
@@ -68,27 +61,6 @@ describe('The fetcher created by createRestFetch', () => {
     });
   });
 
-  it('Can retry on a 401 error', () => {
-    const setAuthToken = jest.fn();
-    const fetcher = createRestFetch({
-      getAuthToken: () => undefined,
-      setAuthToken,
-      retries: 1,
-    });
-
-    fetchMock.mock('path:/v1/test', {
-      status: 401,
-      body: {},
-    });
-
-    expect.assertions(1);
-    return fetcher({
-      endpoint: '/test',
-      service: 'marketplace',
-    }).catch(() => {
-      expect(fetchMock.calls.length).toEqual(2);
-    });
-  });
   it('Will return an error if the fetch returned one', () => {
     const body = {
       message: 'oops',
@@ -165,8 +137,6 @@ describe('The fetcher created by createRestFetch', () => {
         fetchMock
           .once('path:/v1/test', 401)
           .mock('path:/v1/test', { status: 200, body }, { overwriteRoutes: false });
-
-        global.setTimeout = oldSetTimeout;
 
         const fetch = fetcher({
           endpoint: '/test',
