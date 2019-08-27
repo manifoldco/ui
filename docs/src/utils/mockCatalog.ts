@@ -6,8 +6,12 @@ if (typeof window !== 'undefined') {
   realFetch = fetch;
 }
 
-export const mockProviders = (providers: Manifold.ManifoldNode[]) => {
-  fetchMock.mock('express:/v1/providers/:id', url => {
+const waitForDuration = (time: number) => new Promise(resolve => setTimeout(resolve, time));
+
+export const mockProviders = (providers: Manifold.ManifoldNode[], duration: number) => {
+  fetchMock.mock('express:/v1/providers/:id', async url => {
+    await waitForDuration(duration);
+
     const result = /v1\/providers\/([^/]+?)(?:\/)?$/i.exec(url);
     if (result) {
       const id = result[1];
@@ -22,7 +26,9 @@ export const mockProviders = (providers: Manifold.ManifoldNode[]) => {
     }
     return 404;
   });
-  fetchMock.mock('express:/v1/providers/', url => {
+  fetchMock.mock('express:/v1/providers/', async url => {
+    await waitForDuration(duration);
+
     const realUrl = new URL(url);
     if (realUrl.searchParams.has('label')) {
       const label = realUrl.searchParams.get('label');
@@ -43,8 +49,10 @@ export const mockProviders = (providers: Manifold.ManifoldNode[]) => {
   });
 };
 
-export const mockProducts = (products: Manifold.ManifoldNode[]) => {
-  fetchMock.mock('express:/v1/products/:id', url => {
+export const mockProducts = (products: Manifold.ManifoldNode[], duration: number) => {
+  fetchMock.mock('express:/v1/products/:id', async url => {
+    await waitForDuration(duration);
+
     const result = /v1\/products\/([^/]+?)(?:\/)?$/i.exec(url);
     if (result) {
       const id = result[1];
@@ -59,7 +67,9 @@ export const mockProducts = (products: Manifold.ManifoldNode[]) => {
     }
     return 404;
   });
-  fetchMock.mock('express:/v1/products', url => {
+  fetchMock.mock('express:/v1/products', async url => {
+    await waitForDuration(duration);
+
     const realUrl = new URL(url);
     const validProducts = products.filter((node: Manifold.ManifoldNode) => {
       const body = node.body as Manifold.ProductBody;
@@ -96,8 +106,10 @@ export const mockProducts = (products: Manifold.ManifoldNode[]) => {
   });
 };
 
-export const mockPlans = (plans: Manifold.ManifoldNode[]) => {
-  fetchMock.mock('express:/v1/plans/:id', url => {
+export const mockPlans = (plans: Manifold.ManifoldNode[], duration: number) => {
+  fetchMock.mock('express:/v1/plans/:id', async url => {
+    await waitForDuration(duration);
+
     const result = /v1\/plans\/([^/]+?)(?:\/)?$/i.exec(url);
     if (result) {
       const id = result[1];
@@ -112,7 +124,9 @@ export const mockPlans = (plans: Manifold.ManifoldNode[]) => {
     }
     return 404;
   });
-  fetchMock.mock('express:/v1/plans', url => {
+  fetchMock.mock('express:/v1/plans', async url => {
+    await waitForDuration(duration);
+
     const realUrl = new URL(url);
     const validPlans = plans.filter((node: Manifold.ManifoldNode) => {
       const body = node.body as Manifold.PlanBody;
@@ -158,8 +172,10 @@ export const mockPlans = (plans: Manifold.ManifoldNode[]) => {
   });
 };
 
-export const mockRegions = (regions: Manifold.ManifoldNode[]) => {
-  fetchMock.mock('express:/v1/regions/:id', url => {
+export const mockRegions = (regions: Manifold.ManifoldNode[], duration: number) => {
+  fetchMock.mock('express:/v1/regions/:id', async url => {
+    await waitForDuration(duration);
+
     const result = /v1\/regions\/([^/]+?)(?:\/)?$/i.exec(url);
     if (result) {
       const id = result[1];
@@ -174,7 +190,9 @@ export const mockRegions = (regions: Manifold.ManifoldNode[]) => {
     }
     return 404;
   });
-  fetchMock.mock('express:/v1/regions', url => {
+  fetchMock.mock('express:/v1/regions', async url => {
+    await waitForDuration(duration);
+
     const realUrl = new URL(url);
     return {
       status: 200,
