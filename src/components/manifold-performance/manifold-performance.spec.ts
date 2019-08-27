@@ -32,4 +32,20 @@ describe('<manifold-performance>', () => {
       message: 'error test',
     });
   });
+  it.only('queues events and logs them once DataDog is available', async () => {
+    const page = await newSpecPage({
+      components: [ManifoldPerformance],
+      html: `<manifold-performance></manifold-performance>`,
+    });
+    dispatchEvent(
+      new CustomEvent('manifold-error', {
+        detail: { message: 'error message before DD_LOGS is available' },
+      })
+    );
+    page.rootInstance.ddLogs = ddLogs;
+    await page.waitForChanges();
+    expect(ddLogs.logger.info).toHaveBeenCalledWith('manifold-error', {
+      message: 'error message before DD_LOGS is available',
+    });
+  });
 });

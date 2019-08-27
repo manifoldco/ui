@@ -17,6 +17,7 @@ const loggableEvents = [
 export class ManifoldPerformance {
   @Prop({ mutable: true }) ddLogs?: any;
   private ddScript: HTMLScriptElement;
+  private logQueue: CustomEvent[] = [];
 
   ddLoadListener = () => {
     if (window.DD_LOGS) {
@@ -27,10 +28,16 @@ export class ManifoldPerformance {
       forwardErrorsToLogs: false,
     });
     this.ddLogs.addLoggerGlobalContext('browser-source', 'manifold-ui');
+    this.logQueue.forEach(this.logMetric);
+    this.logQueue = [];
   };
 
   logMetric = (e: CustomEvent) => {
-    this.ddLogs.logger.info(e.type, e.detail);
+    if (!this.ddLogs) {
+      this.logQueue.push(e);
+    } else {
+      this.ddLogs.logger.info(e.type, e.detail);
+    }
   };
 
   componentDidLoad() {
