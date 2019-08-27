@@ -89,6 +89,12 @@ const operations: Provisioning.Operation[] = [
 ];
 
 export const mockResources = () => {
-  fetchMock.mock('express:/v1/resources/', resources);
-  fetchMock.mock('express:/v1/operations/', operations);
+  fetchMock.mock(
+    'express:/v1/resources/',
+    new Promise(res => setTimeout(() => res(resources), 300))
+  );
+  fetchMock.mock(
+    'express:/v1/operations/',
+    new Promise(res => setTimeout(() => res(operations), 300))
+  );
 };

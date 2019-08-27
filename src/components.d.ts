@@ -1069,7 +1069,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
     'oauthUrl'?: string;
-    'onManifold-token-receive'?: (event: CustomEvent<any>) => void;
+    'onManifold-token-receive'?: (event: CustomEvent<{ token: string }>) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
