@@ -7,6 +7,7 @@ import fetchMock from 'fetch-mock';
 import Page from '../components/Page';
 import theme from '../lib/theme';
 import { mockPlans, mockProducts, mockProviders, mockRegions } from '../utils/mockCatalog';
+import { mockResources } from '../utils/mockMarketplace';
 
 fetchMock.config.fallbackToNetwork = true;
 fetchMock.config.overwriteRoutes = true;
@@ -41,10 +42,10 @@ function HomePage({ data }: HomePageProps) {
     regions,
   } = data;
   const currentPage = page || home;
-  const links = edges.map(({ node: { frontmatter: { title, path } } }) => {
-    const link: [string, string] = [path, title];
-    return link;
-  });
+  const links = edges.map(({ node: { frontmatter: { title, path } } }): [string, string] => [
+    path,
+    title,
+  ]);
 
   const catalogProviders = providers.edges.map(prod => prod.node.data);
   const catalogProducts = products.edges.map(prod => prod.node.data);
@@ -55,6 +56,8 @@ function HomePage({ data }: HomePageProps) {
   mockProducts(catalogProducts);
   mockPlans(catalogPlans);
   mockRegions(catalogRegions);
+  // Mock marketplace calls to return fake resource data
+  mockResources();
 
   return (
     <ThemeProvider theme={theme}>
