@@ -13,7 +13,7 @@ function withVeryFakeExpiry(token) {
   expiry.setDate(expiry.getDate() + 1);
   const unixTime = Math.floor(expiry.getTime() / 1000);
   const expirySeconds = unixTime.toString();
-  return `${token}.${expirySeconds}`;
+  return `${token}|${expirySeconds}`;
 }
 
 storiesOf('Auth Token Provider [Data]', module)

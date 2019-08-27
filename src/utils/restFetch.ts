@@ -34,7 +34,7 @@ export function createRestFetch({
     const rttStart = performance.now();
 
     const token = getAuthToken();
-    const options = token ? withAuth(getAuthToken(), args.options) : args.options;
+    const options = token ? withAuth(token, args.options) : args.options;
 
     const response = await fetch(`${endpoints[args.service]}${args.endpoint}`, {
       ...options,
