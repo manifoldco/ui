@@ -8,15 +8,9 @@ jest.mock('./errorReport', () => ({ report: errorReporter }));
 import { createGraphqlFetch } from './graphqlFetch';
 
 describe('graphqlFetch', () => {
-  const oldSetTimeout = setTimeout;
   const graphqlEndpoint = 'http://test.test/graphql';
 
-  beforeEach(() => {
-    global.setTimeout = (callback: Function, _wait: number) => callback();
-  });
-
   afterEach(() => {
-    global.setTimeout = oldSetTimeout;
     errorReporter.mockReset();
     fetchMock.restore();
   });
@@ -24,6 +18,7 @@ describe('graphqlFetch', () => {
   describe('general', () => {
     it('defaults to api.manifold.co/graphql', async () => {
       const fetcher = createGraphqlFetch({
+        wait: 0,
         /* no endpoint */
       });
       fetchMock.mock('https://api.manifold.co/graphql', {
@@ -41,6 +36,7 @@ describe('graphqlFetch', () => {
         },
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -59,6 +55,7 @@ describe('graphqlFetch', () => {
     it('throws if the fetch errored', () => {
       const err = new Error('ohnoes');
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -79,6 +76,7 @@ describe('graphqlFetch', () => {
     it('reports db errors', async () => {
       const errors = [{ message: 'bad query', locations: [] }];
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -100,6 +98,7 @@ describe('graphqlFetch', () => {
         ],
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -113,6 +112,7 @@ describe('graphqlFetch', () => {
 
     it('reports unknown errors', async () => {
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -132,6 +132,7 @@ describe('graphqlFetch', () => {
         ],
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -145,54 +146,76 @@ describe('graphqlFetch', () => {
     });
   });
 
-  describe('auth', () => {
-    it('throws when expired', () => {
-      const fetcher = createGraphqlFetch({
-        endpoint: graphqlEndpoint,
-        wait: 0,
-        getAuthToken: () => undefined,
-      });
+  describe('Expired auth tokens', () => {
+    describe('With no retries', () => {
+      it('throws when expired', () => {
+        const fetcher = createGraphqlFetch({
+          wait: 0,
+          endpoint: graphqlEndpoint,
+          getAuthToken: () => undefined,
+        });
 
-      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+        fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
 
-      expect.assertions(2);
-      return fetcher({ query: '' }).catch(result => {
-        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-        expect(result).toEqual(new Error('Auth token expired'));
-      });
-    });
-
-    it('resets token on error', async () => {
-      const setAuthToken = jest.fn();
-      const fetcher = createGraphqlFetch({
-        endpoint: graphqlEndpoint,
-        getAuthToken: () => '1234',
-        setAuthToken,
-      });
-
-      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
-
-      expect.assertions(1);
-      return fetcher({ query: '' }).catch(() => {
-        expect(setAuthToken).toHaveBeenCalledWith('');
+        expect.assertions(2);
+        return fetcher({ query: '' }).catch(result => {
+          expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+          expect(result).toEqual(new Error('Auth token expired'));
+        });
       });
     });
 
-    it('can retry on error', async () => {
-      const setAuthToken = jest.fn();
-      const fetcher = createGraphqlFetch({
-        endpoint: graphqlEndpoint,
-        getAuthToken: () => undefined,
-        setAuthToken,
-        retries: 1,
+    describe('with retries', () => {
+      it('resets token on error', async () => {
+        const setAuthToken = jest.fn();
+        const fetcher = createGraphqlFetch({
+          wait: 0,
+          endpoint: graphqlEndpoint,
+          getAuthToken: () => '1234',
+          setAuthToken,
+        });
+
+        fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+
+        expect.assertions(1);
+        return fetcher({ query: '' }).catch(() => {
+          expect(setAuthToken).toHaveBeenCalledWith('');
+        });
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+      it('Will retry if the token is refreshed', async () => {
+        const setAuthToken = jest.fn();
+        const fetcher = createGraphqlFetch({
+          wait: 0,
+          endpoint: graphqlEndpoint,
+          getAuthToken: () => undefined,
+          setAuthToken,
+          retries: 1,
+        });
 
-      expect.assertions(2);
-      return fetcher({ query: '' }).catch(err => {
-        expect(fetchMock.calls.length).toBe(2);
-        expect(err.message).toEqual('No auth token given');
+        const body = { data: { title: 'test' }, errors: null };
+
+        fetchMock
+          .once(graphqlEndpoint, { status: 401, body: {} })
+          .mock(graphqlEndpoint, { status: 200, body }, { overwriteRoutes: false });
+
+        const fetch = fetcher({ query: '' });
+
+        /* Queue the dispatch back a tick to allow listeners to be set up */
+        await new Promise(resolve => {
+          setTimeout(() => {
+            document.dispatchEvent(
+              new CustomEvent('manifold-token-receive', { detail: { token: '12344' } })
+            );
+
+            resolve();
+          });
+        });
+
+        const result = await fetch;
+
+        expect(fetchMock.calls).toHaveLength(2);
+        expect(result).toEqual(body);
       });
     });
   });
@@ -205,6 +228,7 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'no results', locations: [] }],
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -229,6 +253,7 @@ describe('graphqlFetch', () => {
       };
 
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -250,6 +275,7 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'illegal base32 data at input byte 4', path: ['product'] }],
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -263,6 +289,7 @@ describe('graphqlFetch', () => {
 
     it('500: returns generic message if none given', async () => {
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -287,6 +314,7 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'no results', locations: [] }],
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
@@ -310,6 +338,7 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'no results', locations: [] }],
       };
       const fetcher = createGraphqlFetch({
+        wait: 0,
         endpoint: graphqlEndpoint,
         getAuthToken: () => '1234',
       });
