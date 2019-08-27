@@ -27,7 +27,6 @@ async function setup({
     setAuthToken: jest.fn(),
   }),
   resourceLabel,
-  useAuth = false,
 }: {
   ownerId?: string;
   productLabel?: string;
@@ -35,7 +34,6 @@ async function setup({
   graphqlFetch?: any;
   resourceLabel?: string;
   restFetch?: any;
-  useAuth?: boolean;
 }) {
   const page = await newSpecPage({
     components: [ManifoldDataProvisionButton],
