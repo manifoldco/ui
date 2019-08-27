@@ -132,7 +132,7 @@ describe('The fetcher created by createRestFetch', () => {
 
   describe('When a token expires', () => {
     describe('With retries remaining', () => {
-      it('Will return the an error if auth token request expired', () => {
+      it('Will return the an error if the token is not refreshed', () => {
         const fetcher = createRestFetch({
           wait: 1,
           getAuthToken: () => undefined,
@@ -151,6 +151,43 @@ describe('The fetcher created by createRestFetch', () => {
           expect(fetchMock.called('path:/v1/test')).toBe(true);
           expect(err.message).toEqual('No auth token given');
         });
+      });
+
+      it('Will retry if the token is refreshed', async () => {
+        const fetcher = createRestFetch({
+          wait: 1,
+          getAuthToken: () => '12344',
+          retries: 1,
+        });
+
+        const body = { title: 'test' };
+
+        fetchMock
+          .once('path:/v1/test', 401)
+          .mock('path:/v1/test', { status: 200, body }, { overwriteRoutes: false });
+
+        global.setTimeout = oldSetTimeout;
+
+        const fetch = fetcher({
+          endpoint: '/test',
+          service: 'marketplace',
+        });
+
+        /* Queue the dispatch back a tick to allow listeners to be set up */
+        await new Promise(resolve => {
+          setTimeout(() => {
+            document.dispatchEvent(
+              new CustomEvent('manifold-token-receive', { detail: { token: '12344' } })
+            );
+
+            resolve();
+          });
+        });
+
+        const result = await fetch;
+
+        expect(fetchMock.calls).toHaveLength(2);
+        expect(result).toEqual(body);
       });
     });
 
