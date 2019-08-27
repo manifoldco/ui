@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Added an events queue to `<manifold-performance>` to capture any performance events emitted before DataDog is ready.
+
 ## [v0.5.8]
 
 ### Fixed
