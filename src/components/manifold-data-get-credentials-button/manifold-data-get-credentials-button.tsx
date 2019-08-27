@@ -35,7 +35,8 @@ export class ManifoldDataGetCredentialsButton {
   @Prop() loading?: boolean = false;
   @Event({ eventName: 'manifold-getCredentialsButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-getCredentialsButton-error', bubbles: true }) error: EventEmitter;
-  @Event({ eventName: 'manifold-getCredentialsButton-success', bubbles: true }) success: EventEmitter;
+  @Event({ eventName: 'manifold-getCredentialsButton-success', bubbles: true })
+  success: EventEmitter;
 
   @Watch('resourceLabel') labelChange(newLabel: string) {
     if (!this.resourceId) {
