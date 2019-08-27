@@ -1,10 +1,7 @@
 ---
 title: 🔒 Resource List
 path: /components/resource-list
-example: |
-  <manifold-connection>
-    <manifold-resource-list paused></manifold-resource-list>
-  </manifold-connection>
+example: <manifold-resource-list></manifold-resource-list>
 ---
 
 <manifold-toast alert-type="warning">

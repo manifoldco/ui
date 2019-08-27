@@ -129,7 +129,7 @@ export class ManifoldResourceList {
               | Provisioning.transfer
               | Provisioning.deprovision = operation.body;
 
-            // Don't run this code is the operation is done, fallback to the simpler resource code.
+            // Don't run this code if the operation is done, fallback to the simpler resource code.
             if (opBody.state === 'done') {
               return;
             }
