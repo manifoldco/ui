@@ -16,7 +16,7 @@ export class ManifoldAuthToken {
   @Prop() token?: string;
   @Prop() oauthUrl?: string = 'https://login.manifold.co/signin/oauth/web';
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
-  manifoldOauthTokenChange: EventEmitter;
+  manifoldOauthTokenChange: EventEmitter<{ token: string }>;
 
   private unsubscribe = () => {};
 

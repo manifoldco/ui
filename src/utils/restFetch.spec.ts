@@ -13,10 +13,7 @@ const nonCatalogServices: (keyof typeof connections.prod)[] = [
 ];
 
 describe('The fetcher created by createRestFetch', () => {
-  const oldSetTimeout = setTimeout;
-
-  beforeEach(() => {
-    global.setTimeout = oldSetTimeout;
+  afterEach(() => {
     fetchMock.restore();
   });
 
@@ -64,27 +61,6 @@ describe('The fetcher created by createRestFetch', () => {
     });
   });
 
-  it('Can retry on a 401 error', () => {
-    const setAuthToken = jest.fn();
-    const fetcher = createRestFetch({
-      getAuthToken: () => '1234',
-      setAuthToken,
-      retries: 1,
-    });
-
-    fetchMock.mock('path:/v1/test', {
-      status: 401,
-      body: {},
-    });
-
-    expect.assertions(1);
-    return fetcher({
-      endpoint: '/test',
-      service: 'marketplace',
-    }).catch(() => {
-      expect(fetchMock.calls.length).toEqual(2);
-    });
-  });
   it('Will return an error if the fetch returned one', () => {
     const body = {
       message: 'oops',
@@ -126,23 +102,86 @@ describe('The fetcher created by createRestFetch', () => {
     });
   });
 
-  it('Will return the an error if auth token request expired', () => {
-    const fetcher = createRestFetch({
-      wait: 1,
-      getAuthToken: () => undefined,
+  describe('When a token expires', () => {
+    describe('With retries remaining', () => {
+      it('Will return the an error if the token is not refreshed', () => {
+        const fetcher = createRestFetch({
+          wait: 1,
+          getAuthToken: () => undefined,
+          retries: 1,
+        });
+
+        fetchMock.mock('path:/v1/test', 401);
+
+        const result = fetcher({
+          endpoint: '/test',
+          service: 'marketplace',
+        });
+
+        expect.assertions(2);
+        return result.catch(err => {
+          expect(fetchMock.called('path:/v1/test')).toBe(true);
+          expect(err.message).toEqual('No auth token given');
+        });
+      });
+
+      it('Will retry if the token is refreshed', async () => {
+        const fetcher = createRestFetch({
+          wait: 1,
+          getAuthToken: () => '12344',
+          retries: 1,
+        });
+
+        const body = { title: 'test' };
+
+        fetchMock
+          .once('path:/v1/test', 401)
+          .mock('path:/v1/test', { status: 200, body }, { overwriteRoutes: false });
+
+        const fetch = fetcher({
+          endpoint: '/test',
+          service: 'marketplace',
+        });
+
+        /* Queue the dispatch back a tick to allow listeners to be set up */
+        await new Promise(resolve => {
+          setTimeout(() => {
+            document.dispatchEvent(
+              new CustomEvent('manifold-token-receive', { detail: { token: '12344' } })
+            );
+
+            resolve();
+          });
+        });
+
+        const result = await fetch;
+
+        expect(fetchMock.calls).toHaveLength(2);
+        expect(result).toEqual(body);
+      });
     });
 
-    fetchMock.mock('path:/v1/test', 200);
+    describe('Without retries remaining', () => {
+      it('Will return the an error if auth token request expired', () => {
+        const fetcher = createRestFetch({
+          wait: 1,
+          getAuthToken: () => undefined,
+          retries: 0,
+        });
 
-    const result = fetcher({
-      endpoint: '/test',
-      service: 'marketplace',
-    });
+        fetchMock.mock('path:/v1/test', 401);
 
-    expect.assertions(2);
-    return result.catch(err => {
-      expect(fetchMock.called('path:/v1/test')).toBe(false);
-      expect(err.message).toEqual('No auth token given');
+        const result = fetcher({
+          endpoint: '/test',
+          service: 'marketplace',
+        });
+
+        expect.assertions(2);
+        return result.catch(err => {
+          expect(fetchMock.called('path:/v1/test')).toBe(true);
+          expect(err.message).toEqual('Auth token expired');
+        });
+      });
     });
   });
 
@@ -166,7 +205,7 @@ describe('The fetcher created by createRestFetch', () => {
       getAuthToken: () => '1234',
     });
     fetchMock.mock('path:/v1/test', {});
-    await fetcher({ endpoint: '/test', service: 'catalog', isPublic: false });
+    await fetcher({ endpoint: '/test', service: 'catalog' });
     const [, req] = fetchMock.lastCall() as any;
     expect(req.headers).toEqual({ authorization: 'Bearer 1234' });
   });

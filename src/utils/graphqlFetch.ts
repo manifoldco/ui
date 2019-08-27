@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
-import { hasExpired } from './expiry';
 import { report } from './errorReport';
+import { waitForAuthToken } from './auth';
 
 interface CreateGraphqlFetch {
   endpoint?: string;
@@ -11,8 +11,8 @@ interface CreateGraphqlFetch {
 }
 
 type GraphqlArgs =
-  | { mutation: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }
-  | { query: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }; // require query or mutation, but not both
+  | { mutation: string; variables?: object; emitter?: EventEmitter }
+  | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
 
 interface GraphqlError {
   message: string;
@@ -38,22 +38,8 @@ export function createGraphqlFetch({
     args: GraphqlArgs,
     attempts: number
   ): Promise<GraphqlResponseBody<T>> {
-    const start = new Date();
     const rttStart = performance.now();
-    const { isPublic, emitter, ...request } = args;
-
-    if (!isPublic) {
-      while (!getAuthToken() && !hasExpired(start, wait)) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-
-      if (!getAuthToken()) {
-        const detail = { message: 'No auth token given' };
-        report(detail);
-        throw new Error(detail.message);
-      }
-    }
+    const { emitter, ...request } = args;
 
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -74,10 +60,12 @@ export function createGraphqlFetch({
     if (response.status === 401) {
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
-      report(response); // report unauthenticated
+      report(body); // report unauthenticated
       if (attempts < retries) {
-        return graphqlFetch(args, attempts + 1);
+        return waitForAuthToken(getAuthToken, wait, () => graphqlFetch(args, attempts + 1));
       }
+
+      throw new Error('Auth token expired');
     }
 
     // handle non-GQL responses from errors

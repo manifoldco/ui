@@ -317,7 +317,6 @@ export function planCost(restFetch: RestFetch, { planID, features, init }: PlanC
   return restFetch<Gateway.Price>({
     service: 'gateway',
     endpoint: `/id/plan/${planID}/cost`,
-    isPublic: true,
     body: { features },
     options: {
       method: 'POST',

@@ -47,7 +47,6 @@ export class ManifoldDataProductLogo {
     const { data } = await this.graphqlFetch({
       query,
       variables,
-      isPublic: true,
     });
 
     this.product = data.product;
