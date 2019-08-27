@@ -108,6 +108,7 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, con
         });
       }
 
+      const start = new Date().getTime();
       // Fetch all the records in one go
       // eslint-disable-next-line no-await-in-loop
       const entities = await fetch(endpoint.path.toString(), {
@@ -116,17 +117,20 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }, con
         body: endpoint.body,
       }).then(response => response.json());
 
+      const end = new Date().getTime();
+
       results[api][endpoint.name] = entities.map(entity => ({
         entity,
         endpoint,
-        processed: processNode(
+        processed: processNode({
           entity,
-          endpoint.method,
+          method: endpoint.method,
           api,
-          endpoint.name,
+          endpoint: endpoint.name,
+          duration: end - start,
           createNodeId,
-          createContentDigest
-        ),
+          createContentDigest,
+        }),
       }));
     }
 

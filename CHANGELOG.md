@@ -7,19 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Changed
+- Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs.
 
-- When an expired auth token causes an API call to respond with a 401, the token will now refresh and
-  the API call will retry.
+## [v0.5.8]
 
 ### Fixed
 
 - Fixed resource card CTA slot from flashing while loading (#438)
 - Hide credentials button no longer flashes when credentials component loads (#434)
+- When an expired auth token causes an API call to respond with a 401, the token will now refresh and
+  the API call will retry.
 
 ### Changed
 
 - Enforce standard height on product cards for more consistency
+- Replace auth token polling with an event based system
 
 ## [v0.5.7]
 
@@ -38,6 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed padding above `<manifold-product-page>` (#399)
 - Adjusted positioning for CTA slot in `manifold-service-card-view`. (#404)
+
+### Added
+
+- `<manifold-performance>` component for partners to add opt-in metrics collection to their implementation (#427)
 
 ## [v0.5.5]
 

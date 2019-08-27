@@ -7,6 +7,7 @@ import fetchMock from 'fetch-mock';
 import Page from '../components/Page';
 import theme from '../lib/theme';
 import { mockPlans, mockProducts, mockProviders, mockRegions } from '../utils/mockCatalog';
+import { mockResources } from '../utils/mockMarketplace';
 
 fetchMock.config.fallbackToNetwork = true;
 fetchMock.config.overwriteRoutes = true;
@@ -20,10 +21,10 @@ interface HomePageProps {
     home: MarkdownRemark.Data;
     page: MarkdownRemark.Data;
     toc: { edges: { node: MarkdownRemark.Data }[] };
-    providers: { edges: { node: { data: Manifold.ManifoldNode } }[] };
-    products: { edges: { node: { data: Manifold.ManifoldNode } }[] };
-    plans: { edges: { node: { data: Manifold.ManifoldNode } }[] };
-    regions: { edges: { node: { data: Manifold.ManifoldNode } }[] };
+    providers: { edges: { node: { data: Manifold.ManifoldNode; requestDuration: number } }[] };
+    products: { edges: { node: { data: Manifold.ManifoldNode; requestDuration: number } }[] };
+    plans: { edges: { node: { data: Manifold.ManifoldNode; requestDuration: number } }[] };
+    regions: { edges: { node: { data: Manifold.ManifoldNode; requestDuration: number } }[] };
   };
 }
 
@@ -41,20 +42,26 @@ function HomePage({ data }: HomePageProps) {
     regions,
   } = data;
   const currentPage = page || home;
-  const links = edges.map(({ node: { frontmatter: { title, path } } }) => {
-    const link: [string, string] = [path, title];
-    return link;
-  });
+  const links = edges.map(({ node: { frontmatter: { title, path } } }): [string, string] => [
+    path,
+    title,
+  ]);
 
   const catalogProviders = providers.edges.map(prod => prod.node.data);
+  const catalogProviderRequestDuration = providers.edges[0].node.requestDuration;
   const catalogProducts = products.edges.map(prod => prod.node.data);
+  const catalogProductsRequestDuration = products.edges[0].node.requestDuration;
   const catalogPlans = plans.edges.map(prod => prod.node.data);
+  const catalogPlansRequestDuration = plans.edges[0].node.requestDuration;
   const catalogRegions = regions.edges.map(prod => prod.node.data);
+  const catalogRegionsRequestDuration = regions.edges[0].node.requestDuration;
   // Mock catalog calls to always return the latest catalog data
-  mockProviders(catalogProviders);
-  mockProducts(catalogProducts);
-  mockPlans(catalogPlans);
-  mockRegions(catalogRegions);
+  mockProviders(catalogProviders, catalogProviderRequestDuration);
+  mockProducts(catalogProducts, catalogProductsRequestDuration);
+  mockPlans(catalogPlans, catalogPlansRequestDuration);
+  mockRegions(catalogRegions, catalogRegionsRequestDuration);
+  // Mock marketplace calls to return fake resource data
+  mockResources();
 
   return (
     <ThemeProvider theme={theme}>
@@ -92,6 +99,7 @@ export const query = graphql`
     providers: allGetCatalogProviders {
       edges {
         node {
+          requestDuration
           data {
             id
             type
@@ -112,6 +120,7 @@ export const query = graphql`
     products: allGetCatalogProducts {
       edges {
         node {
+          requestDuration
           data {
             id
             body {
@@ -199,6 +208,7 @@ export const query = graphql`
     plans: allGetCatalogPlans {
       edges {
         node {
+          requestDuration
           data {
             id
             type
@@ -277,6 +287,7 @@ export const query = graphql`
     regions: allGetCatalogRegions {
       edges {
         node {
+          requestDuration
           data {
             id
             version

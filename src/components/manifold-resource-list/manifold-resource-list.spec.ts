@@ -8,6 +8,7 @@ import { Resource } from '../../spec/mock/marketplace';
 import { Product } from '../../spec/mock/catalog';
 import { connections } from '../../utils/connections';
 import { createRestFetch } from '../../utils/restFetch';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proto = ManifoldResourceList.prototype as any;
@@ -15,6 +16,11 @@ const oldCallback = proto.componentWillLoad;
 
 proto.componentWillLoad = function() {
   (this as any).restFetch = createRestFetch({
+    getAuthToken: jest.fn(() => '1234'),
+    wait: 10,
+    setAuthToken: jest.fn(),
+  });
+  (this as any).graphqlFetch = createGraphqlFetch({
     getAuthToken: jest.fn(() => '1234'),
     wait: 10,
     setAuthToken: jest.fn(),
@@ -54,10 +60,10 @@ describe('<manifold-resource-list>', () => {
     fetchMock.restore();
   });
 
-  it('The resources list are rendered if given.', async () => {
+  it('shows 4 skeleton cards while loading.', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-      .mock(`${connections.prod.catalog}/products`, [Product])
+      .mock(connections.prod.graphql, { data: [Product] })
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const page = await newSpecPage({
@@ -74,13 +80,13 @@ describe('<manifold-resource-list>', () => {
     // TODO: Add a test that will test that the resources are rendered with their various states
     // to replace the 'processes resources properly' here.
     expect(page.root.shadowRoot.querySelector('.wrapper')).toBeTruthy();
-    expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(1);
+    expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(4);
   });
 
   it('processes resources properly', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-      .mock(`${connections.prod.catalog}/products`, [Product])
+      .mock(connections.prod.graphql, { data: [Product] })
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const page = await newSpecPage({
@@ -91,7 +97,7 @@ describe('<manifold-resource-list>', () => {
     const instance = page.rootInstance as ManifoldResourceList;
 
     expect(fetchMock.called(`${connections.prod.marketplace}/resources/?me`)).toBe(true);
-    expect(fetchMock.called(`${connections.prod.catalog}/products`)).toBe(true);
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
     expect(fetchMock.called(`${connections.prod.provisioning}/operations/?is_deleted=false`)).toBe(
       true
     );
@@ -130,7 +136,7 @@ describe('<manifold-resource-list>', () => {
     it('slot="loading" is rendered if still loading.', async () => {
       fetchMock
         .mock(`${connections.prod.marketplace}/resources/?me`, {})
-        .mock(`${connections.prod.catalog}/products`, [])
+        .mock(connections.prod.graphql, { data: [] })
         .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
 
       const page = await newSpecPage({
@@ -148,7 +154,7 @@ describe('<manifold-resource-list>', () => {
     it('slot="no-resources" is rendered if no resources are found.', async () => {
       fetchMock
         .mock(`${connections.prod.marketplace}/resources/?me`, [])
-        .mock(`${connections.prod.catalog}/products`, [])
+        .mock(connections.prod.graphql, { data: [] })
         .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
 
       const page = await newSpecPage({

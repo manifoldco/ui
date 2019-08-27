@@ -8,5 +8,10 @@
       "use": "@now/static-build",
       "config": { "distDir": "storybook-static" }
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "DATADOG_CLIENT_TOKEN": "@datadog-client-token"
+    }
+  }
 }

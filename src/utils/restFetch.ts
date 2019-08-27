@@ -1,7 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
-import { withAuth } from './auth';
-import { hasExpired } from './expiry';
+import { withAuth, waitForAuthToken } from './auth';
 import { report } from './errorReport';
 
 export interface CreateRestFetch {
@@ -17,7 +16,6 @@ interface RestFetchArguments {
   endpoint: string;
   body?: object;
   options?: Omit<RequestInit, 'body'>;
-  isPublic?: boolean;
   emitter?: EventEmitter;
 }
 
@@ -33,27 +31,11 @@ export function createRestFetch({
   setAuthToken = () => {},
 }: CreateRestFetch): RestFetch {
   async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
-    const start = new Date();
     const rttStart = performance.now();
 
-    // TODO: catalog should ALWAYS be able to fetch WITHOUT auth if needed,
-    // but this prevents the ability for it to auth altogether. We need both!
-    const isCatalog = args.service === 'catalog';
-    const isPublic = (isCatalog && args.isPublic !== false) || args.isPublic;
+    const token = getAuthToken();
+    const options = token ? withAuth(token, args.options) : args.options;
 
-    if (!isPublic) {
-      while (!getAuthToken() && !hasExpired(start, wait)) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-      if (!getAuthToken()) {
-        const detail = { message: 'No auth token given' };
-        report(detail);
-        throw new Error(detail.message);
-      }
-    }
-
-    const options = isPublic ? args.options : withAuth(getAuthToken(), args.options);
     const response = await fetch(`${endpoints[args.service]}${args.endpoint}`, {
       ...options,
       body: JSON.stringify(args.body),
@@ -73,7 +55,7 @@ export function createRestFetch({
       setAuthToken('');
       report(response);
       if (attempts < retries) {
-        return restFetch(args, attempts + 1);
+        return waitForAuthToken(getAuthToken, wait, () => restFetch(args, attempts + 1));
       }
 
       throw new Error('Auth token expired');
