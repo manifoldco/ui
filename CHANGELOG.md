@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Enforce standard height on product cards for more consistency
+- Replace auth token polling with an event based system
 
 ## [v0.5.7]
 
