@@ -125,179 +125,179 @@ describe('<manifold-data-provision-button>', () => {
       root.appendChild(element);
       expect(fetchMock.called(/\/products\//)).toBe(false);
     });
-  });
 
-  describe('events', () => {
-    it('click', async () => {
-      const productLabel = 'click-product';
-      const resourceLabel = 'click-resource';
+    describe('events', () => {
+      it('click', async () => {
+        const productLabel = 'click-product';
+        const resourceLabel = 'click-resource';
 
-      const mockClick = jest.fn();
-      element.ownerId = 'owner-id';
-      element.productLabel = productLabel;
-      element.resourceLabel = resourceLabel;
-      const root = page.root as HTMLElement;
-      root.appendChild(element);
-      await page.waitForChanges();
+        const mockClick = jest.fn();
+        element.ownerId = 'owner-id';
+        element.productLabel = productLabel;
+        element.resourceLabel = resourceLabel;
+        const root = page.root as HTMLElement;
+        root.appendChild(element);
+        await page.waitForChanges();
 
-      const button = root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
+        const button = root.querySelector('button');
+        if (!button) {
+          throw new Error('button not found in document');
+        }
 
-      // listen for event and fire
-      page.doc.addEventListener('manifold-provisionButton-click', mockClick);
-      button.click();
-
-      expect(mockClick).toBeCalledWith(
-        expect.objectContaining({
-          detail: {
-            planId: ExpandedPlan.id,
-            productLabel,
-            resourceLabel,
-          },
-        })
-      );
-    });
-
-    it('invalid: too short', async () => {
-      const productLabel = 'click-product';
-      const resourceLabel = 'x';
-
-      const mockClick = jest.fn();
-      element.ownerId = 'owner-id';
-      element.productLabel = productLabel;
-      element.resourceLabel = resourceLabel;
-      const root = page.root as HTMLElement;
-      root.appendChild(element);
-      await page.waitForChanges();
-
-      const button = root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
-
-      // listen for event and fire
-      page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
-      button.click();
-
-      expect(mockClick).toBeCalledWith(
-        expect.objectContaining({
-          detail: {
-            message: 'Must be at least 3 characters',
-            planId: ExpandedPlan.id,
-            productLabel,
-            resourceLabel,
-          },
-        })
-      );
-    });
-
-    it('invalid: bad characters', async () => {
-      const resourceLabel = '🦞🦞🦞';
-      const productLabel = 'click-product';
-
-      const mockClick = jest.fn();
-      element.ownerId = 'owner-id';
-      element.productLabel = productLabel;
-      element.resourceLabel = resourceLabel;
-      const root = page.root as HTMLElement;
-      root.appendChild(element);
-      await page.waitForChanges();
-
-      const button = root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
-
-      // listen for event and fire
-      page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
-      button.click();
-
-      expect(mockClick).toBeCalledWith(
-        expect.objectContaining({
-          detail: {
-            message:
-              'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
-            planId: ExpandedPlan.id,
-            productLabel,
-            resourceLabel,
-          },
-        })
-      );
-    });
-
-    it('error', async () => {
-      const resourceLabel = 'error-resource';
-      const productLabel = 'error-product';
-      element.ownerId = 'owner-id';
-      element.productLabel = productLabel;
-      element.resourceLabel = resourceLabel;
-      const root = page.root as HTMLElement;
-      root.appendChild(element);
-      await page.waitForChanges();
-
-      const button = root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
-
-      const mockClick = jest.fn();
-      await new Promise(resolve => {
         // listen for event and fire
-        mockClick.mockImplementation(() => resolve());
-        page.doc.addEventListener('manifold-provisionButton-error', mockClick);
+        page.doc.addEventListener('manifold-provisionButton-click', mockClick);
         button.click();
+
+        expect(mockClick).toBeCalledWith(
+          expect.objectContaining({
+            detail: {
+              planId: ExpandedPlan.id,
+              productLabel,
+              resourceLabel,
+            },
+          })
+        );
       });
 
-      expect(mockClick).toBeCalledWith(
-        expect.objectContaining({
-          detail: {
-            message: 'provision failed',
-            planId: ExpandedPlan.id,
-            productLabel,
-            resourceLabel,
-          },
-        })
-      );
-    });
+      it('invalid: too short', async () => {
+        const productLabel = 'click-product';
+        const resourceLabel = 'x';
 
-    it('success', async () => {
-      const resourceLabel = 'success-resource';
-      const productLabel = 'success-product';
+        const mockClick = jest.fn();
+        element.ownerId = 'owner-id';
+        element.productLabel = productLabel;
+        element.resourceLabel = resourceLabel;
+        const root = page.root as HTMLElement;
+        root.appendChild(element);
+        await page.waitForChanges();
 
-      element.ownerId = 'owner-id';
-      element.productLabel = productLabel;
-      element.resourceLabel = resourceLabel;
-      const root = page.root as HTMLElement;
-      root.appendChild(element);
-      await page.waitForChanges();
+        const button = root.querySelector('button');
+        if (!button) {
+          throw new Error('button not found in document');
+        }
 
-      const button = root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
-
-      const mockClick = jest.fn();
-      await new Promise(resolve => {
         // listen for event and fire
-        mockClick.mockImplementation(() => resolve());
-        page.doc.addEventListener('manifold-provisionButton-success', mockClick);
+        page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
         button.click();
+
+        expect(mockClick).toBeCalledWith(
+          expect.objectContaining({
+            detail: {
+              message: 'Must be at least 3 characters',
+              planId: ExpandedPlan.id,
+              productLabel,
+              resourceLabel,
+            },
+          })
+        );
       });
 
-      expect(mockClick).toBeCalledWith(
-        expect.objectContaining({
-          detail: {
-            createdAt: '2019-01-01 00:00:00',
-            message: `${resourceLabel} successfully provisioned`,
-            planId: ExpandedPlan.id,
-            productLabel,
-            resourceId,
-            resourceLabel,
-          },
-        })
-      );
+      it('invalid: bad characters', async () => {
+        const resourceLabel = '🦞🦞🦞';
+        const productLabel = 'click-product';
+
+        const mockClick = jest.fn();
+        element.ownerId = 'owner-id';
+        element.productLabel = productLabel;
+        element.resourceLabel = resourceLabel;
+        const root = page.root as HTMLElement;
+        root.appendChild(element);
+        await page.waitForChanges();
+
+        const button = root.querySelector('button');
+        if (!button) {
+          throw new Error('button not found in document');
+        }
+
+        // listen for event and fire
+        page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
+        button.click();
+
+        expect(mockClick).toBeCalledWith(
+          expect.objectContaining({
+            detail: {
+              message:
+                'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
+              planId: ExpandedPlan.id,
+              productLabel,
+              resourceLabel,
+            },
+          })
+        );
+      });
+
+      it('error', async () => {
+        const resourceLabel = 'error-resource';
+        const productLabel = 'error-product';
+        element.ownerId = 'owner-id';
+        element.productLabel = productLabel;
+        element.resourceLabel = resourceLabel;
+        const root = page.root as HTMLElement;
+        root.appendChild(element);
+        await page.waitForChanges();
+
+        const button = root.querySelector('button');
+        if (!button) {
+          throw new Error('button not found in document');
+        }
+
+        const mockClick = jest.fn();
+        await new Promise(resolve => {
+          // listen for event and fire
+          mockClick.mockImplementation(() => resolve());
+          page.doc.addEventListener('manifold-provisionButton-error', mockClick);
+          button.click();
+        });
+
+        expect(mockClick).toBeCalledWith(
+          expect.objectContaining({
+            detail: {
+              message: 'provision failed',
+              planId: ExpandedPlan.id,
+              productLabel,
+              resourceLabel,
+            },
+          })
+        );
+      });
+
+      it('success', async () => {
+        const resourceLabel = 'success-resource';
+        const productLabel = 'success-product';
+
+        element.ownerId = 'owner-id';
+        element.productLabel = productLabel;
+        element.resourceLabel = resourceLabel;
+        const root = page.root as HTMLElement;
+        root.appendChild(element);
+        await page.waitForChanges();
+
+        const button = root.querySelector('button');
+        if (!button) {
+          throw new Error('button not found in document');
+        }
+
+        const mockClick = jest.fn();
+        await new Promise(resolve => {
+          // listen for event and fire
+          mockClick.mockImplementation(() => resolve());
+          page.doc.addEventListener('manifold-provisionButton-success', mockClick);
+          button.click();
+        });
+
+        expect(mockClick).toBeCalledWith(
+          expect.objectContaining({
+            detail: {
+              createdAt: '2019-01-01 00:00:00',
+              message: `${resourceLabel} successfully provisioned`,
+              planId: ExpandedPlan.id,
+              productLabel,
+              resourceId,
+              resourceLabel,
+            },
+          })
+        );
+      });
     });
   });
 });
