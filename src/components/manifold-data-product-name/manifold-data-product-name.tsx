@@ -1,16 +1,16 @@
 import { Component, Prop, State, Element, Watch } from '@stencil/core';
+import gql from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
-import { Gateway } from '../../types/gateway';
+import { Product, Resource } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
@@ -33,36 +33,52 @@ export class ManifoldDataProductName {
   }
 
   fetchProduct = async (productLabel: string) => {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
     this.productName = undefined;
 
-    const products = await this.restFetch<Catalog.Product[]>({
-      service: 'catalog',
-      endpoint: `/products?label=${productLabel}`,
+    const product = await this.graphqlFetch<Product>({
+      query: gql`
+        query PRODUCT_NAME {
+          product(label: "$productLabel") {
+            displayName
+          }
+        }
+      `,
+      variables: { productLabel },
     });
 
-    if (products) {
-      this.productName = products[0].body.name; // eslint-disable-line prefer-destructuring
+    if (product.data) {
+      this.productName = product.data.displayName;
     }
   };
 
   fetchResource = async (resourceName: string) => {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
     this.productName = undefined;
 
-    const resource = await this.restFetch<Gateway.Resource>({
-      service: 'gateway',
-      endpoint: `/resources/me/${resourceName}`,
+    const resource = await this.graphqlFetch<Resource>({
+      query: gql`
+        query RESOURCE {
+          resource(label: "$resourceName") {
+            plan {
+              product {
+                displayName
+              }
+            }
+          }
+        }
+      `,
+      variables: { resourceName },
     });
 
-    if (resource) {
-      this.productName = resource.product && resource.product.name;
+    if (resource.data && resource.data.plan) {
+      this.productName = resource.data.plan.product.displayName;
     }
   };
 

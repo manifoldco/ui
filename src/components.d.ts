@@ -159,6 +159,10 @@ export namespace Components {
   }
   interface ManifoldDataProductName {
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -166,10 +170,6 @@ export namespace Components {
     * Look up product name from resource
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProvisionButton {
     /**
@@ -1204,6 +1204,10 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
     'productLabel'?: string;
@@ -1211,10 +1215,6 @@ declare namespace LocalJSX {
     * Look up product name from resource
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
     /**

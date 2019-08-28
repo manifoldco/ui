@@ -40,4 +40,11 @@ describe('<manifold-data-product-name>', () => {
     productName.resourceChange(newResource);
     expect(productName.fetchResource).toHaveBeenCalledWith(newResource);
   });
+
+  describe('v0 API', () => {
+    it('[product-name]');
+    it('[product-name]: responds to change');
+    it('[resource-label]');
+    it('[resource-label]: responds to change');
+  });
 });

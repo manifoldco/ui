@@ -259,7 +259,7 @@ export enum OrderByDirection {
  **/
 export type PageInfo = {
   __typename?: 'PageInfo',
-  startCurser?: Maybe<Scalars['String']>,
+  startCursor?: Maybe<Scalars['String']>,
   endCursor?: Maybe<Scalars['String']>,
   hasNextPage: Scalars['Boolean'],
   hasPreviousPage: Scalars['Boolean'],
@@ -689,6 +689,8 @@ export type Query = {
   profiles?: Maybe<ProfileConnection>,
   /** Look up an invoice by its `id`. */
   invoice?: Maybe<Invoice>,
+  /** Look up a line item by it's `id`. */
+  lineItem?: Maybe<LineItem>,
 };
 
 
@@ -831,6 +833,17 @@ export type QueryProfilesArgs = {
  * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryInvoiceArgs = {
+  id: Scalars['ID']
+};
+
+
+/** 
+ * Queries for the Manifold GraphQL API.
+ * 
+ * More details and usage available on the
+ * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type QueryLineItemArgs = {
   id: Scalars['ID']
 };
 
