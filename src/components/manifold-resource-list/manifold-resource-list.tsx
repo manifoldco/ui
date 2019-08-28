@@ -1,7 +1,6 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { Query } from '../../types/graphql';
 import { Marketplace } from '../../types/marketplace';
 import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
