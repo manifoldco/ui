@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { Query, ProductConnection, ProductEdge } from '../../types/graphql';
+import { Query } from '../../types/graphql';
 import { Marketplace } from '../../types/marketplace';
 import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
@@ -151,7 +151,7 @@ export class ManifoldResourceList {
         (productsResp &&
           productsResp.data &&
           productsResp.data.products &&
-          (productsResp.data.products as ProductConnection).edges) ||
+          productsResp.data.products.edges) ||
         [];
 
       const userResource = ManifoldResourceList.userResources(resourcesResp);
@@ -178,7 +178,7 @@ export class ManifoldResourceList {
 
           if (resource) {
             const product = products.find(
-              (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
+              (prod): boolean => prod.node.id === resource.body.product_id
             );
 
             resources.push({
@@ -196,8 +196,7 @@ export class ManifoldResourceList {
             return;
           }
           const product = products.find(
-            (prod: ProductEdge): boolean =>
-              prod.node.id === (opBody as Provisioning.provision).product_id
+            (prod): boolean => prod.node.id === (opBody as Provisioning.provision).product_id
           );
 
           resources.push({
@@ -217,9 +216,7 @@ export class ManifoldResourceList {
           return;
         }
 
-        const product = products.find(
-          (prod: ProductEdge): boolean => prod.node.id === resource.body.product_id
-        );
+        const product = products.find((prod): boolean => prod.node.id === resource.body.product_id);
 
         resources.push({
           id: resource.id,
