@@ -56,7 +56,10 @@ export class ManifoldProductPage {
                 <div class="sidebar-section">
                   <h4>Category</h4>
                   {categories.map(category => (
-                    <div class="category" style={{ '--categoryColor': `var(--manifold-c-${category.label})` }}>
+                    <div
+                      class="category"
+                      style={{ '--categoryColor': `var(--manifold-c-${category.label})` }}
+                    >
                       <manifold-icon
                         icon={categoryIcon[category.label] || categoryIcon.uncategorized}
                         margin-right
