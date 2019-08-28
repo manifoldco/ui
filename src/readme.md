@@ -226,7 +226,7 @@ used) **while your PR is still open.** Ask yourself:
 - [ ] Are the [docs][docs] up-to-date?
 - [ ] Do any [Storybook][storybook] stories need to be written?
 - [ ] Do any [Happo tests][happo] need to be written?
-- [ ] If applicable, have you [tested against a platform][platform-testing].
+- [ ] If applicable, have you [tested against a platform][platform-testing]?
 
 If everything looks good and works as expected, **don’t merge your PR yet**!
 Update the CHANGELOG (below).
