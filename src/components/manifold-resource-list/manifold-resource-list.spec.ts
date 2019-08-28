@@ -5,10 +5,25 @@ import { ManifoldResourceList } from './manifold-resource-list';
 import { Marketplace } from '../../types/marketplace';
 import { Provisioning } from '../../types/provisioning';
 import { Resource } from '../../spec/mock/marketplace';
-import { Product } from '../../spec/mock/catalog';
 import { connections } from '../../utils/connections';
 import { createRestFetch } from '../../utils/restFetch';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
+
+const Product = {
+  id: '12345',
+  displayName: 'product',
+  logoUrl: 'https://fillmurray.com/200/200',
+};
+
+const mockGraphqlProducts = {
+  products: {
+    edges: [
+      {
+        node: Product,
+      },
+    ],
+  },
+};
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const proto = ManifoldResourceList.prototype as any;
@@ -60,10 +75,10 @@ describe('<manifold-resource-list>', () => {
     fetchMock.restore();
   });
 
-  it('shows 4 skeleton cards while loading.', async () => {
+  it('The resources list are rendered if given.', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-      .mock(connections.prod.graphql, { data: [Product] })
+      .mock(connections.prod.graphql, { data: mockGraphqlProducts })
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const page = await newSpecPage({
@@ -80,13 +95,13 @@ describe('<manifold-resource-list>', () => {
     // TODO: Add a test that will test that the resources are rendered with their various states
     // to replace the 'processes resources properly' here.
     expect(page.root.shadowRoot.querySelector('.wrapper')).toBeTruthy();
-    expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(4);
+    expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(1);
   });
 
   it('processes resources properly', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-      .mock(connections.prod.graphql, { data: [Product] })
+      .mock(connections.prod.graphql, { data: mockGraphqlProducts })
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const page = await newSpecPage({
@@ -108,7 +123,8 @@ describe('<manifold-resource-list>', () => {
         id: Resource.id,
         name: Resource.body.name,
         label: Resource.body.label,
-        logo: Product.body.logo_url,
+        logo: Product.logoUrl,
+        logoLabel: Product.displayName,
         status: 'provision',
       },
     ]);
