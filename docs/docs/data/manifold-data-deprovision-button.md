@@ -4,7 +4,7 @@ path: /data/deprovision-button
 example: |
   <manifold-data-deprovision-button resource-label="my-resource">
     Deprovison resource
-  </manifold-data-provision-button>
+  </manifold-data-deprovision-button>
 ---
 
 # 🔒 Deprovision Button
@@ -18,7 +18,7 @@ Set the CTA text by adding anything between the opening and closing tags:
 ```html
 <manifold-data-deprovision-button resource-label="my-resource">
   Deprovision My Resource
-</manifold-data-provision-button>
+</manifold-data-deprovision-button>
 ```
 
 `slot` can be attached to any HTML or JSX element. To read more about slots, see [Stencil’s Documentation][stencil-slot]
@@ -43,7 +43,7 @@ document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => co
 |--------------------------------------|------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
 | `manifold-deprovisionButton-click`   | `resourceLabel`                          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
 | `manifold-deprovisionButton-success` | `message`, `resourceId`, `resourceLabel` | Successful deprovision. Returns a resource ID and resource Label.                                                           |
-| `manifold-deprovisionButton-error`   | `message`, `resourceId`, `resourceLabel` | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-deprovisionButton-error`   | `message`, `resourceId`, `resourceLabel` | Erred deprovision, along with information on what went wrong.                                                                 |
 
 ## Styling
 

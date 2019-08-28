@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed a typo in manifold-data-deprovision-button documentation
+
 ### Changed
+
 - Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs.
 
 ## [v0.5.8]
