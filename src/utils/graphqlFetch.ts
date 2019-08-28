@@ -6,6 +6,7 @@ import {
   RegionConnection,
   Provider,
   Category,
+  Profile,
 } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -17,6 +18,7 @@ interface QueryData {
   products: { products: ProductConnection };
   provider: { provider: Provider };
   regions: { regions: RegionConnection };
+  profile: { profile: Profile };
 }
 
 interface CreateGraphqlFetch {

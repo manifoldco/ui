@@ -21,14 +21,6 @@ interface ErrorMessage {
   resourceLabel?: string;
 }
 
-interface Profile {
-  id: string;
-}
-
-interface ProfileMessage {
-  profile: Profile;
-}
-
 const query = gql`
   query ProfileId {
     profile {
@@ -191,7 +183,7 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const { data } = await this.graphqlFetch<ProfileMessage>({ query });
+    const { data } = await this.graphqlFetch<'profile'>({ query });
 
     if (data) {
       this.ownerId = data.profile.id;
