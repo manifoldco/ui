@@ -177,8 +177,21 @@ export const product: Product = {
   supportEmail: prodMock.body.support_email,
   documentationUrl: prodMock.body.documentation_url,
   termsUrl: prodMock.body.terms.provided && prodMock.body.terms.url ? prodMock.body.terms.url : '',
-  // TODO: Products on a category should be nullable, update when it is
-  categories: [],
+  categories: prodMock.body.tags
+    ? prodMock.body.tags.map(tag => ({
+        __typename: 'Category',
+        label: tag,
+        products: {
+          __typename: 'ProductConnection',
+          edges: [],
+          pageInfo: {
+            __typename: 'PageInfo',
+            hasNextPage: false,
+            hasPreviousPage: false,
+          },
+        },
+      }))
+    : [],
   screenshots: prodMock.body.images.map((image, index) => ({
     __typename: 'ProductScreenshot',
     order: index,
