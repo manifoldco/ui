@@ -8,6 +8,7 @@ import Page from '../components/Page';
 import theme from '../lib/theme';
 import { mockPlans, mockProducts, mockProviders, mockRegions } from '../utils/mockCatalog';
 import { mockResources } from '../utils/mockMarketplace';
+import { mockGraphQl } from '../utils/mockGraphql';
 
 fetchMock.config.fallbackToNetwork = true;
 fetchMock.config.overwriteRoutes = true;
@@ -62,6 +63,8 @@ function HomePage({ data }: HomePageProps) {
   mockRegions(catalogRegions, catalogRegionsRequestDuration);
   // Mock marketplace calls to return fake resource data
   mockResources();
+  // Mock graphql calls to return the real API data
+  mockGraphQl();
 
   return (
     <ThemeProvider theme={theme}>

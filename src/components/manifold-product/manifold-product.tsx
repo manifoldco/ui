@@ -1,19 +1,47 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
+import { Product } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+
+const query = gql`
+  query PRODUCT($productLabel: String!) {
+    product(label: $productLabel) {
+      documentationUrl
+      supportEmail
+      displayName
+      label
+      logoUrl
+      categories {
+        label
+      }
+      termsUrl
+      valueProps {
+        header
+        body
+      }
+      tagline
+      screenshots {
+        url
+        order
+      }
+      provider {
+        displayName
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
-  @State() product?: Catalog.Product;
-  @State() provider?: Catalog.Provider;
+  @State() product?: Product;
   @Watch('productLabel') productChange(newLabel: string) {
     this.fetchProduct(newLabel);
   }
@@ -25,30 +53,23 @@ export class ManifoldProduct {
   }
 
   fetchProduct = async (productLabel: string) => {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    this.product = undefined;
-    const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
-      service: 'catalog',
-      endpoint: `/products/?label=${productLabel}`,
+    const variables = { productLabel };
+    const { data } = await this.graphqlFetch<'product'>({
+      query,
+      variables,
     });
 
-    if (productResp && productResp.length) {
-      this.product = productResp[0]; // eslint-disable-line prefer-destructuring
-
-      this.provider = await this.restFetch<Catalog.Provider>({
-        service: 'catalog',
-        endpoint: `/providers/${this.product.body.provider_id}`,
-      });
-    }
+    this.product = data ? data.product : undefined;
   };
 
   @logger()
   render() {
     return (
-      <manifold-product-page product={this.product} provider={this.provider}>
+      <manifold-product-page product={this.product}>
         <manifold-forward-slot slot="cta">
           <slot name="cta" />
         </manifold-forward-slot>
@@ -57,4 +78,4 @@ export class ManifoldProduct {
   }
 }
 
-Tunnel.injectProps(ManifoldProduct, ['restFetch']);
+Tunnel.injectProps(ManifoldProduct, ['graphqlFetch']);

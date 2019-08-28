@@ -1,5 +1,4 @@
-import jawsdbMock from '../../spec/mock/jawsdb/product.json';
-import jawsdbProvider from '../../spec/mock/jawsdb/provider.json';
+import jawsdbMock from '../../spec/mock/jawsdb/graphqlProduct.json';
 
 import fromJSON from '../../spec/mock/fromJSON';
 
@@ -14,7 +13,6 @@ export const skeleton = () => {
 export const jawsDB = () => {
   const productPage = document.createElement('manifold-product-page');
   productPage.product = fromJSON(jawsdbMock);
-  productPage.provider = fromJSON(jawsdbProvider);
 
   const buttonWrapper = document.createElement('div');
   buttonWrapper.style.width = '100%';
