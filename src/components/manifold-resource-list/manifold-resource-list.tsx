@@ -112,7 +112,7 @@ export class ManifoldResourceList {
       endpoint: `/resources/?me`,
     });
 
-    const fetchProducts = this.graphqlFetch<Query>({
+    const fetchProducts = this.graphqlFetch<'products'>({
       query: gql`
         query PRODUCT_LOGOS {
           products(first: 500) {
@@ -148,11 +148,7 @@ export class ManifoldResourceList {
     // Can continue without product logos if necessary.
     if (operationsResp && resourcesResp) {
       const products =
-        (productsResp &&
-          productsResp.data &&
-          productsResp.data.products &&
-          productsResp.data.products.edges) ||
-        [];
+        (productsResp && productsResp.data && productsResp.data.products.edges) || [];
 
       const userResource = ManifoldResourceList.userResources(resourcesResp);
 

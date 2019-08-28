@@ -1,6 +1,23 @@
 import { EventEmitter } from '@stencil/core';
+import {
+  CategoryConnection,
+  ProductConnection,
+  Product,
+  RegionConnection,
+  Provider,
+  Category,
+} from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
+
+interface QueryData {
+  category: { category: Category };
+  categories: { categories: CategoryConnection };
+  product: { product: Product };
+  products: { products: ProductConnection };
+  provider: { provider: Provider };
+  regions: { regions: RegionConnection };
+}
 
 interface CreateGraphqlFetch {
   endpoint?: string;
@@ -20,12 +37,14 @@ interface GraphqlError {
   path?: string;
 }
 
-export interface GraphqlResponseBody<T> {
-  data: T | null;
+export interface GraphqlResponseBody<T extends keyof QueryData> {
+  data: QueryData[T] | null;
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = <T extends keyof QueryData>(
+  args: GraphqlArgs
+) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   endpoint = 'https://api.manifold.co/graphql',
@@ -34,7 +53,7 @@ export function createGraphqlFetch({
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateGraphqlFetch): GraphqlFetch {
-  async function graphqlFetch<T>(
+  async function graphqlFetch<T extends keyof QueryData>(
     args: GraphqlArgs,
     attempts: number
   ): Promise<GraphqlResponseBody<T>> {
