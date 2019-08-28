@@ -1,4 +1,4 @@
-import { newSpecPage } from '@stencil/core/testing';
+import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { Product, ExpandedPlan } from '../../spec/mock/catalog';
@@ -10,83 +10,72 @@ import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const graphqlEndpoint = 'http://test.com/graphql';
-
-async function setup({
-  graphqlFetch = createGraphqlFetch({
-    endpoint: graphqlEndpoint,
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  }),
-  ownerId,
-  planLabel,
-  productLabel,
-  restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  }),
-  resourceLabel,
-}: {
-  ownerId?: string;
-  productLabel?: string;
-  planLabel?: string;
-  graphqlFetch?: any;
-  resourceLabel?: string;
-  restFetch?: any;
-}) {
-  const page = await newSpecPage({
-    components: [ManifoldDataProvisionButton],
-    html: '<div></div>',
-  });
-
-  const component = page.doc.createElement('manifold-data-provision-button');
-  if (ownerId) component.ownerId = ownerId;
-  component.graphqlFetch = graphqlFetch;
-  component.planLabel = planLabel;
-  component.productLabel = productLabel;
-  component.resourceLabel = resourceLabel;
-  component.restFetch = restFetch;
-
-  if (!page.root) throw new Error('<manifold-data-provision-button> not found in document');
-  page.root.appendChild(component);
-  await page.waitForChanges();
-  return { page, component };
-}
+const profile = { profile: { id: '1234' } };
+const resourceId = 'abcdefghijklmnopqrstuvwxyz123';
 
 describe('<manifold-data-provision-button>', () => {
-  const profile = { profile: { id: '1234' } };
-  const resourceId = 'abcdefghijklmnopqrstuvwxyz123';
+  let page: SpecPage;
+  let element: HTMLManifoldDataProvisionButtonElement;
 
-  fetchMock.mock(graphqlEndpoint, { data: { profile } });
-  fetchMock.mock(/\/products\//, [Product]);
-  fetchMock.mock(/\/plans\//, [ExpandedPlan]);
-  fetchMock.mock(/\/resource\//, (_: any, req) => {
-    const { label } = JSON.parse(req.body as string);
-    return label.includes('error')
-      ? { status: 500, body: { message: 'provision failed' } }
-      : {
-          status: 200,
-          body: {
-            created_at: '2019-01-01 00:00:00',
-            id: resourceId,
-            label,
-          },
-        };
+  beforeEach(async () => {
+    page = await newSpecPage({
+      components: [ManifoldDataProvisionButton],
+      html: `<div></div>`,
+    });
+    element = page.doc.createElement('manifold-data-provision-button');
+    element.graphqlFetch = createGraphqlFetch({
+      endpoint: graphqlEndpoint,
+      getAuthToken: jest.fn(() => '1234'),
+      wait: 10,
+      setAuthToken: jest.fn(),
+    });
+    element.restFetch = createRestFetch({
+      getAuthToken: jest.fn(() => '1234'),
+      wait: 10,
+      setAuthToken: jest.fn(),
+    });
+
+    fetchMock.reset();
+
+    fetchMock.mock(graphqlEndpoint, profile);
+    fetchMock.mock(/\/products\//, [Product]);
+    fetchMock.mock(/\/plans\//, [ExpandedPlan]);
+    fetchMock.mock(/\/resource\//, (_: any, req) => {
+      const { label } = JSON.parse(req.body as string);
+      return label.includes('error')
+        ? { status: 500, body: { message: 'provision failed' } }
+        : {
+            status: 200,
+            body: {
+              created_at: '2019-01-01 00:00:00',
+              id: resourceId,
+              label,
+            },
+          };
+    });
   });
 
   beforeEach(() => fetchMock.resetHistory());
 
   describe('v0 API', () => {
     it('[owner-id]: fetches if missing', async () => {
-      await setup({ productLabel: 'test', planLabel: 'test' });
+      element.productLabel = 'test';
+      element.planLabel = 'test';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
     });
 
     it('[owner-id]: doesn’t fetch if set', async () => {
-      const { page } = await setup({ ownerId: '5678', productLabel: 'test', planLabel: 'test' });
-      const provisionButton =
-        page.root && page.root.querySelector('manifold-data-provision-button');
+      element.ownerId = '5678';
+      element.productLabel = 'test';
+      element.planLabel = 'test';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
+
+      const provisionButton = root.querySelector('manifold-data-provision-button');
       if (!provisionButton) {
         throw new Error('provision button not found');
       }
@@ -97,7 +86,12 @@ describe('<manifold-data-provision-button>', () => {
 
     it('[plan-label]: fetches by plan label if specified', async () => {
       const planLabel = 'test-plan';
-      await setup({ ownerId: 'test-owner', productLabel: 'test-product', planLabel });
+      element.ownerId = 'test-owner';
+      element.productLabel = 'test-product';
+      element.planLabel = planLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
       expect(
         fetchMock.called(
@@ -108,9 +102,12 @@ describe('<manifold-data-provision-button>', () => {
 
     it('[product-label]: fetches product by label', async () => {
       const productLabel = 'test-product';
-      const { page } = await setup({ productLabel });
-      const provisionButton =
-        page.root && page.root.querySelector('manifold-data-provision-button');
+      element.productLabel = productLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
+
+      const provisionButton = root.querySelector('manifold-data-provision-button');
       if (!provisionButton) {
         throw new Error('provision button not found');
       }
@@ -124,7 +121,8 @@ describe('<manifold-data-provision-button>', () => {
     });
 
     it('[product-label]: doesn’t fetch if missing', async () => {
-      await setup({});
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
       expect(fetchMock.called(/\/products\//)).toBe(false);
     });
   });
@@ -135,10 +133,17 @@ describe('<manifold-data-provision-button>', () => {
       const resourceLabel = 'click-resource';
 
       const mockClick = jest.fn();
-      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+      element.ownerId = 'owner-id';
+      element.productLabel = productLabel;
+      element.resourceLabel = resourceLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const button = page.root && page.root.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      const button = root.querySelector('button');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       // listen for event and fire
       page.doc.addEventListener('manifold-provisionButton-click', mockClick);
@@ -160,9 +165,14 @@ describe('<manifold-data-provision-button>', () => {
       const resourceLabel = 'x';
 
       const mockClick = jest.fn();
-      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+      element.ownerId = 'owner-id';
+      element.productLabel = productLabel;
+      element.resourceLabel = resourceLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const button = page.root && page.root.querySelector('button');
+      const button = root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
       }
@@ -188,9 +198,14 @@ describe('<manifold-data-provision-button>', () => {
       const productLabel = 'click-product';
 
       const mockClick = jest.fn();
-      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+      element.ownerId = 'owner-id';
+      element.productLabel = productLabel;
+      element.resourceLabel = resourceLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const button = page.root && page.root.querySelector('button');
+      const button = root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
       }
@@ -215,10 +230,14 @@ describe('<manifold-data-provision-button>', () => {
     it('error', async () => {
       const resourceLabel = 'error-resource';
       const productLabel = 'error-product';
+      element.ownerId = 'owner-id';
+      element.productLabel = productLabel;
+      element.resourceLabel = resourceLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
-
-      const button = page.root && page.root.querySelector('button');
+      const button = root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
       }
@@ -247,9 +266,14 @@ describe('<manifold-data-provision-button>', () => {
       const resourceLabel = 'success-resource';
       const productLabel = 'success-product';
 
-      const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
+      element.ownerId = 'owner-id';
+      element.productLabel = productLabel;
+      element.resourceLabel = resourceLabel;
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-      const button = page.root && page.root.querySelector('button');
+      const button = root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
       }
