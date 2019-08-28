@@ -87,7 +87,9 @@ describe('<manifold-data-provision-button>', () => {
       const { page } = await setup({ ownerId: '5678', productLabel: 'test', planLabel: 'test' });
       const provisionButton =
         page.root && page.root.querySelector('manifold-data-provision-button');
-      if (!provisionButton) throw new Error('provision button not found');
+      if (!provisionButton) {
+        throw new Error('provision button not found');
+      }
 
       expect(fetchMock.called(graphqlEndpoint)).toBe(false);
       expect(provisionButton.ownerId).toEqual('5678');
@@ -109,7 +111,9 @@ describe('<manifold-data-provision-button>', () => {
       const { page } = await setup({ productLabel });
       const provisionButton =
         page.root && page.root.querySelector('manifold-data-provision-button');
-      if (!provisionButton) throw new Error('provision button not found');
+      if (!provisionButton) {
+        throw new Error('provision button not found');
+      }
 
       expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
         true
@@ -159,7 +163,9 @@ describe('<manifold-data-provision-button>', () => {
       const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       // listen for event and fire
       page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
@@ -185,7 +191,9 @@ describe('<manifold-data-provision-button>', () => {
       const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       // listen for event and fire
       page.doc.addEventListener('manifold-provisionButton-invalid', mockClick);
@@ -211,7 +219,9 @@ describe('<manifold-data-provision-button>', () => {
       const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       const mockClick = jest.fn();
       await new Promise(resolve => {
@@ -240,7 +250,9 @@ describe('<manifold-data-provision-button>', () => {
       const { page } = await setup({ ownerId: 'owner-id', productLabel, resourceLabel });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       const mockClick = jest.fn();
       await new Promise(resolve => {

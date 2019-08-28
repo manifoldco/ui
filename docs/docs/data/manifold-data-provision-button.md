@@ -27,7 +27,7 @@ listening from events from the [plan selector](#manifold-plan-selector) componen
 like so:
 
 ```js
-const userId = ''; // optional, but providing will save a request
+const userId = ''; // Note: Can be omitted, will be fetched automatically.
 const resourceLabel = ''; // Can be obtained from your own input
 
 function updateButton({ detail: { features, planLabel, productLabel, regionId } }) {
