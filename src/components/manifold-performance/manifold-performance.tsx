@@ -40,12 +40,13 @@ export class ManifoldPerformance {
     }
     if (!this.ddLogs) {
       this.logQueue.push(e);
+      return;
+    }
+
+    if (e.type === 'manifold-error' || (e.type === 'receiveManifoldToken' && e.detail.error)) {
+      this.ddLogs.logger.error(e.type, { type: e.type, ...e.detail });
     } else {
-      if (e.type === 'manifold-error' || (e.type === 'receiveManifoldToken' && e.detail.error)) {
-        this.ddLogs.logger.error(e.type, { type: e.type, ...e.detail });
-      } else {
-        this.ddLogs.logger.info(e.type, { type: e.type, ...e.detail });
-      }
+      this.ddLogs.logger.info(e.type, { type: e.type, ...e.detail });
     }
   };
 
