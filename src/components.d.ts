@@ -101,6 +101,10 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataGetCredentialsButton {
+    /**
+    * Sets if the credentials should be copied to clipboard in addition to being sent in a dom event.
+    */
+    'copyToClipboard': boolean;
     'loading'?: boolean;
     /**
     * The id of the resource to fetch credentials for
@@ -1151,6 +1155,10 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataGetCredentialsButton extends JSXBase.HTMLAttributes<HTMLManifoldDataGetCredentialsButtonElement> {
+    /**
+    * Sets if the credentials should be copied to clipboard in addition to being sent in a dom event.
+    */
+    'copyToClipboard'?: boolean;
     'loading'?: boolean;
     'onManifold-getCredentialsButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-getCredentialsButton-error'?: (event: CustomEvent<any>) => void;

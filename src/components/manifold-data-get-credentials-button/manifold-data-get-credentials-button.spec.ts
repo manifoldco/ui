@@ -211,7 +211,7 @@ describe('<manifold-data-get-credentials-button>', () => {
       );
     });
 
-    it('success', async () => {
+    it('success with copy to clipboard', async () => {
       fetchMock.mock(`path:/v1/credentials/`, [Credential]);
 
       if (!page.root) {
@@ -220,6 +220,7 @@ describe('<manifold-data-get-credentials-button>', () => {
 
       const resourceLabel = 'success-label';
       element.resourceLabel = resourceLabel;
+      element.copyToClipboard = true;
       page.root.appendChild(element);
       await page.waitForChanges();
 
@@ -243,7 +244,7 @@ describe('<manifold-data-get-credentials-button>', () => {
             message: `successfully obtained the credentials for ${resourceLabel}`,
             resourceLabel,
             resourceId: Resource.id,
-            credentials: [Credential],
+            credentials: Credential.body.values,
           },
         })
       );

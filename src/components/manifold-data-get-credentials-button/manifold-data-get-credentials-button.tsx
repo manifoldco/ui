@@ -14,7 +14,7 @@ interface SuccessMessage {
   message: string;
   resourceLabel: string;
   resourceId?: string;
-  credentials?: Marketplace.Credential[];
+  credentials?: { [s: string]: string };
 }
 
 interface ErrorMessage {
@@ -32,6 +32,8 @@ export class ManifoldDataGetCredentialsButton {
   @Prop() resourceLabel?: string;
   /** The id of the resource to fetch credentials for */
   @Prop({ mutable: true }) resourceId?: string = '';
+  /** Sets if the credentials should be copied to clipboard in addition to being sent in a dom event. */
+  @Prop() copyToClipboard: boolean = false;
   @Prop() loading?: boolean = false;
   @Event({ eventName: 'manifold-getCredentialsButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-getCredentialsButton-error', bubbles: true }) error: EventEmitter;
@@ -72,13 +74,27 @@ export class ManifoldDataGetCredentialsButton {
         endpoint: `/credentials/?resource_id=${this.resourceId}`,
       });
 
+      let credentials: { [s: string]: string } = {};
+      if (response) {
+        response.forEach(cred => {
+          credentials = {
+            ...credentials,
+            ...cred.body.values,
+          };
+        });
+      }
+
       const success: SuccessMessage = {
         message: `successfully obtained the credentials for ${this.resourceLabel}`,
-        credentials: response,
+        credentials,
         resourceLabel: this.resourceLabel || '',
         resourceId: this.resourceId,
       };
       this.success.emit(success);
+
+      if (this.copyToClipboard) {
+        this.sendToClipboard(credentials);
+      }
     } catch (e) {
       const error: ErrorMessage = {
         message: e.message,
@@ -107,6 +123,18 @@ export class ManifoldDataGetCredentialsButton {
     }
 
     this.resourceId = response[0].id;
+  }
+
+  sendToClipboard(credentials: { [s: string]: string }): void {
+    const textArea = document.createElement('textarea');
+    textArea.innerHTML = Object.entries(credentials)
+      .reduce((accumulator: string, cred) => `${accumulator}\n${cred[0]}: ${cred[1]}`, '')
+      .trimLeft();
+
+    this.el.appendChild(textArea);
+    textArea.select();
+    console.log('Copying to clipboard', textArea.innerHTML);
+    this.el.removeChild(textArea);
   }
 
   @logger()
