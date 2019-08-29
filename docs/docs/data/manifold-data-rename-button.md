@@ -1,12 +1,12 @@
 ---
-title: 🔒 Rename Button
-path: /data/rename-button
+title: "\U0001F512 Rename Button"
+path: "/data/rename-button"
 example: |
   <manifold-data-rename-button resource-label="my-resource">
     Rename resource
-  </manifold-data-provision-button>
----
+  </manifold-data-rename-button>
 
+---
 # 🔒 Rename Button
 
 An unstyled button for renaming resources. 🔒 Requires authentication.
