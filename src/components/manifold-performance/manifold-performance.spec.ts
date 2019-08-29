@@ -32,7 +32,7 @@ describe('<manifold-performance>', () => {
       message: 'error test',
     });
   });
-  it.only('queues events and logs them once DataDog is available', async () => {
+  it('queues events and logs them once DataDog is available', async () => {
     const page = await newSpecPage({
       components: [ManifoldPerformance],
       html: `<manifold-performance></manifold-performance>`,
