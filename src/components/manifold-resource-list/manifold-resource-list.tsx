@@ -1,10 +1,11 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import { Marketplace } from '../../types/marketplace';
-import { Catalog } from '../../types/catalog';
 import { Provisioning } from '../../types/provisioning';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 interface FoundResource {
@@ -12,6 +13,7 @@ interface FoundResource {
   label: string;
   name: string;
   logo?: string;
+  logoLabel?: string;
   status: string;
 }
 
@@ -36,6 +38,8 @@ const TRANSFER = 'transfer';
 })
 export class ManifoldResourceList {
   @Element() el: HTMLElement;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   /** Disable auto-updates? */
@@ -92,104 +96,134 @@ export class ManifoldResourceList {
   }
 
   async fetchResources() {
-    if (!this.restFetch) {
+    if (!this.restFetch || !this.graphqlFetch) {
       return;
     }
 
     // TODO: All this will be removed when graphql comes in
-    const operationsResp = await this.restFetch<Provisioning.Operation[]>({
+    const fetchOperations = this.restFetch<Provisioning.Operation[]>({
       service: 'provisioning',
       endpoint: `/operations/?is_deleted=false`,
     });
 
-    if (operationsResp) {
-      const productsResp = await this.restFetch<Catalog.Product[]>({
-        service: 'catalog',
-        endpoint: `/products`,
-      });
+    const fetchResources = this.restFetch<Marketplace.Resource[]>({
+      service: 'marketplace',
+      endpoint: `/resources/?me`,
+    });
 
-      const resourcesResp = await this.restFetch<Marketplace.Resource[]>({
-        service: 'marketplace',
-        endpoint: `/resources/?me`,
-      });
-
-      if (resourcesResp && Array.isArray(productsResp)) {
-        const userResource = ManifoldResourceList.userResources(resourcesResp);
-
-        const resources: FoundResource[] = [];
-        // First, do a run through of the operations to add any resource not covered by one or in the process of being modified by one
-        operationsResp
-          .filter((op: Provisioning.Operation) =>
-            [PROVISION, RESIZE, TRANSFER, DEPROVISION].includes(op.body.type)
-          )
-          .forEach((operation: Provisioning.Operation) => {
-            const opBody:
-              | Provisioning.provision
-              | Provisioning.resize
-              | Provisioning.transfer
-              | Provisioning.deprovision = operation.body;
-
-            // Don't run this code if the operation is done, fallback to the simpler resource code.
-            if (opBody.state === 'done') {
-              return;
+    const fetchProducts = this.graphqlFetch<'products'>({
+      query: gql`
+        query PRODUCT_LOGOS {
+          products(first: 500) {
+            edges {
+              node {
+                id
+                displayName
+                logoUrl
+              }
             }
+          }
+        }
+      `,
+    });
 
-            const resource = userResource.find(
-              (res: RealResource) => opBody.resource_id === res.id
-            );
+    let operationsResp;
+    let resourcesResp;
+    let productsResp;
+    try {
+      [operationsResp, resourcesResp, productsResp] = await Promise.all([
+        fetchOperations,
+        fetchResources,
+        fetchProducts,
+      ]);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      if (productsResp && productsResp.errors) {
+        console.error(productsResp.errors);
+      }
+    }
 
-            if (resource) {
-              const product = productsResp.find(
-                (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
-              );
+    // Can continue without product logos if necessary.
+    if (operationsResp && resourcesResp) {
+      const products =
+        (productsResp && productsResp.data && productsResp.data.products.edges) || [];
 
-              resources.push({
-                id: resource.id,
-                label: resource.body.label,
-                name: resource.body.name,
-                logo: product && product.body.logo_url,
-                status: ManifoldResourceList.opStateToStatus(operation),
-              });
-              return;
-            }
-            if (operation.body.type !== PROVISION) {
-              // Only provision operation without a resource should be processed
-              return;
-            }
-            const product = productsResp.find(
-              (prod: Catalog.Product): boolean =>
-                prod.id === (opBody as Provisioning.provision).product_id
-            );
-            resources.push({
-              id: opBody.resource_id || '',
-              // Only the provision operation has this info
-              label: (opBody as Provisioning.provision).label || '',
-              name: (opBody as Provisioning.provision).name || '',
-              logo: product && product.body.logo_url,
-              status: ManifoldResourceList.opStateToStatus(operation),
-            });
-          });
+      const userResource = ManifoldResourceList.userResources(resourcesResp);
 
-        // Then run through all the real resource and add them as available if they weren't added by an operation
-        userResource.forEach((resource: RealResource) => {
-          if (resources.find((res: FoundResource) => res.id === resource.id)) {
+      const resources: FoundResource[] = [];
+      // First, do a run through of the operations to add any resource not covered by one or in the process of being modified by one
+      operationsResp
+        .filter((op: Provisioning.Operation) =>
+          [PROVISION, RESIZE, TRANSFER, DEPROVISION].includes(op.body.type)
+        )
+        .forEach((operation: Provisioning.Operation) => {
+          const opBody:
+            | Provisioning.provision
+            | Provisioning.resize
+            | Provisioning.transfer
+            | Provisioning.deprovision = operation.body;
+
+          // Don't run this code is the operation is done, fallback to the simpler resource code.
+          if (opBody.state === 'done') {
             return;
           }
 
-          const product = productsResp.find(
-            (prod: Catalog.Product): boolean => prod.id === resource.body.product_id
+          const resource = userResource.find((res: RealResource) => opBody.resource_id === res.id);
+
+          if (resource) {
+            const product = products.find(
+              (prod): boolean => prod.node.id === resource.body.product_id
+            );
+
+            resources.push({
+              id: resource.id,
+              label: resource.body.label,
+              name: resource.body.name,
+              logo: product ? product.node.logoUrl : undefined,
+              logoLabel: product ? product.node.displayName : undefined,
+              status: ManifoldResourceList.opStateToStatus(operation),
+            });
+            return;
+          }
+          if (operation.body.type !== PROVISION) {
+            // Only provision operation without a resource should be processed
+            return;
+          }
+          const product = products.find(
+            (prod): boolean => prod.node.id === (opBody as Provisioning.provision).product_id
           );
+
           resources.push({
-            id: resource.id,
-            label: resource.body.label,
-            name: resource.body.name,
-            logo: product && product.body.logo_url,
-            status: 'available',
+            id: opBody.resource_id || '',
+            // Only the provision operation has this info
+            label: (opBody as Provisioning.provision).label || '',
+            name: (opBody as Provisioning.provision).name || '',
+            logo: product ? product.node.logoUrl : undefined,
+            logoLabel: product ? product.node.displayName : undefined,
+            status: ManifoldResourceList.opStateToStatus(operation),
           });
         });
 
-        this.resources = resources.sort((a, b) => a.label.localeCompare(b.label));
-      }
+      // Then run through all the real resource and add them as available if they weren't added by an operation
+      userResource.forEach((resource: RealResource) => {
+        if (resources.find((res: FoundResource) => res.id === resource.id)) {
+          return;
+        }
+
+        const product = products.find((prod): boolean => prod.node.id === resource.body.product_id);
+
+        resources.push({
+          id: resource.id,
+          label: resource.body.label,
+          name: resource.body.name,
+          logo: product ? product.node.logoUrl : undefined,
+          logoLabel: product ? product.node.displayName : undefined,
+          status: 'available',
+        });
+      });
+
+      this.resources = resources.sort((a, b) => a.label.localeCompare(b.label));
     } else {
       this.resources = [];
     }
@@ -209,6 +243,7 @@ export class ManifoldResourceList {
                 label={resource.label}
                 name={resource.name}
                 logo={resource.logo}
+                logoLabel={resource.logoLabel}
                 resourceId={resource.id}
                 resourceStatus={resource.status}
                 resourceLinkFormat={this.resourceLinkFormat}
@@ -228,4 +263,4 @@ export class ManifoldResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldResourceList, ['restFetch']);
+Tunnel.injectProps(ManifoldResourceList, ['graphqlFetch', 'restFetch']);
