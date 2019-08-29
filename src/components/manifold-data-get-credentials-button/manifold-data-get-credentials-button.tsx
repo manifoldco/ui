@@ -133,7 +133,6 @@ export class ManifoldDataGetCredentialsButton {
 
     this.el.appendChild(textArea);
     textArea.select();
-    console.log('Copying to clipboard', textArea.innerHTML);
     this.el.removeChild(textArea);
   }
 
