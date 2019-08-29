@@ -1,15 +1,12 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Catalog } from '../../types/catalog';
-import { Product } from '../../spec/mock/catalog';
+import { Product } from '../../types/graphql';
+import { product } from '../../spec/mock/graphql';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
-const productWithoutScreenshots: Catalog.Product = {
-  ...Product,
-  body: {
-    ...Product.body,
-    images: [],
-  },
+const productWithoutScreenshots: Product = {
+  ...product,
+  screenshots: [],
 };
 
 describe(`<manifold-product-details>`, () => {
@@ -20,13 +17,13 @@ describe(`<manifold-product-details>`, () => {
       (elm: any, props: any) => {
         elm.product = props.product;
       },
-      { product: Product }
+      { product }
     );
     await page.waitForChanges();
 
     const element = await page.find('manifold-product-details >>> .tagline');
     const value = await element.innerText;
-    expect(value).toBe(Product.body.tagline);
+    expect(value).toBe(product.tagline);
   });
 
   it('display screenshots section when there are no images', async () => {
@@ -36,7 +33,7 @@ describe(`<manifold-product-details>`, () => {
       (elm: any, props: any) => {
         elm.product = props.product;
       },
-      { product: Product }
+      { product }
     );
     await page.waitForChanges();
 

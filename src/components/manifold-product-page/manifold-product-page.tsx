@@ -1,6 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 import { arrow_up_right, book, life_buoy, file_text } from '@manifoldco/icons';
-import { Catalog } from '../../types/catalog';
+import { Product } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
 import logger from '../../utils/logger';
@@ -11,30 +11,27 @@ import logger from '../../utils/logger';
   shadow: true,
 })
 export class ManifoldProductPage {
-  @Prop() product?: Catalog.Product;
-  @Prop() provider?: Catalog.Provider;
+  @Prop() product?: Product;
 
   get providerName() {
-    if (!this.product || !this.provider) {
+    if (!this.product) {
       return undefined;
     }
-    return (
-      (this.provider.body.name !== this.product.body.name && this.provider.body.name) || undefined
-    );
+    return this.product.provider && this.product.provider.displayName;
   }
 
   @logger()
   render() {
     if (this.product) {
       const {
-        documentation_url,
-        support_email,
-        name,
+        documentationUrl,
+        supportEmail,
+        displayName,
         label,
-        logo_url,
-        tags,
-        terms,
-      } = this.product.body;
+        logoUrl,
+        categories,
+        termsUrl,
+      } = this.product;
       const gradient = `var(--manifold-g-${label}, var(--manifold-g-default))`;
 
       return (
@@ -43,10 +40,10 @@ export class ManifoldProductPage {
             <aside class="sidebar">
               <div class="sidebar-card" style={{ '--background-gradient': gradient }}>
                 <div class="product-logo">
-                  <img src={logo_url} alt={name} itemprop="logo" />
+                  <img src={logoUrl} alt={displayName} itemprop="logo" />
                 </div>
                 <h2 class="product-name" itemprop="name">
-                  {name}
+                  {displayName}
                 </h2>
                 <p class="provider-name">
                   {this.providerName && <span itemprop="brand">from {this.providerName}</span>}
@@ -55,16 +52,19 @@ export class ManifoldProductPage {
               <div class="sidebar-cta">
                 <slot name="cta" />
               </div>
-              {tags && (
+              {categories && (
                 <div class="sidebar-section">
                   <h4>Category</h4>
-                  {tags.map(tag => (
-                    <div class="category" style={{ '--categoryColor': `var(--manifold-c-${tag})` }}>
+                  {categories.map(category => (
+                    <div
+                      class="category"
+                      style={{ '--categoryColor': `var(--manifold-c-${category.label})` }}
+                    >
                       <manifold-icon
-                        icon={categoryIcon[tag] || categoryIcon.uncategorized}
+                        icon={categoryIcon[category.label] || categoryIcon.uncategorized}
                         margin-right
                       />
-                      {tag}
+                      {category.label}
                     </div>
                   ))}
                 </div>
@@ -72,22 +72,22 @@ export class ManifoldProductPage {
               <div class="sidebar-section">
                 <h4>Links</h4>
                 <div class="provider-link">
-                  <a href={documentation_url} target="_blank" rel="noopener noreferrer">
+                  <a href={documentationUrl} target="_blank" rel="noopener noreferrer">
                     <manifold-icon icon={book} margin-right />
                     Docs
                     <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
                   </a>
                 </div>
                 <div class="provider-link">
-                  <a href={`mailto:${support_email}`} target="_blank" rel="noopener noreferrer">
+                  <a href={`mailto:${supportEmail}`} target="_blank" rel="noopener noreferrer">
                     <manifold-icon icon={life_buoy} margin-right />
                     Support
                     <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />
                   </a>
                 </div>
-                {terms.provided && (
+                {termsUrl && (
                   <div class="provider-link">
-                    <a href={terms.url} target="_blank" rel="noopener noreferrer">
+                    <a href={termsUrl} target="_blank" rel="noopener noreferrer">
                       <manifold-icon icon={file_text} margin-right />
                       Terms of service
                       <manifold-icon class="external-link-icon" icon={arrow_up_right} margin-left />

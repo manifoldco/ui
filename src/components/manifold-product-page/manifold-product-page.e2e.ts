@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Product } from '../../spec/mock/catalog';
+import { product } from '../../spec/mock/graphql';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
@@ -11,12 +11,12 @@ describe('<manifold-product-page>', () => {
       (elm: any, props: any) => {
         elm.product = props.product;
       },
-      { product: Product }
+      { product }
     );
     await page.waitForChanges();
 
     const el = await page.find('manifold-product-page >>> [itemprop="name"]');
-    expect(el.innerText).toBe(Product.body.name);
+    expect(el.innerText).toBe(product.displayName);
   });
 
   it('displays the product/service logo', async () => {
@@ -26,11 +26,11 @@ describe('<manifold-product-page>', () => {
       (elm: any, props: any) => {
         elm.product = props.product;
       },
-      { product: Product }
+      { product }
     );
     await page.waitForChanges();
 
     const el = await page.find('manifold-product-page >>> [itemprop="logo"]');
-    expect(el.getAttribute('src')).toBe(Product.body.logo_url);
+    expect(el.getAttribute('src')).toBe(product.logoUrl);
   });
 });

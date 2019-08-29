@@ -25,6 +25,9 @@ import {
   GraphqlFetch,
 } from './utils/graphqlFetch';
 import {
+  Product,
+} from './types/graphql';
+import {
   Option,
 } from './types/Select';
 
@@ -441,20 +444,19 @@ export namespace Components {
   }
   interface ManifoldProduct {
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldProductDetails {
-    'product'?: Catalog.Product;
+    'product'?: Product;
   }
   interface ManifoldProductPage {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
+    'product'?: Product;
   }
   interface ManifoldRegionSelector {
     'allowedRegions': string[];
@@ -1503,20 +1505,19 @@ declare namespace LocalJSX {
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
-    'product'?: Catalog.Product;
+    'product'?: Product;
   }
   interface ManifoldProductPage extends JSXBase.HTMLAttributes<HTMLManifoldProductPageElement> {
-    'product'?: Catalog.Product;
-    'provider'?: Catalog.Provider;
+    'product'?: Product;
   }
   interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
     'allowedRegions'?: string[];
