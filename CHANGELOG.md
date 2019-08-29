@@ -10,17 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added an events queue to `<manifold-performance>` to capture any performance events emitted before DataDog is ready.
+- Added more event data & testing for `<manifold-data-provision-button>`.
 
 ### Fixed
 
 - Fixed a typo in manifold-data-deprovision-button documentation
 
-
 ### Changed
 
 - Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs.
 - Changed the `manifold-product` component to now use the GraphQL API rather than the REST API.
-
 
 ## [v0.5.8]
 
