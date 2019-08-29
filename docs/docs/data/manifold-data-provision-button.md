@@ -23,7 +23,7 @@ An unstyled button for provisioning resources. 🔒 Requires authentication.
 ## Using with Plan Selector
 
 This component needs a lot of information to do its job. For that reason, we recommend relying on
-listening from events from the [plan selector](#manifold-plan-selector) component. You could do that
+listening for events from the [plan selector](#manifold-plan-selector) component. You could do that
 like so:
 
 ```js
