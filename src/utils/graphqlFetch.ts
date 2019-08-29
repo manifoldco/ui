@@ -1,6 +1,25 @@
 import { EventEmitter } from '@stencil/core';
-import { hasExpired } from './expiry';
+import {
+  CategoryConnection,
+  ProductConnection,
+  Product,
+  RegionConnection,
+  Provider,
+  Category,
+  Profile,
+} from '../types/graphql';
 import { report } from './errorReport';
+import { waitForAuthToken } from './auth';
+
+interface QueryData {
+  category: { category: Category };
+  categories: { categories: CategoryConnection };
+  product: { product: Product };
+  products: { products: ProductConnection };
+  provider: { provider: Provider };
+  regions: { regions: RegionConnection };
+  profile: { profile: Profile };
+}
 
 interface CreateGraphqlFetch {
   endpoint?: string;
@@ -11,8 +30,8 @@ interface CreateGraphqlFetch {
 }
 
 type GraphqlArgs =
-  | { mutation: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }
-  | { query: string; variables?: object; isPublic?: boolean; emitter?: EventEmitter }; // require query or mutation, but not both
+  | { mutation: string; variables?: object; emitter?: EventEmitter }
+  | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
 
 interface GraphqlError {
   message: string;
@@ -20,12 +39,14 @@ interface GraphqlError {
   path?: string;
 }
 
-export interface GraphqlResponseBody<T> {
-  data: T | null;
+export interface GraphqlResponseBody<T extends keyof QueryData> {
+  data: QueryData[T] | null;
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = <T extends keyof QueryData>(
+  args: GraphqlArgs
+) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   endpoint = 'https://api.manifold.co/graphql',
@@ -34,26 +55,12 @@ export function createGraphqlFetch({
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateGraphqlFetch): GraphqlFetch {
-  async function graphqlFetch<T>(
+  async function graphqlFetch<T extends keyof QueryData>(
     args: GraphqlArgs,
     attempts: number
   ): Promise<GraphqlResponseBody<T>> {
-    const start = new Date();
     const rttStart = performance.now();
-    const { isPublic, emitter, ...request } = args;
-
-    if (!isPublic) {
-      while (!getAuthToken() && !hasExpired(start, wait)) {
-        // eslint-disable-next-line no-await-in-loop
-        await new Promise(resolve => setTimeout(resolve, 2000));
-      }
-
-      if (!getAuthToken()) {
-        const detail = { message: 'No auth token given' };
-        report(detail);
-        throw new Error(detail.message);
-      }
-    }
+    const { emitter, ...request } = args;
 
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -74,10 +81,12 @@ export function createGraphqlFetch({
     if (response.status === 401) {
       // TODO trigger token refresh for manifold-auth-token
       setAuthToken('');
-      report(response); // report unauthenticated
+      report(body); // report unauthenticated
       if (attempts < retries) {
-        return graphqlFetch(args, attempts + 1);
+        return waitForAuthToken(getAuthToken, wait, () => graphqlFetch(args, attempts + 1));
       }
+
+      throw new Error('Auth token expired');
     }
 
     // handle non-GQL responses from errors

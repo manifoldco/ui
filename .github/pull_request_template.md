@@ -20,5 +20,7 @@
 - [ ] **CHANGELOG**: The **Unreleased** section of CHANGELOG was updated
 - [ ] **Prop changes**: [docs][docs] were updated
 - [ ] **Prop changes**: E2E tests were updated, testing from the highest level possible
+- [ ] **Platform testing**: If this change should be [tested against a platform][platform-testing], has it been?
 
 [docs]: https://ui.sandbox.manifold.co
+[platform-testing]: https://app.gitbook.com/@manifold/s/engineering/playbooks/testing-your-code-against-a-platform

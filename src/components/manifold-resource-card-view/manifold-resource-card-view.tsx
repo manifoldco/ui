@@ -25,6 +25,7 @@ export class ManifoldResourceCardView {
   @Prop() label?: string;
   @Prop() name?: string;
   @Prop() logo?: string;
+  @Prop() logoLabel?: string;
   @Prop() resourceId?: string;
   @Prop() resourceStatus?: string;
   @Prop() resourceLinkFormat?: string;
@@ -101,7 +102,7 @@ export class ManifoldResourceCardView {
         </div>
         <div class="logo">
           {this.logo ? (
-            <manifold-lazy-image src={this.logo} alt={this.label} itemprop="image" />
+            <manifold-lazy-image src={this.logo} alt={this.logoLabel} itemprop="image" />
           ) : (
             <div class="logo-placeholder">
               <manifold-icon icon={resource} />

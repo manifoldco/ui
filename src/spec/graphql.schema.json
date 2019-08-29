@@ -7,7 +7,7 @@
       {
         "kind": "OBJECT",
         "name": "Query",
-        "description": "Queries for the Manifold GraphQL API.",
+        "description": "Queries for the Manifold GraphQL API.\n\nMore details and usage available on the\n[platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).",
         "fields": [
           {
             "name": "provider",
@@ -120,7 +120,7 @@
           },
           {
             "name": "products",
-            "description": "List all availabkle products",
+            "description": "List all available products",
             "args": [
               {
                 "name": "first",
@@ -150,6 +150,25 @@
             "deprecationReason": null
           },
           {
+            "name": "profile",
+            "description": "Look up a profile by `id`, `subject` or based on the currently authenticated profile.\n\nNote: this query can only be performed when authenticated.",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "node",
             "description": "Look up a node by its `id`.",
             "args": [
@@ -169,6 +188,114 @@
               "name": null,
               "ofType": { "kind": "INTERFACE", "name": "Node", "ofType": null }
             },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "resources",
+            "description": "Resources will return a paginated list of resources. It will either contain\nall available resources linked to the token, or it will be filtered down to\nfetch data for the specified profile. The owner can either be a ProfileID or\na Subject ID which represents the ProfileID within a specific Platform.\n\nNote: this is currently only available with a Platform API Token.",
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              },
+              {
+                "name": "owner",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "ResourceConnection", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "resource",
+            "description": "Fetch a resource for the specific label or ID. When authenticated as a\nprofile, this will fetch the resource associated with the profile. If\nauthenticated as a platform, an owner needs to be provided when a label is\nused.\n\nNote: this is currently only available with a Platform API Token.",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+                "defaultValue": null
+              },
+              {
+                "name": "label",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              },
+              {
+                "name": "owner",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "Resource", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "profiles",
+            "description": "Profiles will return a paginated list of profiles for a Platform, optionally\nquerying for only profiles with subscription usage over a provided time.\n\nNote: this is currently only available with a Platform API Token.",
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              },
+              {
+                "name": "withUsage",
+                "description": null,
+                "type": { "kind": "INPUT_OBJECT", "name": "WithUsage", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "ProfileConnection", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "invoice",
+            "description": "Look up an invoice by its `id`.",
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -337,7 +464,10 @@
           { "kind": "OBJECT", "name": "Provider", "ofType": null },
           { "kind": "OBJECT", "name": "Product", "ofType": null },
           { "kind": "OBJECT", "name": "Plan", "ofType": null },
-          { "kind": "OBJECT", "name": "Region", "ofType": null }
+          { "kind": "OBJECT", "name": "Region", "ofType": null },
+          { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+          { "kind": "OBJECT", "name": "LineItem", "ofType": null },
+          { "kind": "OBJECT", "name": "Resource", "ofType": null }
         ]
       },
       {
@@ -2360,6 +2490,1190 @@
               "kind": "NON_NULL",
               "name": null,
               "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "ProfileIdentity",
+        "description": "ProfileIdentity allows fetching a profile by its `id` or\nby its `subject`.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Profile",
+        "description": "Profile represents a consumer in the Manifold system.",
+        "fields": [
+          {
+            "name": "id",
+            "description": "The ID of the profile which is internally used.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "subject",
+            "description": "Subject represents the identifier of the profile on the platform's side.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "platform",
+            "description": "Platform represents the platform this profile belongs to.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Platform", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "invoicePreview",
+            "description": "InvoicePreview represents the preview of the customer’s invoice\nfor the current billing cycle as of midnight UTC.\n\nAn invoice preview consist of the amount due and related details at\na specific moment in time. It does not represent an estimation of the\namount that will be due at the end of the billing cycle.\n\n*This is only an invoice preview. It should not be used to charge users.*\n\nNote: this is currently only available with a Platform API Token.",
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "invoices",
+            "description": "Invoices will return a paginated list of invoices.\n\nNote: this is currently only available with a Platform API Token.",
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": null,
+                "type": { "kind": "INPUT_OBJECT", "name": "InvoiceOrderBy", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "InvoiceConnection", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Platform",
+        "description": "Platform represents one of the platforms on which Manifold has published its\nmarketplace.",
+        "fields": [
+          {
+            "name": "id",
+            "description": "The ID of the Platform for internal usage.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "domain",
+            "description": "The domain associated with the platform.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Invoice",
+        "description": "Invoice represents the total due in a specific billing period.",
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "cost",
+            "description": "Cost is the amount due for the invoice.\n\nThe cost is provided in the currency’s smallest unit.\n\nExample: `1000` is `1000 cents` which is `$10 USD`.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "currency",
+            "description": "Currency is the currency of the `cost` field.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "Currency", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "start",
+            "description": "Start indicates when the invoice's period starts.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "end",
+            "description": "End indicates when the invoice's period ends.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lineItems",
+            "description": "List LineItems composing the invoice.",
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "LineItemConnection", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "Currency",
+        "description": "Currency is the supported currency represented as an ISO currency code.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          { "name": "USD", "description": null, "isDeprecated": false, "deprecationReason": null }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "SCALAR",
+        "name": "Time",
+        "description": "Time represents a point in time formatted as an\n[RFC3339](https://www.ietf.org/rfc/rfc3339.txt) formatted string.\n\nExample: `2009-11-10T23:00:00Z`",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LineItemConnection",
+        "description": "LineItemConnection is the connection between an invoice and its lineItems.",
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "LineItemEdge", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LineItemEdge",
+        "description": "LineItemEdge is an edge of LineItemConnection",
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "LineItem", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "LineItem",
+        "description": "LineItem represents the amount due for a resource.",
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "cost",
+            "description": "Cost is the amount due for the associated resource.\n\nThe cost is provided in the currency’s smallest unit.\n\nExample: `1000` is `1000 cents` which is `$10 USD`.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "currency",
+            "description": "Currency is the currency of the `cost` field.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "Currency", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "duration",
+            "description": "Duration is the time horizon for associated resource’s billing (monthly, yearly)",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "Duration", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "renewalPoint",
+            "description": "RenewalPoint describes the renewal behavior (calendar, anniversary)",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "RenewalPoint", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "chargeTime",
+            "description": "ChargeTime describes the charge behavior (post-paid, pre-paid)",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "ChargeTime", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "resource",
+            "description": "Resource is the resource accociated with this line item.",
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Resource", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "subLineItems",
+            "description": "List SubLineItems composing the line item.",
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "SubLineItemConnection", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "Duration",
+        "description": "Duration is a representation of how long a cycle is.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "MONTHLY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "RenewalPoint",
+        "description": "RenewalPoint is a representation of when the cycle renewal occurs.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CALENDAR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ChargeTime",
+        "description": "ChargeTime is representation of when the charge for a cycle occurs.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "POST_PAID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Resource",
+        "description": "A resource represents the provisioned version of a selected product. It is\nlinked to a plan and has credentials associated with it.",
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayName",
+            "description": " A human readable display name for this resource. ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": " A machine readable label for this resource. It is unique per owner. ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plan",
+            "description": "The plan for which this resource is provisioned. The plan can be null if the\nresource is a custom resource, or if there's a transient failure.",
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Plan", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "owner",
+            "description": "The profile which owns the resource.\n\nNote: if the resource is not owned by a Platform Profile, this will be null.",
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Profile", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "credentials",
+            "description": "A list of credentials which are used to access the Resource",
+            "args": [
+              {
+                "name": "first",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": null,
+                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "CredentialConnection", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CredentialConnection",
+        "description": "CredentialsConnection allows a type to set up a connection to list associated\ncredentials.",
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "CredentialEdge", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CredentialEdge",
+        "description": "CredentialsEdge represents a single item on a Credentials Connection page which\nhas a cursor which can be used for pagination and holds the actual credential\ninformation.",
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Credential", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "Credential",
+        "description": "Credential represents a plain text value for a credential which can be used to\nconfigure a resource.",
+        "fields": [
+          {
+            "name": "key",
+            "description": " The key to which we can reference the credential as. ",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "value",
+            "description": "The plain text value of the credential. This value is the value that can be\nused in the actual configuration for the resource.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SubLineItemConnection",
+        "description": "SubLineItemConnection is the connection between a lineItem and its subLineItems.",
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "SubLineItemEdge", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SubLineItemEdge",
+        "description": "SubLineItemEdge is an edge of SubLineItemConnection",
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "SubLineItem", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "SubLineItem",
+        "description": "SubLineItem represents the break down by base cost, features and metered usage\nof the amount due by resource.",
+        "fields": [
+          {
+            "name": "cost",
+            "description": "Cost is the amount due for the feature.\n\nThe cost is provided in the currency’s smallest unit.\n\nExample: `1000` is `1000 cents` which is `$10 USD`.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "currency",
+            "description": "Currency is the currency of the `cost` field.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "Currency", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "plan",
+            "description": "Plan is the plan associated with the SubLineItem.",
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Plan", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "item",
+            "description": "Item is the feature name (base-cost, or a customized name)",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "description",
+            "description": "Description is the value for the feature, or a metering bucket.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "calculationType",
+            "description": "CalculationType defines the feature’s billing behavior (prorated, usage)",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "CalculationType", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "start",
+            "description": "Start indicates when the feature started to take effect.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "end",
+            "description": "End indicates when the feature stopped to take effect.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CalculationType",
+        "description": "CalculationType are the known calculation types possible for SubLineItems.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "PRORATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "USAGE_TIER",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "InvoiceOrderBy",
+        "description": "InvoiceOrderBy defines how an invoice connection is to be ordered.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "field",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "InvoiceOrderByField", "ofType": null }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "direction",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+            },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "InvoiceOrderByField",
+        "description": "InvoiceOrderByField is a the field by which an Invoice list will be ordered.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "CREATED_AT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "InvoiceConnection",
+        "description": "InvoiceConnection is the connection between an entity and its invoices.",
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "InvoiceEdge", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "InvoiceEdge",
+        "description": "InvoiceEdge is an edge of InvoiceConnection",
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ResourceConnection",
+        "description": "ResourceConnection allows a type to set up a connection to list associated\nresources.",
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "ResourceEdge", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ResourceEdge",
+        "description": "ResourceEdge represents a single item on a Resources Connection page which has\na cursor which can be used for pagination and holds the actual resource\ninformation.",
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": { "kind": "OBJECT", "name": "Resource", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "WithUsage",
+        "description": "WithUsage allows fetching profiles that have been used after the start date,\nbefore the end date or between the start and end date.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "start",
+            "description": "Start allows fetching profiles used after this date",
+            "type": { "kind": "SCALAR", "name": "Time", "ofType": null },
+            "defaultValue": null
+          },
+          {
+            "name": "end",
+            "description": "End allows fetching profiles used before this date",
+            "type": { "kind": "SCALAR", "name": "Time", "ofType": null },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProfileConnection",
+        "description": "ProfileConnection is the connection containing Profile edges",
+        "fields": [
+          {
+            "name": "pageInfo",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "edges",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "OBJECT", "name": "ProfileEdge", "ofType": null }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProfileEdge",
+        "description": "ProfileEdge is the edge of a ProfileConnection",
+        "fields": [
+          {
+            "name": "cursor",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "node",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
             },
             "isDeprecated": false,
             "deprecationReason": null

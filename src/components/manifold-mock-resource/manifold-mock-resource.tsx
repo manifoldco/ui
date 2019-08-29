@@ -949,7 +949,7 @@ export class ManifoldMockResource {
     window.setTimeout(() => {
       this.loading = false;
       this.resource = this.mock;
-    }, 1000);
+    }, 300);
   }
 
   @logger()

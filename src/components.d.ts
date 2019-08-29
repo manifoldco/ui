@@ -482,6 +482,7 @@ export namespace Components {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
+    'logoLabel'?: string;
     'name'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
@@ -519,6 +520,10 @@ export namespace Components {
     'data'?: Gateway.Resource;
   }
   interface ManifoldResourceList {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Disable auto-updates?
     */
@@ -1069,7 +1074,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
     'oauthUrl'?: string;
-    'onManifold-token-receive'?: (event: CustomEvent<any>) => void;
+    'onManifold-token-receive'?: (event: CustomEvent<{ token: string }>) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1540,6 +1545,7 @@ declare namespace LocalJSX {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
+    'logoLabel'?: string;
     'name'?: string;
     'onManifold-resource-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
@@ -1578,6 +1584,10 @@ declare namespace LocalJSX {
     'data'?: Gateway.Resource;
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Disable auto-updates?
     */
