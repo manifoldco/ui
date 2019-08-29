@@ -34,6 +34,10 @@ export class ManifoldPerformance {
   };
 
   logMetric = (e: CustomEvent) => {
+    if (e.type === 'receiveManifoldToken' && !e.detail.token) {
+      // Only log duration if token is defined
+      return;
+    }
     if (e.type === 'receiveManifoldToken') {
       delete e.detail.token;
       delete e.detail.expiry;
