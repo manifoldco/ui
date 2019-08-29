@@ -1,0 +1,13 @@
+---
+label: Preview Page
+hide_body: false
+fields:
+- type: text
+  name: title
+  label: title
+- type: text
+  name: path
+  label: path
+- type: text
+  name: example
+  label: example
