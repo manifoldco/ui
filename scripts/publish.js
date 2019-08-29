@@ -14,7 +14,7 @@ const SELECT_FLAG = /-.*/; // Selects anything after a hyphen, or nothing
 // 1. Read Git tag
 let version;
 try {
-  version = execSync('git describe --abbrev=0 --tags --exact-match')
+  version = execSync('git describe --abbrev=0 --tags')
     .toString()
     .replace('v', '')
     .replace('\n', '');

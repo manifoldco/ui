@@ -23,7 +23,7 @@ FILES_TO_COPY.forEach(file => copySync(resolve(__dirname, '..', file), resolve(W
 // 2. Read Git tag
 let version;
 try {
-  version = execSync('git describe --abbrev=0 --tags --exact-match')
+  version = execSync('git describe --abbrev=0 --tags')
     .toString()
     .replace('v', '')
     .replace('\n', '');
