@@ -1,4 +1,5 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import copy from 'copy-text-to-clipboard';
 
 import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
@@ -93,7 +94,11 @@ export class ManifoldDataGetCredentialsButton {
       this.success.emit(success);
 
       if (this.copyToClipboard) {
-        this.sendToClipboard(credentials);
+        copy(
+          Object.entries(credentials)
+            .reduce((accumulator: string, cred) => `${accumulator}\n${cred[0]}: ${cred[1]}`, '')
+            .trimLeft()
+        );
       }
     } catch (e) {
       const error: ErrorMessage = {
@@ -123,18 +128,6 @@ export class ManifoldDataGetCredentialsButton {
     }
 
     this.resourceId = response[0].id;
-  }
-
-  sendToClipboard(credentials: { [s: string]: string }): void {
-    const textArea = document.createElement('textarea');
-    textArea.innerHTML = Object.entries(credentials)
-      .reduce((accumulator: string, cred) => `${accumulator}\n${cred[0]}: ${cred[1]}`, '')
-      .trimLeft();
-
-    this.el.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    this.el.removeChild(textArea);
   }
 
   @logger()
