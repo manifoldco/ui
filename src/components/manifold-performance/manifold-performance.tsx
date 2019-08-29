@@ -36,7 +36,7 @@ export class ManifoldPerformance {
     if (!this.ddLogs) {
       this.logQueue.push(e);
     } else {
-      this.ddLogs.logger.info(e.type, e.detail);
+      this.ddLogs.logger.info(e.type, { type: e.type, ...e.detail });
     }
   };
 

@@ -29,6 +29,7 @@ describe('<manifold-performance>', () => {
     await page.waitForChanges();
     dispatchEvent(new CustomEvent('manifold-error', { detail: { message: 'error test' } }));
     expect(ddLogs.logger.info).toHaveBeenCalledWith('manifold-error', {
+      type: 'manifold-error',
       message: 'error test',
     });
   });
@@ -45,6 +46,7 @@ describe('<manifold-performance>', () => {
     page.rootInstance.ddLogs = ddLogs;
     await page.waitForChanges();
     expect(ddLogs.logger.info).toHaveBeenCalledWith('manifold-error', {
+      type: 'manifold-error',
       message: 'error message before DD_LOGS is available',
     });
   });
