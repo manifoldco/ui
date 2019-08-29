@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs.
 - Changed the `manifold-product` component to now use the GraphQL API rather than the REST API.
+- Chnaged `manifold-data-product-name` to use GraphQL
 
 ## [v0.5.8]
 

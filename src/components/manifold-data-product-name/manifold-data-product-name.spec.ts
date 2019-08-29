@@ -44,13 +44,13 @@ describe('<manifold-data-product-name>', () => {
           product = { displayName: products.mailgun };
         }
 
-        // if product and querying resource, return resource
+        // if querying resource, return resource
         if (body.includes('resource')) {
           return product
             ? { data: { resource: { plan: { product } } } }
             : { data: null, errors: [{ message: 'resource not found' }] };
         }
-        // otherwise if a product was requested return that
+        // otherwise return product
         return product
           ? { data: { product } }
           : { data: null, errors: [{ message: 'product not found' }] };
