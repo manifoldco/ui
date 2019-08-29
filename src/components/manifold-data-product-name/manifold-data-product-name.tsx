@@ -1,9 +1,8 @@
-import { Component, Prop, State, Element, Watch } from '@stencil/core';
-import gql from '@manifoldco/gql-zero';
+import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Product, Resource } from '../../types/graphql';
 import Tunnel from '../../data/connection';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-product-name' })
@@ -15,6 +14,7 @@ export class ManifoldDataProductName {
   @Prop() productLabel?: string;
   /** Look up product name from resource */
   @Prop() resourceLabel?: string;
+  @State() errors?: GraphqlError[];
   @State() productName?: string;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
@@ -39,10 +39,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const product = await this.graphqlFetch<Product>({
+    const { data, errors } = await this.graphqlFetch<'product'>({
       query: gql`
-        query PRODUCT_NAME {
-          product(label: "$productLabel") {
+        query PRODUCT_NAME($productLabel: String!) {
+          product(label: $productLabel) {
             displayName
           }
         }
@@ -50,22 +50,24 @@ export class ManifoldDataProductName {
       variables: { productLabel },
     });
 
-    if (product.data) {
-      this.productName = product.data.displayName;
+    if (data && data.product) {
+      this.productName = data.product.displayName;
+    } else if (errors) {
+      this.errors = errors;
     }
   };
 
-  fetchResource = async (resourceName: string) => {
+  fetchResource = async (resourceLabel: string) => {
     if (!this.graphqlFetch) {
       return;
     }
 
     this.productName = undefined;
 
-    const resource = await this.graphqlFetch<Resource>({
+    const { data, errors } = await this.graphqlFetch<'resource'>({
       query: gql`
-        query RESOURCE {
-          resource(label: "$resourceName") {
+        query RESOURCE($resourceLabel: String!) {
+          resource(label: $resourceLabel) {
             plan {
               product {
                 displayName
@@ -74,18 +76,26 @@ export class ManifoldDataProductName {
           }
         }
       `,
-      variables: { resourceName },
+      variables: { resourceLabel },
     });
 
-    if (resource.data && resource.data.plan) {
-      this.productName = resource.data.plan.product.displayName;
+    if (data && data.resource && data.resource.plan) {
+      this.productName = data.resource.plan.product.displayName;
+    } else if (errors) {
+      this.errors = errors;
     }
   };
 
   @logger()
   render() {
+    if (this.errors) {
+      return this.errors.map(({ message }) => (
+        <manifold-toast alertType="error">{message}</manifold-toast>
+      ));
+    }
+
     return this.productName || null;
   }
 }
 
-Tunnel.injectProps(ManifoldDataProductName, ['restFetch']);
+Tunnel.injectProps(ManifoldDataProductName, ['graphqlFetch']);
