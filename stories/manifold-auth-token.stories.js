@@ -27,9 +27,11 @@ storiesOf('Auth Token Provider [Data]', module)
     'See your resources',
     () => `
       <manifold-connection>
-        These resources are loaded from the server rather than mocks
-        <manifold-auth-token token="${withVeryFakeExpiry(localStorage.manifold_api_token)}"/>
-        <manifold-resource-list />
+        <manifold-performance>
+          These resources are loaded from the server rather than mocks
+          <manifold-auth-token token="${withVeryFakeExpiry(localStorage.manifold_api_token)}"/>
+          <manifold-resource-list />
+        </manifold-performance>
       </manifold-connection>
     `
   );

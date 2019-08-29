@@ -11,6 +11,7 @@ const loggableEvents = [
   'manifold-rest-fetch-duration',
   'manifold-graphql-fetch-duration',
   'manifold-error',
+  'receiveManifoldToken',
 ];
 
 @Component({ tag: 'manifold-performance' })
@@ -33,10 +34,18 @@ export class ManifoldPerformance {
   };
 
   logMetric = (e: CustomEvent) => {
+    if (e.type === 'receiveManifoldToken') {
+      delete e.detail.token;
+      delete e.detail.expiry;
+    }
     if (!this.ddLogs) {
       this.logQueue.push(e);
     } else {
-      this.ddLogs.logger.info(e.type, { type: e.type, ...e.detail });
+      if (e.type === 'manifold-error' || (e.type === 'receiveManifoldToken' && e.detail.error)) {
+        this.ddLogs.logger.error(e.type, { type: e.type, ...e.detail });
+      } else {
+        this.ddLogs.logger.info(e.type, { type: e.type, ...e.detail });
+      }
     }
   };
 
