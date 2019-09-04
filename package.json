@@ -49,7 +49,7 @@
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",
     "prepare:docs": "npm run prepare:package && npm run copy-changelog",
-    "prepare:forestry": "cd docs && npm install @manifoldco/ui@latest",
+    "prepare:forestry": "npm install && cd docs && npm install @manifoldco/ui@latest",
     "prepare:package": "npm run build && node scripts/prepublish",
     "publish": "npm run prepare:package && node scripts/publish",
     "storybook": "start-storybook -p 6006",
