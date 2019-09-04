@@ -14,7 +14,6 @@ export class ManifoldAuthToken {
   @Prop() subscribe: (s: Subscriber) => () => void = () => () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
-  @Prop() oauthUrl?: string = 'https://login.manifold.co/signin/oauth/web';
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter<{ token: string }>;
 
@@ -26,15 +25,6 @@ export class ManifoldAuthToken {
 
   componentWillLoad() {
     this.setExternalToken(this.token);
-    if (this.subscribe) {
-      this.unsubscribe = this.subscribe((oldToken?: string, newToken?: string) => {
-        if (oldToken && !newToken && this.oauthUrl) {
-          const url = new URL(this.oauthUrl, window.location.href);
-          url.searchParams.set('ts', new Date().getTime().toString());
-          this.oauthUrl = url.href;
-        }
-      });
-    }
   }
 
   componentDidUnload() {
@@ -60,9 +50,7 @@ export class ManifoldAuthToken {
 
   @logger()
   render() {
-    return (
-      <manifold-oauth onReceiveManifoldToken={this.setInternalToken} oauthUrl={this.oauthUrl} />
-    );
+    return <manifold-oauth onReceiveManifoldToken={this.setInternalToken} />;
   }
 }
 
