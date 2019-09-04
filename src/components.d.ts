@@ -103,6 +103,7 @@ export namespace Components {
     'loading': boolean;
     'resourceLabel': string;
   }
+  interface ManifoldDataCopyCredentials {}
   interface ManifoldDataDeprovisionButton {
     'loading'?: boolean;
     'resourceId'?: string;
@@ -690,6 +691,12 @@ declare global {
     new (): HTMLManifoldCredentialsViewElement;
   };
 
+  interface HTMLManifoldDataCopyCredentialsElement extends Components.ManifoldDataCopyCredentials, HTMLStencilElement {}
+  var HTMLManifoldDataCopyCredentialsElement: {
+    prototype: HTMLManifoldDataCopyCredentialsElement;
+    new (): HTMLManifoldDataCopyCredentialsElement;
+  };
+
   interface HTMLManifoldDataDeprovisionButtonElement extends Components.ManifoldDataDeprovisionButton, HTMLStencilElement {}
   var HTMLManifoldDataDeprovisionButtonElement: {
     prototype: HTMLManifoldDataDeprovisionButtonElement;
@@ -1011,6 +1018,7 @@ declare global {
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-credentials': HTMLManifoldCredentialsElement;
     'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
+    'manifold-data-copy-credentials': HTMLManifoldDataCopyCredentialsElement;
     'manifold-data-deprovision-button': HTMLManifoldDataDeprovisionButtonElement;
     'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
@@ -1142,6 +1150,7 @@ declare namespace LocalJSX {
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceLabel'?: string;
   }
+  interface ManifoldDataCopyCredentials extends JSXBase.HTMLAttributes<HTMLManifoldDataCopyCredentialsElement> {}
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     'loading'?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
@@ -1709,6 +1718,7 @@ declare namespace LocalJSX {
     'manifold-cost-display': ManifoldCostDisplay;
     'manifold-credentials': ManifoldCredentials;
     'manifold-credentials-view': ManifoldCredentialsView;
+    'manifold-data-copy-credentials': ManifoldDataCopyCredentials;
     'manifold-data-deprovision-button': ManifoldDataDeprovisionButton;
     'manifold-data-has-resource': ManifoldDataHasResource;
     'manifold-data-manage-button': ManifoldDataManageButton;
