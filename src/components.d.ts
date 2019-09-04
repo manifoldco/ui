@@ -440,6 +440,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    'showSkeletons'?: boolean;
   }
   interface ManifoldProduct {
     /**
@@ -1500,6 +1501,7 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
+    'showSkeletons'?: boolean;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
