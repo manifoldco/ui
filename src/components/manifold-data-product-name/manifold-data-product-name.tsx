@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import Tunnel from '../../data/connection';
@@ -89,9 +89,7 @@ export class ManifoldDataProductName {
   @logger()
   render() {
     if (this.errors) {
-      return this.errors.map(({ message }) => (
-        <manifold-toast alertType="error">{message}</manifold-toast>
-      ));
+      return 'Product name not found';
     }
 
     return this.productName || null;
