@@ -60,7 +60,7 @@ export class ManifoldProduct {
     const variables = { productLabel };
     const { data } = await this.graphqlFetch({ query, variables });
 
-    this.product = data && data.product ? data.product : undefined;
+    this.product = (data && data.product) || undefined;
   };
 
   @logger()
