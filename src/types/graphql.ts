@@ -28,7 +28,7 @@ export enum CalculationType {
 
 /** Category is a category an entity is in. */
 export type Category = {
-  __typename?: 'Category',
+   __typename?: 'Category',
   label: Scalars['String'],
   products: ProductConnection,
 };
@@ -43,14 +43,14 @@ export type CategoryProductsArgs = {
 
 /** CategoryConnection is a connection between an entity and its categories. */
 export type CategoryConnection = {
-  __typename?: 'CategoryConnection',
+   __typename?: 'CategoryConnection',
   edges: Array<CategoryEdge>,
   pageInfo: PageInfo,
 };
 
 /** CategoryEdge is an edge of a CategoryConnection. */
 export type CategoryEdge = {
-  __typename?: 'CategoryEdge',
+   __typename?: 'CategoryEdge',
   node: Category,
   cursor: Scalars['String'],
 };
@@ -77,7 +77,7 @@ export enum ConfigurableFeaturesOrderByField {
  * configure a resource.
  **/
 export type Credential = {
-  __typename?: 'Credential',
+   __typename?: 'Credential',
   /**  The key to which we can reference the credential as.  */
   key: Scalars['String'],
   /** 
@@ -92,7 +92,7 @@ export type Credential = {
  * credentials.
  **/
 export type CredentialConnection = {
-  __typename?: 'CredentialConnection',
+   __typename?: 'CredentialConnection',
   pageInfo: PageInfo,
   edges: Array<CredentialEdge>,
 };
@@ -103,7 +103,7 @@ export type CredentialConnection = {
  * information.
  **/
 export type CredentialEdge = {
-  __typename?: 'CredentialEdge',
+   __typename?: 'CredentialEdge',
   cursor: Scalars['String'],
   node?: Maybe<Credential>,
 };
@@ -131,7 +131,7 @@ export enum FixedFeaturesOrderByField {
 
 /** Invoice represents the total due in a specific billing period. */
 export type Invoice = Node & {
-  __typename?: 'Invoice',
+   __typename?: 'Invoice',
   id: Scalars['ID'],
   /** 
  * Cost is the amount due for the invoice.
@@ -160,14 +160,14 @@ export type InvoiceLineItemsArgs = {
 
 /** InvoiceConnection is the connection between an entity and its invoices. */
 export type InvoiceConnection = {
-  __typename?: 'InvoiceConnection',
+   __typename?: 'InvoiceConnection',
   pageInfo: PageInfo,
   edges: Array<InvoiceEdge>,
 };
 
 /** InvoiceEdge is an edge of InvoiceConnection */
 export type InvoiceEdge = {
-  __typename?: 'InvoiceEdge',
+   __typename?: 'InvoiceEdge',
   cursor: Scalars['String'],
   node?: Maybe<Invoice>,
 };
@@ -185,7 +185,7 @@ export enum InvoiceOrderByField {
 
 /** LineItem represents the amount due for a resource. */
 export type LineItem = Node & {
-  __typename?: 'LineItem',
+   __typename?: 'LineItem',
   id: Scalars['ID'],
   /** 
  * Cost is the amount due for the associated resource.
@@ -218,14 +218,14 @@ export type LineItemSubLineItemsArgs = {
 
 /** LineItemConnection is the connection between an invoice and its lineItems. */
 export type LineItemConnection = {
-  __typename?: 'LineItemConnection',
+   __typename?: 'LineItemConnection',
   pageInfo: PageInfo,
   edges: Array<LineItemEdge>,
 };
 
 /** LineItemEdge is an edge of LineItemConnection */
 export type LineItemEdge = {
-  __typename?: 'LineItemEdge',
+   __typename?: 'LineItemEdge',
   cursor: Scalars['String'],
   node?: Maybe<LineItem>,
 };
@@ -258,7 +258,7 @@ export enum OrderByDirection {
  * connections style pagination.
  **/
 export type PageInfo = {
-  __typename?: 'PageInfo',
+   __typename?: 'PageInfo',
   startCursor?: Maybe<Scalars['String']>,
   endCursor?: Maybe<Scalars['String']>,
   hasNextPage: Scalars['Boolean'],
@@ -267,7 +267,7 @@ export type PageInfo = {
 
 /** A Plan is a plan in a product */
 export type Plan = Node & {
-  __typename?: 'Plan',
+   __typename?: 'Plan',
   id: Scalars['ID'],
   /** A human readable display name for this plan. */
   displayName: Scalars['String'],
@@ -286,7 +286,10 @@ export type Plan = Node & {
   meteredFeatures?: Maybe<PlanMeteredFeatureConnection>,
   /** A list of configurable features associated with the plan. */
   configurableFeatures?: Maybe<PlanConfigurableFeatureConnection>,
+  /** The plan's base cost without the addition of metered features costs */
   cost: Scalars['Int'],
+  /** If the plan is free, including if there are metered features changing the cost of a plan with base cost 0. */
+  free: Scalars['Boolean'],
   /** The datacenters associated with this plan. */
   regions?: Maybe<RegionConnection>,
 };
@@ -325,7 +328,7 @@ export type PlanRegionsArgs = {
 
 /** PlanConfigurableFeature is a configurable feature of a plan. */
 export type PlanConfigurableFeature = {
-  __typename?: 'PlanConfigurableFeature',
+   __typename?: 'PlanConfigurableFeature',
   label: Scalars['String'],
   displayName: Scalars['String'],
   type: PlanFeatureType,
@@ -335,21 +338,21 @@ export type PlanConfigurableFeature = {
 
 /** PlanConfigurableFeatureConnection is the connection between a plan and its configurable properties. */
 export type PlanConfigurableFeatureConnection = {
-  __typename?: 'PlanConfigurableFeatureConnection',
+   __typename?: 'PlanConfigurableFeatureConnection',
   pageInfo: PageInfo,
   edges: Array<PlanConfigurableFeatureEdge>,
 };
 
 /** PlanConfigurableFeatureEdge is an edge of a PlanConfigurableFeatureConnection. */
 export type PlanConfigurableFeatureEdge = {
-  __typename?: 'PlanConfigurableFeatureEdge',
+   __typename?: 'PlanConfigurableFeatureEdge',
   cursor: Scalars['String'],
   node: PlanConfigurableFeature,
 };
 
 /** PlanConfigurableFeatureNumericDetails contains the numeric details of a configurable plan feature. */
 export type PlanConfigurableFeatureNumericDetails = {
-  __typename?: 'PlanConfigurableFeatureNumericDetails',
+   __typename?: 'PlanConfigurableFeatureNumericDetails',
   increment: Scalars['Int'],
   min: Scalars['Int'],
   max: Scalars['Int'],
@@ -359,21 +362,21 @@ export type PlanConfigurableFeatureNumericDetails = {
 
 /** A PlanConnection is the connection between a Plan and its containing Product */
 export type PlanConnection = {
-  __typename?: 'PlanConnection',
+   __typename?: 'PlanConnection',
   edges: Array<PlanEdge>,
   pageInfo: PageInfo,
 };
 
 /** A PlanEdge is an edge of a PlanConnection */
 export type PlanEdge = {
-  __typename?: 'PlanEdge',
+   __typename?: 'PlanEdge',
   node: Plan,
   cursor: Scalars['String'],
 };
 
 /** PlanFeatureCostTier represents a cost tier in a plan. */
 export type PlanFeatureCostTier = {
-  __typename?: 'PlanFeatureCostTier',
+   __typename?: 'PlanFeatureCostTier',
   limit: Scalars['Int'],
   cost: Scalars['Int'],
 };
@@ -387,28 +390,28 @@ export enum PlanFeatureType {
 
 /** PlanFixedFeature is a value property of a plan. */
 export type PlanFixedFeature = {
-  __typename?: 'PlanFixedFeature',
+   __typename?: 'PlanFixedFeature',
   displayName: Scalars['String'],
   displayValue: Scalars['String'],
 };
 
 /** PlanFixedFeaturesConnection is the connection between a plan and its value properties. */
 export type PlanFixedFeatureConnection = {
-  __typename?: 'PlanFixedFeatureConnection',
+   __typename?: 'PlanFixedFeatureConnection',
   pageInfo: PageInfo,
   edges: Array<PlanFixedFeatureEdge>,
 };
 
 /** PlanFixedFeatureEdge is an edge of a PlanFixedFeatureConnection. */
 export type PlanFixedFeatureEdge = {
-  __typename?: 'PlanFixedFeatureEdge',
+   __typename?: 'PlanFixedFeatureEdge',
   cursor: Scalars['String'],
   node: PlanFixedFeature,
 };
 
 /** PlanMeteredFeature is a metered feature of a plan. */
 export type PlanMeteredFeature = {
-  __typename?: 'PlanMeteredFeature',
+   __typename?: 'PlanMeteredFeature',
   label: Scalars['String'],
   displayName: Scalars['String'],
   numericDetails: PlanMeteredFeatureNumericDetails,
@@ -416,21 +419,21 @@ export type PlanMeteredFeature = {
 
 /** PlanMeteredFeatureConnection is the connection between a plan and its metered properties. */
 export type PlanMeteredFeatureConnection = {
-  __typename?: 'PlanMeteredFeatureConnection',
+   __typename?: 'PlanMeteredFeatureConnection',
   pageInfo: PageInfo,
   edges: Array<PlanMeteredFeatureEdge>,
 };
 
 /** PlanMeteredFeatureEdge is an edge of a PlanMeteredFeatureConnection. */
 export type PlanMeteredFeatureEdge = {
-  __typename?: 'PlanMeteredFeatureEdge',
+   __typename?: 'PlanMeteredFeatureEdge',
   cursor: Scalars['String'],
   node: PlanMeteredFeature,
 };
 
 /** PlanMeteredFeatureNumericDetails contains the numeric details of a metered plan feature. */
 export type PlanMeteredFeatureNumericDetails = {
-  __typename?: 'PlanMeteredFeatureNumericDetails',
+   __typename?: 'PlanMeteredFeatureNumericDetails',
   unit: Scalars['String'],
   costTiers?: Maybe<Array<PlanFeatureCostTier>>,
 };
@@ -461,7 +464,7 @@ export enum PlanState {
  * marketplace.
  **/
 export type Platform = {
-  __typename?: 'Platform',
+   __typename?: 'Platform',
   /** The ID of the Platform for internal usage. */
   id: Scalars['ID'],
   /** The domain associated with the platform. */
@@ -470,7 +473,7 @@ export type Platform = {
 
 /** A Product is a provider's product */
 export type Product = Node & {
-  __typename?: 'Product',
+   __typename?: 'Product',
   id: Scalars['ID'],
   displayName: Scalars['String'],
   label: Scalars['String'],
@@ -491,6 +494,13 @@ export type Product = Node & {
   screenshots?: Maybe<Array<ProductScreenshot>>,
   /** ValueProps is a list of property values with a header and a body. It is non-nullable, but it can be empty. */
   valueProps: Array<ValueProp>,
+  /** ValuePropsHtml is the HTML representation of the value propositions. It is non-nullable, but it can be empty. */
+  valuePropsHtml: Scalars['String'],
+  /** 
+ * SetupStepsHtml is the HTML representation of the setup steps required to
+   * configure a new product. It is non-nullable, but it can be empty.
+ **/
+  setupStepsHtml: Scalars['String'],
   /** List Plans associated with the product */
   plans?: Maybe<PlanConnection>,
   categories: Array<Category>,
@@ -499,6 +509,7 @@ export type Product = Node & {
 
 /** A Product is a provider's product */
 export type ProductPlansArgs = {
+  free?: Maybe<Scalars['Boolean']>,
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<PlanOrderBy>
@@ -506,21 +517,21 @@ export type ProductPlansArgs = {
 
 /** A ProductConnection is the connection containing Product edges */
 export type ProductConnection = {
-  __typename?: 'ProductConnection',
+   __typename?: 'ProductConnection',
   edges: Array<ProductEdge>,
   pageInfo: PageInfo,
 };
 
 /** A ProductEdge is an edge of a ProductConnection */
 export type ProductEdge = {
-  __typename?: 'ProductEdge',
+   __typename?: 'ProductEdge',
   node: Product,
   cursor: Scalars['String'],
 };
 
 /** ProductIntegration contains information about integrating products. */
 export type ProductIntegration = {
-  __typename?: 'ProductIntegration',
+   __typename?: 'ProductIntegration',
   baseUrl: Scalars['String'],
   ssoUrl: Scalars['String'],
 };
@@ -538,7 +549,7 @@ export enum ProductOrderByField {
 
 /** ProductScreenshot includes the information to find and order a screenshot. */
 export type ProductScreenshot = {
-  __typename?: 'ProductScreenshot',
+   __typename?: 'ProductScreenshot',
   url: Scalars['String'],
   order: Scalars['Int'],
 };
@@ -554,7 +565,7 @@ export enum ProductState {
 
 /** Profile represents a consumer in the Manifold system. */
 export type Profile = {
-  __typename?: 'Profile',
+   __typename?: 'Profile',
   /** The ID of the profile which is internally used. */
   id: Scalars['ID'],
   /** Subject represents the identifier of the profile on the platform's side. */
@@ -592,14 +603,14 @@ export type ProfileInvoicesArgs = {
 
 /** ProfileConnection is the connection containing Profile edges */
 export type ProfileConnection = {
-  __typename?: 'ProfileConnection',
+   __typename?: 'ProfileConnection',
   pageInfo: PageInfo,
   edges: Array<ProfileEdge>,
 };
 
 /** ProfileEdge is the edge of a ProfileConnection */
 export type ProfileEdge = {
-  __typename?: 'ProfileEdge',
+   __typename?: 'ProfileEdge',
   cursor: Scalars['String'],
   node: Profile,
 };
@@ -607,7 +618,7 @@ export type ProfileEdge = {
 
 /** A Provider in Manifold's catalog. Providers own Products. */
 export type Provider = Node & {
-  __typename?: 'Provider',
+   __typename?: 'Provider',
   id: Scalars['ID'],
   /** A URL friendly label for this Provider. Globally unique. */
   label: Scalars['String'],
@@ -638,7 +649,7 @@ export type ProviderProductsArgs = {
  * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type Query = {
-  __typename?: 'Query',
+   __typename?: 'Query',
   /** 
  * Look up a Provider by it's `id` or `label`. Exactly one of `id` or `label` is
    * required, and `id` has precedence over `label`.
@@ -849,7 +860,7 @@ export type QueryLineItemArgs = {
 
 /** A Region is a Data Center within a cloud provider's platform. */
 export type Region = Node & {
-  __typename?: 'Region',
+   __typename?: 'Region',
   id: Scalars['ID'],
   /** A human readble display name for this Region. */
   displayName: Scalars['String'],
@@ -860,13 +871,13 @@ export type Region = Node & {
 };
 
 export type RegionConnection = {
-  __typename?: 'RegionConnection',
+   __typename?: 'RegionConnection',
   edges: Array<RegionEdge>,
   pageInfo: PageInfo,
 };
 
 export type RegionEdge = {
-  __typename?: 'RegionEdge',
+   __typename?: 'RegionEdge',
   node: Region,
   cursor: Scalars['String'],
 };
@@ -894,7 +905,7 @@ export enum RenewalPoint {
  * linked to a plan and has credentials associated with it.
  **/
 export type Resource = Node & {
-  __typename?: 'Resource',
+   __typename?: 'Resource',
   id: Scalars['ID'],
   /**  A human readable display name for this resource.  */
   displayName: Scalars['String'],
@@ -930,7 +941,7 @@ export type ResourceCredentialsArgs = {
  * resources.
  **/
 export type ResourceConnection = {
-  __typename?: 'ResourceConnection',
+   __typename?: 'ResourceConnection',
   pageInfo: PageInfo,
   edges: Array<ResourceEdge>,
 };
@@ -941,7 +952,7 @@ export type ResourceConnection = {
  * information.
  **/
 export type ResourceEdge = {
-  __typename?: 'ResourceEdge',
+   __typename?: 'ResourceEdge',
   cursor: Scalars['String'],
   node?: Maybe<Resource>,
 };
@@ -951,7 +962,7 @@ export type ResourceEdge = {
  * of the amount due by resource.
  **/
 export type SubLineItem = {
-  __typename?: 'SubLineItem',
+   __typename?: 'SubLineItem',
   /** 
  * Cost is the amount due for the feature.
    * 
@@ -978,14 +989,14 @@ export type SubLineItem = {
 
 /** SubLineItemConnection is the connection between a lineItem and its subLineItems. */
 export type SubLineItemConnection = {
-  __typename?: 'SubLineItemConnection',
+   __typename?: 'SubLineItemConnection',
   pageInfo: PageInfo,
   edges: Array<SubLineItemEdge>,
 };
 
 /** SubLineItemEdge is an edge of SubLineItemConnection */
 export type SubLineItemEdge = {
-  __typename?: 'SubLineItemEdge',
+   __typename?: 'SubLineItemEdge',
   cursor: Scalars['String'],
   node?: Maybe<SubLineItem>,
 };
@@ -993,7 +1004,7 @@ export type SubLineItemEdge = {
 
 /** ValueProp is a property value */
 export type ValueProp = {
-  __typename?: 'ValueProp',
+   __typename?: 'ValueProp',
   header: Scalars['String'],
   body: Scalars['String'],
 };
