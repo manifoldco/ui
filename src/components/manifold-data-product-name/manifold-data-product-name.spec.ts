@@ -1,43 +1,112 @@
+import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import fetchMock from 'fetch-mock';
 import { ManifoldDataProductName } from './manifold-data-product-name';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
+
+const products = {
+  jawsdb: 'JawsDB Postgres',
+  logdna: 'LogDNA',
+  mailgun: 'Mailgun',
+};
+
+const graphqlEndpoint = 'http://test.com/graphql';
 
 describe('<manifold-data-product-name>', () => {
-  it('fetches product from label on load', () => {
-    const productLabel = 'test-product';
+  describe('v0 API', () => {
+    let page: SpecPage;
+    let element: HTMLManifoldDataProductNameElement;
 
-    const productName = new ManifoldDataProductName();
-    productName.fetchProduct = jest.fn();
-    productName.productLabel = productLabel;
-    productName.componentWillLoad();
-    expect(productName.fetchProduct).toHaveBeenCalledWith(productLabel);
-  });
+    beforeEach(async () => {
+      // setup
+      page = await newSpecPage({
+        components: [ManifoldDataProductName],
+        html: `<div></div>`,
+      });
+      element = page.doc.createElement('manifold-data-product-name');
+      element.graphqlFetch = createGraphqlFetch({
+        endpoint: graphqlEndpoint,
+        getAuthToken: jest.fn(() => '1234'),
+        wait: 10,
+        setAuthToken: jest.fn(),
+      });
 
-  it('fetches product from label on change', () => {
-    const newProduct = 'new-product';
+      fetchMock.reset();
 
-    const productName = new ManifoldDataProductName();
-    productName.fetchProduct = jest.fn();
-    productName.productLabel = 'old-product';
-    productName.productChange(newProduct);
-    expect(productName.fetchProduct).toHaveBeenCalledWith(newProduct);
-  });
+      fetchMock.mock(graphqlEndpoint, (_, req) => {
+        const body = (req.body && req.body.toString()) || '';
+        let product;
+        // fake the product query here
+        if (body.includes('jawsdb')) {
+          product = { displayName: products.jawsdb };
+        } else if (body.includes('logdna')) {
+          product = { displayName: products.logdna };
+        } else if (body.includes('mailgun')) {
+          product = { displayName: products.mailgun };
+        }
 
-  it('fetches resource on load', () => {
-    const resourceLabel = 'my-resource';
+        // if querying resource, return resource
+        if (body.includes('resource')) {
+          return product
+            ? { data: { resource: { plan: { product } } } }
+            : { data: null, errors: [{ message: 'resource not found' }] };
+        }
+        // otherwise return product
+        return product
+          ? { data: { product } }
+          : { data: null, errors: [{ message: 'product not found' }] };
+      });
+    });
 
-    const productName = new ManifoldDataProductName();
-    productName.fetchResource = jest.fn();
-    productName.resourceLabel = resourceLabel;
-    productName.componentWillLoad();
-    expect(productName.fetchResource).toHaveBeenCalledWith(resourceLabel);
-  });
+    it('[product-name]: displays name to user', async () => {
+      element.productLabel = 'jawsdb-postgres';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
 
-  it('fetches resource on change', () => {
-    const newResource = 'new-resource';
+      // test initial render
+      const name = root.querySelector('manifold-data-product-name') as HTMLElement;
+      expect(name.innerHTML).toBe(products.jawsdb);
 
-    const productName = new ManifoldDataProductName();
-    productName.fetchResource = jest.fn();
-    productName.resourceLabel = 'old-resource';
-    productName.resourceChange(newResource);
-    expect(productName.fetchResource).toHaveBeenCalledWith(newResource);
+      // test for change, too
+      element.productLabel = 'mailgun';
+      await page.waitForChanges();
+      expect(name.innerHTML).toBe(products.mailgun);
+    });
+
+    it('[product-name]: displays error', async () => {
+      element.productLabel = 'bad-product';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
+
+      const name = root.querySelector('manifold-data-product-name') as HTMLElement;
+      expect(name.innerHTML).toBe('Product name not found');
+    });
+
+    it('[resource-label]: displays name to user', async () => {
+      element.resourceLabel = 'resource-jawsdb-postgres';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
+
+      // test initial render
+      const name = root.querySelector('manifold-data-product-name') as HTMLElement;
+      expect(name.innerHTML).toBe(products.jawsdb);
+
+      // test for change, too
+      element.resourceLabel = 'resource-mailgun';
+      await page.waitForChanges();
+      expect(name.innerHTML).toBe(products.mailgun);
+    });
+
+    it('[resource-label]: displays error', async () => {
+      element.resourceLabel = 'bad-product';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
+
+      const name = root.querySelector('manifold-data-product-name') as HTMLElement;
+      expect(name.innerHTML).toBe('Product name not found');
+    });
   });
 });

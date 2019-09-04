@@ -1,14 +1,14 @@
 import { EventEmitter } from '@stencil/core';
 import {
-  CategoryConnection,
-  ProductConnection,
-  Product,
-  RegionConnection,
-  Provider,
   Category,
+  CategoryConnection,
+  Product,
+  ProductConnection,
   Profile,
+  Provider,
   Resource,
   ResourceConnection,
+  RegionConnection,
 } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -18,11 +18,11 @@ interface QueryData {
   categories: { categories: CategoryConnection };
   product: { product: Product };
   products: { products: ProductConnection };
+  profile: { profile: Profile };
   provider: { provider: Provider };
   regions: { regions: RegionConnection };
   resource: { resource: Resource };
   resources: { resources: ResourceConnection };
-  profile: { profile: Profile };
 }
 
 interface CreateGraphqlFetch {
@@ -37,7 +37,7 @@ type GraphqlArgs =
   | { mutation: string; variables?: object; emitter?: EventEmitter }
   | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
 
-interface GraphqlError {
+export interface GraphqlError {
   message: string;
   locations?: { line: number; column: number }[];
   path?: string;
@@ -66,12 +66,14 @@ export function createGraphqlFetch({
     const rttStart = performance.now();
     const { emitter, ...request } = args;
 
+    const token = getAuthToken();
+    // yes sometimes the auth token can be 'undefined'
+    const auth: { [key: string]: string } =
+      token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
+
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
-      },
+      headers: { 'content-type': 'application/json', ...auth },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors
