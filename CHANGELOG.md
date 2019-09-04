@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed a typo in manifold-data-deprovision-button documentation
+- Upgraded `@manifoldco/shadowcat` to feature the latest security patches.
 
 ### Changed
 
