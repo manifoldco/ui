@@ -1,29 +1,7 @@
 import { EventEmitter } from '@stencil/core';
-import {
-  Category,
-  CategoryConnection,
-  Product,
-  ProductConnection,
-  Profile,
-  Provider,
-  Resource,
-  ResourceConnection,
-  RegionConnection,
-} from '../types/graphql';
+import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
-
-interface QueryData {
-  category: { category: Category };
-  categories: { categories: CategoryConnection };
-  product: { product: Product };
-  products: { products: ProductConnection };
-  profile: { profile: Profile };
-  provider: { provider: Provider };
-  regions: { regions: RegionConnection };
-  resource: { resource: Resource };
-  resources: { resources: ResourceConnection };
-}
 
 interface CreateGraphqlFetch {
   endpoint?: string;
@@ -43,14 +21,12 @@ export interface GraphqlError {
   path?: string;
 }
 
-export interface GraphqlResponseBody<T extends keyof QueryData> {
-  data: QueryData[T] | null;
+export interface GraphqlResponseBody {
+  data: Query | null;
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = <T extends keyof QueryData>(
-  args: GraphqlArgs
-) => Promise<GraphqlResponseBody<T>>;
+export type GraphqlFetch = (args: GraphqlArgs) => Promise<GraphqlResponseBody>;
 
 export function createGraphqlFetch({
   endpoint = 'https://api.manifold.co/graphql',
@@ -59,10 +35,7 @@ export function createGraphqlFetch({
   getAuthToken = () => undefined,
   setAuthToken = () => {},
 }: CreateGraphqlFetch): GraphqlFetch {
-  async function graphqlFetch<T extends keyof QueryData>(
-    args: GraphqlArgs,
-    attempts: number
-  ): Promise<GraphqlResponseBody<T>> {
+  async function graphqlFetch(args: GraphqlArgs, attempts: number): Promise<GraphqlResponseBody> {
     const rttStart = performance.now();
     const { emitter, ...request } = args;
 
@@ -81,7 +54,7 @@ export function createGraphqlFetch({
       return Promise.reject(e);
     });
 
-    const body: GraphqlResponseBody<T> = await response.json();
+    const body: GraphqlResponseBody = await response.json();
 
     // handle unauthenticated error
     if (response.status === 401) {

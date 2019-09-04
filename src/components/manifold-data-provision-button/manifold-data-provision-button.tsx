@@ -207,7 +207,7 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const { data } = await this.graphqlFetch<'profile'>({ query });
+    const { data } = await this.graphqlFetch({ query });
 
     if (data) {
       this.ownerId = data.profile.id;

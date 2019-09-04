@@ -39,7 +39,7 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const { data, errors } = await this.graphqlFetch<'product'>({
+    const { data, errors } = await this.graphqlFetch({
       query: gql`
         query PRODUCT_NAME($productLabel: String!) {
           product(label: $productLabel) {
@@ -64,7 +64,7 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const { data, errors } = await this.graphqlFetch<'resource'>({
+    const { data, errors } = await this.graphqlFetch({
       query: gql`
         query RESOURCE($resourceLabel: String!) {
           resource(label: $resourceLabel) {
