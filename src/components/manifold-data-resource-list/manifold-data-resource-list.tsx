@@ -4,7 +4,7 @@ import { gql } from '@manifoldco/gql-zero';
 import Tunnel from '../../data/connection';
 import logger from '../../utils/logger';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { ResourceConnection, Resource } from '../../types/graphql';
+import { ResourceConnection, Resource, ResourceEdge } from '../../types/graphql';
 
 interface EventDetail {
   ownerId?: string;
@@ -42,7 +42,7 @@ export class ManifoldDataResourceList {
   /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent?: boolean = false;
   @State() interval?: number;
-  @State() resources?: ResourceConnection;
+  @State() resources?: ResourceEdge[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
@@ -69,7 +69,7 @@ export class ManifoldDataResourceList {
       });
 
       if (data) {
-        this.resources = data.resources;
+        this.resources = this.userResources(data.resources);
       }
 
       if (errors) {
@@ -102,7 +102,7 @@ export class ManifoldDataResourceList {
     return this.resourceLinkFormat.replace(/:resource/gi, resource.label);
   }
 
-  static userResources(resources: ResourceConnection) {
+  userResources(resources: ResourceConnection) {
     return resources.edges.filter(
       ({ node }) => node && node.owner && node.owner.id.indexOf('/user/') !== -1
     );
@@ -110,13 +110,13 @@ export class ManifoldDataResourceList {
 
   @logger()
   render() {
-    if (!this.resources || !Array.isArray(this.resources.edges)) {
+    if (!Array.isArray(this.resources)) {
       return null;
     }
 
     return (
       <ul>
-        {this.resources.edges.map(
+        {this.resources.map(
           ({ node }) =>
             node && (
               <li>

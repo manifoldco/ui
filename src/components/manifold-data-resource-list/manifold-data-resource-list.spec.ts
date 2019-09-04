@@ -1,36 +1,44 @@
-import { Resource } from '../../spec/mock/marketplace';
 import { ManifoldDataResourceList } from './manifold-data-resource-list';
+import { ResourceConnection } from '../../types/graphql';
+
+const mockResources: ResourceConnection = {
+  pageInfo: {
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
+  edges: [
+    {
+      cursor: '1',
+      node: {
+        displayName: 'Resource Name',
+        label: 'resource-label',
+        id: '1234',
+        owner: {
+          id: '12345',
+          // unsused owner data
+          subject: '',
+          platform: {
+            id: '',
+            domain: '',
+          },
+        },
+      },
+    },
+    {
+      cursor: '1',
+      node: {
+        displayName: 'Resource Without Owner',
+        label: 'resource-without-owner',
+        id: '1234',
+      },
+    },
+  ],
+};
 
 describe('<manifold-data-resource-list>', () => {
   it('filters user-only resources', () => {
     const resourceList = new ManifoldDataResourceList();
 
-    const userResource1 = { ...Resource, body: { ...Resource.body, owner_id: undefined } };
-    const userResource2 = { ...Resource, body: { ...Resource.body, user_id: undefined } };
-    const teamResource1 = {
-      ...Resource,
-      body: {
-        ...Resource.body,
-        owner_id: undefined,
-        team_id: Resource.body.user_id,
-        user_id: undefined,
-      },
-    };
-    const teamResource2 = {
-      ...Resource,
-      body: {
-        ...Resource.body,
-        owner_id: `manifold.co/team/${Resource.body.user_id}`,
-        team_id: undefined,
-        user_id: undefined,
-      },
-    };
-    const badResource = {
-      ...Resource,
-      body: { ...Resource.body, owner_id: undefined, user_id: undefined, team_id: undefined },
-    };
-
-    const resources = [userResource1, userResource2, teamResource1, teamResource2, badResource];
-    expect(resourceList.userResources(resources)).toEqual([userResource1, userResource2]);
+    expect(resourceList.userResources(mockResources)).toEqual([mockResources.edges[0]]);
   });
 });
