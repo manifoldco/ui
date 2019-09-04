@@ -7,6 +7,8 @@ import {
   Provider,
   Category,
   Profile,
+  Resource,
+  ResourceConnection,
 } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -18,6 +20,8 @@ interface QueryData {
   products: { products: ProductConnection };
   provider: { provider: Provider };
   regions: { regions: RegionConnection };
+  resource: { resource: Resource };
+  resources: { resources: ResourceConnection };
   profile: { profile: Profile };
 }
 

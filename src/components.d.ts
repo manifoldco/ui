@@ -219,6 +219,10 @@ export namespace Components {
   }
   interface ManifoldDataResourceList {
     /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
@@ -230,10 +234,6 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceLogo {
     /**
@@ -1271,6 +1271,10 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
     /**
     * Disable auto-updates?
@@ -1284,10 +1288,6 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement> {
     /**

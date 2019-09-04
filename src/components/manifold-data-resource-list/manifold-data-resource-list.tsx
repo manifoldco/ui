@@ -1,9 +1,10 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Marketplace } from '../../types/marketplace';
 import Tunnel from '../../data/connection';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { ResourceConnection, Resource } from '../../types/graphql';
 
 interface EventDetail {
   ownerId?: string;
@@ -12,20 +13,28 @@ interface EventDetail {
   resourceName: string;
 }
 
-interface RealResource extends Marketplace.Resource {
-  body: RealResourceBody;
-}
-
-interface RealResourceBody extends Marketplace.ResourceBody {
-  team_id?: string;
-  user_id?: string;
-}
+const query = gql`
+  query RESOURCES {
+    resources(first: 500) {
+      edges {
+        node {
+          id
+          displayName
+          label
+          owner {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-data-resource-list' })
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -33,7 +42,7 @@ export class ManifoldDataResourceList {
   /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent?: boolean = false;
   @State() interval?: number;
-  @State() resources?: Marketplace.Resource[];
+  @State() resources?: ResourceConnection;
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
@@ -50,71 +59,75 @@ export class ManifoldDataResourceList {
   }
 
   fetchResources = async () => {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me`,
-    });
+    try {
+      const { data, errors } = await this.graphqlFetch<'resources'>({
+        query,
+      });
 
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
+      if (data) {
+        this.resources = data.resources;
+      }
 
-    if (Array.isArray(response)) {
-      this.resources = this.userResources(
-        [...response].sort((a, b) => a.body.label.localeCompare(b.body.label))
-      );
+      if (errors) {
+        errors.forEach(error => {
+          throw new Error(error.message);
+        });
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  handleClick(resource: Marketplace.Resource, e: Event) {
+  handleClick(resource: Resource, e: Event) {
     if (!this.resourceLinkFormat || this.preserveEvent) {
       e.preventDefault();
       const detail: EventDetail = {
         resourceId: resource.id,
-        resourceLabel: resource.body.label,
-        resourceName: resource.body.name,
-        ownerId: resource.body.owner_id,
+        resourceLabel: resource.label,
+        resourceName: resource.displayName,
+        ownerId: resource.owner ? resource.owner.id : undefined,
       };
       this.clickEvent.emit(detail);
     }
   }
 
-  formatLink(resource: Marketplace.Resource) {
+  formatLink(resource: Resource) {
     if (!this.resourceLinkFormat) {
       return undefined;
     }
-    return this.resourceLinkFormat.replace(/:resource/gi, resource.body.label);
+    return this.resourceLinkFormat.replace(/:resource/gi, resource.label);
   }
 
-  userResources(resources: RealResource[]) {
-    return resources.filter(
-      ({ body: { owner_id, user_id } }) =>
-        user_id || (owner_id && owner_id.indexOf('/user/') !== -1)
+  static userResources(resources: ResourceConnection) {
+    return resources.edges.filter(
+      ({ node }) => node && node.owner && node.owner.id.indexOf('/user/') !== -1
     );
   }
 
   @logger()
   render() {
-    if (!Array.isArray(this.resources)) {
+    if (!this.resources || !Array.isArray(this.resources.edges)) {
       return null;
     }
 
     return (
       <ul>
-        {this.resources.map(resource => (
-          <li>
-            <a href={this.formatLink(resource)} onClick={e => this.handleClick(resource, e)}>
-              {resource.body.name}
-            </a>
-          </li>
-        ))}
+        {this.resources.edges.map(
+          ({ node }) =>
+            node && (
+              <li>
+                <a href={this.formatLink(node)} onClick={e => this.handleClick(node, e)}>
+                  {node.displayName}
+                </a>
+              </li>
+            )
+        )}
       </ul>
     );
   }
 }
-Tunnel.injectProps(ManifoldDataResourceList, ['restFetch']);
+Tunnel.injectProps(ManifoldDataResourceList, ['graphqlFetch']);
