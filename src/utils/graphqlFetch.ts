@@ -1,12 +1,13 @@
 import { EventEmitter } from '@stencil/core';
 import {
-  CategoryConnection,
-  ProductConnection,
-  Product,
-  RegionConnection,
-  Provider,
   Category,
+  CategoryConnection,
+  Product,
+  ProductConnection,
   Profile,
+  Provider,
+  RegionConnection,
+  Resource,
 } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -18,6 +19,7 @@ interface QueryData {
   products: { products: ProductConnection };
   provider: { provider: Provider };
   regions: { regions: RegionConnection };
+  resource: { resource: Resource };
   profile: { profile: Profile };
 }
 
@@ -33,7 +35,7 @@ type GraphqlArgs =
   | { mutation: string; variables?: object; emitter?: EventEmitter }
   | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
 
-interface GraphqlError {
+export interface GraphqlError {
   message: string;
   locations?: { line: number; column: number }[];
   path?: string;

@@ -45,6 +45,7 @@ export const freePlan: Plan = {
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   product,
   cost: ExpandedFreePlan.body.cost,
+  free: true,
   fixedFeatures: {
     __typename: 'PlanFixedFeatureConnection',
     edges: ExpandedFreePlan.body.expanded_features
@@ -111,6 +112,7 @@ export const plan: Plan = {
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   product,
   cost: ExpandedPlan.body.cost,
+  free: false,
   fixedFeatures: {
     __typename: 'PlanFixedFeatureConnection',
     edges: ExpandedPlan.body.expanded_features
@@ -202,6 +204,8 @@ export const product: Product = {
     body: valueProp.body,
     header: valueProp.header,
   })),
+  valuePropsHtml: '',
+  setupStepsHtml: '',
   integration: {
     __typename: 'ProductIntegration',
     baseUrl: prodMock.body.integration.base_url,
