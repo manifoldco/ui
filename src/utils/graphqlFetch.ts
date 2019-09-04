@@ -64,12 +64,14 @@ export function createGraphqlFetch({
     const rttStart = performance.now();
     const { emitter, ...request } = args;
 
+    const token = getAuthToken();
+    // yes sometimes the auth token can be 'undefined'
+    const auth: { [key: string]: string } =
+      token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
+
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...(getAuthToken() ? { authorization: `Bearer ${getAuthToken()}` } : {}),
-      },
+      headers: { 'content-type': 'application/json', ...auth },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors
