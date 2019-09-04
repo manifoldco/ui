@@ -79,8 +79,8 @@ describe('<manifold-data-product-name>', () => {
       root.appendChild(element);
       await page.waitForChanges();
 
-      const error = root.querySelector('manifold-toast') as HTMLElement;
-      expect(error.innerHTML).toBe('product not found');
+      const name = root.querySelector('manifold-data-product-name') as HTMLElement;
+      expect(name.innerHTML).toBe('Product name not found');
     });
 
     it('[resource-label]: displays name to user', async () => {
@@ -105,8 +105,8 @@ describe('<manifold-data-product-name>', () => {
       root.appendChild(element);
       await page.waitForChanges();
 
-      const error = root.querySelector('manifold-toast') as HTMLElement;
-      expect(error.innerHTML).toBe('resource not found');
+      const name = root.querySelector('manifold-data-product-name') as HTMLElement;
+      expect(name.innerHTML).toBe('Product name not found');
     });
   });
 });
