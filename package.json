@@ -76,8 +76,7 @@
   "dependencies": {
     "@manifoldco/gql-zero": "^0.2.0",
     "@manifoldco/shadowcat": "^0.1.7",
-    "@stencil/state-tunnel": "^1.0.1",
-    "copy-text-to-clipboard": "^2.1.0"
+    "@stencil/state-tunnel": "^1.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.7.0",
