@@ -7,18 +7,20 @@ example: |
   </manifold-copy-credentials>
 ---
 
-# 🔒 Get credentials Button
+# 🔒 Copy credentials
 
 An unstyled button for copying a resource’s credentials to the clipboard. 🔒 Requires
 authentication.
 
-## Fetching credentials
+## Refreshing credentials
 
-This component will **fetch credentials as soon as it’s rendered.** It does this because the copying
-to clipboard action needs to be synchronous in order to work in browsers.
+This component will **fetch credentials as soon as it’s rendered** because copying to clipboard
+needs to be a user-initiated click, and happen immediately (this is a security feature of most
+browsers to prevent bad scripts from hijacking/accessing the clipboard).
 
-If a user remains on a page for so long the credentials may be out-of-date, you can request new ones
-using its `refresh()` class method:
+However, a component that has fetched credentials before a user may have needed them results in an
+obvious problem: **they may be out of date.** This is fixable by requesting fresh credentials using
+its `refresh()` class method:
 
 ```js
 document.querySelector('manifold-copy-credentials[resource-label="my-resource"]').refresh();
@@ -36,33 +38,26 @@ Set the CTA text by adding anything between the opening and closing tags:
 
 ## Events
 
-For validation, error, and success messages, it will emit custom events.
+For successful user actions as well as errors, there are some events you can monitor:
 
 ```js
-document.addEventListener('manifold-copyCredentials-click', ({ detail: { resourceLabel } }) =>
-  console.info(`⌛ Getting the credentials for ${resourceLabel} …`)
-);
-document.addEventListener(
-  'manifold-copyCredentials-success',
-  ({ detail: { resourceLabel, credentials } }) => {
-    console.info(`Found the credentials for ${resourceLabel}`);
-    // Do something with credentials
-  }
-);
+document.addEventListener('manifold-copyCredentials-success', ({ detail }) => console.log(detail));
+// {
+//   resourceLabel: 'my-resource',
+// };
 document.addEventListener('manifold-copyCredentials-error', ({ detail }) => console.log(detail));
 // {
-//   type: 'not_found',
-//   message: 'not_found: Resource not found',
-//   resourceid: '1234',
+//   error: 'not_found: Resource not found',
 //   resourceLabel: 'my-resource',
 // };
 ```
 
-| Name                               |                         Returns                         | Description                                                                                                                 |
-| :--------------------------------- | :-----------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-copyCredentials-click`   |              `resourceId`, `resourceLabel`              | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-copyCredentials-success` | `message`, `resourceId`, `resourceLabel`, `credentials` | Successful credentials request. Returns a resource ID, resource Label and the credentials found for the resource            |
-| `manifold-copyCredentials-error`   |        `message`, `resourceId`, `resourceLabel`         | Erred credential request, along with information on what went wrong.                                                        |
+_Note: for security reasons, we don’t broadcast user credentials anywhere._
+
+| Name                               |         Returns          | Description                                                                                                     |
+| :--------------------------------- | :----------------------: | :-------------------------------------------------------------------------------------------------------------- |
+| `manifold-copyCredentials-success` |     `resourceLabel`      | Credentials were successfully copied to the clipboard. Yay!                                                     |
+| `manifold-copyCredentials-error`   | `error`, `resourceLabel` | Something went wrong, either during the copy to clipboard action, or retrieving credentials in the first place. |
 
 ## Styling
 
