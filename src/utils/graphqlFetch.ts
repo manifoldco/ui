@@ -6,8 +6,9 @@ import {
   ProductConnection,
   Profile,
   Provider,
-  RegionConnection,
   Resource,
+  ResourceConnection,
+  RegionConnection,
 } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -17,10 +18,11 @@ interface QueryData {
   categories: { categories: CategoryConnection };
   product: { product: Product };
   products: { products: ProductConnection };
+  profile: { profile: Profile };
   provider: { provider: Provider };
   regions: { regions: RegionConnection };
   resource: { resource: Resource };
-  profile: { profile: Profile };
+  resources: { resources: ResourceConnection };
 }
 
 interface CreateGraphqlFetch {
