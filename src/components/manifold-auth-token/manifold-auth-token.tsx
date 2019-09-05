@@ -9,9 +9,9 @@ import { Subscriber } from '../../state/connection';
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() setAuthToken: (s: string) => void = () => {};
+  @Prop() setAuthToken?: (s: string) => void = () => {};
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() subscribe: (s: Subscriber) => () => void = () => () => {};
+  @Prop() subscribe?: (s: Subscriber) => () => void = () => () => {};
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
   @State() tick?: string;
@@ -42,7 +42,7 @@ export class ManifoldAuthToken {
 
   setExternalToken(token?: string) {
     if (token) {
-      if (!isExpired(token)) {
+      if (!isExpired(token) && this.setAuthToken) {
         this.setAuthToken(token);
       }
     }
@@ -52,7 +52,9 @@ export class ManifoldAuthToken {
     const payload = e.detail as AuthToken;
     if (!payload.error && payload.expiry) {
       const formattedToken = `${payload.token}|${payload.expiry}`;
-      this.setAuthToken(formattedToken);
+      if (this.setAuthToken) {
+        this.setAuthToken(formattedToken);
+      }
       this.manifoldOauthTokenChange.emit({ token: formattedToken });
     }
   };

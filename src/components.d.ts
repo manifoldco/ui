@@ -43,11 +43,11 @@ export namespace Components {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'setAuthToken': (s: string) => void;
+    'setAuthToken'?: (s: string) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'subscribe': (s: Subscriber) => () => void;
+    'subscribe'?: (s: Subscriber) => () => void;
     'token'?: string;
   }
   interface ManifoldBadge {}
