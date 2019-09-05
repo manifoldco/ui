@@ -1,6 +1,6 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -21,7 +21,7 @@ interface ErrorMessage {
 export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** The label of the resource to deprovision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) resourceId?: string = '';
@@ -113,5 +113,3 @@ export class ManifoldDataDeprovisionButton {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldDataDeprovisionButton, ['restFetch']);

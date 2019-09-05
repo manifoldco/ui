@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Marketplace } from '../../types/marketplace';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
@@ -9,7 +9,7 @@ import logger from '../../utils/logger';
 export class ManifoldDataHasResource {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   @State() interval?: number;
@@ -60,5 +60,3 @@ export class ManifoldDataHasResource {
     return <slot name={this.hasResources ? 'has-resource' : 'no-resource'} />;
   }
 }
-
-Tunnel.injectProps(ManifoldDataHasResource, ['restFetch']);

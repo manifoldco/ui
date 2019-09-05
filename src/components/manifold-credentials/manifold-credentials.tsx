@@ -1,14 +1,14 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 
 import { Marketplace } from '../../types/marketplace';
-import ConnectionTunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   @Prop() resourceLabel: string = '';
   @Prop({ mutable: true }) resourceId?: string = '';
   @State() loading?: boolean = false;
@@ -82,5 +82,3 @@ export class ManifoldCredentials {
     );
   }
 }
-
-ConnectionTunnel.injectProps(ManifoldCredentials, ['restFetch']);

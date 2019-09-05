@@ -64,3 +64,5 @@ export class ConnectionState {
     retries: 1,
   });
 }
+
+export default new ConnectionState();

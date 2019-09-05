@@ -1,15 +1,15 @@
 import { Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
@@ -95,5 +95,3 @@ export class ManifoldDataProductName {
     return this.productName || null;
   }
 }
-
-Tunnel.injectProps(ManifoldDataProductName, ['graphqlFetch']);

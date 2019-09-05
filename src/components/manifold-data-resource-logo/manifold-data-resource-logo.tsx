@@ -2,7 +2,7 @@ import { h, Component, Prop, State, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import { Product } from '../../types/graphql';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -11,8 +11,8 @@ import logger from '../../utils/logger';
 export class ManifoldDataResourceLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
@@ -62,5 +62,3 @@ export class ManifoldDataResourceLogo {
     ) : null;
   }
 }
-
-Tunnel.injectProps(ManifoldDataResourceLogo, ['restFetch']);

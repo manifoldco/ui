@@ -1,34 +1,14 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component } from '@stencil/core';
 
-import Tunnel from '../../data/connection';
 import logger from '../../utils/logger';
 
-const baseWait = 15000;
-
+/* This component currently serves no purpose, but it will be needed again
+ * when we circle back to https://github.com/manifoldco/engineering/issues/9106
+ */
 @Component({ tag: 'manifold-connection' })
 export class ManifoldConnection {
-  /** _(optional)_ Specify `env="stage"` for staging */
-  @Prop() env: 'local' | 'stage' | 'prod' = 'prod';
-  /** _(optional)_ Wait time for the fetch calls before it times out */
-  @Prop() waitTime: number = baseWait;
-
-  /** _(hidden)_ Passed by the state tunnel */
-  @Prop() setEnv?: (env: 'local' | 'stage' | 'prod') => void;
-  @Prop() setWaitTime?: (waitTime: number) => void;
-
-  componentWillLoad() {
-    if (this.setEnv) {
-      this.setEnv(this.env);
-    }
-    if (this.setWaitTime) {
-      this.setWaitTime(this.waitTime);
-    }
-  }
-
   @logger()
   render() {
     return <slot />;
   }
 }
-
-Tunnel.injectProps(ManifoldConnection, ['setEnv', 'setWaitTime']);

@@ -3,7 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import logger from '../../utils/logger';
 
 const query = gql`
@@ -19,16 +19,14 @@ const query = gql`
 export class ManifoldDataProductLogo {
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** _(Deprecated)_ Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Product;
-  @Watch('authToken') refetch() {
-    this.fetchProduct(this.productLabel);
-  }
+
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
   }
@@ -61,5 +59,3 @@ export class ManifoldDataProductLogo {
     ) : null;
   }
 }
-
-Tunnel.injectProps(ManifoldDataProductLogo, ['graphqlFetch']);

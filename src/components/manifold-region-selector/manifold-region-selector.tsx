@@ -2,7 +2,7 @@ import { h, Component, Prop, State, Event, Element, EventEmitter } from '@stenci
 
 import { Option } from '../../types/Select';
 import { Catalog } from '../../types/catalog';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { globalRegion } from '../../data/region';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -13,7 +13,7 @@ export class ManifoldRegionSelector {
   @Prop() allowedRegions: string[] = [];
   @Prop() ariaLabel: string;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   @Prop() name: string;
   @Prop() preferredRegions?: string[];
   @Prop() value?: string;
@@ -109,5 +109,3 @@ export class ManifoldRegionSelector {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldRegionSelector, ['restFetch']);

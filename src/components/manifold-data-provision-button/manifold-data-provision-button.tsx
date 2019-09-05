@@ -2,7 +2,7 @@ import { h, Component, Prop, Element, State, Watch, Event, EventEmitter } from '
 import { gql } from '@manifoldco/gql-zero';
 
 import { Gateway } from '../../types/gateway';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { globalRegion } from '../../data/region';
 import { Catalog } from '../../types/catalog';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -49,10 +49,10 @@ const query = gql`
 @Component({ tag: 'manifold-data-provision-button' })
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
@@ -231,5 +231,3 @@ export class ManifoldDataProvisionButton {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldDataProvisionButton, ['restFetch', 'graphqlFetch']);

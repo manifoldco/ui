@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Element, Event, EventEmitter, Watch } from '@stencil/core';
 
 import { Gateway } from '../../types/gateway';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { globalRegion } from '../../data/region';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
@@ -26,7 +26,7 @@ interface ErrorMessage {
 export class ManifoldDataManageButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** Name of resource */
   @Prop() resourceLabel?: string;
   @Prop() features?: Gateway.FeatureMap = {};
@@ -129,5 +129,3 @@ export class ManifoldDataManageButton {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldDataManageButton, ['restFetch']);
