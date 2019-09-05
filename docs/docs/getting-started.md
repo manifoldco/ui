@@ -5,8 +5,7 @@ title: Getting Started
 
 # Getting Started
 
-Manifold’s [web component][web-components] UI library, powered by
-[Stencil][stencil].
+Manifold’s [web component][web-components] UI library, powered by [Stencil][stencil].
 
 ## Installation
 
@@ -16,8 +15,8 @@ npm i @manifoldco/ui
 
 ## Usage
 
-Manifold UI can be used in any frameworkless project (“vanilla” JS), or any
-modern framework like React, Vue, or Angular.
+Manifold UI can be used in any frameworkless project (“vanilla” JS), or any modern framework like
+React, Vue, or Angular.
 
 In any setup, you can use our CDN for UI:
 
@@ -65,6 +64,11 @@ In any setup, you can use our CDN for UI:
 
 ### React
 
+You may choose to load Manifold UI asynchrously with a dynamic import, or synchronously with a
+regular import.
+
+**Asynchronous:**
+
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -78,17 +82,32 @@ const App = () => <manifold-marketplace />;
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
+**Synchronous:**
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import '@manifoldco/ui/dist/manifold/manifold.css';
+import { defineCustomElements } from '@manifoldco/ui/dist/loader';
+
+defineCustomElements(window);
+
+const App = () => <manifold-marketplace />;
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
 ### TypeScript + JSX setup
 
-When using inside TypeScript, you’ll likely see this error (
-`manifold-connection` could be any custom element):
+When using inside TypeScript, you’ll likely see this error ( `manifold-connection` could be any
+custom element):
 
 ```
 Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'
 ```
 
-To solve that, create a `custom-elements.d.ts` file somewhere inside your
-project (must be inside the [include][tsconfig] option in `tsconfig.json`):
+To solve that, create a `custom-elements.d.ts` file somewhere inside your project (must be inside
+the [include][tsconfig] option in `tsconfig.json`):
 
 ```ts
 import { Components } from '@manifoldco/ui';
@@ -109,17 +128,16 @@ declare global {
 }
 ```
 
-This will expose the types from Stencil to JSX, and you’ll be able to get
-typechecking as you write.
+This will expose the types from Stencil to JSX, and you’ll be able to get typechecking as you write.
 
-_Note: every element will have to be declared manually, at least until [this
-PR][ts-fix] is merged in TypeScript core._
+_Note: every element will have to be declared manually, at least until [this PR][ts-fix] is merged
+in TypeScript core._
 
 ### Ember, Angular, Vue, and others
 
-Initializing Manifold UI works the exact same as any other Stencil project.
-For more advanced instructions on integrating with your specific stack,
-please refer to Stencil’s [docs on integration][stencil-framework].
+Initializing Manifold UI works the exact same as any other Stencil project. For more advanced
+instructions on integrating with your specific stack, please refer to Stencil’s [docs on
+integration][stencil-framework].
 
 [stencil]: https://stenciljs.com/
 [stencil-framework]: https://stenciljs.com/docs/overview/

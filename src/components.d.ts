@@ -424,6 +424,7 @@ export namespace Components {
     * Show only free plans?
     */
     'freePlans'?: boolean;
+    'hideUntilReady'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -440,7 +441,6 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'showSkeletons'?: boolean;
   }
   interface ManifoldProduct {
     /**
@@ -1485,6 +1485,7 @@ declare namespace LocalJSX {
     * Show only free plans?
     */
     'freePlans'?: boolean;
+    'hideUntilReady'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1501,7 +1502,6 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'restFetch'?: RestFetch;
-    'showSkeletons'?: boolean;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**

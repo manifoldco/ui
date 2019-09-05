@@ -22,7 +22,7 @@ export const skeleton = async () => {
 export const jawsDB = async () => {
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
-  selector.showSkeletons = false;
+  selector.hideUntilReady = false;
 
   document.body.appendChild(selector);
 
@@ -32,7 +32,7 @@ export const jawsDB = async () => {
 export const delayedJawsDB = async () => {
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
-  selector.showSkeletons = false;
+  selector.hideUntilReady = false;
 
   const mockFetch = (async (...args) => {
     // Even with a delay, we should not see skeletons

@@ -15,14 +15,12 @@ Display the plans for a product.
 <manifold-plan-selector product-label="jawsdb-mysql"></manifold-plan-selector>
 ```
 
-You can find the `:product` label for each at
-`https://manifold.co/services/:product`.
+You can find the `:product` label for each at `https://manifold.co/services/:product`.
 
 ## CTA
 
-You can pass in your own button or link in the bottom-right of the component
-by passing in any element with `slot="cta"` as an attribute. [Read more about
-slots][slot].
+You can pass in your own button or link in the bottom-right of the component by passing in any
+element with `slot="cta"` as an attribute. [Read more about slots][slot].
 
 ```jsx
 <manifold-plan-selector product-label="jawsdb-mysql">
@@ -34,10 +32,10 @@ slots][slot].
 
 ## Events
 
-This component emits [custom
-events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
-when it updates. To listen to those events, add an event listener either on
-the component itself, or `document`.
+This component emits
+[custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) when it
+updates. To listen to those events, add an event listener either on the component itself, or
+`document`.
 
 ```js
 document.addEventListener('manifold-planSelector-change', ({ detail }) => {
@@ -61,9 +59,8 @@ The following events are emitted:
 
 ## Regions
 
-Most of our products are regionless, but some plans let users specify the
-region. In this case, you may optionally want to order the regions with the
-`regions` attribute:
+Most of our products are regionless, but some plans let users specify the region. In this case, you
+may optionally want to order the regions with the `regions` attribute:
 
 ```html
 <manifold-plan-selector
@@ -71,11 +68,10 @@ region. In this case, you may optionally want to order the regions with the
 ></manifold-plan-selector>
 ```
 
-Regions will be ordered in the order specified. Any regions not mentioned
-will come at the end, alphabetically. Any regions not supported by the plan
-will simply be ignored (in this sense, you could even pass the same ordered
-list to all plans regardless, if you’d like them always to display in the
-same order).
+Regions will be ordered in the order specified. Any regions not mentioned will come at the end,
+alphabetically. Any regions not supported by the plan will simply be ignored (in this sense, you
+could even pass the same ordered list to all plans regardless, if you’d like them always to display
+in the same order).
 
 ### Supported regions
 
@@ -118,3 +114,12 @@ same order).
 | `rs-dallas-1`        | Rackspace - Dallas 1                       |
 
 [slot]: https://stenciljs.com/docs/templating-jsx/
+
+## Hide Until Ready
+
+By default, the plan selector will display our skeleton UI while it retrieves data. You can use
+`hide-until-ready` to tell the component to display nothing until the data has been retrieved. This
+also allows you to use your own loading indicators, as described [in the advanced
+section][custom-loaders].
+
+[custom-loaders]: /advanced/authentication

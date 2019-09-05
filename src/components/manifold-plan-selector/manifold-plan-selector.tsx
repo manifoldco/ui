@@ -21,7 +21,7 @@ export class ManifoldPlanSelector {
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceLabel?: string;
-  @Prop() showSkeletons?: boolean = true;
+  @Prop() hideUntilReady?: boolean = false;
   @State() product?: Catalog.Product;
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
@@ -47,7 +47,7 @@ export class ManifoldPlanSelector {
       call = this.fetchResource(this.resourceLabel);
     }
 
-    if (!this.showSkeletons) {
+    if (this.hideUntilReady) {
       return call;
     }
 
