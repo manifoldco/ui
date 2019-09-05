@@ -8,7 +8,7 @@ storiesOf('Copy credentials 🔒', module)
   .addDecorator(manifoldConnectionDecorator)
   .add('default', () => {
     const resourceLabel = text('resource-label', 'config');
-    text('📋 clipboard test', '');
+    text('📋 test paste', '');
     return `
       <style>
         button {
@@ -18,8 +18,8 @@ storiesOf('Copy credentials 🔒', module)
           color: blue;
         }
       </style>
-      <manifold-data-copy-credentials-button resource-label="${resourceLabel}">
+      <manifold-copy-credentials resource-label="${resourceLabel}">
         Copy
-      </manifold-data-copy-credentials-button>
+      </manifold-copy-credentials>
     `;
   });

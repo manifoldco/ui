@@ -1,12 +1,9 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
+import ClipboardJS from 'clipboard';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
-
-interface ClickDetail {
-  resourceLabel?: string;
-}
 
 interface ErrorDetail {
   error: string;
@@ -24,6 +21,7 @@ export class ManifoldCopyCredentials {
   @Prop() graphqlFetch?: GraphqlFetch;
   /** The label of the resource to fetch credentials for */
   @Prop() resourceLabel?: string;
+  @State() clipboard?: ClipboardJS;
   @State() credentials?: string;
   @State() loading: boolean = true;
   @Event({ eventName: 'manifold-copyCredentials-click', bubbles: true }) click: EventEmitter;
@@ -35,16 +33,11 @@ export class ManifoldCopyCredentials {
   }
 
   componentWillLoad() {
-    if (!this.resourceLabel) {
-      const detail: ErrorDetail = {
-        resourceLabel: this.resourceLabel,
-        error: 'Attribute `resource-label` is missing',
-      };
-      this.error.emit({ detail });
-      return;
-    }
-
     this.refresh();
+  }
+
+  get id() {
+    return `clipboard-${this.resourceLabel}`;
   }
 
   async refresh() {
@@ -52,13 +45,19 @@ export class ManifoldCopyCredentials {
       return;
     }
 
+    // clean up listeners
+    if (this.clipboard) {
+      this.clipboard.destroy();
+    }
+
+    // disable clicks while loading
     this.loading = true;
 
     const { data, errors } = await this.graphqlFetch({
       query: gql`
         query RESOURCE_WITH_CREDENTIALS($resourceLabel: String!) {
           resource(label: $resourceLabel) {
-            credentials {
+            credentials(first: 100) {
               edges {
                 node {
                   key
@@ -86,42 +85,27 @@ export class ManifoldCopyCredentials {
       const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
       this.success.emit({ detail });
 
-      this.credentials = data.resource.credentials.edges.reduce(
-        (display, { node }) => (node ? `${display}\n${node.key}=${node.value}` : display),
-        ''
+      const credentials: string[] = data.resource.credentials.edges.reduce(
+        (credList, { node }) => (node ? [...credList, `\n${node.key}=${node.value}`] : credList),
+        []
       );
+      this.credentials = credentials.join('\n');
     }
+
+    // re-initialize clipboard
+    this.clipboard = new ClipboardJS(`#${this.id}`); // eslint-disable-line no-new
 
     this.loading = false;
   }
 
-  // in order to work in Firefox and Safari, this *must* be a sync action (i.e. creds must already be fetched)
-  sendToClipboard = (): void => {
-    if (!this.credentials) {
-      const detail: ErrorDetail = {
-        error: 'Credentials still loading',
-        resourceLabel: this.resourceLabel,
-      };
-      this.error.emit({ detail });
-      return;
-    }
-
-    const textArea = document.createElement('textarea');
-    textArea.innerHTML = this.credentials;
-
-    this.el.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    this.el.removeChild(textArea);
-
-    const detail: ClickDetail = { resourceLabel: this.resourceLabel };
-    this.click.emit({ detail });
-  };
-
   @logger()
   render() {
     return (
-      <button onClick={this.sendToClipboard} disabled={this.loading || !this.credentials}>
+      <button
+        data-clipboard-text={this.credentials ? this.credentials : undefined}
+        id={this.id}
+        disabled={this.loading || !this.credentials}
+      >
         <slot />
       </button>
     );
