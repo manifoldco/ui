@@ -40,15 +40,14 @@ export namespace Components {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken {
-    'oauthUrl'?: string;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'setAuthToken': (s: string) => void;
+    'setAuthToken'?: (s: string) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'subscribe': (s: Subscriber) => () => void;
+    'subscribe'?: (s: Subscriber) => () => void;
     'token'?: string;
   }
   interface ManifoldBadge {}
@@ -1075,7 +1074,6 @@ declare namespace LocalJSX {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
-    'oauthUrl'?: string;
     'onManifold-token-receive'?: (event: CustomEvent<{ token: string }>) => void;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
