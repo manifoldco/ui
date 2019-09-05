@@ -1,5 +1,5 @@
 ---
-title: Resource Details View
+title: Custom Loaders
 path: /advanced/custom-loaders
 ---
 
