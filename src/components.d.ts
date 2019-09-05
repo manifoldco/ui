@@ -88,23 +88,7 @@ export namespace Components {
     'loading': boolean;
     'resourceLabel': string;
   }
-  interface ManifoldDataDeprovisionButton {
-    'loading'?: boolean;
-    'resourceId'?: string;
-    /**
-    * The label of the resource to deprovision
-    */
-    'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-  }
-  interface ManifoldDataGetCredentialsButton {
-    /**
-    * Sets if the credentials should be copied to clipboard in addition to being sent in a dom event.
-    */
-    'copyToClipboard': boolean;
+  interface ManifoldDataCopyCredentialsButton {
     'loading'?: boolean;
     /**
     * The id of the resource to fetch credentials for
@@ -112,6 +96,18 @@ export namespace Components {
     'resourceId'?: string;
     /**
     * The label of the resource to fetch credentials for
+    */
+    'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
+  }
+  interface ManifoldDataDeprovisionButton {
+    'loading'?: boolean;
+    'resourceId'?: string;
+    /**
+    * The label of the resource to deprovision
     */
     'resourceLabel'?: string;
     /**
@@ -695,16 +691,16 @@ declare global {
     new (): HTMLManifoldCredentialsViewElement;
   };
 
+  interface HTMLManifoldDataCopyCredentialsButtonElement extends Components.ManifoldDataCopyCredentialsButton, HTMLStencilElement {}
+  var HTMLManifoldDataCopyCredentialsButtonElement: {
+    prototype: HTMLManifoldDataCopyCredentialsButtonElement;
+    new (): HTMLManifoldDataCopyCredentialsButtonElement;
+  };
+
   interface HTMLManifoldDataDeprovisionButtonElement extends Components.ManifoldDataDeprovisionButton, HTMLStencilElement {}
   var HTMLManifoldDataDeprovisionButtonElement: {
     prototype: HTMLManifoldDataDeprovisionButtonElement;
     new (): HTMLManifoldDataDeprovisionButtonElement;
-  };
-
-  interface HTMLManifoldDataGetCredentialsButtonElement extends Components.ManifoldDataGetCredentialsButton, HTMLStencilElement {}
-  var HTMLManifoldDataGetCredentialsButtonElement: {
-    prototype: HTMLManifoldDataGetCredentialsButtonElement;
-    new (): HTMLManifoldDataGetCredentialsButtonElement;
   };
 
   interface HTMLManifoldDataHasResourceElement extends Components.ManifoldDataHasResource, HTMLStencilElement {}
@@ -1022,8 +1018,8 @@ declare global {
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-credentials': HTMLManifoldCredentialsElement;
     'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
+    'manifold-data-copy-credentials-button': HTMLManifoldDataCopyCredentialsButtonElement;
     'manifold-data-deprovision-button': HTMLManifoldDataDeprovisionButtonElement;
-    'manifold-data-get-credentials-button': HTMLManifoldDataGetCredentialsButtonElement;
     'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
     'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
@@ -1139,6 +1135,21 @@ declare namespace LocalJSX {
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceLabel'?: string;
   }
+  interface ManifoldDataCopyCredentialsButton extends JSXBase.HTMLAttributes<HTMLManifoldDataCopyCredentialsButtonElement> {
+    'loading'?: boolean;
+    /**
+    * The id of the resource to fetch credentials for
+    */
+    'resourceId'?: string;
+    /**
+    * The label of the resource to fetch credentials for
+    */
+    'resourceLabel'?: string;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'restFetch'?: RestFetch;
+  }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     'loading'?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
@@ -1147,28 +1158,6 @@ declare namespace LocalJSX {
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
-    */
-    'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-  }
-  interface ManifoldDataGetCredentialsButton extends JSXBase.HTMLAttributes<HTMLManifoldDataGetCredentialsButtonElement> {
-    /**
-    * Sets if the credentials should be copied to clipboard in addition to being sent in a dom event.
-    */
-    'copyToClipboard'?: boolean;
-    'loading'?: boolean;
-    'onManifold-getCredentialsButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-getCredentialsButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-getCredentialsButton-success'?: (event: CustomEvent<any>) => void;
-    /**
-    * The id of the resource to fetch credentials for
-    */
-    'resourceId'?: string;
-    /**
-    * The label of the resource to fetch credentials for
     */
     'resourceLabel'?: string;
     /**
@@ -1729,8 +1718,8 @@ declare namespace LocalJSX {
     'manifold-cost-display': ManifoldCostDisplay;
     'manifold-credentials': ManifoldCredentials;
     'manifold-credentials-view': ManifoldCredentialsView;
+    'manifold-data-copy-credentials-button': ManifoldDataCopyCredentialsButton;
     'manifold-data-deprovision-button': ManifoldDataDeprovisionButton;
-    'manifold-data-get-credentials-button': ManifoldDataGetCredentialsButton;
     'manifold-data-has-resource': ManifoldDataHasResource;
     'manifold-data-manage-button': ManifoldDataManageButton;
     'manifold-data-product-logo': ManifoldDataProductLogo;
