@@ -3,16 +3,16 @@ import fetchMock from 'fetch-mock';
 
 import { Resource, Credential } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
-import { ManifoldDataCopyCredentialsButton } from './manifold-data-get-credentials-button';
+import { ManifoldCopyCredentials } from './manifold-copy-credentials';
 import { createRestFetch } from '../../utils/restFetch';
 
 describe('<manifold-data-get-credentials-button>', () => {
   let page: SpecPage;
-  let element: HTMLManifoldDataGetCredentialsButtonElement;
+  let element: HTMLManifoldCopyCredentialsElement;
 
   beforeEach(async () => {
     page = await newSpecPage({
-      components: [ManifoldDataCopyCredentialsButton],
+      components: [ManifoldCopyCredentials],
       html: `<div></div>`,
     });
     element = page.doc.createElement('manifold-data-get-credentials-button');
@@ -28,7 +28,7 @@ describe('<manifold-data-get-credentials-button>', () => {
   it('fetches resource id on change if not set', () => {
     const resourceLabel = 'new-resource';
 
-    const provisionButton = new ManifoldDataCopyCredentialsButton();
+    const provisionButton = new ManifoldCopyCredentials();
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = 'old-resource';
 
@@ -39,7 +39,7 @@ describe('<manifold-data-get-credentials-button>', () => {
   it('does not resource id on change if set', () => {
     const resourceLabel = 'new-resource';
 
-    const provisionButton = new ManifoldDataCopyCredentialsButton();
+    const provisionButton = new ManifoldCopyCredentials();
     provisionButton.fetchResourceId = jest.fn();
     provisionButton.resourceLabel = 'old-resource';
     provisionButton.resourceId = '1234';

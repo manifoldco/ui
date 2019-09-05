@@ -1,12 +1,11 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
-import Tunnel from '../../data/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
-@Component({ tag: 'manifold-data-copy-credentials-button' })
-export class ManifoldDataCopyCredentialsButton {
+@Component({ tag: 'manifold-copy-credentials' })
+export class ManifoldCopyCredentials {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
@@ -108,5 +107,3 @@ export class ManifoldDataCopyCredentialsButton {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldDataCopyCredentialsButton, ['restFetch']);
