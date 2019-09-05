@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Enabled custom loading indicators.
+- Added `<manifold-copy-credentials>` for quickly-copying secrets to a user’s clipboard
 
 ### Fixed
 
@@ -30,9 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed a typo in manifold-data-deprovision-button documentation (#457)
 - Upgraded `@manifoldco/shadowcat` to feature the latest security patches. (#477)
-
-### Added
-- Added a new `manifold-data-get-credentials-button` component to fetch the credentials of a resource on click. Those credentials are passed as a dom event.
 
 ### Changed
 
