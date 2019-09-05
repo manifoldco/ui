@@ -3,27 +3,27 @@ title: Resource Details View
 path: /advanced/custom-loaders
 ---
 
-# Custom Loaders
+# Custom loaders
 
-By default, our components that fetch data from our API will display skeleton screens that indicate
-what the UI will look like when the data is retrieved. In some cases, you may wish to use your own
-loading indicators in order to keep your UI design more consistent. What follows is a guide for
-replacing our loaders with your own.
+By default, our components that fetch data from our API will display [skeleton screens][skeletons]
+that indicate what the UI will look like when the data is retrieved. In some cases, you may wish to
+use your own loading indicators in order to keep your UI design more consistent. What follows is a
+guide for replacing our loaders with your own.
 
-## Hide Until Ready
+## Hide until ready
 
 Components that expose the `hide-until-ready` attribute will support this behavior. If this
 attribute is set, our components won't display anything until they have finished retrieving data and
 have fully rendered their contents. Example:
 
 ```html
-<manifold-plan-selector product-label="jawsdb-mysql"></manifold-plan-selector>
+<manifold-plan-selector product-label="jawsdb-mysql" hide-until-ready></manifold-plan-selector>
 ```
 
 This is only half of the custom loader story. In order to display your loaders while the component
 is still fetching, you can leverage `componentOnReady` as described below.
 
-## Use Your Loading Indicator
+## Use your loading indicator
 
 Our web components expose a `componentOnReady()` function. This returns a promise that resolves as
 soon as the component has rendered. If you are using `hide-until-ready`, this promise will not
@@ -67,11 +67,14 @@ function App() {
 export default App;
 ```
 
-Please note that this technique requires you to load Manifold UI synchronously.
+Please note that because we need `componentOnReady` to exist at the time React renders, using custom
+loaders requires you to load Manifold UI synchronously (in other words, `defineCustomElements` can't
+be [lazy-loaded][lazy-loading] using `import()`).
 
-## Currently Supported Components
+## Currently supported components
 
-We plan to make this functionality available to all components that talk to the API. For the time
-being, this is only available for a limited set of components:
+- [manifold-plan-selector][plan-selector]
 
-- [manifold-plan-selector](/components/plan-selector)
+[skeletons]: https://css-tricks.com/building-skeleton-screens-css-custom-properties/
+[plan-selector]: /components/plan-selector
+[lazy-loading]: https://reactjs.org/docs/code-splitting.html
