@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Multiple queries in GraphQL now supported in TypeScript
 
+### Changed
+
+- Clarified documentation for multiple components
+
 ## [v0.5.9]
 
 ### Added
