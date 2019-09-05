@@ -31,7 +31,7 @@
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
     "bundlesize": "npm run build && npx bundlesize",
     "copy-changelog": "node scripts/copy-changelog",
-    "dev": "concurrently 'stencil build --watch' 'wait-on dist/loader/index.cjs.js && cp .manifold-local.yml .manifold.yml && manifold run -- npm run storybook'",
+    "dev": "concurrently 'stencil build --watch' 'rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook'",
     "docs": "npm run prepare:docs && cd docs && npm start",
     "docs:forestry": "cd docs && npm run start:forestry",
     "generate:gql": "graphql-codegen --config codegen.yml",
@@ -76,7 +76,8 @@
   "dependencies": {
     "@manifoldco/gql-zero": "^0.2.0",
     "@manifoldco/shadowcat": "^0.1.7",
-    "@stencil/state-tunnel": "^1.0.1"
+    "@stencil/state-tunnel": "^1.0.1",
+    "clipboard": "^2.0.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.7.0",
@@ -91,6 +92,7 @@
     "@storybook/addon-knobs": "^5.1.11",
     "@storybook/addons": "^5.1.11",
     "@storybook/html": "^5.1.11",
+    "@types/clipboard": "^2.0.1",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "^24.0.18",
     "@types/puppeteer": "1.19.1",
