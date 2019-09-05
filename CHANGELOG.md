@@ -5,23 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v0.5.9]
 
 ### Added
 
-- Added an events queue to `<manifold-performance>` to capture any performance events emitted before DataDog is ready.
-- Added more event data & testing for `<manifold-data-provision-button>`.
+- Added an events queue to `<manifold-performance>` to capture any performance events emitted before DataDog is ready. (#451)
+- Added more event data & testing for `<manifold-data-provision-button>`. (#447)
 
 ### Fixed
 
-- Fixed a typo in manifold-data-deprovision-button documentation
-- Upgraded `@manifoldco/shadowcat` to feature the latest security patches.
+- Fixed a typo in manifold-data-deprovision-button documentation (#457)
+- Upgraded `@manifoldco/shadowcat` to feature the latest security patches. (#477)
 
 ### Changed
 
-- Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs.
-- Changed the `manifold-product` component to now use the GraphQL API rather than the REST API.
-- Changed `manifold-data-product-name` to use GraphQL
+- Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs. (#450)
+- Changed the `manifold-product` component to now use the GraphQL API rather than the REST API. (#456)
+- Changed `manifold-data-product-name` to use GraphQL (#463)
 
 ## [v0.5.8]
 
@@ -30,12 +30,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed resource card CTA slot from flashing while loading (#438)
 - Hide credentials button no longer flashes when credentials component loads (#434)
 - When an expired auth token causes an API call to respond with a 401, the token will now refresh and
-  the API call will retry.
+  the API call will retry. (#440)
 
 ### Changed
 
-- Enforce standard height on product cards for more consistency
-- Replace auth token polling with an event based system
+- Enforce standard height on product cards for more consistency (#435)
+- Replace auth token polling with an event based system (#436)
 
 ## [v0.5.7]
 
@@ -47,8 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed events firing twice for `<manifold-resource-rename>`, `<manifold-resource-sso>`, and `<manifold-resource-deprovision>` (#401)
 - Performance optimizations for network calls in `manifold-marketplace` (#424)
-- Prevent provision button from being clicked multiple times.
-- Fixed a bug in Firefox with `<manifold-auth-token> (#429)`
+- Prevent provision button from being clicked multiple times. (#410)
+- Fixed a bug in Firefox with `<manifold-auth-token>` (#429)
 
 ### Changed
 
