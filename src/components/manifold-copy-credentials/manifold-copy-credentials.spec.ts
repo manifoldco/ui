@@ -1,6 +1,15 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
+/* eslint-disable import/first */
+
+// mock clipboard-polyfill before importing the component
+const copy = jest.fn();
+copy.mockImplementation(() => new Promise(resolve => resolve()));
+jest.mock('clipboard-polyfill', () => ({
+  writeText: copy,
+}));
+
 import { ManifoldCopyCredentials } from './manifold-copy-credentials';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 import { CredentialEdge } from '../../types/graphql';
@@ -10,6 +19,15 @@ const credentials: Partial<CredentialEdge[]> = [
   { cursor: '', node: { key: 'KEY_1', value: 'SECRET_1' } },
   { cursor: '', node: { key: 'KEY_2', value: 'SECRET_2' } },
 ];
+const credentialsText = credentials
+  .reduce(
+    (secrets, credential) =>
+      credential && credential.node
+        ? [...secrets, `${credential.node.key}=${credential.node.value}`]
+        : secrets,
+    []
+  )
+  .join('\n');
 
 describe('<manifold-copy-credentials>', () => {
   let page: SpecPage;
@@ -26,6 +44,9 @@ describe('<manifold-copy-credentials>', () => {
       setAuthToken: jest.fn(),
     });
 
+    // reset clipboard calls
+    copy.mockClear();
+
     // mock graphql (a resource with “error” in the name will throw)
     fetchMock.reset();
     fetchMock.mock(graphqlEndpoint, (_, req) => {
@@ -36,8 +57,8 @@ describe('<manifold-copy-credentials>', () => {
     });
   });
 
-  describe('v0 API', () => {
-    it('[resource-label]: fetches creds', async () => {
+  describe('v0 HTML', () => {
+    it('[resource-label]: copies creds to clipboard', async () => {
       // set up page
       element.resourceLabel = 'my-resource';
       const { root } = page;
@@ -55,20 +76,13 @@ describe('<manifold-copy-credentials>', () => {
       }
       // expect button is not disabled
       expect(button.getAttribute('disabled')).toBeNull();
+
       // expect button has creds formatted properly
-      const secretText = credentials
-        .reduce(
-          (secrets, credential) =>
-            credential && credential.node
-              ? [...secrets, `${credential.node.key}=${credential.node.value}`]
-              : secrets,
-          []
-        )
-        .join('\n');
-      expect(button.getAttribute('data-clipboard-text')).toBe(secretText);
+      button.click();
+      expect(copy).toHaveBeenCalledWith(credentialsText);
     });
 
-    it('[resource-label]: errs if missing', async () => {
+    it('[resource-label]: disables button if bad resource', async () => {
       // set up page
       element.resourceLabel = 'error-resource';
       const { root } = page;
@@ -89,58 +103,12 @@ describe('<manifold-copy-credentials>', () => {
     });
   });
 
-  describe('security', () => {
-    it('credentials aren’t exposed in any events', async () => {
-      element.resourceLabel = 'my-resource';
-      const { root, doc } = page;
-      if (!root || !doc) {
-        throw new Error('<manifold-copy-credentials> not found in document');
-      }
-      root.appendChild(element);
-      // wait for creds
-      await page.waitForChanges();
-
-      // store all event data
-      let eventData = '';
-
-      // select button
-      const button = root.querySelector('button');
-      if (!button) {
-        throw new Error('<button> not found in document');
-      }
-
-      // set up listeners, and wait for success
-      const mockError = jest.fn();
-      const mockSuccess = jest.fn();
-      await new Promise(resolve => {
-        mockError.mockImplementation(args => {
-          eventData = `${eventData}${JSON.stringify(args)}`;
-        });
-        mockSuccess.mockImplementation(args => {
-          eventData = `${eventData}${JSON.stringify(args)}`;
-          resolve();
-        });
-        doc.addEventListener('manifold-copyCredentials-error', mockError);
-        doc.addEventListener('manifold-copyCredentials-success', mockSuccess);
-        button.click();
-      });
-
-      // ensure no credentials are present in output
-      credentials.forEach(credential => {
-        if (!credential || !credential.node) {
-          throw new Error('credential node missing');
-        }
-        expect(eventData.includes(credential.node.key)).toBe(false);
-        expect(eventData.includes(credential.node.value)).toBe(false);
-      });
-    });
-  });
-
-  describe('events', () => {
+  describe('v0 events', () => {
     it('error', async () => {
       // set up page
-      element.resourceLabel = 'error-resource';
-      const { root, doc } = page;
+      const resourceLabel = 'error-resource';
+      element.resourceLabel = resourceLabel;
+      const { root, rootInstance, doc } = page;
       if (!root || !doc) {
         throw new Error('<manifold-copy-credentials> not found in document');
       }
@@ -151,13 +119,23 @@ describe('<manifold-copy-credentials>', () => {
         mockError.mockImplementation(() => resolve());
         doc.addEventListener('manifold-copyCredentials-error', mockError);
         root.appendChild(element);
+        // reload component manually because mocking the endpoint fires too quickly
+        page.waitForChanges().then(() => rootInstance.componentWillLoad());
       });
 
-      expect(mockError).toHaveBeenCalledWith(expect.objectContaining({ detail: {} }));
+      expect(mockError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            message: 'resource not found',
+            resourceLabel,
+          },
+        })
+      );
     });
 
     it('success', async () => {
-      element.resourceLabel = 'my-resource';
+      const resourceLabel = 'success-resource';
+      element.resourceLabel = resourceLabel;
       const { root, doc } = page;
       if (!root || !doc) {
         throw new Error('<manifold-copy-credentials> not found in document');
@@ -179,7 +157,73 @@ describe('<manifold-copy-credentials>', () => {
         doc.addEventListener('manifold-copyCredentials-success', mockSuccess);
         button.click();
       });
-      expect(mockSuccess).toHaveBeenCalledWith(expect.objectContaining({ detail: {} }));
+      expect(mockSuccess).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: {
+            resourceLabel,
+          },
+        })
+      );
+    });
+  });
+
+  describe('security', () => {
+    it('credentials aren’t exposed in success event', async () => {
+      const resourceLabel = 'my-resource';
+      element.resourceLabel = resourceLabel;
+      const { root, doc } = page;
+      if (!root || !doc) {
+        throw new Error('<manifold-copy-credentials> not found in document');
+      }
+      root.appendChild(element);
+      // wait for creds
+      await page.waitForChanges();
+
+      // select button
+      const button = root.querySelector('button');
+      if (!button) {
+        throw new Error('<button> not found in document');
+      }
+
+      // set up listeners, and wait for success
+      const mockSuccess = jest.fn();
+      await new Promise(resolve => {
+        mockSuccess.mockImplementation(() => resolve());
+        doc.addEventListener('manifold-copyCredentials-success', mockSuccess);
+        button.click();
+      });
+
+      const eventData = JSON.stringify(
+        mockSuccess.mock.calls.map(({ detail }) => JSON.stringify(detail))
+      );
+
+      // ensure no credentials are present in output
+      credentials.forEach(credential => {
+        if (!credential || !credential.node) {
+          throw new Error('credential node missing');
+        }
+        expect(eventData.includes(credential.node.key)).toBe(false);
+        expect(eventData.includes(credential.node.value)).toBe(false);
+      });
+    });
+
+    it('credentials aren’t exposed in any HTML', async () => {
+      element.resourceLabel = 'my-resource';
+      const { root } = page;
+      if (!root) {
+        throw new Error('<manifold-copy-credentials> not found in document');
+      }
+      root.appendChild(element);
+      await page.waitForChanges();
+      const html = root.outerHTML;
+
+      credentials.forEach(credential => {
+        if (!credential || !credential.node) {
+          throw new Error('credential node missing');
+        }
+        expect(html.includes(credential.node.key)).toBe(false);
+        expect(html.includes(credential.node.value)).toBe(false);
+      });
     });
   });
 });

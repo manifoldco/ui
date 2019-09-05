@@ -1,13 +1,13 @@
-import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { h, Element, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
-import ClipboardJS from 'clipboard';
+import * as clipboard from 'clipboard-polyfill';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 interface ErrorDetail {
-  error: string;
+  message: string;
   resourceLabel?: string;
 }
 
@@ -17,19 +17,17 @@ interface SuccessDetail {
 
 @Component({ tag: 'manifold-copy-credentials' })
 export class ManifoldCopyCredentials {
+  @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** The label of the resource to fetch credentials for */
   @Prop() resourceLabel?: string;
-  @State() clipboard?: ClipboardJS;
   @State() credentials?: string;
-  @State() loading: boolean = true;
   @Event({ eventName: 'manifold-copyCredentials-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-copyCredentials-success', bubbles: true }) success: EventEmitter;
 
   @Watch('resourceLabel') labelChange() {
     this.refresh();
-    this.attachClipboard();
   }
 
   componentWillLoad() {
@@ -37,30 +35,29 @@ export class ManifoldCopyCredentials {
   }
 
   componentDidLoad() {
-    this.attachClipboard(); // attach clipboard only after render
-  }
-
-  private get id() {
-    return `copy-creds-${this.resourceLabel}`;
-  }
-
-  private attachClipboard() {
-    // clean up existing clipboard if there is one
-    if (this.clipboard) {
-      this.clipboard.destroy();
+    const button = this.el.querySelector('button');
+    if (button) {
+      button.addEventListener('click', () => this.handleClick());
+    } else {
+      console.error('<manifold-copy-credentials>: couldn’t attach clipboard listener');
     }
+  }
 
-    // re-initialize and re-bind events for clipboard
-    this.clipboard = new ClipboardJS(`#${this.id}`); // use IDs for performance
-    this.clipboard.on('error', e => {
-      const detail: ErrorDetail = { error: 'Copy failed', resourceLabel: this.resourceLabel };
-      this.error.emit({ detail });
-      console.error(e);
-    });
-    this.clipboard.on('success', () => {
-      const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
-      this.success.emit({ detail });
-    });
+  private handleClick() {
+    if (this.credentials) {
+      clipboard
+        .writeText(this.credentials)
+        .then(() => {
+          const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
+          this.success.emit(detail);
+        })
+        .catch(() => {
+          const message = 'couldn’t access clipboard';
+          const detail: ErrorDetail = { message, resourceLabel: this.resourceLabel };
+          this.error.emit(detail);
+          console.error(message);
+        });
+    }
   }
 
   async refresh() {
@@ -68,8 +65,8 @@ export class ManifoldCopyCredentials {
       return;
     }
 
-    // disable clicks while loading
-    this.loading = true;
+    // disable button while loading
+    this.credentials = undefined;
 
     const { data, errors } = await this.graphqlFetch({
       query: gql`
@@ -91,8 +88,9 @@ export class ManifoldCopyCredentials {
 
     // if errors, report them but keep going
     if (Array.isArray(errors)) {
-      errors.forEach(error => {
-        const detail: ErrorDetail = { resourceLabel: this.resourceLabel, error: error.message };
+      console.log(this.resourceLabel);
+      errors.forEach(({ message }) => {
+        const detail: ErrorDetail = { resourceLabel: this.resourceLabel, message };
         this.error.emit(detail);
       });
     }
@@ -105,21 +103,12 @@ export class ManifoldCopyCredentials {
       );
       this.credentials = credentials.join('\n');
     }
-
-    // unset loading
-    this.loading = false;
   }
 
   @logger()
   render() {
-    const disabled = this.loading === true || !this.credentials || undefined;
-
     return (
-      <button
-        data-clipboard-text={this.credentials ? this.credentials : undefined}
-        id={this.id}
-        disabled={disabled}
-      >
+      <button disabled={!this.credentials || undefined}>
         <slot />
       </button>
     );

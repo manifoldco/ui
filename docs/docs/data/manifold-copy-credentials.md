@@ -45,17 +45,17 @@ document.addEventListener('manifold-copyCredentials-success', ({ detail }) => co
 // };
 document.addEventListener('manifold-copyCredentials-error', ({ detail }) => console.log(detail));
 // {
-//   error: 'not_found: Resource not found',
+//   message: 'resource not found',
 //   resourceLabel: 'my-resource',
 // };
 ```
 
 _Note: for security reasons, we don’t broadcast user credentials anywhere._
 
-| Name                               |         Returns          | Description                                                                                                     |
-| :--------------------------------- | :----------------------: | :-------------------------------------------------------------------------------------------------------------- |
-| `manifold-copyCredentials-success` |     `resourceLabel`      | Credentials were successfully copied to the clipboard. Yay!                                                     |
-| `manifold-copyCredentials-error`   | `error`, `resourceLabel` | Something went wrong, either during the copy to clipboard action, or retrieving credentials in the first place. |
+| Name                               |          Returns           | Description                                                                                                     |
+| :--------------------------------- | :------------------------: | :-------------------------------------------------------------------------------------------------------------- |
+| `manifold-copyCredentials-success` |      `resourceLabel`       | Credentials were successfully copied to the clipboard. Yay!                                                     |
+| `manifold-copyCredentials-error`   | `message`, `resourceLabel` | Something went wrong, either during the copy to clipboard action, or retrieving credentials in the first place. |
 
 ## Styling
 
