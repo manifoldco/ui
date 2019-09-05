@@ -6,7 +6,7 @@ import { connections } from '../../utils/connections';
 import { ManifoldCopyCredentials } from './manifold-copy-credentials';
 import { createRestFetch } from '../../utils/restFetch';
 
-describe('<manifold-data-get-credentials-button>', () => {
+describe('<manifold-copy-credentials>', () => {
   let page: SpecPage;
   let element: HTMLManifoldCopyCredentialsElement;
 
@@ -15,7 +15,7 @@ describe('<manifold-data-get-credentials-button>', () => {
       components: [ManifoldCopyCredentials],
       html: `<div></div>`,
     });
-    element = page.doc.createElement('manifold-data-get-credentials-button');
+    element = page.doc.createElement('manifold-copy-credentials');
     element.restFetch = createRestFetch({
       getAuthToken: jest.fn(() => '1234'),
       wait: 10,
@@ -138,7 +138,7 @@ describe('<manifold-data-get-credentials-button>', () => {
       fetchMock.mock(`path:/v1/credentials/`, [Credential]);
 
       if (!page.root) {
-        throw new Error('<manifold-data-get-credentials-button> not found in document');
+        throw new Error('<manifold-copy-credentials> not found in document');
       }
 
       const resourceLabel = 'click-label';
@@ -178,7 +178,7 @@ describe('<manifold-data-get-credentials-button>', () => {
       });
 
       if (!page.root) {
-        throw new Error('<manifold-data-get-credentials-button> not found in document');
+        throw new Error('<manifold-copy-credentials> not found in document');
       }
 
       const resourceLabel = 'error-label';
@@ -220,7 +220,6 @@ describe('<manifold-data-get-credentials-button>', () => {
 
       const resourceLabel = 'success-label';
       element.resourceLabel = resourceLabel;
-      element.copyToClipboard = true;
       page.root.appendChild(element);
       await page.waitForChanges();
 

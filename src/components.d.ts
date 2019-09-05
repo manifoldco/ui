@@ -16,14 +16,14 @@ import {
   Subscriber,
 } from './state/connection';
 import {
+  GraphqlFetch,
+} from './utils/graphqlFetch';
+import {
   RestFetch,
 } from './utils/restFetch';
 import {
   Marketplace,
 } from './types/marketplace';
-import {
-  GraphqlFetch,
-} from './utils/graphqlFetch';
 import {
   Product,
 } from './types/graphql';
@@ -70,19 +70,14 @@ export namespace Components {
   }
   interface ManifoldConnection {}
   interface ManifoldCopyCredentials {
-    'loading'?: boolean;
     /**
-    * The id of the resource to fetch credentials for
+    * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'resourceId'?: string;
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * The label of the resource to fetch credentials for
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldCostDisplay {
     'baseCost'?: number;
@@ -1116,19 +1111,17 @@ declare namespace LocalJSX {
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {}
   interface ManifoldCopyCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCopyCredentialsElement> {
-    'loading'?: boolean;
     /**
-    * The id of the resource to fetch credentials for
+    * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'resourceId'?: string;
+    'graphqlFetch'?: GraphqlFetch;
+    'onManifold-copyCredentials-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-copyCredentials-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-copyCredentials-success'?: (event: CustomEvent<any>) => void;
     /**
     * The label of the resource to fetch credentials for
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;

@@ -12,6 +12,18 @@ example: |
 An unstyled button for copying a resource’s credentials to the clipboard. 🔒 Requires
 authentication.
 
+## Fetching credentials
+
+This component will **fetch credentials as soon as it’s rendered.** It does this because the copying
+to clipboard action needs to be synchronous in order to work in browsers.
+
+If a user remains on a page for so long the credentials may be out-of-date, you can request new ones
+using its `refresh()` class method:
+
+```js
+document.querySelector('manifold-copy-credentials[resource-label="my-resource"]').refresh();
+```
+
 ## CTA text
 
 Set the CTA text by adding anything between the opening and closing tags:

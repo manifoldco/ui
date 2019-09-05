@@ -1,107 +1,127 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Marketplace } from '../../types/marketplace';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+
+interface ClickDetail {
+  resourceLabel?: string;
+}
+
+interface ErrorDetail {
+  error: string;
+  resourceLabel?: string;
+}
+
+interface SuccessDetail {
+  resourceLabel?: string;
+}
 
 @Component({ tag: 'manifold-copy-credentials' })
 export class ManifoldCopyCredentials {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** The label of the resource to fetch credentials for */
   @Prop() resourceLabel?: string;
-  /** The id of the resource to fetch credentials for */
-  @Prop({ mutable: true }) resourceId?: string = '';
-  @Prop() loading?: boolean = false;
-  @State() credentials?: { [s: string]: string };
+  @State() credentials?: string;
+  @State() loading: boolean = true;
+  @Event({ eventName: 'manifold-copyCredentials-click', bubbles: true }) click: EventEmitter;
+  @Event({ eventName: 'manifold-copyCredentials-error', bubbles: true }) error: EventEmitter;
+  @Event({ eventName: 'manifold-copyCredentials-success', bubbles: true }) success: EventEmitter;
 
-  @Watch('resourceLabel') labelChange(newLabel: string) {
-    this.fetchResourceId(newLabel).then(() => {
-      this.getCreds();
-    });
+  @Watch('resourceLabel') labelChange() {
+    this.refresh();
   }
 
   componentWillLoad() {
-    if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel).then(() => {
-        this.getCreds();
-      });
+    if (!this.resourceLabel) {
+      const detail: ErrorDetail = {
+        resourceLabel: this.resourceLabel,
+        error: 'Attribute `resource-label` is missing',
+      };
+      this.error.emit({ detail });
       return;
     }
-    this.getCreds();
+
+    this.refresh();
   }
 
-  async getCreds() {
-    if (!this.restFetch || this.loading) {
+  async refresh() {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    if (!this.resourceId) {
-      console.error('Property “resourceId” is missing');
-      return;
-    }
+    this.loading = true;
 
-    const response = await this.restFetch<Marketplace.Credential[]>({
-      service: 'marketplace',
-      endpoint: `/credentials/?resource_id=${this.resourceId}`,
+    const { data, errors } = await this.graphqlFetch({
+      query: gql`
+        query RESOURCE_WITH_CREDENTIALS($resourceLabel: String!) {
+          resource(label: $resourceLabel) {
+            credentials {
+              edges {
+                node {
+                  key
+                  value
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: { resourceLabel: this.resourceLabel },
     });
 
-    let credentials: { [s: string]: string } = {};
-    if (response) {
-      response.forEach(cred => {
-        credentials = {
-          ...credentials,
-          ...cred.body.values,
-        };
+    // if errors, report them but keep going
+    if (errors) {
+      errors.forEach(error => {
+        const detail: ErrorDetail = { resourceLabel: this.resourceLabel, error: error.message };
+        this.error.emit(detail);
       });
     }
 
-    this.credentials = credentials;
-  }
+    // if creds, set it and continue to unset loading
+    if (data && data.resource && data.resource.credentials) {
+      // DO NOT emit creds in a success message here
+      const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
+      this.success.emit({ detail });
 
-  async fetchResourceId(resourceLabel: string) {
-    if (!this.restFetch) {
-      return;
+      this.credentials = data.resource.credentials.edges.reduce(
+        (display, { node }) => (node ? `${display}\n${node.key}=${node.value}` : display),
+        ''
+      );
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
-    });
-
-    if (!response || !response.length) {
-      console.error(`${resourceLabel} product not found`);
-      return;
-    }
-
-    this.resourceId = response[0].id;
+    this.loading = false;
   }
 
+  // in order to work in Firefox and Safari, this *must* be a sync action (i.e. creds must already be fetched)
   sendToClipboard = (): void => {
     if (!this.credentials) {
+      const detail: ErrorDetail = {
+        error: 'Credentials still loading',
+        resourceLabel: this.resourceLabel,
+      };
+      this.error.emit({ detail });
       return;
     }
 
     const textArea = document.createElement('textarea');
-    textArea.innerHTML = Object.entries(this.credentials)
-      .reduce((accumulator: string, cred) => `${accumulator}\n${cred[0]}: ${cred[1]}`, '')
-      .trimLeft();
+    textArea.innerHTML = this.credentials;
 
     this.el.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
     this.el.removeChild(textArea);
+
+    const detail: ClickDetail = { resourceLabel: this.resourceLabel };
+    this.click.emit({ detail });
   };
 
   @logger()
   render() {
     return (
-      <button
-        onClick={this.sendToClipboard}
-        data-resource-id={this.resourceId}
-        disabled={!this.resourceId || this.loading || !this.credentials}
-      >
+      <button onClick={this.sendToClipboard} disabled={this.loading || !this.credentials}>
         <slot />
       </button>
     );

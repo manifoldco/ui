@@ -1,16 +1,25 @@
 import { storiesOf } from '@storybook/html';
+import { withKnobs, text } from '@storybook/addon-knobs';
 
-import markdown from '../docs/docs/data/manifold-data-sso-button.md';
 import { manifoldConnectionDecorator } from './connectionDecorator';
 
-storiesOf('Copy credentials 🔒 [Data]', module)
-  .addParameters({ readme: { sidebar: markdown } })
+storiesOf('Copy credentials 🔒', module)
+  .addDecorator(withKnobs)
   .addDecorator(manifoldConnectionDecorator)
-  .add(
-    'default',
-    () => `
-      <manifold-data-copy-credentials-button resource-label="database">
+  .add('default', () => {
+    const resourceLabel = text('resource-label', 'config');
+    text('📋 clipboard test', '');
+    return `
+      <style>
+        button {
+          cursor: hover;
+        }
+        button:hover {
+          color: blue;
+        }
+      </style>
+      <manifold-data-copy-credentials-button resource-label="${resourceLabel}">
         Copy
       </manifold-data-copy-credentials-button>
-    `
-  );
+    `;
+  });
