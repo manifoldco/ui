@@ -1,6 +1,6 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { Connector } from '../../types/connector';
 import { RestFetch } from '../../utils/restFetch';
@@ -27,8 +27,8 @@ interface ErrorMessage {
 @Component({ tag: 'manifold-data-sso-button' })
 export class ManifoldDataSsoButton {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The id of the resource to rename, will be fetched if not set */
@@ -136,5 +136,3 @@ export class ManifoldDataSsoButton {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldDataSsoButton, ['restFetch']);

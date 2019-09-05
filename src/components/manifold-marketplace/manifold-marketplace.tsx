@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import skeletonProducts from '../../data/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -10,7 +10,7 @@ import logger from '../../utils/logger';
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   /** Hide categories & side menu? */
@@ -133,5 +133,3 @@ export class ManifoldMarketplace {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldMarketplace, ['restFetch']);

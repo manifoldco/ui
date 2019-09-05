@@ -1,6 +1,6 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -35,8 +35,8 @@ interface ErrorMessage {
 @Component({ tag: 'manifold-data-rename-button' })
 export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The new label to give to the resource */
@@ -189,5 +189,3 @@ export class ManifoldDataRenameButton {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldDataRenameButton, ['restFetch']);

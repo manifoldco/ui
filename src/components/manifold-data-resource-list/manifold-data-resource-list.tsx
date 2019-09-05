@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { ResourceConnection, Resource, ResourceEdge } from '../../types/graphql';
@@ -33,8 +33,8 @@ const query = gql`
 @Component({ tag: 'manifold-data-resource-list' })
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -127,4 +127,3 @@ export class ManifoldDataResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldDataResourceList, ['graphqlFetch']);

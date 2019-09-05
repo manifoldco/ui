@@ -1,15 +1,15 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 
 import { Gateway } from '../../types/gateway';
-import ConnectionTunnel from '../../data/connection';
+import connection from '../../state/connection';
 import ResourceTunnel from '../../data/resource';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** Which resource does this belong to? */
   @Prop() resourceLabel?: string;
   /** Set whether or not to refetch the resource from the api until it is in an available and valid state */
@@ -74,5 +74,3 @@ export class ManifoldResourceContainer {
     );
   }
 }
-
-ConnectionTunnel.injectProps(ManifoldResourceContainer, ['restFetch']);

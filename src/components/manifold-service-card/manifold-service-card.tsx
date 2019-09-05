@@ -1,15 +1,15 @@
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   @Prop({ reflect: true }) isFeatured?: boolean;
   @Prop({ mutable: true }) product?: Catalog.Product;
   @Prop() productId?: string;
@@ -137,5 +137,3 @@ export class ManifoldServiceCard {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldServiceCard, ['restFetch']);

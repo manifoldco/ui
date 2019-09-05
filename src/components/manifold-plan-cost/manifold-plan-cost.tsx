@@ -2,7 +2,7 @@ import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -10,8 +10,8 @@ import logger from '../../utils/logger';
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** All plan features */
   @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
   /** Compact mode (for plan selector sidebar) */
@@ -97,5 +97,3 @@ export class ManifoldPlanCost {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldPlanCost, ['restFetch']);
