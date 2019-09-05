@@ -31,14 +31,12 @@ document.querySelector('manifold-copy-credentials[resource-label="my-resource"]'
 Set the CTA text by adding anything between the opening and closing tags:
 
 ```html
-<manifold-copy-credentials>
-  Get credentials
-</manifold-copy-credentials>
+<manifold-copy-credentials>Copy</manifold-copy-credentials>
 ```
 
 ## Events
 
-For successful user actions as well as errors, there are some events you can monitor:
+For successful user actions as well as errors, the following events will be emitted:
 
 ```js
 document.addEventListener('manifold-copyCredentials-success', ({ detail }) => console.log(detail));

@@ -1115,7 +1115,6 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'graphqlFetch'?: GraphqlFetch;
-    'onManifold-copyCredentials-click'?: (event: CustomEvent<any>) => void;
     'onManifold-copyCredentials-error'?: (event: CustomEvent<any>) => void;
     'onManifold-copyCredentials-success'?: (event: CustomEvent<any>) => void;
     /**

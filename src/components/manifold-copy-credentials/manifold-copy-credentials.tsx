@@ -1,7 +1,8 @@
-import { h, Component, Prop, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 import ClipboardJS from 'clipboard';
 
+import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
@@ -16,38 +17,55 @@ interface SuccessDetail {
 
 @Component({ tag: 'manifold-copy-credentials' })
 export class ManifoldCopyCredentials {
-  @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** The label of the resource to fetch credentials for */
   @Prop() resourceLabel?: string;
   @State() clipboard?: ClipboardJS;
   @State() credentials?: string;
   @State() loading: boolean = true;
-  @Event({ eventName: 'manifold-copyCredentials-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-copyCredentials-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-copyCredentials-success', bubbles: true }) success: EventEmitter;
 
   @Watch('resourceLabel') labelChange() {
     this.refresh();
+    this.attachClipboard();
   }
 
   componentWillLoad() {
     this.refresh();
   }
 
-  get id() {
-    return `clipboard-${this.resourceLabel}`;
+  componentDidLoad() {
+    this.attachClipboard(); // attach clipboard only after render
+  }
+
+  private get id() {
+    return `copy-creds-${this.resourceLabel}`;
+  }
+
+  private attachClipboard() {
+    // clean up existing clipboard if there is one
+    if (this.clipboard) {
+      this.clipboard.destroy();
+    }
+
+    // re-initialize and re-bind events for clipboard
+    this.clipboard = new ClipboardJS(`#${this.id}`); // use IDs for performance
+    this.clipboard.on('error', e => {
+      const detail: ErrorDetail = { error: 'Copy failed', resourceLabel: this.resourceLabel };
+      this.error.emit({ detail });
+      console.error(e);
+    });
+    this.clipboard.on('success', () => {
+      const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
+      this.success.emit({ detail });
+    });
   }
 
   async refresh() {
     if (!this.graphqlFetch) {
       return;
-    }
-
-    // clean up listeners
-    if (this.clipboard) {
-      this.clipboard.destroy();
     }
 
     // disable clicks while loading
@@ -72,39 +90,35 @@ export class ManifoldCopyCredentials {
     });
 
     // if errors, report them but keep going
-    if (errors) {
+    if (Array.isArray(errors)) {
       errors.forEach(error => {
         const detail: ErrorDetail = { resourceLabel: this.resourceLabel, error: error.message };
         this.error.emit(detail);
       });
     }
 
-    // if creds, set it and continue to unset loading
+    // if creds, set it and continue
     if (data && data.resource && data.resource.credentials) {
-      // DO NOT emit creds in a success message here
-      const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
-      this.success.emit({ detail });
-
       const credentials: string[] = data.resource.credentials.edges.reduce(
-        (credList, { node }) => (node ? [...credList, `\n${node.key}=${node.value}`] : credList),
+        (credList, { node }) => (node ? [...credList, `${node.key}=${node.value}`] : credList),
         []
       );
       this.credentials = credentials.join('\n');
     }
 
-    // re-initialize clipboard
-    this.clipboard = new ClipboardJS(`#${this.id}`); // eslint-disable-line no-new
-
+    // unset loading
     this.loading = false;
   }
 
   @logger()
   render() {
+    const disabled = this.loading === true || !this.credentials || undefined;
+
     return (
       <button
         data-clipboard-text={this.credentials ? this.credentials : undefined}
         id={this.id}
-        disabled={this.loading || !this.credentials}
+        disabled={disabled}
       >
         <slot />
       </button>
