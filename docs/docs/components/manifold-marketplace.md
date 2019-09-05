@@ -29,8 +29,8 @@ A common usecase is using `products` in conjuction with `hide-categories` (below
 
 ## Hide categories
 
-Hiding the categories is a great way to have a more compact display. It’s recommended to use this if
-you’re only displaying a few products via `products` (above):
+Hiding the categories is a great way to have a more compact display. It’s recommended if you’re only
+displaying a few products via `products` (above):
 
 ```html
 <manifold-marketplace hide-categories></manifold-marketplace>
@@ -38,7 +38,7 @@ you’re only displaying a few products via `products` (above):
 
 ## Hide search
 
-This hides the search bar (always shown by default).
+This attribute hides the search bar (always shown by default).
 
 ```html
 <manifold-marketplace hide-search></manifold-marketplace>
@@ -47,7 +47,7 @@ This hides the search bar (always shown by default).
 ## Hide template cards
 
 Add the `hide-templates` attribute to hide external service template cards (GitHub, Stripe, etc.).
-This will also hide their respective categories if no other products are using them.
+This attribute will also hide the cards’ respective categories if no other products are using them.
 
 ```html
 <manifold-marketplace hide-templates></manifold-marketplace>
@@ -97,4 +97,5 @@ also be turned into an `<a>` tag by specifying `product-link-format` and `templa
 `:product` will be replaced with the url-friendly slug for the product, as will `:template` for
 custom resource templates.
 
-Note that this will disable the custom events unless `preserve-event` is passed as well.
+Note that use of either of these two attributes will disable the custom events unless
+`preserve-event` is passed as well.
