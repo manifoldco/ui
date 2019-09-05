@@ -111,7 +111,7 @@ export class ManifoldPlanSelector {
         return;
       }
 
-      this.fetchPlans(resource.body.product_id);
+      await this.fetchPlans(resource.body.product_id);
     }
   }
 

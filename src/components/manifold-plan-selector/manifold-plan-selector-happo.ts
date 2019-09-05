@@ -22,7 +22,7 @@ export const skeleton = async () => {
 export const jawsDB = async () => {
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
-  selector.hideUntilReady = false;
+  selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
 
@@ -32,7 +32,7 @@ export const jawsDB = async () => {
 export const delayedJawsDB = async () => {
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
-  selector.hideUntilReady = false;
+  selector.hideUntilReady = true;
 
   const mockFetch = (async (...args) => {
     // Even with a delay, we should not see skeletons
@@ -41,6 +41,33 @@ export const delayedJawsDB = async () => {
   }) as RestFetch;
 
   selector.restFetch = mockFetch;
+
+  document.body.appendChild(selector);
+
+  await selector.componentOnReady();
+};
+
+export const planError = async () => {
+  const selector = document.createElement('manifold-plan-selector');
+  selector.productLabel = product.body.label;
+
+  const mockFetch = (async args => {
+    if (args.endpoint === `/products/?label=${product.body.label}`) {
+      return [
+        {
+          id: product.id,
+          get body() {
+            throw new Error('oops');
+          },
+        },
+      ];
+    }
+
+    return connection.restFetch(args);
+  }) as RestFetch;
+
+  selector.restFetch = mockFetch;
+  selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
 
