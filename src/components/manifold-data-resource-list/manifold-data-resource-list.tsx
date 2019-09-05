@@ -64,12 +64,12 @@ export class ManifoldDataResourceList {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch<'resources'>({
+    const { data, errors } = await this.graphqlFetch({
       query,
     });
 
     if (data) {
-      this.resources = data.resources.edges;
+      this.resources = (data.resources && data.resources.edges) || [];
     } else if (errors) {
       this.errors = errors;
     }
