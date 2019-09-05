@@ -3,7 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 
 import Tunnel from '../../data/connection';
 import logger from '../../utils/logger';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { ResourceConnection, Resource, ResourceEdge } from '../../types/graphql';
 
 interface EventDetail {
@@ -43,6 +43,7 @@ export class ManifoldDataResourceList {
   @Prop() preserveEvent?: boolean = false;
   @State() interval?: number;
   @State() resources?: ResourceEdge[];
+  @State() errors?: GraphqlError[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   componentWillLoad() {
@@ -63,22 +64,14 @@ export class ManifoldDataResourceList {
       return;
     }
 
-    try {
-      const { data, errors } = await this.graphqlFetch<'resources'>({
-        query,
-      });
+    const { data, errors } = await this.graphqlFetch<'resources'>({
+      query,
+    });
 
-      if (data) {
-        this.resources = this.userResources(data.resources);
-      }
-
-      if (errors) {
-        errors.forEach(error => {
-          throw new Error(error.message);
-        });
-      }
-    } catch (e) {
-      console.error(e);
+    if (data) {
+      this.resources = data.resources.edges;
+    } else if (errors) {
+      this.errors = errors;
     }
   };
 
@@ -112,6 +105,10 @@ export class ManifoldDataResourceList {
   render() {
     if (!Array.isArray(this.resources)) {
       return null;
+    }
+
+    if (this.errors) {
+      return 'Resources not found.';
     }
 
     return (
