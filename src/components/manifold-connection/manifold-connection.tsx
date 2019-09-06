@@ -1,4 +1,5 @@
 import { h, Component } from '@stencil/core';
+import '../../utils/fetchAllPages';
 
 import logger from '../../utils/logger';
 
