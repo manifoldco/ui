@@ -12,6 +12,12 @@ example: |
 An unstyled button for copying a resource’s credentials to the clipboard. 🔒 Requires
 authentication.
 
+```html
+<manifold-copy-credentials resource-label="my-resource">
+  Copy
+</manifold-copy-credentials>
+```
+
 ## Refreshing credentials
 
 This component will **fetch credentials as soon as it’s rendered** because copying to clipboard
@@ -24,14 +30,6 @@ its `refresh()` class method:
 
 ```js
 document.querySelector('manifold-copy-credentials[resource-label="my-resource"]').refresh();
-```
-
-## CTA text
-
-Set the CTA text by adding anything between the opening and closing tags:
-
-```html
-<manifold-copy-credentials>Copy</manifold-copy-credentials>
 ```
 
 ## Events
@@ -50,7 +48,8 @@ document.addEventListener('manifold-copyCredentials-error', ({ detail }) => cons
 // };
 ```
 
-_Note: for security reasons, we don’t broadcast user credentials anywhere._
+_Note: for security reasons, we don’t expose user credentials anywhere accessible, either in the
+events emitted or anywhere in the HTML._
 
 | Name                               |          Returns           | Description                                                                                                     |
 | :--------------------------------- | :------------------------: | :-------------------------------------------------------------------------------------------------------------- |
