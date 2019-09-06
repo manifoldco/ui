@@ -15,12 +15,19 @@ interface NextPage {
   after: string;
 }
 
-export default async function fetchAllPages<Edge>(
-  query: string,
-  nextPage: NextPage = { first: 25, after: '' },
-  agg: PageAggregator<Edge>,
-  getConnection: (q: Query) => Connection<Edge>
-) {
+interface Args<Edge> {
+  query: string;
+  nextPage: NextPage;
+  agg: PageAggregator<Edge>;
+  getConnection: (q: Query) => Connection<Edge>;
+}
+
+export default async function fetchAllPages<Edge>({
+  query,
+  nextPage = { first: 25, after: '' },
+  agg,
+  getConnection,
+}: Args<Edge>) {
   const page = await connection.graphqlFetch({ query, variables: nextPage });
 
   if (page.errors) {
@@ -33,7 +40,7 @@ export default async function fetchAllPages<Edge>(
 
     if (pageInfo.hasNextPage) {
       const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
-      await fetchAllPages(query, next, agg, getConnection);
+      await fetchAllPages({ query, nextPage: next, agg, getConnection });
     }
   }
 }

@@ -251,7 +251,13 @@ describe('Fetching all pages of a GraphQL connection', () => {
     const aggregator = agg<CategoryEdge>();
     const aggSpy = jest.spyOn(aggregator, 'write');
 
-    await fetchAllPages(query, { first: 3, after: '' }, aggregator, (q: Query) => q.categories);
+    await fetchAllPages({
+      query,
+      nextPage: { first: 3, after: '' },
+      agg: aggregator,
+      getConnection: (q: Query) => q.categories,
+    });
+
     expect(fetchMock.calls).toHaveLength(aggSpy.mock.calls.length);
     expect(aggregator.entries()).toEqual(
       firstPage.categories.edges.concat(secondPage.categories.edges)
