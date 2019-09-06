@@ -122,9 +122,9 @@ in TypeScript core._
 
 ### Ember, Angular, Vue, and others
 
-Initializing Manifold UI works the same as any other Stencil project. For
-more advanced instructions on integrating with your specific stack, please
-refer to Stencil’s [docs on integration][stencil-framework].
+Initializing Manifold UI works the same as any other Stencil project. For more advanced instructions
+on integrating with your specific stack, please refer to Stencil’s [docs on
+integration][stencil-framework].
 
 [stencil]: https://stenciljs.com/
 [stencil-framework]: https://stenciljs.com/docs/overview
