@@ -1,14 +1,13 @@
-import { gql } from '@manifoldco/gql-zero';
 import connection from '../state/connection';
-import { PageInfo, Query, CategoryEdge } from '../types/graphql';
+import { PageInfo, Query } from '../types/graphql';
 
-interface PageAggregator<EdgeType> {
-  write: (edges: Array<EdgeType>) => void;
+interface PageAggregator<Edge> {
+  write: (edges: Edge[]) => void;
 }
 
 interface Connection<Edge> {
   pageInfo: PageInfo;
-  edges: Array<Edge>;
+  edges: Edge[];
 }
 
 interface NextPage {
@@ -23,57 +22,29 @@ export default async function fetchAllPages<Edge>(
   getConnection: (q: Query) => Connection<Edge>
 ) {
   const page = await connection.graphqlFetch({ query, variables: nextPage });
+
+  if (page.errors) {
+    throw new Error(`Could not fetch all pages of query: ${query}`);
+  }
+
   if (page.data) {
     const { edges, pageInfo } = getConnection(page.data);
     agg.write(edges);
 
     if (pageInfo.hasNextPage) {
-      const page = { first: nextPage.first, after: pageInfo.endCursor || '' };
-      await fetchAllPages(query, page, agg, getConnection);
+      const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
+      await fetchAllPages(query, next, agg, getConnection);
     }
   }
 }
 
-const query = gql`
-  query CATEGORIES($first: Int!, $after: String!) {
-    categories(first: $first, after: $after) {
-      edges {
-        node {
-          label
-          products(first: 10) {
-            edges {
-              node {
-                label
-              }
-            }
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`;
-
-function agg<T>() {
-  let entries: Array<T> = [];
+export function createAggregator<T>() {
+  const entries: T[] = [];
 
   return {
-    write: (edges: Array<T>) => {
+    write: (edges: T[]) => {
       entries.push(...edges);
     },
     entries: () => entries,
   };
 }
-
-const aggregator = agg<CategoryEdge>();
-
-fetchAllPages(query, { first: 3, after: '' }, aggregator, (q: Query) => q.categories).then(() => {
-  console.log(aggregator.entries().map(e => e.node));
-});
