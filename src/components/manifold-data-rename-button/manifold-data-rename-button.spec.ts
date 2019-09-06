@@ -177,9 +177,7 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
+      if (!button) throw new Error('button not found in document');
 
       // listen for event and fire
       page.doc.addEventListener('manifold-renameButton-click', mockClick);
@@ -206,9 +204,7 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
+      if (!button) throw new Error('button not found in document');
 
       // listen for event and fire
       const mockClick = jest.fn();
@@ -243,9 +239,7 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
+      if (!button) throw new Error('button not found in document');
 
       // listen for event and fire
       const mockClick = jest.fn();
@@ -282,9 +276,7 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
+      if (!button) throw new Error('button not found in document');
 
       const mockClick = jest.fn();
       await new Promise(resolve => {
@@ -321,9 +313,7 @@ describe('<manifold-data-rename-button>', () => {
       });
 
       const button = page.root && page.root.querySelector('button');
-      if (!button) {
-        throw new Error('button not found in document');
-      }
+      if (!button) throw new Error('button not found in document');
 
       const mockClick = jest.fn();
       await new Promise(resolve => {
