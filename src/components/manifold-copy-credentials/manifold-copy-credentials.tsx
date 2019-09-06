@@ -35,6 +35,7 @@ export class ManifoldCopyCredentials {
   }
 
   componentDidLoad() {
+    // important: this must be bound using a “vanilla” click listener to work cross-browser, for security reasons
     const button = this.el.querySelector('button');
     if (button) {
       button.addEventListener('click', () => this.handleClick());
@@ -88,7 +89,6 @@ export class ManifoldCopyCredentials {
 
     // if errors, report them but keep going
     if (Array.isArray(errors)) {
-      console.log(this.resourceLabel);
       errors.forEach(({ message }) => {
         const detail: ErrorDetail = { resourceLabel: this.resourceLabel, message };
         this.error.emit(detail);
