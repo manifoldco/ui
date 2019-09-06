@@ -57,7 +57,7 @@ describe('<manifold-copy-credentials>', () => {
     });
   });
 
-  describe('v0 HTML', () => {
+  describe('v0 props', () => {
     it('[resource-label]: copies creds to clipboard', async () => {
       // set up page
       element.resourceLabel = 'my-resource';
