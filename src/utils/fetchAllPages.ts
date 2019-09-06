@@ -20,15 +20,16 @@ export default async function fetchAllPages<Edge>(
   query: string,
   nextPage: NextPage = { first: 25, after: '' },
   agg: PageAggregator<Edge>,
-  key: keyof Query
+  getConnection: (q: Query) => Connection<Edge>
 ) {
   const page = await connection.graphqlFetch({ query, variables: nextPage });
-  const data = page.data && (page.data[key] as Partial<Connection<Edge>>);
-  if (data) {
-    agg.write(data.edges || []);
-    if (data.pageInfo && data.pageInfo.hasNextPage) {
-      const page = { first: nextPage.first, after: data.pageInfo.endCursor || '' };
-      await fetchAllPages(query, page, agg, key);
+  if (page.data) {
+    const { edges, pageInfo } = getConnection(page.data);
+    agg.write(edges);
+
+    if (pageInfo.hasNextPage) {
+      const page = { first: nextPage.first, after: pageInfo.endCursor || '' };
+      await fetchAllPages(query, page, agg, getConnection);
     }
   }
 }
@@ -73,6 +74,6 @@ function agg<T>() {
 
 const aggregator = agg<CategoryEdge>();
 
-fetchAllPages(query, { first: 3, after: '' }, aggregator, 'categories').then(() => {
+fetchAllPages(query, { first: 3, after: '' }, aggregator, (q: Query) => q.categories).then(() => {
   console.log(aggregator.entries().map(e => e.node));
 });
