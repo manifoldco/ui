@@ -1,4 +1,14 @@
-import { h, Element, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import {
+  h,
+  Element,
+  Component,
+  Prop,
+  State,
+  Event,
+  EventEmitter,
+  Method,
+  Watch,
+} from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 import * as clipboard from 'clipboard-polyfill';
 
@@ -44,23 +54,7 @@ export class ManifoldCopyCredentials {
     }
   }
 
-  private handleClick() {
-    if (this.credentials) {
-      clipboard
-        .writeText(this.credentials)
-        .then(() => {
-          const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
-          this.success.emit(detail);
-        })
-        .catch(() => {
-          const message = 'couldn’t access clipboard';
-          const detail: ErrorDetail = { message, resourceLabel: this.resourceLabel };
-          this.error.emit(detail);
-          console.error(message);
-        });
-    }
-  }
-
+  @Method()
   async refresh() {
     if (!this.graphqlFetch) {
       return;
@@ -97,11 +91,27 @@ export class ManifoldCopyCredentials {
 
     // if creds, set it and continue
     if (data && data.resource && data.resource.credentials) {
-      const credentials: string[] = data.resource.credentials.edges.reduce(
-        (credList, { node }) => (node ? [...credList, `${node.key}=${node.value}`] : credList),
-        []
+      const credentials: string[] = data.resource.credentials.edges.map(({ node }) =>
+        node ? `${node.key}=${node.value}` : ''
       );
       this.credentials = credentials.join('\n');
+    }
+  }
+
+  private handleClick() {
+    if (this.credentials) {
+      clipboard
+        .writeText(this.credentials)
+        .then(() => {
+          const detail: SuccessDetail = { resourceLabel: this.resourceLabel };
+          this.success.emit(detail);
+        })
+        .catch(() => {
+          const message = 'couldn’t access clipboard';
+          const detail: ErrorDetail = { message, resourceLabel: this.resourceLabel };
+          this.error.emit(detail);
+          console.error(message);
+        });
     }
   }
 

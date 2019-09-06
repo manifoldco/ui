@@ -35,7 +35,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-unused-vars': 'off', // compiler catches these well enough
-    parser: '@typescript-eslint/parser',
     'arrow-parens': 'off', // let Prettier decide
     camelcase: 'off', // underscores are a thing
     'class-methods-use-this': 'off', // component lifecycle methods sometimes don't use `this`
@@ -49,15 +48,16 @@ module.exports = {
         objects: 'always-multiline',
       },
     ],
+    curly: ['error', 'all'],
+    'func-names': 'off',
     'function-paren-newline': 'off', // let Prettier decide
     'implicit-arrow-linebreak': 'off', // let Prettier decide
     'import/no-extraneous-dependencies': 'off', // We need zero deps for npm
     'import/prefer-default-export': 'off', // named exports are perfectly fine
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'object-curly-newline': 'off', // let Prettier decide,
     'prettier/prettier': 'error',
-    'no-console': ['error', { allow: ['warn', 'error'] }],
-    'func-names': 'off',
   },
 };

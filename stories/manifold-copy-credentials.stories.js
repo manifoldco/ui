@@ -12,7 +12,7 @@ storiesOf('Copy credentials 🔒', module)
     return `
       <style>
         button {
-          cursor: hover;
+          cursor: pointer;
         }
         button:hover {
           color: blue;

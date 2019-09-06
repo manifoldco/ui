@@ -74,6 +74,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'graphqlFetch'?: GraphqlFetch;
+    'refresh': () => Promise<void>;
     /**
     * The label of the resource to fetch credentials for
     */
