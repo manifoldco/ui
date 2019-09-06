@@ -12,10 +12,7 @@ export class ManifoldResourceCredentials {
   @logger()
   render() {
     return (
-      <manifold-credentials
-        resourceLabel={this.data && this.data.label}
-        resourceId={this.data && this.data.id}
-      >
+      <manifold-credentials resourceLabel={this.data && this.data.label}>
         <manifold-forward-slot slot="show-button">
           <slot name="show-button" />
         </manifold-forward-slot>

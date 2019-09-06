@@ -10,6 +10,7 @@ import {
   Catalog,
 } from './types/catalog';
 import {
+  CredentialEdge,
   PlanConnection,
   Product,
   ProductEdge,
@@ -26,9 +27,6 @@ import {
 import {
   RestFetch,
 } from './utils/restFetch';
-import {
-  Marketplace,
-} from './types/marketplace';
 import {
   AuthToken,
 } from './types/auth';
@@ -92,15 +90,14 @@ export namespace Components {
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials {
-    'resourceId'?: string;
-    'resourceLabel': string;
     /**
     * _(hidden)_
     */
-    'restFetch'?: RestFetch;
+    'graphqlFetch'?: GraphqlFetch;
+    'resourceLabel'?: string;
   }
   interface ManifoldCredentialsView {
-    'credentials'?: Marketplace.Credential[];
+    'credentials'?: CredentialEdge[];
     'loading': boolean;
     'resourceLabel': string;
   }
@@ -1159,15 +1156,14 @@ declare namespace LocalJSX {
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
-    'resourceId'?: string;
-    'resourceLabel'?: string;
     /**
     * _(hidden)_
     */
-    'restFetch'?: RestFetch;
+    'graphqlFetch'?: GraphqlFetch;
+    'resourceLabel'?: string;
   }
   interface ManifoldCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsViewElement> {
-    'credentials'?: Marketplace.Credential[];
+    'credentials'?: CredentialEdge[];
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
     'resourceLabel'?: string;

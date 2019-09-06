@@ -1,76 +1,70 @@
-import { h, Component, Prop, State, Watch } from '@stencil/core';
+import { h, Element, Component, Prop, State } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Marketplace } from '../../types/marketplace';
+import { CredentialEdge } from '../../types/graphql';
 import connection from '../../state/connection';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
+  @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
-  @Prop() resourceLabel: string = '';
-  @Prop({ mutable: true }) resourceId?: string = '';
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() resourceLabel?: string = '';
+  @State() credentials?: CredentialEdge[];
   @State() loading?: boolean = false;
-  @State() credentials?: Marketplace.Credential[];
+  @State() shouldTransition: boolean = false;
 
-  @Watch('resourceLabel') labelChange(newLabel: string) {
-    if (!this.resourceId) {
-      this.fetchResourceId(newLabel);
-    }
-  }
-
-  componentWillLoad() {
-    if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel);
-    }
-  }
+  hideCredentials = () => {
+    this.credentials = undefined;
+  };
 
   fetchCredentials = async () => {
-    if (!this.restFetch || !this.resourceId) {
+    if (!this.graphqlFetch) {
       return;
     }
 
     this.loading = true;
-    const response = await this.restFetch<Marketplace.Credential[]>({
-      service: 'marketplace',
-      endpoint: `/credentials/?resource_id=${this.resourceId}`,
+
+    const { data } = await this.graphqlFetch({
+      query: gql`
+        query RESOURCE_CREDENTIALS($resourceLabel: String!) {
+          resource(label: $resourceLabel) {
+            credentials(first: 25) {
+              edges {
+                node {
+                  key
+                  value
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: { resourceLabel: this.resourceLabel },
     });
 
-    this.credentials = response;
+    this.credentials =
+      (data && data.resource && data.resource.credentials && data.resource.credentials.edges) ||
+      undefined;
+
     this.loading = false;
   };
 
-  async fetchResourceId(resourceLabel: string) {
-    if (!this.restFetch) {
-      return;
-    }
-
-    const resources = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
-    });
-
-    if (!resources || !resources.length) {
-      console.error(`${resourceLabel} resource not found`);
-      return;
-    }
-
-    this.resourceId = resources[0].id;
-  }
-
   credentialsRequested = () => {
     this.fetchCredentials();
+    this.loading = false;
   };
 
   @logger()
   render() {
     return (
       <manifold-credentials-view
-        loading={this.loading}
-        resourceLabel={this.resourceLabel}
         credentials={this.credentials}
+        loading={this.loading}
         onCredentialsRequested={this.credentialsRequested}
+        resourceLabel={this.resourceLabel}
       >
         <manifold-forward-slot slot="show-button">
           <slot name="show-button" />
