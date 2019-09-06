@@ -16,14 +16,14 @@ import {
   Subscriber,
 } from './state/connection';
 import {
+  GraphqlFetch,
+} from './utils/graphqlFetch';
+import {
   RestFetch,
 } from './utils/restFetch';
 import {
   Marketplace,
 } from './types/marketplace';
-import {
-  GraphqlFetch,
-} from './utils/graphqlFetch';
 import {
   Product,
 } from './types/graphql';
@@ -69,6 +69,17 @@ export namespace Components {
     'target'?: string;
   }
   interface ManifoldConnection {}
+  interface ManifoldCopyCredentials {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'refresh': () => Promise<void>;
+    /**
+    * The label of the resource to fetch credentials for
+    */
+    'resourceLabel'?: string;
+  }
   interface ManifoldCostDisplay {
     'baseCost'?: number;
     'compact'?: boolean;
@@ -658,6 +669,12 @@ declare global {
     new (): HTMLManifoldConnectionElement;
   };
 
+  interface HTMLManifoldCopyCredentialsElement extends Components.ManifoldCopyCredentials, HTMLStencilElement {}
+  var HTMLManifoldCopyCredentialsElement: {
+    prototype: HTMLManifoldCopyCredentialsElement;
+    new (): HTMLManifoldCopyCredentialsElement;
+  };
+
   interface HTMLManifoldCostDisplayElement extends Components.ManifoldCostDisplay, HTMLStencilElement {}
   var HTMLManifoldCostDisplayElement: {
     prototype: HTMLManifoldCostDisplayElement;
@@ -994,6 +1011,7 @@ declare global {
     'manifold-button': HTMLManifoldButtonElement;
     'manifold-button-link': HTMLManifoldButtonLinkElement;
     'manifold-connection': HTMLManifoldConnectionElement;
+    'manifold-copy-credentials': HTMLManifoldCopyCredentialsElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-credentials': HTMLManifoldCredentialsElement;
     'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
@@ -1093,6 +1111,18 @@ declare namespace LocalJSX {
     'target'?: string;
   }
   interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {}
+  interface ManifoldCopyCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCopyCredentialsElement> {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'onManifold-copyCredentials-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-copyCredentials-success'?: (event: CustomEvent<any>) => void;
+    /**
+    * The label of the resource to fetch credentials for
+    */
+    'resourceLabel'?: string;
+  }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
     'compact'?: boolean;
@@ -1678,6 +1708,7 @@ declare namespace LocalJSX {
     'manifold-button': ManifoldButton;
     'manifold-button-link': ManifoldButtonLink;
     'manifold-connection': ManifoldConnection;
+    'manifold-copy-credentials': ManifoldCopyCredentials;
     'manifold-cost-display': ManifoldCostDisplay;
     'manifold-credentials': ManifoldCredentials;
     'manifold-credentials-view': ManifoldCredentialsView;

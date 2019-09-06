@@ -20,13 +20,13 @@ export type Scalars = {
   Time: any,
 };
 
-/** CalculationType are the known calculation types possible for SubLineItems. */
+/** CalculationType represents the known calculation types possible for SubLineItems. */
 export enum CalculationType {
   Prorate = 'PRORATE',
   UsageTier = 'USAGE_TIER'
 }
 
-/** Category is a category an entity is in. */
+/** Category represents the category an entity is in. */
 export type Category = {
    __typename?: 'Category',
   label: Scalars['String'],
@@ -34,7 +34,7 @@ export type Category = {
 };
 
 
-/** Category is a category an entity is in. */
+/** Category represents the category an entity is in. */
 export type CategoryProductsArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
@@ -73,15 +73,15 @@ export enum ConfigurableFeaturesOrderByField {
 }
 
 /** 
- * Credential represents a plain text value for a credential which can be used to
+ * Credential represents a plain-text value for a credential which can be used to
  * configure a resource.
  **/
 export type Credential = {
    __typename?: 'Credential',
-  /**  The key to which we can reference the credential as.  */
+  /** The key for referencing the credential.  */
   key: Scalars['String'],
   /** 
- * The plain text value of the credential. This value is the value that can be
+ * The plain-text value of the credential. This value is the value that can be
    * used in the actual configuration for the resource.
  **/
   value: Scalars['String'],
@@ -98,8 +98,8 @@ export type CredentialConnection = {
 };
 
 /** 
- * CredentialsEdge represents a single item on a Credentials Connection page which
- * has a cursor which can be used for pagination and holds the actual credential
+ * CredentialsEdge represents a single item on a CredentialsConnection page which
+ * has a cursor that can be used for pagination and holds the actual credential
  * information.
  **/
 export type CredentialEdge = {
@@ -108,12 +108,12 @@ export type CredentialEdge = {
   node?: Maybe<Credential>,
 };
 
-/** Currency is the supported currency represented as an ISO currency code. */
+/** Currency is the supported currency, represented as an ISO currency code. */
 export enum Currency {
   Usd = 'USD'
 }
 
-/** Duration is a representation of how long a cycle is. */
+/** Duration is a representation of the length a cycle. */
 export enum Duration {
   Monthly = 'MONTHLY'
 }
@@ -129,7 +129,7 @@ export enum FixedFeaturesOrderByField {
   DisplayName = 'DISPLAY_NAME'
 }
 
-/** Invoice represents the total due in a specific billing period. */
+/** Invoice represents the total amount due in a specific billing period. */
 export type Invoice = Node & {
    __typename?: 'Invoice',
   id: Scalars['ID'],
@@ -152,7 +152,7 @@ export type Invoice = Node & {
 };
 
 
-/** Invoice represents the total due in a specific billing period. */
+/** Invoice represents the total amount due in a specific billing period. */
 export type InvoiceLineItemsArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>
@@ -165,7 +165,7 @@ export type InvoiceConnection = {
   edges: Array<InvoiceEdge>,
 };
 
-/** InvoiceEdge is an edge of InvoiceConnection */
+/** InvoiceEdge is an edge of InvoiceConnection. */
 export type InvoiceEdge = {
    __typename?: 'InvoiceEdge',
   cursor: Scalars['String'],
@@ -178,7 +178,7 @@ export type InvoiceOrderBy = {
   direction: OrderByDirection,
 };
 
-/** InvoiceOrderByField is a the field by which an Invoice list will be ordered. */
+/** InvoiceOrderByField is the field by which an Invoice list will be ordered. */
 export enum InvoiceOrderByField {
   CreatedAt = 'CREATED_AT'
 }
@@ -197,13 +197,13 @@ export type LineItem = Node & {
   cost: Scalars['Int'],
   /** Currency is the currency of the `cost` field. */
   currency: Currency,
-  /** Duration is the time horizon for associated resource’s billing (monthly, yearly) */
+  /** Duration is the time horizon for the associated resource’s billing (monthly, yearly). */
   duration: Duration,
-  /** RenewalPoint describes the renewal behavior (calendar, anniversary) */
+  /** RenewalPoint describes the renewal behavior (calendar, anniversary). */
   renewalPoint: RenewalPoint,
-  /** ChargeTime describes the charge behavior (post-paid, pre-paid) */
+  /** ChargeTime describes the charge behavior (post-paid, pre-paid). */
   chargeTime: ChargeTime,
-  /** Resource is the resource accociated with this line item. */
+  /** Resource is the resource associated with this line item. */
   resource?: Maybe<Resource>,
   /** List SubLineItems composing the line item. */
   subLineItems?: Maybe<SubLineItemConnection>,
@@ -223,7 +223,7 @@ export type LineItemConnection = {
   edges: Array<LineItemEdge>,
 };
 
-/** LineItemEdge is an edge of LineItemConnection */
+/** LineItemEdge is an edge of LineItemConnection. */
 export type LineItemEdge = {
    __typename?: 'LineItemEdge',
   cursor: Scalars['String'],
@@ -246,7 +246,7 @@ export type Node = {
   id: Scalars['ID'],
 };
 
-/** The direction use to order results. */
+/** The direction used to order results. */
 export enum OrderByDirection {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -254,8 +254,7 @@ export enum OrderByDirection {
 
 /** 
  * PageInfo provides support for
- * [Relay](https://facebook.github.io/relay/graphql/connections.htm) cursor
- * connections style pagination.
+ * [Relay](https://facebook.github.io/relay/graphql/connections.htm) cursor-connections style pagination.
  **/
 export type PageInfo = {
    __typename?: 'PageInfo',
@@ -265,18 +264,18 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean'],
 };
 
-/** A Plan is a plan in a product */
+/** Plan is the product plan. */
 export type Plan = Node & {
    __typename?: 'Plan',
   id: Scalars['ID'],
-  /** A human readable display name for this plan. */
+  /** A human-readable display name for this plan. */
   displayName: Scalars['String'],
   /** 
- * A URL friendly label for this Region, combining its platform and dataCenter
+ * A URL-friendly label for this Region, combining its platform and dataCenter
    * with a hyphen. Globally unique.
  **/
   label: Scalars['String'],
-  /** The product this plan is associated with. */
+  /** The product associated with this plan. */
   product: Product,
   /** The current state of the plan. */
   state: PlanState,
@@ -290,12 +289,12 @@ export type Plan = Node & {
   cost: Scalars['Int'],
   /** If the plan is free, including if there are metered features changing the cost of a plan with base cost 0. */
   free: Scalars['Boolean'],
-  /** The datacenters associated with this plan. */
+  /** The data centers associated with this plan. */
   regions?: Maybe<RegionConnection>,
 };
 
 
-/** A Plan is a plan in a product */
+/** Plan is the product plan. */
 export type PlanFixedFeaturesArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
@@ -303,7 +302,7 @@ export type PlanFixedFeaturesArgs = {
 };
 
 
-/** A Plan is a plan in a product */
+/** Plan is the product plan. */
 export type PlanMeteredFeaturesArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
@@ -311,7 +310,7 @@ export type PlanMeteredFeaturesArgs = {
 };
 
 
-/** A Plan is a plan in a product */
+/** Plan is the product plan. */
 export type PlanConfigurableFeaturesArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
@@ -319,7 +318,7 @@ export type PlanConfigurableFeaturesArgs = {
 };
 
 
-/** A Plan is a plan in a product */
+/** Plan is the product plan. */
 export type PlanRegionsArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
@@ -360,14 +359,14 @@ export type PlanConfigurableFeatureNumericDetails = {
   costTiers?: Maybe<Array<PlanFeatureCostTier>>,
 };
 
-/** A PlanConnection is the connection between a Plan and its containing Product */
+/** A PlanConnection is the connection between a plan and its containing product. */
 export type PlanConnection = {
    __typename?: 'PlanConnection',
   edges: Array<PlanEdge>,
   pageInfo: PageInfo,
 };
 
-/** A PlanEdge is an edge of a PlanConnection */
+/** A PlanEdge is an edge of a PlanConnection. */
 export type PlanEdge = {
    __typename?: 'PlanEdge',
   node: Plan,
@@ -388,14 +387,14 @@ export enum PlanFeatureType {
   Number = 'NUMBER'
 }
 
-/** PlanFixedFeature is a value property of a plan. */
+/** PlanFixedFeature is a value proposition of a plan. */
 export type PlanFixedFeature = {
    __typename?: 'PlanFixedFeature',
   displayName: Scalars['String'],
   displayValue: Scalars['String'],
 };
 
-/** PlanFixedFeaturesConnection is the connection between a plan and its value properties. */
+/** PlanFixedFeaturesConnection is the connection between a plan and its value propositions. */
 export type PlanFixedFeatureConnection = {
    __typename?: 'PlanFixedFeatureConnection',
   pageInfo: PageInfo,
@@ -444,14 +443,14 @@ export type PlanOrderBy = {
   direction: OrderByDirection,
 };
 
-/** PlanOrderByField is a the field by which a plan list will be ordered. */
+/** PlanOrderByField is the field by which a plan list will be ordered. */
 export enum PlanOrderByField {
   Label = 'LABEL',
   DisplayName = 'DISPLAY_NAME',
   Cost = 'COST'
 }
 
-/** PlanState is an enumeration of possible Plan states. */
+/** PlanState is an enumeration of possible plan states. */
 export enum PlanState {
   Hidden = 'HIDDEN',
   Available = 'AVAILABLE',
@@ -459,19 +458,16 @@ export enum PlanState {
   Unlisted = 'UNLISTED'
 }
 
-/** 
- * Platform represents one of the platforms on which Manifold has published its
- * marketplace.
- **/
+/** Platform represents a platform where a Manifold marketplace has been published. */
 export type Platform = {
    __typename?: 'Platform',
-  /** The ID of the Platform for internal usage. */
+  /** The ID of the platform, for internal usage. */
   id: Scalars['ID'],
   /** The domain associated with the platform. */
   domain: Scalars['String'],
 };
 
-/** A Product is a provider's product */
+/** Product represents a provider's product. */
 export type Product = Node & {
    __typename?: 'Product',
   id: Scalars['ID'],
@@ -483,16 +479,16 @@ export type Product = Node & {
    * providerID is null or a provider cannot be retrieved.
  **/
   provider?: Maybe<Provider>,
-  /** State is the currect product state. */
+  /** State is the current state of a product. */
   state: ProductState,
   tagline: Scalars['String'],
   supportEmail: Scalars['String'],
   documentationUrl: Scalars['String'],
   termsUrl: Scalars['String'],
   integration?: Maybe<ProductIntegration>,
-  /** Screenshots are a list of all the images set for this product listing details. */
+  /** Screenshots provide a list of all images in a product listing's details. */
   screenshots?: Maybe<Array<ProductScreenshot>>,
-  /** ValueProps is a list of property values with a header and a body. It is non-nullable, but it can be empty. */
+  /** ValueProps is a list of value propositions with a header and a body. It is non-nullable, but it can be empty. */
   valueProps: Array<ValueProp>,
   /** ValuePropsHtml is the HTML representation of the value propositions. It is non-nullable, but it can be empty. */
   valuePropsHtml: Scalars['String'],
@@ -507,29 +503,30 @@ export type Product = Node & {
 };
 
 
-/** A Product is a provider's product */
+/** Product represents a provider's product. */
 export type ProductPlansArgs = {
+  label?: Maybe<Scalars['String']>,
   free?: Maybe<Scalars['Boolean']>,
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<PlanOrderBy>
 };
 
-/** A ProductConnection is the connection containing Product edges */
+/** A ProductConnection is the connection containing Product edges. */
 export type ProductConnection = {
    __typename?: 'ProductConnection',
   edges: Array<ProductEdge>,
   pageInfo: PageInfo,
 };
 
-/** A ProductEdge is an edge of a ProductConnection */
+/** A ProductEdge is an edge of a ProductConnection. */
 export type ProductEdge = {
    __typename?: 'ProductEdge',
   node: Product,
   cursor: Scalars['String'],
 };
 
-/** ProductIntegration contains information about integrating products. */
+/** ProductIntegration contains information related to product integration. */
 export type ProductIntegration = {
    __typename?: 'ProductIntegration',
   baseUrl: Scalars['String'],
@@ -542,7 +539,7 @@ export type ProductOrderBy = {
   direction: OrderByDirection,
 };
 
-/** ProductOrderByField is a the field by which a Product list will be ordered. */
+/** ProductOrderByField is the field by which the product list will be ordered. */
 export enum ProductOrderByField {
   DisplayName = 'DISPLAY_NAME'
 }
@@ -573,22 +570,22 @@ export type Profile = {
   /** Platform represents the platform this profile belongs to. */
   platform: Platform,
   /** 
- * InvoicePreview represents the preview of the customer’s invoice
+ * InvoicePreview provides a preview of the customer’s invoice
    * for the current billing cycle as of midnight UTC.
    * 
-   * An invoice preview consist of the amount due and related details at
+   * An invoice preview consists of the amount due and related details at
    * a specific moment in time. It does not represent an estimation of the
    * amount that will be due at the end of the billing cycle.
    * 
    * *This is only an invoice preview. It should not be used to charge users.*
    * 
-   * Note: this is currently only available with a Platform API Token.
+   * Note: This is currently only supported with a Platform API token.
  **/
   invoicePreview?: Maybe<Invoice>,
   /** 
- * Invoices will return a paginated list of invoices.
+ * Invoices returns a paginated list of invoices.
    * 
-   * Note: this is currently only available with a Platform API Token.
+   * Note: This is currently only supported with a Platform API token.
  **/
   invoices?: Maybe<InvoiceConnection>,
 };
@@ -601,14 +598,14 @@ export type ProfileInvoicesArgs = {
   orderBy?: Maybe<InvoiceOrderBy>
 };
 
-/** ProfileConnection is the connection containing Profile edges */
+/** ProfileConnection is the connection containing Profile edges. */
 export type ProfileConnection = {
    __typename?: 'ProfileConnection',
   pageInfo: PageInfo,
   edges: Array<ProfileEdge>,
 };
 
-/** ProfileEdge is the edge of a ProfileConnection */
+/** ProfileEdge is the edge of a ProfileConnection. */
 export type ProfileEdge = {
    __typename?: 'ProfileEdge',
   cursor: Scalars['String'],
@@ -616,26 +613,26 @@ export type ProfileEdge = {
 };
 
 
-/** A Provider in Manifold's catalog. Providers own Products. */
+/** A Provider in Manifold's catalog. Providers own products. */
 export type Provider = Node & {
    __typename?: 'Provider',
   id: Scalars['ID'],
-  /** A URL friendly label for this Provider. Globally unique. */
+  /** A URL-friendly label for this provider. Globally unique. */
   label: Scalars['String'],
-  /** A human readble display name for this Provider. */
+  /** A human-readable display name for this provider. */
   displayName: Scalars['String'],
-  /** The URL of the logo for this Provider. */
+  /** The URL of the logo for this provider. */
   logoUrl: Scalars['String'],
-  /** The URL of this Provider's primary website. */
+  /** The URL of this provider's primary website. */
   url: Scalars['String'],
-  /** The email address for contacting this Provider with support requests. */
+  /** The email address for contacting this provider with support requests. */
   supportEmail: Scalars['String'],
   /** The list of products associated with this provider. */
   products?: Maybe<ProductConnection>,
 };
 
 
-/** A Provider in Manifold's catalog. Providers own Products. */
+/** A Provider in Manifold's catalog. Providers own products. */
 export type ProviderProductsArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
@@ -645,57 +642,56 @@ export type ProviderProductsArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type Query = {
    __typename?: 'Query',
   /** 
- * Look up a Provider by it's `id` or `label`. Exactly one of `id` or `label` is
+ * Look up a Provider by its `id` or `label`. Exactly one of `id` or `label` is
    * required, and `id` has precedence over `label`.
  **/
   provider?: Maybe<Provider>,
   /** Look up a Plan by its `id`. `id` is required. */
   plan?: Maybe<Plan>,
-  /** Look up a product by its `id` or label. Exactly one of `id` or `label` is required, and `id` has precedence over `label`. */
+  /** Look up a Product by its `id` or label. Exactly one of `id` or `label` is required, and `id` has precedence over `label`. */
   product?: Maybe<Product>,
   /** List all available categories in the system. */
   categories: CategoryConnection,
   /** Look up a category by its label. */
   category?: Maybe<Category>,
-  /** List all available products */
+  /** List all available products. */
   products?: Maybe<ProductConnection>,
   /** 
- * Look up a profile by `id`, `subject` or based on the currently authenticated profile.
+ * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
    * 
-   * Note: this query can only be performed when authenticated.
+   * Note: This query can only be performed when authenticated.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
   /** 
- * Resources will return a paginated list of resources. It will either contain
-   * all available resources linked to the token, or it will be filtered down to
+ * Return a paginated list of resources. The return value can either contain
+   * all available resources linked to the token, or can be filtered down to
    * fetch data for the specified profile. The owner can either be a ProfileID or
-   * a Subject ID which represents the ProfileID within a specific Platform.
+   * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
    * 
-   * Note: this is currently only available with a Platform API Token.
+   * Note: This query is currently only supported with use of a Platform API token.
  **/
   resources?: Maybe<ResourceConnection>,
   /** 
- * Fetch a resource for the specific label or ID. When authenticated as a
-   * profile, this will fetch the resource associated with the profile. If
-   * authenticated as a platform, an owner needs to be provided when a label is
-   * used.
+ * Fetch a resource for the specified `label` or `id`. When authenticated as a
+   * profile user, fetches the resource associated with the profile. When
+   * authenticated as a platform user and a label is specified, an owner must be provided.
    * 
-   * Note: this is currently only available with a Platform API Token.
+   * Note: This query is currently only supported with use of a Platform API token.
  **/
   resource?: Maybe<Resource>,
   /** 
- * Profiles will return a paginated list of profiles for a Platform, optionally
-   * querying for only profiles with subscription usage over a provided time.
+ * Return a paginated list of profiles for a platform, optionally
+   * querying for only profiles with subscription usage over a specified time.
    * 
-   * Note: this is currently only available with a Platform API Token.
+   * Note: This query is currently only supported with use of a Platform API token.
  **/
   profiles?: Maybe<ProfileConnection>,
   /** Look up an invoice by its `id`. */
@@ -708,8 +704,8 @@ export type Query = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryProviderArgs = {
   id?: Maybe<Scalars['ID']>,
@@ -720,8 +716,8 @@ export type QueryProviderArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryPlanArgs = {
   id: Scalars['ID']
@@ -731,8 +727,8 @@ export type QueryPlanArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryProductArgs = {
   id?: Maybe<Scalars['ID']>,
@@ -743,8 +739,8 @@ export type QueryProductArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryCategoriesArgs = {
   first: Scalars['Int'],
@@ -755,8 +751,8 @@ export type QueryCategoriesArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryCategoryArgs = {
   label: Scalars['String']
@@ -766,8 +762,8 @@ export type QueryCategoryArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryProductsArgs = {
   first: Scalars['Int'],
@@ -779,8 +775,8 @@ export type QueryProductsArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryProfileArgs = {
   id?: Maybe<Scalars['ProfileIdentity']>
@@ -790,8 +786,8 @@ export type QueryProfileArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryNodeArgs = {
   id: Scalars['ID']
@@ -801,8 +797,8 @@ export type QueryNodeArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryResourcesArgs = {
   first: Scalars['Int'],
@@ -814,8 +810,8 @@ export type QueryResourcesArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryResourceArgs = {
   id?: Maybe<Scalars['ID']>,
@@ -827,8 +823,8 @@ export type QueryResourceArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryProfilesArgs = {
   first: Scalars['Int'],
@@ -840,8 +836,8 @@ export type QueryProfilesArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryInvoiceArgs = {
   id: Scalars['ID']
@@ -851,22 +847,22 @@ export type QueryInvoiceArgs = {
 /** 
  * Queries for the Manifold GraphQL API.
  * 
- * More details and usage available on the
- * [platform documentation page](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryLineItemArgs = {
   id: Scalars['ID']
 };
 
-/** A Region is a Data Center within a cloud provider's platform. */
+/** A Region is a data center within a cloud provider's platform. */
 export type Region = Node & {
    __typename?: 'Region',
   id: Scalars['ID'],
-  /** A human readble display name for this Region. */
+  /** A human-readable display name for this region. */
   displayName: Scalars['String'],
-  /** The commercial cloud provider that hosts the Region. */
+  /** The commercial cloud provider that hosts the region. */
   platform: Scalars['String'],
-  /** A platform specific data center identifier. */
+  /** A platform-specific data center identifier. */
   dataCenter: Scalars['String'],
 };
 
@@ -888,7 +884,7 @@ export type RegionsOrderBy = {
   direction: OrderByDirection,
 };
 
-/** RegionsOrderByField is an enum of fields to order regions by. */
+/** RegionsOrderByField is an enum of fields by which regions will be ordered. */
 export enum RegionsOrderByField {
   DisplayName = 'DISPLAY_NAME',
   Platform = 'PLATFORM',
@@ -907,22 +903,22 @@ export enum RenewalPoint {
 export type Resource = Node & {
    __typename?: 'Resource',
   id: Scalars['ID'],
-  /**  A human readable display name for this resource.  */
+  /**  A human-readable display name for this resource.  */
   displayName: Scalars['String'],
-  /**  A machine readable label for this resource. It is unique per owner.  */
+  /**  A machine-readable label for this resource, unique per owner.  */
   label: Scalars['String'],
   /** 
  * The plan for which this resource is provisioned. The plan can be null if the
-   * resource is a custom resource, or if there's a transient failure.
+   * resource is a custom resource, or if a transient failure occurred.
  **/
   plan?: Maybe<Plan>,
   /** 
  * The profile which owns the resource.
    * 
-   * Note: if the resource is not owned by a Platform Profile, this will be null.
+   * Note: If the resource is not owned by a Platform Profile, the value is null.
  **/
   owner?: Maybe<Profile>,
-  /** A list of credentials which are used to access the Resource */
+  /** A list of credentials which can be used to access the Resource. */
   credentials?: Maybe<CredentialConnection>,
 };
 
@@ -948,7 +944,7 @@ export type ResourceConnection = {
 
 /** 
  * ResourceEdge represents a single item on a Resources Connection page which has
- * a cursor which can be used for pagination and holds the actual resource
+ * a cursor that can be used for pagination and holds the actual resource
  * information.
  **/
 export type ResourceEdge = {
@@ -958,7 +954,7 @@ export type ResourceEdge = {
 };
 
 /** 
- * SubLineItem represents the break down by base cost, features and metered usage
+ * SubLineItem represents the breakdown by base cost, features, and metered usage
  * of the amount due by resource.
  **/
 export type SubLineItem = {
@@ -975,15 +971,15 @@ export type SubLineItem = {
   currency: Currency,
   /** Plan is the plan associated with the SubLineItem. */
   plan?: Maybe<Plan>,
-  /** Item is the feature name (base-cost, or a customized name) */
+  /** Item is the feature name (either base-cost, or a customized name). */
   item: Scalars['String'],
   /** Description is the value for the feature, or a metering bucket. */
   description: Scalars['String'],
-  /** CalculationType defines the feature’s billing behavior (prorated, usage) */
+  /** CalculationType defines the feature’s billing behavior (prorated, usage). */
   calculationType: CalculationType,
   /** Start indicates when the feature started to take effect. */
   start: Scalars['Time'],
-  /** End indicates when the feature stopped to take effect. */
+  /** End indicates when the feature stopped taking effect. */
   end: Scalars['Time'],
 };
 
@@ -994,7 +990,7 @@ export type SubLineItemConnection = {
   edges: Array<SubLineItemEdge>,
 };
 
-/** SubLineItemEdge is an edge of SubLineItemConnection */
+/** SubLineItemEdge is an edge of SubLineItemConnection. */
 export type SubLineItemEdge = {
    __typename?: 'SubLineItemEdge',
   cursor: Scalars['String'],
@@ -1002,7 +998,7 @@ export type SubLineItemEdge = {
 };
 
 
-/** ValueProp is a property value */
+/** ValueProp is a value proposition. */
 export type ValueProp = {
    __typename?: 'ValueProp',
   header: Scalars['String'],
@@ -1011,11 +1007,11 @@ export type ValueProp = {
 
 /** 
  * WithUsage allows fetching profiles that have been used after the start date,
- * before the end date or between the start and end date.
+ * before the end date, or between the start and end date.
  **/
 export type WithUsage = {
-  /** Start allows fetching profiles used after this date */
+  /** Start allows fetching profiles used after this date. */
   start?: Maybe<Scalars['Time']>,
-  /** End allows fetching profiles used before this date */
+  /** End allows fetching profiles used before this date. */
   end?: Maybe<Scalars['Time']>,
 };

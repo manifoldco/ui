@@ -18,7 +18,7 @@ Set the CTA text by adding anything between the opening and closing tags:
 ```html
 <manifold-data-sso-button>
   SSO into My Resource
-</manifold-data-provision-button>
+</manifold-data-sso-button>
 ```
 
 `slot` can be attached to any HTML or JSX element. To read more about slots, see [Stencil’s Documentation][stencil-slot]
