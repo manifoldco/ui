@@ -316,6 +316,7 @@ export namespace Components {
     * Hide template cards?
     */
     'hideTemplates'?: boolean;
+    'hideUntilReady'?: boolean;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */
@@ -1379,6 +1380,7 @@ declare namespace LocalJSX {
     * Hide template cards?
     */
     'hideTemplates'?: boolean;
+    'hideUntilReady'?: boolean;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */

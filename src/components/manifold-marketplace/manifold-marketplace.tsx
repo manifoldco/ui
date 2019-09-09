@@ -92,14 +92,19 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
+  @Prop() hideUntilReady?: boolean = false;
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
   @State() services: ProductEdge[];
   @State() isLoading: boolean = false;
 
-  componentWillLoad() {
+  componentWillLoad(): Promise<void> | void {
     this.parseProps();
-    this.fetchProducts();
+    const call = this.fetchProducts();
+
+    if (this.hideUntilReady) {
+      return call;
+    }
   }
 
   async fetchProducts() {
