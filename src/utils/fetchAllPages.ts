@@ -1,10 +1,6 @@
 import connection from '../state/connection';
 import { PageInfo, Query } from '../types/graphql';
 
-interface PageAggregator<Edge> {
-  write: (edges: Edge[]) => void;
-}
-
 interface Connection<Edge> {
   pageInfo: PageInfo;
   edges: Edge[];
@@ -18,40 +14,27 @@ interface NextPage {
 interface Args<Edge> {
   query: string;
   nextPage: NextPage;
-  agg: PageAggregator<Edge>;
   getConnection: (q: Query) => Connection<Edge>;
 }
 
 export default async function fetchAllPages<Edge>({
   query,
   nextPage = { first: 25, after: '' },
-  agg,
   getConnection,
-}: Args<Edge>) {
+}: Args<Edge>): Promise<Edge[]> {
   const page = await connection.graphqlFetch({ query, variables: nextPage });
 
-  if (page.errors) {
+  if (page.errors || !page.data) {
     throw new Error(`Could not fetch all pages of query: ${query}`);
   }
 
-  if (page.data) {
-    const { edges, pageInfo } = getConnection(page.data);
-    agg.write(edges);
+  const { edges, pageInfo } = getConnection(page.data);
 
-    if (pageInfo.hasNextPage) {
-      const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
-      await fetchAllPages({ query, nextPage: next, agg, getConnection });
-    }
+  if (pageInfo.hasNextPage) {
+    const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
+    const remaining = await fetchAllPages({ query, nextPage: next, getConnection });
+    return edges.concat(remaining);
   }
-}
 
-export function createAggregator<T>() {
-  const entries: T[] = [];
-
-  return {
-    write: (edges: T[]) => {
-      entries.push(...edges);
-    },
-    entries: () => entries,
-  };
+  return edges;
 }
