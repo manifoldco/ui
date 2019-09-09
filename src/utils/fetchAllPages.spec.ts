@@ -1,6 +1,6 @@
 import { gql } from '@manifoldco/gql-zero';
 import fetchMock from 'fetch-mock';
-import { Query, CategoryEdge } from '../types/graphql';
+import { Query } from '../types/graphql';
 import fetchAllPages from './fetchAllPages';
 
 const query = gql`
