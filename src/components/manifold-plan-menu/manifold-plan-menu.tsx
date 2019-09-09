@@ -1,26 +1,77 @@
-import { h, Component, Prop, FunctionalComponent } from '@stencil/core';
+import { h, FunctionalComponent, Prop, Component } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
-import { Catalog } from '../../types/catalog';
+import { PlanEdge, PlanConfigurableFeatureConnection, PlanConnection } from '../../types/graphql';
 import logger from '../../utils/logger';
 
-const PlanButton: FunctionalComponent<{
+interface PlanButtonProps {
   checked?: boolean;
-  customizable?: boolean;
+  isConfigurable?: boolean;
   value?: string;
   onChange?: (e: Event) => void;
-}> = (props, children) => (
+}
+
+const PlanButton: FunctionalComponent<PlanButtonProps> = (props, children) => (
   <li class="plan-button">
     <label>
       <input name="plan" type="radio" {...props} />
       <div class="plan-button-inner">
         {children}
         <manifold-icon class="check-icon" icon={check} />
-        {props.customizable && (
+        {props.isConfigurable && (
           <manifold-icon class="custom-icon" icon={sliders} data-hidden={props.checked} />
         )}
       </div>
     </label>
   </li>
+);
+
+interface CostProps {
+  cost: number;
+  id: string;
+}
+
+const Cost: FunctionalComponent<CostProps> = ({ cost, id }) => (
+  <div class="cost">
+    <manifold-plan-cost defaultCost={cost} planId={id} compact={true} />
+  </div>
+);
+
+interface PlanMenuProps {
+  plans: PlanEdge[];
+  selectedPlanId?: string;
+  selectPlan: Function;
+}
+
+const isConfigurable = (configurableFeatures?: PlanConfigurableFeatureConnection) =>
+  configurableFeatures && configurableFeatures.edges.length > 0;
+
+const PlanMenu: FunctionalComponent<PlanMenuProps> = ({ plans, selectedPlanId, selectPlan }) => (
+  <ul class="plan-list">
+    {plans.map(({ node: { id, displayName, configurableFeatures, cost } }) => (
+      <PlanButton
+        checked={selectedPlanId === id}
+        value={id}
+        onChange={() => selectPlan(id)}
+        isConfigurable={isConfigurable(configurableFeatures || undefined)}
+      >
+        {displayName}
+        <Cost cost={cost} id={id} />
+      </PlanButton>
+    ))}
+  </ul>
+);
+
+const SkeletonPlanMenu = () => (
+  <ul class="plan-list">
+    {[1, 2, 3, 4].map((_, i) => (
+      <PlanButton checked={i === 0}>
+        <manifold-skeleton-text>Plan placeholder</manifold-skeleton-text>
+        <div class="cost">
+          <manifold-skeleton-text>Free</manifold-skeleton-text>
+        </div>
+      </PlanButton>
+    ))}
+  </ul>
 );
 
 @Component({
@@ -29,7 +80,7 @@ const PlanButton: FunctionalComponent<{
   shadow: true,
 })
 export class ManifoldPlanMenu {
-  @Prop() plans?: Catalog.ExpandedPlan[];
+  @Prop() plans?: PlanConnection;
   @Prop() selectedPlanId?: string;
   @Prop() selectPlan: Function = () => {};
 
@@ -37,47 +88,15 @@ export class ManifoldPlanMenu {
   render() {
     if (this.plans) {
       return (
-        <ul class="plan-list">
-          {this.plans.map(
-            ({
-              id,
-              body: { name, customizable, cost, defaultCost, expanded_features = [] },
-            }: Catalog.ExpandedPlan) => (
-              <PlanButton
-                checked={this.selectedPlanId === id}
-                value={id}
-                onChange={() => this.selectPlan(id)}
-                customizable={customizable}
-              >
-                {name}
-                <div class="cost">
-                  <manifold-plan-cost
-                    allFeatures={expanded_features}
-                    defaultCost={defaultCost || cost}
-                    planId={id}
-                    compact={true}
-                  />
-                </div>
-              </PlanButton>
-            )
-          )}
-        </ul>
+        <PlanMenu
+          plans={this.plans.edges}
+          selectedPlanId={this.selectedPlanId}
+          selectPlan={this.selectPlan}
+        />
       );
     }
 
     // 💀
-
-    return (
-      <ul class="plan-list">
-        {[1, 2, 3, 4].map((_, i) => (
-          <PlanButton checked={i === 0}>
-            <manifold-skeleton-text>Plan placeholder</manifold-skeleton-text>
-            <div class="cost">
-              <manifold-skeleton-text>Free</manifold-skeleton-text>
-            </div>
-          </PlanButton>
-        ))}
-      </ul>
-    );
+    return <SkeletonPlanMenu />;
   }
 }

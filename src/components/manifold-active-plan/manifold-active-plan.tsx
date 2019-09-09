@@ -2,6 +2,7 @@ import { h, Component, State, Prop, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import logger from '../../utils/logger';
+import { Product } from '../../types/graphql';
 @Component({
   tag: 'manifold-active-plan',
   styleUrl: 'plan-selector.css',
@@ -10,7 +11,7 @@ import logger from '../../utils/logger';
 export class ManifoldActivePlan {
   @Prop() isExistingResource?: boolean;
   @Prop() plans?: Catalog.ExpandedPlan[];
-  @Prop() product?: Catalog.Product;
+  @Prop() product?: Product;
   @Prop() regions?: string[];
   @Prop() selectedResource?: Gateway.Resource;
   @State() selectedPlanId: string;
@@ -49,7 +50,7 @@ export class ManifoldActivePlan {
 
     return [
       <manifold-plan-menu
-        plans={this.plans}
+        plans={this.product && this.product.plans ? this.product.plans : undefined}
         selectedPlanId={this.selectedPlanId}
         selectPlan={this.selectPlan}
       />,

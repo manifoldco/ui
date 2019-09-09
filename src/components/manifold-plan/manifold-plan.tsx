@@ -1,20 +1,36 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import { Catalog } from '../../types/catalog';
 import Tunnel from '../../data/connection';
 import { RestFetch } from '../../utils/restFetch';
+import { Product } from '../../types/graphql';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+
+const query = gql`
+  query PRODUCT($productLabel: String!) {
+    product(label: $productLabel) {
+      id
+      displayName
+      label
+      logoUrl
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {
   @Element() el: HTMLElement;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** URL-friendly slug (e.g. `"kitefin"`) */
   @Prop() planLabel?: string;
-  @State() product?: Catalog.Product;
+  @State() product?: Product;
   @State() plan?: Catalog.Plan;
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductAndPlan(newProduct, this.planLabel);
@@ -28,19 +44,19 @@ export class ManifoldPlan {
   }
 
   async fetchProductAndPlan(productLabel?: string, planLabel?: string) {
-    if (!productLabel || !planLabel || !this.restFetch) {
+    if (!productLabel || !planLabel || !this.restFetch || !this.graphqlFetch) {
       return;
     }
 
     this.product = undefined;
-    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
-      service: 'catalog',
-      endpoint: `/products/?label=${productLabel}`,
+    const { data } = await this.graphqlFetch({
+      query,
+      variables: { productLabel },
     });
 
-    if (response && response.length) {
-      this.product = response[0]; // eslint-disable-line prefer-destructuring
-      await this.fetchPlan(response[0].id, planLabel);
+    if (data && data.product) {
+      this.product = data.product;
+      await this.fetchPlan(data.product.id, planLabel);
     }
   }
 
@@ -66,4 +82,4 @@ export class ManifoldPlan {
   }
 }
 
-Tunnel.injectProps(ManifoldPlan, ['restFetch']);
+Tunnel.injectProps(ManifoldPlan, ['graphqlFetch', 'restFetch']);

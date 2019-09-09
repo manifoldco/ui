@@ -1,7 +1,7 @@
 import { h, Component } from '@stencil/core';
 
 import ResourceTunnel, { ResourceState } from '../../data/resource';
-import { convertPlan, convertProduct } from '../../utils/gatewayToCatalog';
+import { convertPlan } from '../../utils/gatewayToCatalog';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-plan' })
@@ -23,7 +23,7 @@ export class ManifoldResourcePlan {
                 state.data.product.id || '',
                 state.data.product.provider.id || ''
               )}
-              product={convertProduct(state.data.product)}
+              product={state.data.product}
             />
           ) : (
             // ☠

@@ -1,4 +1,5 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
@@ -7,12 +8,94 @@ import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import { planSort } from '../../utils/plan';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { Product } from '../../types/graphql';
+
+const query = gql`
+  query PLAN_LIST($productLabel: String!) {
+    product(label: $productLabel) {
+      id
+      displayName
+      label
+      logoUrl
+      plans(first: 500) {
+        edges {
+          node {
+            id
+            displayName
+            label
+            free
+            cost
+            fixedFeatures(first: 500) {
+              edges {
+                node {
+                  displayValue
+                  displayValue
+                }
+              }
+            }
+            meteredFeatures(first: 500) {
+              edges {
+                node {
+                  label
+                  displayName
+                  numericDetails {
+                    unit
+                    costTiers {
+                      limit
+                      cost
+                    }
+                  }
+                }
+              }
+            }
+            configurableFeatures(first: 500) {
+              edges {
+                node {
+                  label
+                  displayName
+                  type
+                  options {
+                    displayName
+                    displayValue
+                  }
+                  numericDetails {
+                    increment
+                    min
+                    max
+                    unit
+                    costTiers {
+                      limit
+                      cost
+                    }
+                  }
+                }
+              }
+            }
+            regions(first: 500) {
+              edges {
+                node {
+                  id
+                  displayName
+                  platform
+                  dataCenter
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** Show only free plans? */
   @Prop() freePlans?: boolean = false;
+  /** _(hidden)_ Passed by `<manifold-connection>` */
+  @Prop() graphqlFetch?: GraphqlFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() restFetch?: RestFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
@@ -21,7 +104,7 @@ export class ManifoldPlanSelector {
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceLabel?: string;
-  @State() product?: Catalog.Product;
+  @State() product?: Product;
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
@@ -46,23 +129,15 @@ export class ManifoldPlanSelector {
   }
 
   async fetchProductByLabel(productLabel: string) {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    this.product = undefined;
-    if (this.regions) {
-      this.parsedRegions = this.parseRegions(this.regions);
-    }
+    const { data } = await this.graphqlFetch({ query, variables: { productLabel } });
 
-    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
-      service: 'catalog',
-      endpoint: `/products/?label=${productLabel}`,
-    });
-
-    if (response && response.length) {
-      this.product = response[0]; // eslint-disable-line prefer-destructuring
-      this.fetchPlans(this.product.id);
+    if (data && data.product) {
+      this.product = data.product;
+      this.fetchPlans(data.product.id);
     }
   }
 
@@ -127,4 +202,4 @@ export class ManifoldPlanSelector {
   }
 }
 
-Tunnel.injectProps(ManifoldPlanSelector, ['restFetch']);
+Tunnel.injectProps(ManifoldPlanSelector, ['graphqlFetch', 'restFetch']);
