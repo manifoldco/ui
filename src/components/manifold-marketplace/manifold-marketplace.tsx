@@ -98,13 +98,15 @@ export class ManifoldMarketplace {
   @State() services: ProductEdge[];
   @State() isLoading: boolean = false;
 
-  componentWillLoad(): Promise<void> | void {
+  componentWillLoad() {
     this.parseProps();
     const call = this.fetchProducts();
 
     if (this.hideUntilReady) {
       return call;
     }
+
+    return Promise.resolve();
   }
 
   async fetchProducts() {
