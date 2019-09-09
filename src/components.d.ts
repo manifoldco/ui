@@ -26,6 +26,7 @@ import {
 } from './types/marketplace';
 import {
   Product,
+  ProductEdge,
 } from './types/graphql';
 import {
   Option,
@@ -300,6 +301,10 @@ export namespace Components {
     */
     'featured'?: string;
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Hide categories & side menu?
     */
     'hideCategories'?: boolean;
@@ -324,10 +329,6 @@ export namespace Components {
     */
     'products'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    /**
     * Template format structure, with `:product` placeholder
     */
     'templateLinkFormat'?: string;
@@ -341,7 +342,7 @@ export namespace Components {
     'preserveEvent': boolean;
     'productLinkFormat'?: string;
     'products': string[];
-    'services': Catalog.Product[];
+    'services': ProductEdge[];
     'skeleton'?: boolean;
     'templateLinkFormat'?: string;
   }
@@ -1363,6 +1364,10 @@ declare namespace LocalJSX {
     */
     'featured'?: string;
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Hide categories & side menu?
     */
     'hideCategories'?: boolean;
@@ -1387,10 +1392,6 @@ declare namespace LocalJSX {
     */
     'products'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    /**
     * Template format structure, with `:product` placeholder
     */
     'templateLinkFormat'?: string;
@@ -1404,7 +1405,7 @@ declare namespace LocalJSX {
     'preserveEvent'?: boolean;
     'productLinkFormat'?: string;
     'products'?: string[];
-    'services'?: Catalog.Product[];
+    'services'?: ProductEdge[];
     'skeleton'?: boolean;
     'templateLinkFormat'?: string;
   }
