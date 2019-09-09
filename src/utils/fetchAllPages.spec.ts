@@ -1,7 +1,7 @@
 import { gql } from '@manifoldco/gql-zero';
 import fetchMock from 'fetch-mock';
 import { Query, CategoryEdge } from '../types/graphql';
-import fetchAllPages, { createAggregator as agg } from './fetchAllPages';
+import fetchAllPages from './fetchAllPages';
 
 const query = gql`
   query CATEGORIES($first: Int!, $after: String!) {
@@ -248,19 +248,13 @@ describe('Fetching all pages of a GraphQL connection', () => {
         { overwriteRoutes: false }
       );
 
-    const aggregator = agg<CategoryEdge>();
-    const aggSpy = jest.spyOn(aggregator, 'write');
-
-    await fetchAllPages({
+    const entries = await fetchAllPages({
       query,
       nextPage: { first: 3, after: '' },
-      agg: aggregator,
       getConnection: (q: Query) => q.categories,
     });
 
-    expect(fetchMock.calls).toHaveLength(aggSpy.mock.calls.length);
-    expect(aggregator.entries()).toEqual(
-      firstPage.categories.edges.concat(secondPage.categories.edges)
-    );
+    expect(fetchMock.calls).toHaveLength(2);
+    expect(entries).toEqual(firstPage.categories.edges.concat(secondPage.categories.edges));
   });
 });
