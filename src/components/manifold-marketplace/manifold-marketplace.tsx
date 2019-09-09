@@ -5,7 +5,7 @@ import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import { Query, ProductEdge, ProductState } from '../../types/graphql';
-import fetchAllPages, { createAggregator } from '../../utils/fetchAllPages';
+import fetchAllPages from '../../utils/fetchAllPages';
 import skeletonProducts from '../../data/marketplace';
 import { Catalog } from '../../types/catalog';
 
@@ -104,15 +104,13 @@ export class ManifoldMarketplace {
 
   async fetchProducts() {
     this.isLoading = true;
-    const agg = createAggregator<ProductEdge>();
-    await fetchAllPages({
+    this.services = await fetchAllPages({
       query: productQuery,
-      agg,
+      nextPage: { first: 25, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
     });
     this.isLoading = false;
-    this.services = agg.entries();
   }
 
   private parse(list: string): string[] {
