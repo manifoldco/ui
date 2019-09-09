@@ -24,21 +24,17 @@ export default async function fetchAllPages<Edge>({
 }: Args<Edge>): Promise<Edge[]> {
   const page = await connection.graphqlFetch({ query, variables: nextPage });
 
-  if (page.errors) {
+  if (page.errors || !page.data) {
     throw new Error(`Could not fetch all pages of query: ${query}`);
   }
 
-  if (page.data) {
-    const { edges, pageInfo } = getConnection(page.data);
+  const { edges, pageInfo } = getConnection(page.data);
 
-    if (pageInfo.hasNextPage) {
-      const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
-      const remaining = await fetchAllPages({ query, nextPage: next, getConnection });
-      return edges.concat(remaining);
-    }
-
-    return edges;
+  if (pageInfo.hasNextPage) {
+    const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
+    const remaining = await fetchAllPages({ query, nextPage: next, getConnection });
+    return edges.concat(remaining);
   }
 
-  return [];
+  return edges;
 }

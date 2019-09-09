@@ -233,6 +233,8 @@ const secondPage = {
 };
 
 describe('Fetching all pages of a GraphQL connection', () => {
+  afterEach(fetchMock.reset);
+
   it('fetches all the pages', async () => {
     fetchMock
       .once('https://api.manifold.co/graphql', {
