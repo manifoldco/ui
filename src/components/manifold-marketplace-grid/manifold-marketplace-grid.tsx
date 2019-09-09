@@ -5,6 +5,7 @@ import { ProductEdge } from '../../types/graphql';
 import serviceTemplates from '../../data/templates';
 import { categoryIcon, formatCategoryLabel } from '../../utils/marketplace';
 import logger from '../../utils/logger';
+import { filteredServices, categories } from './utils';
 
 /*
  * The first phase of the GraphQL conversion involves fetching all pages
@@ -45,43 +46,6 @@ import logger from '../../utils/logger';
  * not submit a category label. This will present products as it does today, but
  * will also need to fetch more results when the user scrolls if more pages remain.
  */
-
-function filteredServices(filter: string, services?: ProductEdge[]): ProductEdge[] {
-  if (!filter || !services) {
-    return [];
-  }
-
-  const searchTerm = filter.toLocaleLowerCase();
-  return services.filter(s => {
-    const searchTargets = [s.node.label, s.node.displayName.toLocaleLowerCase()].concat(
-      s.node.categories.map(c => c.label)
-    );
-    return searchTargets.some(t => t.includes(searchTerm));
-  });
-}
-
-interface CategoryMap {
-  [category: string]: ProductEdge[];
-}
-
-function categories(services?: ProductEdge[]): CategoryMap {
-  const categoryMap: CategoryMap = {};
-
-  if (Array.isArray(services)) {
-    services.forEach(service => {
-      const { categories } = service.node;
-      const tags = categories.length ? categories.map(c => c.label) : ['uncategorized'];
-      tags.forEach(tag => {
-        categoryMap[tag] = categoryMap[tag] || [];
-        categoryMap[tag].push(service);
-      });
-
-      return {};
-    });
-  }
-
-  return categoryMap;
-}
 
 @Component({
   tag: 'manifold-marketplace-grid',
@@ -136,8 +100,8 @@ export class ManifoldMarketplaceGrid {
     const categoryList: string[] = [];
 
     // Iterate through services, only add unique categories
-    this.filteredServices.forEach(({ node: { categories } }: ProductEdge) => {
-      categories.forEach(({ label }) => {
+    this.filteredServices.forEach(({ node }: ProductEdge) => {
+      node.categories.forEach(({ label }) => {
         if (!categoryList.includes(label)) {
           categoryList.push(label);
         }

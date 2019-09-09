@@ -1,6 +1,6 @@
 import connection from '../state/connection';
-import { GraphqlFetch } from './graphqlFetch';
 import { PageInfo, Query } from '../types/graphql';
+import { GraphqlFetch } from '../utils/graphqlFetch';
 
 interface Connection<Edge> {
   pageInfo: PageInfo;
@@ -21,7 +21,7 @@ interface Args<Edge> {
 
 export default async function fetchAllPages<Edge>({
   query,
-  nextPage = { first: 25, after: '' },
+  nextPage,
   getConnection,
   graphqlFetch = connection.graphqlFetch,
 }: Args<Edge>): Promise<Edge[]> {
