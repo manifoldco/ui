@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Element } from '@stencil/core';
 import observeRect from '@reach/observe-rect';
 
-import { ProductEdge } from '../../types/graphql';
+import { ProductEdge, PlanConnection, Product } from '../../types/graphql';
 import serviceTemplates from '../../data/templates';
 import { categoryIcon, formatCategoryLabel } from '../../utils/marketplace';
 import logger from '../../utils/logger';
@@ -100,7 +100,7 @@ export class ManifoldMarketplaceGrid {
     const categoryList: string[] = [];
 
     // Iterate through services, only add unique categories
-    this.filteredServices.forEach(({ node }: ProductEdge) => {
+    this.filteredServices.forEach(({ node }) => {
       node.categories.forEach(({ label }) => {
         if (!categoryList.includes(label)) {
           categoryList.push(label);
@@ -217,20 +217,26 @@ export class ManifoldMarketplaceGrid {
     }
   };
 
-  private renderServiceCard = (product: ProductEdge) => (
-    <manifold-service-card-view
-      description={product.node.tagline}
-      isFeatured={this.featured && this.featured.includes(product.node.label)}
-      isFree={product.node.plans ? product.node.plans.edges.length > 0 : false}
-      logo={product.node.logoUrl}
-      name={product.node.displayName}
-      preserveEvent={this.preserveEvent}
-      productId={product.node.id}
-      productLabel={product.node.label}
-      productLinkFormat={this.productLinkFormat}
-      skeleton={this.skeleton}
-    />
-  );
+  private renderServiceCard = (product: ProductEdge) => {
+    const productNode: Product & {
+      freePlans?: PlanConnection;
+    } = product.node;
+
+    return (
+      <manifold-service-card-view
+        description={productNode.tagline}
+        isFeatured={this.featured && this.featured.includes(productNode.label)}
+        isFree={productNode.freePlans ? productNode.freePlans.edges.length > 0 : false}
+        logo={productNode.logoUrl}
+        name={productNode.displayName}
+        preserveEvent={this.preserveEvent}
+        productId={productNode.id}
+        productLabel={productNode.label}
+        productLinkFormat={this.productLinkFormat}
+        skeleton={this.skeleton}
+      />
+    );
+  };
 
   @logger()
   render() {

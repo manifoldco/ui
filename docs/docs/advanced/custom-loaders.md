@@ -73,10 +73,10 @@ be [lazy-loaded][lazy-loading] using `import()`).
 
 ## Currently supported components
 
-- [manifold-plan-selector][plan-selector]
 - [manifold-marketplace][marketplace]
+- [manifold-plan-selector][plan-selector]
 
-[skeletons]: https://css-tricks.com/building-skeleton-screens-css-custom-properties/
-[plan-selector]: /components/plan-selector
-[marketplace]: /components/manifold-marketplace
 [lazy-loading]: https://reactjs.org/docs/code-splitting.html
+[marketplace]: /components/manifold-marketplace
+[plan-selector]: /components/plan-selector
+[skeletons]: https://css-tricks.com/building-skeleton-screens-css-custom-properties/

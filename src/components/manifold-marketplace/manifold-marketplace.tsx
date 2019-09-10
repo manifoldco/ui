@@ -54,7 +54,7 @@ const productQuery = gql`
           categories {
             label
           }
-          plans(first: 1, free: true) {
+          freePlans: plans(first: 1, free: true) {
             edges {
               node {
                 free
