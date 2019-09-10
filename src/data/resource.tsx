@@ -1,10 +1,11 @@
 import { h } from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
 import { Gateway } from '../types/gateway';
-import { Product } from '../types/graphql';
+import { Resource } from '../types/graphql';
 
 export interface ResourceState {
-  data?: Gateway.Resource & { product?: Product };
+  data?: Gateway.Resource;
+  gqlData?: Resource;
   loading: boolean;
 }
 

@@ -23,7 +23,9 @@ export class ManifoldResourcePlan {
                 state.data.product.id || '',
                 state.data.product.provider.id || ''
               )}
-              product={state.data.product}
+              product={
+                (state.gqlData && state.gqlData.plan && state.gqlData.plan.product) || undefined
+              }
             />
           ) : (
             // ☠
