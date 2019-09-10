@@ -3,7 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 
 import { CredentialEdge } from '../../types/graphql';
 import connection from '../../state/connection';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
@@ -13,6 +13,7 @@ export class ManifoldCredentials {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() resourceLabel?: string = '';
   @State() credentials?: CredentialEdge[];
+  @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
   @State() shouldTransition: boolean = false;
 
@@ -25,9 +26,10 @@ export class ManifoldCredentials {
       return;
     }
 
+    this.errors = undefined;
     this.loading = true;
 
-    const { data } = await this.graphqlFetch({
+    const { data, errors } = await this.graphqlFetch({
       query: gql`
         query RESOURCE_CREDENTIALS($resourceLabel: String!) {
           resource(label: $resourceLabel) {
@@ -45,6 +47,10 @@ export class ManifoldCredentials {
       variables: { resourceLabel: this.resourceLabel },
     });
 
+    if (errors) {
+      this.errors = errors;
+    }
+
     this.credentials =
       (data && data.resource && data.resource.credentials && data.resource.credentials.edges) ||
       undefined;
@@ -59,7 +65,7 @@ export class ManifoldCredentials {
 
   @logger()
   render() {
-    return (
+    return [
       <manifold-credentials-view
         credentials={this.credentials}
         loading={this.loading}
@@ -72,7 +78,12 @@ export class ManifoldCredentials {
         <manifold-forward-slot slot="hide-button">
           <slot name="hide-button" />
         </manifold-forward-slot>
-      </manifold-credentials-view>
-    );
+      </manifold-credentials-view>,
+      this.errors
+        ? this.errors.map(({ message }) => (
+            <manifold-toast alert-type="error">{message}</manifold-toast>
+          ))
+        : null,
+    ];
   }
 }
