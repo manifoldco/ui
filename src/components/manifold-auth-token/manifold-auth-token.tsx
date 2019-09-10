@@ -13,6 +13,8 @@ export class ManifoldAuthToken {
   @Prop() subscribe?: (s: Subscriber) => () => void = connection.subscribe;
   /* Authorisation header token that can be used to authenticate the user in manifold */
   @Prop() token?: string;
+  @Prop() useOauth?: boolean;
+  @Prop() refresh?: () => Promise<AuthToken>;
   @State() tick?: string;
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter<{ token: string }>;
@@ -28,8 +30,12 @@ export class ManifoldAuthToken {
     if (this.subscribe) {
       this.unsubscribe = this.subscribe((oldToken?: string, newToken?: string) => {
         if (oldToken && !newToken) {
-          // changing this to any new string will cause a token refresh. getTime() does that wonderfully.
-          this.tick = new Date().getTime().toString();
+          if (this.useOauth) {
+            // changing this to any new string will cause a token refresh. getTime() does that wonderfully.
+            this.tick = new Date().getTime().toString();
+          } else if (this.refresh) {
+            this.refresh().then(this.setToken);
+          }
         }
       });
     }
@@ -47,8 +53,11 @@ export class ManifoldAuthToken {
     }
   }
 
-  setInternalToken = (e: CustomEvent) => {
-    const payload = e.detail as AuthToken;
+  setInternalToken = (e: CustomEvent<AuthToken>) => {
+    this.setToken(e.detail);
+  };
+
+  setToken = (payload: AuthToken) => {
     if (!payload.error && payload.expiry) {
       const formattedToken = `${payload.token}|${payload.expiry}`;
       if (this.setAuthToken) {
@@ -60,6 +69,10 @@ export class ManifoldAuthToken {
 
   @logger()
   render() {
-    return <manifold-oauth tick={this.tick} onReceiveManifoldToken={this.setInternalToken} />;
+    return (
+      this.useOauth && (
+        <manifold-oauth tick={this.tick} onReceiveManifoldToken={this.setInternalToken} />
+      )
+    );
   }
 }
