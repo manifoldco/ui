@@ -1,232 +1,106 @@
 ---
-title: Resource Details View
+title: Resource Helpers
 path: /advanced/resource-details
+example: |
+  <style>
+    manifold-data-rename-button button,
+    manifold-data-deprovision-button button,
+    manifold-data-sso-button button {
+      border: none;
+      padding: 0;
+    }
+  </style>
+  <manifold-mock-resource>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 1em;">
+      <div style="display: flex; align-items: center;">
+        <manifold-input default-value="my-resource" disabled></manifold-input>
+        <manifold-resource-status size="small" style="margin-left: 1em;"></manifold-resource-status>
+      </div>
+      <div>
+        <manifold-resource-rename>
+          <manifold-button>Rename</manifold-button>
+        </manifold-resource-rename>
+        <manifold-resource-sso>
+          <manifold-button>SSO</manifold-button>
+        </manifold-resource-sso>
+        <manifold-resource-deprovision>
+          <manifold-button>Deprovision</manifold-button>
+        </manifold-resource-deprovision>
+      </div>
+    </div>
+    <manifold-resource-product style="margin-bottom: 1em"></manifold-resource-product>
+    <manifold-resource-plan style="margin-bottom: 1em"></manifold-resource-plan>
+    <manifold-resource-credentials></manifold-resource-credentials>
+  </manifold-mock-resource>
 ---
 
-# Creating a resource details view
+# Resource Helpers
 
-A specific set of component are available to use for creating a resource details view without having
-to keep giving the resource label as attributes to all the components in the library.
+A special wrapper component, `<manifold-resource-container>`, can be used to create a special shared
+context for related resource components. Using this has the following advantages:
 
-To setup a resource details view, wrap all the structure you want to be part of the resource details
-view in a `manifold-resource-container` component with access to the resource label.
+- Requests will be consolidated so users experience shorter loading times
+- You don’t have to specify `resource-label="my-resource"` on all its children
+
+To use this special context, you also have to use aliased components, as specified below:
 
 ```html
 <manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
-</manifold-resource-container>
-```
+  <!-- use any, or all, of the following components: -->
 
-<style>
-  manifold-data-rename-button button, manifold-data-deprovision-button button, manifold-data-sso-button button {
-    border: none;
-    padding: 0;
-  }
-</style>
-<manifold-mock-resource>
-  <div style="display: flex; justify-content: space-between; margin-bottom: 1em;">
-    <div style="display: flex; align-items: center;">
-      <manifold-input default-value="my-resource" disabled></manifold-input>
-      <manifold-resource-status size="small" style="margin-left: 1em;"></manifold-resource-status>
-    </div>
-    <div>
-      <manifold-resource-rename>
-        <manifold-button>Rename</manifold-button>
-      </manifold-resource-rename>
-      <manifold-resource-sso>
-        <manifold-button>SSO</manifold-button>
-      </manifold-resource-sso>
-      <manifold-resource-deprovision>
-        <manifold-button>Deprovision</manifold-button>
-      </manifold-resource-deprovision>
-    </div>
-  </div>
-  <manifold-resource-product style="margin-bottom: 1em"></manifold-resource-product>
-  <manifold-resource-plan style="margin-bottom: 1em"></manifold-resource-plan>
   <manifold-resource-credentials></manifold-resource-credentials>
-</resource-mock-resource>
 
-## Refetching until the resource is valid
-
-The `refetch-until-valid` property on the `resource-container` can be used to force the container to
-refetch the resource until it has found one and the status of that resource is available. This is
-useful for reloading the page until the resource has finished resizing or provisioning for example.
-
-## The resource credentials
-
-The [`manifold-credentials`](/components/credentials) component can be used inside the container
-without any attribute by using the `manifold-resource-credentials` component.
-
-```html
-<manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
-  <manifold-resource-credentials></manifold-resource-credentials>
-</manifold-resource-container>
-```
-
-## The resource deprovision Button
-
-The [`manifold-data-deprovision-button`](/data/deprovision-button) component can be used inside the
-container without any attribute by using the `manifold-resource-deprovision` component. This
-component is still acting as a data component and can be stylized or be given children.
-
-```html
-<manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
   <manifold-resource-deprovision>Deprovision</manifold-resource-deprovision>
-</manifold-resource-container>
-```
 
-### Events
-
-For validation, error, and success messages, it will emit custom events.
-
-```js
-document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
-  console.info(`⌛ Deprovisioning ${resourceLabel} …`)
-);
-document.addEventListener('manifold-deprovisionButton-success', ({ detail: { resourceLabel } }) =>
-  alert(`${resourceLabel} deprovisioned successfully!`)
-);
-document.addEventListener('manifold-deprovisionButton-error', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource"}
-```
-
-| Name                                 | Returns                                  | Description                                                                                                                 |
-| ------------------------------------ | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-deprovisionButton-click`   | `resourceLabel`                          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-deprovisionButton-success` | `message`, `resourceId`, `resourceLabel` | Successful deprovision. Returns a resource ID and resource Label.                                                           |
-| `manifold-deprovisionButton-error`   | `message`, `resourceId`, `resourceLabel` | Erred provision, along with information on what went wrong.                                                                 |
-
-## The resource rename Button
-
-The [`manifold-data-rename-button`](/data/rename-button) component can be used inside the container
-without any attribute by using the `manifold-resource-rename` component. This component is still
-acting as a data component and can be stylized or be given children.
-
-```html
-<manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
-  <manifold-resource-rename>Rename</manifold-resource-rename>
-</manifold-resource-container>
-```
-
-### Events
-
-For validation, error, and success messages, it will emit custom events.
-
-```js
-document.addEventListener(
-  'manifold-renameButton-click',
-  ({ detail: { resourceLabel, newLabel } }) =>
-    console.info(`⌛ Renaming ${resourceLabel} to ${newLabel} …`)
-);
-document.addEventListener(
-  'manifold-renameButton-success',
-  ({ detail: { resourceLabel, newLabel } }) =>
-    alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
-);
-document.addEventListener('manifold-renameButton-error', ({ detail }) => console.log(detail));
-// {
-//   message: 'bad_request: bad_request: No plan_id provided',
-//   resourceid: '1234',
-//   resourceLabel: 'my-resource',
-//   newLabel: 'new-name',
-// }
-document.addEventListener('manifold-renameButton-invalid', ({ detail }) => console.log(detail));
-// {
-//   message: 'bad_request: bad_request: No plan_id provided',
-//   resourceid: '1234',
-//   resourceLabel: 'my-resource',
-//   newLabel: 'new-name',
-// }
-```
-
-| Name                            | Returns                                              | Description                                                                                                                 |
-| ------------------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-renameButton-click`   | `resourceId`, `resourceLabel`, `newLabel`            | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-renameButton-success` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
-| `manifold-renameButton-error`   | `message`, `resourceId`, `resourceLabel`, `newLabel` | Erred rename, along with information on what went wrong.                                                                    |
-| `manifold-renameButton-error`   | `message`, `resourceId`, `resourceLabel`, `newLabel` | Invalid renaming, along with information on what went wrong.                                                                |
-
-## The resource sso Button
-
-The [`manifold-data-sso-button`](/data/sso-button) component can be used inside the container
-without any attribute by using the `manifold-resource-sso` component. This component is still acting
-as a data component and can be stylized or be given children.
-
-```html
-<manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
-  <manifold-resource-sso>SSO into resource</manifold-resource-sso>
-</manifold-resource-container>
-```
-
-### Events
-
-For validation, error, and success messages, it will emit custom events.
-
-```js
-document.addEventListener('manifold-ssoButton-click', ({ detail: { resourceLabel } }) =>
-  console.info(`User is logging into ${resourceLabel}…`)
-);
-document.addEventListener(
-  'manifold-ssoButton-success',
-  ({ detail: { resourceLabel, redirectUrl } }) => (window.location = redirectUrl)
-);
-document.addEventListener('manifold-ssoButton-error', ({ detail }) => console.log(detail));
-// {
-//   type: 'not_found',
-//   message: 'no_found: Resource not found',
-//   resourceid: '1234',
-//   resourceLabel: 'my-resource',
-// }
-```
-
-| Name                         | Returns                                                 | Description                                                                                                                 |
-| ---------------------------- | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-ssoButton-click`   | `resourceId`, `resourceLabel`                           | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-ssoButton-success` | `message`, `resourceId`, `resourceLabel`, `redirectUrl` | Successful sso. Returns a resource ID, resource Label and the redirect_url for the product's dashboard.                     |
-| `manifold-ssoButton-error`   | `message`, `resourceId`, `resourceLabel`                | Erred sso, along with information on what went wrong.                                                                       |
-
-## The resource product details
-
-The [`manifold-resource-card`][service-card] component can be used inside the container without any
-attribute by using the [`manifold-resource-product`][resource-product] component.
-
-```html
-<manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
-  <manifold-resource-product></manifold-resource-product>
-</manifold-resource-container>
-```
-
-## The resource plan details
-
-The [`manifold-plan`][plan] component can be used inside the container without any attribute by
-using the [`manifold-resource-plan`][resource-plan] component.
-
-```html
-<manifold-resource-container resource-label="my-resource">
-  <!--- Your structure goes here --->
   <manifold-resource-plan></manifold-resource-plan>
-</manifold-resource-container>
-```
 
-## The resource status
+  <manifold-resource-product></manifold-resource-product>
 
-You can display the resource's status like on the `resource-card` component or the standalone
-[`manifold-resource-status-view`][status] component inside the container by using the
-`manifold-resource-status` component.
+  <manifold-resource-rename>Rename</manifold-resource-rename>
 
-```html
-<manifold-resource-container resource-label="my-resource">
+  <manifold-resource-sso>Launch Dashboard</manifold-resource-sso>
+
   <manifold-resource-status></manifold-resource-status>
 </manifold-resource-container>
 ```
 
+All of the children of `<manifold-resource-container>` are special versions of existing components.
+**These versions of components don’t require any attributes.** They do emit all events, and accept
+all children of their aliases:
+
+| Original component                                  | Resource context version          |       Events?       |
+| :-------------------------------------------------- | :-------------------------------- | :-----------------: |
+| [`<manifold-credentials>`][credentials]             | `<manifold-resource-credentials>` |                     |
+| [`<manifold-data-deprovision-button>`][deprovision] | `<manifold-resource-deprovision>` | [Yes][deprovision]  |
+| [`<manifold-data-rename-button>`][rename]           | `<manifold-resource-rename>`      |    [Yes][rename]    |
+| [`<manifold-data-sso-button>`][sso]                 | `<manifold-resource-sso>`         |     [Yes][sso]      |
+| [`<manifold-service-card>`][service-card]           | `<manifold-resource-product>`     | [Yes][service-card] |
+| [`<manifold-plan>`][plan]                           | `<manifold-resource-plan>`        |                     |
+| [`<manifold-resource-status>`][status]              | `<manifold-resource-status>`      |                     |
+
+_For example: the `<manifold-resource-sso>` component will emit the same `manifold-ssoButton-click`,
+`manifold-ssoButton-success`, and `manifold-ssoButton-error` events as
+`<manifold-data-sso-button>`._
+
+## Refetch until valid
+
+The `refetch-until-valid` property on the `resource-container` can be used to force the container to
+continually attempt to fetch the resource until it has found one and the status of that resource is
+available. This is useful for reloading the page until the resource has finished resizing or
+provisioning for example.
+
+```html
+<manifold-resource-container resource-label="my-resource" refetch-until-valid>
+  <manifold-resource-credentials></manifold-resource-credentials>
+</manifold-resource-container>
+```
+
+[credentials]: /components/credentials
+[deprovision]: /data/deprovision-button
 [plan]: /components/plan
+[rename]: /data/rename-button
 [resource-plan]: /components/manifold-resource-plan
 [resource-product]: /components/manifold-resource-product
 [service-card]: /components/manifold-service-card
-[status]: o/components/resource-status/
+[sso]: /data/sso-button
+[status]: /components/resource-status/

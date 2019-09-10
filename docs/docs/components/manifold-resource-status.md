@@ -9,24 +9,24 @@ example: '<manifold-mock-resource><manifold-resource-status></manifold-resource-
 Displays an availability tag for a resource. Can be used standalone without any data fetching.
 
 ```html
-  <manifold-resource-status-view state="available"></manifold-resource-product>
+<manifold-resource-status state="available"></manifold-resource-status>
 ```
 
 ## Resource states
 
 ```html
-  <manifold-resource-status-view state="available"></manifold-resource-product>
-  <manifold-resource-status-view state="provision"></manifold-resource-product>
-  <manifold-resource-status-view state="degraded"></manifold-resource-product>
-  <manifold-resource-status-view state="offline"></manifold-resource-product>
+<manifold-resource-status state="available"></manifold-resource-status>
+<manifold-resource-status state="provision"></manifold-resource-status>
+<manifold-resource-status state="degraded"></manifold-resource-status>
+<manifold-resource-status state="offline"></manifold-resource-status>
 ```
 
 ## Sizes
 
 ```html
-  <manifold-resource-status-view size="xsmall" state="available"></manifold-resource-product>
-  <manifold-resource-status-view size="small" state="available"></manifold-resource-product>
-  <manifold-resource-status-view size="medium" state="available"></manifold-resource-product>
+<manifold-resource-status size="xsmall" state="available"></manifold-resource-status>
+<manifold-resource-status size="small" state="available"></manifold-resource-status>
+<manifold-resource-status size="medium" state="available"></manifold-resource-status>
 ```
 
 ## Loading state

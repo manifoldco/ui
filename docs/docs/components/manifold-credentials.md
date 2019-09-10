@@ -1,7 +1,8 @@
 ---
 title: '🔒 Resource Credentials'
 path: '/components/credentials'
-example: '<manifold-credentials resource-name="cms-stage"></manifold-credentials>'
+example: |
+  <manifold-credentials-view></manifold-credentials-view>
 ---
 
 # 🔒 Credentials
