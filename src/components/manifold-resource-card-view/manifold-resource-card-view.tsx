@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { resource } from '@manifoldco/icons';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -19,8 +19,8 @@ interface EventDetail {
 })
 export class ManifoldResourceCardView {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
 
   @Prop() label?: string;
   @Prop() name?: string;
@@ -126,5 +126,3 @@ export class ManifoldResourceCardView {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldResourceCardView, ['restFetch']);

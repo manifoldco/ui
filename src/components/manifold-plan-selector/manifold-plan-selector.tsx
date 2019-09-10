@@ -3,7 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -95,15 +95,16 @@ export class ManifoldPlanSelector {
   /** Show only free plans? */
   @Prop() freePlans?: boolean = false;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceLabel?: string;
+  @Prop() hideUntilReady?: boolean = false;
   @State() product?: Product;
   @State() plans?: Catalog.Plan[];
   @State() resource?: Gateway.Resource;
@@ -120,12 +121,20 @@ export class ManifoldPlanSelector {
     }
   }
 
-  componentWillLoad() {
+  componentWillLoad(): Promise<void> | void {
+    let call;
+
     if (this.productLabel) {
-      this.fetchProductByLabel(this.productLabel);
+      call = this.fetchProductByLabel(this.productLabel);
     } else if (this.resourceLabel) {
-      this.fetchResource(this.resourceLabel);
+      call = this.fetchResource(this.resourceLabel);
     }
+
+    if (this.hideUntilReady) {
+      return call;
+    }
+
+    return undefined;
   }
 
   async fetchProductByLabel(productLabel: string) {
@@ -177,7 +186,7 @@ export class ManifoldPlanSelector {
         return;
       }
 
-      this.fetchPlans(resource.body.product_id);
+      await this.fetchPlans(resource.body.product_id);
     }
   }
 
@@ -201,5 +210,3 @@ export class ManifoldPlanSelector {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldPlanSelector, ['graphqlFetch', 'restFetch']);

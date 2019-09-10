@@ -2,7 +2,7 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import { Product } from '../../types/graphql';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
@@ -37,8 +37,8 @@ const query = gql`
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
   @State() product?: Product;
@@ -74,5 +74,3 @@ export class ManifoldProduct {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldProduct, ['graphqlFetch']);

@@ -1,6 +1,6 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { Gateway } from '../../types/gateway';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
@@ -8,8 +8,8 @@ import logger from '../../utils/logger';
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
 
   @Prop() resourceId?: string;
   @Prop() label?: string;
@@ -75,5 +75,3 @@ export class ManifoldResourceCard {
     );
   }
 }
-
-Tunnel.injectProps(ManifoldResourceCard, ['restFetch']);

@@ -3,7 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 
 import { Marketplace } from '../../types/marketplace';
 import { Provisioning } from '../../types/provisioning';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
@@ -38,10 +38,10 @@ const TRANSFER = 'transfer';
 })
 export class ManifoldResourceList {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -267,4 +267,3 @@ export class ManifoldResourceList {
     );
   }
 }
-Tunnel.injectProps(ManifoldResourceList, ['graphqlFetch', 'restFetch']);

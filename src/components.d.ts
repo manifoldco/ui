@@ -20,14 +20,14 @@ import {
   Subscriber,
 } from './state/connection';
 import {
+  GraphqlFetch,
+} from './utils/graphqlFetch';
+import {
   RestFetch,
 } from './utils/restFetch';
 import {
   Marketplace,
 } from './types/marketplace';
-import {
-  GraphqlFetch,
-} from './utils/graphqlFetch';
 import {
   Option,
 } from './types/Select';
@@ -42,11 +42,11 @@ export namespace Components {
   }
   interface ManifoldAuthToken {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'setAuthToken'?: (s: string) => void;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'subscribe'?: (s: Subscriber) => () => void;
     'token'?: string;
@@ -69,20 +69,17 @@ export namespace Components {
     'stencilClickEvent'?: (e: MouseEvent) => void;
     'target'?: string;
   }
-  interface ManifoldConnection {
+  interface ManifoldConnection {}
+  interface ManifoldCopyCredentials {
     /**
-    * _(optional)_ Specify `env="stage"` for staging
+    * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'env': 'local' | 'stage' | 'prod';
+    'graphqlFetch'?: GraphqlFetch;
+    'refresh': () => Promise<void>;
     /**
-    * _(hidden)_ Passed by the state tunnel
+    * The label of the resource to fetch credentials for
     */
-    'setEnv'?: (env: 'local' | 'stage' | 'prod') => void;
-    'setWaitTime'?: (waitTime: number) => void;
-    /**
-    * _(optional)_ Wait time for the fetch calls before it times out
-    */
-    'waitTime': number;
+    'resourceLabel'?: string;
   }
   interface ManifoldCostDisplay {
     'baseCost'?: number;
@@ -94,7 +91,7 @@ export namespace Components {
     'resourceId'?: string;
     'resourceLabel': string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -145,7 +142,7 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -159,7 +156,7 @@ export namespace Components {
   }
   interface ManifoldDataProductName {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -173,7 +170,7 @@ export namespace Components {
   }
   interface ManifoldDataProvisionButton {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     'ownerId'?: string;
@@ -194,7 +191,7 @@ export namespace Components {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -213,13 +210,13 @@ export namespace Components {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -245,7 +242,7 @@ export namespace Components {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -260,7 +257,7 @@ export namespace Components {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -368,7 +365,7 @@ export namespace Components {
   }
   interface ManifoldPlan {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -380,7 +377,7 @@ export namespace Components {
     */
     'productLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -402,7 +399,7 @@ export namespace Components {
     */
     'planId'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
     /**
@@ -433,6 +430,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -452,7 +450,7 @@ export namespace Components {
   }
   interface ManifoldProduct {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -484,7 +482,7 @@ export namespace Components {
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -499,7 +497,7 @@ export namespace Components {
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -513,7 +511,7 @@ export namespace Components {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -531,7 +529,7 @@ export namespace Components {
   }
   interface ManifoldResourceList {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -547,7 +545,7 @@ export namespace Components {
     */
     'resourceLinkFormat'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -592,7 +590,7 @@ export namespace Components {
     'productLabel'?: string;
     'productLinkFormat'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -678,6 +676,12 @@ declare global {
   var HTMLManifoldConnectionElement: {
     prototype: HTMLManifoldConnectionElement;
     new (): HTMLManifoldConnectionElement;
+  };
+
+  interface HTMLManifoldCopyCredentialsElement extends Components.ManifoldCopyCredentials, HTMLStencilElement {}
+  var HTMLManifoldCopyCredentialsElement: {
+    prototype: HTMLManifoldCopyCredentialsElement;
+    new (): HTMLManifoldCopyCredentialsElement;
   };
 
   interface HTMLManifoldCostDisplayElement extends Components.ManifoldCostDisplay, HTMLStencilElement {}
@@ -1016,6 +1020,7 @@ declare global {
     'manifold-button': HTMLManifoldButtonElement;
     'manifold-button-link': HTMLManifoldButtonLinkElement;
     'manifold-connection': HTMLManifoldConnectionElement;
+    'manifold-copy-credentials': HTMLManifoldCopyCredentialsElement;
     'manifold-cost-display': HTMLManifoldCostDisplayElement;
     'manifold-credentials': HTMLManifoldCredentialsElement;
     'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
@@ -1085,11 +1090,11 @@ declare namespace LocalJSX {
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
     'onManifold-token-receive'?: (event: CustomEvent<{ token: string }>) => void;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'setAuthToken'?: (s: string) => void;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'subscribe'?: (s: Subscriber) => () => void;
     'token'?: string;
@@ -1114,20 +1119,18 @@ declare namespace LocalJSX {
     'stencilClickEvent'?: (e: MouseEvent) => void;
     'target'?: string;
   }
-  interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
+  interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {}
+  interface ManifoldCopyCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCopyCredentialsElement> {
     /**
-    * _(optional)_ Specify `env="stage"` for staging
+    * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'env'?: 'local' | 'stage' | 'prod';
+    'graphqlFetch'?: GraphqlFetch;
+    'onManifold-copyCredentials-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-copyCredentials-success'?: (event: CustomEvent<any>) => void;
     /**
-    * _(hidden)_ Passed by the state tunnel
+    * The label of the resource to fetch credentials for
     */
-    'setEnv'?: (env: 'local' | 'stage' | 'prod') => void;
-    'setWaitTime'?: (waitTime: number) => void;
-    /**
-    * _(optional)_ Wait time for the fetch calls before it times out
-    */
-    'waitTime'?: number;
+    'resourceLabel'?: string;
   }
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
@@ -1139,7 +1142,7 @@ declare namespace LocalJSX {
     'resourceId'?: string;
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1197,7 +1200,7 @@ declare namespace LocalJSX {
     */
     'alt'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -1211,7 +1214,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -1225,7 +1228,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     'onManifold-provisionButton-click'?: (event: CustomEvent<any>) => void;
@@ -1250,7 +1253,7 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1273,13 +1276,13 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
@@ -1306,7 +1309,7 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1324,7 +1327,7 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1434,7 +1437,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -1446,7 +1449,7 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1468,7 +1471,7 @@ declare namespace LocalJSX {
     */
     'planId'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
     /**
@@ -1501,6 +1504,7 @@ declare namespace LocalJSX {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1520,7 +1524,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -1553,7 +1557,7 @@ declare namespace LocalJSX {
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1569,7 +1573,7 @@ declare namespace LocalJSX {
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1583,7 +1587,7 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1601,7 +1605,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
@@ -1617,7 +1621,7 @@ declare namespace LocalJSX {
     */
     'resourceLinkFormat'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1663,7 +1667,7 @@ declare namespace LocalJSX {
     'productLabel'?: string;
     'productLinkFormat'?: string;
     /**
-    * _(hidden)_ Passed by `<manifold-connection>`
+    * _(hidden)_
     */
     'restFetch'?: RestFetch;
   }
@@ -1721,6 +1725,7 @@ declare namespace LocalJSX {
     'manifold-button': ManifoldButton;
     'manifold-button-link': ManifoldButtonLink;
     'manifold-connection': ManifoldConnection;
+    'manifold-copy-credentials': ManifoldCopyCredentials;
     'manifold-cost-display': ManifoldCostDisplay;
     'manifold-credentials': ManifoldCredentials;
     'manifold-credentials-view': ManifoldCredentialsView;

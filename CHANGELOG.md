@@ -5,11 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v0.5.10]
+
+### Added
+
+- Enabled custom loading indicators. (#471)
+- Added `<manifold-copy-credentials>` for quickly-copying secrets to a user’s clipboard. (#452)
 
 ### Fixed
 
-- Multiple queries in GraphQL now supported in TypeScript
+- Multiple queries in GraphQL now supported in TypeScript. (#476)
+
+### Changed
+
+- Clarified documentation for multiple components. (#481)
 
 ## [v0.5.9]
 
@@ -20,29 +29,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed a typo in manifold-data-deprovision-button documentation (#457)
+- Fixed a typo in manifold-data-deprovision-button documentation. (#457)
 - Upgraded `@manifoldco/shadowcat` to feature the latest security patches. (#477)
 
 ### Changed
 
 - Changed the docs fetch mocking to now wait for the real request duration. This duration is obtained at build time from the manifold APIs. (#450)
 - Changed the `manifold-product` component to now use the GraphQL API rather than the REST API. (#456)
-- Changed `manifold-data-product-name` to use GraphQL (#463)
-- Changed `manifold-data-resource-list` to use GraphQL (#474)
+- Changed `manifold-data-product-name` to use GraphQL. (#463)
+- Changed `manifold-data-resource-list` to use GraphQL. (#474)
 
 ## [v0.5.8]
 
 ### Fixed
 
-- Fixed resource card CTA slot from flashing while loading (#438)
-- Hide credentials button no longer flashes when credentials component loads (#434)
+- Fixed resource card CTA slot from flashing while loading. (#438)
+- Hide credentials button no longer flashes when credentials component loads. (#434)
 - When an expired auth token causes an API call to respond with a 401, the token will now refresh and
   the API call will retry. (#440)
 
 ### Changed
 
-- Enforce standard height on product cards for more consistency (#435)
-- Replace auth token polling with an event based system (#436)
+- Enforce standard height on product cards for more consistency. (#435)
+- Replace auth token polling with an event based system. (#436)
 
 ## [v0.5.7]
 
@@ -52,10 +61,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed events firing twice for `<manifold-resource-rename>`, `<manifold-resource-sso>`, and `<manifold-resource-deprovision>` (#401)
-- Performance optimizations for network calls in `manifold-marketplace` (#424)
+- Fixed events firing twice for `<manifold-resource-rename>`, `<manifold-resource-sso>`, and `<manifold-resource-deprovision>`. (#401)
+- Performance optimizations for network calls in `manifold-marketplace`. (#424)
 - Prevent provision button from being clicked multiple times. (#410)
-- Fixed a bug in Firefox with `<manifold-auth-token>` (#429)
+- Fixed a bug in Firefox with `<manifold-auth-token>`. (#429)
 
 ### Changed
 

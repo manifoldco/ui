@@ -2,7 +2,7 @@ import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import { Catalog } from '../../types/catalog';
-import Tunnel from '../../data/connection';
+import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import { Product } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -22,10 +22,10 @@ const query = gql`
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() graphqlFetch?: GraphqlFetch;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  /** _(hidden)_ */
+  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** URL-friendly slug (e.g. `"kitefin"`) */
@@ -81,5 +81,3 @@ export class ManifoldPlan {
     return <manifold-plan-details scrollLocked={false} plan={this.plan} product={this.product} />;
   }
 }
-
-Tunnel.injectProps(ManifoldPlan, ['graphqlFetch', 'restFetch']);

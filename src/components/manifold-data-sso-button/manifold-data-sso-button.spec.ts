@@ -152,7 +152,9 @@ describe('<manifold-data-sso-button>', () => {
     it('click', async () => {
       fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
 
-      if (!page.root) throw new Error('<manifold-sso-button> not found in document');
+      if (!page.root) {
+        throw new Error('<manifold-sso-button> not found in document');
+      }
 
       const resourceLabel = 'click-label';
       element.resourceLabel = resourceLabel;
@@ -160,7 +162,9 @@ describe('<manifold-data-sso-button>', () => {
       await page.waitForChanges();
 
       const button = element.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       const onClick = jest.fn();
       await new Promise(resolve => {
@@ -188,7 +192,9 @@ describe('<manifold-data-sso-button>', () => {
         body: { message },
       });
 
-      if (!page.root) throw new Error('<manifold-sso-button> not found in document');
+      if (!page.root) {
+        throw new Error('<manifold-sso-button> not found in document');
+      }
 
       const resourceLabel = 'error-label';
       element.resourceLabel = resourceLabel;
@@ -196,7 +202,9 @@ describe('<manifold-data-sso-button>', () => {
       await page.waitForChanges();
 
       const button = element.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       const onError = jest.fn();
       await new Promise(resolve => {
@@ -221,7 +229,9 @@ describe('<manifold-data-sso-button>', () => {
     it('success', async () => {
       fetchMock.mock(`${connections.prod.connector}/sso`, authCode);
 
-      if (!page.root) throw new Error('<manifold-sso-button> not found in document');
+      if (!page.root) {
+        throw new Error('<manifold-sso-button> not found in document');
+      }
 
       const resourceLabel = 'success-label';
       element.resourceLabel = resourceLabel;
@@ -229,7 +239,9 @@ describe('<manifold-data-sso-button>', () => {
       await page.waitForChanges();
 
       const button = element.querySelector('button');
-      if (!button) throw new Error('button not found in document');
+      if (!button) {
+        throw new Error('button not found in document');
+      }
 
       const onSuccess = jest.fn();
       await new Promise(resolve => {
