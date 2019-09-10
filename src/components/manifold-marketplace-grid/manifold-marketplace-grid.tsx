@@ -1,15 +1,51 @@
 import { h, Component, Prop, State, Element } from '@stencil/core';
 import observeRect from '@reach/observe-rect';
 
-import { Catalog } from '../../types/catalog';
+import { ProductEdge, PlanConnection, Product } from '../../types/graphql';
 import serviceTemplates from '../../data/templates';
-import {
-  categories,
-  categoryIcon,
-  formatCategoryLabel,
-  filteredServices,
-} from '../../utils/marketplace';
+import { categoryIcon, formatCategoryLabel } from '../../utils/marketplace';
 import logger from '../../utils/logger';
+import { filteredServices, categories } from './utils';
+
+/*
+ * The first phase of the GraphQL conversion involves fetching all pages
+ * from the API and leaving the UI unchanged. Thus, the strategy with the
+ * least amount of impact is to use the products query, rather than the
+ * categories query. This allows us to pass data to marketplace-grid that
+ * has a close mapping to what we gave it from the REST API. Most of the logic
+ * for filtering and categorizing occurs in the marketplace-grid, so by leaving
+ * the structure similar, we only have to make small changes in how we access the
+ * data, rather than overhauling the actual logic required to filter and categorize.
+ *
+ * My long term thoughts on how this component should work will ultimately depend
+ * on what the design team decides, but the API seems to suggest a reasonable and
+ * fairly common interface, which I'll describe now.
+ *
+ * The categorized view would be driven by the categories query, which contains one
+ * page of products for each category. So the first data load contains one page of
+ * categories, and for each of these, we display the first page of product data in
+ * the grid, using a page size that we think is a reasonable maximum. If we need
+ * to fetch more pages of categories, this could be done eagerly, or on demand as a
+ * result of the user scrolling.
+ *
+ * Within each category, if the pageInfo for the first page of product data
+ * indicates that it has more products, we could present a "See All" indicator.
+ * It could be like a custom service card that says "See All <category>". Clicking
+ * on that card would then present a grid that talks to the API to display the
+ * products in that category. This would use a larger page size for products and
+ * would load subsequent pages as a result of the user scrolling. Filtering should
+ * be enabled in this interface, and should submit a filter and category label to
+ * the API, which may not yet be supported by GraphQL, so we'll have to ask for it
+ * if it's not. The filter would be debounced, and if needed, we can cache results
+ * using the filter value as a key. In this view, I could see the category menu
+ * either being disabled or remaining enabled. If it is enabled, clicking a
+ * different category would continue to present the 'all-products' interface for
+ * the new category.
+ *
+ * Filtering within the category view would also submit to the API, but it would
+ * not submit a category label. This will present products as it does today, but
+ * will also need to fetch more results when the user scrolls if more pages remain.
+ */
 
 @Component({
   tag: 'manifold-marketplace-grid',
@@ -26,7 +62,7 @@ export class ManifoldMarketplaceGrid {
   @Prop() preserveEvent: boolean = false;
   @Prop() productLinkFormat?: string;
   @Prop() products: string[] = [];
-  @Prop() services: Catalog.Product[] = [];
+  @Prop() services: ProductEdge[] = [];
   @Prop() skeleton?: boolean = false;
   @Prop() templateLinkFormat?: string;
   @State() filter: string | null;
@@ -64,13 +100,10 @@ export class ManifoldMarketplaceGrid {
     const categoryList: string[] = [];
 
     // Iterate through services, only add unique categories
-    this.filteredServices.forEach(({ body: { tags } }: Catalog.Product) => {
-      if (!Array.isArray(tags)) {
-        return;
-      }
-      tags.forEach(tag => {
-        if (!categoryList.includes(tag)) {
-          categoryList.push(tag);
+    this.filteredServices.forEach(({ node }) => {
+      node.categories.forEach(({ label }) => {
+        if (!categoryList.includes(label)) {
+          categoryList.push(label);
         }
       });
     });
@@ -88,14 +121,14 @@ export class ManifoldMarketplaceGrid {
     return [...categoryList].sort((a, b) => a.localeCompare(b));
   }
 
-  get filteredServices(): Catalog.Product[] {
+  get filteredServices(): ProductEdge[] {
     if (this.skeleton) {
       return this.services;
     }
 
     const services = this.products.length
-      ? this.products.reduce<Catalog.Product[]>((all, p) => {
-          const service = this.services.find(s => s.body.label === p);
+      ? this.products.reduce<ProductEdge[]>((all, p) => {
+          const service = this.services.find(s => s.node.label === p);
           return service ? all.concat(service) : all;
         }, [])
       : this.services;
@@ -123,7 +156,7 @@ export class ManifoldMarketplaceGrid {
     e.preventDefault();
   };
 
-  private categorizedServices(category: string): Catalog.Product[] {
+  private categorizedServices(category: string): ProductEdge[] {
     return categories(this.filteredServices)[category] || [];
   }
 
@@ -184,20 +217,26 @@ export class ManifoldMarketplaceGrid {
     }
   };
 
-  private renderServiceCard = (product: Catalog.Product) => (
-    <manifold-service-card-view
-      description={product.body.tagline}
-      isFeatured={this.featured && this.featured.includes(product.body.label)}
-      isFree={this.freeProducts && this.freeProducts.includes(product.id)}
-      logo={product.body.logo_url}
-      name={product.body.name}
-      preserveEvent={this.preserveEvent}
-      productId={product.id}
-      productLabel={product.body.label}
-      productLinkFormat={this.productLinkFormat}
-      skeleton={this.skeleton}
-    />
-  );
+  private renderServiceCard = (product: ProductEdge) => {
+    const productNode: Product & {
+      freePlans?: PlanConnection;
+    } = product.node;
+
+    return (
+      <manifold-service-card-view
+        description={productNode.tagline}
+        isFeatured={this.featured && this.featured.includes(productNode.label)}
+        isFree={productNode.freePlans ? productNode.freePlans.edges.length > 0 : false}
+        logo={productNode.logoUrl}
+        name={productNode.displayName}
+        preserveEvent={this.preserveEvent}
+        productId={productNode.id}
+        productLabel={productNode.label}
+        productLinkFormat={this.productLinkFormat}
+        skeleton={this.skeleton}
+      />
+    );
+  };
 
   @logger()
   render() {

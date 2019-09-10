@@ -1,7 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Catalog } from '../../types/catalog';
-import { Product } from '../../spec/mock/catalog';
 import serviceTemplates from '../../data/templates';
+import services from '../../spec/mock/products.json';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
@@ -21,17 +20,6 @@ const testCategories: string[] = [
   'utility',
   'worker',
 ];
-
-const services: Catalog.Product[] = testCategories.map((category, index) => ({
-  ...Product,
-  id: `product-${index}`,
-  body: {
-    ...Product.body,
-    name: `${Product.body.name} (${category})`,
-    label: `service-${category}`, // service-ai-ml, service-authentication, …
-    tags: [category],
-  },
-}));
 
 const templateCategories: string[] = serviceTemplates.reduce(
   (categories: string[], { category }) =>
@@ -59,12 +47,12 @@ describe('<manifold-marketplace-grid>', () => {
     const serviceCards = await page.findAll(
       'manifold-marketplace-grid >>> manifold-service-card-view'
     );
-    expect(serviceCards).toHaveLength(services.length);
+
+    const labels = await Promise.all(serviceCards.map(c => c.getProperty('productLabel')));
+    expect(labels).toEqual(expect.arrayContaining(services.map(s => s.node.label)));
   });
 
   it('displays free products', async () => {
-    const freeProducts = ['product-0', 'product-2', 'product-3']; // must be sequential
-
     const page = await newE2EPage({
       html: `<manifold-marketplace-grid></manifold-marketplace-grid>`,
     });
@@ -72,29 +60,28 @@ describe('<manifold-marketplace-grid>', () => {
       'manifold-marketplace-grid',
       (elm: any, props: any) => {
         elm.services = props.services;
-        elm.freeProducts = props.freeProducts;
       },
-      { freeProducts, services }
+      { services }
     );
+
     await page.waitForChanges();
 
     const cards = await page.findAll('manifold-marketplace-grid >>> manifold-service-card-view');
-    const isFree = await Promise.all(
-      cards.map(async card => {
-        if (await card.getProperty('isFree')) {
-          // we have to test the property because this shadow DOM isn’t fully initialized in this test
-          return card.getProperty('productId');
-        }
-        return false;
-      })
-    );
+    const freeProducts = services.filter(s => s.node.plans.edges.length);
 
-    expect(isFree.filter(value => value)).toEqual(freeProducts);
+    await freeProducts.forEach(async p => {
+      const card = await cards.find(async c => {
+        const productId = await c.getProperty('productId');
+        return productId === p.node.id;
+      });
+
+      expect(card).toBeDefined();
+    });
   });
 
   describe('v0 API', () => {
     it('[featured] features specified products', async () => {
-      const featured = ['service-database', 'service-logging'];
+      const featured = ['dumper', 'blitline'];
 
       const page = await newE2EPage({
         html: `<manifold-marketplace-grid></manifold-marketplace-grid>`,
@@ -252,7 +239,7 @@ describe('<manifold-marketplace-grid>', () => {
     });
 
     it('[products] only shows the ones specified', async () => {
-      const products = ['service-ai-ml', 'service-utility'];
+      const products = ['dumper', 'blitline'];
 
       const page = await newE2EPage({
         html: `<manifold-marketplace-grid></manifold-marketplace-grid>`,
@@ -287,13 +274,13 @@ describe('<manifold-marketplace-grid>', () => {
           elm.services = props.services;
           elm.productLinkFormat = '/product/:product';
         },
-        { services }
+        { services: services.slice(0, 1) }
       );
       await page.waitForChanges();
 
       const card = await page.find('manifold-marketplace-grid >>> manifold-service-card-view');
       const link = card.shadowRoot.querySelector('a');
-      expect(link && link.getAttribute('href')).toBe(`/product/${services[0].body.label}`);
+      expect(link && link.getAttribute('href')).toBe(`/product/${services[0].node.label}`);
     });
 
     it('[template-link-format] formats hrefs properly', async () => {
@@ -341,7 +328,7 @@ describe('<manifold-marketplace-grid>', () => {
       const serviceCards = await page.findAll(
         'manifold-marketplace-grid >>> manifold-service-card-view'
       );
-      expect(serviceCards).toHaveLength(1);
+      expect(serviceCards.length).toBeLessThan(services.length);
 
       // Also ensure category titles are hidden when searching
       const categoryTitles = await page.findAll('manifold-marketplace-grid >>> [id^="category-"]');
