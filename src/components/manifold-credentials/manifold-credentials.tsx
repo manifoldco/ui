@@ -1,4 +1,4 @@
-import { h, Element, Component, Prop, State } from '@stencil/core';
+import { h, Element, Component, Method, Prop, State } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import { CredentialEdge } from '../../types/graphql';
@@ -21,7 +21,8 @@ export class ManifoldCredentials {
     this.credentials = undefined;
   };
 
-  fetchCredentials = async () => {
+  @Method()
+  async showCredentials() {
     if (!this.graphqlFetch) {
       return;
     }
@@ -56,10 +57,10 @@ export class ManifoldCredentials {
       undefined;
 
     this.loading = false;
-  };
+  }
 
   credentialsRequested = () => {
-    this.fetchCredentials();
+    this.showCredentials();
     this.loading = false;
   };
 
@@ -70,7 +71,6 @@ export class ManifoldCredentials {
         credentials={this.credentials}
         loading={this.loading}
         onCredentialsRequested={this.credentialsRequested}
-        resourceLabel={this.resourceLabel}
       >
         <manifold-forward-slot slot="show-button">
           <slot name="show-button" />
@@ -79,7 +79,7 @@ export class ManifoldCredentials {
           <slot name="hide-button" />
         </manifold-forward-slot>
       </manifold-credentials-view>,
-      this.errors
+      Array.isArray(this.errors)
         ? this.errors.map(({ message }) => (
             <manifold-toast alert-type="error">{message}</manifold-toast>
           ))

@@ -95,11 +95,11 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     'resourceLabel'?: string;
+    'showCredentials': () => Promise<void>;
   }
   interface ManifoldCredentialsView {
     'credentials'?: CredentialEdge[];
     'loading': boolean;
-    'resourceLabel': string;
   }
   interface ManifoldDataDeprovisionButton {
     'loading'?: boolean;
@@ -1166,7 +1166,6 @@ declare namespace LocalJSX {
     'credentials'?: CredentialEdge[];
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
-    'resourceLabel'?: string;
   }
   interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
     'loading'?: boolean;

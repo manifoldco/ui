@@ -9,10 +9,9 @@ import logger from '../../utils/logger';
   styleUrl: 'manifold-credentials-view.css',
   shadow: true,
 })
-export class ManifoldResourceCredentials {
+export class ManifoldCredentialsView {
   @Element() private el: HTMLElement;
   @Prop() credentials?: CredentialEdge[];
-  @Prop() resourceLabel: string = '';
   @Prop() loading: boolean = false;
   @State() shouldTransition: boolean = false;
   @Event() credentialsRequested: EventEmitter;
@@ -21,12 +20,13 @@ export class ManifoldResourceCredentials {
   hideButtonEl?: Element;
 
   componentDidLoad() {
-    // hack to prevent “Hide credentials” from being visible on load in Firefox
+    this.findNodes();
+    this.addListeners();
+
+    // hide the first transition for 250ms (long enough to transition in)
     setTimeout(() => {
       this.shouldTransition = true;
     }, 250);
-    this.findNodes();
-    this.addListeners();
   }
 
   componentDidUpdate() {
@@ -35,18 +35,16 @@ export class ManifoldResourceCredentials {
     this.addListeners();
   }
 
-  componentDidUnload() {
+  componentWillUnload() {
     this.removeListeners();
   }
 
   findNodes() {
-    this.el.childNodes.forEach(child => {
-      if ((child as HTMLElement).getAttribute('slot') === 'show-button') {
-        this.showButtonEl =
-          (child as HTMLElement).querySelector('*:not(manifold-forward-slot)') || undefined;
-      } else if ((child as HTMLElement).getAttribute('slot') === 'hide-button') {
-        this.hideButtonEl =
-          (child as HTMLElement).querySelector('*:not(manifold-forward-slot)') || undefined;
+    this.el.childNodes.forEach((child: HTMLElement) => {
+      if (child.getAttribute('slot') === 'show-button') {
+        this.showButtonEl = child.querySelector('*:not(manifold-forward-slot)') || undefined;
+      } else if (child.getAttribute('slot') === 'hide-button') {
+        this.hideButtonEl = child.querySelector('*:not(manifold-forward-slot)') || undefined;
       }
     });
   }
