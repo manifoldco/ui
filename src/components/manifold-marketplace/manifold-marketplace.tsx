@@ -1,16 +1,81 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
 import connection from '../../state/connection';
-import skeletonProducts from '../../data/marketplace';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import { Query, ProductEdge, ProductState } from '../../types/graphql';
+import fetchAllPages from '../../utils/fetchAllPages';
+import skeletonProducts from '../../data/marketplace';
+import { Catalog } from '../../types/catalog';
+
+function transformSkeleton(skel: Catalog.Product): ProductEdge {
+  return {
+    cursor: skel.id,
+    node: {
+      id: skel.id,
+      displayName: skel.body.name,
+      documentationUrl: skel.body.documentation_url,
+      label: skel.body.label,
+      logoUrl: skel.body.logo_url,
+      tagline: skel.body.tagline,
+      setupStepsHtml: '',
+      state: ProductState.Available,
+      supportEmail: skel.body.support_email,
+      termsUrl: '',
+      valueProps: [],
+      valuePropsHtml: '',
+      categories: skel.body.tags
+        ? skel.body.tags.map(t => ({
+            label: t,
+            products: {
+              edges: [],
+              pageInfo: {
+                hasNextPage: false,
+                hasPreviousPage: false,
+              },
+            },
+          }))
+        : [],
+    },
+  };
+}
+
+const productQuery = gql`
+  query PRODUCTS($first: Int!, $after: String!) {
+    products(first: $first, after: $after) {
+      edges {
+        node {
+          id
+          label
+          tagline
+          logoUrl
+          displayName
+          categories {
+            label
+          }
+          freePlans: plans(first: 1, free: true) {
+            edges {
+              node {
+                free
+              }
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
+  /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Comma-separated list of featured products (labels) */
   @Prop() featured?: string;
   /** Hide categories & side menu? */
@@ -27,77 +92,33 @@ export class ManifoldMarketplace {
   @Prop() products?: string;
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
-  @State() freeProducts?: string[];
+  @Prop() hideUntilReady?: boolean = false;
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
-  @State() services: Catalog.Product[] = [];
-
-  @Watch('services') servicesUpdated() {
-    this.fetchFreeProducts();
-  }
+  @State() services: ProductEdge[];
+  @State() isLoading: boolean = false;
 
   componentWillLoad() {
     this.parseProps();
-    this.fetchProducts(); // don’t wait on product fetch
+    const call = this.fetchProducts();
+
+    if (this.hideUntilReady) {
+      return call;
+    }
+
+    return Promise.resolve();
   }
 
-  fetchProducts = async () => {
-    if (!this.restFetch) {
-      return;
-    }
-
-    const response = await this.restFetch<Catalog.ExpandedProduct[]>({
-      service: 'catalog',
-      endpoint: `/products`,
+  async fetchProducts() {
+    this.isLoading = true;
+    this.services = await fetchAllPages({
+      query: productQuery,
+      nextPage: { first: 25, after: '' },
+      getConnection: (q: Query) => q.products,
+      graphqlFetch: this.graphqlFetch,
     });
-
-    if (response) {
-      // filter services if list is specified
-      const services =
-        this.parsedProducts.length > 0
-          ? response.filter(service => this.parsedProducts.includes(service.body.label))
-          : response;
-
-      // Alphabetize once, then don’t worry about it
-      this.services = [...services].sort((a, b) => a.body.name.localeCompare(b.body.name));
-    }
-  };
-
-  // fetch free products once, then save
-  fetchFreeProducts = async () => {
-    const freeProducts: string[] = [];
-
-    // Fetch all plans in parallel
-    await Promise.all(
-      this.services.map(
-        ({ id }) =>
-          // eslint-disable-next-line no-async-promise-executor
-          new Promise(async resolve => {
-            if (!this.restFetch) {
-              resolve();
-              return;
-            }
-
-            const plansResp = await this.restFetch<Catalog.ExpandedPlan[]>({
-              service: 'catalog',
-              endpoint: `/plans/?product_id=${id}`,
-            });
-
-            if (plansResp instanceof Error) {
-              console.error(plansResp);
-              return;
-            }
-
-            if (Array.isArray(plansResp) && plansResp.find(plan => plan.body.free === true)) {
-              freeProducts.push(id);
-            }
-            resolve();
-          })
-      )
-    );
-
-    this.freeProducts = freeProducts; // don’t update state until all requests finish
-  };
+    this.isLoading = false;
+  }
 
   private parse(list: string): string[] {
     return list.split(',').map(item => item.trim());
@@ -114,20 +135,17 @@ export class ManifoldMarketplace {
 
   @logger()
   render() {
-    const isLoading = !this.services.length || !this.freeProducts; // wait for free calls to finish
-
     return (
       <manifold-marketplace-grid
         featured={this.parsedFeatured}
-        freeProducts={this.freeProducts}
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}
         preserveEvent={this.preserveEvent}
         productLinkFormat={this.productLinkFormat}
         products={this.parsedProducts}
-        skeleton={isLoading}
-        services={isLoading ? skeletonProducts : this.services}
+        skeleton={this.isLoading}
+        services={this.isLoading ? skeletonProducts.map(transformSkeleton) : this.services}
         templateLinkFormat={this.templateLinkFormat}
       />
     );
