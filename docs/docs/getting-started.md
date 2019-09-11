@@ -18,6 +18,14 @@ npm i @manifoldco/ui
 Manifold UI can be used in any frameworkless project (“vanilla” JS), or any modern framework like
 React, Vue, or Angular.
 
+| Framework                 | Supported? |
+| :------------------------ | :--------: |
+| Vanilla JS (no framework) |     ✅     |
+| Angular                   |     ✅     |
+| React                     |     ✅     |
+| Vue                       |     ✅     |
+| Ember                     |     ✅     |
+
 In any setup, you can use our CDN for UI:
 
 ```html
@@ -130,13 +138,13 @@ declare global {
 
 This will expose the types from Stencil to JSX, and you’ll be able to get typechecking as you write.
 
-_Note: every element will have to be declared manually, at least until [this PR][ts-fix] is merged
+_Note: Every element will have to be declared manually, at least until [this PR][ts-fix] is merged
 in TypeScript core._
 
 ### Ember, Angular, Vue, and others
 
-Initializing Manifold UI works the exact same as any other Stencil project. For more advanced
-instructions on integrating with your specific stack, please refer to Stencil’s [docs on
+Initializing Manifold UI works the same as any other Stencil project. For more advanced instructions
+on integrating with your specific stack, please refer to Stencil’s [docs on
 integration][stencil-framework].
 
 [stencil]: https://stenciljs.com/
