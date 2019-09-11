@@ -5,16 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 
 ### Changed
 
 - Changed `manifold-marketplace` to use GraphQL. (#489)
-- Improved Storybook stories
+- Improved Storybook stories (#500)
+- `@manifoldco/shadowcat` is now part of UI. (#498)
 
 ### Fixed
 
-- Fixed `<manifold-button>` borders
+- Fixed `<manifold-button>` borders (#500)
 
 ## [v0.5.10]
 
