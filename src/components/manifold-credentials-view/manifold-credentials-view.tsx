@@ -19,10 +19,12 @@ export class ManifoldCredentialsView {
   showButtonEl?: Element;
   hideButtonEl?: Element;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.findNodes();
     this.addListeners();
+  }
 
+  componentDidLoad() {
     // hide the first transition for 250ms (long enough to transition in)
     setTimeout(() => {
       this.shouldTransition = true;
