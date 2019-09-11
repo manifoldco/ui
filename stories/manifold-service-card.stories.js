@@ -1,9 +1,6 @@
 import { storiesOf } from '@storybook/html';
 
-import markdown from '../docs/docs/components/manifold-service-card.md';
-
 storiesOf('Service card', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .add(
     'JawsDB',
     () => `<manifold-service-card product-label="jawsdb-mysql"></manifold-service-card>`

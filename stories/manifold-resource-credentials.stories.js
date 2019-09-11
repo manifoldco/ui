@@ -1,10 +1,8 @@
 import { storiesOf } from '@storybook/html';
 
-import markdown from '../docs/docs/components/manifold-credentials.md';
 import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Resource Credentials 🔒', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .addDecorator(manifoldConnectionDecorator)
   .add(
     'default',

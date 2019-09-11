@@ -1,9 +1,6 @@
 import { storiesOf } from '@storybook/html';
 
-import markdown from '../docs/docs/components/manifold-product.md';
-
 storiesOf('Product', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .add(
     'JawsDB',
     () => `

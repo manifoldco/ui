@@ -1,10 +1,8 @@
 import { storiesOf } from '@storybook/html';
 
-import markdown from '../docs/docs/components/manifold-performance.md';
 import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Performance', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .addDecorator(manifoldConnectionDecorator)
   .add(
     '<manifold-plan> metrics',

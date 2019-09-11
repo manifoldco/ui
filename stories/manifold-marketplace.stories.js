@@ -1,9 +1,6 @@
 import { storiesOf } from '@storybook/html';
 
-import markdown from '../docs/docs/components/manifold-marketplace.md';
-
 storiesOf('Marketplace', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .add(
     'default',
     () =>
