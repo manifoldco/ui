@@ -1,0 +1,79 @@
+<script>
+  // ⚠️ these run for every story
+
+  // get SSO button working
+  function runOnPageChange() {
+    function initSSO() {
+      const sso = document.querySelector('manifold-resource-sso');
+      if (!sso) {
+        return;
+      }
+
+      sso.addEventListener('manifold-ssoButton-error', ({ detail }) => console.error(detail));
+      sso.addEventListener('manifold-ssoButton-success', ({ detail }) => {
+        window.open(detail.redirectUrl, '_blank');
+      });
+    }
+
+    // listen to plan selector, update any/all buttons on the page
+    function updatePlanResize() {
+      const planSelector = document.querySelector('manifold-plan-selector');
+      if (!planSelector) {
+        return;
+      }
+
+      const buttons = ['manifold-data-manage-button', 'manifold-data-provision-button'];
+      planSelector.addEventListener('manifold-planSelector-change', update);
+      planSelector.addEventListener('manifold-planSelector-load', update);
+      function update({ detail }) {
+        buttons.forEach(selector => {
+          const button = document.querySelector(selector);
+          if (button) {
+            button.planID = detail.planID;
+            button.planLabel = detail.planLabel;
+            button.productLabel = detail.productLabel;
+            button.features = detail.features;
+            button.addEventListener('manifold-manageButton-error', ({ detail }) =>
+              console.error(detail)
+            );
+            button.addEventListener('manifold-provisionButton-error', ({ detail }) =>
+              console.error(detail)
+            );
+            button.addEventListener('manifold-manageButton-success', ({ detail }) =>
+              console.log(detail)
+            );
+            button.addEventListener('manifold-provisionButton-success', ({ detail }) =>
+              console.log(detail)
+            );
+          }
+        });
+      }
+    }
+
+    initSSO();
+    updatePlanResize();
+  }
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+      // run the following scripts on page change / update:
+      runOnPageChange();
+
+      // Storybook setup
+      const callback = function(mutationsList) {
+        for (let i = 0, len = mutationsList.length; i < len; i++) {
+          if (mutationsList[i].type == 'childList') {
+            runOnPageChange();
+            break;
+          }
+        }
+      };
+
+      const observer = new MutationObserver(callback);
+      const config = { childList: true, subtree: false };
+      observer.observe(document.getElementById('root'), config);
+    },
+    false
+  );
+</script>

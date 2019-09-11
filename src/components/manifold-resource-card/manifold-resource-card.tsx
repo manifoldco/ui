@@ -45,14 +45,14 @@ export class ManifoldResourceCard {
       }
       this.resource = response;
     } else if (label) {
-      const response = await this.restFetch<Gateway.Resource[]>({
+      const resource = await this.restFetch<Gateway.Resource[]>({
         service: 'gateway',
         endpoint: `/resources/me/${label}`,
       });
 
-      if (response && response.length) {
+      if (resource) {
         // eslint-disable-next-line prefer-destructuring
-        this.resource = response[0];
+        this.resource = Array.isArray(resource) ? resource[0] : resource;
       }
     }
   }
