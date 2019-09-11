@@ -1,5 +1,4 @@
 import { storiesOf } from '@storybook/html';
-import markdown from '../docs/docs/advanced/authentication.md';
 
 function withVeryFakeExpiry(token) {
   /* During the ui transition from REST calls to GraphQL and PUMA,
@@ -17,7 +16,6 @@ function withVeryFakeExpiry(token) {
 }
 
 storiesOf('Auth Token Provider [Data]', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .addDecorator(storyFn =>
     localStorage.manifold_api_token
       ? storyFn()

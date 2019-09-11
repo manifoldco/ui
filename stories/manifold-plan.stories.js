@@ -1,10 +1,8 @@
 import { storiesOf } from '@storybook/html';
 
-import markdown from '../docs/docs/components/manifold-plan.md';
 import { manifoldConnectionDecorator } from './connectionDecorator';
 
 storiesOf('Plan', module)
-  .addParameters({ readme: { sidebar: markdown } })
   .addDecorator(manifoldConnectionDecorator)
   .add(
     'ElegantCMS Free',
