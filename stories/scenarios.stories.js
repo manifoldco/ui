@@ -26,7 +26,7 @@ storiesOf('Scenarios', module)
         <manifold-performance>
           <p><em>These resources are loaded from the server rather than mocks</em></p>
           <manifold-auth-token token="${withVeryFakeExpiry(
-            localStorage.getItem('manifold_api_token') || undefined
+            localStorage.getItem('manifold_api_token') || ''
           )}"/>
           <manifold-resource-list />
         </manifold-performance>

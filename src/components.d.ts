@@ -29,6 +29,9 @@ import {
   ProductEdge,
 } from './types/graphql';
 import {
+  AuthToken,
+} from './types/auth';
+import {
   Option,
 } from './types/Select';
 
@@ -360,6 +363,9 @@ export namespace Components {
     'name': string;
     'suffix': string;
     'value': number;
+  }
+  interface ManifoldOauth {
+    'tick'?: string;
   }
   interface ManifoldPerformance {
     'ddLogs'?: any;
@@ -809,6 +815,12 @@ declare global {
     new (): HTMLManifoldNumberInputElement;
   };
 
+  interface HTMLManifoldOauthElement extends Components.ManifoldOauth, HTMLStencilElement {}
+  var HTMLManifoldOauthElement: {
+    prototype: HTMLManifoldOauthElement;
+    new (): HTMLManifoldOauthElement;
+  };
+
   interface HTMLManifoldPerformanceElement extends Components.ManifoldPerformance, HTMLStencilElement {}
   var HTMLManifoldPerformanceElement: {
     prototype: HTMLManifoldPerformanceElement;
@@ -1036,6 +1048,7 @@ declare global {
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-mock-resource': HTMLManifoldMockResourceElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
+    'manifold-oauth': HTMLManifoldOauthElement;
     'manifold-performance': HTMLManifoldPerformanceElement;
     'manifold-plan': HTMLManifoldPlanElement;
     'manifold-plan-cost': HTMLManifoldPlanCostElement;
@@ -1426,6 +1439,10 @@ declare namespace LocalJSX {
     'suffix'?: string;
     'value'?: number;
   }
+  interface ManifoldOauth extends JSXBase.HTMLAttributes<HTMLManifoldOauthElement> {
+    'onReceiveManifoldToken'?: (event: CustomEvent<AuthToken>) => void;
+    'tick'?: string;
+  }
   interface ManifoldPerformance extends JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement> {
     'ddLogs'?: any;
   }
@@ -1734,6 +1751,7 @@ declare namespace LocalJSX {
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
     'manifold-mock-resource': ManifoldMockResource;
     'manifold-number-input': ManifoldNumberInput;
+    'manifold-oauth': ManifoldOauth;
     'manifold-performance': ManifoldPerformance;
     'manifold-plan': ManifoldPlan;
     'manifold-plan-cost': ManifoldPlanCost;
