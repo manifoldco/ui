@@ -22,6 +22,9 @@ import {
   Subscriber,
 } from './state/connection';
 import {
+  AuthType,
+} from './components/manifold-auth-token/manifold-auth-token';
+import {
   GraphqlFetch,
 } from './utils/graphqlFetch';
 import {

@@ -6,7 +6,7 @@ import loadMark from '../../utils/loadMark';
 import { report } from '../../utils/errorReport';
 import connection, { Subscriber } from '../../state/connection';
 
-type AuthType = 'oauth' | 'manual';
+export type AuthType = 'oauth' | 'manual';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
