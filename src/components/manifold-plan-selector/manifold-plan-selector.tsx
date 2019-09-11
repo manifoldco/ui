@@ -12,13 +12,13 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
 
 const query = gql`
-  query PLAN_LIST($productLabel: String!) {
+  query PLAN_LIST($productLabel: String!, $free: Boolean) {
     product(label: $productLabel) {
       id
       displayName
       label
       logoUrl
-      plans(first: 500) {
+      plans(first: 500, free: $free) {
         edges {
           node {
             id
@@ -93,7 +93,7 @@ const query = gql`
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
   /** Show only free plans? */
-  @Prop() freePlans?: boolean = false;
+  @Prop() freePlans?: boolean;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -142,7 +142,10 @@ export class ManifoldPlanSelector {
       return;
     }
 
-    const { data } = await this.graphqlFetch({ query, variables: { productLabel } });
+    const { data } = await this.graphqlFetch({
+      query,
+      variables: { productLabel, free: this.freePlans },
+    });
 
     if (data && data.product) {
       this.product = data.product;

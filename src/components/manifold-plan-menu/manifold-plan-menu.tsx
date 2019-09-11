@@ -42,17 +42,25 @@ interface PlanMenuProps {
   selectPlan: Function;
 }
 
-const isConfigurable = (configurableFeatures?: PlanConfigurableFeatureConnection) =>
-  configurableFeatures && configurableFeatures.edges.length > 0;
+const isConfigurable = (configurableFeatures?: PlanConfigurableFeatureConnection | null) =>
+  configurableFeatures ? configurableFeatures.edges.length > 0 : undefined;
+
+const sortPlans = (plans: PlanEdge[]) =>
+  plans.sort((a, b) => {
+    if (isConfigurable(a.node.configurableFeatures)) {
+      return 1;
+    }
+    return a.node.cost > b.node.cost ? 1 : -1;
+  });
 
 const PlanMenu: FunctionalComponent<PlanMenuProps> = ({ plans, selectedPlanId, selectPlan }) => (
   <ul class="plan-list">
-    {plans.map(({ node: { id, displayName, configurableFeatures, cost } }) => (
+    {sortPlans(plans).map(({ node: { id, displayName, configurableFeatures, cost } }) => (
       <PlanButton
         checked={selectedPlanId === id}
         value={id}
         onChange={() => selectPlan(id)}
-        isConfigurable={isConfigurable(configurableFeatures || undefined)}
+        isConfigurable={isConfigurable(configurableFeatures)}
       >
         {displayName}
         <Cost cost={cost} id={id} />

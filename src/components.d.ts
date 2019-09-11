@@ -505,6 +505,10 @@ export namespace Components {
   }
   interface ManifoldResourceContainer {
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
     'refetchUntilValid': boolean;
@@ -1581,6 +1585,10 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
