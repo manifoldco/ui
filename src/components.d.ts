@@ -41,6 +41,7 @@ export namespace Components {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken {
+    'authType'?: AuthType;
     /**
     * _(hidden)_
     */
@@ -1081,6 +1082,8 @@ declare namespace LocalJSX {
     'selectedResource'?: Gateway.Resource;
   }
   interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
+    'authType'?: AuthType;
+    'onManifold-token-clear'?: (event: CustomEvent<any>) => void;
     'onManifold-token-receive'?: (event: CustomEvent<{ token: string }>) => void;
     /**
     * _(hidden)_

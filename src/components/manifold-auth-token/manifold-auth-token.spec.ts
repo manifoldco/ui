@@ -1,15 +1,25 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldAuthToken } from './manifold-auth-token';
+import { ConnectionState, Subscriber } from '../../state/connection';
 
-async function setup(token?: string) {
+interface Props {
+  token?: string;
+  authType?: string;
+  setAuthToken?: (s: string) => void;
+  subscribe?: (s: Subscriber) => () => void;
+}
+
+async function setup(props: Props) {
   const page = await newSpecPage({
     components: [ManifoldAuthToken],
     html: '<div></div>',
   });
 
   const component = page.doc.createElement('manifold-auth-token');
-  component.token = token;
-  component.setAuthToken = jest.fn();
+  component.token = props.token;
+  component.authType = props.authType;
+  component.setAuthToken = props.setAuthToken;
+  component.subscribe = props.subscribe;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -21,7 +31,7 @@ async function setup(token?: string) {
 describe('<manifold-auth-token>', () => {
   describe('when the token is received', () => {
     it('emits an event', async () => {
-      const { component, page } = await setup();
+      const { component, page } = await setup({});
 
       const shadowcat = component.querySelector('manifold-oauth');
       expect(shadowcat).toBeDefined();
@@ -57,14 +67,15 @@ describe('<manifold-auth-token>', () => {
 
     it('calls the set auth token on load', async () => {
       const token = `test|${expirySeconds}`;
-      const { component } = await setup(token);
+
+      const { component } = await setup({ token, setAuthToken: jest.fn() });
 
       expect(component.setAuthToken).toHaveBeenCalledWith(token);
     });
 
     it('calls the set auth token on change', async () => {
       const token = `test|${expirySeconds}`;
-      const { component, page } = await setup(token);
+      const { component, page } = await setup({ token, setAuthToken: jest.fn() });
 
       const newToken = `test-new|${expirySeconds}`;
       component.token = newToken;
@@ -82,20 +93,69 @@ describe('<manifold-auth-token>', () => {
 
     it('does not call the set auth token on load', async () => {
       const token = `test|${expirySeconds}`;
-      const { component } = await setup(token);
+      const { component } = await setup({ token, setAuthToken: jest.fn() });
 
       expect(component.setAuthToken).not.toHaveBeenCalled();
     });
 
     it('does not call the set auth token on change', async () => {
       const token = `test|${expirySeconds}`;
-      const { component, page } = await setup(token);
+      const { component, page } = await setup({ token, setAuthToken: jest.fn() });
 
       const newToken = `test-new|${expirySeconds}`;
       component.token = newToken;
       await page.waitForChanges();
 
       expect(component.setAuthToken).not.toHaveBeenCalledWith();
+    });
+  });
+
+  describe('When using manual auth', () => {
+    it('does not render an iframe', async () => {
+      const connection = new ConnectionState();
+      connection.authToken = 'foo';
+      const props = {
+        token: connection.authToken,
+        authType: 'manual',
+        setAuthToken: connection.setAuthToken,
+        subscribe: connection.subscribe,
+      };
+      const { page } = await setup(props);
+
+      const iframe = page.doc.querySelector('iframe');
+      expect(iframe).toBeNull();
+    });
+
+    describe('when the token is cleared', () => {
+      it('allows the consumer to reset the token', async () => {
+        const connection = new ConnectionState();
+        connection.authToken = 'foo';
+        const props = {
+          token: connection.authToken,
+          authType: 'manual',
+          setAuthToken: connection.setAuthToken,
+          subscribe: connection.subscribe,
+        };
+        const { component, page } = await setup(props);
+
+        const received = jest.fn();
+        component.addEventListener('manifold-token-receive', received);
+
+        const listen = new Promise(resolve => {
+          component.addEventListener('manifold-token-clear', async () => {
+            component.token = 'bar';
+            await page.waitForChanges();
+            resolve();
+          });
+        });
+
+        connection.setAuthToken('');
+
+        await listen;
+        expect(received).toHaveBeenCalledWith(
+          expect.objectContaining({ detail: { token: 'bar' } })
+        );
+      });
     });
   });
 });
