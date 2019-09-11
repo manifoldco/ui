@@ -18,7 +18,7 @@ const query = gql`
       displayName
       label
       logoUrl
-      plans(first: 500, free: $free) {
+      plans(first: 500, orderBy: { field: COST, direction: ASC }, free: $free) {
         edges {
           node {
             id

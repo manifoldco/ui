@@ -51,6 +51,7 @@ export class ManifoldActivePlan {
     return [
       <manifold-plan-menu
         plans={this.product && this.product.plans ? this.product.plans : undefined}
+        oldPlans={this.plans}
         selectedPlanId={this.selectedPlanId}
         selectPlan={this.selectPlan}
       />,

@@ -419,6 +419,7 @@ export namespace Components {
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
+    'oldPlans': Catalog.ExpandedPlan[];
     'plans'?: PlanConnection;
     'selectPlan': Function;
     'selectedPlanId'?: string;
@@ -1498,6 +1499,7 @@ declare namespace LocalJSX {
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
+    'oldPlans'?: Catalog.ExpandedPlan[];
     'plans'?: PlanConnection;
     'selectPlan'?: Function;
     'selectedPlanId'?: string;

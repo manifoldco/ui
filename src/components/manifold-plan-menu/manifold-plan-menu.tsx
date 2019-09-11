@@ -2,6 +2,7 @@ import { h, FunctionalComponent, Prop, Component } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 import { PlanEdge, PlanConfigurableFeatureConnection, PlanConnection } from '../../types/graphql';
 import logger from '../../utils/logger';
+import { Catalog } from '../../types/catalog';
 
 interface PlanButtonProps {
   checked?: boolean;
@@ -27,17 +28,25 @@ const PlanButton: FunctionalComponent<PlanButtonProps> = (props, children) => (
 
 interface CostProps {
   cost: number;
+  plan?: Catalog.ExpandedPlan;
   id: string;
 }
 
-const Cost: FunctionalComponent<CostProps> = ({ cost, id }) => (
+const Cost: FunctionalComponent<CostProps> = ({ cost, plan, id }) => (
   <div class="cost">
-    <manifold-plan-cost defaultCost={cost} planId={id} compact={true} />
+    <manifold-plan-cost
+      defaultCost={cost}
+      allFeatures={plan && plan.body.expanded_features}
+      selectedFeatures={plan && plan.body.features}
+      planId={id}
+      compact={true}
+    />
   </div>
 );
 
 interface PlanMenuProps {
   plans: PlanEdge[];
+  oldPlans: Catalog.ExpandedPlan[];
   selectedPlanId?: string;
   selectPlan: Function;
 }
@@ -45,15 +54,16 @@ interface PlanMenuProps {
 const isConfigurable = (configurableFeatures?: PlanConfigurableFeatureConnection | null) =>
   configurableFeatures ? configurableFeatures.edges.length > 0 : undefined;
 
+// Push configurable plans to the end
 const sortPlans = (plans: PlanEdge[]) =>
-  plans.sort((a, b) => {
-    if (isConfigurable(a.node.configurableFeatures)) {
-      return 1;
-    }
-    return a.node.cost > b.node.cost ? 1 : -1;
-  });
+  plans.sort(a => (isConfigurable(a.node && a.node.configurableFeatures) ? 1 : 0));
 
-const PlanMenu: FunctionalComponent<PlanMenuProps> = ({ plans, selectedPlanId, selectPlan }) => (
+const PlanMenu: FunctionalComponent<PlanMenuProps> = ({
+  plans,
+  oldPlans,
+  selectedPlanId,
+  selectPlan,
+}) => (
   <ul class="plan-list">
     {sortPlans(plans).map(({ node: { id, displayName, configurableFeatures, cost } }) => (
       <PlanButton
@@ -63,7 +73,7 @@ const PlanMenu: FunctionalComponent<PlanMenuProps> = ({ plans, selectedPlanId, s
         isConfigurable={isConfigurable(configurableFeatures)}
       >
         {displayName}
-        <Cost cost={cost} id={id} />
+        <Cost cost={cost} plan={oldPlans.find(plan => plan.id === id)} id={id} />
       </PlanButton>
     ))}
   </ul>
@@ -89,6 +99,7 @@ const SkeletonPlanMenu = () => (
 })
 export class ManifoldPlanMenu {
   @Prop() plans?: PlanConnection;
+  @Prop() oldPlans: Catalog.ExpandedPlan[] = [];
   @Prop() selectedPlanId?: string;
   @Prop() selectPlan: Function = () => {};
 
@@ -98,6 +109,7 @@ export class ManifoldPlanMenu {
       return (
         <PlanMenu
           plans={this.plans.edges}
+          oldPlans={this.oldPlans}
           selectedPlanId={this.selectedPlanId}
           selectPlan={this.selectPlan}
         />
