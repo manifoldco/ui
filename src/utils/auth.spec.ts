@@ -1,29 +1,7 @@
-import { withAuth, isExpired } from './auth';
+import { withAuth } from './auth';
 
 describe('withAuth method', () => {
   it('reads manifold_api_token from the given token', () => {
     expect(withAuth('larry')).toEqual({ headers: { authorization: 'Bearer larry' } });
-  });
-});
-
-describe('isExpired method', () => {
-  // eslint-disable-next-line no-console
-  console.log(`TZ: ${process.env.TZ}`);
-
-  const oneDay = 60 * 60 * 24 * 1000;
-  // Use Date.now() to test this because it’s timezone-independent
-  const tomorrow = (Date.now() + oneDay) / 1000;
-  const yesterday = (Date.now() - oneDay) / 1000;
-
-  it('not expired: false', () => {
-    expect(isExpired(`token|${tomorrow}`)).toBe(false);
-  });
-
-  it('expired: true', () => {
-    expect(isExpired(`token|${yesterday}`)).toBe(true);
-  });
-
-  it('invalid: true', () => {
-    expect(isExpired(`token|Tue, 1 Jan 2030 00:00:00 GMT`)).toBe(true);
   });
 });
