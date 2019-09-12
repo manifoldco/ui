@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Added a time to first meaningful render event to be consumed by `<manifold-performance>` component
+
 ### Changed
 
 - Changed `manifold-marketplace` to use GraphQL. (#489)
