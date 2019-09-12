@@ -1,6 +1,6 @@
 import { h, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 
-import { AuthToken } from '@manifoldco/shadowcat';
+import { AuthToken } from '../../types/auth';
 import logger from '../../utils/logger';
 import { isExpired } from '../../utils/auth';
 import connection, { Subscriber } from '../../state/connection';
