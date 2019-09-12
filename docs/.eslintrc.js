@@ -18,7 +18,7 @@ module.exports = {
     },
   },
   rules: {
-    parser: '@typescript-eslint/parser',
+    '@typescript-eslint/ban-ts-ignore': 'off', // we’ll cheat in docs
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
@@ -28,6 +28,7 @@ module.exports = {
     'import/prefer-default-export': 'off', // named exports are perfectly fine
     'lines-between-class-members': 'off', // class members don’t need that space!
     'react/jsx-filename-extension': 'off', // allow .tsx
+    'react/jsx-props-no-spreading': 'off', // we like this
     'react/prop-types': 'off', // use TS
   },
   overrides: [
