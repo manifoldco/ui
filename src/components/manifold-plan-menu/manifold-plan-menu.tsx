@@ -54,12 +54,14 @@ interface PlanMenuProps {
 const isConfigurable = (plan: Plan) =>
   plan && plan.configurableFeatures ? plan.configurableFeatures.edges.length > 0 : undefined;
 
+// Metered feature costs are scaled 10,000x reletive to plan cost.
 const METERED_FEATURE_COST_OFFSET = 10000;
 
 const getMeteredCost = (plan: Plan) => {
   if (plan.meteredFeatures) {
     return (
       plan.meteredFeatures.edges.reduce((total, feature) => {
+        // Count only the lowest (first) cost tier for each feature.
         const costTiers = feature.node.numericDetails.costTiers || [];
         return total + (costTiers.length > 0 ? costTiers[0].cost : 0);
       }, 0) / METERED_FEATURE_COST_OFFSET
@@ -68,12 +70,13 @@ const getMeteredCost = (plan: Plan) => {
 
   return 0;
 };
-// Push configurable plans to the end
+
 const sortPlans = (plans: PlanEdge[]) => {
-  const sortedMetered = plans.sort((a, b) => {
-    console.log(a.node.cost, getMeteredCost(a.node), b.node.cost, getMeteredCost(b.node));
-    return a.node.cost + getMeteredCost(a.node) > b.node.cost + getMeteredCost(b.node) ? 1 : -1;
-  });
+  // Sort with metered feature base costs added.
+  const sortedMetered = plans.sort((a, b) =>
+    a.node.cost + getMeteredCost(a.node) > b.node.cost + getMeteredCost(b.node) ? 1 : -1
+  );
+  // Group plans with configurable features and put them at the end.
   const nonConfigurable = sortedMetered.filter(plan => !isConfigurable(plan.node));
   const configurable = sortedMetered.filter(plan => isConfigurable(plan.node));
   return [...nonConfigurable, ...configurable];
