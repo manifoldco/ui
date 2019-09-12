@@ -29,7 +29,6 @@ describe('<manifold-oauth>', () => {
     it('receiveManifoldToken', async () => {
       const data = {
         access_token: 'secret-token',
-        duration: 1,
         expiry: 1,
       };
 
@@ -55,7 +54,6 @@ describe('<manifold-oauth>', () => {
       expect(mock).toHaveBeenCalledWith(
         expect.objectContaining({
           detail: {
-            duration: data.duration,
             error: undefined,
             expiry: data.expiry,
             token: data.access_token,
