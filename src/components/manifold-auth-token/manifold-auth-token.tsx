@@ -49,7 +49,8 @@ export class ManifoldAuthToken {
     const payload = e.detail as AuthToken;
 
     if (payload.error) {
-      return report(payload.error);
+      report(payload.error);
+      return;
     }
 
     if (!payload.error && payload.expiry && payload.token) {
