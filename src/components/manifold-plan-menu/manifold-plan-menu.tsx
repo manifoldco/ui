@@ -51,13 +51,13 @@ interface PlanMenuProps {
   selectPlan: Function;
 }
 
-const isConfigurable = (plan: Plan) =>
+export const isConfigurable = (plan: Plan) =>
   plan && plan.configurableFeatures ? plan.configurableFeatures.edges.length > 0 : undefined;
 
 // Metered feature costs are scaled 10,000x reletive to plan cost.
 const METERED_FEATURE_COST_OFFSET = 10000;
 
-const getMeteredCost = (plan: Plan) => {
+export const getMeteredCost = (plan: Plan) => {
   if (plan.meteredFeatures) {
     return (
       plan.meteredFeatures.edges.reduce((total, feature) => {
@@ -71,7 +71,7 @@ const getMeteredCost = (plan: Plan) => {
   return 0;
 };
 
-const sortPlans = (plans: PlanEdge[]) => {
+export const sortPlans = (plans: PlanEdge[]) => {
   // Sort with metered feature base costs added.
   const sortedMetered = plans.sort(
     (a, b) => a.node.cost + getMeteredCost(a.node) - (b.node.cost + getMeteredCost(b.node))
