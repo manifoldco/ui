@@ -38,8 +38,11 @@ storiesOf('Resource', module)
     </style>
     <div class="wrapper">
       <manifold-resource-container resource-label="${resourceLabel}">
-        <h2>${resourceLabel}</h2>
-        <manifold-resource-status></manifold-resource-status>
+        <h2>
+          ${resourceLabel}
+          <manifold-resource-status></manifold-resource-status>
+        </h2>
+        <manifold-resource-card label="${resourceLabel}"></manifold-resource-card>
         <h2>Product</h2>
         <manifold-resource-product></manifold-resource-product>
         <h2>Plan</h2>
