@@ -32,16 +32,22 @@ element with `slot="cta"` as an attribute. [Read more about slots][slot].
 
 ## Events
 
-This component emits
-[custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) when it
-updates. To listen to those events, add an event listener either on the component itself, or
-`document`.
+This component emits [custom events][custom-events] when it updates. To listen to those events, add
+an event listener either on the component itself, or `document`.
 
 ```js
 document.addEventListener('manifold-planSelector-change', ({ detail }) => {
   console.log(detail);
 });
-// { planId: "2357v8j36f5h866c32ddwwjxvfe8j", planLabel: "nvidia-1080ti-100gb-ssd", planName: "NVIDIA 1080TI", productLabel: "zerosix", features: { … } } }
+// {
+//   planId: '2357v8j36f5h866c32ddwwjxvfe8j',
+//   planLabel: 'nvidia-1080ti-100gb-ssd',
+//   planName: 'NVIDIA 1080TI',
+//   productLabel: 'zerosix',
+//   features: {
+//     // …
+//   },
+// }
 ```
 
 The following events are emitted:
@@ -113,8 +119,6 @@ in the same order).
 | `gcp-us-west-2`      | Google Cloud - US West 2                   |
 | `rs-dallas-1`        | Rackspace - Dallas 1                       |
 
-[slot]: https://stenciljs.com/docs/templating-jsx/
-
 ## Hide Until Ready
 
 By default, the plan selector will display our skeleton UI while it retrieves data. You can use
@@ -123,3 +127,5 @@ also allows you to use your own loading indicators, as described [in the advance
 section][custom-loaders].
 
 [custom-loaders]: /advanced/authentication
+[custom-events]: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
+[slot]: https://stenciljs.com/docs/templating-jsx/

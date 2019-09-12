@@ -1,16 +1,5 @@
-import { isConfigurable, getMeteredCost, sortPlans } from './manifold-plan-menu';
-import {
-  Product,
-  Plan,
-  PlanEdge,
-  PlanConfigurableFeature,
-  PlanFeatureType,
-  PlanConfigurableFeatureConnection,
-  PlanConfigurableFeatureEdge,
-  PlanMeteredFeature,
-  PlanMeteredFeatureConnection,
-  PlanMeteredFeatureEdge,
-} from '../../types/graphql';
+import { isConfigurable, getMeteredCost, sortPlans } from './PlanMenu';
+import { Plan, PlanEdge } from '../../types/graphql';
 
 const mockFreePlan: Partial<Plan> = {
   id: 'free',
@@ -22,7 +11,7 @@ const mockPaidPlan: Partial<Plan> = {
   cost: 1000,
   free: false,
 };
-const mockMeteredPlan = {
+const mockMeteredPlan: any = {
   id: 'metered',
   cost: 0,
   free: false,
