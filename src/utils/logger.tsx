@@ -17,7 +17,7 @@ interface RenderResult {
   $tag$: string;
 }
 
-function hasSkeletonElements(rendered: RenderResult): boolean {
+export function hasSkeletonElements(rendered: RenderResult): boolean {
   if (rendered.$tag$ && rendered.$tag$.startsWith('manifold-skeleton-')) {
     return true;
   }
