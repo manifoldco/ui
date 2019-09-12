@@ -73,8 +73,8 @@ const getMeteredCost = (plan: Plan) => {
 
 const sortPlans = (plans: PlanEdge[]) => {
   // Sort with metered feature base costs added.
-  const sortedMetered = plans.sort((a, b) =>
-    a.node.cost + getMeteredCost(a.node) > b.node.cost + getMeteredCost(b.node) ? 1 : -1
+  const sortedMetered = plans.sort(
+    (a, b) => a.node.cost + getMeteredCost(a.node) - (b.node.cost + getMeteredCost(b.node))
   );
   // Group plans with configurable features and put them at the end.
   const nonConfigurable = sortedMetered.filter(plan => !isConfigurable(plan.node));
