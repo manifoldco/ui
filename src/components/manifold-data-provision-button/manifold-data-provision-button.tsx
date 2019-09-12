@@ -107,23 +107,21 @@ export class ManifoldDataProvisionButton {
     const clickMessage: ClickMessage = { ...detail };
     this.click.emit(clickMessage);
 
-    if (!this.resourceLabel) {
-      console.error('Property “resourceLabel” is missing');
-      return;
-    }
-
-    if (this.resourceLabel.length < 3) {
-      const message: InvalidMessage = { ...detail, message: 'Must be at least 3 characters' };
-      this.invalid.emit(message);
-      return;
-    }
-    if (!this.validate(this.resourceLabel)) {
-      const message: InvalidMessage = {
-        ...detail,
-        message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
-      };
-      this.invalid.emit(message);
-      return;
+    if (this.resourceLabel) {
+      if (this.resourceLabel.length < 3) {
+        const message: InvalidMessage = { ...detail, message: 'Must be at least 3 characters' };
+        this.invalid.emit(message);
+        return;
+      }
+      if (!this.validate(this.resourceLabel)) {
+        const message: InvalidMessage = {
+          ...detail,
+          message:
+            'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
+        };
+        this.invalid.emit(message);
+        return;
+      }
     }
 
     // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
@@ -157,7 +155,7 @@ export class ManifoldDataProvisionButton {
         const success: SuccessMessage = {
           ...detail,
           createdAt: response.created_at,
-          message: `${label} successfully provisioned`,
+          message: label ? `${label} successfully provisioned` : 'successfully provisioned',
           resourceId: response.id || '',
           resourceLabel: label,
         };
