@@ -155,7 +155,7 @@ export class ManifoldDataProvisionButton {
         const success: SuccessMessage = {
           ...detail,
           createdAt: response.created_at,
-          message: `${label} successfully provisioned`,
+          message: label ? `${label} successfully provisioned` : 'successfully provisioned',
           resourceId: response.id || '',
           resourceLabel: label,
         };

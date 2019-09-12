@@ -354,7 +354,7 @@ describe('<manifold-data-provision-button>', () => {
           expect.objectContaining({
             detail: {
               createdAt: '2019-01-01 00:00:00',
-              message: ` successfully provisioned`,
+              message: 'successfully provisioned',
               planId: ExpandedPlan.id,
               productLabel,
               resourceId,
