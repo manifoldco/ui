@@ -4,7 +4,10 @@ import fetchMock from 'fetch-mock';
 import { ManifoldResourceContainer } from './manifold-resource-container';
 import { connections } from '../../utils/connections';
 import { createRestFetch } from '../../utils/restFetch';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
 import { GatewayResource } from '../../spec/mock/gateway';
+
+const graphqlEndpoint = 'http://test.com/graphql';
 
 fetchMock.config.overwriteRoutes = false;
 
@@ -19,6 +22,12 @@ describe('<manifold-resource-credentials>', () => {
     });
     element = page.doc.createElement('manifold-resource-container');
     element.restFetch = createRestFetch({
+      getAuthToken: jest.fn(() => '1234'),
+      wait: 10,
+      setAuthToken: jest.fn(),
+    });
+    element.graphqlFetch = createGraphqlFetch({
+      endpoint: graphqlEndpoint,
       getAuthToken: jest.fn(() => '1234'),
       wait: 10,
       setAuthToken: jest.fn(),
