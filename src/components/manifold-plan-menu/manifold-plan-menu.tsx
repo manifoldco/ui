@@ -1,6 +1,6 @@
 import { h, FunctionalComponent, Prop, Component } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
-import { PlanEdge, PlanConfigurableFeatureConnection, PlanConnection } from '../../types/graphql';
+import { PlanEdge, PlanConnection, Plan } from '../../types/graphql';
 import logger from '../../utils/logger';
 import { Catalog } from '../../types/catalog';
 
@@ -51,12 +51,33 @@ interface PlanMenuProps {
   selectPlan: Function;
 }
 
-const isConfigurable = (configurableFeatures?: PlanConfigurableFeatureConnection | null) =>
-  configurableFeatures ? configurableFeatures.edges.length > 0 : undefined;
+const isConfigurable = (plan: Plan) =>
+  plan && plan.configurableFeatures ? plan.configurableFeatures.edges.length > 0 : undefined;
 
+const METERED_FEATURE_COST_OFFSET = 10000;
+
+const getMeteredCost = (plan: Plan) => {
+  if (plan.meteredFeatures) {
+    return (
+      plan.meteredFeatures.edges.reduce((total, feature) => {
+        const costTiers = feature.node.numericDetails.costTiers || [];
+        return total + (costTiers.length > 0 ? costTiers[0].cost : 0);
+      }, 0) / METERED_FEATURE_COST_OFFSET
+    );
+  }
+
+  return 0;
+};
 // Push configurable plans to the end
-const sortPlans = (plans: PlanEdge[]) =>
-  plans.sort(a => (isConfigurable(a.node && a.node.configurableFeatures) ? 1 : 0));
+const sortPlans = (plans: PlanEdge[]) => {
+  const sortedMetered = plans.sort((a, b) => {
+    console.log(a.node.cost, getMeteredCost(a.node), b.node.cost, getMeteredCost(b.node));
+    return a.node.cost + getMeteredCost(a.node) > b.node.cost + getMeteredCost(b.node) ? 1 : -1;
+  });
+  const nonConfigurable = sortedMetered.filter(plan => !isConfigurable(plan.node));
+  const configurable = sortedMetered.filter(plan => isConfigurable(plan.node));
+  return [...nonConfigurable, ...configurable];
+};
 
 const PlanMenu: FunctionalComponent<PlanMenuProps> = ({
   plans,
@@ -65,17 +86,21 @@ const PlanMenu: FunctionalComponent<PlanMenuProps> = ({
   selectPlan,
 }) => (
   <ul class="plan-list">
-    {sortPlans(plans).map(({ node: { id, displayName, configurableFeatures, cost } }) => (
-      <PlanButton
-        checked={selectedPlanId === id}
-        value={id}
-        onChange={() => selectPlan(id)}
-        isConfigurable={isConfigurable(configurableFeatures)}
-      >
-        {displayName}
-        <Cost cost={cost} plan={oldPlans.find(plan => plan.id === id)} id={id} />
-      </PlanButton>
-    ))}
+    {sortPlans(plans).map(({ node }) => {
+      const { id, displayName, cost } = node;
+
+      return (
+        <PlanButton
+          checked={selectedPlanId === id}
+          value={id}
+          onChange={() => selectPlan(id)}
+          isConfigurable={isConfigurable(node)}
+        >
+          {displayName}
+          <Cost cost={cost} plan={oldPlans.find(plan => plan.id === id)} id={id} />
+        </PlanButton>
+      );
+    })}
   </ul>
 );
 
