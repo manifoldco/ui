@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/html';
 import { withKnobs, text } from '@storybook/addon-knobs';
-import { manifoldConnectionDecorator } from './connectionDecorator';
+import { manifoldConnectionDecorator } from './data/connectionDecorator';
 
 function withVeryFakeExpiry(token) {
   /* During the ui transition from REST calls to GraphQL and PUMA,

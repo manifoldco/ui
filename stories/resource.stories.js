@@ -1,6 +1,6 @@
 import { storiesOf } from '@storybook/html';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
-import { manifoldConnectionDecorator } from './connectionDecorator';
+import { manifoldConnectionDecorator } from './data/connectionDecorator';
 import productLabels from './data/product-labels';
 
 storiesOf('Resource', module)
