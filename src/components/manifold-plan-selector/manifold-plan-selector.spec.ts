@@ -5,15 +5,18 @@ import { ManifoldPlanSelector } from './manifold-plan-selector';
 import { ExpandedPlan } from '../../spec/mock/catalog';
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
+import { Product } from '../../types/graphql';
 
-const mockProduct: any = {
+const product: Partial<Product> = {
+  id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+  displayName: 'JawsDB MySQL',
+  label: 'jawsdb-mysql',
+  logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
+};
+
+const mockProduct = {
   data: {
-    product: {
-      id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
-      displayName: 'JawsDB MySQL',
-      label: 'jawsdb-mysql',
-      logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
-    },
+    product,
   },
 };
 
