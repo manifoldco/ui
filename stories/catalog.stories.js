@@ -8,15 +8,17 @@ storiesOf('Catalog', module)
   .addDecorator(manifoldConnectionDecorator)
   .addDecorator(withKnobs)
   .add('marketplace', () => {
+    const search = boolean('search', true);
+    const categories = boolean('categories', true);
+    const templates = boolean('templates', false);
     const featured = text('featured', '');
     const products = text('products', '');
-    const search = boolean('search', true);
-    const templates = boolean('templates', false);
     return `<manifold-marketplace
       product-link-format="/products/:product"
       preserve-events
       ${featured ? `featured="${featured}"` : ''}
       ${templates === false ? 'hide-templates' : ''}
+      ${categories === false ? 'hide-categories' : ''}
       ${products ? `products="${products}"` : ''}
       ${search === false ? 'hide-search' : ''}
       template-link-format="/products/custom/:template"
