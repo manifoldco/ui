@@ -12,6 +12,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed `manifold-marketplace` to use GraphQL. (#489)
 - Improved Storybook stories (#500)
 - `@manifoldco/shadowcat` is now part of UI. (#498)
+- `<manifold-data-provision-button>` will now work even if given an undefined resource label. The API will auto-generate the label if omitted. (#503)
 
 ### Fixed
 
