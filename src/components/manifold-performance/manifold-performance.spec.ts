@@ -10,6 +10,11 @@ const ddLogs = {
   },
 };
 
+(global as any).MutationObserver = class {
+  disconnect() {}
+  observe() {}
+};
+
 describe('<manifold-performance>', () => {
   it('calls DataDog init when DD is ready', async () => {
     const page = await newSpecPage({
