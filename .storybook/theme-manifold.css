@@ -75,3 +75,15 @@
 body {
   font-family: var(--manifold-font-family);
 }
+
+/* Storybook changes */
+
+button {
+  background: black;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  font-size: 0.8735804647em;
+  font-weight: 700;
+  padding: 0.5em 1.25em;
+}
