@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
 
 import { Product } from '../../types/graphql';
 import { Catalog } from '../../types/catalog';
@@ -24,6 +24,7 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldPlanDetails {
+  @Element() el: HTMLElement;
   @Prop() isExistingResource?: boolean = false;
   @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Catalog.ExpandedPlan;

@@ -12,6 +12,21 @@ interface StencilComponent {
   };
 }
 
+interface RenderResult {
+  $children$: [RenderResult];
+  $tag$: string;
+}
+
+function hasSkeletonElements(rendered: RenderResult): boolean {
+  if (rendered.$tag$ && rendered.$tag$.startsWith('manifold-skeleton-')) {
+    return true;
+  }
+  if (rendered.$children$) {
+    return rendered.$children$.map(c => hasSkeletonElements(c)).includes(true);
+  }
+  return false;
+}
+
 /* eslint-disable no-param-reassign */
 
 export default function logger<T>() {
@@ -24,7 +39,24 @@ export default function logger<T>() {
 
     descriptor.value = function render() {
       try {
-        return originalMethod.apply(this); // attempt to call render()
+        const rendered = originalMethod.apply(this); // attempt to call render()
+        if (
+          this.el &&
+          this.el.dataset.start &&
+          !this.el.dataset.end &&
+          !hasSkeletonElements(rendered)
+        ) {
+          this.el.dataset.end = performance.now();
+          const evt = new CustomEvent('manifold-time-to-render', {
+            bubbles: true,
+            detail: {
+              component: target.constructor.name,
+              duration: this.el.dataset.end - this.el.dataset.start,
+            },
+          });
+          this.el.dispatchEvent(evt);
+        }
+        return rendered;
       } catch (e) {
         const detail: ErrorDetail = {
           component: target.constructor.name,
