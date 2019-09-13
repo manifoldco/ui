@@ -76,6 +76,7 @@ describe('<manifold-resource-credentials>', () => {
     expect(fetchMock.called(`${connections.prod.gateway}/resources/me/${resourceLabel}`)).toBe(
       true
     );
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
   });
   it('will not fetch the resource if the component has no resource label', async () => {
     const resourceLabel = 'test-resource';
@@ -87,6 +88,7 @@ describe('<manifold-resource-credentials>', () => {
     expect(fetchMock.called(`${connections.prod.gateway}/resources/me/${resourceLabel}`)).toBe(
       false
     );
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
   });
   it.skip('will refetch the resource after load if given an invalid resource', async () => {
     const resourceLabel = 'test-resource';
@@ -106,6 +108,7 @@ describe('<manifold-resource-credentials>', () => {
     expect(fetchMock.called(`${connections.prod.gateway}/resources/me/${resourceLabel}`)).toBe(
       true
     );
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
     expect(window.setTimeout).toHaveBeenCalledTimes(1);
   });
   it.skip('will refetch the resource after load if it received an error', async () => {
@@ -122,6 +125,7 @@ describe('<manifold-resource-credentials>', () => {
     element.refetchUntilValid = true;
     root.appendChild(element);
     await page.waitForChanges();
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
     expect(fetchMock.called(`${connections.prod.gateway}/resources/me/${resourceLabel}`)).toBe(
       true
     );
