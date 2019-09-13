@@ -53,8 +53,7 @@
     "prepare:package": "npm run build && node scripts/prepublish",
     "publish": "npm run prepare:package && node scripts/publish",
     "storybook": "start-storybook -p 6006",
-    "test": "stencil test --spec --e2e --maxWorkers=2 && npm run test:tz",
-    "test:tz": "TZ=America/New_York npm run test:spec utils/auth.spec && TZ=America/Los_Angeles npm run test:spec utils/auth.spec && TZ=Europe/London npm run test:spec utils/auth.spec && TZ=Asia/Tokyo npm run test:spec utils/auth.spec",
+    "test": "stencil test --spec --e2e --maxWorkers=2",
     "test:e2e": "stencil test --e2e",
     "test:spec": "stencil test --spec",
     "test:coverage": "stencil test --spec --e2e --coverage --maxWorkers=2",
@@ -122,6 +121,6 @@
     "stylelint-config-standard": "^18.3.0",
     "ts-loader": "^6.1.0",
     "wait-on": "^3.3.0",
-    "webpack": "^4.39.3"
+    "webpack": "^4.40.1"
   }
 }
