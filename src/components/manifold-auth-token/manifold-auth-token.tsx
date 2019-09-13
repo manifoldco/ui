@@ -2,7 +2,7 @@ import { h, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 
 import { AuthToken } from '../../types/auth';
 import logger from '../../utils/logger';
-import { isExpired } from '../../utils/auth';
+import { report } from '../../utils/errorReport';
 import connection, { Subscriber } from '../../state/connection';
 
 @Component({ tag: 'manifold-auth-token' })
@@ -40,21 +40,24 @@ export class ManifoldAuthToken {
   }
 
   setExternalToken(token?: string) {
-    if (token) {
-      if (!isExpired(token) && this.setAuthToken) {
-        this.setAuthToken(token);
-      }
+    if (token && this.setAuthToken) {
+      this.setAuthToken(token);
     }
   }
 
   setInternalToken = (e: CustomEvent) => {
     const payload = e.detail as AuthToken;
-    if (!payload.error && payload.expiry) {
-      const formattedToken = `${payload.token}|${payload.expiry}`;
+
+    if (payload.error) {
+      report(payload.error);
+      return;
+    }
+
+    if (!payload.error && payload.expiry && payload.token) {
       if (this.setAuthToken) {
-        this.setAuthToken(formattedToken);
+        this.setAuthToken(payload.token);
       }
-      this.manifoldOauthTokenChange.emit({ token: formattedToken });
+      this.manifoldOauthTokenChange.emit({ token: payload.token });
     }
   };
 
