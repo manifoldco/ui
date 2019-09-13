@@ -126,7 +126,7 @@ export class ManifoldMarketplace {
     this.isLoading = true;
     const services = await fetchAllPages({
       query: productQuery,
-      nextPage: { first: 25, after: '' },
+      nextPage: { first: 50, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
     });
@@ -138,19 +138,7 @@ export class ManifoldMarketplace {
             query: plansQuery,
             nextPage: { first: 25, after: '' },
             variables: { productId: service.node.id },
-            getConnection: (q: Query) => {
-              if (q.product && q.product.plans) {
-                return q.product.plans;
-              }
-
-              return {
-                edges: [],
-                pageInfo: {
-                  hasNextPage: false,
-                  hasPreviousPage: false,
-                },
-              };
-            },
+            getConnection: (q: Query) => q.product && q.product.plans,
             graphqlFetch: this.graphqlFetch,
           });
 
