@@ -52,7 +52,7 @@ export const planError = async () => {
   selector.productLabel = product.body.label;
 
   const mockFetch = (async args => {
-    if (args.endpoint === `/products/?label=${product.body.label}`) {
+    if (args.endpoint === `/plans/?product_id=${product.id}`) {
       return [
         {
           id: product.id,
