@@ -1,4 +1,4 @@
-import { ProductEdge } from '../../types/graphql';
+import { ProductEdge } from '../../types/componentData';
 
 export function filteredServices(filter: string, services?: ProductEdge[]): ProductEdge[] {
   if (!filter || !services) {

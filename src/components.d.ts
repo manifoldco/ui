@@ -25,12 +25,14 @@ import {
   Marketplace,
 } from './types/marketplace';
 import {
-  Product,
   ProductEdge,
-} from './types/graphql';
+} from './types/componentData';
 import {
   AuthToken,
 } from './types/auth';
+import {
+  Product,
+} from './types/graphql';
 import {
   Option,
 } from './types/Select';

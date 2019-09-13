@@ -4,7 +4,8 @@ import { gql } from '@manifoldco/gql-zero';
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
-import { Query, ProductEdge, ProductState } from '../../types/graphql';
+import { Query, ProductState } from '../../types/graphql';
+import { ProductEdge, Product } from '../../types/componentData';
 import fetchAllPages from '../../utils/fetchAllPages';
 import skeletonProducts from '../../data/marketplace';
 import { Catalog } from '../../types/catalog';
@@ -25,6 +26,7 @@ function transformSkeleton(skel: Catalog.Product): ProductEdge {
       termsUrl: '',
       valueProps: [],
       valuePropsHtml: '',
+      hasFreePlan: true,
       categories: skel.body.tags
         ? skel.body.tags.map(t => ({
             label: t,
@@ -54,18 +56,29 @@ const productQuery = gql`
           categories {
             label
           }
-          freePlans: plans(first: 1, free: true) {
-            edges {
-              node {
-                free
-              }
-            }
-          }
         }
       }
       pageInfo {
         hasNextPage
         endCursor
+      }
+    }
+  }
+`;
+
+const plansQuery = gql`
+  query PLANS($first: Int!, $after: String!, $productId: ID!) {
+    product(id: $productId) {
+      plans(first: $first, after: $after) {
+        edges {
+          node {
+            free
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
       }
     }
   }
@@ -111,12 +124,50 @@ export class ManifoldMarketplace {
 
   async fetchProducts() {
     this.isLoading = true;
-    this.services = await fetchAllPages({
+    const services = await fetchAllPages({
       query: productQuery,
       nextPage: { first: 25, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
     });
+
+    this.services = await Promise.all(
+      services.map(
+        async (service): Promise<ProductEdge> => {
+          const plans = await fetchAllPages({
+            query: plansQuery,
+            nextPage: { first: 25, after: '' },
+            variables: { productId: service.node.id },
+            getConnection: (q: Query) => {
+              if (q.product && q.product.plans) {
+                return q.product.plans;
+              }
+
+              return {
+                edges: [],
+                pageInfo: {
+                  hasNextPage: false,
+                  hasPreviousPage: false,
+                },
+              };
+            },
+            graphqlFetch: this.graphqlFetch,
+          });
+
+          const hasFreePlan = plans.some(p => p.node.free);
+          const node: Product = {
+            ...service.node,
+            hasFreePlan,
+          };
+
+          return {
+            ...service,
+            node,
+          };
+        }
+      )
+    );
+
     this.isLoading = false;
   }
 

@@ -1,51 +1,11 @@
 import { h, Component, Prop, State, Element } from '@stencil/core';
 import observeRect from '@reach/observe-rect';
 
-import { ProductEdge, PlanConnection, Product } from '../../types/graphql';
+import { ProductEdge } from '../../types/componentData';
 import serviceTemplates from '../../data/templates';
 import { categoryIcon, formatCategoryLabel } from '../../utils/marketplace';
 import logger from '../../utils/logger';
 import { filteredServices, categories } from './utils';
-
-/*
- * The first phase of the GraphQL conversion involves fetching all pages
- * from the API and leaving the UI unchanged. Thus, the strategy with the
- * least amount of impact is to use the products query, rather than the
- * categories query. This allows us to pass data to marketplace-grid that
- * has a close mapping to what we gave it from the REST API. Most of the logic
- * for filtering and categorizing occurs in the marketplace-grid, so by leaving
- * the structure similar, we only have to make small changes in how we access the
- * data, rather than overhauling the actual logic required to filter and categorize.
- *
- * My long term thoughts on how this component should work will ultimately depend
- * on what the design team decides, but the API seems to suggest a reasonable and
- * fairly common interface, which I'll describe now.
- *
- * The categorized view would be driven by the categories query, which contains one
- * page of products for each category. So the first data load contains one page of
- * categories, and for each of these, we display the first page of product data in
- * the grid, using a page size that we think is a reasonable maximum. If we need
- * to fetch more pages of categories, this could be done eagerly, or on demand as a
- * result of the user scrolling.
- *
- * Within each category, if the pageInfo for the first page of product data
- * indicates that it has more products, we could present a "See All" indicator.
- * It could be like a custom service card that says "See All <category>". Clicking
- * on that card would then present a grid that talks to the API to display the
- * products in that category. This would use a larger page size for products and
- * would load subsequent pages as a result of the user scrolling. Filtering should
- * be enabled in this interface, and should submit a filter and category label to
- * the API, which may not yet be supported by GraphQL, so we'll have to ask for it
- * if it's not. The filter would be debounced, and if needed, we can cache results
- * using the filter value as a key. In this view, I could see the category menu
- * either being disabled or remaining enabled. If it is enabled, clicking a
- * different category would continue to present the 'all-products' interface for
- * the new category.
- *
- * Filtering within the category view would also submit to the API, but it would
- * not submit a category label. This will present products as it does today, but
- * will also need to fetch more results when the user scrolls if more pages remain.
- */
 
 @Component({
   tag: 'manifold-marketplace-grid',
@@ -218,15 +178,13 @@ export class ManifoldMarketplaceGrid {
   };
 
   private renderServiceCard = (product: ProductEdge) => {
-    const productNode: Product & {
-      freePlans?: PlanConnection;
-    } = product.node;
+    const productNode = product.node;
 
     return (
       <manifold-service-card-view
         description={productNode.tagline}
         isFeatured={this.featured && this.featured.includes(productNode.label)}
-        isFree={productNode.freePlans ? productNode.freePlans.edges.length > 0 : false}
+        isFree={productNode.hasFreePlan}
         logo={productNode.logoUrl}
         name={productNode.displayName}
         preserveEvent={this.preserveEvent}
