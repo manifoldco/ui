@@ -9,16 +9,16 @@ import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import { planSort } from '../../utils/plan';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { Product } from '../../types/graphql';
+import { Product, PlanConnection } from '../../types/graphql';
 
 const query = gql`
-  query PLAN_LIST($productLabel: String!, $free: Boolean) {
+  query PLAN_LIST($productLabel: String!) {
     product(label: $productLabel) {
       id
       displayName
       label
       logoUrl
-      plans(first: 500, orderBy: { field: COST, direction: ASC }, free: $free) {
+      plans(first: 500, orderBy: { field: COST, direction: ASC }) {
         edges {
           node {
             id
@@ -89,6 +89,18 @@ const query = gql`
   }
 `;
 
+const filterFreePlans = (product: Product): Product => {
+  const freePlans: PlanConnection = {
+    ...(product.plans as PlanConnection),
+    edges: product.plans ? product.plans.edges.filter(plan => plan.node.free) : [],
+  };
+
+  return {
+    ...product,
+    plans: freePlans,
+  };
+};
+
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
   @Element() el: HTMLElement;
@@ -144,11 +156,11 @@ export class ManifoldPlanSelector {
 
     const { data } = await this.graphqlFetch({
       query,
-      variables: { productLabel, free: this.freePlans },
+      variables: { productLabel },
     });
 
     if (data && data.product) {
-      this.product = data.product;
+      this.product = this.freePlans ? filterFreePlans(data.product) : data.product;
       this.fetchPlans(data.product.id);
     }
   }
