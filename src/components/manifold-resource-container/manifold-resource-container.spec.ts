@@ -90,7 +90,7 @@ describe('<manifold-resource-credentials>', () => {
     );
     expect(fetchMock.called(graphqlEndpoint)).toBe(false);
   });
-  it.skip('will refetch the resource after load if given an invalid resource', async () => {
+  it('will refetch the resource after load if given an invalid resource', async () => {
     const resourceLabel = 'test-resource';
     // @ts-ignore
     page.win.setTimeout = jest.fn(call => call());
@@ -111,12 +111,13 @@ describe('<manifold-resource-credentials>', () => {
     expect(fetchMock.called(graphqlEndpoint)).toBe(true);
     expect(window.setTimeout).toHaveBeenCalledTimes(1);
   });
-  it.skip('will refetch the resource after load if it received an error', async () => {
+  it('will refetch the resource after load if it received an error', async () => {
     const resourceLabel = 'test-resource';
     // @ts-ignore
     page.win.setTimeout = jest.fn(call => call());
-    fetchMock.mock(`${connections.prod.gateway}/resources/me/${resourceLabel}`, 404);
-    fetchMock.mock(`${connections.prod.gateway}/resources/me/${resourceLabel}`, GatewayResource);
+    fetchMock
+      .once(`${connections.prod.gateway}/resources/me/${resourceLabel}`, 404)
+      .once(`${connections.prod.gateway}/resources/me/${resourceLabel}`, GatewayResource);
 
     fetchMock.mock(graphqlEndpoint, GraphqlResource);
 
