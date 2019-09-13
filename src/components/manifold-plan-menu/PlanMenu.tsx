@@ -78,6 +78,7 @@ export const sortPlans = (plans: PlanEdge[]) => {
     }
     return 0;
   });
+
   // Group plans with configurable features and put them at the end.
   const nonConfigurable = sortedMetered.filter(plan => !isConfigurable(plan.node));
   const configurable = sortedMetered.filter(plan => isConfigurable(plan.node));
