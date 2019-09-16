@@ -1,4 +1,6 @@
 import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+
+import { Product } from '../../types/graphql';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import { globalRegion } from '../../data/region';
@@ -25,7 +27,7 @@ export class ManifoldPlanDetails {
   @Prop() isExistingResource?: boolean = false;
   @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Catalog.ExpandedPlan;
-  @Prop() product?: Catalog.Product;
+  @Prop() product?: Product;
   @Prop() regions?: string[];
   @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
   @Prop() resourceRegion?: string;
@@ -50,7 +52,7 @@ export class ManifoldPlanDetails {
       planId: newPlan.id,
       planLabel: newPlan.body.label,
       planName: newPlan.body.name,
-      productLabel: this.product && this.product.body.label,
+      productLabel: this.product && this.product.label,
       features: this.customFeatures(features), // We need all features for plan cost, but only need to expose the custom ones
       regionId: this.regionId,
     };
@@ -92,7 +94,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planLabel: this.plan.body.label,
         planName: this.plan.body.name,
-        productLabel: this.product.body.label,
+        productLabel: this.product.label,
         features: this.customFeatures(features),
         regionId: this.regionId,
       };
@@ -110,7 +112,7 @@ export class ManifoldPlanDetails {
         planId: this.plan.id,
         planName: this.plan.body.name,
         planLabel: this.plan.body.label,
-        productLabel: this.product.body.label,
+        productLabel: this.product.label,
         features: this.customFeatures(this.features),
         regionId: e.detail.value,
       };
@@ -242,7 +244,7 @@ export class ManifoldPlanDetails {
   @logger()
   render() {
     if (this.plan && this.product) {
-      const { logo_url, name: productName } = this.product.body;
+      const { logoUrl, displayName } = this.product;
       const { defaultCost, cost, expanded_features, name: planName } = this.plan.body;
 
       return (
@@ -255,14 +257,14 @@ export class ManifoldPlanDetails {
           <div class="card">
             <header class="header">
               <div class="logo">
-                <img src={logo_url} alt={productName} itemprop="logo" />
+                <img src={logoUrl} alt={displayName} itemprop="logo" />
               </div>
               <div>
                 <h1 class="plan-name" itemprop="name">
                   {planName}
                 </h1>
                 <h2 class="product-name" itemprop="brand">
-                  {productName}
+                  {displayName}
                 </h2>
               </div>
             </header>

@@ -158,6 +158,12 @@ export type InvoiceLineItemsArgs = {
   after?: Maybe<Scalars['String']>
 };
 
+/** InvoiceAction is the mutation action to be taken on an Invoice */
+export enum InvoiceAction {
+  Attempt = 'ATTEMPT',
+  Collected = 'COLLECTED'
+}
+
 /** InvoiceConnection is the connection between an entity and its invoices. */
 export type InvoiceConnection = {
    __typename?: 'InvoiceConnection',
@@ -182,6 +188,19 @@ export type InvoiceOrderBy = {
 export enum InvoiceOrderByField {
   CreatedAt = 'CREATED_AT'
 }
+
+/** InvoiceStatus represents the current status of an Invoice */
+export enum InvoiceStatus {
+  Pending = 'PENDING',
+  Paid = 'PAID'
+}
+
+/** PayInvoiceMutation is the mutation input for updating an Invoice to paid */
+export type InvoiceStatusInput = {
+  id: Scalars['ID'],
+  action: InvoiceAction,
+  reason?: Maybe<Scalars['String']>,
+};
 
 /** LineItem represents the amount due for a resource. */
 export type LineItem = Node & {
@@ -241,6 +260,28 @@ export enum MeteredFeaturesOrderByField {
   Label = 'LABEL',
   DisplayName = 'DISPLAY_NAME'
 }
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type Mutation = {
+   __typename?: 'Mutation',
+  updateInvoiceState?: Maybe<Invoice>,
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateInvoiceStateArgs = {
+  input: InvoiceStatusInput
+};
 
 export type Node = {
   id: Scalars['ID'],
@@ -474,10 +515,7 @@ export type Product = Node & {
   displayName: Scalars['String'],
   label: Scalars['String'],
   logoUrl: Scalars['String'],
-  /** 
- * Provider is the provider associated with this product. It can be null if
-   * providerID is null or a provider cannot be retrieved.
- **/
+  /** Provider is the provider associated with this product. It can be null if the provider cannot be retrieved. */
   provider?: Maybe<Provider>,
   /** State is the current state of a product. */
   state: ProductState,

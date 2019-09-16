@@ -2,9 +2,23 @@ import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 import { createRestFetch } from '../../utils/restFetch';
 import { ManifoldPlanSelector } from './manifold-plan-selector';
-import { Product, ExpandedPlan } from '../../spec/mock/catalog';
+import { ExpandedPlan } from '../../spec/mock/catalog';
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
+import { Product } from '../../types/graphql';
+
+const product: Partial<Product> = {
+  id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+  displayName: 'JawsDB MySQL',
+  label: 'jawsdb-mysql',
+  logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
+};
+
+const mockProduct = {
+  data: {
+    product,
+  },
+};
 
 async function setup(productLabel?: string, resourceLabel?: string) {
   const page = await newSpecPage({
@@ -35,17 +49,19 @@ describe('<manifold-plan-selector>', () => {
 
   it('fetches product and plans by label on load, if given', async () => {
     const productLabel = 'test-label';
-    fetchMock.mock(`${connections.prod.catalog}/products/?label=${productLabel}`, [Product]);
-    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [ExpandedPlan]);
+    fetchMock.mock(connections.prod.graphql, mockProduct);
+    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`, [
+      ExpandedPlan,
+    ]);
 
     await setup(productLabel);
 
-    expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${productLabel}`)).toBe(
-      true
-    );
-    expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
-      true
-    );
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
+    expect(
+      fetchMock.called(
+        `${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`
+      )
+    ).toBe(true);
   });
 
   it('fetches new product by label on change, if given', async () => {
@@ -54,17 +70,19 @@ describe('<manifold-plan-selector>', () => {
 
     const { component, page } = await setup('old-product');
 
-    fetchMock.mock(`${connections.prod.catalog}/products/?label=${newProduct}`, [Product]);
-    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${Product.id}`, [ExpandedPlan]);
+    fetchMock.mock(connections.prod.graphql, mockProduct);
+    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`, [
+      ExpandedPlan,
+    ]);
     component.productLabel = newProduct;
     await page.waitForChanges();
 
-    expect(fetchMock.called(`${connections.prod.catalog}/products/?label=${newProduct}`)).toBe(
-      true
-    );
-    expect(fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Product.id}`)).toBe(
-      true
-    );
+    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
+    expect(
+      fetchMock.called(
+        `${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`
+      )
+    ).toBe(true);
   });
 
   it('fetches resource on load by resource name, if given', async () => {

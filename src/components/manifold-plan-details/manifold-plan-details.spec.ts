@@ -1,6 +1,15 @@
 import { Gateway } from '../../types/gateway';
 import { ManifoldPlanDetails as PlanDetails } from './manifold-plan-details';
-import { ExpandedPlan, ExpandedPlanCustom, Product } from '../../spec/mock/catalog';
+import { ExpandedPlan, ExpandedPlanCustom } from '../../spec/mock/catalog';
+import { Product } from '../../types/graphql';
+
+// GraphQL types are too strict and force adding unused fields here.
+const mockProduct: Partial<Product> = {
+  id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+  displayName: 'JawsDB MySQL',
+  label: 'jawsdb-mysql',
+  logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
+};
 
 describe(`<manifold-plan-details>`, () => {
   it('initializes all features for fixed plans', () => {
@@ -61,7 +70,7 @@ describe(`<manifold-plan-details>`, () => {
   it('filters out non-custom features', () => {
     const planDetails = new PlanDetails();
     planDetails.plan = ExpandedPlanCustom;
-    planDetails.product = Product;
+    planDetails.product = mockProduct as Product;
 
     expect(
       planDetails.customFeatures({
@@ -77,7 +86,7 @@ describe(`<manifold-plan-details>`, () => {
   it('dispatches update event', () => {
     const planDetails = new PlanDetails();
     planDetails.plan = ExpandedPlanCustom;
-    planDetails.product = Product;
+    planDetails.product = mockProduct as Product;
     planDetails.planLoad = { emit: jest.fn() };
     planDetails.componentWillLoad(); // Set initial features
 

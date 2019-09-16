@@ -1,6 +1,7 @@
 import product from '../../spec/mock/jawsdb/product.json';
 import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 export const skeleton = async () => {
   const selector = document.createElement('manifold-plan-selector');
@@ -12,7 +13,14 @@ export const skeleton = async () => {
     return connection.restFetch(...args);
   }) as RestFetch;
 
+  const mockGqlFetch = (async (...args) => {
+    // Simulate a delay so we see the skeletons
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return connection.graphqlFetch(...args);
+  }) as GraphqlFetch;
+
   selector.restFetch = mockFetch;
+  selector.graphqlFetch = mockGqlFetch;
 
   document.body.appendChild(selector);
 
@@ -52,7 +60,7 @@ export const planError = async () => {
   selector.productLabel = product.body.label;
 
   const mockFetch = (async args => {
-    if (args.endpoint === `/products/?label=${product.body.label}`) {
+    if (args.endpoint === `/plans/?product_id=${product.id}`) {
       return [
         {
           id: product.id,

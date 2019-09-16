@@ -10,6 +10,11 @@ import {
   Catalog,
 } from './types/catalog';
 import {
+  PlanConnection,
+  Product,
+  ProductEdge,
+} from './types/graphql';
+import {
   Gateway,
 } from './types/gateway';
 import {
@@ -25,10 +30,6 @@ import {
   Marketplace,
 } from './types/marketplace';
 import {
-  Product,
-  ProductEdge,
-} from './types/graphql';
-import {
   AuthToken,
 } from './types/auth';
 import {
@@ -39,7 +40,7 @@ export namespace Components {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
     'plans'?: Catalog.ExpandedPlan[];
-    'product'?: Catalog.Product;
+    'product'?: Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
@@ -372,6 +373,10 @@ export namespace Components {
   }
   interface ManifoldPlan {
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * URL-friendly slug (e.g. `"kitefin"`)
     */
     'planLabel'?: string;
@@ -413,14 +418,15 @@ export namespace Components {
   interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
     'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.Product;
+    'product'?: Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
-    'plans'?: Catalog.ExpandedPlan[];
+    'oldPlans': Catalog.ExpandedPlan[];
+    'plans'?: PlanConnection;
     'selectPlan': Function;
     'selectedPlanId'?: string;
   }
@@ -429,6 +435,10 @@ export namespace Components {
     * Show only free plans?
     */
     'freePlans'?: boolean;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'hideUntilReady'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -501,6 +511,10 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
@@ -1089,7 +1103,7 @@ declare namespace LocalJSX {
   interface ManifoldActivePlan extends JSXBase.HTMLAttributes<HTMLManifoldActivePlanElement> {
     'isExistingResource'?: boolean;
     'plans'?: Catalog.ExpandedPlan[];
-    'product'?: Catalog.Product;
+    'product'?: Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
@@ -1448,6 +1462,10 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * URL-friendly slug (e.g. `"kitefin"`)
     */
     'planLabel'?: string;
@@ -1491,14 +1509,15 @@ declare namespace LocalJSX {
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
     'plan'?: Catalog.ExpandedPlan;
-    'product'?: Catalog.Product;
+    'product'?: Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
-    'plans'?: Catalog.ExpandedPlan[];
+    'oldPlans'?: Catalog.ExpandedPlan[];
+    'plans'?: PlanConnection;
     'selectPlan'?: Function;
     'selectedPlanId'?: string;
   }
@@ -1507,6 +1526,10 @@ declare namespace LocalJSX {
     * Show only free plans?
     */
     'freePlans'?: boolean;
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'hideUntilReady'?: boolean;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
@@ -1581,6 +1604,10 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
