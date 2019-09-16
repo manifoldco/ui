@@ -1,12 +1,12 @@
 ---
 title: "\U0001F512 Rename Button"
-path: "/data/rename-button"
+path: '/data/rename-button'
 example: |
   <manifold-data-rename-button resource-label="my-resource">
     Rename resource
   </manifold-data-rename-button>
-
 ---
+
 # 🔒 Rename Button
 
 An unstyled button for renaming resources. 🔒 Requires authentication.
@@ -40,9 +40,19 @@ document.addEventListener(
     alert(`${resourceLabel} renamed to ${newLabel} successfully!`)
 );
 document.addEventListener('manifold-renameButton-error', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
+// {
+//   message: 'bad_request: bad_request: No plan_id provided',
+//   resourceid: '1234',
+//   resourceLabel: 'my-resource',
+//   newLabel: 'new-name',
+// }
 document.addEventListener('manifold-renameButton-invalid', ({ detail }) => console.log(detail));
-// {message: "bad_request: bad_request: No plan_id provided", resourceid: "1234", resourceLabel: "my-resource", newLabel: "new-name"}
+// {
+//   message: 'bad_request: bad_request: No plan_id provided',
+//   resourceid: '1234',
+//   resourceLabel: 'my-resource',
+//   newLabel: 'new-name',
+// }
 ```
 
 | Name                            |                       Returns                        | Description                                                                                                                 |

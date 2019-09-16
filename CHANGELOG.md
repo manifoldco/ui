@@ -17,6 +17,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed `<manifold-button>` borders (#500)
+- `<manifold-credentials>` now uses GraphQL (#490)
 
 ## [v0.5.10]
 

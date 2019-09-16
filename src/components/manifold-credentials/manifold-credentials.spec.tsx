@@ -1,178 +1,102 @@
-import { newSpecPage } from '@stencil/core/testing';
+import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import { Resource, Credential } from '../../spec/mock/marketplace';
-import { connections } from '../../utils/connections';
 import { ManifoldCredentials } from './manifold-credentials';
-import { createRestFetch } from '../../utils/restFetch';
+import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-credentials-view';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
+import { CredentialEdge } from '../../types/graphql';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const proto = ManifoldCredentials.prototype as any;
-const oldCallback = proto.componentWillLoad;
 
-proto.componentWillLoad = function() {
-  (this as any).restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
-    setAuthToken: jest.fn(),
-  });
-
-  if (oldCallback) {
-    oldCallback.call(this);
-  }
-};
+const graphqlEndpoint = 'http://test.com/graphql';
+const credentials: Partial<CredentialEdge[]> = [
+  { cursor: '', node: { key: 'KEY_1', value: 'SECRET_1' } },
+  { cursor: '', node: { key: 'KEY_2', value: 'SECRET_2' } },
+];
+const credentialsHTML = credentials
+  .reduce(
+    (secrets, credential) =>
+      credential && credential.node
+        ? [
+            ...secrets,
+            `<span class="env-key">${credential.node.key}</span>=<span class="env-value">${credential.node.value}</span>`,
+          ]
+        : secrets,
+    []
+  )
+  .join('');
 
 describe('<manifold-credentials>', () => {
-  it('fetches the resource id on load if not set', () => {
-    const resourceLabel = 'test-resource';
+  let page: SpecPage;
+  let element: HTMLManifoldCredentialsElement;
 
-    const provisionButton = new ManifoldCredentials();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = resourceLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
-  });
-
-  it('does not fetch the resource id on load if set', () => {
-    const resourceLabel = 'test-resource';
-
-    const provisionButton = new ManifoldCredentials();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = resourceLabel;
-    provisionButton.resourceId = resourceLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
-  });
-
-  it('fetches resource id on change if not set', () => {
-    const resourceLabel = 'new-resource';
-
-    const provisionButton = new ManifoldCredentials();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = 'old-resource';
-
-    provisionButton.labelChange(resourceLabel);
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
-  });
-
-  it('does not resource id on change if set', () => {
-    const resourceLabel = 'new-resource';
-
-    const provisionButton = new ManifoldCredentials();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = 'old-resource';
-    provisionButton.resourceId = '1234';
-
-    provisionButton.labelChange(resourceLabel);
-    expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
-  });
-
-  describe('when created without a resource ID', () => {
-    afterEach(() => {
-      fetchMock.restore();
+  beforeEach(async () => {
+    // set up test page
+    page = await newSpecPage({
+      components: [ManifoldCredentials, ManifoldCredentialsView],
+      html: `<div></div>`,
+    });
+    element = page.doc.createElement('manifold-credentials');
+    element.graphqlFetch = createGraphqlFetch({
+      endpoint: graphqlEndpoint,
+      getAuthToken: jest.fn(() => '1234'),
+      wait: 10,
+      setAuthToken: jest.fn(),
     });
 
-    it('will fetch the resource id', async () => {
-      const resourceLabel = 'new-resource';
-
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
-        Resource,
-      ]);
-
-      const page = await newSpecPage({
-        components: [ManifoldCredentials],
-        html: `
-          <manifold-credentials
-            resource-label="${resourceLabel}"
-          ></manifold-credentials>
-        `,
-      });
-
-      expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
-      ).toBe(true);
-
-      const root = page.rootInstance as ManifoldCredentials;
-      expect(root.resourceId).toEqual(Resource.id);
-    });
-
-    it('will do nothing on a fetch error', async () => {
-      const resourceLabel = 'new-resource';
-
-      fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, []);
-
-      const page = await newSpecPage({
-        components: [ManifoldCredentials],
-        html: `
-          <manifold-credentials
-            resource-label="${resourceLabel}"
-          ></manifold-credentials>
-        `,
-      });
-
-      expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
-      ).toBe(true);
-
-      const root = page.rootInstance as ManifoldCredentials;
-      expect(root.resourceId).not.toEqual(Resource.id);
+    // mock graphql (a resource with “error” in the name will throw)
+    fetchMock.reset();
+    fetchMock.mock(graphqlEndpoint, (_, req) => {
+      const body = (req.body && req.body.toString()) || '';
+      return body.includes('error')
+        ? { data: null, errors: [{ message: 'resource not found' }] }
+        : {
+            data: {
+              resource: {
+                resourceLabel: 'my-resource',
+                credentials: { edges: credentials },
+              },
+            },
+          };
     });
   });
 
-  describe('When requesting credentials', () => {
-    afterEach(() => {
-      fetchMock.restore();
+  describe('v0 props', () => {
+    it('[resource-label]: displays credentials when clicked', async () => {
+      element.resourceLabel = 'success-resource';
+      if (!page.root) {
+        throw new Error('<manifold-credentials> not in document');
+      }
+      page.root.appendChild(element);
+
+      // simulate button click to fetch credentials, and wait for page to update
+      element.showCredentials();
+      await page.waitForChanges();
+
+      const view = page.root && page.root.querySelector('manifold-credentials-view');
+
+      // expect button to be present
+      const button = view && view.shadowRoot && view.shadowRoot.querySelector('manifold-button');
+      expect(button).not.toBeNull();
+
+      const code = view && view.shadowRoot && view.shadowRoot.querySelector('code');
+      expect(code && code.innerHTML).toEqualHtml(credentialsHTML);
     });
 
-    beforeEach(() => {
-      fetchMock.mock(/.*\/resources\/.*/, [Resource]);
-    });
+    it('[resource-label]: displays errors if not found', async () => {
+      element.resourceLabel = 'error-resource';
+      if (!page.root) {
+        throw new Error('<manifold-credentials> not in document');
+      }
+      page.root.appendChild(element);
 
-    it('will set the credentials on a successful fetch', async () => {
-      fetchMock.mock(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`, [
-        Credential,
-      ]);
+      // simulate button click to fetch credentials, and wait for page to update
+      element.showCredentials();
+      await page.waitForChanges();
 
-      const page = await newSpecPage({
-        components: [ManifoldCredentials],
-        html: `
-          <manifold-credentials
-            resource-label="test"
-          ></manifold-credentials>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldCredentials;
-      await instance.fetchCredentials();
-
-      expect(
-        fetchMock.called(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`)
-      ).toBe(true);
-      expect(instance.credentials).toEqual([Credential]);
-    });
-
-    it('does nothing if the resource ID is not set', async () => {
-      fetchMock.mock(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`, [
-        Credential,
-      ]);
-
-      const page = await newSpecPage({
-        components: [ManifoldCredentials],
-        html: `
-          <manifold-credentials
-            resource-label="test"
-          ></manifold-credentials>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldCredentials;
-      instance.resourceId = '';
-      await instance.fetchCredentials();
-
-      expect(
-        fetchMock.called(`${connections.prod.marketplace}/credentials/?resource_id=${Resource.id}`)
-      ).toBe(false);
-      expect(instance.credentials).not.toBeDefined();
+      const toast = page.root.querySelector('manifold-toast');
+      expect(toast).not.toBeNull();
+      expect(toast && toast.innerText).toBe('resource not found');
     });
   });
 });

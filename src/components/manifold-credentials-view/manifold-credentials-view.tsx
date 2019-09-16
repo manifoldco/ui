@@ -1,7 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
 
-import { Marketplace } from '../../types/marketplace';
+import { CredentialEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
 
 @Component({
@@ -9,10 +9,9 @@ import logger from '../../utils/logger';
   styleUrl: 'manifold-credentials-view.css',
   shadow: true,
 })
-export class ManifoldResourceCredentials {
+export class ManifoldCredentialsView {
   @Element() private el: HTMLElement;
-  @Prop() credentials?: Marketplace.Credential[];
-  @Prop() resourceLabel: string = '';
+  @Prop() credentials?: CredentialEdge[];
   @Prop() loading: boolean = false;
   @State() shouldTransition: boolean = false;
   @Event() credentialsRequested: EventEmitter;
@@ -26,7 +25,7 @@ export class ManifoldResourceCredentials {
   }
 
   componentDidLoad() {
-    // hack to prevent “Hide credentials” from being visible on load in Firefox
+    // hide the first transition for 250ms (long enough to transition in)
     setTimeout(() => {
       this.shouldTransition = true;
     }, 250);
@@ -38,30 +37,16 @@ export class ManifoldResourceCredentials {
     this.addListeners();
   }
 
-  componentDidUnload() {
+  componentWillUnload() {
     this.removeListeners();
   }
 
-  get lines() {
-    // Returns # of lines for creds.
-    if (!this.credentials) {
-      return 0;
-    }
-    const linesPerResource = 3;
-    return this.credentials.reduce(
-      (lines, creds) => lines + linesPerResource + Object.keys(creds.body.values).length,
-      0
-    );
-  }
-
   findNodes() {
-    this.el.childNodes.forEach(child => {
-      if ((child as HTMLElement).slot === 'show-button') {
-        this.showButtonEl =
-          (child as HTMLElement).querySelector(':not(manifold-forward-slot)') || undefined;
-      } else if ((child as HTMLElement).slot === 'hide-button') {
-        this.hideButtonEl =
-          (child as HTMLElement).querySelector(':not(manifold-forward-slot)') || undefined;
+    this.el.childNodes.forEach((child: HTMLElement) => {
+      if (child.getAttribute('slot') === 'show-button') {
+        this.showButtonEl = child.querySelector('*:not(manifold-forward-slot)') || undefined;
+      } else if (child.getAttribute('slot') === 'hide-button') {
+        this.hideButtonEl = child.querySelector('*:not(manifold-forward-slot)') || undefined;
       }
     });
   }
@@ -120,7 +105,7 @@ export class ManifoldResourceCredentials {
       <div
         class="credential"
         data-showing={!!this.credentials}
-        style={{ height: `${this.lines * 1.75}em` }}
+        style={{ height: this.credentials ? `${this.credentials.length * 1.75}em` : undefined }}
       >
         <div class="screen-left" />
         <div class="screen-right" />
@@ -129,16 +114,15 @@ export class ManifoldResourceCredentials {
           <div class="secrets">
             <pre class="env">
               <code>
-                {this.credentials.map(({ body }) => [
-                  <span class="comment"># {this.resourceLabel}</span>,
-                  '\n\n',
-                  Object.entries(body.values).map(([key, value]) => [
-                    <span class="env-key">{key}</span>,
-                    '=',
-                    <span class="env-value">{value}</span>,
-                    '\n',
-                  ]),
-                ])}
+                {this.credentials.map(({ node }) =>
+                  node
+                    ? [
+                        <span class="env-key">{node.key}</span>,
+                        '=',
+                        <span class="env-value">{node.value}</span>,
+                      ]
+                    : null
+                )}
               </code>
             </pre>
           </div>

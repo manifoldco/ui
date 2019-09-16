@@ -1,75 +1,75 @@
-import { h, Component, Prop, State, Watch } from '@stencil/core';
+import { h, Element, Component, Method, Prop, State } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Marketplace } from '../../types/marketplace';
+import { CredentialEdge } from '../../types/graphql';
 import connection from '../../state/connection';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
+  @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
-  @Prop() resourceLabel: string = '';
-  @Prop({ mutable: true }) resourceId?: string = '';
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() resourceLabel?: string = '';
+  @State() credentials?: CredentialEdge[];
+  @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
-  @State() credentials?: Marketplace.Credential[];
+  @State() shouldTransition: boolean = false;
 
-  @Watch('resourceLabel') labelChange(newLabel: string) {
-    if (!this.resourceId) {
-      this.fetchResourceId(newLabel);
-    }
-  }
-
-  componentWillLoad() {
-    if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel);
-    }
-  }
-
-  fetchCredentials = async () => {
-    if (!this.restFetch || !this.resourceId) {
-      return;
-    }
-
-    this.loading = true;
-    const response = await this.restFetch<Marketplace.Credential[]>({
-      service: 'marketplace',
-      endpoint: `/credentials/?resource_id=${this.resourceId}`,
-    });
-
-    this.credentials = response;
-    this.loading = false;
+  hideCredentials = () => {
+    this.credentials = undefined;
   };
 
-  async fetchResourceId(resourceLabel: string) {
-    if (!this.restFetch) {
+  @Method()
+  async showCredentials() {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    const resources = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
+    this.errors = undefined;
+    this.loading = true;
+
+    const { data, errors } = await this.graphqlFetch({
+      query: gql`
+        query RESOURCE_CREDENTIALS($resourceLabel: String!) {
+          resource(label: $resourceLabel) {
+            credentials(first: 25) {
+              edges {
+                node {
+                  key
+                  value
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: { resourceLabel: this.resourceLabel },
     });
 
-    if (!resources || !resources.length) {
-      console.error(`${resourceLabel} resource not found`);
-      return;
+    if (errors) {
+      this.errors = errors;
     }
 
-    this.resourceId = resources[0].id;
+    this.credentials =
+      (data && data.resource && data.resource.credentials && data.resource.credentials.edges) ||
+      undefined;
+
+    this.loading = false;
   }
 
   credentialsRequested = () => {
-    this.fetchCredentials();
+    this.showCredentials();
+    this.loading = false;
   };
 
   @logger()
   render() {
-    return (
+    return [
       <manifold-credentials-view
-        loading={this.loading}
-        resourceLabel={this.resourceLabel}
         credentials={this.credentials}
+        loading={this.loading}
         onCredentialsRequested={this.credentialsRequested}
       >
         <manifold-forward-slot slot="show-button">
@@ -78,7 +78,12 @@ export class ManifoldCredentials {
         <manifold-forward-slot slot="hide-button">
           <slot name="hide-button" />
         </manifold-forward-slot>
-      </manifold-credentials-view>
-    );
+      </manifold-credentials-view>,
+      Array.isArray(this.errors)
+        ? this.errors.map(({ message }) => (
+            <manifold-toast alert-type="error">{message}</manifold-toast>
+          ))
+        : null,
+    ];
   }
 }

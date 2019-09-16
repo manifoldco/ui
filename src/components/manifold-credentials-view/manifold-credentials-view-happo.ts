@@ -3,7 +3,6 @@ import fromJSON from '../../spec/mock/fromJSON';
 
 export const credsHidden = () => {
   const creds = document.createElement('manifold-credentials-view');
-  creds.resourceLabel = 'test';
 
   document.body.appendChild(creds);
 
@@ -12,7 +11,6 @@ export const credsHidden = () => {
 
 export const credsShown = () => {
   const creds = document.createElement('manifold-credentials-view');
-  creds.resourceLabel = 'test';
   creds.credentials = fromJSON(credentials);
 
   document.body.appendChild(creds);
@@ -31,7 +29,6 @@ export const resourceLoading = () => {
 
 export const credsHiddenWithCustomButton = () => {
   const creds = document.createElement('manifold-credentials-view');
-  creds.resourceLabel = 'test';
 
   const button = document.createElement('manifold-button');
   button.color = 'orange';
@@ -50,7 +47,6 @@ export const credsHiddenWithCustomButton = () => {
 
 export const credsShownWithCustomButton = () => {
   const creds = document.createElement('manifold-credentials-view');
-  creds.resourceLabel = 'test';
   creds.credentials = fromJSON(credentials);
 
   const button = document.createElement('manifold-button');
