@@ -38,9 +38,9 @@ describe('<manifold-copy-credentials>', () => {
     page = await newSpecPage({ components: [ManifoldCopyCredentials], html: `<div></div>` });
     element = page.doc.createElement('manifold-copy-credentials');
     element.graphqlFetch = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
+      endpoint: () => graphqlEndpoint,
       getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
+      wait: () => 10,
       setAuthToken: jest.fn(),
     });
 

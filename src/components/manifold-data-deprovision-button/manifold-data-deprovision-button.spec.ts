@@ -13,7 +13,7 @@ const oldCallback = proto.componentWillLoad;
 proto.componentWillLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
+    wait: () => 10,
     setAuthToken: jest.fn(),
   });
 
@@ -193,6 +193,8 @@ describe('<manifold-data-deprovision-button>', () => {
         `,
       });
 
+      const component = page.root as HTMLManifoldDataDeprovisionButtonElement;
+      component.restFetch = createRestFetch({});
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -202,6 +204,7 @@ describe('<manifold-data-deprovision-button>', () => {
       const mockClick = jest.fn();
       page.doc.addEventListener('manifold-deprovisionButton-click', mockClick);
       button.click();
+      await page.waitForChanges();
 
       expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
       expect(mockClick).toHaveBeenCalledWith(

@@ -6,7 +6,7 @@ export const manifoldConnectionDecorator = storyFn => {
   const token = text('manifold_api_token', localStorage.getItem('manifold_api_token') || '');
   localStorage.setItem('manifold_api_token', token); // update localStorage to persist
   return `
-  <manifold-connection>
+  <manifold-connection env="stage">
     <manifold-auth-token token="${token}|${new Date(Date.now() + 6.04e8).getTime()}"/>
     ${storyFn()}
   </manifold-connection>

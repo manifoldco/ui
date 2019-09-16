@@ -22,7 +22,7 @@ storiesOf('Scenarios', module)
   .addDecorator(manifoldConnectionDecorator)
   .add('OAuth', () => {
     return `
-      <manifold-connection>
+      <manifold-connection env="stage">
         <manifold-performance>
           <p><em>These resources are loaded from the server rather than mocks</em></p>
           <manifold-auth-token token="${withVeryFakeExpiry(

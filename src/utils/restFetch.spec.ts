@@ -106,7 +106,7 @@ describe('The fetcher created by createRestFetch', () => {
     describe('With retries remaining', () => {
       it('Will return the an error if the token is not refreshed', () => {
         const fetcher = createRestFetch({
-          wait: 1,
+          wait: () => 1,
           getAuthToken: () => undefined,
           retries: 1,
         });
@@ -127,7 +127,7 @@ describe('The fetcher created by createRestFetch', () => {
 
       it('Will retry if the token is refreshed', async () => {
         const fetcher = createRestFetch({
-          wait: 1,
+          wait: () => 1,
           getAuthToken: () => '12344',
           retries: 1,
         });
@@ -164,7 +164,7 @@ describe('The fetcher created by createRestFetch', () => {
     describe('Without retries remaining', () => {
       it('Will return the an error if auth token request expired', () => {
         const fetcher = createRestFetch({
-          wait: 1,
+          wait: () => 1,
           getAuthToken: () => undefined,
           retries: 0,
         });
@@ -188,7 +188,7 @@ describe('The fetcher created by createRestFetch', () => {
   it('auths for everything but catalog', () =>
     nonCatalogServices.forEach(async service => {
       const fetcher = createRestFetch({
-        wait: 1,
+        wait: () => 1,
         getAuthToken: () => '1234',
       });
       fetchMock.mock('path:/v1/test', 200);
@@ -201,7 +201,7 @@ describe('The fetcher created by createRestFetch', () => {
   // (catalog will auth if token is there like it is in these tests, but won’t wait if it’s not)
   it('auths for catalog if token is present initially', async () => {
     const fetcher = createRestFetch({
-      wait: 1,
+      wait: () => 1,
       getAuthToken: () => '1234',
     });
     fetchMock.mock('path:/v1/test', {});

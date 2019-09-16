@@ -18,7 +18,7 @@ describe('graphqlFetch', () => {
   describe('general', () => {
     it('defaults to api.manifold.co/graphql', async () => {
       const fetcher = createGraphqlFetch({
-        wait: 0,
+        wait: () => 0,
         /* no endpoint */
       });
       fetchMock.mock('https://api.manifold.co/graphql', {
@@ -36,8 +36,8 @@ describe('graphqlFetch', () => {
         },
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -55,8 +55,8 @@ describe('graphqlFetch', () => {
     it('throws if the fetch errored', () => {
       const err = new Error('ohnoes');
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -76,8 +76,8 @@ describe('graphqlFetch', () => {
     it('reports db errors', async () => {
       const errors = [{ message: 'bad query', locations: [] }];
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -98,8 +98,8 @@ describe('graphqlFetch', () => {
         ],
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -112,8 +112,8 @@ describe('graphqlFetch', () => {
 
     it('reports unknown errors', async () => {
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -132,8 +132,8 @@ describe('graphqlFetch', () => {
         ],
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -150,8 +150,8 @@ describe('graphqlFetch', () => {
     describe('With no retries', () => {
       it('throws when expired', () => {
         const fetcher = createGraphqlFetch({
-          wait: 0,
-          endpoint: graphqlEndpoint,
+          wait: () => 0,
+          endpoint: () => graphqlEndpoint,
           getAuthToken: () => undefined,
         });
 
@@ -169,8 +169,8 @@ describe('graphqlFetch', () => {
       it('resets token on error', async () => {
         const setAuthToken = jest.fn();
         const fetcher = createGraphqlFetch({
-          wait: 0,
-          endpoint: graphqlEndpoint,
+          wait: () => 0,
+          endpoint: () => graphqlEndpoint,
           getAuthToken: () => '1234',
           setAuthToken,
         });
@@ -186,8 +186,8 @@ describe('graphqlFetch', () => {
       it('Will retry if the token is refreshed', async () => {
         const setAuthToken = jest.fn();
         const fetcher = createGraphqlFetch({
-          wait: 0,
-          endpoint: graphqlEndpoint,
+          wait: () => 0,
+          endpoint: () => graphqlEndpoint,
           getAuthToken: () => undefined,
           setAuthToken,
           retries: 1,
@@ -228,8 +228,8 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'no results', locations: [] }],
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -253,8 +253,8 @@ describe('graphqlFetch', () => {
       };
 
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -275,8 +275,8 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'illegal base32 data at input byte 4', path: ['product'] }],
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -289,8 +289,8 @@ describe('graphqlFetch', () => {
 
     it('500: returns generic message if none given', async () => {
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -314,8 +314,8 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'no results', locations: [] }],
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
@@ -338,8 +338,8 @@ describe('graphqlFetch', () => {
         errors: [{ message: 'no results', locations: [] }],
       };
       const fetcher = createGraphqlFetch({
-        wait: 0,
-        endpoint: graphqlEndpoint,
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 

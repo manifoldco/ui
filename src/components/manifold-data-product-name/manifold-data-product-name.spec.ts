@@ -24,9 +24,9 @@ describe('<manifold-data-product-name>', () => {
       });
       element = page.doc.createElement('manifold-data-product-name');
       element.graphqlFetch = createGraphqlFetch({
-        endpoint: graphqlEndpoint,
+        endpoint: () => graphqlEndpoint,
         getAuthToken: jest.fn(() => '1234'),
-        wait: 10,
+        wait: () => 10,
         setAuthToken: jest.fn(),
       });
 

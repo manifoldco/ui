@@ -41,7 +41,7 @@ export default async function fetchAllPages<Edge>({
 
   if (pageInfo.hasNextPage) {
     const next = { first: nextPage.first, after: pageInfo.endCursor || '' };
-    const remaining = await fetchAllPages({ query, nextPage: next, getConnection });
+    const remaining = await fetchAllPages({ query, nextPage: next, getConnection, graphqlFetch });
     return edges.concat(remaining);
   }
 
