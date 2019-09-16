@@ -2,7 +2,7 @@
 title: '🔒 Resource Credentials'
 path: '/components/credentials'
 example: |
-  <manifold-credentials-view></manifold-credentials-view>
+  <manifold-credentials resource-label="config"></manifold-credentials>
 ---
 
 # 🔒 Credentials
@@ -28,3 +28,5 @@ more about slots][slot].
   <MyButton slot="hide-button">Hide credentials</MyButton>
 </manifold-credentials>
 ```
+
+[slot]: https://stenciljs.com/docs/templating-jsx/

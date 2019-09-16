@@ -105,7 +105,7 @@ export class ManifoldCredentialsView {
       <div
         class="credential"
         data-showing={!!this.credentials}
-        style={{ height: `${(this.credentials && this.credentials.length) || 0 * 1.75}em` }}
+        style={{ height: this.credentials ? `${this.credentials.length * 1.75}em` : undefined }}
       >
         <div class="screen-left" />
         <div class="screen-right" />
