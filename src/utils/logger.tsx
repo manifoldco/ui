@@ -19,13 +19,14 @@ interface RenderResult {
 
 export function hasSkeletonElements(rendered: RenderResult): boolean {
   if (
+    rendered &&
     rendered.$tag$ &&
     rendered.$tag$.startsWith &&
     rendered.$tag$.startsWith('manifold-skeleton-')
   ) {
     return true;
   }
-  if (rendered.$children$) {
+  if (rendered && rendered.$children$) {
     return rendered.$children$.map(c => hasSkeletonElements(c)).includes(true);
   }
   return false;
