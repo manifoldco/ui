@@ -18,7 +18,11 @@ interface RenderResult {
 }
 
 export function hasSkeletonElements(rendered: RenderResult): boolean {
-  if (rendered.$tag$ && rendered.$tag$.startsWith('manifold-skeleton-')) {
+  if (
+    rendered.$tag$ &&
+    rendered.$tag$.startsWith &&
+    rendered.$tag$.startsWith('manifold-skeleton-')
+  ) {
     return true;
   }
   if (rendered.$children$) {
@@ -43,6 +47,7 @@ export default function logger<T>() {
         if (
           this.performanceLoadMark &&
           !this.performanceRenderedMark &&
+          target.constructor.name.startsWith('Manifold') &&
           !hasSkeletonElements(rendered)
         ) {
           this.performanceRenderedMark = performance.now();
@@ -53,7 +58,7 @@ export default function logger<T>() {
               duration: this.performanceRenderedMark - this.performanceLoadMark,
             },
           });
-          this.el.dispatchEvent(evt);
+          document.dispatchEvent(evt);
         }
         return rendered;
       } catch (e) {
