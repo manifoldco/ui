@@ -19,7 +19,7 @@ describe('<manifold-data-sso-button>', () => {
     element = page.doc.createElement('manifold-data-sso-button');
     element.restFetch = createRestFetch({
       getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
+      wait: () => 10,
       setAuthToken: jest.fn(),
     });
 

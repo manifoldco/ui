@@ -2,6 +2,9 @@ import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 export const skeleton = () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const grid = document.createElement('manifold-marketplace');
 
   const mockFetch = (async (...args) => {
@@ -18,6 +21,9 @@ export const skeleton = () => {
 };
 
 export const allProducts = () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const grid = document.createElement('manifold-marketplace');
   grid.hideUntilReady = true;
 
@@ -27,6 +33,9 @@ export const allProducts = () => {
 };
 
 export const delayedProducts = () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const grid = document.createElement('manifold-marketplace');
   grid.hideUntilReady = true;
 

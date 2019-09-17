@@ -14,7 +14,7 @@ const oldCallback = proto.componentWillLoad;
 proto.componentWillLoad = function() {
   (this as any).restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
+    wait: () => 10,
     setAuthToken: jest.fn(),
   });
 

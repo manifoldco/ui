@@ -16,7 +16,7 @@ async function setup(resourceLabel: string) {
   component.resourceLabel = resourceLabel;
   component.restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
+    wait: () => 10,
     setAuthToken: jest.fn(),
   });
 
