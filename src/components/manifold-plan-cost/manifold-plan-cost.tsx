@@ -6,6 +6,7 @@ import connection from '../../state/connection';
 import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
@@ -30,6 +31,7 @@ export class ManifoldPlanCost {
     this.fetchCustomCost();
   }
 
+  @loadMark()
   componentWillLoad() {
     return this.fetchCustomCost(); // If we’re calculating custom features, wait to render until call finishes
   }

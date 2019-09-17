@@ -1,6 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { Option } from '../../types/Select';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-select',
@@ -24,6 +25,9 @@ export class ManifoldSelect {
     const { value } = e.target as HTMLSelectElement;
     this.updateValue.emit({ name: this.name, value });
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

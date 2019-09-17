@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-toggle',
@@ -27,6 +28,9 @@ export class MfToggle {
       value: checked === true,
     });
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

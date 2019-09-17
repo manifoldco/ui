@@ -5,6 +5,7 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 const query = gql`
   query PRODUCT_LOGO($productLabel: String!) {
@@ -31,6 +32,7 @@ export class ManifoldDataProductLogo {
     this.fetchProduct(newProduct);
   }
 
+  @loadMark()
   componentWillLoad() {
     this.fetchProduct(this.productLabel);
   }

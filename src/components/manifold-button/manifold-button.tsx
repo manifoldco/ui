@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 export type buttonColors = 'black' | 'gray' | 'orange' | 'pink' | 'white';
 
@@ -24,6 +25,9 @@ export class ManifoldButton {
       this.stencilClickEvent(e);
     }
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

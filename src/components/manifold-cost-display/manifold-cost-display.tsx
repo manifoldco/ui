@@ -3,6 +3,7 @@ import { Catalog } from '../../types/catalog';
 import { $ } from '../../utils/currency';
 import { numberFeatureMeasurableDisplayValue } from '../../utils/plan';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-cost-display', styleUrl: 'manifold-cost-display.css', shadow: true })
 export class ManifoldCostDisplay {
@@ -55,6 +56,9 @@ export class ManifoldCostDisplay {
     }
     return output;
   }
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

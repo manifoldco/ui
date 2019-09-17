@@ -7,6 +7,7 @@ import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { planSort } from '../../utils/plan';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product, PlanConnection } from '../../types/graphql';
@@ -133,6 +134,7 @@ export class ManifoldPlanSelector {
     }
   }
 
+  @loadMark()
   componentWillLoad(): Promise<void> | void {
     let call;
 

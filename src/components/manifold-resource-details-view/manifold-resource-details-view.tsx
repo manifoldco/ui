@@ -4,6 +4,7 @@ import { FeatureName } from './components/FeatureName';
 import { FeatureValue } from './components/FeatureValue';
 import { $ } from '../../utils/currency';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-resource-details-view',
@@ -12,6 +13,9 @@ import logger from '../../utils/logger';
 })
 export class ManifoldResourceDetails {
   @Prop() data?: Gateway.Resource;
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

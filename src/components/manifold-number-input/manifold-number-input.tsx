@@ -1,6 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
 import { minus, plus } from '@manifoldco/icons';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-number-input',
@@ -62,6 +63,9 @@ export class ManifoldNumberInput {
 
     this.value = value;
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

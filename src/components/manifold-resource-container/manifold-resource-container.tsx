@@ -6,6 +6,7 @@ import connection from '../../state/connection';
 import ResourceTunnel from '../../data/resource';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { Product, Resource } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
@@ -50,6 +51,7 @@ export class ManifoldResourceContainer {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     return this.fetchResource(this.resourceLabel);
   }

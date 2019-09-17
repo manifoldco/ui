@@ -1,5 +1,6 @@
 import { h, Component, Prop, Element } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 declare global {
   interface Window {
@@ -57,23 +58,6 @@ export class ManifoldPerformance {
     }
   };
 
-  mutationCallback = (mutationsList: [MutationRecord]) => {
-    mutationsList.forEach(mutation => {
-      mutation.addedNodes.forEach((node: HTMLElement) => {
-        if (node.localName && node.localName.startsWith('manifold-')) {
-          /* eslint-disable no-param-reassign */
-          node.dataset.start = String(performance.now());
-          /* eslint-enable no-param-reassign */
-        }
-      });
-    });
-  };
-
-  componentWillLoad() {
-    this.observer = new MutationObserver(this.mutationCallback);
-    this.observer.observe(this.el, { childList: true, subtree: true });
-  }
-
   componentDidLoad() {
     loggableEvents.forEach(eventType => window.addEventListener(eventType, this.logMetric));
   }
@@ -90,6 +74,9 @@ export class ManifoldPerformance {
       this.ddLoadListener();
     }
   }
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

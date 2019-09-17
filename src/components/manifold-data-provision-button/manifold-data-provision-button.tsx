@@ -8,6 +8,7 @@ import { Catalog } from '../../types/catalog';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface ClickMessage {
   planId: string;
@@ -79,6 +80,7 @@ export class ManifoldDataProvisionButton {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     if (this.productLabel) {
       this.fetchProductPlanId(this.productLabel, this.planLabel);

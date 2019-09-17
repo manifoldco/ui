@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, State, EventEmitter, Watch } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-input',
@@ -35,6 +36,9 @@ export class ManifoldSelect {
   onBlurHandler = () => {
     this.updateValue.emit({ name: this.name, value: this.value });
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

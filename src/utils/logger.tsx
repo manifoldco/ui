@@ -41,17 +41,16 @@ export default function logger<T>() {
       try {
         const rendered = originalMethod.apply(this); // attempt to call render()
         if (
-          this.el &&
-          this.el.dataset.start &&
-          !this.el.dataset.end &&
+          this.performanceLoadMark &&
+          !this.performanceRenderedMark &&
           !hasSkeletonElements(rendered)
         ) {
-          this.el.dataset.end = performance.now();
+          this.performanceRenderedMark = performance.now();
           const evt = new CustomEvent('manifold-time-to-render', {
             bubbles: true,
             detail: {
               component: target.constructor.name,
-              duration: this.el.dataset.end - this.el.dataset.start,
+              duration: this.performanceRenderedMark - this.performanceLoadMark,
             },
           });
           this.el.dispatchEvent(evt);

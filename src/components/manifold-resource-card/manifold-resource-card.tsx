@@ -4,6 +4,7 @@ import connection from '../../state/connection';
 import { Gateway } from '../../types/gateway';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
@@ -24,6 +25,7 @@ export class ManifoldResourceCard {
     this.fetchResource({ label: newlabel });
   }
 
+  @loadMark()
   componentWillLoad() {
     this.fetchResource({ id: this.resourceId, label: this.label });
   }

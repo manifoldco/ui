@@ -5,6 +5,7 @@ import { ProductEdge, PlanConnection, Product } from '../../types/graphql';
 import serviceTemplates from '../../data/templates';
 import { categoryIcon, formatCategoryLabel } from '../../utils/marketplace';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { filteredServices, categories } from './utils';
 
 /*
@@ -237,6 +238,9 @@ export class ManifoldMarketplaceGrid {
       />
     );
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

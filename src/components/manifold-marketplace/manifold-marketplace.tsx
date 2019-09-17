@@ -4,6 +4,7 @@ import { gql } from '@manifoldco/gql-zero';
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { Query, ProductEdge, ProductState } from '../../types/graphql';
 import fetchAllPages from '../../utils/fetchAllPages';
 import skeletonProducts from '../../data/marketplace';
@@ -98,6 +99,7 @@ export class ManifoldMarketplace {
   @State() services: ProductEdge[];
   @State() isLoading: boolean = false;
 
+  @loadMark()
   componentWillLoad() {
     this.parseProps();
     const call = this.fetchProducts();

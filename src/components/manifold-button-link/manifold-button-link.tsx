@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface EventDetail {
   href?: string;
@@ -32,6 +33,9 @@ export class ManifoldButtonLink {
       this.stencilClickEvent(e);
     }
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

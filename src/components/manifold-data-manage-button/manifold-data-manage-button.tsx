@@ -6,6 +6,7 @@ import { globalRegion } from '../../data/region';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface SuccessMessage {
   features?: Gateway.FeatureMap;
@@ -41,6 +42,7 @@ export class ManifoldDataManageButton {
     this.fetchResourceId(newResource);
   }
 
+  @loadMark()
   componentWillLoad() {
     if (this.resourceLabel) {
       this.fetchResourceId(this.resourceLabel);

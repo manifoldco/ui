@@ -5,6 +5,7 @@ import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface EventDetail {
   resourceId?: string;
@@ -39,6 +40,7 @@ export class ManifoldResourceCardView {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     if (!this.loading && !this.resourceId && this.label) {
       this.fetchResourceId(this.label);
