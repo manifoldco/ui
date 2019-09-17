@@ -1,9 +1,8 @@
 import { h, Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { AuthToken, PumaAuthToken } from '../../types/auth';
 import logger from '../../utils/logger';
-
-const OAUTH_ORIGIN = 'https://login.manifold.co';
-const OAUTH_URL = `${OAUTH_ORIGIN}/signin/oauth/web`;
+import connection from '../../state/connection';
+import { connections } from '../../utils/connections';
 
 @Component({ tag: 'manifold-oauth' })
 export class ManifoldOauth {
@@ -16,10 +15,14 @@ export class ManifoldOauth {
 
   private loadTime?: Date;
 
+  get oauthURL() {
+    return connections[connection.env].oauth;
+  }
+
   tokenListener = (ev: MessageEvent) => {
     const pumaToken = ev.data as PumaAuthToken;
 
-    if (ev.origin === OAUTH_ORIGIN) {
+    if (ev.origin === new URL(this.oauthURL).origin) {
       this.receiveManifoldToken.emit({
         token: pumaToken.access_token,
         expiry: pumaToken.expiry,
@@ -32,6 +35,7 @@ export class ManifoldOauth {
   componentWillLoad() {
     this.loadTime = new Date();
     window.addEventListener('message', this.tokenListener);
+    return connection.onReady();
   }
 
   componentDidUnload() {
@@ -42,7 +46,7 @@ export class ManifoldOauth {
     const iframe = this.el.querySelector('iframe');
     if (iframe) {
       // set iframe src again to refresh. Works in Chrome, Firefox, and Safari.
-      iframe.setAttribute('src', OAUTH_URL);
+      iframe.setAttribute('src', this.oauthURL);
     }
   }
 
@@ -50,7 +54,7 @@ export class ManifoldOauth {
   render() {
     return (
       <iframe
-        src={OAUTH_URL}
+        src={this.oauthURL}
         allowtransparency="true"
         aria-hidden="true"
         frameborder="0"
