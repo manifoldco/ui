@@ -35,16 +35,9 @@ describe('<manifold-resource-credentials>', () => {
       html: `<div></div>`,
     });
     element = page.doc.createElement('manifold-resource-container');
-    element.restFetch = createRestFetch({
-      getAuthToken: jest.fn(() => '1234'),
-      wait: () => 10,
-      setAuthToken: jest.fn(),
-    });
+    element.restFetch = createRestFetch({});
     element.graphqlFetch = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
-      getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
-      setAuthToken: jest.fn(),
+      endpoint: () => graphqlEndpoint,
     });
   });
   afterEach(() => {

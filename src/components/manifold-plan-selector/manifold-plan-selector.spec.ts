@@ -6,6 +6,7 @@ import { ExpandedPlan } from '../../spec/mock/catalog';
 import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
 import { Product } from '../../types/graphql';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 const product: Partial<Product> = {
   id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
@@ -23,17 +24,14 @@ const mockProduct = {
 async function setup(productLabel?: string, resourceLabel?: string) {
   const page = await newSpecPage({
     components: [ManifoldPlanSelector],
-    html: '<div></div>',
+    html: '<manifold-connection></manifold-connection>',
   });
 
   const component = page.doc.createElement('manifold-plan-selector');
   component.productLabel = productLabel;
   component.resourceLabel = resourceLabel;
-  component.restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: () => 10,
-    setAuthToken: jest.fn(),
-  });
+  component.restFetch = createRestFetch({});
+  component.graphqlFetch = createGraphqlFetch({});
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
