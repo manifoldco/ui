@@ -5,7 +5,7 @@ import { text, radios } from '@storybook/addon-knobs';
 export const manifoldConnectionDecorator = storyFn => {
   const token = text('manifold_api_token', localStorage.getItem('manifold_api_token') || '');
   const options = { Production: 'prod', Staging: 'stage' };
-  const env = radios('env', options, 'prod', 'env');
+  const env = radios('env', options, 'prod');
   localStorage.setItem('manifold_api_token', token); // update localStorage to persist
   return `
   <manifold-connection env="${env}">

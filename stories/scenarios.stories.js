@@ -21,7 +21,7 @@ storiesOf('Scenarios', module)
   .addDecorator(withKnobs)
   .add('OAuth', () => {
     const options = { Production: 'prod', Staging: 'stage' };
-    const env = radios('env', options, 'stage', 'env');
+    const env = radios('env', options, 'stage');
     return `
       <manifold-connection env="${env}">
         <manifold-performance>
