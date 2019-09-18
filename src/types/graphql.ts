@@ -6,15 +6,15 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** 
+  /**
  * ProfileIdentity allows fetching a profile by its `id` or
    * by its `subject`.
  **/
   ProfileIdentity: any,
-  /** 
+  /**
  * Time represents a point in time formatted as an
    * [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) formatted string.
-   * 
+   *
    * Example: `2009-11-10T23:00:00Z`
  **/
   Time: any,
@@ -72,7 +72,7 @@ export enum ConfigurableFeaturesOrderByField {
   DisplayName = 'DISPLAY_NAME'
 }
 
-/** 
+/**
  * Credential represents a plain-text value for a credential which can be used to
  * configure a resource.
  **/
@@ -80,14 +80,14 @@ export type Credential = {
    __typename?: 'Credential',
   /** The key for referencing the credential.  */
   key: Scalars['String'],
-  /** 
+  /**
  * The plain-text value of the credential. This value is the value that can be
    * used in the actual configuration for the resource.
  **/
   value: Scalars['String'],
 };
 
-/** 
+/**
  * CredentialsConnection allows a type to set up a connection to list associated
  * credentials.
  **/
@@ -97,7 +97,7 @@ export type CredentialConnection = {
   edges: Array<CredentialEdge>,
 };
 
-/** 
+/**
  * CredentialsEdge represents a single item on a CredentialsConnection page which
  * has a cursor that can be used for pagination and holds the actual credential
  * information.
@@ -133,11 +133,11 @@ export enum FixedFeaturesOrderByField {
 export type Invoice = Node & {
    __typename?: 'Invoice',
   id: Scalars['ID'],
-  /** 
+  /**
  * Cost is the amount due for the invoice.
-   * 
+   *
    * The cost is provided in the currency’s smallest unit.
-   * 
+   *
    * Example: `1000` is `1000 cents` which is `$10 USD`.
  **/
   cost: Scalars['Int'],
@@ -206,11 +206,11 @@ export type InvoiceStatusInput = {
 export type LineItem = Node & {
    __typename?: 'LineItem',
   id: Scalars['ID'],
-  /** 
+  /**
  * Cost is the amount due for the associated resource.
-   * 
+   *
    * The cost is provided in the currency’s smallest unit.
-   * 
+   *
    * Example: `1000` is `1000 cents` which is `$10 USD`.
  **/
   cost: Scalars['Int'],
@@ -261,9 +261,9 @@ export enum MeteredFeaturesOrderByField {
   DisplayName = 'DISPLAY_NAME'
 }
 
-/** 
+/**
  * Mutations for the Manifold GraphQL API
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -273,9 +273,9 @@ export type Mutation = {
 };
 
 
-/** 
+/**
  * Mutations for the Manifold GraphQL API
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -293,7 +293,7 @@ export enum OrderByDirection {
   Desc = 'DESC'
 }
 
-/** 
+/**
  * PageInfo provides support for
  * [Relay](https://facebook.github.io/relay/graphql/connections.htm) cursor-connections style pagination.
  **/
@@ -311,7 +311,7 @@ export type Plan = Node & {
   id: Scalars['ID'],
   /** A human-readable display name for this plan. */
   displayName: Scalars['String'],
-  /** 
+  /**
  * A URL-friendly label for this Region, combining its platform and dataCenter
    * with a hyphen. Globally unique.
  **/
@@ -530,7 +530,7 @@ export type Product = Node & {
   valueProps: Array<ValueProp>,
   /** ValuePropsHtml is the HTML representation of the value propositions. It is non-nullable, but it can be empty. */
   valuePropsHtml: Scalars['String'],
-  /** 
+  /**
  * SetupStepsHtml is the HTML representation of the setup steps required to
    * configure a new product. It is non-nullable, but it can be empty.
  **/
@@ -607,22 +607,22 @@ export type Profile = {
   subject: Scalars['String'],
   /** Platform represents the platform this profile belongs to. */
   platform: Platform,
-  /** 
+  /**
  * InvoicePreview provides a preview of the customer’s invoice
    * for the current billing cycle as of midnight UTC.
-   * 
+   *
    * An invoice preview consists of the amount due and related details at
    * a specific moment in time. It does not represent an estimation of the
    * amount that will be due at the end of the billing cycle.
-   * 
+   *
    * *This is only an invoice preview. It should not be used to charge users.*
-   * 
+   *
    * Note: This is currently only supported with a Platform API token.
  **/
   invoicePreview?: Maybe<Invoice>,
-  /** 
+  /**
  * Invoices returns a paginated list of invoices.
-   * 
+   *
    * Note: This is currently only supported with a Platform API token.
  **/
   invoices?: Maybe<InvoiceConnection>,
@@ -677,15 +677,15 @@ export type ProviderProductsArgs = {
   orderBy?: Maybe<ProductOrderBy>
 };
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type Query = {
    __typename?: 'Query',
-  /** 
+  /**
  * Look up a Provider by its `id` or `label`. Exactly one of `id` or `label` is
    * required, and `id` has precedence over `label`.
  **/
@@ -700,35 +700,35 @@ export type Query = {
   category?: Maybe<Category>,
   /** List all available products. */
   products?: Maybe<ProductConnection>,
-  /** 
+  /**
  * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
-   * 
+   *
    * Note: This query can only be performed when authenticated.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
-  /** 
+  /**
  * Return a paginated list of resources. The return value can either contain
    * all available resources linked to the token, or can be filtered down to
    * fetch data for the specified profile. The owner can either be a ProfileID or
    * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
-   * 
+   *
    * Note: This query is currently only supported with use of a Platform API token.
  **/
   resources?: Maybe<ResourceConnection>,
-  /** 
+  /**
  * Fetch a resource for the specified `label` or `id`. When authenticated as a
    * profile user, fetches the resource associated with the profile. When
    * authenticated as a platform user and a label is specified, an owner must be provided.
-   * 
+   *
    * Note: This query is currently only supported with use of a Platform API token.
  **/
   resource?: Maybe<Resource>,
-  /** 
+  /**
  * Return a paginated list of profiles for a platform, optionally
    * querying for only profiles with subscription usage over a specified time.
-   * 
+   *
    * Note: This query is currently only supported with use of a Platform API token.
  **/
   profiles?: Maybe<ProfileConnection>,
@@ -739,9 +739,9 @@ export type Query = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -751,9 +751,9 @@ export type QueryProviderArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -762,9 +762,9 @@ export type QueryPlanArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -774,9 +774,9 @@ export type QueryProductArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -786,9 +786,9 @@ export type QueryCategoriesArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -797,9 +797,9 @@ export type QueryCategoryArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -810,9 +810,9 @@ export type QueryProductsArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -821,9 +821,9 @@ export type QueryProfileArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -832,9 +832,9 @@ export type QueryNodeArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -845,9 +845,9 @@ export type QueryResourcesArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -858,9 +858,9 @@ export type QueryResourceArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -871,9 +871,9 @@ export type QueryProfilesArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -882,9 +882,9 @@ export type QueryInvoiceArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -934,7 +934,7 @@ export enum RenewalPoint {
   Calendar = 'CALENDAR'
 }
 
-/** 
+/**
  * A resource represents the provisioned version of a selected product. It is
  * linked to a plan and has credentials associated with it.
  **/
@@ -945,14 +945,14 @@ export type Resource = Node & {
   displayName: Scalars['String'],
   /**  A machine-readable label for this resource, unique per owner.  */
   label: Scalars['String'],
-  /** 
+  /**
  * The plan for which this resource is provisioned. The plan can be null if the
    * resource is a custom resource, or if a transient failure occurred.
  **/
   plan?: Maybe<Plan>,
-  /** 
+  /**
  * The profile which owns the resource.
-   * 
+   *
    * Note: If the resource is not owned by a Platform Profile, the value is null.
  **/
   owner?: Maybe<Profile>,
@@ -961,7 +961,7 @@ export type Resource = Node & {
 };
 
 
-/** 
+/**
  * A resource represents the provisioned version of a selected product. It is
  * linked to a plan and has credentials associated with it.
  **/
@@ -970,7 +970,7 @@ export type ResourceCredentialsArgs = {
   after?: Maybe<Scalars['String']>
 };
 
-/** 
+/**
  * ResourceConnection allows a type to set up a connection to list associated
  * resources.
  **/
@@ -980,7 +980,7 @@ export type ResourceConnection = {
   edges: Array<ResourceEdge>,
 };
 
-/** 
+/**
  * ResourceEdge represents a single item on a Resources Connection page which has
  * a cursor that can be used for pagination and holds the actual resource
  * information.
@@ -991,17 +991,17 @@ export type ResourceEdge = {
   node?: Maybe<Resource>,
 };
 
-/** 
+/**
  * SubLineItem represents the breakdown by base cost, features, and metered usage
  * of the amount due by resource.
  **/
 export type SubLineItem = {
    __typename?: 'SubLineItem',
-  /** 
+  /**
  * Cost is the amount due for the feature.
-   * 
+   *
    * The cost is provided in the currency’s smallest unit.
-   * 
+   *
    * Example: `1000` is `1000 cents` which is `$10 USD`.
  **/
   cost: Scalars['Int'],
@@ -1043,7 +1043,7 @@ export type ValueProp = {
   body: Scalars['String'],
 };
 
-/** 
+/**
  * WithUsage allows fetching profiles that have been used after the start date,
  * before the end date, or between the start and end date.
  **/

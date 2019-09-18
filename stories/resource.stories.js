@@ -78,8 +78,10 @@ storiesOf('Resource', module)
   .add('provision', () => {
     const newResource = text('resource-label', 'pdfshift');
     const productLabel = select('product-label', productLabels, 'pdfshift');
-    const ownerId = text('owner-id', localStorage.getItem('manifold-owner-id') || '');
-    localStorage.setItem('manifold-owner-id', ownerId);
+    const ownerId = text('owner-id', localStorage.getItem('manifold_user_id') || '');
+    if (ownerId) {
+      localStorage.setItem('manifold_user_id', ownerId);
+    }
     return `
       <style>
         menu {
