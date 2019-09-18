@@ -4,6 +4,7 @@ import { Catalog } from '../../types/catalog';
 import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
@@ -40,6 +41,7 @@ export class ManifoldServiceCard {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     this.fetchProduct({ id: this.productId, label: this.productLabel });
   }

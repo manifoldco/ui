@@ -3,6 +3,7 @@ import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { ResourceConnection, Resource, ResourceEdge } from '../../types/graphql';
 
@@ -46,6 +47,7 @@ export class ManifoldDataResourceList {
   @State() errors?: GraphqlError[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
+  @loadMark()
   componentWillLoad() {
     this.fetchResources();
     if (!this.paused) {

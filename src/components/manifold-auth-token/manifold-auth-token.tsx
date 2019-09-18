@@ -2,6 +2,7 @@ import { h, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/
 
 import { AuthToken } from '../../types/auth';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { report } from '../../utils/errorReport';
 import connection, { Subscriber } from '../../state/connection';
 
@@ -23,6 +24,7 @@ export class ManifoldAuthToken {
     this.setExternalToken(newToken);
   }
 
+  @loadMark()
   componentWillLoad() {
     this.setExternalToken(this.token);
     if (this.subscribe) {

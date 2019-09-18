@@ -7,6 +7,7 @@ import connection from '../../state/connection';
 import { RestFetch } from '../../utils/restFetch';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface FoundResource {
   id: string;
@@ -59,6 +60,7 @@ export class ManifoldResourceList {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     this.fetchResources();
     if (!this.paused) {

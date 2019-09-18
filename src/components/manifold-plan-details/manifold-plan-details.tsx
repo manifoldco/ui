@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Event, EventEmitter, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
 
 import { Product } from '../../types/graphql';
 import { Catalog } from '../../types/catalog';
@@ -8,6 +8,7 @@ import { initialFeatures } from '../../utils/plan';
 import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface EventDetail {
   planId: string;
@@ -24,6 +25,7 @@ interface EventDetail {
   shadow: true,
 })
 export class ManifoldPlanDetails {
+  @Element() el: HTMLElement;
   @Prop() isExistingResource?: boolean = false;
   @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Catalog.ExpandedPlan;
@@ -70,6 +72,8 @@ export class ManifoldPlanDetails {
     this.regionId = newRegion;
   }
 
+  @loadMark()
+  @loadMark()
   componentWillLoad() {
     if (this.resourceRegion) {
       this.regionId = this.resourceRegion;

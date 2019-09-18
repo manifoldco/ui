@@ -1,5 +1,6 @@
 import { h, Component, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface EventDetail {
   productId?: string;
@@ -37,6 +38,9 @@ export class ManifoldServiceCardView {
       this.marketplaceClick.emit(detail);
     }
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

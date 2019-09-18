@@ -6,6 +6,7 @@ import connection from '../../state/connection';
 import { globalRegion } from '../../data/region';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-region-selector' })
 export class ManifoldRegionSelector {
@@ -21,6 +22,7 @@ export class ManifoldRegionSelector {
   @State() globalRegion: Catalog.Region = globalRegion;
   @Event() updateValue: EventEmitter;
 
+  @loadMark()
   async componentWillLoad() {
     if (!this.restFetch) {
       return;

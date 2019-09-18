@@ -3,6 +3,7 @@ import { h, Component, Prop } from '@stencil/core';
 import ResourceTunnel from '../../data/resource';
 import { Gateway } from '../../types/gateway';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
@@ -10,6 +11,9 @@ export class ManifoldResourceRename {
   @Prop() loading: boolean = true;
   /** The new label to give to the resource */
   @Prop() newLabel: string = '';
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

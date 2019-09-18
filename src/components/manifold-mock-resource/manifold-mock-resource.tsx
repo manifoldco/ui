@@ -2,6 +2,7 @@ import { h, Component, State, Prop } from '@stencil/core';
 import { Gateway } from '../../types/gateway';
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 const ResourceMock: Gateway.Resource = {
   id: '1',
@@ -945,6 +946,7 @@ export class ManifoldMockResource {
   @State() resource?: Gateway.Resource;
   @State() loading: boolean = true;
 
+  @loadMark()
   componentWillLoad() {
     window.setTimeout(() => {
       this.loading = false;

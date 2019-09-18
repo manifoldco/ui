@@ -4,6 +4,7 @@ import { PlanMenu, SkeletonPlanMenu } from './PlanMenu';
 
 import { PlanConnection } from '../../types/graphql';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { Catalog } from '../../types/catalog';
 
 @Component({
@@ -16,6 +17,9 @@ export class ManifoldPlanMenu {
   @Prop() oldPlans: Catalog.ExpandedPlan[] = [];
   @Prop() selectedPlanId?: string;
   @Prop() selectPlan: Function = () => {};
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

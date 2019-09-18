@@ -4,6 +4,7 @@ import { gql } from '@manifoldco/gql-zero';
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
@@ -23,6 +24,7 @@ export class ManifoldDataProductName {
     this.fetchResource(newResource);
   }
 
+  @loadMark()
   componentWillLoad() {
     if (this.productLabel) {
       this.fetchProduct(this.productLabel);

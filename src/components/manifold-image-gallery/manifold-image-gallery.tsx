@@ -1,5 +1,6 @@
 import { h, Component, Prop, State, FunctionalComponent } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface ThumbnailProps {
   src: string;
@@ -27,6 +28,9 @@ export class ImageGallery {
   selectImage = (image: string) => {
     this.selectedImage = image;
   };
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

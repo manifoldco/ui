@@ -1,5 +1,6 @@
 import { h, Component, Element, Prop } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-icon',
@@ -39,6 +40,9 @@ export class ManifoldIcon {
       };
     });
   }
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

@@ -2,6 +2,7 @@ import { h, Component, State, Prop, Watch } from '@stencil/core';
 import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { Product } from '../../types/graphql';
 @Component({
   tag: 'manifold-active-plan',
@@ -41,6 +42,9 @@ export class ManifoldActivePlan {
     }
     return this.plans.find(({ id }) => id === this.selectedPlanId);
   }
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

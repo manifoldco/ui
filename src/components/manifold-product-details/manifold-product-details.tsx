@@ -3,6 +3,7 @@ import { h, Component, Prop } from '@stencil/core';
 import { Product } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-product-details',
@@ -11,6 +12,9 @@ import logger from '../../utils/logger';
 })
 export class ManifoldProductDetails {
   @Prop() product?: Product;
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

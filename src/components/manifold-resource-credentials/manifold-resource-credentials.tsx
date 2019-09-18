@@ -2,12 +2,16 @@ import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { Gateway } from '../../types/gateway';
 
 @Component({ tag: 'manifold-resource-credentials' })
 export class ManifoldResourceCredentials {
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

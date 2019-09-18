@@ -15,6 +15,7 @@ import * as clipboard from 'clipboard-polyfill';
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface ErrorDetail {
   message: string;
@@ -40,6 +41,7 @@ export class ManifoldCopyCredentials {
     this.refresh();
   }
 
+  @loadMark()
   componentWillLoad() {
     this.refresh();
   }

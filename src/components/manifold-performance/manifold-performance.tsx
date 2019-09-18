@@ -1,5 +1,6 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component, Prop, Element } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 declare global {
   interface Window {
@@ -11,14 +12,17 @@ const loggableEvents = [
   'manifold-rest-fetch-duration',
   'manifold-graphql-fetch-duration',
   'manifold-error',
+  'manifold-time-to-render',
   'receiveManifoldToken',
 ];
 
 @Component({ tag: 'manifold-performance' })
 export class ManifoldPerformance {
   @Prop({ mutable: true }) ddLogs?: any;
+  @Element() el: HTMLElement;
   private ddScript: HTMLScriptElement;
   private logQueue: CustomEvent[] = [];
+  private observer: MutationObserver;
 
   ddLoadListener = () => {
     if (window.DD_LOGS) {
@@ -61,6 +65,7 @@ export class ManifoldPerformance {
   componentDidUnload() {
     this.ddScript.removeEventListener('load', this.ddLoadListener);
     loggableEvents.forEach(eventType => window.removeEventListener(eventType, this.logMetric));
+    this.observer.disconnect();
   }
 
   componentDidRender() {
@@ -69,6 +74,9 @@ export class ManifoldPerformance {
       this.ddLoadListener();
     }
   }
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

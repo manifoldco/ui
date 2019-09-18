@@ -1,5 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-tooltip',
@@ -8,6 +9,9 @@ import logger from '../../utils/logger';
 })
 export class ManifoldTooltip {
   @Prop() labelText?: string;
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

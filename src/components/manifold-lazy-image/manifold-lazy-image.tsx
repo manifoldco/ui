@@ -1,5 +1,6 @@
 import { h, Component, Prop, State } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-lazy-image' })
 export class ManifoldLazyImage {
@@ -8,6 +9,7 @@ export class ManifoldLazyImage {
   @Prop() alt: string;
   @State() observer: IntersectionObserver;
 
+  @loadMark()
   componentWillLoad() {
     this.observer = new IntersectionObserver(this.observe);
   }

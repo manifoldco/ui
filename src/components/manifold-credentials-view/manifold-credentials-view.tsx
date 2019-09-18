@@ -3,6 +3,7 @@ import { eye, lock, loader } from '@manifoldco/icons';
 
 import { CredentialEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-credentials-view',
@@ -19,6 +20,7 @@ export class ManifoldCredentialsView {
   showButtonEl?: Element;
   hideButtonEl?: Element;
 
+  @loadMark()
   componentWillLoad() {
     this.findNodes();
     this.addListeners();

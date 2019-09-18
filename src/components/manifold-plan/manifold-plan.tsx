@@ -7,6 +7,7 @@ import { RestFetch } from '../../utils/restFetch';
 import { Product } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 const query = gql`
   query PRODUCT($productLabel: String!) {
@@ -39,6 +40,8 @@ export class ManifoldPlan {
     this.fetchProductAndPlan(this.productLabel, newPlan);
   }
 
+  @loadMark()
+  @loadMark()
   componentWillLoad() {
     this.fetchProductAndPlan(this.productLabel, this.planLabel);
   }

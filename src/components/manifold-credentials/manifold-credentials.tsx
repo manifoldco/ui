@@ -5,6 +5,7 @@ import { CredentialEdge } from '../../types/graphql';
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
@@ -16,6 +17,9 @@ export class ManifoldCredentials {
   @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
   @State() shouldTransition: boolean = false;
+
+  @loadMark()
+  componentWillLoad() {}
 
   hideCredentials = () => {
     this.credentials = undefined;

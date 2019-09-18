@@ -4,6 +4,7 @@ import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface ClickMessage {
   newLabel: string;
@@ -55,6 +56,7 @@ export class ManifoldDataRenameButton {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     if (this.resourceLabel && !this.resourceId) {
       this.fetchResourceId(this.resourceLabel);

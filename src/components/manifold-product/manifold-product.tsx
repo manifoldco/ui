@@ -4,6 +4,7 @@ import { gql } from '@manifoldco/gql-zero';
 import { Product } from '../../types/graphql';
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 const query = gql`
@@ -46,6 +47,7 @@ export class ManifoldProduct {
     this.fetchProduct(newLabel);
   }
 
+  @loadMark()
   componentWillLoad() {
     if (this.productLabel) {
       this.fetchProduct(this.productLabel);

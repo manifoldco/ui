@@ -4,6 +4,7 @@ import { Product } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-product-page',
@@ -19,6 +20,9 @@ export class ManifoldProductPage {
     }
     return this.product.provider && this.product.provider.displayName;
   }
+
+  @loadMark()
+  componentWillLoad() {}
 
   @logger()
   render() {

@@ -1,5 +1,6 @@
 import { h, Component } from '@stencil/core';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-skeleton-text',
@@ -7,6 +8,9 @@ import logger from '../../utils/logger';
   shadow: true,
 })
 export class ManifoldSkeletonText {
+  @loadMark()
+  componentWillLoad() {}
+
   @logger()
   render() {
     return (

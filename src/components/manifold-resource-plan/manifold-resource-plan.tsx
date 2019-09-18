@@ -3,9 +3,13 @@ import { h, Component } from '@stencil/core';
 import ResourceTunnel, { ResourceState } from '../../data/resource';
 import { convertPlan } from '../../utils/gatewayToCatalog';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
+  @loadMark()
+  componentWillLoad() {}
+
   @logger()
   render() {
     return (

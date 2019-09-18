@@ -6,6 +6,7 @@ import connection from '../../state/connection';
 import { Marketplace } from '../../types/marketplace';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
@@ -21,6 +22,7 @@ export class ManifoldDataResourceLogo {
     this.fetchResource(newResource);
   }
 
+  @loadMark()
   componentWillLoad() {
     this.fetchResource(this.resourceLabel);
   }

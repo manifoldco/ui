@@ -5,6 +5,7 @@ import { Marketplace } from '../../types/marketplace';
 import { Connector } from '../../types/connector';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
+import loadMark from '../../utils/loadMark';
 
 interface ClickMessage {
   resourceLabel: string;
@@ -44,6 +45,7 @@ export class ManifoldDataSsoButton {
     }
   }
 
+  @loadMark()
   componentWillLoad() {
     if (this.resourceLabel && !this.resourceId) {
       this.fetchResourceId(this.resourceLabel);
