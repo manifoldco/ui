@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { withKnobs, radios } from '@storybook/addon-knobs';
 import { manifoldConnectionDecorator } from './data/connectionDecorator';
 
 function withVeryFakeExpiry(token) {
@@ -20,7 +20,8 @@ function withVeryFakeExpiry(token) {
 storiesOf('Scenarios', module)
   .addDecorator(withKnobs)
   .add('OAuth', () => {
-    const env = text('env', 'stage');
+    const options = { Production: 'prod', Staging: 'stage' };
+    const env = radios('env', options, 'stage', 'env');
     return `
       <manifold-connection env="${env}">
         <manifold-performance>
