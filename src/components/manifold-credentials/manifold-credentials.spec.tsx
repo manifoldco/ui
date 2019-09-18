@@ -38,9 +38,9 @@ describe('<manifold-credentials>', () => {
     });
     element = page.doc.createElement('manifold-credentials');
     element.graphqlFetch = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
+      endpoint: () => graphqlEndpoint,
       getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
+      wait: () => 10,
       setAuthToken: jest.fn(),
     });
 

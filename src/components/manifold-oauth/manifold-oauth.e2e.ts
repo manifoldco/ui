@@ -7,7 +7,9 @@ describe('<manifold-oauth>', () => {
     it('iframe is URL-locked', async () => {
       const page = await newE2EPage();
 
-      await page.setContent('<manifold-oauth></manifold-oauth>');
+      await page.setContent(
+        '<manifold-connection><manifold-oauth></manifold-oauth></manifold-connection>'
+      );
       await page.waitForChanges();
 
       const iframe = await page.find('iframe');
@@ -21,7 +23,9 @@ describe('<manifold-oauth>', () => {
     it('iframe is sandboxed to only allow scripts', async () => {
       const page = await newE2EPage();
 
-      await page.setContent('<manifold-oauth></manifold-oauth>');
+      await page.setContent(
+        '<manifold-connection><manifold-oauth></manifold-oauth></manifold-connection>'
+      );
       await page.waitForChanges();
 
       const iframe = await page.find('iframe');
@@ -37,7 +41,9 @@ describe('<manifold-oauth>', () => {
     it('Firefox: iframe isn’t display: none, but still appears invisible to user', async () => {
       const page = await newE2EPage();
 
-      await page.setContent('<manifold-oauth></manifold-oauth>');
+      await page.setContent(
+        '<manifold-connection><manifold-oauth></manifold-oauth></manifold-connection>'
+      );
       await page.waitForChanges();
       const iframeStyling = await page.$eval('iframe', (elm: any) => ({
         attrs: {

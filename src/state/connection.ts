@@ -6,15 +6,46 @@ const baseWait = 15000;
 
 export type Subscriber = (oldToken?: string, newToken?: string) => void;
 
+const INITIALIZED = 'manifold-connection-initialize';
+
+interface Initialization {
+  env?: 'local' | 'stage' | 'prod';
+  waitTime?: number;
+  authToken?: string;
+}
+
 export class ConnectionState {
-  /** _(optional)_ Specify `env="stage"` for staging */
+  authToken?: string;
   env: 'local' | 'stage' | 'prod' = 'prod';
-  /** _(optional)_ Wait time for the fetch calls before it times out */
   waitTime: number = baseWait;
 
-  authToken?: string;
-
   private subscribers: Subscriber[] = [];
+
+  private initialized: boolean = false;
+
+  initialize = ({ env = 'prod', waitTime = baseWait }: Initialization) => {
+    this.env = env;
+    this.waitTime = waitTime;
+    this.initialized = true;
+    const event = new CustomEvent(INITIALIZED);
+    document.dispatchEvent(event);
+  };
+
+  onReady = () => {
+    return new Promise(resolve => {
+      if (this.initialized) {
+        resolve();
+      }
+
+      const done = () => {
+        this.initialized = true;
+        document.removeEventListener(INITIALIZED, done);
+        resolve();
+      };
+
+      document.addEventListener(INITIALIZED, done);
+    });
+  };
 
   subscribe = (s: Subscriber) => {
     this.subscribers.push(s);
@@ -22,14 +53,6 @@ export class ConnectionState {
     return () => {
       this.subscribers.splice(this.subscribers.indexOf(s), 1);
     };
-  };
-
-  setEnv = (newValue: 'local' | 'stage' | 'prod') => {
-    this.env = newValue;
-  };
-
-  setWaitTime = (newValue: number) => {
-    this.waitTime = newValue;
   };
 
   setAuthToken = (token: string) => {
@@ -49,18 +72,20 @@ export class ConnectionState {
   }
 
   restFetch = createRestFetch({
-    endpoints: connections[this.env],
+    endpoints: () => connections[this.env],
     getAuthToken: this.getAuthToken,
     setAuthToken: this.setAuthToken,
-    wait: this.waitTime,
+    onReady: this.onReady,
+    wait: () => this.waitTime,
     retries: 1,
   });
 
   graphqlFetch = createGraphqlFetch({
     getAuthToken: this.getAuthToken,
     setAuthToken: this.setAuthToken,
-    endpoint: connections[this.env].graphql,
-    wait: this.waitTime,
+    onReady: this.onReady,
+    endpoint: () => connections[this.env].graphql,
+    wait: () => this.waitTime,
     retries: 1,
   });
 }

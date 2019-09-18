@@ -1,15 +1,23 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldOauth } from './manifold-oauth';
+import connection from '../../state/connection';
 
 describe('<manifold-oauth>', () => {
   describe('v0 props', () => {
     // Testing implementation details isn’t preferred, but E2E testing with
     // page.on('request') proved to be too difficult with Stencil.
     it('[tick]: when changed it resets iframe', async () => {
+      connection.initialize({});
+
       const page = await newSpecPage({
         components: [ManifoldOauth],
         html: '<manifold-oauth></manifold-oauth>',
       });
+
+      const oauth = page.doc.querySelector('manifold-oauth');
+      if (!oauth) {
+        throw new Error('manifold-oauth not in document');
+      }
       const { root, rootInstance } = page;
       if (!root || !rootInstance) {
         throw new Error('manifold-oauth not in document');
@@ -27,6 +35,8 @@ describe('<manifold-oauth>', () => {
 
   describe('v0 events', () => {
     it('receiveManifoldToken', async () => {
+      connection.initialize({});
+
       const data = {
         access_token: 'secret-token',
         expiry: 1,

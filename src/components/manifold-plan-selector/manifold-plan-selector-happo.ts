@@ -4,6 +4,9 @@ import { RestFetch } from '../../utils/restFetch';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 export const skeleton = async () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
 
@@ -28,6 +31,9 @@ export const skeleton = async () => {
 };
 
 export const jawsDB = async () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
   selector.hideUntilReady = true;
@@ -38,6 +44,9 @@ export const jawsDB = async () => {
 };
 
 export const delayedJawsDB = async () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
   selector.hideUntilReady = true;
@@ -56,6 +65,9 @@ export const delayedJawsDB = async () => {
 };
 
 export const planError = async () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = product.body.label;
 

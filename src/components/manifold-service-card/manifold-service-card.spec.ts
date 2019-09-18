@@ -18,7 +18,7 @@ describe('<manifold-service-card>', () => {
     card = page.doc.createElement('manifold-service-card');
     card.restFetch = createRestFetch({
       getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
+      wait: () => 10,
       setAuthToken: jest.fn(),
     });
   });

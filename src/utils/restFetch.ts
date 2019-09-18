@@ -4,11 +4,12 @@ import { withAuth, waitForAuthToken } from './auth';
 import { report } from './errorReport';
 
 export interface CreateRestFetch {
-  endpoints?: Connection;
-  wait?: number;
+  endpoints?: () => Connection;
+  wait?: () => number;
   retries?: number;
   getAuthToken?: () => string | undefined;
   setAuthToken?: (token: string) => void;
+  onReady?: () => Promise<unknown>;
 }
 
 interface RestFetchArguments {
@@ -24,19 +25,22 @@ type Success = undefined;
 export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
 
 export function createRestFetch({
-  endpoints = connections.prod,
-  wait = 15000,
+  endpoints = () => connections.prod,
+  wait = () => 15000,
   retries = 0,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
+  onReady = () => new Promise(resolve => resolve()),
 }: CreateRestFetch): RestFetch {
   async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
+    await onReady();
+
     const rttStart = performance.now();
 
     const token = getAuthToken();
     const options = token ? withAuth(token, args.options) : args.options;
 
-    const response = await fetch(`${endpoints[args.service]}${args.endpoint}`, {
+    const response = await fetch(`${endpoints()[args.service]}${args.endpoint}`, {
       ...options,
       body: JSON.stringify(args.body),
     }).catch((e: Response) => {
@@ -55,7 +59,7 @@ export function createRestFetch({
       setAuthToken('');
       report(response);
       if (attempts < retries) {
-        return waitForAuthToken(getAuthToken, wait, () => restFetch(args, attempts + 1));
+        return waitForAuthToken(getAuthToken, wait(), () => restFetch(args, attempts + 1));
       }
 
       throw new Error('Auth token expired');

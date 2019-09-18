@@ -71,7 +71,10 @@ export namespace Components {
     'stencilClickEvent'?: (e: MouseEvent) => void;
     'target'?: string;
   }
-  interface ManifoldConnection {}
+  interface ManifoldConnection {
+    'env'?: 'local' | 'stage' | 'prod';
+    'waitTime'?: number;
+  }
   interface ManifoldCopyCredentials {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
@@ -1136,7 +1139,10 @@ declare namespace LocalJSX {
     'stencilClickEvent'?: (e: MouseEvent) => void;
     'target'?: string;
   }
-  interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {}
+  interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
+    'env'?: 'local' | 'stage' | 'prod';
+    'waitTime'?: number;
+  }
   interface ManifoldCopyCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCopyCredentialsElement> {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`

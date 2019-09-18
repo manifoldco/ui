@@ -4,11 +4,12 @@ import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
 
 interface CreateGraphqlFetch {
-  endpoint?: string;
-  wait?: number;
+  endpoint?: () => string;
+  wait?: () => number;
   retries?: number;
   getAuthToken?: () => string | undefined;
   setAuthToken?: (token: string) => void;
+  onReady?: () => Promise<unknown>;
 }
 
 type GraphqlArgs =
@@ -29,13 +30,16 @@ export interface GraphqlResponseBody {
 export type GraphqlFetch = (args: GraphqlArgs) => Promise<GraphqlResponseBody>;
 
 export function createGraphqlFetch({
-  endpoint = 'https://api.manifold.co/graphql',
-  wait = 15000,
+  endpoint = () => 'https://api.manifold.co/graphql',
+  wait = () => 15000,
   retries = 0,
   getAuthToken = () => undefined,
   setAuthToken = () => {},
+  onReady = () => new Promise(resolve => resolve()),
 }: CreateGraphqlFetch): GraphqlFetch {
   async function graphqlFetch(args: GraphqlArgs, attempts: number): Promise<GraphqlResponseBody> {
+    await onReady();
+
     const rttStart = performance.now();
     const { emitter, ...request } = args;
 
@@ -44,7 +48,7 @@ export function createGraphqlFetch({
     const auth: { [key: string]: string } =
       token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
 
-    const response = await fetch(endpoint, {
+    const response = await fetch(endpoint(), {
       method: 'POST',
       headers: { 'content-type': 'application/json', ...auth },
       body: JSON.stringify(request),
@@ -62,7 +66,7 @@ export function createGraphqlFetch({
       setAuthToken('');
       report(body); // report unauthenticated
       if (attempts < retries) {
-        return waitForAuthToken(getAuthToken, wait, () => graphqlFetch(args, attempts + 1));
+        return waitForAuthToken(getAuthToken, wait(), () => graphqlFetch(args, attempts + 1));
       }
 
       throw new Error('Auth token expired');

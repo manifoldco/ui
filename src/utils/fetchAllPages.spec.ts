@@ -2,6 +2,7 @@ import { gql } from '@manifoldco/gql-zero';
 import fetchMock from 'fetch-mock';
 import { Query } from '../types/graphql';
 import fetchAllPages from './fetchAllPages';
+import { createGraphqlFetch } from './graphqlFetch';
 
 const query = gql`
   query CATEGORIES($first: Int!, $after: String!) {
@@ -254,6 +255,7 @@ describe('Fetching all pages of a GraphQL connection', () => {
       query,
       nextPage: { first: 3, after: '' },
       getConnection: (q: Query) => q.categories,
+      graphqlFetch: createGraphqlFetch({}),
     });
 
     expect(fetchMock.calls).toHaveLength(2);

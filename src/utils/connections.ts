@@ -6,6 +6,7 @@ export interface Connection {
   provisioning: string;
   connector: string;
   graphql: string;
+  oauth: string;
 }
 
 export type Env = 'local' | 'stage' | 'prod';
@@ -20,6 +21,7 @@ export const connections: Connections = {
     provisioning: 'http://api.provisioning.arigato.tools/v1',
     connector: 'http://api.connector.arigato.tools/v1',
     graphql: 'http://graphql.arigato.tools/graphql',
+    oauth: 'https://login.arigato.tools/signin/oauth/web', // does this work?
   },
   stage: {
     billing: 'https://api.billing.stage.manifold.co/v1',
@@ -29,6 +31,7 @@ export const connections: Connections = {
     provisioning: 'https://api.provisioning.stage.manifold.co/v1',
     connector: 'https://api.connector.stage.manifold.co/v1',
     graphql: 'https://api.stage.manifold.co/graphql',
+    oauth: 'https://login.stage.manifold.co/signin/oauth/web',
   },
   prod: {
     billing: 'https://api.billing.manifold.co/v1',
@@ -38,5 +41,6 @@ export const connections: Connections = {
     provisioning: 'https://api.provisioning.manifold.co/v1',
     connector: 'https://api.connector.manifold.co/v1',
     graphql: 'https://api.manifold.co/graphql',
+    oauth: 'https://login.manifold.co/signin/oauth/web',
   },
 };

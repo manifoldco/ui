@@ -24,14 +24,14 @@ describe('<manifold-data-provision-button>', () => {
     });
     element = page.doc.createElement('manifold-data-provision-button');
     element.graphqlFetch = createGraphqlFetch({
-      endpoint: graphqlEndpoint,
+      endpoint: () => graphqlEndpoint,
       getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
+      wait: () => 10,
       setAuthToken: jest.fn(),
     });
     element.restFetch = createRestFetch({
       getAuthToken: jest.fn(() => '1234'),
-      wait: 10,
+      wait: () => 10,
       setAuthToken: jest.fn(),
     });
 

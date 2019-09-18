@@ -15,7 +15,7 @@ async function setup() {
   const component = page.doc.createElement('manifold-region-selector');
   component.restFetch = createRestFetch({
     getAuthToken: jest.fn(() => '1234'),
-    wait: 10,
+    wait: () => 10,
     setAuthToken: jest.fn(),
   });
 

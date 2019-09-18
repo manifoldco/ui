@@ -1,16 +1,19 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 import '../../utils/fetchAllPages';
 
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import connection from '../../state/connection';
 
-/* This component currently serves no purpose, but it will be needed again
- * when we circle back to https://github.com/manifoldco/engineering/issues/9106
- */
 @Component({ tag: 'manifold-connection' })
 export class ManifoldConnection {
+  @Prop() env?: 'local' | 'stage' | 'prod';
+  @Prop() waitTime?: number;
+
   @loadMark()
-  componentWillLoad() {}
+  componentWillLoad() {
+    connection.initialize({ env: this.env, waitTime: this.waitTime });
+  }
 
   @logger()
   render() {
