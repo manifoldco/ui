@@ -4,7 +4,7 @@ describe('<manifold-performance>', () => {
   it('should receive manifold-time-to-render event', async () => {
     const page = await newE2EPage();
     await page.setContent(
-      `<manifold-performance><manifold-plan product-label="elegant-cms" plan-label="manifold-developer"></manifold-plan></manifold-performance>`
+      `<manifold-connection><manifold-performance><manifold-plan product-label="elegant-cms" plan-label="manifold-developer"></manifold-plan></manifold-performance></manifold-connection>`
     );
     const evtSpy = await page.spyOnEvent('manifold-time-to-render');
     await new Promise(resolve => {
