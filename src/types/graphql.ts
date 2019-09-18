@@ -73,6 +73,47 @@ export enum ConfigurableFeaturesOrderByField {
 }
 
 /** 
+ * CreateProfileAuthTokenInput requires a profileId in order to create a scoped auth token.
+ * The profileId must be the same profileId the platform uses to expose identity and authorization
+ * To manifold.
+ **/
+export type CreateProfileAuthTokenInput = {
+  profileId: Scalars['ProfileIdentity'],
+};
+
+/** 
+ * The payload for creating an auth token returns a profile-scoped auth token
+ * available for use with manifold.
+ **/
+export type CreateProfileAuthTokenPayload = {
+   __typename?: 'CreateProfileAuthTokenPayload',
+  data?: Maybe<ProfileAuthToken>,
+};
+
+/** A request input type for creating a new resource. */
+export type CreateResourceInput = {
+  /** A URL friendly label for this Resource. Globally unique. */
+  label: Scalars['String'],
+  /** A human readble display name for this Resource. */
+  displayName: Scalars['String'],
+  /** The id of the owner for this resource. Omit to use the current user ID. */
+  ownerId?: Maybe<Scalars['ID']>,
+  /** The product to provision for this resource. */
+  productId: Scalars['ID'],
+  /** The plan to provision for this resource on the given product. */
+  planId: Scalars['ID'],
+  /** The region to provision this resource to, must be supported by the plan. */
+  regionId: Scalars['ID'],
+};
+
+/** The payload for a provisioned resource. */
+export type CreateResourcePayload = {
+   __typename?: 'CreateResourcePayload',
+  /** The provisioned resource body */
+  data: Resource,
+};
+
+/** 
  * Credential represents a plain-text value for a credential which can be used to
  * configure a resource.
  **/
@@ -112,6 +153,21 @@ export type CredentialEdge = {
 export enum Currency {
   Usd = 'USD'
 }
+
+/** A request input type for deprovisoning an existing resource. */
+export type DeleteResourceInput = {
+  /** The ID of the resource to deprovision */
+  resourceId: Scalars['ID'],
+  /** The id of the owner for this resource. Omit to use the current user ID. */
+  ownerId?: Maybe<Scalars['ID']>,
+};
+
+/** The payload for a deprovisioned resource. */
+export type DeleteResourcePayload = {
+   __typename?: 'DeleteResourcePayload',
+  /** The deprovisioned resource body */
+  data: Resource,
+};
 
 /** Duration is a representation of the length a cycle. */
 export enum Duration {
@@ -269,7 +325,48 @@ export enum MeteredFeaturesOrderByField {
  **/
 export type Mutation = {
    __typename?: 'Mutation',
-  updateInvoiceState?: Maybe<Invoice>,
+  /** 
+ * Create an asynchronous request to create a resource with Manifold. If the owner ID is omitted in the input,
+   * the system will try to find that owner using the given authentication token.
+   * 
+   * Note: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated
+   * thoughout the operation lifecycle. This endpoint returns the  preview of the resource before it is created.
+ **/
+  createResource: CreateResourcePayload,
+  /** Updates a resource synchronously using the provided input. */
+  updateResource: UpdateResourcePayload,
+  /** 
+ * Create an asynchronous request to update a resource's plan with Manifold using the provided resource ID. If the owner
+   * ID is omitted in the input, the system will try to find that owner using the given authentication token. The owner
+   * must have access to the resource for it to be updatable.
+   * 
+   * Note: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated
+   * thoughout the operation lifecycle. This endpoint returns the resource before it is updated.
+ **/
+  updateResourcePlan: UpdateResourcePlanPayload,
+  /** 
+ * Create an asynchronous request to delete a resource with Manifold using the provided resource ID. If the owner
+   * ID is omitted in the input, the system will try to find that owner using the given authentication token. The owner
+   * must have access to the resource for it to be deprovisionable.
+   * 
+   * Note: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated
+   * thoughout the operation lifecycle. This endpoint returns the resource before it is deleted.
+ **/
+  deleteResource: DeleteResourcePayload,
+  /** 
+ * Update the status of an Invoice to mark it as paid.
+   * 
+   * Possible actions are:
+   * - ATTEMPT: A payment was tried, but was unable to be collected (also requires a reason)
+   * - COLLECTED: A payment was tried, and was successfully collected (does not require a reason)
+ **/
+  updateInvoiceStatus?: Maybe<Invoice>,
+  /** 
+ * Create a Manifold Auth Token for a Profile.
+   * 
+   * Note: You must authenticate with a platform api token.
+ **/
+  createProfileAuthToken: CreateProfileAuthTokenPayload,
 };
 
 
@@ -279,8 +376,63 @@ export type Mutation = {
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
-export type MutationUpdateInvoiceStateArgs = {
+export type MutationCreateResourceArgs = {
+  input: CreateResourceInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateResourceArgs = {
+  input: UpdateResourceInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateResourcePlanArgs = {
+  input: UpdateResourcePlanInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationDeleteResourceArgs = {
+  input: DeleteResourceInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateInvoiceStatusArgs = {
   input: InvoiceStatusInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationCreateProfileAuthTokenArgs = {
+  input: CreateProfileAuthTokenInput
 };
 
 export type Node = {
@@ -431,6 +583,7 @@ export enum PlanFeatureType {
 /** PlanFixedFeature is a value proposition of a plan. */
 export type PlanFixedFeature = {
    __typename?: 'PlanFixedFeature',
+  label: Scalars['String'],
   displayName: Scalars['String'],
   displayValue: Scalars['String'],
 };
@@ -523,9 +676,10 @@ export type Product = Node & {
   supportEmail: Scalars['String'],
   documentationUrl: Scalars['String'],
   termsUrl: Scalars['String'],
-  integration?: Maybe<ProductIntegration>,
   /** Screenshots provide a list of all images in a product listing's details. */
   screenshots?: Maybe<Array<ProductScreenshot>>,
+  /** Images provide a list of all images in a product listing's details. */
+  images?: Maybe<Array<Scalars['String']>>,
   /** ValueProps is a list of value propositions with a header and a body. It is non-nullable, but it can be empty. */
   valueProps: Array<ValueProp>,
   /** ValuePropsHtml is the HTML representation of the value propositions. It is non-nullable, but it can be empty. */
@@ -562,13 +716,6 @@ export type ProductEdge = {
    __typename?: 'ProductEdge',
   node: Product,
   cursor: Scalars['String'],
-};
-
-/** ProductIntegration contains information related to product integration. */
-export type ProductIntegration = {
-   __typename?: 'ProductIntegration',
-  baseUrl: Scalars['String'],
-  ssoUrl: Scalars['String'],
 };
 
 /** ProductOrderBy defines how a product connection is to be ordered. */
@@ -634,6 +781,12 @@ export type ProfileInvoicesArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<InvoiceOrderBy>
+};
+
+/** The profile-scoped auth token that is available for use to authenticate with manifold. */
+export type ProfileAuthToken = {
+   __typename?: 'ProfileAuthToken',
+  token: Scalars['String'],
 };
 
 /** ProfileConnection is the connection containing Profile edges. */
@@ -1035,6 +1188,40 @@ export type SubLineItemEdge = {
   node?: Maybe<SubLineItem>,
 };
 
+
+/** A request input type for updating an existing resource */
+export type UpdateResourceInput = {
+  /** The ID of the resource to update */
+  resourceId: Scalars['ID'],
+  /** The new label to give to this resource */
+  newLabel?: Maybe<Scalars['String']>,
+  /** The new display name to give to this resource */
+  newDisplayName?: Maybe<Scalars['String']>,
+};
+
+/** The payload for an updated resource. */
+export type UpdateResourcePayload = {
+   __typename?: 'UpdateResourcePayload',
+  /** The updated resource body */
+  data: Resource,
+};
+
+/** A request input type for updating an existing resource's plan. */
+export type UpdateResourcePlanInput = {
+  /** The ID of the resource to resize */
+  resourceId: Scalars['ID'],
+  /** The id of the new plan to assign for this resource. */
+  newPlanID: Scalars['ID'],
+  /** The id of the owner for this resource. Omit to use the current user ID. */
+  ownerId?: Maybe<Scalars['ID']>,
+};
+
+/** The payload for a resource whose plan changed. */
+export type UpdateResourcePlanPayload = {
+   __typename?: 'UpdateResourcePlanPayload',
+  /** The updated resource body */
+  data: Resource,
+};
 
 /** ValueProp is a value proposition. */
 export type ValueProp = {
