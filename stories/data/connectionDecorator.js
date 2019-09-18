@@ -1,4 +1,5 @@
 import { text, radios } from '@storybook/addon-knobs';
+import { gql } from '@manifoldco/gql-zero';
 
 // Creates a fake token provider and manifold connection that adds the api token from localstorage
 // with an expiriy date a week from when it is created. 6.04e8 is a week in milliseconds.
@@ -10,12 +11,30 @@ export const manifoldConnectionDecorator = storyFn => {
 
   // grab user ID from Manifold (we need this in other stories)
   if (token && !localStorage.getItem('manifold_user_id')) {
-    fetch('https://api.identity.manifold.co/v1/self', {
-      headers: { authorization: `Bearer ${token}` },
+    fetch('https://api.manifold.co/graphql', {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: gql`
+          query GET_PROFILE_ID {
+            profile {
+              id
+            }
+          }
+        `,
+      }),
     })
       .then(data => data.json())
-      .then(({ id }) => {
-        localStorage.setItem('manifold_user_id', id);
+      .then(({ data, errors }) => {
+        if (errors) {
+          errors.forEach(({ message }) => console.error(message));
+        } else {
+          console.log(data);
+        }
+        // localStorage.setItem('manifold_user_id', id);
       });
   }
 
