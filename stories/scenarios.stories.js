@@ -19,10 +19,10 @@ function withVeryFakeExpiry(token) {
 
 storiesOf('Scenarios', module)
   .addDecorator(withKnobs)
-  .addDecorator(manifoldConnectionDecorator)
   .add('OAuth', () => {
+    const env = text('env', 'stage');
     return `
-      <manifold-connection env="stage">
+      <manifold-connection env="${env}">
         <manifold-performance>
           <p><em>These resources are loaded from the server rather than mocks</em></p>
           <manifold-auth-token token="${withVeryFakeExpiry(
