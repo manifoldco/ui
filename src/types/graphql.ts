@@ -6,15 +6,15 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** 
+  /**
  * ProfileIdentity allows fetching a profile by its `id` or
    * by its `subject`.
  **/
   ProfileIdentity: any,
-  /** 
+  /**
  * Time represents a point in time formatted as an
    * [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) formatted string.
-   * 
+   *
    * Example: `2009-11-10T23:00:00Z`
  **/
   Time: any,
@@ -72,48 +72,7 @@ export enum ConfigurableFeaturesOrderByField {
   DisplayName = 'DISPLAY_NAME'
 }
 
-/** 
- * CreateProfileAuthTokenInput requires a profileId in order to create a scoped auth token.
- * The profileId must be the same profileId the platform uses to expose identity and authorization
- * To manifold.
- **/
-export type CreateProfileAuthTokenInput = {
-  profileId: Scalars['ProfileIdentity'],
-};
-
-/** 
- * The payload for creating an auth token returns a profile-scoped auth token
- * available for use with manifold.
- **/
-export type CreateProfileAuthTokenPayload = {
-   __typename?: 'CreateProfileAuthTokenPayload',
-  data?: Maybe<ProfileAuthToken>,
-};
-
-/** A request input type for creating a new resource. */
-export type CreateResourceInput = {
-  /** A URL friendly label for this Resource. Globally unique. */
-  label: Scalars['String'],
-  /** A human readble display name for this Resource. */
-  displayName: Scalars['String'],
-  /** The id of the owner for this resource. Omit to use the current user ID. */
-  ownerId?: Maybe<Scalars['ID']>,
-  /** The product to provision for this resource. */
-  productId: Scalars['ID'],
-  /** The plan to provision for this resource on the given product. */
-  planId: Scalars['ID'],
-  /** The region to provision this resource to, must be supported by the plan. */
-  regionId: Scalars['ID'],
-};
-
-/** The payload for a provisioned resource. */
-export type CreateResourcePayload = {
-   __typename?: 'CreateResourcePayload',
-  /** The provisioned resource body */
-  data: Resource,
-};
-
-/** 
+/**
  * Credential represents a plain-text value for a credential which can be used to
  * configure a resource.
  **/
@@ -121,14 +80,14 @@ export type Credential = {
    __typename?: 'Credential',
   /** The key for referencing the credential.  */
   key: Scalars['String'],
-  /** 
+  /**
  * The plain-text value of the credential. This value is the value that can be
    * used in the actual configuration for the resource.
  **/
   value: Scalars['String'],
 };
 
-/** 
+/**
  * CredentialsConnection allows a type to set up a connection to list associated
  * credentials.
  **/
@@ -138,7 +97,7 @@ export type CredentialConnection = {
   edges: Array<CredentialEdge>,
 };
 
-/** 
+/**
  * CredentialsEdge represents a single item on a CredentialsConnection page which
  * has a cursor that can be used for pagination and holds the actual credential
  * information.
@@ -153,21 +112,6 @@ export type CredentialEdge = {
 export enum Currency {
   Usd = 'USD'
 }
-
-/** A request input type for deprovisoning an existing resource. */
-export type DeleteResourceInput = {
-  /** The ID of the resource to deprovision */
-  resourceId: Scalars['ID'],
-  /** The id of the owner for this resource. Omit to use the current user ID. */
-  ownerId?: Maybe<Scalars['ID']>,
-};
-
-/** The payload for a deprovisioned resource. */
-export type DeleteResourcePayload = {
-   __typename?: 'DeleteResourcePayload',
-  /** The deprovisioned resource body */
-  data: Resource,
-};
 
 /** Duration is a representation of the length a cycle. */
 export enum Duration {
@@ -189,11 +133,11 @@ export enum FixedFeaturesOrderByField {
 export type Invoice = Node & {
    __typename?: 'Invoice',
   id: Scalars['ID'],
-  /** 
+  /**
  * Cost is the amount due for the invoice.
-   * 
+   *
    * The cost is provided in the currency’s smallest unit.
-   * 
+   *
    * Example: `1000` is `1000 cents` which is `$10 USD`.
  **/
   cost: Scalars['Int'],
@@ -262,11 +206,11 @@ export type InvoiceStatusInput = {
 export type LineItem = Node & {
    __typename?: 'LineItem',
   id: Scalars['ID'],
-  /** 
+  /**
  * Cost is the amount due for the associated resource.
-   * 
+   *
    * The cost is provided in the currency’s smallest unit.
-   * 
+   *
    * Example: `1000` is `1000 cents` which is `$10 USD`.
  **/
   cost: Scalars['Int'],
@@ -317,122 +261,26 @@ export enum MeteredFeaturesOrderByField {
   DisplayName = 'DISPLAY_NAME'
 }
 
-/** 
+/**
  * Mutations for the Manifold GraphQL API
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type Mutation = {
    __typename?: 'Mutation',
-  /** 
- * Create an asynchronous request to create a resource with Manifold. If the owner ID is omitted in the input,
-   * the system will try to find that owner using the given authentication token.
-   * 
-   * Note: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated
-   * thoughout the operation lifecycle. This endpoint returns the  preview of the resource before it is created.
- **/
-  createResource: CreateResourcePayload,
-  /** Updates a resource synchronously using the provided input. */
-  updateResource: UpdateResourcePayload,
-  /** 
- * Create an asynchronous request to update a resource's plan with Manifold using the provided resource ID. If the owner
-   * ID is omitted in the input, the system will try to find that owner using the given authentication token. The owner
-   * must have access to the resource for it to be updatable.
-   * 
-   * Note: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated
-   * thoughout the operation lifecycle. This endpoint returns the resource before it is updated.
- **/
-  updateResourcePlan: UpdateResourcePlanPayload,
-  /** 
- * Create an asynchronous request to delete a resource with Manifold using the provided resource ID. If the owner
-   * ID is omitted in the input, the system will try to find that owner using the given authentication token. The owner
-   * must have access to the resource for it to be deprovisionable.
-   * 
-   * Note: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated
-   * thoughout the operation lifecycle. This endpoint returns the resource before it is deleted.
- **/
-  deleteResource: DeleteResourcePayload,
-  /** 
- * Update the status of an Invoice to mark it as paid.
-   * 
-   * Possible actions are:
-   * - ATTEMPT: A payment was tried, but was unable to be collected (also requires a reason)
-   * - COLLECTED: A payment was tried, and was successfully collected (does not require a reason)
- **/
-  updateInvoiceStatus?: Maybe<Invoice>,
-  /** 
- * Create a Manifold Auth Token for a Profile.
-   * 
-   * Note: You must authenticate with a platform api token.
- **/
-  createProfileAuthToken: CreateProfileAuthTokenPayload,
+  updateInvoiceState?: Maybe<Invoice>,
 };
 
 
-/** 
+/**
  * Mutations for the Manifold GraphQL API
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
-export type MutationCreateResourceArgs = {
-  input: CreateResourceInput
-};
-
-
-/** 
- * Mutations for the Manifold GraphQL API
- * 
- * More details and usage available in our
- * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
- **/
-export type MutationUpdateResourceArgs = {
-  input: UpdateResourceInput
-};
-
-
-/** 
- * Mutations for the Manifold GraphQL API
- * 
- * More details and usage available in our
- * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
- **/
-export type MutationUpdateResourcePlanArgs = {
-  input: UpdateResourcePlanInput
-};
-
-
-/** 
- * Mutations for the Manifold GraphQL API
- * 
- * More details and usage available in our
- * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
- **/
-export type MutationDeleteResourceArgs = {
-  input: DeleteResourceInput
-};
-
-
-/** 
- * Mutations for the Manifold GraphQL API
- * 
- * More details and usage available in our
- * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
- **/
-export type MutationUpdateInvoiceStatusArgs = {
+export type MutationUpdateInvoiceStateArgs = {
   input: InvoiceStatusInput
-};
-
-
-/** 
- * Mutations for the Manifold GraphQL API
- * 
- * More details and usage available in our
- * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
- **/
-export type MutationCreateProfileAuthTokenArgs = {
-  input: CreateProfileAuthTokenInput
 };
 
 export type Node = {
@@ -445,7 +293,7 @@ export enum OrderByDirection {
   Desc = 'DESC'
 }
 
-/** 
+/**
  * PageInfo provides support for
  * [Relay](https://facebook.github.io/relay/graphql/connections.htm) cursor-connections style pagination.
  **/
@@ -463,7 +311,7 @@ export type Plan = Node & {
   id: Scalars['ID'],
   /** A human-readable display name for this plan. */
   displayName: Scalars['String'],
-  /** 
+  /**
  * A URL-friendly label for this Region, combining its platform and dataCenter
    * with a hyphen. Globally unique.
  **/
@@ -583,7 +431,6 @@ export enum PlanFeatureType {
 /** PlanFixedFeature is a value proposition of a plan. */
 export type PlanFixedFeature = {
    __typename?: 'PlanFixedFeature',
-  label: Scalars['String'],
   displayName: Scalars['String'],
   displayValue: Scalars['String'],
 };
@@ -676,15 +523,14 @@ export type Product = Node & {
   supportEmail: Scalars['String'],
   documentationUrl: Scalars['String'],
   termsUrl: Scalars['String'],
+  integration?: Maybe<ProductIntegration>,
   /** Screenshots provide a list of all images in a product listing's details. */
   screenshots?: Maybe<Array<ProductScreenshot>>,
-  /** Images provide a list of all images in a product listing's details. */
-  images?: Maybe<Array<Scalars['String']>>,
   /** ValueProps is a list of value propositions with a header and a body. It is non-nullable, but it can be empty. */
   valueProps: Array<ValueProp>,
   /** ValuePropsHtml is the HTML representation of the value propositions. It is non-nullable, but it can be empty. */
   valuePropsHtml: Scalars['String'],
-  /** 
+  /**
  * SetupStepsHtml is the HTML representation of the setup steps required to
    * configure a new product. It is non-nullable, but it can be empty.
  **/
@@ -716,6 +562,13 @@ export type ProductEdge = {
    __typename?: 'ProductEdge',
   node: Product,
   cursor: Scalars['String'],
+};
+
+/** ProductIntegration contains information related to product integration. */
+export type ProductIntegration = {
+   __typename?: 'ProductIntegration',
+  baseUrl: Scalars['String'],
+  ssoUrl: Scalars['String'],
 };
 
 /** ProductOrderBy defines how a product connection is to be ordered. */
@@ -754,22 +607,22 @@ export type Profile = {
   subject: Scalars['String'],
   /** Platform represents the platform this profile belongs to. */
   platform: Platform,
-  /** 
+  /**
  * InvoicePreview provides a preview of the customer’s invoice
    * for the current billing cycle as of midnight UTC.
-   * 
+   *
    * An invoice preview consists of the amount due and related details at
    * a specific moment in time. It does not represent an estimation of the
    * amount that will be due at the end of the billing cycle.
-   * 
+   *
    * *This is only an invoice preview. It should not be used to charge users.*
-   * 
+   *
    * Note: This is currently only supported with a Platform API token.
  **/
   invoicePreview?: Maybe<Invoice>,
-  /** 
+  /**
  * Invoices returns a paginated list of invoices.
-   * 
+   *
    * Note: This is currently only supported with a Platform API token.
  **/
   invoices?: Maybe<InvoiceConnection>,
@@ -781,12 +634,6 @@ export type ProfileInvoicesArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<InvoiceOrderBy>
-};
-
-/** The profile-scoped auth token that is available for use to authenticate with manifold. */
-export type ProfileAuthToken = {
-   __typename?: 'ProfileAuthToken',
-  token: Scalars['String'],
 };
 
 /** ProfileConnection is the connection containing Profile edges. */
@@ -830,15 +677,15 @@ export type ProviderProductsArgs = {
   orderBy?: Maybe<ProductOrderBy>
 };
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type Query = {
    __typename?: 'Query',
-  /** 
+  /**
  * Look up a Provider by its `id` or `label`. Exactly one of `id` or `label` is
    * required, and `id` has precedence over `label`.
  **/
@@ -853,35 +700,35 @@ export type Query = {
   category?: Maybe<Category>,
   /** List all available products. */
   products?: Maybe<ProductConnection>,
-  /** 
+  /**
  * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
-   * 
+   *
    * Note: This query can only be performed when authenticated.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
-  /** 
+  /**
  * Return a paginated list of resources. The return value can either contain
    * all available resources linked to the token, or can be filtered down to
    * fetch data for the specified profile. The owner can either be a ProfileID or
    * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
-   * 
+   *
    * Note: This query is currently only supported with use of a Platform API token.
  **/
   resources?: Maybe<ResourceConnection>,
-  /** 
+  /**
  * Fetch a resource for the specified `label` or `id`. When authenticated as a
    * profile user, fetches the resource associated with the profile. When
    * authenticated as a platform user and a label is specified, an owner must be provided.
-   * 
+   *
    * Note: This query is currently only supported with use of a Platform API token.
  **/
   resource?: Maybe<Resource>,
-  /** 
+  /**
  * Return a paginated list of profiles for a platform, optionally
    * querying for only profiles with subscription usage over a specified time.
-   * 
+   *
    * Note: This query is currently only supported with use of a Platform API token.
  **/
   profiles?: Maybe<ProfileConnection>,
@@ -892,9 +739,9 @@ export type Query = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -904,9 +751,9 @@ export type QueryProviderArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -915,9 +762,9 @@ export type QueryPlanArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -927,9 +774,9 @@ export type QueryProductArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -939,9 +786,9 @@ export type QueryCategoriesArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -950,9 +797,9 @@ export type QueryCategoryArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -963,9 +810,9 @@ export type QueryProductsArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -974,9 +821,9 @@ export type QueryProfileArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -985,9 +832,9 @@ export type QueryNodeArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -998,9 +845,9 @@ export type QueryResourcesArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -1011,9 +858,9 @@ export type QueryResourceArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -1024,9 +871,9 @@ export type QueryProfilesArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -1035,9 +882,9 @@ export type QueryInvoiceArgs = {
 };
 
 
-/** 
+/**
  * Queries for the Manifold GraphQL API.
- * 
+ *
  * More details and usage available in our
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
@@ -1087,7 +934,7 @@ export enum RenewalPoint {
   Calendar = 'CALENDAR'
 }
 
-/** 
+/**
  * A resource represents the provisioned version of a selected product. It is
  * linked to a plan and has credentials associated with it.
  **/
@@ -1098,14 +945,14 @@ export type Resource = Node & {
   displayName: Scalars['String'],
   /**  A machine-readable label for this resource, unique per owner.  */
   label: Scalars['String'],
-  /** 
+  /**
  * The plan for which this resource is provisioned. The plan can be null if the
    * resource is a custom resource, or if a transient failure occurred.
  **/
   plan?: Maybe<Plan>,
-  /** 
+  /**
  * The profile which owns the resource.
-   * 
+   *
    * Note: If the resource is not owned by a Platform Profile, the value is null.
  **/
   owner?: Maybe<Profile>,
@@ -1114,7 +961,7 @@ export type Resource = Node & {
 };
 
 
-/** 
+/**
  * A resource represents the provisioned version of a selected product. It is
  * linked to a plan and has credentials associated with it.
  **/
@@ -1123,7 +970,7 @@ export type ResourceCredentialsArgs = {
   after?: Maybe<Scalars['String']>
 };
 
-/** 
+/**
  * ResourceConnection allows a type to set up a connection to list associated
  * resources.
  **/
@@ -1133,7 +980,7 @@ export type ResourceConnection = {
   edges: Array<ResourceEdge>,
 };
 
-/** 
+/**
  * ResourceEdge represents a single item on a Resources Connection page which has
  * a cursor that can be used for pagination and holds the actual resource
  * information.
@@ -1144,17 +991,17 @@ export type ResourceEdge = {
   node?: Maybe<Resource>,
 };
 
-/** 
+/**
  * SubLineItem represents the breakdown by base cost, features, and metered usage
  * of the amount due by resource.
  **/
 export type SubLineItem = {
    __typename?: 'SubLineItem',
-  /** 
+  /**
  * Cost is the amount due for the feature.
-   * 
+   *
    * The cost is provided in the currency’s smallest unit.
-   * 
+   *
    * Example: `1000` is `1000 cents` which is `$10 USD`.
  **/
   cost: Scalars['Int'],
@@ -1189,40 +1036,6 @@ export type SubLineItemEdge = {
 };
 
 
-/** A request input type for updating an existing resource */
-export type UpdateResourceInput = {
-  /** The ID of the resource to update */
-  resourceId: Scalars['ID'],
-  /** The new label to give to this resource */
-  newLabel?: Maybe<Scalars['String']>,
-  /** The new display name to give to this resource */
-  newDisplayName?: Maybe<Scalars['String']>,
-};
-
-/** The payload for an updated resource. */
-export type UpdateResourcePayload = {
-   __typename?: 'UpdateResourcePayload',
-  /** The updated resource body */
-  data: Resource,
-};
-
-/** A request input type for updating an existing resource's plan. */
-export type UpdateResourcePlanInput = {
-  /** The ID of the resource to resize */
-  resourceId: Scalars['ID'],
-  /** The id of the new plan to assign for this resource. */
-  newPlanID: Scalars['ID'],
-  /** The id of the owner for this resource. Omit to use the current user ID. */
-  ownerId?: Maybe<Scalars['ID']>,
-};
-
-/** The payload for a resource whose plan changed. */
-export type UpdateResourcePlanPayload = {
-   __typename?: 'UpdateResourcePlanPayload',
-  /** The updated resource body */
-  data: Resource,
-};
-
 /** ValueProp is a value proposition. */
 export type ValueProp = {
    __typename?: 'ValueProp',
@@ -1230,7 +1043,7 @@ export type ValueProp = {
   body: Scalars['String'],
 };
 
-/** 
+/**
  * WithUsage allows fetching profiles that have been used after the start date,
  * before the end date, or between the start and end date.
  **/

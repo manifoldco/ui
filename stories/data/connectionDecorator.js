@@ -11,30 +11,13 @@ export const manifoldConnectionDecorator = storyFn => {
 
   // grab user ID from Manifold (we need this in other stories)
   if (token && !localStorage.getItem('manifold_user_id')) {
-    fetch('https://api.manifold.co/graphql', {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: gql`
-          query GET_PROFILE_ID {
-            profile {
-              id
-            }
-          }
-        `,
-      }),
+    // TODO: use GraphQL once we’re using platform tokens
+    fetch('https://api.identity.manifold.co/v1/self', {
+      headers: { authorization: `Bearer ${token}`, 'Content-type': 'application/json' },
     })
       .then(data => data.json())
-      .then(({ data, errors }) => {
-        if (errors) {
-          errors.forEach(({ message }) => console.error(message));
-        } else {
-          console.log(data);
-        }
-        // localStorage.setItem('manifold_user_id', id);
+      .then(({ id }) => {
+        localStorage.setItem('manifold_user_id', id);
       });
   }
 
