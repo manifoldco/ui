@@ -9,6 +9,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Added a time to first meaningful render event to be consumed by `<manifold-performance>` component
 
+### Added
+
+- Ability to authenticate and refresh manually, bypassing OAuth. (#495)
+
 ### Changed
 
 - Changed `manifold-marketplace` to use GraphQL. (#489)

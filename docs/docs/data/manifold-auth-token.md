@@ -5,8 +5,19 @@ path: /data/auth-token
 
 # Auth Token
 
-This component handles [auth][auth] for our components. This is merely a list of options and events;
-to see the full picture please refer to the [guide][auth] on the subject.
+<manifold-toast alert-type="warning">
+  <div>This component may be deprecated in the near-future in favor of
+  setting tokens directly on <code>&lt;manifold-connection/&gt;</code></div>
+</manifold-toast>
+
+For all resource-specific operations (creating resources, viewing resources, etc.) the web
+components will need user-level authentication. This component supports two methods of
+authentication: **OAuth** (default) and **manual**.
+
+## Authenticating with OAuth (default)
+
+OAuth is the default method of authentication handled by this component. This is merely a list of
+options and events; to see the full picture please refer to the [guide][auth] on the subject.
 
 This component must be always be used inside [Connection][connection] like so:
 
@@ -21,7 +32,7 @@ OAuth dance can take a couple seconds, so the sooner this can start the faster i
 users). We also recommend **only placing it on the page once** to avoid multiple token requests
 per-page.
 
-## Caching for performance
+### Caching for performance
 
 Sometimes the OAuth dance can take a couple seconds to complete. In that light, we strongly
 recommend caching the token somewhere so that new tokens are only requested when necessary.
@@ -57,6 +68,29 @@ interruption on the user side. Nothing is required on your part for an expired t
 caching set up via the `manifold-token-receive` event listener, your cache will be updated whenever
 new tokens are received.
 
+## Authenticating Manually
+
+Alternately, if you’d like to skip the OAuth process in favor for your own, you may do so like this:
+
+```html
+<manifold-connoction>
+  <manifold-auth-token auth-type="manual" token="my-token"></manifold-auth-token>
+</manifold-connection>
+```
+
+You’ll also need to specify a mechanism for retrieving a new token. It will fire a method you
+specify every time an authorization request fails. You’ll need to attach this method on the
+component itself like so:
+
+```js
+const component = document.querySelector('manifold-auth-token');
+
+component.addEventListener('manifold-token-clear', async () => {
+  const token = await myGetTokenFunction(); // replace this with your token retrieval call
+  component.token = token;
+});
+```
+
 ## Events
 
 The following custom events are emitted to `document`. You can listen for events like so:
@@ -73,9 +107,10 @@ document.addEventListener('manifold-token-receive', ({ detail }) => {
 });
 ```
 
-| Event Name               | Description                              | Data                                   |
-| :----------------------- | :--------------------------------------- | :------------------------------------- |
-| `manifold-token-receive` | Emitted whenever a new token is received | `token`, `expiry`, `error`, `duration` |
+| Event Name               | Description                                                                  | Data                                   |
+| :----------------------- | :--------------------------------------------------------------------------- | :------------------------------------- |
+| `manifold-token-clear`   | Emitted whenever a token fails an auth request. Use this to set a new token. | `token`, `expiry`, `error`, `duration` |
+| `manifold-token-receive` | Emitted whenever a new token is received                                     | `token`, `expiry`, `error`, `duration` |
 
 [connection]: /connection
 [auth]: /advanced/authentication

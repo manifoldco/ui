@@ -1,5 +1,5 @@
 import { storiesOf } from '@storybook/html';
-import { withKnobs, radios } from '@storybook/addon-knobs';
+import { withKnobs, radios, text } from '@storybook/addon-knobs';
 import { manifoldConnectionDecorator } from './data/connectionDecorator';
 
 function withVeryFakeExpiry(token) {
@@ -19,17 +19,18 @@ function withVeryFakeExpiry(token) {
 
 storiesOf('Scenarios', module)
   .addDecorator(withKnobs)
-  .add('OAuth', () => {
+  .add('auth', () => {
     const options = { Production: 'prod', Staging: 'stage' };
     const env = radios('env', options, 'stage');
+    const authType = radios('authType', { Manual: 'manual', Oauth: 'oauth' }, 'oauth');
+    const token = text('manifold_api_token', localStorage.getItem('manifold_api_token') || '');
+
     return `
       <manifold-connection env="${env}">
         <manifold-performance>
           <p><em>These resources are loaded from the server rather than mocks</em></p>
-          <manifold-auth-token token="${withVeryFakeExpiry(
-            localStorage.getItem('manifold_api_token') || ''
-          )}"/>
-          <manifold-resource-list />
+          <manifold-auth-token token="${token}" auth-type="${authType}"></manifold-auth-token>
+          <manifold-resource-list></manifold-resource-list>
         </manifold-performance>
       </manifold-connection>`;
   })
