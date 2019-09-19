@@ -227,7 +227,7 @@ export class ManifoldMarketplaceGrid {
       <manifold-service-card-view
         description={productNode.tagline}
         isFeatured={this.featured && this.featured.includes(productNode.label)}
-        isFree={productNode.freePlans ? productNode.freePlans.edges.length > 0 : false}
+        isFree={Array.isArray(this.freeProducts) && this.freeProducts.includes(productNode.label)}
         logo={productNode.logoUrl}
         name={productNode.displayName}
         preserveEvent={this.preserveEvent}

@@ -55,7 +55,23 @@ const productQuery = gql`
           categories {
             label
           }
-          freePlans: plans(first: 1, free: true) {
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
+
+const freePlans = gql`
+  query FREE_PLANS($first: Int!, $after: String!) {
+    products(first: $first, after: $after) {
+      edges {
+        node {
+          label
+          plans(first: $first) {
             edges {
               node {
                 free
@@ -94,6 +110,7 @@ export class ManifoldMarketplace {
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
   @Prop() hideUntilReady?: boolean = false;
+  @State() freeProducts: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
   @State() services: ProductEdge[];
@@ -102,6 +119,7 @@ export class ManifoldMarketplace {
   @loadMark()
   componentWillLoad() {
     this.parseProps();
+    this.fetchFreeProducts();
     const call = this.fetchProducts();
 
     if (this.hideUntilReady) {
@@ -122,6 +140,21 @@ export class ManifoldMarketplace {
     this.isLoading = false;
   }
 
+  async fetchFreeProducts() {
+    const products = await fetchAllPages({
+      query: freePlans,
+      nextPage: { first: 50, after: '' },
+      getConnection: (q: Query) => q.products,
+      graphqlFetch: this.graphqlFetch,
+    });
+    this.freeProducts = products
+      .filter(
+        ({ node: { plans } }) =>
+          plans && plans.edges.findIndex(({ node: { free } }) => free === true) !== -1
+      )
+      .map(({ node }) => node.label);
+  }
+
   private parse(list: string): string[] {
     return list.split(',').map(item => item.trim());
   }
@@ -140,6 +173,7 @@ export class ManifoldMarketplace {
     return (
       <manifold-marketplace-grid
         featured={this.parsedFeatured}
+        freeProducts={this.freeProducts}
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}
