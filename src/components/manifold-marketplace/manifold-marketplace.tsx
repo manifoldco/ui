@@ -115,7 +115,7 @@ export class ManifoldMarketplace {
     this.isLoading = true;
     this.services = await fetchAllPages({
       query: productQuery,
-      nextPage: { first: 25, after: '' },
+      nextPage: { first: 50, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
     });
