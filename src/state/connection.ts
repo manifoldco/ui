@@ -23,9 +23,10 @@ export class ConnectionState {
 
   private initialized: boolean = false;
 
-  initialize = ({ env = 'prod', waitTime = baseWait }: Initialization) => {
+  initialize = ({ env = 'prod', waitTime = baseWait, authToken }: Initialization) => {
     this.env = env;
     this.waitTime = waitTime;
+    this.authToken = authToken;
     this.initialized = true;
     const event = new CustomEvent(INITIALIZED);
     document.dispatchEvent(event);
