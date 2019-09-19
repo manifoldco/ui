@@ -19,7 +19,7 @@ function withVeryFakeExpiry(token) {
 
 storiesOf('Scenarios', module)
   .addDecorator(withKnobs)
-  .add('Auth', () => {
+  .add('auth', () => {
     const options = { Production: 'prod', Staging: 'stage' };
     const env = radios('env', options, 'stage');
     const authType = radios('authType', { Manual: 'manual', Oauth: 'oauth' }, 'oauth');

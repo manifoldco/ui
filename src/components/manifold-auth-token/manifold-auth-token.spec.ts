@@ -4,7 +4,7 @@ import { ConnectionState, Subscriber } from '../../state/connection';
 
 interface Props {
   token?: string;
-  authType?: string;
+  authType?: 'oauth' | 'manual';
   setAuthToken?: (s: string) => void;
   subscribe?: (s: Subscriber) => () => void;
 }
@@ -81,7 +81,7 @@ describe('<manifold-auth-token>', () => {
     it('does not render an iframe', async () => {
       const connection = new ConnectionState();
       connection.authToken = 'foo';
-      const props = {
+      const props: Props = {
         token: connection.authToken,
         authType: 'manual',
         setAuthToken: connection.setAuthToken,
@@ -97,7 +97,7 @@ describe('<manifold-auth-token>', () => {
       it('allows the consumer to reset the token', async () => {
         const connection = new ConnectionState();
         connection.authToken = 'foo';
-        const props = {
+        const props: Props = {
           token: connection.authToken,
           authType: 'manual',
           setAuthToken: connection.setAuthToken,
