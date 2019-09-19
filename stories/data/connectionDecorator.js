@@ -7,6 +7,7 @@ export const manifoldConnectionDecorator = storyFn => {
   const token = text('manifold_api_token', localStorage.getItem('manifold_api_token') || '');
   const options = { Production: 'prod', Staging: 'stage' };
   const env = radios('env', options, 'prod');
+  const authType = radios('authType', { Manual: 'manual', Oauth: 'oauth' }, 'manual');
   localStorage.setItem('manifold_api_token', token); // update localStorage to persist
 
   // grab user ID from Manifold (we need this in other stories)
@@ -23,7 +24,7 @@ export const manifoldConnectionDecorator = storyFn => {
 
   return `
   <manifold-connection env="${env}">
-    <manifold-auth-token token="${token}|${new Date(Date.now() + 6.04e8).getTime()}"/>
+    <manifold-auth-token token="${token}" auth-type="${authType}"></manifold-auth-token>
     ${storyFn()}
   </manifold-connection>
 `;
