@@ -32,24 +32,27 @@ describe('<manifold-data-product-name>', () => {
 
       fetchMock.reset();
 
-      fetchMock.mock(graphqlEndpoint, (_, req) => {
-        const body = (req.body && req.body.toString()) || '';
+      fetchMock.mock(`begin:${graphqlEndpoint}`, url => {
+        const search = new URLSearchParams(url.split('?')[1]);
+        const variables = JSON.parse(search.get('variables') || '');
+        const label = variables.resourceLabel || variables.productLabel;
         let product;
         // fake the product query here
-        if (body.includes('jawsdb')) {
+        if (label.includes('jawsdb')) {
           product = { displayName: products.jawsdb };
-        } else if (body.includes('logdna')) {
+        } else if (label.includes('logdna')) {
           product = { displayName: products.logdna };
-        } else if (body.includes('mailgun')) {
+        } else if (label.includes('mailgun')) {
           product = { displayName: products.mailgun };
         }
 
-        // if querying resource, return resource
-        if (body.includes('resource')) {
+        // if querying resource, return product in resource wrapper
+        if (variables.resourceLabel) {
           return product
             ? { data: { resource: { plan: { product } } } }
             : { data: null, errors: [{ message: 'resource not found' }] };
         }
+
         // otherwise return product
         return product
           ? { data: { product } }

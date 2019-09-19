@@ -238,12 +238,12 @@ describe('Fetching all pages of a GraphQL connection', () => {
 
   it('fetches all the pages', async () => {
     fetchMock
-      .once('https://api.manifold.co/graphql', {
+      .once('begin:https://api.manifold.co/graphql', {
         status: 200,
         body: { data: firstPage },
       })
       .once(
-        'https://api.manifold.co/graphql',
+        'begin:https://api.manifold.co/graphql',
         {
           status: 200,
           body: { data: secondPage },

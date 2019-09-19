@@ -47,14 +47,14 @@ describe('<manifold-plan-selector>', () => {
 
   it('fetches product and plans by label on load, if given', async () => {
     const productLabel = 'test-label';
-    fetchMock.mock(connections.prod.graphql, mockProduct);
+    fetchMock.mock(`begin:${connections.prod.graphql}`, mockProduct);
     fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`, [
       ExpandedPlan,
     ]);
 
     await setup(productLabel);
 
-    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
+    expect(fetchMock.called(`begin:${connections.prod.graphql}`)).toBe(true);
     expect(
       fetchMock.called(
         `${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`
@@ -68,14 +68,14 @@ describe('<manifold-plan-selector>', () => {
 
     const { component, page } = await setup('old-product');
 
-    fetchMock.mock(connections.prod.graphql, mockProduct);
+    fetchMock.mock(`begin:${connections.prod.graphql}`, mockProduct);
     fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`, [
       ExpandedPlan,
     ]);
     component.productLabel = newProduct;
     await page.waitForChanges();
 
-    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
+    expect(fetchMock.called(`begin:${connections.prod.graphql}`)).toBe(true);
     expect(
       fetchMock.called(
         `${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`

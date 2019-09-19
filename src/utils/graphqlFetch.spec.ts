@@ -21,12 +21,12 @@ describe('graphqlFetch', () => {
         wait: () => 0,
         /* no endpoint */
       });
-      fetchMock.mock('https://api.manifold.co/graphql', {
+      fetchMock.mock('begin:https://api.manifold.co/graphql', {
         status: 200,
         body: { data: {} },
       });
       await fetcher({ query: '' });
-      expect(fetchMock.called('https://api.manifold.co/graphql')).toBe(true);
+      expect(fetchMock.called('begin:https://api.manifold.co/graphql')).toBe(true);
     });
 
     it('returns data from server', async () => {
@@ -41,14 +41,14 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 200,
         body,
       });
 
       const result = await fetcher({ query: '' });
 
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(result).toEqual(body);
     });
 
@@ -60,13 +60,13 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { throws: err });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { throws: err });
 
       expect.assertions(2);
       return fetcher({
         query: 'myQuery',
       }).catch(result => {
-        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+        expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
         expect(result).toEqual(err);
       });
     });
@@ -81,7 +81,7 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 200, // error code for malformed query
         body: { data: null, errors },
       });
@@ -103,7 +103,7 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 422, body });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { status: 422, body });
 
       await fetcher({ query: '' });
       // graphql format
@@ -117,7 +117,7 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 500, body: {} });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { status: 500, body: {} });
 
       await fetcher({ query: '' });
       // graphql format
@@ -143,7 +143,7 @@ describe('graphqlFetch', () => {
       });
 
       const response = { status: 200, body };
-      fetchMock.mock(graphqlEndpoint, response);
+      fetchMock.mock(`begin:${graphqlEndpoint}`, response);
 
       return fetcher({ query: '' }).catch(() => {
         expect(errorReporter).toHaveBeenCalledWith(body.errors);
@@ -160,14 +160,14 @@ describe('graphqlFetch', () => {
           getAuthToken: () => undefined,
         });
 
-        fetchMock.mock(graphqlEndpoint, {
+        fetchMock.mock(`begin:${graphqlEndpoint}`, {
           status: 200,
           body: { errors: [{ extensions: { type: 'AuthFailed' } }] },
         });
 
         expect.assertions(2);
         return fetcher({ query: '' }).catch(result => {
-          expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+          expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
           expect(result).toEqual(new Error('Auth token expired'));
         });
       });
@@ -183,7 +183,7 @@ describe('graphqlFetch', () => {
           setAuthToken,
         });
 
-        fetchMock.mock(graphqlEndpoint, {
+        fetchMock.mock(`begin:${graphqlEndpoint}`, {
           status: 200,
           body: { errors: [{ extensions: { type: 'AuthFailed' } }] },
         });
@@ -211,7 +211,7 @@ describe('graphqlFetch', () => {
             status: 200,
             body: { errors: [{ extensions: { type: 'AuthFailed' } }] },
           })
-          .mock(graphqlEndpoint, { status: 200, body }, { overwriteRoutes: false });
+          .mock(`begin:${graphqlEndpoint}`, { status: 200, body }, { overwriteRoutes: false });
 
         const fetch = fetcher({ query: '' });
 
@@ -247,14 +247,14 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 200, // error code for DB error (e.g. nothing returned)
         body,
       });
 
       const result = await fetcher({ query: '' });
 
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(result).toEqual(body);
     });
 
@@ -276,13 +276,13 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 200, body });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { status: 200, body });
 
       expect.assertions(2);
       return fetcher({
         query: '',
       }).catch(e => {
-        expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+        expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
         expect(e.message).toEqual('Auth token expired');
       });
     });
@@ -298,10 +298,10 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 422, body });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { status: 422, body });
 
       const result = await fetcher({ query: '' });
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(result).toEqual(body);
     });
 
@@ -312,13 +312,13 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 500, // error code for something that went wrong
         body: {},
       });
 
       const result = await fetcher({ query: '' });
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(result).toEqual({
         data: null,
         errors: [{ message: 'Internal Server Error' }],
@@ -338,7 +338,7 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 200, // error code for DB error (e.g. nothing returned)
         body,
       });
@@ -363,7 +363,7 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 200, // error code for DB error (e.g. nothing returned)
         body,
       });
@@ -380,13 +380,40 @@ describe('graphqlFetch', () => {
   });
 
   describe('performance', () => {
+    it('uses GET', async () => {
+      const fetcher = createGraphqlFetch({
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
+        status: 200,
+        body: { data: null, errors: null },
+      });
+      await fetcher({
+        query: `
+        query GET_PRODUCT {
+          product(label: $productLabel) {
+            label
+          }
+        }`,
+        variables: {
+          productLabel: 'dumper',
+        },
+      });
+      const url = fetchMock.calls()[0][0] as string;
+      const search = new URLSearchParams(url.split('?')[1]);
+      expect(search.get('query')).toEqual('query GET_PRODUCT{product(label:$productLabel){label}}');
+      expect(search.get('variables')).toEqual(JSON.stringify({ productLabel: 'dumper' }));
+    });
+
     it('keeps connection alive (speeds up Chrome)', async () => {
       const fetcher = createGraphqlFetch({
         wait: () => 0,
         endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
-      fetchMock.mock(graphqlEndpoint, {
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
         status: 200,
         body: { data: null, errors: null },
       });

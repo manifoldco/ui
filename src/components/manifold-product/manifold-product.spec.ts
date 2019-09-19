@@ -33,14 +33,14 @@ describe('<manifold-product>', () => {
 
   it('fetches the product by label on load', async () => {
     const productLabel = 'product-label';
-    fetchMock.mock(graphqlEndpoint, product);
+    fetchMock.mock(`begin:${graphqlEndpoint}`, product);
 
     const root = page.root as HTMLElement;
     element.productLabel = productLabel;
     root.appendChild(element);
     await page.waitForChanges();
 
-    expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+    expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
   });
 
   it('fetches the product by label on change', async () => {
@@ -53,11 +53,11 @@ describe('<manifold-product>', () => {
     await page.waitForChanges();
 
     const newLabel = 'new-product-label';
-    fetchMock.mock(graphqlEndpoint, product);
+    fetchMock.mock(`begin:${graphqlEndpoint}`, product);
 
     element.productLabel = newLabel;
     await page.waitForChanges();
 
-    expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+    expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
   });
 });

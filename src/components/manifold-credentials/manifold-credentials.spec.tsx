@@ -46,9 +46,10 @@ describe('<manifold-credentials>', () => {
 
     // mock graphql (a resource with “error” in the name will throw)
     fetchMock.reset();
-    fetchMock.mock(graphqlEndpoint, (_, req) => {
-      const body = (req.body && req.body.toString()) || '';
-      return body.includes('error')
+    fetchMock.mock(`begin:${graphqlEndpoint}`, url => {
+      const search = new URLSearchParams(url.split('?')[1]);
+      const variables = JSON.parse(search.get('variables') || '');
+      return variables.resourceLabel.includes('error')
         ? { data: null, errors: [{ message: 'resource not found' }] }
         : {
             data: {

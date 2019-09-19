@@ -2,6 +2,7 @@ import { EventEmitter } from '@stencil/core';
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
+import gqlMin from './gql-min';
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
@@ -51,14 +52,23 @@ export function createGraphqlFetch({
     const auth: { [key: string]: string } =
       token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
 
-    const response = await fetch(endpoint(), {
-      method: 'POST',
+    // minify response.mutation and response.query
+    const minifiedRequest = Object.entries(request).reduce((req, [key, value]) => {
+      let minifiedVal = JSON.stringify(value);
+      if (key === 'query' || key === 'mutation') {
+        minifiedVal = gqlMin(value);
+      }
+      return { ...req, [key]: minifiedVal };
+    }, {});
+    const search = new URLSearchParams(minifiedRequest);
+
+    const response = await fetch(`${endpoint()}?${search.toString()}`, {
+      method: 'GET',
       headers: {
         Connection: 'keep-alive',
         'Content-type': 'application/json',
         ...auth,
       },
-      body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors
       report(e);

@@ -37,7 +37,7 @@ describe('<manifold-data-provision-button>', () => {
 
     fetchMock.reset();
 
-    fetchMock.mock(graphqlEndpoint, profile);
+    fetchMock.mock(`begin:${graphqlEndpoint}`, profile);
     fetchMock.mock(/\/products\//, [Product]);
     fetchMock.mock(/\/plans\//, [ExpandedPlan]);
     fetchMock.mock(/\/resource\//, (_: any, req) => {
@@ -64,7 +64,7 @@ describe('<manifold-data-provision-button>', () => {
       const root = page.root as HTMLElement;
       root.appendChild(element);
       await page.waitForChanges();
-      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
     });
 
     it('[owner-id]: doesn’t fetch if set', async () => {

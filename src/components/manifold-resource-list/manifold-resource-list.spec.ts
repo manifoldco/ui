@@ -78,7 +78,7 @@ describe('<manifold-resource-list>', () => {
   it('The resources list are rendered if given.', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-      .mock(connections.prod.graphql, { data: mockGraphqlProducts })
+      .mock(`begin:${connections.prod.graphql}`, { data: mockGraphqlProducts })
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const page = await newSpecPage({
@@ -101,7 +101,7 @@ describe('<manifold-resource-list>', () => {
   it('processes resources properly', async () => {
     fetchMock
       .mock(`${connections.prod.marketplace}/resources/?me`, resources)
-      .mock(connections.prod.graphql, { data: mockGraphqlProducts })
+      .mock(`begin:${connections.prod.graphql}`, { data: mockGraphqlProducts })
       .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, [provisionOperation]);
 
     const page = await newSpecPage({
@@ -112,7 +112,7 @@ describe('<manifold-resource-list>', () => {
     const instance = page.rootInstance as ManifoldResourceList;
 
     expect(fetchMock.called(`${connections.prod.marketplace}/resources/?me`)).toBe(true);
-    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
+    expect(fetchMock.called(`begin:${connections.prod.graphql}`)).toBe(true);
     expect(fetchMock.called(`${connections.prod.provisioning}/operations/?is_deleted=false`)).toBe(
       true
     );
@@ -152,7 +152,7 @@ describe('<manifold-resource-list>', () => {
     it('slot="loading" is rendered if still loading.', async () => {
       fetchMock
         .mock(`${connections.prod.marketplace}/resources/?me`, {})
-        .mock(connections.prod.graphql, { data: [] })
+        .mock(`begin:${connections.prod.graphql}`, { data: [] })
         .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
 
       const page = await newSpecPage({
@@ -170,7 +170,7 @@ describe('<manifold-resource-list>', () => {
     it('slot="no-resources" is rendered if no resources are found.', async () => {
       fetchMock
         .mock(`${connections.prod.marketplace}/resources/?me`, [])
-        .mock(connections.prod.graphql, { data: [] })
+        .mock(`begin:${connections.prod.graphql}`, { data: [] })
         .mock(`${connections.prod.provisioning}/operations/?is_deleted=false`, []);
 
       const page = await newSpecPage({
