@@ -65,28 +65,33 @@ const productQuery = gql`
   }
 `;
 
-const freePlans = gql`
-  query FREE_PLANS($first: Int!, $after: String!) {
-    products(first: $first, after: $after) {
-      edges {
-        node {
-          label
-          plans(first: $first) {
-            edges {
-              node {
-                free
-              }
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`;
+// TODO: fix the freePlans query in GraphQL
+const TEMPORARY_FREE_PRODUCTS = [
+  'blitline',
+  'bonsai-elasticsearch',
+  'cloudamqp',
+  'cloudcube',
+  'custom-recognition',
+  'degraffdb-generators-stage',
+  'elegant-cms',
+  'generic-tagging',
+  'hypdf',
+  'informant',
+  'logdna',
+  'mailgun',
+  'memcachier-cache',
+  'pdfshift',
+  'piio',
+  'posthook',
+  'prefab',
+  'scaledrone',
+  'scoutapp',
+  'till',
+  'timber-logging',
+  'timber-logging-staging',
+  'valence',
+  'websolr',
+];
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
@@ -110,7 +115,6 @@ export class ManifoldMarketplace {
   /** Template format structure, with `:product` placeholder */
   @Prop() templateLinkFormat?: string;
   @Prop() hideUntilReady?: boolean = false;
-  @State() freeProducts: string[] = [];
   @State() parsedFeatured: string[] = [];
   @State() parsedProducts: string[] = [];
   @State() services: ProductEdge[];
@@ -119,7 +123,6 @@ export class ManifoldMarketplace {
   @loadMark()
   componentWillLoad() {
     this.parseProps();
-    this.fetchFreeProducts();
     const call = this.fetchProducts();
 
     if (this.hideUntilReady) {
@@ -140,21 +143,6 @@ export class ManifoldMarketplace {
     this.isLoading = false;
   }
 
-  async fetchFreeProducts() {
-    const products = await fetchAllPages({
-      query: freePlans,
-      nextPage: { first: 50, after: '' },
-      getConnection: (q: Query) => q.products,
-      graphqlFetch: this.graphqlFetch,
-    });
-    this.freeProducts = products
-      .filter(
-        ({ node: { plans } }) =>
-          plans && plans.edges.findIndex(({ node: { free } }) => free === true) !== -1
-      )
-      .map(({ node }) => node.label);
-  }
-
   private parse(list: string): string[] {
     return list.split(',').map(item => item.trim());
   }
@@ -173,7 +161,7 @@ export class ManifoldMarketplace {
     return (
       <manifold-marketplace-grid
         featured={this.parsedFeatured}
-        freeProducts={this.freeProducts}
+        freeProducts={TEMPORARY_FREE_PRODUCTS}
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}
