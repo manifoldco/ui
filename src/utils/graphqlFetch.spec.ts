@@ -307,6 +307,7 @@ describe('graphqlFetch', () => {
       });
     });
   });
+
   describe('metrics', () => {
     it('emits a metrics event from document when no EventEmitter supplied', async () => {
       const body = {
@@ -332,6 +333,7 @@ describe('graphqlFetch', () => {
       await fetcher({ query: '' });
       expect(event && event.detail && event.detail.duration).toBeDefined();
     });
+
     it('emits a metrics event from an EventEmitter when supplied', async () => {
       const body = {
         data: null,
@@ -356,6 +358,23 @@ describe('graphqlFetch', () => {
       expect((emitter.emit as jest.Mock).mock.calls[0][0]).toMatchObject({
         type: 'manifold-graphql-fetch-duration',
       });
+    });
+  });
+
+  describe('performance', () => {
+    it('keeps connection alive (speeds up Chrome)', async () => {
+      const fetcher = createGraphqlFetch({
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+      fetchMock.mock(graphqlEndpoint, {
+        status: 200,
+        body: { data: null, errors: null },
+      });
+      await fetcher({ query: '' });
+      const body = fetchMock.calls()[0][1] as RequestInit;
+      expect(body.headers).toEqual(expect.objectContaining({ Connection: 'keep-alive' }));
     });
   });
 });
