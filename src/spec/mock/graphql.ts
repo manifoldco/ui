@@ -57,6 +57,7 @@ export const freePlan: Plan = {
           __typename: 'PlanFixedFeature',
           displayName: feature.name,
           displayValue: feature.value_string as string,
+          label: feature.label,
         },
       })),
     pageInfo: {
@@ -124,6 +125,7 @@ export const plan: Plan = {
           __typename: 'PlanFixedFeature',
           displayName: feature.name,
           displayValue: feature.value_string as string,
+          label: feature.label,
         },
       })),
     pageInfo: {
@@ -206,11 +208,13 @@ export const product: Product = {
   })),
   valuePropsHtml: '',
   setupStepsHtml: '',
+  /*
   integration: {
     __typename: 'ProductIntegration',
     baseUrl: prodMock.body.integration.base_url,
     ssoUrl: prodMock.body.integration.sso_url as string,
   },
+  */
   provider,
   plans: {
     __typename: 'PlanConnection',
