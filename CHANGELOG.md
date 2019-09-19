@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-- Added a time to first meaningful render event to be consumed by `<manifold-performance>` component
+## [v0.5.11]
 
 ### Added
 
 - Ability to authenticate and refresh manually, bypassing OAuth. (#495)
+- Added a time to first meaningful render event to be consumed by `<manifold-performance>` component
+  (#501)
 
 ### Changed
 
