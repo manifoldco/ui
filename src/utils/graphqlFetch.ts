@@ -50,7 +50,11 @@ export function createGraphqlFetch({
 
     const response = await fetch(endpoint(), {
       method: 'POST',
-      headers: { 'content-type': 'application/json', ...auth },
+      headers: {
+        Connection: 'keep-alive',
+        'Content-type': 'application/json',
+        ...auth,
+      },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors

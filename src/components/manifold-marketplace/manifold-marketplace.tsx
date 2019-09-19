@@ -55,13 +55,6 @@ const productQuery = gql`
           categories {
             label
           }
-          freePlans: plans(first: 1, free: true) {
-            edges {
-              node {
-                free
-              }
-            }
-          }
         }
       }
       pageInfo {
@@ -71,6 +64,34 @@ const productQuery = gql`
     }
   }
 `;
+
+// TODO: fix the freePlans query in GraphQL
+const TEMPORARY_FREE_PRODUCTS = [
+  'blitline',
+  'bonsai-elasticsearch',
+  'cloudamqp',
+  'cloudcube',
+  'custom-recognition',
+  'degraffdb-generators-stage',
+  'elegant-cms',
+  'generic-tagging',
+  'hypdf',
+  'informant',
+  'logdna',
+  'mailgun',
+  'memcachier-cache',
+  'pdfshift',
+  'piio',
+  'posthook',
+  'prefab',
+  'scaledrone',
+  'scoutapp',
+  'till',
+  'timber-logging',
+  'timber-logging-staging',
+  'valence',
+  'websolr',
+];
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
@@ -115,7 +136,7 @@ export class ManifoldMarketplace {
     this.isLoading = true;
     this.services = await fetchAllPages({
       query: productQuery,
-      nextPage: { first: 25, after: '' },
+      nextPage: { first: 50, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
     });
@@ -140,6 +161,7 @@ export class ManifoldMarketplace {
     return (
       <manifold-marketplace-grid
         featured={this.parsedFeatured}
+        freeProducts={TEMPORARY_FREE_PRODUCTS}
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}
