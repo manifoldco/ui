@@ -128,20 +128,25 @@ describe('graphqlFetch', () => {
       const body = {
         data: null,
         errors: [
-          { message: 'User does not have permission to access the resource', path: ['resources'] },
+          {
+            message: 'User does not have permission to access the resource',
+            path: ['resources'],
+            extensions: { type: 'AuthFailed' },
+          },
         ],
       };
+
       const fetcher = createGraphqlFetch({
         wait: () => 0,
         endpoint: () => graphqlEndpoint,
         getAuthToken: () => '1234',
       });
 
-      const response = { status: 401, body };
+      const response = { status: 200, body };
       fetchMock.mock(graphqlEndpoint, response);
 
       return fetcher({ query: '' }).catch(() => {
-        expect(errorReporter).toHaveBeenCalledWith(body);
+        expect(errorReporter).toHaveBeenCalledWith(body.errors);
       });
     });
   });
@@ -155,7 +160,10 @@ describe('graphqlFetch', () => {
           getAuthToken: () => undefined,
         });
 
-        fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+        fetchMock.mock(graphqlEndpoint, {
+          status: 200,
+          body: { errors: [{ extensions: { type: 'AuthFailed' } }] },
+        });
 
         expect.assertions(2);
         return fetcher({ query: '' }).catch(result => {
@@ -175,7 +183,10 @@ describe('graphqlFetch', () => {
           setAuthToken,
         });
 
-        fetchMock.mock(graphqlEndpoint, { status: 401, body: {} });
+        fetchMock.mock(graphqlEndpoint, {
+          status: 200,
+          body: { errors: [{ extensions: { type: 'AuthFailed' } }] },
+        });
 
         expect.assertions(1);
         return fetcher({ query: '' }).catch(() => {
@@ -196,7 +207,10 @@ describe('graphqlFetch', () => {
         const body = { data: { title: 'test' }, errors: null };
 
         fetchMock
-          .once(graphqlEndpoint, { status: 401, body: {} })
+          .once(graphqlEndpoint, {
+            status: 200,
+            body: { errors: [{ extensions: { type: 'AuthFailed' } }] },
+          })
           .mock(graphqlEndpoint, { status: 200, body }, { overwriteRoutes: false });
 
         const fetch = fetcher({ query: '' });
@@ -244,11 +258,15 @@ describe('graphqlFetch', () => {
       expect(result).toEqual(body);
     });
 
-    it('401: unauthorized (token expired)', async () => {
+    it('Unauthorized (token expired)', async () => {
       const body = {
         data: null,
         errors: [
-          { message: 'User does not have permission to access the resource', path: ['resources'] },
+          {
+            message: 'User does not have permission to access the resource',
+            path: ['resources'],
+            extensions: { type: 'AuthFailed' },
+          },
         ],
       };
 
@@ -258,7 +276,7 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 401, body });
+      fetchMock.mock(graphqlEndpoint, { status: 200, body });
 
       expect.assertions(2);
       return fetcher({

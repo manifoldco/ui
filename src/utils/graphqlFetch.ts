@@ -20,6 +20,9 @@ export interface GraphqlError {
   message: string;
   locations?: { line: number; column: number }[];
   path?: string;
+  extensions?: {
+    type?: string;
+  };
 }
 
 export interface GraphqlResponseBody {
@@ -64,18 +67,6 @@ export function createGraphqlFetch({
 
     const body: GraphqlResponseBody = await response.json();
 
-    // handle unauthenticated error
-    if (response.status === 401) {
-      // TODO trigger token refresh for manifold-auth-token
-      setAuthToken('');
-      report(body); // report unauthenticated
-      if (attempts < retries) {
-        return waitForAuthToken(getAuthToken, wait(), () => graphqlFetch(args, attempts + 1));
-      }
-
-      throw new Error('Auth token expired');
-    }
-
     // handle non-GQL responses from errors
     if (!body.data && !Array.isArray(body.errors)) {
       const errors = [{ message: response.statusText }] as GraphqlError[];
@@ -88,9 +79,21 @@ export function createGraphqlFetch({
       };
     }
 
-    // report errors if any, but continue
     if (body.errors) {
       report(body.errors);
+
+      const authExpired = body.errors.some(e => {
+        return e.extensions && e.extensions.type === 'AuthFailed';
+      });
+
+      if (authExpired) {
+        setAuthToken('');
+        if (attempts < retries) {
+          return waitForAuthToken(getAuthToken, wait(), () => graphqlFetch(args, attempts + 1));
+        }
+
+        throw new Error('Auth token expired');
+      }
     }
 
     const fetchDuration = performance.now() - rttStart;
