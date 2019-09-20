@@ -380,7 +380,7 @@ describe('graphqlFetch', () => {
   });
 
   describe('performance', () => {
-    it('uses GET', async () => {
+    it('uses GET for queries', async () => {
       const fetcher = createGraphqlFetch({
         wait: () => 0,
         endpoint: () => graphqlEndpoint,
@@ -402,9 +402,43 @@ describe('graphqlFetch', () => {
         },
       });
       const url = fetchMock.calls()[0][0] as string;
+      const options = fetchMock.calls()[0][1] as RequestInit;
       const search = new URLSearchParams(url.split('?')[1]);
+      expect(options.method).toBe('GET');
       expect(search.get('query')).toEqual('query GET_PRODUCT{product(label:$productLabel){label}}');
       expect(search.get('variables')).toEqual(JSON.stringify({ productLabel: 'dumper' }));
+    });
+
+    it('still uses POST for mutations', async () => {
+      const fetcher = createGraphqlFetch({
+        wait: () => 0,
+        endpoint: () => graphqlEndpoint,
+        getAuthToken: () => '1234',
+      });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, {
+        status: 200,
+        body: { data: null, errors: null },
+      });
+      const request = {
+        mutation: `
+        mutation RENAME_RESOURCE {
+          updateResource(id: $resourceId, label: "new-label") {
+            label
+          }
+        }`,
+        variables: {
+          resourceid: 'abc',
+        },
+      };
+      await fetcher(request);
+      await fetcher({ query: '' });
+      const url = fetchMock.calls()[0][0] as string;
+      const options = fetchMock.calls()[0][1] as RequestInit;
+
+      // expect URL is the same
+      expect(url).toBe(graphqlEndpoint);
+      expect(options.method).toBe('POST');
+      expect(options.body).toEqual(JSON.stringify(request));
     });
 
     it('keeps connection alive (speeds up Chrome)', async () => {

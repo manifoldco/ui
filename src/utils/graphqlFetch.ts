@@ -2,7 +2,7 @@ import { EventEmitter } from '@stencil/core';
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
-import gqlMin from './gql-min';
+import { gqlSearch } from './gql-min';
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
@@ -13,9 +13,17 @@ interface CreateGraphqlFetch {
   onReady?: () => Promise<unknown>;
 }
 
-type GraphqlArgs =
-  | { mutation: string; variables?: object; emitter?: EventEmitter }
-  | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
+interface GraphqlQuery {
+  query: string;
+  variables?: object;
+  emitter?: EventEmitter;
+}
+
+interface GraphqlMutation {
+  mutation: string;
+  variables?: object;
+  emitter?: EventEmitter;
+}
 
 export interface GraphqlError {
   message: string;
@@ -31,7 +39,7 @@ export interface GraphqlResponseBody {
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = (args: GraphqlArgs) => Promise<GraphqlResponseBody>;
+export type GraphqlFetch = (args: GraphqlQuery | GraphqlMutation) => Promise<GraphqlResponseBody>;
 
 export function createGraphqlFetch({
   endpoint = () => 'https://api.manifold.co/graphql',
@@ -41,37 +49,48 @@ export function createGraphqlFetch({
   setAuthToken = () => {},
   onReady = () => new Promise(resolve => resolve()),
 }: CreateGraphqlFetch): GraphqlFetch {
-  async function graphqlFetch(args: GraphqlArgs, attempts: number): Promise<GraphqlResponseBody> {
+  async function graphqlFetch(
+    args: GraphqlQuery | GraphqlMutation,
+    attempts: number
+  ): Promise<GraphqlResponseBody> {
     await onReady();
 
     const rttStart = performance.now();
     const { emitter, ...request } = args;
 
-    const token = getAuthToken();
-    // yes sometimes the auth token can be 'undefined'
-    const auth: { [key: string]: string } =
-      token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
-
-    // minify response.mutation and response.query
-    const minifiedRequest = Object.entries(request).reduce((req, [key, value]) => {
-      let minifiedVal = JSON.stringify(value);
-      if (key === 'query' || key === 'mutation') {
-        minifiedVal = gqlMin(value);
-      }
-      return { ...req, [key]: minifiedVal };
-    }, {});
-    const search = new URLSearchParams(minifiedRequest);
-
-    const response = await fetch(`${endpoint()}?${search.toString()}`, {
-      method: 'GET',
+    // set up default request
+    let url = endpoint();
+    const options: RequestInit = {
+      method: 'POST',
       headers: {
         Connection: 'keep-alive',
         'Content-type': 'application/json',
-        ...auth,
       },
-    }).catch((e: Response) => {
-      // handle unexpected errors
-      report(e);
+      body: JSON.stringify(request),
+    };
+
+    // if valid token, add to request
+    const token = getAuthToken();
+    if (token && token !== 'undefined') {
+      options.headers = {
+        ...options.headers, // thank TypeScript for this dumb spread
+        authorization: `Bearer ${token}`,
+      };
+    }
+
+    // if request is GQL query, and it’s short enough, send as GET
+    if ((request as GraphqlQuery).query) {
+      const MAX_LENGTH = 2048; // should this be higher?
+      const queryUrl = `${url}?${gqlSearch(request)}`;
+      if (queryUrl.length < MAX_LENGTH) {
+        options.method = 'GET';
+        delete options.body;
+        url = queryUrl;
+      }
+    }
+
+    const response = await fetch(url, options).catch((e: Response) => {
+      report(e); // handle unexpected errors
       return Promise.reject(e);
     });
 
@@ -126,7 +145,7 @@ export function createGraphqlFetch({
     return body;
   }
 
-  return function(args: GraphqlArgs) {
+  return function(args: GraphqlQuery | GraphqlMutation) {
     return graphqlFetch(args, 0);
   };
 }
