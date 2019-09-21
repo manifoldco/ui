@@ -1,7 +1,6 @@
 import { h, Component } from '@stencil/core';
 
 import ResourceTunnel, { ResourceState } from '../../data/resource';
-import { convertPlan } from '../../utils/gatewayToCatalog';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -14,28 +13,17 @@ export class ManifoldResourcePlan {
   render() {
     return (
       <ResourceTunnel.Consumer>
-        {(state: ResourceState) =>
-          !state.loading &&
-          state.data &&
-          state.data.product &&
-          state.data.plan &&
-          state.data.product.provider ? (
-            <manifold-plan-details
-              scrollLocked={false}
-              plan={convertPlan(
-                state.data.plan,
-                state.data.product.id || '',
-                state.data.product.provider.id || ''
-              )}
-              product={
-                (state.gqlData && state.gqlData.plan && state.gqlData.plan.product) || undefined
-              }
-            />
-          ) : (
-            // ☠
-            <manifold-plan-details />
-          )
-        }
+        {(state: ResourceState) => {
+          if (!state.loading && state.data) {
+            const product = (state.data.plan && state.data.plan.product) || undefined;
+            const plan = state.data.plan || undefined;
+
+            return <manifold-plan-details scrollLocked={false} plan={plan} product={product} />;
+          }
+
+          // ☠
+          return <manifold-plan-details />;
+        }}
       </ResourceTunnel.Consumer>
     );
   }

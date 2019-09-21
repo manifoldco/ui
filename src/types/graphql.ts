@@ -469,7 +469,7 @@ export type Plan = Node & {
  **/
   label: Scalars['String'],
   /** The product associated with this plan. */
-  product: Product,
+  product?: Maybe<Product>,
   /** The current state of the plan. */
   state: PlanState,
   /** A list of fixed features associated with the plan. */
@@ -856,18 +856,18 @@ export type Query = {
   /** 
  * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
    * 
-   * Note: This query can only be performed when authenticated.
+   * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
   /** 
- * Return a paginated list of resources. The return value can either contain
-   * all available resources linked to the token, or can be filtered down to
-   * fetch data for the specified profile. The owner can either be a ProfileID or
-   * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
+ *  Return a paginated list of resources. The return value can either contain
+   *  all available resources linked to the token, or can be filtered down to
+   *  fetch data for the specified profile. The owner can either be a ProfileID or
+   *  a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
    * 
-   * Note: This query is currently only supported with use of a Platform API token.
+   * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
   resources?: Maybe<ResourceConnection>,
   /** 
@@ -875,7 +875,7 @@ export type Query = {
    * profile user, fetches the resource associated with the profile. When
    * authenticated as a platform user and a label is specified, an owner must be provided.
    * 
-   * Note: This query is currently only supported with use of a Platform API token.
+   * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
   resource?: Maybe<Resource>,
   /** 
@@ -1098,6 +1098,16 @@ export type Resource = Node & {
   displayName: Scalars['String'],
   /**  A machine-readable label for this resource, unique per owner.  */
   label: Scalars['String'],
+  /** Whether or not a user can SSO into this resource's product dashboard. */
+  ssoSupported: Scalars['Boolean'],
+  /** 
+ * The URL used to redirect the user to this resource's product dashboard. When requested, this field will
+   * return a unique and short-lived URL that can be used to redirect the user towards the product dashboard. If
+   * not used, the URL will expire after around 5 minutes and another one will need to be requested.
+ **/
+  ssoUrl: Scalars['String'],
+  /**  An enum indicating the availability status of the resource  */
+  status: ResourceStatus,
   /** 
  * The plan for which this resource is provisioned. The plan can be null if the
    * resource is a custom resource, or if a transient failure occurred.
@@ -1143,6 +1153,14 @@ export type ResourceEdge = {
   cursor: Scalars['String'],
   node?: Maybe<Resource>,
 };
+
+/** ResourceStatus represents the current status of a Resource */
+export enum ResourceStatus {
+  Available = 'AVAILABLE',
+  Provisioning = 'PROVISIONING',
+  ProvisioningError = 'PROVISIONING_ERROR',
+  Offline = 'OFFLINE'
+}
 
 /** 
  * SubLineItem represents the breakdown by base cost, features, and metered usage

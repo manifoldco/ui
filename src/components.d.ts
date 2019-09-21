@@ -7,13 +7,14 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  Catalog,
-} from './types/catalog';
-import {
   CredentialEdge,
+  Plan,
   PlanConnection,
+  PlanMeteredFeatureEdge,
   Product,
   ProductEdge,
+  Region,
+  Resource,
 } from './types/graphql';
 import {
   Gateway,
@@ -34,13 +35,16 @@ import {
   AuthToken,
 } from './types/auth';
 import {
+  Catalog,
+} from './types/catalog';
+import {
   Option,
 } from './types/Select';
 
 export namespace Components {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
+    'plans'?: PlanConnection;
     'product'?: Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
@@ -93,7 +97,7 @@ export namespace Components {
   interface ManifoldCostDisplay {
     'baseCost'?: number;
     'compact'?: boolean;
-    'measuredFeatures': Catalog.ExpandedFeature[];
+    'meteredFeatures': PlanMeteredFeatureEdge[];
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials {
@@ -356,7 +360,7 @@ export namespace Components {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
-    'mock': Gateway.Resource;
+    'mock': Resource;
   }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
@@ -395,10 +399,6 @@ export namespace Components {
   }
   interface ManifoldPlanCost {
     /**
-    * All plan features
-    */
-    'allFeatures': Catalog.ExpandedFeature[];
-    /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
@@ -407,9 +407,9 @@ export namespace Components {
     */
     'defaultCost'?: number;
     /**
-    * Plan ID
+    * All plan features
     */
-    'planId'?: string;
+    'plan'?: Plan;
     /**
     * _(hidden)_
     */
@@ -421,11 +421,11 @@ export namespace Components {
   }
   interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
-    'plan'?: Catalog.ExpandedPlan;
+    'plan'?: Plan;
     'product'?: Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: string;
+    'resourceRegion'?: Region;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
@@ -452,14 +452,6 @@ export namespace Components {
     * Specify region order
     */
     'regions'?: string;
-    /**
-    * Is this tied to an existing resource?
-    */
-    'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct {
     /**
@@ -476,18 +468,6 @@ export namespace Components {
   }
   interface ManifoldProductPage {
     'product'?: Product;
-  }
-  interface ManifoldRegionSelector {
-    'allowedRegions': string[];
-    'ariaLabel': string;
-    'name': string;
-    'preferredRegions'?: string[];
-    'regions'?: Catalog.Region[];
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    'value'?: string;
   }
   interface ManifoldResourceCard {
     'label'?: string;
@@ -542,7 +522,7 @@ export namespace Components {
   }
   interface ManifoldResourceDetails {}
   interface ManifoldResourceDetailsView {
-    'data'?: Gateway.Resource;
+    'data'?: Resource;
   }
   interface ManifoldResourceList {
     /**
@@ -892,12 +872,6 @@ declare global {
     new (): HTMLManifoldProductPageElement;
   };
 
-  interface HTMLManifoldRegionSelectorElement extends Components.ManifoldRegionSelector, HTMLStencilElement {}
-  var HTMLManifoldRegionSelectorElement: {
-    prototype: HTMLManifoldRegionSelectorElement;
-    new (): HTMLManifoldRegionSelectorElement;
-  };
-
   interface HTMLManifoldResourceCardElement extends Components.ManifoldResourceCard, HTMLStencilElement {}
   var HTMLManifoldResourceCardElement: {
     prototype: HTMLManifoldResourceCardElement;
@@ -1075,7 +1049,6 @@ declare global {
     'manifold-product': HTMLManifoldProductElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
-    'manifold-region-selector': HTMLManifoldRegionSelectorElement;
     'manifold-resource-card': HTMLManifoldResourceCardElement;
     'manifold-resource-card-view': HTMLManifoldResourceCardViewElement;
     'manifold-resource-container': HTMLManifoldResourceContainerElement;
@@ -1105,7 +1078,7 @@ declare global {
 declare namespace LocalJSX {
   interface ManifoldActivePlan extends JSXBase.HTMLAttributes<HTMLManifoldActivePlanElement> {
     'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
+    'plans'?: PlanConnection;
     'product'?: Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
@@ -1163,7 +1136,7 @@ declare namespace LocalJSX {
   interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
     'baseCost'?: number;
     'compact'?: boolean;
-    'measuredFeatures'?: Catalog.ExpandedFeature[];
+    'meteredFeatures'?: PlanMeteredFeatureEdge[];
     'startingAt'?: boolean;
   }
   interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
@@ -1445,7 +1418,7 @@ declare namespace LocalJSX {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {
-    'mock'?: Gateway.Resource;
+    'mock'?: Resource;
   }
   interface ManifoldNumberInput extends JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement> {
     'decrementDisabledLabel'?: string;
@@ -1486,10 +1459,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
     /**
-    * All plan features
-    */
-    'allFeatures'?: Catalog.ExpandedFeature[];
-    /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
@@ -1498,9 +1467,9 @@ declare namespace LocalJSX {
     */
     'defaultCost'?: number;
     /**
-    * Plan ID
+    * All plan features
     */
-    'planId'?: string;
+    'plan'?: Plan;
     /**
     * _(hidden)_
     */
@@ -1514,11 +1483,11 @@ declare namespace LocalJSX {
     'isExistingResource'?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
-    'plan'?: Catalog.ExpandedPlan;
+    'plan'?: Plan;
     'product'?: Product;
     'regions'?: string[];
     'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: string;
+    'resourceRegion'?: Region;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
@@ -1545,14 +1514,6 @@ declare namespace LocalJSX {
     * Specify region order
     */
     'regions'?: string;
-    /**
-    * Is this tied to an existing resource?
-    */
-    'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
     /**
@@ -1569,19 +1530,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldProductPage extends JSXBase.HTMLAttributes<HTMLManifoldProductPageElement> {
     'product'?: Product;
-  }
-  interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
-    'allowedRegions'?: string[];
-    'ariaLabel'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'preferredRegions'?: string[];
-    'regions'?: Catalog.Region[];
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    'value'?: string;
   }
   interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
     'label'?: string;
@@ -1637,7 +1585,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
   interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
-    'data'?: Gateway.Resource;
+    'data'?: Resource;
   }
   interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
     /**
@@ -1793,7 +1741,6 @@ declare namespace LocalJSX {
     'manifold-product': ManifoldProduct;
     'manifold-product-details': ManifoldProductDetails;
     'manifold-product-page': ManifoldProductPage;
-    'manifold-region-selector': ManifoldRegionSelector;
     'manifold-resource-card': ManifoldResourceCard;
     'manifold-resource-card-view': ManifoldResourceCardView;
     'manifold-resource-container': ManifoldResourceContainer;

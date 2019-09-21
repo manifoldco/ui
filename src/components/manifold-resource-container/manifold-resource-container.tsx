@@ -1,24 +1,88 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { Gateway } from '../../types/gateway';
 import connection from '../../state/connection';
 import ResourceTunnel from '../../data/resource';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Product, Resource } from '../../types/graphql';
+import { Resource, ResourceStatus } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 const query = gql`
   query RESOURCE($resourceLabel: String!) {
     resource(label: $resourceLabel) {
+      id
+      displayName
+      label
+      status
       plan {
+        id
+        displayName
+        label
+        free
+        cost
         product {
           id
           displayName
           label
           logoUrl
+        }
+        fixedFeatures(first: 500) {
+          edges {
+            node {
+              displayName
+              displayValue
+            }
+          }
+        }
+        meteredFeatures(first: 500) {
+          edges {
+            node {
+              label
+              displayName
+              numericDetails {
+                unit
+                costTiers {
+                  limit
+                  cost
+                }
+              }
+            }
+          }
+        }
+        configurableFeatures(first: 500) {
+          edges {
+            node {
+              label
+              displayName
+              type
+              options {
+                displayName
+                displayValue
+              }
+              numericDetails {
+                increment
+                min
+                max
+                unit
+                costTiers {
+                  limit
+                  cost
+                }
+              }
+            }
+          }
+        }
+        regions(first: 500) {
+          edges {
+            node {
+              id
+              displayName
+              platform
+              dataCenter
+            }
+          }
         }
       }
     }
@@ -35,8 +99,7 @@ export class ManifoldResourceContainer {
   @Prop() resourceLabel?: string;
   /** Set whether or not to refetch the resource from the api until it is in an available and valid state */
   @Prop() refetchUntilValid: boolean = false;
-  @State() resource?: Gateway.Resource;
-  @State() gqlData?: Resource;
+  @State() resource?: Resource;
   @State() loading: boolean = false;
   @State() timeout?: number;
 
@@ -46,7 +109,7 @@ export class ManifoldResourceContainer {
   }
 
   @Watch('refetchUntilValid') refreshChange(newRefresh: boolean) {
-    if (newRefresh && (!this.resource || this.resource.state !== 'available')) {
+    if (newRefresh && (!this.resource || this.resource.status !== ResourceStatus.Available)) {
       this.fetchResource(this.resourceLabel);
     }
   }
@@ -67,20 +130,17 @@ export class ManifoldResourceContainer {
 
     this.loading = true;
     try {
-      const response = await this.restFetch<Gateway.Resource & { product?: Product }>({
-        service: 'gateway',
-        endpoint: `/resources/me/${resourceLabel}`,
-      });
-
       const { data } = await this.graphqlFetch({ query, variables: { resourceLabel } });
 
-      if (this.refetchUntilValid && (!response || response.state !== 'available')) {
+      if (
+        this.refetchUntilValid &&
+        (!data || (data.resource && data.resource.status !== ResourceStatus.Available))
+      ) {
         this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
       }
 
-      this.resource = response;
       if (data && data.resource) {
-        this.gqlData = data.resource;
+        this.resource = data.resource;
       }
       this.loading = false;
     } catch (error) {
@@ -96,9 +156,7 @@ export class ManifoldResourceContainer {
   @logger()
   render() {
     return (
-      <ResourceTunnel.Provider
-        state={{ data: this.resource, gqlData: this.gqlData, loading: this.loading }}
-      >
+      <ResourceTunnel.Provider state={{ data: this.resource, loading: this.loading }}>
         <slot />
       </ResourceTunnel.Provider>
     );

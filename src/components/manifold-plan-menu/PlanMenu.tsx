@@ -1,7 +1,6 @@
 import { h, FunctionalComponent } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 import { PlanEdge, Plan } from '../../types/graphql';
-import { Catalog } from '../../types/catalog';
 
 interface PlanButtonProps {
   checked?: boolean;
@@ -27,25 +26,18 @@ const PlanButton: FunctionalComponent<PlanButtonProps> = (props, children) => (
 
 interface CostProps {
   cost: number;
-  plan?: Catalog.ExpandedPlan;
+  plan?: Plan;
   id: string;
 }
 
-const Cost: FunctionalComponent<CostProps> = ({ cost, plan, id }) => (
+const Cost: FunctionalComponent<CostProps> = ({ plan }) => (
   <div class="cost">
-    <manifold-plan-cost
-      defaultCost={cost}
-      allFeatures={plan && plan.body.expanded_features}
-      selectedFeatures={plan && plan.body.features}
-      planId={id}
-      compact={true}
-    />
+    <manifold-plan-cost plan={plan} compact={true} />
   </div>
 );
 
 interface PlanMenuProps {
   plans: PlanEdge[];
-  oldPlans: Catalog.ExpandedPlan[];
   selectedPlanId?: string;
   selectPlan: Function;
 }
@@ -87,7 +79,6 @@ export const sortPlans = (plans: PlanEdge[]) => {
 
 export const PlanMenu: FunctionalComponent<PlanMenuProps> = ({
   plans,
-  oldPlans,
   selectedPlanId,
   selectPlan,
 }) => (
@@ -103,7 +94,7 @@ export const PlanMenu: FunctionalComponent<PlanMenuProps> = ({
           isConfigurable={isConfigurable(node)}
         >
           {displayName}
-          <Cost cost={cost} plan={oldPlans.find(plan => plan.id === id)} id={id} />
+          <Cost cost={cost} plan={node} id={id} />
         </PlanButton>
       );
     })}

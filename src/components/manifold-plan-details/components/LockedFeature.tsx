@@ -1,3 +1,4 @@
+// NOTE This component is not currently used anywhere. Saving it for when upgradable/downgradable become available in the GraphQL API.
 import { h, FunctionalComponent } from '@stencil/core';
 import { lock } from '@manifoldco/icons';
 

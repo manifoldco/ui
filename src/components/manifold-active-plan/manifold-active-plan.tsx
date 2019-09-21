@@ -1,9 +1,8 @@
 import { h, Component, State, Prop, Watch } from '@stencil/core';
-import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Product } from '../../types/graphql';
+import { Product, PlanConnection } from '../../types/graphql';
 @Component({
   tag: 'manifold-active-plan',
   styleUrl: 'plan-selector.css',
@@ -11,16 +10,16 @@ import { Product } from '../../types/graphql';
 })
 export class ManifoldActivePlan {
   @Prop() isExistingResource?: boolean;
-  @Prop() plans?: Catalog.ExpandedPlan[];
+  @Prop() plans?: PlanConnection;
   @Prop() product?: Product;
   @Prop() regions?: string[];
   @Prop() selectedResource?: Gateway.Resource;
   @State() selectedPlanId: string;
-  @Watch('plans') plansChange(newPlans: Catalog.ExpandedPlan[]) {
+  @Watch('plans') plansChange(newPlans: PlanConnection) {
     if (this.selectedResource && this.selectedResource.plan && this.selectedResource.plan.id) {
       this.selectPlan(this.selectedResource.plan.id);
     } else {
-      this.selectPlan(newPlans[0].id);
+      this.selectPlan(newPlans.edges[0].node.id);
     }
   }
   @Watch('selectedResource') resourceChange(newResource: Gateway.Resource) {
@@ -38,9 +37,11 @@ export class ManifoldActivePlan {
       return undefined;
     }
     if (!this.selectedPlanId) {
-      return this.plans[0];
+      return this.plans.edges[0].node;
     }
-    return this.plans.find(({ id }) => id === this.selectedPlanId);
+    const plan = this.plans.edges.find(({ node }) => node.id === this.selectedPlanId);
+
+    return plan && plan.node;
   }
 
   @loadMark()
@@ -48,14 +49,9 @@ export class ManifoldActivePlan {
 
   @logger()
   render() {
-    const resourceRegion =
-      (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
-      undefined;
-
     return [
       <manifold-plan-menu
-        plans={this.product && this.product.plans ? this.product.plans : undefined}
-        oldPlans={this.plans}
+        plans={this.plans}
         selectedPlanId={this.selectedPlanId}
         selectPlan={this.selectPlan}
       />,
@@ -66,7 +62,6 @@ export class ManifoldActivePlan {
         product={this.product}
         regions={this.regions}
         resourceFeatures={this.selectedResource && this.selectedResource.features}
-        resourceRegion={resourceRegion}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

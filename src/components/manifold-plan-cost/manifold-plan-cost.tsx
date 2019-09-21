@@ -1,12 +1,13 @@
 import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 
-import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import connection from '../../state/connection';
-import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
+import { planCost, initialFeatures } from '../../utils/plan';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { Plan } from '../../types/graphql';
+import { isConfigurable } from '../manifold-plan-menu/PlanMenu';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
@@ -14,13 +15,12 @@ export class ManifoldPlanCost {
   /** _(hidden)_ */
   @Prop() restFetch?: RestFetch = connection.restFetch;
   /** All plan features */
-  @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
+  @Prop() plan?: Plan;
   /** Compact mode (for plan selector sidebar) */
   @Prop() compact?: boolean = false;
   /** Plan default cost */
   @Prop({ mutable: true }) defaultCost?: number = 0;
-  /** Plan ID */
-  @Prop() planId?: string;
+
   /** User-selected plan features (needed only for customizable) */
   @Prop() selectedFeatures?: Gateway.FeatureMap = {};
   @State() controller?: AbortController;
@@ -36,37 +36,37 @@ export class ManifoldPlanCost {
     return this.fetchCustomCost(); // If we’re calculating custom features, wait to render until call finishes
   }
 
-  get isCustomizable() {
-    return hasCustomizableFeatures(this.allFeatures);
-  }
+  // get isCustomizable() {
+  //   return hasCustomizableFeatures(this.allFeatures);
+  // }
 
-  measuredFeatures(features: Catalog.ExpandedFeature[]): Catalog.ExpandedFeature[] {
-    return features
-      .filter(({ measurable }) => measurable === true)
-      .filter(({ value }) => {
-        if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) {
-          return false;
-        }
-        return value.numeric_details.cost_ranges.find(
-          ({ cost_multiple }) => typeof cost_multiple === 'number' && cost_multiple > 0
-        );
-      });
-  }
+  // measuredFeatures(features: Catalog.ExpandedFeature[]): Catalog.ExpandedFeature[] {
+  //   return features
+  //     .filter(({ measurable }) => measurable === true)
+  //     .filter(({ value }) => {
+  //       if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) {
+  //         return false;
+  //       }
+  //       return value.numeric_details.cost_ranges.find(
+  //         ({ cost_multiple }) => typeof cost_multiple === 'number' && cost_multiple > 0
+  //       );
+  //     });
+  // }
 
   fetchCustomCost() {
-    if (!this.restFetch) {
+    if (!this.restFetch || !this.plan) {
       return null;
     }
 
     // If this doesn’t have customizable features, then don’t call the API
-    if (!this.isCustomizable) {
+    if (!isConfigurable(this.plan)) {
       return null;
     }
 
-    const allFeatures = { ...initialFeatures(this.allFeatures), ...this.selectedFeatures };
+    const allFeatures = { ...initialFeatures(this.plan), ...this.selectedFeatures };
 
     // Fetch base cost from cost API (and cancel in-flight reqs)
-    if (!this.planId) {
+    if (!this.plan.id) {
       return Promise.resolve();
     }
     // Hide display while calculating
@@ -78,7 +78,7 @@ export class ManifoldPlanCost {
 
     // Returning the promise is necessary for componentWillLoad()
     return planCost(this.restFetch, {
-      planID: this.planId,
+      planID: this.plan.id,
       features: allFeatures,
       init: { signal: this.controller.signal },
     }).then(({ cost }: Gateway.Price) => {
@@ -91,10 +91,12 @@ export class ManifoldPlanCost {
   render() {
     return (
       <manifold-cost-display
-        baseCost={this.defaultCost}
+        baseCost={this.plan && this.plan.cost}
         compact={this.compact}
-        measuredFeatures={this.measuredFeatures(this.allFeatures)}
-        startingAt={this.isCustomizable && this.compact}
+        meteredFeatures={
+          (this.plan && this.plan.meteredFeatures && this.plan.meteredFeatures.edges) || undefined
+        }
+        startingAt={this.plan && isConfigurable(this.plan) && this.compact}
       />
     );
   }

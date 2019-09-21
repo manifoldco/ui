@@ -1,7 +1,5 @@
 import { h, Component, Prop } from '@stencil/core';
-import { Gateway } from '../../types/gateway';
-import { FeatureName } from './components/FeatureName';
-import { FeatureValue } from './components/FeatureValue';
+import { Resource } from '../../types/graphql';
 import { $ } from '../../utils/currency';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -12,41 +10,26 @@ import loadMark from '../../utils/loadMark';
   shadow: true,
 })
 export class ManifoldResourceDetails {
-  @Prop() data?: Gateway.Resource;
+  @Prop() data?: Resource;
 
   @loadMark()
   componentWillLoad() {}
 
   @logger()
   render() {
+    // TODO: re-add estimated cost & features when supported by GraphQL
+
     if (this.data) {
-      const { expanded_features, name } = this.data.plan as Gateway.ResolvedPlan;
-      const { estimated_cost, features: customFeatures = [] } = this.data;
       return (
         <div class="container">
-          <h3 class="heading">Plan Features</h3>
+          <h3 class="heading">Plan</h3>
           <div class="details">
-            {estimated_cost && [
-              <span class="amount">{$(estimated_cost.cost)}</span>,
+            {this.data.plan && [
+              <span class="amount">{$(this.data.plan.cost)}</span>,
               <span class="suffix">/mo</span>,
+              <p class="plan-name">{this.data.plan.displayName}</p>,
             ]}
-            <p class="plan-name">{name}</p>
           </div>
-          <dl class="features">
-            {expanded_features.map(feature => {
-              const customFeature = customFeatures.find(({ label }) => label === feature.label);
-              const customValue = customFeature && customFeature.value.value;
-
-              return [
-                <dt class="feature-name">
-                  <FeatureName feature={feature} />
-                </dt>,
-                <dd class="feature-value">
-                  <FeatureValue feature={feature} value={customValue} />
-                </dd>,
-              ];
-            })}
-          </dl>
         </div>
       );
     }

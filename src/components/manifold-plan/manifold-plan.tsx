@@ -81,6 +81,6 @@ export class ManifoldPlan {
 
   @logger()
   render() {
-    return <manifold-plan-details scrollLocked={false} plan={this.plan} product={this.product} />;
+    return <manifold-plan-details scrollLocked={false} product={this.product} />;
   }
 }

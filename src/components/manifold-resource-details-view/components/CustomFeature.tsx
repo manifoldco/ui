@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from '@stencil/core';
-import { stringFeatureOptions } from '../../../utils/plan';
+// import { stringFeatureOptions } from '../../../utils/plan';
 import { Catalog } from '../../../types/catalog';
 import { LockedFeature } from './LockedFeature';
 
@@ -66,16 +66,16 @@ export const CustomFeature: FunctionalComponent<CustomFeatureProps> = ({
           increment-disabled-label="This feature is not upgradable"
         />
       );
-    case 'string':
-      return (
-        <manifold-select
-          aria-label={feature.name}
-          name={feature.label}
-          options={stringFeatureOptions(feature.values || [])}
-          onUpdateValue={onChange}
-          defaultValue={value as string}
-        />
-      );
+    // case 'string':
+    //   return (
+    //     <manifold-select
+    //       aria-label={feature.name}
+    //       name={feature.label}
+    //       options={stringFeatureOptions(feature.values || [])}
+    //       onUpdateValue={onChange}
+    //       defaultValue={value as string}
+    //     />
+    //   );
     default:
       return <div />;
   }

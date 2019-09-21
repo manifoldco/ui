@@ -27,7 +27,6 @@ export class ManifoldPlanMenu {
       return (
         <PlanMenu
           plans={this.plans.edges}
-          oldPlans={this.oldPlans}
           selectedPlanId={this.selectedPlanId}
           selectPlan={this.selectPlan}
         />

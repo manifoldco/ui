@@ -1,14 +1,9 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
-import { Gateway } from '../../types/gateway';
 import connection from '../../state/connection';
-import { Marketplace } from '../../types/marketplace';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { planSort } from '../../utils/plan';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product, PlanConnection } from '../../types/graphql';
 
@@ -30,7 +25,8 @@ const query = gql`
             fixedFeatures(first: 500) {
               edges {
                 node {
-                  displayValue
+                  label
+                  displayName
                   displayValue
                 }
               }
@@ -109,24 +105,15 @@ export class ManifoldPlanSelector {
   @Prop() freePlans?: boolean;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify region order */
   @Prop() regions?: string;
-  /** Is this tied to an existing resource? */
-  @Prop() resourceLabel?: string;
   @Prop() hideUntilReady?: boolean = false;
   @State() product?: Product;
-  @State() plans?: Catalog.Plan[];
-  @State() resource?: Gateway.Resource;
   @State() parsedRegions: string[];
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProductByLabel(newProduct);
-  }
-  @Watch('resourceLabel') resourceChange(newResource: string) {
-    this.fetchResource(newResource);
   }
   @Watch('regions') regionsChange(newRegions: string) {
     if (newRegions) {
@@ -140,8 +127,6 @@ export class ManifoldPlanSelector {
 
     if (this.productLabel) {
       call = this.fetchProductByLabel(this.productLabel);
-    } else if (this.resourceLabel) {
-      call = this.fetchResource(this.resourceLabel);
     }
 
     if (this.hideUntilReady) {
@@ -163,49 +148,48 @@ export class ManifoldPlanSelector {
 
     if (data && data.product) {
       this.product = this.freePlans ? filterFreePlans(data.product) : data.product;
-      this.fetchPlans(data.product.id);
     }
   }
 
-  async fetchPlans(productId: string) {
-    if (!this.restFetch) {
-      return;
-    }
+  // async fetchPlans(productId: string) {
+  //   if (!this.restFetch) {
+  //     return;
+  //   }
 
-    this.plans = undefined;
+  //   this.plans = undefined;
 
-    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
-      service: 'catalog',
-      endpoint: `/plans/?product_id=${productId}`,
-    });
+  //   const response = await this.restFetch<Catalog.ExpandedPlan[]>({
+  //     service: 'catalog',
+  //     endpoint: `/plans/?product_id=${productId}`,
+  //   });
 
-    if (response) {
-      this.plans = planSort(response, { free: this.freePlans });
-    }
-  }
+  //   if (response) {
+  //     this.plans = planSort(response, { free: this.freePlans });
+  //   }
+  // }
 
-  async fetchResource(resourceLabel: string) {
-    if (!this.restFetch) {
-      return;
-    }
+  // async fetchResource(resourceLabel: string) {
+  //   if (!this.restFetch) {
+  //     return;
+  //   }
 
-    this.resource = undefined;
+  //   this.resource = undefined;
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
-    });
+  //   const response = await this.restFetch<Marketplace.Resource[]>({
+  //     service: 'marketplace',
+  //     endpoint: `/resources/?me&label=${resourceLabel}`,
+  //   });
 
-    if (response && response.length) {
-      const resource = response[0];
-      if (!resource.body.product_id) {
-        console.error('No resource found');
-        return;
-      }
+  //   if (response && response.length) {
+  //     const resource = response[0];
+  //     if (!resource.body.product_id) {
+  //       console.error('No resource found');
+  //       return;
+  //     }
 
-      await this.fetchPlans(resource.body.product_id);
-    }
-  }
+  //     await this.fetchPlans(resource.body.product_id);
+  //   }
+  // }
 
   parseRegions(regions: string) {
     return regions.split(',').map(region => region.trim().toLowerCase());
@@ -215,10 +199,9 @@ export class ManifoldPlanSelector {
   render() {
     return (
       <manifold-active-plan
-        plans={this.plans}
+        plans={(this.product && this.product.plans) || undefined}
         product={this.product}
         regions={this.parsedRegions}
-        selectedResource={this.resource}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />
