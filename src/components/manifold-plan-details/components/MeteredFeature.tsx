@@ -45,8 +45,6 @@ const MultiTier: FunctionalComponent<PlanMeteredFeature> = ({ numericDetails }) 
 
 interface MeteredFeatureProps {
   feature: PlanMeteredFeature;
-  // features: Gateway.FeatureMap;
-  // isExistingResource?: boolean;
 }
 
 export const MeteredFeature: FunctionalComponent<MeteredFeatureProps> = ({ feature }) => {
@@ -60,35 +58,4 @@ export const MeteredFeature: FunctionalComponent<MeteredFeatureProps> = ({ featu
     default:
       return <MultiTier {...feature} />;
   }
-
-  // locked feature
-  // const isLocked = !feature.upgradable && !feature.downgradable;
-  // if (isExistingResource && isLocked) {
-  //   return <LockedFeature>{displayValue}</LockedFeature>;
-  // }
-
-  // if (!feature.value.numeric_details) {
-  //   return '';
-  // }
-
-  // customizable feature
-  // const value =
-  //   typeof features[feature.label] === 'number'
-  //     ? (features[feature.label] as number)
-  //     : numberFeatureDefaultValue(feature.value);
-
-  // return (
-  //   <manifold-number-input
-  //     aria-label={feature.displayName}
-  //     increment={feature.numericDetails.}
-  //     max={feature.value.numeric_details.max}
-  //     min={feature.value.numeric_details.min}
-  //     name={feature.label}
-  //     onUpdateValue={onChange}
-  //     suffix={feature.value.numeric_details.suffix}
-  //     value={value}
-  //     decrement-disabled-label="This feature is not downgradable"
-  //     increment-disabled-label="This feature is not upgradable"
-  //   />
-  // );
 };

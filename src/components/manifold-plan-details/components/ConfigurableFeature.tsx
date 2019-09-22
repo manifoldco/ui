@@ -22,13 +22,13 @@ export const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> 
   onChange,
 }) => {
   const currentValue = features[feature.label];
-  console.log({ feature });
   if (feature.type === 'BOOLEAN') {
     const { displayName, label } = feature;
     return (
       <manifold-toggle
         aria-label={displayName}
         defaultValue={booleanFeatureDefaultValue(feature)}
+        // value={currentValue}
         name={label}
         onUpdateValue={(e: CustomEvent) => onChange && onChange(e)}
       />
@@ -51,7 +51,7 @@ export const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> 
   if (feature.type === 'NUMBER') {
     const value =
       typeof currentValue === 'number' ? currentValue : numberFeatureDefaultValue(feature);
-    const { displayName, numericDetails } = feature;
+    const { displayName, numericDetails, label } = feature;
 
     const { increment, min, max, unit } = numericDetails || {};
 
@@ -61,7 +61,7 @@ export const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> 
         increment={increment}
         max={max}
         min={min}
-        name={displayName}
+        name={label}
         onUpdateValue={onChange}
         suffix={unit}
         value={value}

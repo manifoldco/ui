@@ -47,30 +47,6 @@ export function oneCent(number: number) {
 }
 
 /**
- * Determines whether plan has custom features
- */
-
-// export function hasCustomizableFeatures(features: Catalog.ExpandedFeature[]): boolean {
-//   return (
-//     features.findIndex(
-//       ({ customizable }) => typeof customizable === 'boolean' && customizable === true
-//     ) !== -1
-//   );
-// }
-
-/**
- * Determines whether plan has measurable features
- */
-
-// export function hasMeasurableFeatures(features: Catalog.ExpandedFeature[]): boolean {
-//   return (
-//     features.findIndex(
-//       ({ measurable }) => typeof measurable === 'boolean' && measurable === true
-//     ) !== -1
-//   );
-// }
-
-/**
  * User-friendly display for price description (may be found on any feature type)
  */
 export function featureDescription(value: Catalog.FeatureValueDetails): string | undefined {
@@ -80,8 +56,9 @@ export function featureDescription(value: Catalog.FeatureValueDetails): string |
 /**
  * Default data value for a boolean feature
  */
-export function booleanFeatureDefaultValue(feature: PlanConfigurableFeature): boolean {
-  return feature.label === 'true';
+export function booleanFeatureDefaultValue({ options }: PlanConfigurableFeature): boolean {
+  const value = options && options[0] && options[0].displayValue;
+  return value === 'true';
 }
 
 /**
@@ -96,20 +73,6 @@ export function fixedFeatureDisplayValue({ displayValue }: PlanFixedFeature): st
   }
   return displayValue;
 }
-
-/**
- * Default data value for a string feature
- */
-// export function stringFeatureDefaultValue(value: Catalog.FeatureValueDetails): string {
-//   return value.label;
-// }
-
-/**
- * User-friendly display for a string feature value
- */
-// export function stringFeatureDisplayValue(value: Catalog.FeatureValueDetails): string {
-//   return value.name;
-// }
 
 /**
  * Format dropdown options for string features
@@ -229,18 +192,6 @@ export function meteredFeatureDisplayValue({ numericDetails }: PlanMeteredFeatur
 }
 
 /**
- * User-friendly display for a non-measurable number feature value
- */
-// export function numberFeatureDisplayValue(value: Catalog.FeatureValueDetails): string {
-//   const suffix = value.numeric_details && value.numeric_details.suffix;
-//   return Number.isNaN(Number(value.name))
-//     ? value.name
-//     : `${new Intl.NumberFormat('en-US').format(parseFloat(value.name))}${
-//         suffix ? ` ${suffix}` : ''
-//       }`;
-// }
-
-/**
  * Collect all default data values for a feature set
  */
 export function initialFeatures(plan: Plan): Gateway.FeatureMap {
@@ -278,45 +229,6 @@ export function initialFeatures(plan: Plan): Gateway.FeatureMap {
 
   return features;
 }
-
-/**
- * Sort plans
- */
-// export function planSort(
-//   plans: Catalog.ExpandedPlan[],
-//   options?: { free?: boolean }
-// ): Catalog.ExpandedPlan[] {
-//   // Clone array to prevent accidental mutation with sort()
-//   const sorted = [...plans].sort((a, b) => {
-//     // If comparing 2 free plans, they both cost 0 anyway so don’t reorder
-//     if (a.body.free === true && b.body.free === true) {
-//       return 0;
-//     }
-//     // Move free plan to beginning
-//     if (a.body.free === true || b.body.free === true) {
-//       return a.body.free === true ? -1 : 1;
-//     }
-//     // Move custom plan to end (but once at the end, sort by cost)
-//     if (
-//       (a.body.customizable === true || b.body.customizable === true) &&
-//       a.body.customizable !== b.body.customizable // if both custom, skip to cost sorting below
-//     ) {
-//       return a.body.customizable === true ? 1 : -1;
-//     }
-//     // By default, sort by cost
-//     return (a.body.defaultCost || a.body.cost) - (b.body.defaultCost || b.body.cost);
-//   });
-
-//   // TODO: remove when we have API-level filtering
-//   if (options && options.free === true) {
-//     return plans.filter(
-//       ({ body }) =>
-//         body.free === true || body.defaultCost === 0 || (!body.defaultCost && body.cost === 0)
-//     );
-//   }
-
-//   return sorted;
-// }
 
 interface PlanCostOptions {
   planID: string;

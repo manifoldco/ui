@@ -36,23 +36,6 @@ export class ManifoldPlanCost {
     return this.fetchCustomCost(); // If we’re calculating custom features, wait to render until call finishes
   }
 
-  // get isCustomizable() {
-  //   return hasCustomizableFeatures(this.allFeatures);
-  // }
-
-  // measuredFeatures(features: Catalog.ExpandedFeature[]): Catalog.ExpandedFeature[] {
-  //   return features
-  //     .filter(({ measurable }) => measurable === true)
-  //     .filter(({ value }) => {
-  //       if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) {
-  //         return false;
-  //       }
-  //       return value.numeric_details.cost_ranges.find(
-  //         ({ cost_multiple }) => typeof cost_multiple === 'number' && cost_multiple > 0
-  //       );
-  //     });
-  // }
-
   fetchCustomCost() {
     if (!this.restFetch || !this.plan) {
       return null;
@@ -89,13 +72,13 @@ export class ManifoldPlanCost {
 
   @logger()
   render() {
+    const meteredFeatures =
+      (this.plan && this.plan.meteredFeatures && this.plan.meteredFeatures.edges) || undefined;
     return (
       <manifold-cost-display
         baseCost={this.plan && this.plan.cost}
         compact={this.compact}
-        meteredFeatures={
-          (this.plan && this.plan.meteredFeatures && this.plan.meteredFeatures.edges) || undefined
-        }
+        meteredFeatures={meteredFeatures}
         startingAt={this.plan && isConfigurable(this.plan) && this.compact}
       />
     );

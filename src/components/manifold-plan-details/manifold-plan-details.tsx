@@ -10,11 +10,10 @@ import {
   Watch,
 } from '@stencil/core';
 
-import { Product, Plan, RegionEdge, Region } from '../../types/graphql';
+import { Product, Plan, RegionEdge } from '../../types/graphql';
 import { Gateway } from '../../types/gateway';
 import { globalRegion } from '../../data/region';
 import { initialFeatures } from '../../utils/plan';
-// import { FeatureValue } from './components/FeatureValue';
 import { FeatureLabel } from './components/FeatureLabel';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -112,29 +111,28 @@ export class ManifoldPlanDetails {
   @Prop() plan?: Plan;
   @Prop() product?: Product;
   @Prop() regions?: string[];
-  @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
-  @Prop() resourceRegion?: Region;
+  // @Prop() resourceFeatures?: Gateway.ResolvedFeature[];
+  // @Prop() resourceRegion?: Region;
   @State() regionId: string = globalRegion.id; // default will always be overridden if a plan has regions
   @State() features: Gateway.FeatureMap = {};
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-load', bubbles: true }) planLoad: EventEmitter;
   @Watch('plan') planChange(newPlan: Plan, oldPlan: Plan | undefined) {
-    let features = this.features; // eslint-disable-line prefer-destructuring
+    const features = this.features; // eslint-disable-line prefer-destructuring
 
     // If plan changed, only reset features & region if user changed it (i.e there would be an oldPlan)
-    if (!this.resourceFeatures || oldPlan) {
-      features = this.setFeaturesFromPlan(newPlan);
-      this.features = features;
-      this.updateRegionFromPlan(newPlan);
-    }
+    // if (!this.resourceFeatures || oldPlan) {
+    //   features = this.setFeaturesFromPlan(newPlan);
+    //   this.features = features;
+    //   this.updateRegionFromPlan(newPlan);
+    // }
 
     const detail: EventDetail = {
       planId: newPlan.id,
       planLabel: newPlan.label,
       planName: newPlan.displayName,
       productLabel: this.product && this.product.label,
-      // features: this.customFeatures(features), // We need all features for plan cost, but only need to expose the custom ones
-      features: [],
+      features: this.customFeatures(features), // We need all features for plan cost, but only need to expose the custom ones
       regionId: this.regionId,
     };
 
@@ -144,9 +142,9 @@ export class ManifoldPlanDetails {
       this.planUpdate.emit(detail);
     }
   }
-  @Watch('resourceFeatures') resourceFeaturesChange(newFeatures: Gateway.ResolvedFeature[]) {
-    this.features = this.setFeaturesFromResource(newFeatures);
-  }
+  // @Watch('resourceFeatures') resourceFeaturesChange(newFeatures: Gateway.ResolvedFeature[]) {
+  //   this.features = this.setFeaturesFromResource(newFeatures);
+  // }
   @Watch('resourceRegion') resourceRegionChange(newRegion: string) {
     this.regionId = newRegion;
   }
@@ -154,13 +152,14 @@ export class ManifoldPlanDetails {
   @loadMark()
   @loadMark()
   componentWillLoad() {
-    if (this.resourceRegion) {
-      this.regionId = this.resourceRegion.id;
-    }
+    // if (this.resourceRegion) {
+    //   this.regionId = this.resourceRegion.id;
+    // }
 
-    if (this.resourceFeatures) {
-      this.features = this.setFeaturesFromResource(this.resourceFeatures);
-    } else if (this.plan) {
+    // if (this.resourceFeatures) {
+    //   this.features = this.setFeaturesFromResource(this.resourceFeatures);
+    // } else
+    if (this.plan) {
       this.features = this.setFeaturesFromPlan(this.plan);
     }
 
@@ -178,8 +177,7 @@ export class ManifoldPlanDetails {
         planLabel: this.plan.label,
         planName: this.plan.displayName,
         productLabel: this.product.label,
-        // features: this.customFeatures(features),
-        features: [],
+        features: this.customFeatures(features),
         regionId: this.regionId,
       };
       this.planUpdate.emit(detail);
@@ -197,8 +195,7 @@ export class ManifoldPlanDetails {
         planName: this.plan.displayName,
         planLabel: this.plan.label,
         productLabel: this.product.label,
-        // features: this.customFeatures(this.features),
-        features: [],
+        features: this.customFeatures(this.features),
         regionId: e.detail.value,
       };
       this.planUpdate.emit(detail);
@@ -207,36 +204,36 @@ export class ManifoldPlanDetails {
 
   setFeaturesFromPlan(plan: Plan) {
     if (plan) {
-      // TODO format features
       return { ...initialFeatures(plan) };
     }
     return {};
   }
 
-  setFeaturesFromResource(features: Gateway.ResolvedFeature[]) {
-    return features.reduce(
-      (map, { label, value }) => ({
-        ...map,
-        [label]: value.value,
-      }),
-      {}
-    );
-  }
-
-  // customFeatures(features: Gateway.FeatureMap): Gateway.FeatureMap {
-  //   if (!this.plan) {
-  //     return features;
-  //   }
-  //   const { expanded_features } = this.plan.body;
-  //   const customFeatures = { ...features };
-  //   Object.entries(customFeatures).forEach(([label]) => {
-  //     const feature = expanded_features.find(f => f.label === label);
-  //     if (!feature || !feature.customizable) {
-  //       delete customFeatures[label];
-  //     }
-  //   });
-  //   return customFeatures;
+  // setFeaturesFromResource(features: Gateway.ResolvedFeature[]) {
+  //   return features.reduce(
+  //     (map, { label, value }) => ({
+  //       ...map,
+  //       [label]: value.value,
+  //     }),
+  //     {}
+  //   );
   // }
+
+  customFeatures(features: Gateway.FeatureMap): Gateway.FeatureMap {
+    if (!this.plan) {
+      return features;
+    }
+    const { configurableFeatures } = this.plan;
+    const customFeatures = { ...features };
+    Object.entries(customFeatures).forEach(([label]) => {
+      const feature =
+        configurableFeatures && configurableFeatures.edges.find(({ node }) => node.label === label);
+      if (!feature) {
+        delete customFeatures[label];
+      }
+    });
+    return customFeatures;
+  }
 
   get featureList() {
     if (!this.plan) {
@@ -305,10 +302,11 @@ export class ManifoldPlanDetails {
   get regionSelector() {
     let regions: RegionEdge[] = [];
 
-    if (this.resourceRegion) {
-      const region = { node: this.resourceRegion };
-      regions = [region as RegionEdge];
-    } else if (this.plan && this.plan.regions) {
+    // if (this.resourceRegion) {
+    //   const region = { node: this.resourceRegion };
+    //   regions = [region as RegionEdge];
+    // } else
+    if (this.plan && this.plan.regions) {
       regions = this.plan.regions.edges; // eslint-disable-line prefer-destructuring
     }
 
