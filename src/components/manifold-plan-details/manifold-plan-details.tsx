@@ -20,6 +20,7 @@ import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { FixedFeature } from './components/FixedFeature';
 import { MeteredFeature } from './components/MeteredFeature';
+import { ConfigurableFeature } from './components/ConfigurableFeature';
 
 interface EventDetail {
   planId: string;
@@ -242,7 +243,7 @@ export class ManifoldPlanDetails {
       return null;
     }
 
-    const { fixedFeatures, meteredFeatures } = this.plan;
+    const { fixedFeatures, meteredFeatures, configurableFeatures } = this.plan;
 
     // TODO: refactor this.
     // these children rely on plan data, and it’s near-impossible to provide them with default values.
@@ -283,19 +284,20 @@ export class ManifoldPlanDetails {
               </FeatureValue>,
             ];
           })}
-        {/* {configurableFeatures &&
+        {configurableFeatures &&
           configurableFeatures.edges.map(({ node: feature }) => {
             return [
               <FeatureLabel name={feature.displayName} />,
-              <dd class="feature-value">{feature.displayValue}</dd>,
               // Rename to config feature value
-              <FeatureValue
-                features={this.features}
-                feature={feature}
-                onChange={e => this.handleChangeValue(e)}
-              />,
+              <FeatureValue>
+                <ConfigurableFeature
+                  features={this.features}
+                  feature={feature}
+                  onChange={e => this.handleChangeValue(e)}
+                />
+              </FeatureValue>,
             ];
-          })} */}
+          })}
       </dl>
     );
   }

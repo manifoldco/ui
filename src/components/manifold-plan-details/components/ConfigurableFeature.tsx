@@ -22,7 +22,7 @@ export const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> 
   onChange,
 }) => {
   const currentValue = features[feature.label];
-
+  console.log({ feature });
   if (feature.type === 'BOOLEAN') {
     const { displayName, label } = feature;
     return (
@@ -35,7 +35,7 @@ export const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> 
     );
   }
 
-  if (feature.type) {
+  if (feature.type === 'STRING') {
     const { displayName, label, options } = feature;
     return (
       <manifold-select
