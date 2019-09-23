@@ -13,7 +13,6 @@ import {
   PlanMeteredFeatureEdge,
   Product,
   ProductEdge,
-  Region,
   Resource,
 } from './types/graphql';
 import {
@@ -424,8 +423,6 @@ export namespace Components {
     'plan'?: Plan;
     'product'?: Product;
     'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: Region;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
@@ -1486,8 +1483,6 @@ declare namespace LocalJSX {
     'plan'?: Plan;
     'product'?: Product;
     'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
-    'resourceRegion'?: Region;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {

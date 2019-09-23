@@ -1,6 +1,10 @@
 import { h, Component, Prop } from '@stencil/core';
+
+import { FeatureName } from '../manifold-plan-details/components/FeatureName';
+import { FeatureValue } from './components/FeatureValue';
+
 import { Resource } from '../../types/graphql';
-import { $ } from '../../utils/currency';
+import { fixedFeatureDisplayValue, meteredFeatureDisplayValue } from '../../utils/plan';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -17,19 +21,48 @@ export class ManifoldResourceDetails {
 
   @logger()
   render() {
-    // TODO: re-add estimated cost & features when supported by GraphQL
-
-    if (this.data) {
+    if (this.data && this.data.plan) {
+      const { displayName, fixedFeatures, meteredFeatures, configurableFeatures } = this.data.plan;
       return (
         <div class="container">
-          <h3 class="heading">Plan</h3>
+          <h3 class="heading">Plan Features</h3>
           <div class="details">
-            {this.data.plan && [
-              <span class="amount">{$(this.data.plan.cost)}</span>,
-              <span class="suffix">/mo</span>,
-              <p class="plan-name">{this.data.plan.displayName}</p>,
-            ]}
+            {/* TODO: add resource cost when available in GraphQL API. */}
+            {/* {cost && [<span class="amount">{$(cost)}</span>, <span class="suffix">/mo</span>]} */}
+            <p class="plan-name">{displayName}</p>
           </div>
+          <dl class="features">
+            {fixedFeatures &&
+              fixedFeatures.edges.map(({ node: feature }) => {
+                const displayValue = fixedFeatureDisplayValue(feature);
+                return [
+                  <FeatureName name={feature.displayName} />,
+                  <dd class="feature-value">
+                    <FeatureValue value={displayValue} />
+                  </dd>,
+                ];
+              })}
+            {meteredFeatures &&
+              meteredFeatures.edges.map(({ node: feature }) => {
+                const displayValue = meteredFeatureDisplayValue(feature);
+                return [
+                  <FeatureName name={feature.displayName} />,
+                  <dd class="feature-value">
+                    <FeatureValue value={displayValue} />
+                  </dd>,
+                ];
+              })}
+            {configurableFeatures &&
+              configurableFeatures.edges.map(({ node: feature }) => {
+                return [
+                  <FeatureName name={feature.displayName} />,
+                  <dd class="feature-value">
+                    {/* TODO: add value when resources features available in GraphQL API. */}
+                    <FeatureValue value="Custom" />
+                  </dd>,
+                ];
+              })}
+          </dl>
         </div>
       );
     }

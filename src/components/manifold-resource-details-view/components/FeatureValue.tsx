@@ -1,41 +1,15 @@
 import { h, FunctionalComponent } from '@stencil/core';
-import { Catalog } from '../../../types/catalog';
-import { CustomFeature } from './CustomFeature';
-import { MeasurableFeatureUsageDisplay } from './MeasurableFeatureUsageDisplay';
-import { FeatureDisplay } from './FeatureDisplay';
+import { check } from '@manifoldco/icons';
 
 interface FeatureValueProps {
-  feature: Catalog.ExpandedFeature;
-  value?: number | string | boolean;
-  onChange?: (e: CustomEvent) => void;
+  value?: string;
 }
 
-export const FeatureValue: FunctionalComponent<FeatureValueProps> = ({
-  feature,
-  value = '',
-  onChange = () => {},
-}) => {
-  if (feature.customizable) {
-    return <CustomFeature feature={feature} value={value} onChange={onChange} />;
-  }
-  if (feature.measurable) {
-    return <MeasurableFeatureUsageDisplay feature={feature} />;
-  }
-
-  let displayValue;
-
-  switch (feature.type) {
-    case 'boolean':
-      // HACK: The display values doesn't exist in this version of the feature object.
-      displayValue = feature.value_string === 'true' ? 'Yes' : 'No';
-      break;
-    case 'number':
-      displayValue = feature.value_string && parseFloat(feature.value_string).toLocaleString();
-      break;
-    default:
-    case 'string':
-      displayValue = feature.value_string;
-      break;
-  }
-  return <FeatureDisplay value={displayValue} />;
+export const FeatureValue: FunctionalComponent<FeatureValueProps> = ({ value }) => {
+  return (
+    <span class="value" data-value={value}>
+      <manifold-icon class="icon" icon={check} marginRight />
+      {value}
+    </span>
+  );
 };
