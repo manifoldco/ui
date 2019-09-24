@@ -1,4 +1,4 @@
-import { h, JSX, Component, Element, Prop } from '@stencil/core';
+import { h, JSX, Component, Element, Prop, FunctionalComponent } from '@stencil/core';
 
 import { $ } from '../../utils/currency';
 import logger from '../../utils/logger';
@@ -6,6 +6,67 @@ import loadMark from '../../utils/loadMark';
 import { PlanMeteredFeatureEdge } from '../../types/graphql';
 import { meteredFeatureDisplayValue } from '../../utils/plan';
 
+/**
+ * Base Cost
+ */
+interface BaseCostProps {
+  cost: number;
+  isFreeMonthly?: boolean;
+  hasMeteredFeatures?: boolean;
+  compact?: boolean;
+}
+const BaseCost: FunctionalComponent<BaseCostProps> = props => {
+  const { cost, isFreeMonthly, hasMeteredFeatures, compact } = props;
+
+  if (typeof cost !== 'number') {
+    return null;
+  }
+  // If there are measurable costs but no monthly cost, only show measurable
+  if (isFreeMonthly && hasMeteredFeatures) {
+    return null;
+  }
+
+  if (isFreeMonthly) {
+    // Show the badge for compact, large text otherwise
+    return compact ? <manifold-badge data-tag="free">Free</manifold-badge> : 'Free';
+  }
+  // $5 / mo
+  return compact ? $(cost) : [$(cost), <small>&nbsp;/&nbsp;mo</small>];
+};
+
+/**
+ * Metered Cost
+ */
+interface MeteredCostProps {
+  meteredFeatures: PlanMeteredFeatureEdge[];
+}
+const MeteredCost: FunctionalComponent<MeteredCostProps> = ({ meteredFeatures }) => {
+  if (meteredFeatures.length === 0) {
+    return null;
+  }
+
+  if (meteredFeatures.length > 1) {
+    return <small>metered usage</small>;
+  }
+
+  const displayString = meteredFeatureDisplayValue(meteredFeatures[0].node) || '';
+
+  if (displayString.indexOf('per') > 0) {
+    const [cost, suffix] = displayString.split(' per ');
+    return [cost, <small>&nbsp;per&nbsp;{suffix}</small>];
+  }
+
+  if (displayString.indexOf('/') > 0) {
+    const [cost, suffix] = displayString.split(' / ');
+    return [cost, <small>&nbsp;/&nbsp;{suffix}</small>];
+  }
+
+  return displayString;
+};
+
+/**
+ * Cost Display
+ */
 @Component({ tag: 'manifold-cost-display', styleUrl: 'manifold-cost-display.css', shadow: true })
 export class ManifoldCostDisplay {
   @Element() el: HTMLElement;
@@ -18,42 +79,8 @@ export class ManifoldCostDisplay {
     return this.baseCost === 0;
   }
 
-  renderBaseCost(): JSX.Element | null {
-    if (typeof this.baseCost !== 'number') {
-      return null;
-    }
-    // If there are measurable costs but no monthly cost, only show measurable
-    if (this.isFreeMonthly && this.meteredFeatures.length > 0) {
-      return null;
-    }
-
-    if (this.isFreeMonthly) {
-      // Show the badge for compact, large text otherwise
-      return this.compact ? <manifold-badge data-tag="free">Free</manifold-badge> : 'Free';
-    }
-    // $5 / mo
-    return this.compact ? $(this.baseCost) : [$(this.baseCost), <small>&nbsp;/&nbsp;mo</small>];
-  }
-
-  renderMeteredCosts() {
-    if (this.meteredFeatures.length < 1) {
-      return null;
-    }
-
-    if (this.meteredFeatures.length > 1) {
-      return 'metered usage';
-    }
-    const displayString = meteredFeatureDisplayValue(this.meteredFeatures[0].node) || '';
-    const output: (JSX.Element)[] = this.isFreeMonthly ? [] : [' + '];
-    if (displayString.indexOf('per') > 0) {
-      const [cost, suffix] = displayString.split(' per ');
-      output.push(cost, <small>&nbsp;per&nbsp;{suffix}</small>);
-    } else {
-      const [cost, suffix] = displayString.split(' / ');
-      output.push(cost, <small>&nbsp;/&nbsp;{suffix}</small>);
-    }
-
-    return output;
+  get hasMeteredFeatures() {
+    return this.meteredFeatures.length > 0;
   }
 
   @loadMark()
@@ -66,14 +93,22 @@ export class ManifoldCostDisplay {
     }
 
     // Show “starting at” either if customizable, or too many metered features to display
-    const startingAt = (this.compact && this.startingAt) || this.meteredFeatures.length > 1;
+    const startingAt = this.compact && this.startingAt;
+
+    // Show plus sign if displaying both base and metered cost.
+    const compositeCost = !this.isFreeMonthly && this.hasMeteredFeatures;
 
     return (
       <div class="cost" data-compact={this.compact}>
         <span itemprop="price">
           {startingAt && <span class="starting">Starting at</span>}
-          {this.renderBaseCost()}
-          {this.renderMeteredCosts()}
+          <BaseCost
+            cost={this.baseCost}
+            isFreeMonthly={this.isFreeMonthly}
+            hasMeteredFeatures={this.hasMeteredFeatures}
+          />
+          {compositeCost && ' + '}
+          <MeteredCost meteredFeatures={this.meteredFeatures} />
         </span>
       </div>
     );
