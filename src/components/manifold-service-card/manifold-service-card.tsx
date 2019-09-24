@@ -69,7 +69,7 @@ export class ManifoldServiceCard {
   }
 
   async fetchProduct(productLabel?: string) {
-    if (!this.graphqlFetch) {
+    if (!this.graphqlFetch || !productLabel) {
       return;
     }
 
