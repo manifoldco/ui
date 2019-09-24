@@ -2,7 +2,7 @@ import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { Product } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -27,6 +27,10 @@ const query = gql`
   }
 `;
 
+// Product has at least one free plan.
+const isFree = (product: Product) =>
+  !!(product.plans && product.plans.edges.find(({ node }) => node.free));
+
 @Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
@@ -38,6 +42,13 @@ export class ManifoldServiceCard {
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @State() free: boolean = false;
+  @State() errors?: GraphqlError[];
+
+  @Watch('product') productChange(newProduct: Product) {
+    if (newProduct) {
+      this.free = isFree(newProduct);
+    }
+  }
 
   @Watch('productLabel') productLabelChange(newProductLabel: string) {
     if (!this.product || (this.product && this.product.label !== newProductLabel)) {
@@ -62,18 +73,20 @@ export class ManifoldServiceCard {
       return;
     }
 
-    const { data } = await this.graphqlFetch({ query, variables: { productLabel } });
-    if (data && data.product && data.product.plans) {
+    const { data, errors } = await this.graphqlFetch({ query, variables: { productLabel } });
+    if (data && data.product) {
       this.product = data.product;
-      // Product has at least one free plan.
-      this.free = !!data.product.plans.edges.find(({ node }) => node.free);
+    }
+
+    if (errors) {
+      this.errors = errors;
     }
   }
 
   @logger()
   render() {
     if (this.product) {
-      return (
+      return [
         <manifold-service-card-view
           description={this.product.tagline}
           isFeatured={this.isFeatured}
@@ -88,8 +101,12 @@ export class ManifoldServiceCard {
           <manifold-forward-slot slot="cta">
             <slot name="cta" />
           </manifold-forward-slot>
-        </manifold-service-card-view>
-      );
+        </manifold-service-card-view>,
+        this.errors &&
+          this.errors.map(({ message }) => (
+            <manifold-toast alertType="error">{message}</manifold-toast>
+          )),
+      ];
     }
     // ☠
     return (
