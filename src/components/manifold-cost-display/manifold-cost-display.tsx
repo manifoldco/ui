@@ -1,4 +1,4 @@
-import { h, JSX, Component, Element, Prop, FunctionalComponent } from '@stencil/core';
+import { h, Component, Element, Prop, FunctionalComponent } from '@stencil/core';
 
 import { $ } from '../../utils/currency';
 import logger from '../../utils/logger';
