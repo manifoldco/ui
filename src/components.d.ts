@@ -600,16 +600,15 @@ export namespace Components {
     'required'?: boolean;
   }
   interface ManifoldServiceCard {
-    'isFeatured'?: boolean;
-    'preserveEvent'?: boolean;
-    'product'?: Catalog.Product;
-    'productId'?: string;
-    'productLabel'?: string;
-    'productLinkFormat'?: string;
     /**
     * _(hidden)_
     */
-    'restFetch'?: RestFetch;
+    'graphqlFetch'?: GraphqlFetch;
+    'isFeatured'?: boolean;
+    'preserveEvent'?: boolean;
+    'product'?: Product;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
   }
   interface ManifoldServiceCardView {
     'description'?: string;
@@ -1697,16 +1696,15 @@ declare namespace LocalJSX {
     'required'?: boolean;
   }
   interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
-    'isFeatured'?: boolean;
-    'preserveEvent'?: boolean;
-    'product'?: Catalog.Product;
-    'productId'?: string;
-    'productLabel'?: string;
-    'productLinkFormat'?: string;
     /**
     * _(hidden)_
     */
-    'restFetch'?: RestFetch;
+    'graphqlFetch'?: GraphqlFetch;
+    'isFeatured'?: boolean;
+    'preserveEvent'?: boolean;
+    'product'?: Product;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
   }
   interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {
     'description'?: string;

@@ -1,131 +1,98 @@
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
 import connection from '../../state/connection';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { Product } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+
+const query = gql`
+  query PRODUCT_CARD($productLabel: String!) {
+    product(label: $productLabel) {
+      id
+      displayName
+      tagline
+      label
+      logoUrl
+      # must get all plans until 'free' filter works
+      plans(first: 500, orderBy: { field: COST, direction: ASC }) {
+        edges {
+          node {
+            free
+          }
+        }
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-service-card' })
 export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop({ reflect: true }) isFeatured?: boolean;
-  @Prop({ mutable: true }) product?: Catalog.Product;
-  @Prop() productId?: string;
+  @Prop({ mutable: true }) product?: Product;
   @Prop() productLabel?: string;
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @State() free: boolean = false;
 
-  @Watch('product') productChange(newProduct: Catalog.Product) {
-    if (newProduct) {
-      this.fetchIsFree(); // if product has changed, re-fetch free
-    }
-  }
-
-  @Watch('isFree') isFreeChange(newFree: boolean) {
-    this.free = newFree;
-  }
-
-  @Watch('productId') productIdChange(newProductId: string) {
-    if (!this.product || (this.product && this.product.id !== newProductId)) {
-      this.fetchProduct({ id: newProductId });
-    }
-  }
-
   @Watch('productLabel') productLabelChange(newProductLabel: string) {
-    if (!this.product || (this.product && this.product.body.label !== newProductLabel)) {
-      this.fetchProduct({ label: newProductLabel });
+    if (!this.product || (this.product && this.product.label !== newProductLabel)) {
+      this.fetchProduct(newProductLabel);
     }
   }
 
   @loadMark()
   componentWillLoad() {
-    this.fetchProduct({ id: this.productId, label: this.productLabel });
+    this.fetchProduct(this.productLabel);
   }
 
   get href() {
     if (this.productLinkFormat && this.product) {
-      return this.productLinkFormat.replace(/:product/gi, this.product.body.label);
+      return this.productLinkFormat.replace(/:product/gi, this.product.label);
     }
     return ''; // if no format, or product is loading, don’t calculate href
   }
 
-  async fetchProduct({ id, label }: { id?: string; label?: string }) {
-    if (!this.restFetch) {
+  async fetchProduct(productLabel?: string) {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    if (id) {
-      this.product = undefined;
-      const productResp = await this.restFetch<Catalog.ExpandedProduct>({
-        service: 'catalog',
-        endpoint: `/products/${id}`,
-      });
-
-      if (productResp instanceof Error) {
-        console.error(productResp);
-        return;
-      }
-
-      this.product = productResp;
-    } else if (label) {
-      this.product = undefined;
-      const productResp = await this.restFetch<Catalog.ExpandedProduct[]>({
-        service: 'catalog',
-        endpoint: `/products/?label=${label}`,
-      });
-
-      if (Array.isArray(productResp) && productResp.length) {
-        this.product = productResp[0]; // eslint-disable-line prefer-destructuring
-      }
-    }
-  }
-
-  async fetchIsFree() {
-    if (!this.restFetch || !this.product) {
-      return;
-    }
-
-    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
-      service: 'catalog',
-      endpoint: `/plans/?product_id=${this.product.id}`,
-    });
-
-    if (response instanceof Error) {
-      console.error(response);
-      return;
-    }
-
-    if (Array.isArray(response) && response.find(plan => plan.body.free === true)) {
-      this.free = true;
-    } else {
-      this.free = false;
+    const { data } = await this.graphqlFetch({ query, variables: { productLabel } });
+    if (data && data.product && data.product.plans) {
+      this.product = data.product;
+      // Product has at least one free plan.
+      this.free = !!data.product.plans.edges.find(({ node }) => node.free);
     }
   }
 
   @logger()
   render() {
-    return this.product && typeof this.free === 'boolean' ? (
-      <manifold-service-card-view
-        description={this.product.body.tagline}
-        isFeatured={this.isFeatured}
-        isFree={this.free}
-        logo={this.product.body.logo_url}
-        name={this.product.body.name}
-        preserveEvent={this.preserveEvent}
-        productId={this.product.id}
-        productLabel={this.product.body.label}
-        productLinkFormat={this.productLinkFormat}
-      >
-        <manifold-forward-slot slot="cta">
-          <slot name="cta" />
-        </manifold-forward-slot>
-      </manifold-service-card-view>
-    ) : (
-      // ☠
+    if (this.product) {
+      return (
+        <manifold-service-card-view
+          description={this.product.tagline}
+          isFeatured={this.isFeatured}
+          isFree={this.free}
+          logo={this.product.logoUrl}
+          name={this.product.displayName}
+          preserveEvent={this.preserveEvent}
+          productId={this.product.id}
+          productLabel={this.product.label}
+          productLinkFormat={this.productLinkFormat}
+        >
+          <manifold-forward-slot slot="cta">
+            <slot name="cta" />
+          </manifold-forward-slot>
+        </manifold-service-card-view>
+      );
+    }
+    // ☠
+    return (
       <manifold-service-card-view
         skeleton={true}
         description="Awesome product description"
