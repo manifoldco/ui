@@ -60,16 +60,7 @@ export class ConnectionState {
     this.authToken = token;
   };
 
-  getAuthToken = () => this.accessToken;
-
-  get accessToken() {
-    if (this.authToken) {
-      const [token] = this.authToken.split('|');
-      return token;
-    }
-
-    return undefined;
-  }
+  getAuthToken = () => this.authToken;
 
   restFetch = createRestFetch({
     endpoints: () => connections[this.env],
