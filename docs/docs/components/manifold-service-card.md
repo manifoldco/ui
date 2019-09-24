@@ -2,10 +2,13 @@
 title: Service Card
 path: '/components/manifold-service-card'
 example: |
-  <manifold-service-card
-    product-id="234qkjvrptpy3thna4qttwt7m2nf6"
+  <manifold-service-card product-label="jawsdb-mysql">
   </manifold-service-card>
 ---
+
+<manifold-toast alert-type="warning">
+  <div><code>product-id</code> has been removed in favor of <code>product-label</code> starting in version 0.5.12.</div>
+</manifold-toast>
 
 # Service Card
 
@@ -33,14 +36,6 @@ The `manifold-service-card` component can be used to fetch a product's data with
 
 ```html
 <manifold-service-card product-label="logdna"></manifold-product-card>
-```
-
-## Fetching using the id
-
-The `manifold-service-card` component can be used to fetch a product's data with an id.
-
-```html
-<manifold-service-card product-id="1234"></manifold-product-card>
 ```
 
 ## Navigation
@@ -78,5 +73,5 @@ document.addEventListener('manifold-marketplace-click', { detail } => {
 The following events are emitted:
 
 | Event Name                   | Description                                     | Data                                       |
-| ---------------------------- | ----------------------------------------------- | ------------------------------------------ |
+|------------------------------|-------------------------------------------------|--------------------------------------------|
 | `manifold-marketplace-click` | Fires whenever a user has clicked on a product. | `productId`, `productLabel`, `productName` |
