@@ -490,14 +490,14 @@ export namespace Components {
     'value'?: string;
   }
   interface ManifoldResourceCard {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'label'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCardView {
     'label'?: string;
@@ -1584,14 +1584,14 @@ declare namespace LocalJSX {
     'value'?: string;
   }
   interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'label'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
     'label'?: string;
