@@ -1,5 +1,15 @@
 import { newE2EPage } from '@stencil/core/testing';
-import { Product } from '../../spec/mock/catalog';
+
+const Product: any = {
+  id: '234qkjvrptpy3thna4qttwt7m2nf6',
+  displayName: 'LogDNA',
+  tagline: 'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
+  label: 'logdna',
+  logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
+  plans: {
+    edges: [{ node: { free: true } }, { node: { free: false } }],
+  },
+};
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
@@ -14,11 +24,10 @@ describe('<manifold-service-card>', () => {
 
   it('passes down product props to service card view', async () => {
     const requiredProps = {
-      description: Product.body.tagline,
-      logo: Product.body.logo_url,
-      name: Product.body.name,
-      productId: Product.id,
-      productLabel: Product.body.label,
+      description: Product.tagline,
+      logo: Product.logoUrl,
+      name: Product.displayName,
+      productLabel: Product.label,
     };
 
     const page = await newE2EPage({
@@ -57,7 +66,7 @@ describe('<manifold-service-card>', () => {
 
       const link = await page.find('manifold-service-card-view >>> a');
       const href = link.getAttribute('href');
-      expect(href).toBe(`/product/${Product.body.label}`);
+      expect(href).toBe(`/product/${Product.label}`);
     });
 
     it('[preserve-event]: it passes result to child', async () => {
