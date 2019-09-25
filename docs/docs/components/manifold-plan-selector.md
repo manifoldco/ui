@@ -70,7 +70,7 @@ may optionally want to order the regions with the `regions` attribute:
 
 ```html
 <manifold-plan-selector
-  regions="aws-eu-west-1,aws-eu-west-2,aws-us-east-1,aws-us-east-2"
+  regions="235p16bz8n7qkjtvqyg599qtqa9ur,235wy26njfzf53k1d050k2eg9f5ey,235u7nm47cknwjyjdyqwxg070zfmm"
 ></manifold-plan-selector>
 ```
 
