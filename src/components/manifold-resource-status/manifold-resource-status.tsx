@@ -3,11 +3,11 @@ import { h, Component, Prop } from '@stencil/core';
 import Tunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Gateway } from '../../types/gateway';
+import { Resource } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-status' })
 export class ManifoldResourceStatus {
-  @Prop() data?: Gateway.Resource;
+  @Prop() data?: Resource;
   @Prop() loading: boolean = true;
   @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
@@ -19,8 +19,7 @@ export class ManifoldResourceStatus {
     return (
       <manifold-resource-status-view
         size={this.size}
-        resourceState={this.data && (this.data.state as string)}
-        loading={this.loading}
+        status={this.data ? this.data.status : undefined}
       />
     );
   }

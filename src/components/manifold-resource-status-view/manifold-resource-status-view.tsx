@@ -2,18 +2,7 @@ import { h, Component, Prop } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-
-const AVAILABLE = 'available';
-const OFFLINE = 'offline';
-const PROVISIONING = 'provision';
-const DEGRADED = 'degraded';
-
-const message: { [s: string]: string } = {
-  [AVAILABLE]: 'Available',
-  [OFFLINE]: 'Offline',
-  [PROVISIONING]: 'Provision',
-  [DEGRADED]: 'Degraded',
-};
+import { ResourceStatus, ResourceStatusLabel } from '../../types/graphql';
 
 @Component({
   tag: 'manifold-resource-status-view',
@@ -21,38 +10,47 @@ const message: { [s: string]: string } = {
   shadow: true,
 })
 export class ManifoldResourceStatusView {
-  @Prop() loading?: boolean = false;
-  @Prop() resourceState?: string = OFFLINE;
+  @Prop() status?: ResourceStatus;
   @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
-
-  status(resourceState = this.resourceState) {
-    if (resourceState && message[resourceState]) {
-      return resourceState;
-    }
-    return OFFLINE;
-  }
-
-  statusMessage(resourceState = this.resourceState) {
-    if (resourceState && message[resourceState]) {
-      return message[resourceState];
-    }
-    return message[OFFLINE];
-  }
 
   @loadMark()
   componentWillLoad() {}
 
+  statusMessage(label: string) {
+    switch (label) {
+      case ResourceStatusLabel.Available:
+        return 'Available';
+      case ResourceStatusLabel.Creating:
+        return 'Creating';
+      case ResourceStatusLabel.Deleted:
+        return 'Deleted';
+      case ResourceStatusLabel.Deleting:
+        return 'Deleting';
+      case ResourceStatusLabel.Updating:
+        return 'Updating';
+      case ResourceStatusLabel.ErrorCreating:
+        return 'Error Creating';
+      case ResourceStatusLabel.ErrorDeleting:
+        return 'Error Deleting';
+      case ResourceStatusLabel.ErrorUpdating:
+        return 'Error Updating';
+      default:
+        return 'Loading';
+    }
+  }
+
   @logger()
   render() {
-    const status = this.loading ? 'loading' : this.status(this.resourceState);
+    const message = this.status
+      ? this.status.message || this.statusMessage(this.status.label)
+      : 'Loading';
+
     return (
-      <div class="status" data-size={this.size} data-status={status}>
+      <div class="status" data-size={this.size} data-status={this.status && this.status.message}>
         <div class="icon">
-          {this.loading ? <manifold-icon icon={refresh_cw} /> : <div class="icon-status" />}
+          {this.status ? <div class="icon-status" /> : <manifold-icon icon={refresh_cw} />}
         </div>
-        <span role="status">
-          {this.loading ? 'Loading' : this.statusMessage(this.resourceState)}
-        </span>
+        <span role="status">{message}</span>
       </div>
     );
   }

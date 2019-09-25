@@ -15,7 +15,10 @@ const query = gql`
       id
       displayName
       label
-      status
+      status {
+        label
+        message
+      }
       plan {
         id
         displayName

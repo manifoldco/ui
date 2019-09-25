@@ -14,6 +14,7 @@ import {
   Product,
   ProductEdge,
   Resource,
+  ResourceStatus,
 } from './types/graphql';
 import {
   Gateway,
@@ -557,14 +558,13 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldResourceStatus {
-    'data'?: Gateway.Resource;
+    'data'?: Resource;
     'loading': boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldResourceStatusView {
-    'loading'?: boolean;
-    'resourceState'?: string;
     'size'?: 'xsmall' | 'small' | 'medium';
+    'status'?: ResourceStatus;
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
@@ -1614,14 +1614,13 @@ declare namespace LocalJSX {
     'loading'?: boolean;
   }
   interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
-    'data'?: Gateway.Resource;
+    'data'?: Resource;
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
-    'loading'?: boolean;
-    'resourceState'?: string;
     'size'?: 'xsmall' | 'small' | 'medium';
+    'status'?: ResourceStatus;
   }
   interface ManifoldSelect extends JSXBase.HTMLAttributes<HTMLManifoldSelectElement> {
     'defaultValue'?: string;
