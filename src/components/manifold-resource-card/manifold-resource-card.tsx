@@ -1,11 +1,12 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { Resource } from '../../types/graphql';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { gql } from '@manifoldco/gql-zero';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
+import { Error } from '../Error';
 
 const query = gql`
   query RESOURCE($resourceLabel: String!) {
@@ -20,8 +21,6 @@ const query = gql`
       }
       status {
         label
-        percentDone
-        message
       }
     }
   }
@@ -38,6 +37,7 @@ export class ManifoldResourceCard {
   @Prop() resourceLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @State() resource?: Resource;
+  @State() errors?: GraphqlError[];
 
   @Watch('label') resourceLabelChange(newLabel: string) {
     this.fetchResource(newLabel);
@@ -60,7 +60,7 @@ export class ManifoldResourceCard {
     }
 
     if (errors) {
-      // TODO set errors.
+      this.errors = errors;
     }
   }
 
@@ -70,7 +70,7 @@ export class ManifoldResourceCard {
       const { label, displayName, plan, id, status } = this.resource;
       const { logoUrl } = (plan && plan.product) || {};
 
-      return (
+      return [
         <manifold-resource-card-view
           label={label}
           name={displayName}
@@ -79,8 +79,9 @@ export class ManifoldResourceCard {
           resourceStatus={status.label}
           resourceLinkFormat={this.resourceLinkFormat}
           preserveEvent={this.preserveEvent}
-        />
-      );
+        />,
+        <Error errors={this.errors} />,
+      ];
     }
 
     // ☠
