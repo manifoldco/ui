@@ -1,5 +1,5 @@
 import { h, Component, State, Prop } from '@stencil/core';
-import { PlanState, Resource, ResourceStatus } from '../../types/graphql';
+import { PlanState, Resource, ResourceStatusLabel } from '../../types/graphql';
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -59,7 +59,11 @@ const ResourceMock: Resource = {
   },
   ssoSupported: true,
   ssoUrl: '',
-  status: ResourceStatus.Available,
+  status: {
+    label: ResourceStatusLabel.Available,
+    message: '',
+    percentDone: 100,
+  },
 };
 
 @Component({ tag: 'manifold-mock-resource' })

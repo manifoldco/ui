@@ -6,7 +6,7 @@ import ResourceTunnel from '../../data/resource';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Resource, ResourceStatus } from '../../types/graphql';
+import { Resource, ResourceStatusLabel } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 const query = gql`
@@ -109,7 +109,10 @@ export class ManifoldResourceContainer {
   }
 
   @Watch('refetchUntilValid') refreshChange(newRefresh: boolean) {
-    if (newRefresh && (!this.resource || this.resource.status !== ResourceStatus.Available)) {
+    if (
+      newRefresh &&
+      (!this.resource || this.resource.status.label !== ResourceStatusLabel.Available)
+    ) {
       this.fetchResource(this.resourceLabel);
     }
   }
@@ -134,7 +137,7 @@ export class ManifoldResourceContainer {
 
       if (
         this.refetchUntilValid &&
-        (!data || (data.resource && data.resource.status !== ResourceStatus.Available))
+        (!data || (data.resource && data.resource.status.label !== ResourceStatusLabel.Available))
       ) {
         this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
       }

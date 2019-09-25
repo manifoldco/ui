@@ -1106,7 +1106,7 @@ export type Resource = Node & {
    * not used, the URL will expire after around 5 minutes and another one will need to be requested.
  **/
   ssoUrl: Scalars['String'],
-  /**  An enum indicating the availability status of the resource  */
+  /**  Indicates the availability status of the resource  */
   status: ResourceStatus,
   /** 
  * The plan for which this resource is provisioned. The plan can be null if the
@@ -1154,12 +1154,24 @@ export type ResourceEdge = {
   node?: Maybe<Resource>,
 };
 
-/** ResourceStatus represents the current status of a Resource */
-export enum ResourceStatus {
+/** ResourceStatus represents the current availability status of a Resource */
+export type ResourceStatus = {
+   __typename?: 'ResourceStatus',
+  label: ResourceStatusLabel,
+  percentDone: Scalars['Int'],
+  message: Scalars['String'],
+};
+
+/** ResourceStatusLabel is an enum representing the possible status a resource can have. */
+export enum ResourceStatusLabel {
   Available = 'AVAILABLE',
-  Provisioning = 'PROVISIONING',
-  ProvisioningError = 'PROVISIONING_ERROR',
-  Offline = 'OFFLINE'
+  Creating = 'CREATING',
+  Updating = 'UPDATING',
+  Deleting = 'DELETING',
+  Deleted = 'DELETED',
+  ErrorCreating = 'ERROR_CREATING',
+  ErrorUpdating = 'ERROR_UPDATING',
+  ErrorDeleting = 'ERROR_DELETING'
 }
 
 /** 
