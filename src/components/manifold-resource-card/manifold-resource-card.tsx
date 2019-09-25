@@ -31,8 +31,6 @@ export class ManifoldResourceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-
-  @Prop() resourceId?: string;
   @Prop() label?: string;
   @Prop() resourceLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
