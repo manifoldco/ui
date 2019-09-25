@@ -80,10 +80,9 @@ export class ManifoldResourceContainer {
       this.resource = response;
       if (data && data.resource) {
         this.gqlData = data.resource;
+        // Once data has been loaded once, don’t re-show skeletons anywhere (even if re-polling)
+        this.loading = false;
       }
-
-      // Important: don’t set this to true again, otherwise polling will cause skeleton flashing
-      this.loading = false;
     } catch (error) {
       // In case we actually want to keep fetching on an error
       if (this.refetchUntilValid) {
