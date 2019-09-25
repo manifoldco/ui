@@ -8,8 +8,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [unreleased]
 
 ## Changed
+
 - Removed `product-id` from `manifild-service-card` (#533)
 - Converted `manifold-service-card` to GraphQL (#533)
+- Converted `manifold-resource-card` to GraphQL (#537)
 
 ## [v0.5.11]
 

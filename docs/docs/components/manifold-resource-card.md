@@ -13,14 +13,12 @@ Compact view of a user resource. 🔒 Requires authentication.
 <manifold-resource-card label="my-resource"></manifold-resource-card>
 ```
 
-## Fetching by label or ID
+## Fetching by label
 
-The resource card can fetch the resource with either an ID or a resource label.
+The resource card can fetch the resource with a resource label.
 
 ```html
 <manifold-resource-card label="my-resource"></manifold-resource-card>
-<!-- OR -->
-<manifold-resource-card resource-id="123456"></manifold-resource-card>
 ```
 
 ## Navigation
@@ -73,10 +71,6 @@ The underlying `<manifold-resource-card-view>` component may be used to display 
   preserve-event
 ></manifold-resource-card-view>
 ```
-
-### Fetching the resource ID
-
-If the resource ID is unknown, omitting it will make the component fetch the ID automatically.
 
 ### Loading status
 
