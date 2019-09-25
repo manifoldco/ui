@@ -43,6 +43,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Removed `product-id` from `manifold-service-card` (#533)
 - Converted `manifold-service-card` to GraphQL (#533)
+- Converted `manifold-resource-card` to GraphQL (#537)
 
 ## Fixed
 
