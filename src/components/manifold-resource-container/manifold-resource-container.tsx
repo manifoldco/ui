@@ -37,7 +37,7 @@ export class ManifoldResourceContainer {
   @Prop() refetchUntilValid: boolean = false;
   @State() resource?: Gateway.Resource;
   @State() gqlData?: Resource;
-  @State() loading: boolean = false;
+  @State() loading: boolean = true;
   @State() timeout?: number;
 
   @Watch('resourceLabel') resourceChange(newName: string) {
@@ -65,7 +65,6 @@ export class ManifoldResourceContainer {
       return;
     }
 
-    this.loading = true;
     try {
       const response = await this.restFetch<Gateway.Resource & { product?: Product }>({
         service: 'gateway',
@@ -81,8 +80,9 @@ export class ManifoldResourceContainer {
       this.resource = response;
       if (data && data.resource) {
         this.gqlData = data.resource;
+        // Once data has been loaded once, don’t re-show skeletons anywhere (even if re-polling)
+        this.loading = false;
       }
-      this.loading = false;
     } catch (error) {
       // In case we actually want to keep fetching on an error
       if (this.refetchUntilValid) {
