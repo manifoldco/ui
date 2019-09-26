@@ -128,6 +128,7 @@ export namespace Components {
     /**
     * Disable auto-updates?
     */
+    'label'?: string;
     'paused'?: boolean;
   }
   interface ManifoldDataManageButton {
@@ -1201,6 +1202,7 @@ declare namespace LocalJSX {
     /**
     * Disable auto-updates?
     */
+    'label'?: string;
     'paused'?: boolean;
   }
   interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
