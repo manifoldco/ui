@@ -92,7 +92,7 @@ export const product: Product = {
   },
 };
 
-const provider: Provider = {
+export const provider: Provider = {
   __typename: 'Provider',
   id: provMock.id,
   displayName: provMock.body.name,

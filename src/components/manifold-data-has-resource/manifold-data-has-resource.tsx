@@ -41,7 +41,7 @@ export class ManifoldDataHasResource {
   @Prop() paused?: boolean = false;
   @State() interval?: number;
   @State() hasResource?: boolean;
-  @Event({ eventName: 'manifold-hasResource-load', bubbles: true }) load: EventEmitter;
+  @Event({ eventName: 'manifold-hasResource-load', bubbles: true }) loadEvent: EventEmitter;
 
   @Watch('paused') pausedChange(newPaused: boolean) {
     if (newPaused) {
@@ -79,31 +79,34 @@ export class ManifoldDataHasResource {
       variables: { resourceLabel: label },
     });
 
-    let hasResource: boolean;
+    let hasAnyResources = false;
 
-    if ((data && data.resource) || (data && data.resources && data.resources.edges.length)) {
-      hasResource = true; // if this resource exists, or user has > 0 resources
-    } else {
-      hasResource = false;
+    const hasSingle = data && data.resource;
+    const hasMulti = data && data.resources && data.resources.edges.length;
+    if (hasSingle || hasMulti) {
+      hasAnyResources = true;
     }
-
-    // render slot
-    this.hasResource = hasResource;
 
     // emit event
     const detail: EventDetail = {
-      hasAnyResources: hasResource,
-      resourceLabel: this.label,
+      hasAnyResources,
+      resourceLabel: label,
     };
-    this.load.emit(detail);
+    this.loadEvent.emit(detail);
+
+    // render slot
+    this.hasResource = hasAnyResources;
   }
 
   @logger()
   render() {
-    // render loading slot while loading
-    if (this.hasResource === undefined) {
-      return <slot name="loading" />;
+    switch (this.hasResource) {
+      case true:
+        return <slot name="has-resource" />;
+      case false:
+        return <slot name="no-resource" />;
+      default:
+        return <slot name="loading" />;
     }
-    return <slot name={this.hasResource ? 'has-resource' : 'no-resource'} />;
   }
 }
