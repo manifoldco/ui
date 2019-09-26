@@ -18,6 +18,7 @@ export class ManifoldAuthToken {
   @Prop() token?: string;
   @Prop() authType?: AuthType = 'oauth';
   @State() tick?: string;
+  @State() internalToken?: string = connection.authToken;
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter<{ token: string }>;
   @Event({ eventName: 'manifold-token-clear', bubbles: true }) clear: EventEmitter;
@@ -33,6 +34,7 @@ export class ManifoldAuthToken {
     this.setExternalToken(this.token);
     if (this.subscribe) {
       this.unsubscribe = this.subscribe((oldToken?: string, newToken?: string) => {
+        this.internalToken = newToken;
         if (oldToken && !newToken) {
           // changing this to any new string will cause a token refresh. getTime() does that wonderfully.
           this.tick = new Date().getTime().toString();
@@ -72,7 +74,8 @@ export class ManifoldAuthToken {
   @logger()
   render() {
     return (
-      this.authType === 'oauth' && (
+      this.authType === 'oauth' &&
+      !this.internalToken && (
         <manifold-oauth tick={this.tick} onReceiveManifoldToken={this.setInternalToken} />
       )
     );
