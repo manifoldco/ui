@@ -25,8 +25,9 @@ tool. Specify any HTML element with a [slot][slot] to mark when it should show u
 
 ## Querying specific resource
 
-Adding a `label` will let you see if a user has a resource or not. This can be used to, say, add in
-redirect components in the case a resource doesn’t exist.
+Adding a `label` will let you see if a user has a specific resource or not. In this instance,
+`no-resource` will display if a user doesn’t have **that specific resource** (they may still have
+resources provisioned other than the one specfied).
 
 ```html
 <manifold-data-has-resource label="my-resource">
@@ -47,15 +48,16 @@ disable that, add the `paused` attribute:
 
 ## Events
 
-You can also programatically listen for events with the `manifold-hasResource-load` event:
+You can also programatically listen for events with the `manifold-hasResource-load` event. This is
+handy for redirecting in the case of resources not found:
 
 ```js
 document.addEventListener('manifold-hasResource-load', ({ detail }) => {
   console.log(detail);
 
   // {
-  //  hasAnyResources: true,
-  //  resourceLabel: 'my-resource',
+  //   hasAnyResources: true,
+  //   resourceLabel: 'my-resource',
   // }
 });
 ```
