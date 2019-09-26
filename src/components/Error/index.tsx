@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from '@stencil/core';
-import { GraphqlError } from 'utils/graphqlFetch';
+import { GraphqlError } from '../../utils/graphqlFetch';
 
 interface ErrorProps {
   errors?: GraphqlError[];

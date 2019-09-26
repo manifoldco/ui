@@ -496,7 +496,6 @@ export namespace Components {
     'graphqlFetch'?: GraphqlFetch;
     'label'?: string;
     'preserveEvent'?: boolean;
-    'resourceId'?: string;
     'resourceLinkFormat'?: string;
   }
   interface ManifoldResourceCardView {
@@ -1590,7 +1589,6 @@ declare namespace LocalJSX {
     'graphqlFetch'?: GraphqlFetch;
     'label'?: string;
     'preserveEvent'?: boolean;
-    'resourceId'?: string;
     'resourceLinkFormat'?: string;
   }
   interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
