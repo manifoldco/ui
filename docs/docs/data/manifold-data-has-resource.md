@@ -45,4 +45,19 @@ disable that, add the `paused` attribute:
 <manifold-data-has-resource paused></manifold-data-has-resource>
 ```
 
+## Events
+
+You can also programatically listen for events with the `manifold-hasResource-load` event:
+
+```js
+document.addEventListener('manifold-hasResource-load', ({ detail }) => {
+  console.log(detail);
+
+  // {
+  //  hasAnyResources: true,
+  //  resourceLabel: 'my-resource',
+  // }
+});
+```
+
 [slot]: https://stenciljs.com/docs/templating-jsx/

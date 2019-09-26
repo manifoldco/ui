@@ -13,9 +13,86 @@ import {
   ExpandedPlan,
   ExpandedFreePlan,
 } from './catalog';
-import { Resource as resourceMock } from './marketplace';
 
-export const provider: Provider = {
+export const product: Product = {
+  __typename: 'Product',
+  id: prodMock.id,
+  displayName: prodMock.body.name,
+  label: prodMock.body.label,
+  logoUrl: prodMock.body.logo_url,
+  state: prodMock.body.state as ProductState,
+  tagline: prodMock.body.tagline,
+  supportEmail: prodMock.body.support_email,
+  documentationUrl: prodMock.body.documentation_url,
+  termsUrl: prodMock.body.terms.provided && prodMock.body.terms.url ? prodMock.body.terms.url : '',
+  categories: prodMock.body.tags
+    ? prodMock.body.tags.map(tag => ({
+        __typename: 'Category',
+        label: tag,
+        products: {
+          __typename: 'ProductConnection',
+          edges: [],
+          pageInfo: {
+            __typename: 'PageInfo',
+            hasNextPage: false,
+            hasPreviousPage: false,
+          },
+        },
+      }))
+    : [],
+  screenshots: prodMock.body.images.map((image, index) => ({
+    __typename: 'ProductScreenshot',
+    order: index,
+    url: image,
+  })),
+  valueProps: prodMock.body.value_props.map(valueProp => ({
+    __typename: 'ValueProp',
+    body: valueProp.body,
+    header: valueProp.header,
+  })),
+  valuePropsHtml: '',
+  setupStepsHtml: '',
+  plans: {
+    edges: [
+      {
+        cursor: '',
+        node: {
+          id: ExpandedFreePlan.id,
+          displayName: ExpandedFreePlan.body.name,
+          label: ExpandedFreePlan.body.label,
+          state: ExpandedFreePlan.body.state as PlanState,
+          cost: ExpandedFreePlan.body.cost,
+          free: true,
+        },
+      },
+      {
+        cursor: '',
+        node: {
+          id: ExpandedPlan.id,
+          displayName: ExpandedPlan.body.name,
+          label: ExpandedPlan.body.label,
+          state: ExpandedPlan.body.state as PlanState,
+          cost: ExpandedPlan.body.cost,
+          free: false,
+        },
+      },
+    ],
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
+  },
+  provider: {
+    id: provMock.id,
+    displayName: provMock.body.name,
+    label: provMock.body.label,
+    supportEmail: provMock.body.support_email as string,
+    logoUrl: provMock.body.logo_url as string,
+    url: provMock.body.documentation_url as string,
+  },
+};
+
+const provider: Provider = {
   __typename: 'Provider',
   id: provMock.id,
   displayName: provMock.body.name,
@@ -28,9 +105,6 @@ export const provider: Provider = {
     edges: [
       {
         __typename: 'ProductEdge',
-        // Ignoring the "block variable used before declaration"
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         node: product,
         cursor: '',
       },
@@ -49,9 +123,6 @@ export const freePlan: Plan = {
   displayName: ExpandedFreePlan.body.name,
   label: ExpandedFreePlan.body.label,
   state: ExpandedFreePlan.body.state as PlanState,
-  // Ignoring the "block variable used before declaration"
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   product,
   cost: ExpandedFreePlan.body.cost,
   free: true,
@@ -113,15 +184,12 @@ export const freePlan: Plan = {
   },
 };
 
-export const plan: Plan = {
+export const plan = {
   __typename: 'Plan',
   id: ExpandedPlan.id,
   displayName: ExpandedPlan.body.name,
   label: ExpandedPlan.body.label,
   state: ExpandedPlan.body.state as PlanState,
-  // Ignroeing the "block vabiable used before decalaration"
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   product,
   cost: ExpandedPlan.body.cost,
   free: false,
@@ -183,78 +251,11 @@ export const plan: Plan = {
   },
 };
 
-export const product: Product = {
-  __typename: 'Product',
-  id: prodMock.id,
-  displayName: prodMock.body.name,
-  label: prodMock.body.label,
-  logoUrl: prodMock.body.logo_url,
-  state: prodMock.body.state as ProductState,
-  tagline: prodMock.body.tagline,
-  supportEmail: prodMock.body.support_email,
-  documentationUrl: prodMock.body.documentation_url,
-  termsUrl: prodMock.body.terms.provided && prodMock.body.terms.url ? prodMock.body.terms.url : '',
-  categories: prodMock.body.tags
-    ? prodMock.body.tags.map(tag => ({
-        __typename: 'Category',
-        label: tag,
-        products: {
-          __typename: 'ProductConnection',
-          edges: [],
-          pageInfo: {
-            __typename: 'PageInfo',
-            hasNextPage: false,
-            hasPreviousPage: false,
-          },
-        },
-      }))
-    : [],
-  screenshots: prodMock.body.images.map((image, index) => ({
-    __typename: 'ProductScreenshot',
-    order: index,
-    url: image,
-  })),
-  valueProps: prodMock.body.value_props.map(valueProp => ({
-    __typename: 'ValueProp',
-    body: valueProp.body,
-    header: valueProp.header,
-  })),
-  valuePropsHtml: '',
-  setupStepsHtml: '',
-  /*
-  integration: {
-    __typename: 'ProductIntegration',
-    baseUrl: prodMock.body.integration.base_url,
-    ssoUrl: prodMock.body.integration.sso_url as string,
-  },
-  */
-  provider,
-  plans: {
-    __typename: 'PlanConnection',
-    edges: [
-      {
-        __typename: 'PlanEdge',
-        node: freePlan,
-        cursor: '',
-      },
-      {
-        __typename: 'PlanEdge',
-        node: plan,
-        cursor: '',
-      },
-    ],
-    pageInfo: {
-      __typename: 'PageInfo',
-      hasNextPage: false,
-      hasPreviousPage: false,
-    },
-  },
-};
-
+// prevent circular deps
 export const resource: Resource = {
-  displayName: resourceMock.body.name,
-  id: resourceMock.id,
-  label: resourceMock.body.label,
+  displayName: 'my-resource',
+  id: '26841468fmyhcn3h69ednm65knx44',
+  label: 'my-resource',
   ssoSupported: true,
   ssoUrl: '',
   status: {
@@ -262,5 +263,12 @@ export const resource: Resource = {
     message: '',
     percentDone: 100,
   },
-  plan: freePlan,
+  plan: {
+    cost: 0,
+    displayName: 'Free',
+    free: true,
+    id: '235abe2ba8b39e941u2h70ayw5m9j',
+    label: 'free',
+    state: PlanState.Available,
+  },
 };

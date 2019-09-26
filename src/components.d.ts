@@ -1203,6 +1203,7 @@ declare namespace LocalJSX {
     * Disable auto-updates?
     */
     'label'?: string;
+    'onManifold-hasResource-load'?: (event: CustomEvent<any>) => void;
     'paused'?: boolean;
   }
   interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {

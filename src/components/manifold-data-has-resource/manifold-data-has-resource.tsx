@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
@@ -19,12 +19,17 @@ const allResources = gql`
 `;
 
 const singleResource = gql`
-  query GET_RESOURCE {
+  query GET_RESOURCE($resourceLabel: String!) {
     resource(label: $resourceLabel) {
       label
     }
   }
 `;
+
+interface EventDetail {
+  hasAnyResources: boolean;
+  resourceLabel?: string;
+}
 
 @Component({ tag: 'manifold-data-has-resource', shadow: true })
 export class ManifoldDataHasResource {
@@ -36,6 +41,7 @@ export class ManifoldDataHasResource {
   @Prop() paused?: boolean = false;
   @State() interval?: number;
   @State() hasResource?: boolean;
+  @Event({ eventName: 'manifold-hasResource-load', bubbles: true }) load: EventEmitter;
 
   @Watch('paused') pausedChange(newPaused: boolean) {
     if (newPaused) {
@@ -73,11 +79,23 @@ export class ManifoldDataHasResource {
       variables: { resourceLabel: label },
     });
 
+    let hasResource: boolean;
+
     if ((data && data.resource) || (data && data.resources && data.resources.edges.length)) {
-      this.hasResource = true; // if this resource exists, or user has > 0 resources
+      hasResource = true; // if this resource exists, or user has > 0 resources
     } else {
-      this.hasResource = false;
+      hasResource = false;
     }
+
+    // render slot
+    this.hasResource = hasResource;
+
+    // emit event
+    const detail: EventDetail = {
+      hasAnyResources: hasResource,
+      resourceLabel: this.label,
+    };
+    this.load.emit(detail);
   }
 
   @logger()

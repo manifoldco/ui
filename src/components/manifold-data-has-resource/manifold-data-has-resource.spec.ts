@@ -43,7 +43,7 @@ describe('<manifold-data-has-resource>', () => {
     it('loading', async () => {
       fetchMock.mock(
         `begin:${connections.prod.graphql}`,
-        () => setTimeout(() => multiResources, 100) // arbitrary, but usually enough time for the 1st render to complete
+        new Promise(resolve => setTimeout(() => resolve(multiResources), 100)) // arbitrary, but usually enough time for the 1st render to complete
       );
 
       if (page.root) {
@@ -92,7 +92,7 @@ describe('<manifold-data-has-resource>', () => {
   describe('v0 props', () => {
     it('label', async () => {
       fetchMock.mock(`begin:${connections.prod.graphql}`, singleResource);
-
+      element.label = 'my-resource';
       if (page.root) {
         page.root.appendChild(element);
       }
@@ -103,6 +103,54 @@ describe('<manifold-data-has-resource>', () => {
       await page.waitForChanges();
 
       expect(hasResource.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
+    });
+  });
+
+  describe('v0 events', () => {
+    it('load: has resources', async () => {
+      fetchMock.mock(`begin:${connections.prod.graphql}`, multiResources);
+
+      // event listener
+      const mockLoad = jest.fn();
+      page.doc.addEventListener('manifold-hasResource-load', mockLoad);
+
+      if (page.root) {
+        page.root.appendChild(element);
+      }
+      const hasResource = page.doc.querySelector('manifold-data-has-resource');
+      if (!hasResource) {
+        throw new Error('<manifold-data-has-resource> not found in document');
+      }
+
+      // wait for event
+      await new Promise(resolve => {
+        mockLoad.mockImplementation(() => resolve());
+      });
+
+      expect(mockLoad).toHaveBeenCalledWith(expect.objectContaining({}));
+    });
+
+    it('load: no resources', async () => {
+      fetchMock.mock(`begin:${connections.prod.graphql}`, { data: null });
+
+      // event listener
+      const mockLoad = jest.fn();
+      page.doc.addEventListener('manifold-hasResource-load', mockLoad);
+
+      if (page.root) {
+        page.root.appendChild(element);
+      }
+      const hasResource = page.doc.querySelector('manifold-data-has-resource');
+      if (!hasResource) {
+        throw new Error('<manifold-data-has-resource> not found in document');
+      }
+
+      // wait for event
+      await new Promise(resolve => {
+        mockLoad.mockImplementation(() => resolve());
+      });
+
+      expect(mockLoad).toHaveBeenCalledWith(expect.objectContaining({}));
     });
   });
 });
