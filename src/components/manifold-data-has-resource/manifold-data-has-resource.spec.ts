@@ -1,64 +1,108 @@
-import { newSpecPage } from '@stencil/core/testing';
+import { SpecPage, newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldDataHasResource } from './manifold-data-has-resource';
-import { Marketplace } from '../../types/marketplace';
-import { Resource } from '../../spec/mock/marketplace';
 import { connections } from '../../utils/connections';
-import { createRestFetch } from '../../utils/restFetch';
+import { resource } from '../../spec/mock/graphql';
+import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const proto = ManifoldDataHasResource.prototype as any;
-const oldCallback = proto.componentWillLoad;
-
-proto.componentWillLoad = function() {
-  (this as any).restFetch = createRestFetch({
-    getAuthToken: jest.fn(() => '1234'),
-    wait: () => 10,
-    setAuthToken: jest.fn(),
-  });
-
-  if (oldCallback) {
-    oldCallback.call(this);
-  }
+const singleResource = { data: { resource } };
+const multiResources = {
+  data: {
+    resources: {
+      edges: [{ node: resource }, { node: resource }],
+    },
+  },
 };
 
-const resources: Marketplace.Resource[] = [Resource];
-
 describe('<manifold-data-has-resource>', () => {
+  let page: SpecPage;
+  let element: HTMLManifoldDataHasResourceElement;
+
+  beforeEach(async () => {
+    page = await newSpecPage({ components: [ManifoldDataHasResource], html: '<div></div>' });
+    element = page.doc.createElement('manifold-data-has-resource');
+    element.graphqlFetch = createGraphqlFetch({
+      getAuthToken: jest.fn(() => '1234'),
+      wait: () => 10,
+      setAuthToken: jest.fn(),
+    });
+    element.paused = true;
+    element.innerHTML = `
+      <div slot="loading"></div>
+      <div slot="has-resource"></div>
+      <div slot="no-resource"></div>
+    `;
+  });
+
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('Displays the right slot if user has resources', async () => {
-    fetchMock.mock(`${connections.prod.marketplace}/resources/?me`, resources);
+  describe('v0 slots', () => {
+    it('loading', async () => {
+      fetchMock.mock(
+        `begin:${connections.prod.graphql}`,
+        () => setTimeout(() => multiResources, 100) // arbitrary, but usually enough time for the 1st render to complete
+      );
 
-    const hasResource = await newSpecPage({
-      components: [ManifoldDataHasResource],
-      html: `
-        <manifold-data-has-resource paused="">
-          <div itemprop="has-resource" slot="has-resource"></div>
-          <div itemprop="no-resource" slot="no-resource"></div>
-        </manifold-data-has-resource>`,
+      if (page.root) {
+        page.root.appendChild(element);
+      }
+      const hasResource = page.doc.querySelector('manifold-data-has-resource');
+      if (!hasResource) {
+        throw new Error('<manifold-data-has-resource> not found in document');
+      }
+      await page.waitForChanges();
+
+      expect(hasResource.shadowRoot).toEqualHtml(`<slot name="loading"></slot>`);
     });
 
-    // @ts-ignore
-    expect(hasResource.root.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
+    it('has-resource', async () => {
+      fetchMock.mock(`begin:${connections.prod.graphql}`, multiResources);
+
+      if (page.root) {
+        page.root.appendChild(element);
+      }
+      const hasResource = page.doc.querySelector('manifold-data-has-resource');
+      if (!hasResource) {
+        throw new Error('<manifold-data-has-resource> not found in document');
+      }
+      await page.waitForChanges();
+
+      expect(hasResource.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
+    });
+
+    it('no-resource', async () => {
+      fetchMock.mock(`begin:${connections.prod.graphql}`, { data: { resources: { edges: [] } } });
+
+      if (page.root) {
+        page.root.appendChild(element);
+      }
+      const hasResource = page.doc.querySelector('manifold-data-has-resource');
+      if (!hasResource) {
+        throw new Error('<manifold-data-has-resource> not found in document');
+      }
+      await page.waitForChanges();
+
+      expect(hasResource.shadowRoot).toEqualHtml(`<slot name="no-resource"></slot>`);
+    });
   });
 
-  it('Displays the right slot if user has no resources', async () => {
-    fetchMock.mock(`${connections.prod.marketplace}/resources/?me`, []);
+  describe('v0 props', () => {
+    it('label', async () => {
+      fetchMock.mock(`begin:${connections.prod.graphql}`, singleResource);
 
-    const hasResource = await newSpecPage({
-      components: [ManifoldDataHasResource],
-      html: `
-        <manifold-data-has-resource paused="">
-          <div itemprop="has-resource" slot="has-resource"></div>
-          <div itemprop="no-resource" slot="no-resource"></div>
-        </manifold-data-has-resource>`,
+      if (page.root) {
+        page.root.appendChild(element);
+      }
+      const hasResource = page.doc.querySelector('manifold-data-has-resource');
+      if (!hasResource) {
+        throw new Error('<manifold-data-has-resource> not found in document');
+      }
+      await page.waitForChanges();
+
+      expect(hasResource.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
     });
-
-    // @ts-ignore
-    expect(hasResource.root.shadowRoot).toEqualHtml(`<slot name="no-resource"></slot>`);
   });
 });

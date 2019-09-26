@@ -1,10 +1,19 @@
-import { Product, ProductState, Provider, Plan, PlanState } from '../../types/graphql';
+import {
+  Product,
+  ProductState,
+  Provider,
+  Plan,
+  PlanState,
+  Resource,
+  ResourceStatusLabel,
+} from '../../types/graphql';
 import {
   Product as prodMock,
   Provider as provMock,
   ExpandedPlan,
   ExpandedFreePlan,
 } from './catalog';
+import { Resource as resourceMock } from './marketplace';
 
 export const provider: Provider = {
   __typename: 'Provider',
@@ -58,6 +67,7 @@ export const freePlan: Plan = {
           displayName: feature.name,
           displayValue: feature.value_string as string,
           label: feature.label,
+          id: feature.label,
         },
       })),
     pageInfo: {
@@ -77,6 +87,7 @@ export const freePlan: Plan = {
           __typename: 'PlanMeteredFeature',
           displayName: feature.name,
           label: feature.label,
+          id: feature.label,
           displayValue: feature.value_string as string,
           numericDetails: {
             __typename: 'PlanMeteredFeatureNumericDetails',
@@ -126,6 +137,7 @@ export const plan: Plan = {
           displayName: feature.name,
           displayValue: feature.value_string as string,
           label: feature.label,
+          id: feature.label,
         },
       })),
     pageInfo: {
@@ -146,6 +158,7 @@ export const plan: Plan = {
           displayName: feature.name,
           label: feature.label,
           displayValue: feature.value_string as string,
+          id: feature.label,
           numericDetails: {
             __typename: 'PlanMeteredFeatureNumericDetails',
             unit: feature.value.numeric_details
@@ -236,4 +249,18 @@ export const product: Product = {
       hasPreviousPage: false,
     },
   },
+};
+
+export const resource: Resource = {
+  displayName: resourceMock.body.name,
+  id: resourceMock.id,
+  label: resourceMock.body.label,
+  ssoSupported: true,
+  ssoUrl: '',
+  status: {
+    label: ResourceStatusLabel.Available,
+    message: '',
+    percentDone: 100,
+  },
+  plan: freePlan,
 };

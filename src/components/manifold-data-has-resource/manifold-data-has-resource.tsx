@@ -1,20 +1,41 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Marketplace } from '../../types/marketplace';
 import connection from '../../state/connection';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+
+const allResources = gql`
+  query LIST_RESOURCES {
+    resources(first: 1) {
+      edges {
+        node {
+          label
+        }
+      }
+    }
+  }
+`;
+
+const singleResource = gql`
+  query GET_RESOURCE {
+    resource(label: $resourceLabel) {
+      label
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-data-has-resource', shadow: true })
 export class ManifoldDataHasResource {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Disable auto-updates? */
+  @Prop() label?: string;
   @Prop() paused?: boolean = false;
   @State() interval?: number;
-  @State() hasResources?: boolean = false;
+  @State() hasResource?: boolean;
 
   @Watch('paused') pausedChange(newPaused: boolean) {
     if (newPaused) {
@@ -42,23 +63,29 @@ export class ManifoldDataHasResource {
     this.interval = window.setInterval(() => this.fetchResources(), 3000);
   }
 
-  async fetchResources() {
-    if (!this.restFetch) {
+  async fetchResources(label = this.label) {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    const resources = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me`,
+    const { data } = await this.graphqlFetch({
+      query: label ? singleResource : allResources,
+      variables: { resourceLabel: label },
     });
 
-    if (resources && resources.length) {
-      this.hasResources = true;
+    if ((data && data.resource) || (data && data.resources && data.resources.edges.length)) {
+      this.hasResource = true; // if this resource exists, or user has > 0 resources
+    } else {
+      this.hasResource = false;
     }
   }
 
   @logger()
   render() {
-    return <slot name={this.hasResources ? 'has-resource' : 'no-resource'} />;
+    // render loading slot while loading
+    if (this.hasResource === undefined) {
+      return <slot name="loading" />;
+    }
+    return <slot name={this.hasResource ? 'has-resource' : 'no-resource'} />;
   }
 }
