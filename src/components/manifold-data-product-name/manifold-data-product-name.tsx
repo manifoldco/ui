@@ -81,7 +81,7 @@ export class ManifoldDataProductName {
       variables: { resourceLabel },
     });
 
-    if (data && data.resource && data.resource.plan) {
+    if (data && data.resource && data.resource.plan && data.resource.plan.product) {
       this.productName = data.resource.plan.product.displayName;
     } else if (errors) {
       this.errors = errors;

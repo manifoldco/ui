@@ -122,13 +122,14 @@ export namespace Components {
   }
   interface ManifoldDataHasResource {
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
-    /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: RestFetch;
+    'graphqlFetch'?: GraphqlFetch;
+    /**
+    * Disable auto-updates?
+    */
+    'label'?: string;
+    'paused'?: boolean;
   }
   interface ManifoldDataManageButton {
     'features'?: Gateway.FeatureMap;
@@ -1195,13 +1196,15 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
     /**
-    * Disable auto-updates?
-    */
-    'paused'?: boolean;
-    /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
-    'restFetch'?: RestFetch;
+    'graphqlFetch'?: GraphqlFetch;
+    /**
+    * Disable auto-updates?
+    */
+    'label'?: string;
+    'onManifold-hasResource-load'?: (event: CustomEvent<any>) => void;
+    'paused'?: boolean;
   }
   interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
     'features'?: Gateway.FeatureMap;

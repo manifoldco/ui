@@ -367,6 +367,24 @@ export type Mutation = {
    * Note: You must authenticate with a platform api token.
  **/
   createProfileAuthToken: CreateProfileAuthTokenPayload,
+  /** 
+ * Update a profile subject.
+   * 
+   * Changing the subject will change the subject linked to a platform profile.
+   * This results in changing the owner for the platform profile.
+   * The subject is the platform's external id that is linked to a platform profile.
+   * 
+   * The consequences are:
+   * * the new owner will be charged for this complete billing cycle
+   * * the new owner will have access to all the historical data (invoices) of the Profile
+   * 
+   * 
+   * Note: Transferring resource ownership between two profiles is also possible
+   * and allows to split the charge of the billing cycle by usage and to keep
+   * historical data ownership separated.
+   * Only Platform API tokens are able to change subjects.
+ **/
+  updateProfileSubject: UpdateProfileSubjectPayload,
 };
 
 
@@ -435,6 +453,17 @@ export type MutationCreateProfileAuthTokenArgs = {
   input: CreateProfileAuthTokenInput
 };
 
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateProfileSubjectArgs = {
+  input: UpdateProfileSubjectInput
+};
+
 export type Node = {
   id: Scalars['ID'],
 };
@@ -469,7 +498,7 @@ export type Plan = Node & {
  **/
   label: Scalars['String'],
   /** The product associated with this plan. */
-  product: Product,
+  product?: Maybe<Product>,
   /** The current state of the plan. */
   state: PlanState,
   /** A list of fixed features associated with the plan. */
@@ -519,8 +548,9 @@ export type PlanRegionsArgs = {
 };
 
 /** PlanConfigurableFeature is a configurable feature of a plan. */
-export type PlanConfigurableFeature = {
+export type PlanConfigurableFeature = Node & {
    __typename?: 'PlanConfigurableFeature',
+  id: Scalars['ID'],
   label: Scalars['String'],
   displayName: Scalars['String'],
   type: PlanFeatureType,
@@ -581,8 +611,9 @@ export enum PlanFeatureType {
 }
 
 /** PlanFixedFeature is a value proposition of a plan. */
-export type PlanFixedFeature = {
+export type PlanFixedFeature = Node & {
    __typename?: 'PlanFixedFeature',
+  id: Scalars['ID'],
   label: Scalars['String'],
   displayName: Scalars['String'],
   displayValue: Scalars['String'],
@@ -603,8 +634,9 @@ export type PlanFixedFeatureEdge = {
 };
 
 /** PlanMeteredFeature is a metered feature of a plan. */
-export type PlanMeteredFeature = {
+export type PlanMeteredFeature = Node & {
    __typename?: 'PlanMeteredFeature',
+  id: Scalars['ID'],
   label: Scalars['String'],
   displayName: Scalars['String'],
   numericDetails: PlanMeteredFeatureNumericDetails,
@@ -856,18 +888,18 @@ export type Query = {
   /** 
  * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
    * 
-   * Note: This query can only be performed when authenticated.
+   * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
   /** 
- * Return a paginated list of resources. The return value can either contain
-   * all available resources linked to the token, or can be filtered down to
-   * fetch data for the specified profile. The owner can either be a ProfileID or
-   * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
+ *  Return a paginated list of resources. The return value can either contain
+   *  all available resources linked to the token, or can be filtered down to
+   *  fetch data for the specified profile. The owner can either be a ProfileID or
+   *  a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
    * 
-   * Note: This query is currently only supported with use of a Platform API token.
+   * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
   resources?: Maybe<ResourceConnection>,
   /** 
@@ -875,7 +907,7 @@ export type Query = {
    * profile user, fetches the resource associated with the profile. When
    * authenticated as a platform user and a label is specified, an owner must be provided.
    * 
-   * Note: This query is currently only supported with use of a Platform API token.
+   * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
   resource?: Maybe<Resource>,
   /** 
@@ -1098,6 +1130,16 @@ export type Resource = Node & {
   displayName: Scalars['String'],
   /**  A machine-readable label for this resource, unique per owner.  */
   label: Scalars['String'],
+  /** Whether or not a user can SSO into this resource's product dashboard. */
+  ssoSupported: Scalars['Boolean'],
+  /** 
+ * The URL used to redirect the user to this resource's product dashboard. When requested, this field will
+   * return a unique and short-lived URL that can be used to redirect the user towards the product dashboard. If
+   * not used, the URL will expire after around 5 minutes and another one will need to be requested.
+ **/
+  ssoUrl: Scalars['String'],
+  /**  Indicates the availability status of the resource  */
+  status: ResourceStatus,
   /** 
  * The plan for which this resource is provisioned. The plan can be null if the
    * resource is a custom resource, or if a transient failure occurred.
@@ -1144,6 +1186,26 @@ export type ResourceEdge = {
   node?: Maybe<Resource>,
 };
 
+/** ResourceStatus represents the current availability status of a Resource */
+export type ResourceStatus = {
+   __typename?: 'ResourceStatus',
+  label: ResourceStatusLabel,
+  percentDone: Scalars['Int'],
+  message: Scalars['String'],
+};
+
+/** ResourceStatusLabel is an enum representing the possible status a resource can have. */
+export enum ResourceStatusLabel {
+  Available = 'AVAILABLE',
+  Creating = 'CREATING',
+  Updating = 'UPDATING',
+  Deleting = 'DELETING',
+  Deleted = 'DELETED',
+  ErrorCreating = 'ERROR_CREATING',
+  ErrorUpdating = 'ERROR_UPDATING',
+  ErrorDeleting = 'ERROR_DELETING'
+}
+
 /** 
  * SubLineItem represents the breakdown by base cost, features, and metered usage
  * of the amount due by resource.
@@ -1188,6 +1250,22 @@ export type SubLineItemEdge = {
   node?: Maybe<SubLineItem>,
 };
 
+
+/** 
+ * UpdateProfileSubjectInput accepts a profile subject for a given profileId.
+ * The subject is the new subject to update to.
+ * The id is the profile identity, it can either be a subject (the platform's id) or a manifold internal profileId.
+ **/
+export type UpdateProfileSubjectInput = {
+  subject: Scalars['String'],
+  id: Scalars['ProfileIdentity'],
+};
+
+/** The payload from updating the profile subject is the update profile. */
+export type UpdateProfileSubjectPayload = {
+   __typename?: 'UpdateProfileSubjectPayload',
+  data: Profile,
+};
 
 /** A request input type for updating an existing resource */
 export type UpdateResourceInput = {
