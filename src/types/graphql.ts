@@ -367,6 +367,24 @@ export type Mutation = {
    * Note: You must authenticate with a platform api token.
  **/
   createProfileAuthToken: CreateProfileAuthTokenPayload,
+  /** 
+ * Update a profile subject.
+   * 
+   * Changing the subject will change the subject linked to a platform profile.
+   * This results in changing the owner for the platform profile.
+   * The subject is the platform's external id that is linked to a platform profile.
+   * 
+   * The consequences are:
+   * * the new owner will be charged for this complete billing cycle
+   * * the new owner will have access to all the historical data (invoices) of the Profile
+   * 
+   * 
+   * Note: Transferring resource ownership between two profiles is also possible
+   * and allows to split the charge of the billing cycle by usage and to keep
+   * historical data ownership separated.
+   * Only Platform API tokens are able to change subjects.
+ **/
+  updateProfileSubject: UpdateProfileSubjectPayload,
 };
 
 
@@ -433,6 +451,17 @@ export type MutationUpdateInvoiceStatusArgs = {
  **/
 export type MutationCreateProfileAuthTokenArgs = {
   input: CreateProfileAuthTokenInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateProfileSubjectArgs = {
+  input: UpdateProfileSubjectInput
 };
 
 export type Node = {
@@ -519,8 +548,9 @@ export type PlanRegionsArgs = {
 };
 
 /** PlanConfigurableFeature is a configurable feature of a plan. */
-export type PlanConfigurableFeature = {
+export type PlanConfigurableFeature = Node & {
    __typename?: 'PlanConfigurableFeature',
+  id: Scalars['ID'],
   label: Scalars['String'],
   displayName: Scalars['String'],
   type: PlanFeatureType,
@@ -581,8 +611,9 @@ export enum PlanFeatureType {
 }
 
 /** PlanFixedFeature is a value proposition of a plan. */
-export type PlanFixedFeature = {
+export type PlanFixedFeature = Node & {
    __typename?: 'PlanFixedFeature',
+  id: Scalars['ID'],
   label: Scalars['String'],
   displayName: Scalars['String'],
   displayValue: Scalars['String'],
@@ -603,8 +634,9 @@ export type PlanFixedFeatureEdge = {
 };
 
 /** PlanMeteredFeature is a metered feature of a plan. */
-export type PlanMeteredFeature = {
+export type PlanMeteredFeature = Node & {
    __typename?: 'PlanMeteredFeature',
+  id: Scalars['ID'],
   label: Scalars['String'],
   displayName: Scalars['String'],
   numericDetails: PlanMeteredFeatureNumericDetails,
@@ -1218,6 +1250,22 @@ export type SubLineItemEdge = {
   node?: Maybe<SubLineItem>,
 };
 
+
+/** 
+ * UpdateProfileSubjectInput accepts a profile subject for a given profileId.
+ * The subject is the new subject to update to.
+ * The id is the profile identity, it can either be a subject (the platform's id) or a manifold internal profileId.
+ **/
+export type UpdateProfileSubjectInput = {
+  subject: Scalars['String'],
+  id: Scalars['ProfileIdentity'],
+};
+
+/** The payload from updating the profile subject is the update profile. */
+export type UpdateProfileSubjectPayload = {
+   __typename?: 'UpdateProfileSubjectPayload',
+  data: Profile,
+};
 
 /** A request input type for updating an existing resource */
 export type UpdateResourceInput = {
