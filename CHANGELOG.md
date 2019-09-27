@@ -10,6 +10,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Top margin to credentials error messages
+- Place credentials on individual lines
 
 ## [v0.5.12]
 

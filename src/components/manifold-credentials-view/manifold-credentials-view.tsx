@@ -122,6 +122,7 @@ export class ManifoldCredentialsView {
                         <span class="env-key">{node.key}</span>,
                         '=',
                         <span class="env-value">{node.value}</span>,
+                        '\n',
                       ]
                     : null
                 )}
