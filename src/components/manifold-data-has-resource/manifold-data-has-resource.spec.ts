@@ -58,15 +58,13 @@ describe('<manifold-data-has-resource>', () => {
     it('loading', async () => {
       // arbitrary, but enough time for the 1st render to complete
       const response = new Promise(resolve => setTimeout(() => resolve(multiResources), 100));
-      fetchMock.mock(
-        `begin:${graphqlEndpoint}`,
-        response // arbitrary, but usually enough time for the 1st render to complete
-      );
+      fetchMock.mock(`begin:${graphqlEndpoint}`, response);
 
-      const { component } = await setup({});
+      const { page, component } = await setup({});
 
       expect(component.shadowRoot).toEqualHtml(`<slot name="loading"></slot>`);
       await response;
+      await page.waitForChanges();
     });
 
     it('has-resource', async () => {
@@ -101,10 +99,11 @@ describe('<manifold-data-has-resource>', () => {
       fetchMock.mock(`begin:${graphqlEndpoint}`, multiResources);
 
       const mockLoad = jest.fn();
-      await setup({ onLoad: mockLoad });
+      const resourceLabel = 'my-resource';
+      await setup({ onLoad: mockLoad, label: resourceLabel });
 
       expect(mockLoad).toHaveBeenCalledWith(
-        expect.objectContaining({ detail: { hasAnyResources: true } })
+        expect.objectContaining({ detail: { hasAnyResources: true, resourceLabel } })
       );
     });
 
@@ -112,10 +111,11 @@ describe('<manifold-data-has-resource>', () => {
       fetchMock.mock(`begin:${graphqlEndpoint}`, { data: null });
 
       const mockLoad = jest.fn();
-      await setup({ onLoad: mockLoad });
+      const resourceLabel = 'my-resource';
+      await setup({ onLoad: mockLoad, label: resourceLabel });
 
       expect(mockLoad).toHaveBeenCalledWith(
-        expect.objectContaining({ detail: { hasAnyResources: false } })
+        expect.objectContaining({ detail: { hasAnyResources: false, resourceLabel } })
       );
     });
   });
