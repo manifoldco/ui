@@ -19,7 +19,7 @@ const credentialsHTML = credentials
       credential && credential.node
         ? [
             ...secrets,
-            `<span class="env-key">${credential.node.key}</span>=<span class="env-value">${credential.node.value}</span>`,
+            `<span class="env-key">${credential.node.key}</span>=<span class="env-value">${credential.node.value}</span>\n`,
           ]
         : secrets,
     []
