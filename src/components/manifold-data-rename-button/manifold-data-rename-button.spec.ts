@@ -305,7 +305,7 @@ describe('<manifold-data-rename-button>', () => {
     });
 
     it('success', async () => {
-      const newLabel = 'logdna';  // Test relies on logdna here because fetchMock returns the logdna mock resource
+      const newLabel = 'logdna'; // Test relies on logdna here because fetchMock returns the logdna mock resource
       const resourceId = 'success-id';
       const resourceLabel = 'success-label';
 
