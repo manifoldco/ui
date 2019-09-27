@@ -105,7 +105,7 @@ export class ManifoldDataRenameButton {
     };
 
     // rename
-    await this.restFetch({
+    const renamedResource = await this.restFetch<Marketplace.Resource>({
       service: 'marketplace',
       endpoint: `/resources/${this.resourceId}`,
       body,
@@ -121,6 +121,10 @@ export class ManifoldDataRenameButton {
       this.error.emit(errorMessage);
       return Promise.reject(errorMessage);
     });
+    if (renamedResource) {
+      this.newLabel = renamedResource.body.label;
+      resourceDetails.newLabel = this.newLabel;
+    }
 
     // Poll until rename complete
     await this.pollRename();
