@@ -12,6 +12,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Top margin to credentials error messages
 - Place credentials on individual lines
 
+### Fixed
+
+- Fixed success event after a resource rename to include potentially modified label
+
 ## [v0.5.12]
 
 ## Added
