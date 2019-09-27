@@ -2,9 +2,10 @@ import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldDataHasResource } from './manifold-data-has-resource';
-import { connections } from '../../utils/connections';
 import { resource } from '../../spec/mock/graphql';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
+
+const graphqlEndpoint = 'http://test.com/graphql';
 
 const singleResource = { data: { resource } };
 const multiResources = {
@@ -26,31 +27,26 @@ async function setup({ onLoad, label }: Setup) {
     html: '<div></div>',
   });
 
-  const loading = page.doc.createElement('div');
-  loading.slot = 'loading';
-  const hasResources = page.doc.createElement('div');
-  hasResources.slot = 'has-resource';
-  const noResource = page.doc.createElement('div');
-  noResource.slot = 'no-resource';
+  const component = page.doc.createElement('manifold-data-has-resource');
+  component.innerHTML = `
+    <div slot="loading"></div>
+    <div slot="has-resource"></div>
+    <div slot="no-resource"></div>
+  `;
 
-  const element = page.doc.createElement('manifold-data-has-resource');
-  element.appendChild(loading);
-  element.appendChild(hasResources);
-  element.appendChild(noResource);
-
-  element.graphqlFetch = createGraphqlFetch({});
-  element.paused = true;
-  element.label = label;
+  component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
+  component.paused = true;
+  component.label = label;
 
   if (onLoad) {
     page.doc.addEventListener('manifold-hasResource-load', onLoad);
   }
 
   const root = page.root as HTMLDivElement;
-  root.appendChild(element);
+  root.appendChild(component);
   await page.waitForChanges();
 
-  return { page, element };
+  return { page, component };
 }
 
 describe('<manifold-data-has-resource>', () => {
@@ -63,46 +59,46 @@ describe('<manifold-data-has-resource>', () => {
       // arbitrary, but enough time for the 1st render to complete
       const response = new Promise(resolve => setTimeout(() => resolve(multiResources), 100));
       fetchMock.mock(
-        `begin:${connections.prod.graphql}`,
+        `begin:${graphqlEndpoint}`,
         response // arbitrary, but usually enough time for the 1st render to complete
       );
 
-      const { element } = await setup({});
+      const { component } = await setup({});
 
-      expect(element.shadowRoot).toEqualHtml(`<slot name="loading"></slot>`);
+      expect(component.shadowRoot).toEqualHtml(`<slot name="loading"></slot>`);
       await response;
     });
 
     it('has-resource', async () => {
-      fetchMock.mock(`begin:${connections.prod.graphql}`, multiResources);
+      fetchMock.mock(`begin:${graphqlEndpoint}`, multiResources);
 
-      const { element } = await setup({});
+      const { component } = await setup({});
 
-      expect(element.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
+      expect(component.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
     });
 
     it('no-resource', async () => {
-      fetchMock.mock(`begin:${connections.prod.graphql}`, { data: { resources: { edges: [] } } });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { data: { resources: { edges: [] } } });
 
-      const { element } = await setup({});
+      const { component } = await setup({});
 
-      expect(element.shadowRoot).toEqualHtml(`<slot name="no-resource"></slot>`);
+      expect(component.shadowRoot).toEqualHtml(`<slot name="no-resource"></slot>`);
     });
   });
 
   describe('v0 props', () => {
     it('label', async () => {
-      fetchMock.mock(`begin:${connections.prod.graphql}`, singleResource);
+      fetchMock.mock(`begin:${graphqlEndpoint}`, singleResource);
 
-      const { element } = await setup({ label: 'my-resource' });
+      const { component } = await setup({ label: 'my-resource' });
 
-      expect(element.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
+      expect(component.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
     });
   });
 
   describe('v0 events', () => {
     it('load: has resources', async () => {
-      fetchMock.mock(`begin:${connections.prod.graphql}`, multiResources);
+      fetchMock.mock(`begin:${graphqlEndpoint}`, multiResources);
 
       const mockLoad = jest.fn();
       await setup({ onLoad: mockLoad });
@@ -113,7 +109,7 @@ describe('<manifold-data-has-resource>', () => {
     });
 
     it('load: no resources', async () => {
-      fetchMock.mock(`begin:${connections.prod.graphql}`, { data: null });
+      fetchMock.mock(`begin:${graphqlEndpoint}`, { data: null });
 
       const mockLoad = jest.fn();
       await setup({ onLoad: mockLoad });
