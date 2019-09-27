@@ -85,7 +85,7 @@ export class ManifoldCredentials {
       </manifold-credentials-view>,
       Array.isArray(this.errors)
         ? this.errors.map(({ message }) => (
-            <div style={{'margin-top': '1rem'}}>
+            <div style={{ 'margin-top': '1rem' }}>
               <manifold-toast alert-type="error">{message}</manifold-toast>
             </div>
           ))
