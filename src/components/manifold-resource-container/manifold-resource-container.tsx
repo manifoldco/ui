@@ -39,7 +39,7 @@ export class ManifoldResourceContainer {
   @State() gqlData?: Resource;
   @State() loading: boolean = true;
   @State() timeout?: number;
-  @Event({ eventName: 'manifold-resource-loaded' }) resourceLoaded: EventEmitter;
+  @Event({ eventName: 'manifold-resource-load' }) resourceLoad: EventEmitter;
 
   @Watch('resourceLabel') resourceChange(newName: string) {
     clearTimeout(this.timeout);
@@ -83,7 +83,7 @@ export class ManifoldResourceContainer {
         this.gqlData = data.resource;
         // Once data has been loaded once, don’t re-show skeletons anywhere (even if re-polling)
         this.loading = false;
-        this.resourceLoaded.emit();
+        this.resourceLoad.emit();
       }
     } catch (error) {
       // In case we actually want to keep fetching on an error
