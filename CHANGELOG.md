@@ -15,6 +15,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Fixed local testing addresses.
 - Fixed console warning about `loading="lazy"` (#552)
+- Prevent actions on `<manifold-credentials>` while awaiting a resourceLabel (#554)
 
 ### Changed
 
