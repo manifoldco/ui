@@ -9,7 +9,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Added
 
-- Added `disabled` attribute to `manifold-resource-rename`
+- Added `disabled` attribute to `manifold-resource-rename` (#553)
 
 ### Fixed
 
