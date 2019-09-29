@@ -63,7 +63,14 @@ export class ManifoldServiceCardView {
       >
         <div class="grid">
           <div class="logo">
-            <manifold-lazy-image src={this.logo} alt={this.name} itemprop="image" />
+            <img
+              src={this.logo}
+              alt={this.name}
+              itemprop="image"
+              loading="lazy"
+              width="48"
+              height="48"
+            />
           </div>
           <h3 class="name" itemprop="name">
             {this.name}

@@ -104,7 +104,14 @@ export class ManifoldResourceCardView {
         </div>
         <div class="logo">
           {this.logo ? (
-            <manifold-lazy-image src={this.logo} alt={this.logoLabel} itemprop="image" />
+            <img
+              src={this.logo}
+              alt={this.logoLabel}
+              itemprop="image"
+              loading="lazy"
+              height="48"
+              width="48"
+            />
           ) : (
             <div class="logo-placeholder">
               <manifold-icon icon={resource} />
