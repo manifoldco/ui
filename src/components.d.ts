@@ -299,11 +299,6 @@ export namespace Components {
     'required'?: boolean;
     'type'?: string;
   }
-  interface ManifoldLazyImage {
-    'alt': string;
-    'itemprop'?: string;
-    'src': string;
-  }
   interface ManifoldMarketplace {
     /**
     * Comma-separated list of featured products (labels)
@@ -803,12 +798,6 @@ declare global {
     new (): HTMLManifoldInputElement;
   };
 
-  interface HTMLManifoldLazyImageElement extends Components.ManifoldLazyImage, HTMLStencilElement {}
-  var HTMLManifoldLazyImageElement: {
-    prototype: HTMLManifoldLazyImageElement;
-    new (): HTMLManifoldLazyImageElement;
-  };
-
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
   var HTMLManifoldMarketplaceElement: {
     prototype: HTMLManifoldMarketplaceElement;
@@ -1061,7 +1050,6 @@ declare global {
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-input': HTMLManifoldInputElement;
-    'manifold-lazy-image': HTMLManifoldLazyImageElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-mock-resource': HTMLManifoldMockResourceElement;
@@ -1389,11 +1377,6 @@ declare namespace LocalJSX {
     'pattern'?: string;
     'required'?: boolean;
     'type'?: string;
-  }
-  interface ManifoldLazyImage extends JSXBase.HTMLAttributes<HTMLManifoldLazyImageElement> {
-    'alt'?: string;
-    'itemprop'?: string;
-    'src'?: string;
   }
   interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
     /**
@@ -1781,7 +1764,6 @@ declare namespace LocalJSX {
     'manifold-icon': ManifoldIcon;
     'manifold-image-gallery': ManifoldImageGallery;
     'manifold-input': ManifoldInput;
-    'manifold-lazy-image': ManifoldLazyImage;
     'manifold-marketplace': ManifoldMarketplace;
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
     'manifold-mock-resource': ManifoldMockResource;
