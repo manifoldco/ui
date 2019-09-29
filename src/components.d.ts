@@ -1603,6 +1603,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'onManifold-resource-load'?: (event: CustomEvent<any>) => void;
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
