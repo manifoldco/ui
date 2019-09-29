@@ -27,7 +27,7 @@ export class ManifoldCredentials {
 
   @Method()
   async showCredentials() {
-    if (!this.graphqlFetch) {
+    if (!this.graphqlFetch || !this.resourceLabel) {
       return;
     }
 
@@ -73,7 +73,7 @@ export class ManifoldCredentials {
     return [
       <manifold-credentials-view
         credentials={this.credentials}
-        loading={this.loading}
+        loading={this.loading || !this.resourceLabel}
         onCredentialsRequested={this.credentialsRequested}
       >
         <manifold-forward-slot slot="show-button">
