@@ -9,6 +9,7 @@ import loadMark from '../../utils/loadMark';
 export class ManifoldResourceRename {
   @Prop() data?: Gateway.Resource;
   @Prop() loading: boolean = true;
+  @Prop() disabled?: boolean;
   /** The new label to give to the resource */
   @Prop() newLabel: string = '';
 
@@ -22,6 +23,7 @@ export class ManifoldResourceRename {
         resourceId={this.data && this.data.id}
         resourceLabel={this.data && this.data.label}
         loading={this.loading}
+        disabled={this.disabled}
         newLabel={this.newLabel}
       >
         <slot />

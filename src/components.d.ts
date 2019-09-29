@@ -205,6 +205,7 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton {
+    'disabled'?: boolean;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -569,6 +570,7 @@ export namespace Components {
   }
   interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
+    'disabled'?: boolean;
     'loading': boolean;
     /**
     * The new label to give to the resource
@@ -1275,6 +1277,7 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
+    'disabled'?: boolean;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1654,6 +1657,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
     'data'?: Gateway.Resource;
+    'disabled'?: boolean;
     'loading'?: boolean;
     /**
     * The new label to give to the resource

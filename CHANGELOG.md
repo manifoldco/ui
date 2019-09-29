@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## Added
+
+- Added `disabled` attribute to `manifold-resource-rename` (#553)
+
 ### Fixed
 
 - Fixed local testing addresses.
