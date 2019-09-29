@@ -159,7 +159,7 @@ export class ManifoldMarketplace {
   @logger()
   render() {
     const accurateSkeletonCount =
-      this.parsedProducts.length < skeletonProducts.length
+      this.parsedProducts.length > 0 && this.parsedProducts.length < skeletonProducts.length
         ? skeletonProducts.slice(0, this.parsedProducts.length)
         : skeletonProducts;
 
