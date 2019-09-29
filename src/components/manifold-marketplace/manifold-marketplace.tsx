@@ -158,6 +158,11 @@ export class ManifoldMarketplace {
 
   @logger()
   render() {
+    const accurateSkeletonCount =
+      this.parsedProducts.length > 0 && this.parsedProducts.length < skeletonProducts.length
+        ? skeletonProducts.slice(0, this.parsedProducts.length)
+        : skeletonProducts;
+
     return (
       <manifold-marketplace-grid
         featured={this.parsedFeatured}
@@ -169,7 +174,7 @@ export class ManifoldMarketplace {
         productLinkFormat={this.productLinkFormat}
         products={this.parsedProducts}
         skeleton={this.isLoading}
-        services={this.isLoading ? skeletonProducts.map(transformSkeleton) : this.services}
+        services={this.isLoading ? accurateSkeletonCount.map(transformSkeleton) : this.services}
         templateLinkFormat={this.templateLinkFormat}
       />
     );

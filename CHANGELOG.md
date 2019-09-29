@@ -7,7 +7,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
 - Fixed local testing addresses.
+
+### Changed
+
+- Changed number of skeleton products that load (#551)
 
 ## [v0.5.13]
 
