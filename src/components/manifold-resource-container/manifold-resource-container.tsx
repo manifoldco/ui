@@ -39,7 +39,7 @@ export class ManifoldResourceContainer {
   @State() gqlData?: Resource;
   @State() loading: boolean = true;
   @State() timeout?: number;
-  @Event({eventName: 'manifold-resource-loaded'}) resourceLoaded: EventEmitter;
+  @Event({ eventName: 'manifold-resource-loaded' }) resourceLoaded: EventEmitter;
 
   @Watch('resourceLabel') resourceChange(newName: string) {
     clearTimeout(this.timeout);
