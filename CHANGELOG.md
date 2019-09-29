@@ -19,7 +19,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Changed number of skeleton products that load (#551)
+- Changed number of skeleton products that load (#551)git reset HEAD~1
+- Changed line height on `<manifold-toast>` componenet (#557)
 
 ## [v0.5.13]
 

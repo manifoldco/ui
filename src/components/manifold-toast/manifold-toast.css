@@ -27,7 +27,7 @@
   margin-top: 0;
   margin-bottom: 0;
   color: var(--manifold-color-primary);
-  line-height: 1;
+  line-height: 1.3;
   will-change: height;
 
   /* hackiness below to vary the opacity of hex colors */
@@ -134,7 +134,7 @@
   padding: 0;
   color: currentColor;
   font-size: 1.125em;
-  line-height: 1;
+  line-height: 1.3;
   background: none;
   border: none;
   border-top-right-radius: var(--manifold-radius);
