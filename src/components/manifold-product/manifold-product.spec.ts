@@ -1,4 +1,4 @@
-import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldProduct } from './manifold-product';
@@ -7,57 +7,90 @@ import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 const graphqlEndpoint = 'http://test.com/graphql';
 
-describe('<manifold-product>', () => {
-  let page: SpecPage;
-  let element: HTMLManifoldProductElement;
+async function setup(productLabel: string, onLoad?: (e: Event) => void) {
+  const page = await newSpecPage({
+    components: [ManifoldProduct],
+    html: `<div></div>`,
+  });
+  const component = page.doc.createElement('manifold-product');
 
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [ManifoldProduct],
-      html: `<div></div>`,
-    });
-    element = page.doc.createElement('manifold-product');
-    element.graphqlFetch = createGraphqlFetch({
-      endpoint: () => graphqlEndpoint,
-      getAuthToken: jest.fn(() => '1234'),
-      wait: () => 10,
-      setAuthToken: jest.fn(),
-    });
+  if (onLoad) {
+    component.addEventListener('manifold-product-load', onLoad);
+  }
 
-    fetchMock.reset();
+  component.productLabel = productLabel;
+  component.graphqlFetch = createGraphqlFetch({
+    endpoint: () => graphqlEndpoint,
   });
 
+  (page.root as HTMLDivElement).appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
+
+describe('<manifold-product>', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('fetches the product by label on load', async () => {
-    const productLabel = 'product-label';
-    fetchMock.mock(graphqlEndpoint, product);
+  describe('v0 props', () => {
+    it('fetches the product by label on load', async () => {
+      const productLabel = 'product-label';
+      fetchMock.mock(graphqlEndpoint, product);
+      await setup(productLabel);
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+    });
 
-    const root = page.root as HTMLElement;
-    element.productLabel = productLabel;
-    root.appendChild(element);
-    await page.waitForChanges();
+    it('fetches the product by label on change', async () => {
+      const productLabel = 'product-label';
+      fetchMock.once('*', { status: 200, body: {} });
 
-    expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      const { page, component } = await setup(productLabel);
+
+      const newLabel = 'new-product-label';
+      fetchMock.mock(graphqlEndpoint, product);
+
+      component.productLabel = newLabel;
+      await page.waitForChanges();
+
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+    });
   });
 
-  it('fetches the product by label on change', async () => {
-    const productLabel = 'product-label';
-    fetchMock.once('*', 200);
+  describe('v0 events', () => {
+    it('emits the product when found', async () => {
+      const productLabel = 'product-label';
+      const response = { status: 200, body: { data: { product } } };
 
-    const root = page.root as HTMLElement;
-    element.productLabel = productLabel;
-    root.appendChild(element);
-    await page.waitForChanges();
+      fetchMock.mock(graphqlEndpoint, response);
 
-    const newLabel = 'new-product-label';
-    fetchMock.mock(graphqlEndpoint, product);
+      const onLoad = jest.fn();
+      await setup(productLabel, onLoad);
 
-    element.productLabel = newLabel;
-    await page.waitForChanges();
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(onLoad).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: product,
+        })
+      );
+    });
 
-    expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+    it('emits null when not found', async () => {
+      const productLabel = 'product-label';
+      const response = { status: 200, body: { data: { product: null } } };
+
+      fetchMock.mock(graphqlEndpoint, response);
+
+      const onLoad = jest.fn();
+      await setup(productLabel, onLoad);
+
+      expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+      expect(onLoad).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: null,
+        })
+      );
+    });
   });
 });
