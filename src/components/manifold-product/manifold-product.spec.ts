@@ -45,7 +45,7 @@ describe('<manifold-product>', () => {
 
   it('fetches the product by label on change', async () => {
     const productLabel = 'product-label';
-    fetchMock.once('*', 200);
+    fetchMock.once('*', { status: 200, body: {} });
 
     const root = page.root as HTMLElement;
     element.productLabel = productLabel;
