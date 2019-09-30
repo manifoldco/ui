@@ -1547,6 +1547,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'onManifold-product-load'?: (event: CustomEvent<Product | undefined | null>) => void;
     /**
     * _(optional)_ Hide the CTA on the left?
     */

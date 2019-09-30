@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
+import { h, Component, Prop, State, Element, Watch, Event, EventEmitter } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import { Product } from '../../types/graphql';
@@ -43,6 +43,8 @@ export class ManifoldProduct {
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
   @State() product?: Product;
+  @Event({ eventName: 'manifold-product-load' }) loaded: EventEmitter<Product | undefined | null>;
+
   @Watch('productLabel') productChange(newLabel: string) {
     this.fetchProduct(newLabel);
   }
@@ -63,6 +65,7 @@ export class ManifoldProduct {
     const { data } = await this.graphqlFetch({ query, variables });
 
     this.product = (data && data.product) || undefined;
+    this.loaded.emit(data && data.product);
   };
 
   @logger()
