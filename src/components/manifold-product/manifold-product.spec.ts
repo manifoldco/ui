@@ -7,26 +7,24 @@ import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 const graphqlEndpoint = 'http://test.com/graphql';
 
-describe('<manifold-product>', () => {
-  let page: SpecPage;
-  let element: HTMLManifoldProductElement;
-
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [ManifoldProduct],
-      html: `<div></div>`,
-    });
-    element = page.doc.createElement('manifold-product');
-    element.graphqlFetch = createGraphqlFetch({
-      endpoint: () => graphqlEndpoint,
-      getAuthToken: jest.fn(() => '1234'),
-      wait: () => 10,
-      setAuthToken: jest.fn(),
-    });
-
-    fetchMock.reset();
+async function setup(productLabel: string) {
+  const page = await newSpecPage({
+    components: [ManifoldProduct],
+    html: `<div></div>`,
+  });
+  const component = page.doc.createElement('manifold-product');
+  component.productLabel = productLabel;
+  component.graphqlFetch = createGraphqlFetch({
+    endpoint: () => graphqlEndpoint,
   });
 
+  (page.root as HTMLDivElement).appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
+
+describe('<manifold-product>', () => {
   afterEach(() => {
     fetchMock.restore();
   });
@@ -34,12 +32,7 @@ describe('<manifold-product>', () => {
   it('fetches the product by label on load', async () => {
     const productLabel = 'product-label';
     fetchMock.mock(graphqlEndpoint, product);
-
-    const root = page.root as HTMLElement;
-    element.productLabel = productLabel;
-    root.appendChild(element);
-    await page.waitForChanges();
-
+    await setup(productLabel);
     expect(fetchMock.called(graphqlEndpoint)).toBe(true);
   });
 
@@ -47,15 +40,12 @@ describe('<manifold-product>', () => {
     const productLabel = 'product-label';
     fetchMock.once('*', { status: 200, body: {} });
 
-    const root = page.root as HTMLElement;
-    element.productLabel = productLabel;
-    root.appendChild(element);
-    await page.waitForChanges();
+    const { page, component } = await setup(productLabel);
 
     const newLabel = 'new-product-label';
     fetchMock.mock(graphqlEndpoint, product);
 
-    element.productLabel = newLabel;
+    component.productLabel = newLabel;
     await page.waitForChanges();
 
     expect(fetchMock.called(graphqlEndpoint)).toBe(true);
