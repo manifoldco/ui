@@ -247,7 +247,6 @@ export class ManifoldResourceList {
           ? this.resources.map(resource => (
               <manifold-resource-card-view
                 label={resource.label}
-                name={resource.name}
                 logo={resource.logo}
                 logoLabel={resource.logoLabel}
                 resourceId={resource.id}
@@ -261,7 +260,6 @@ export class ManifoldResourceList {
                 label="my-loading-resource"
                 loading={true}
                 logo="myresource.png"
-                name="my-loading-resource"
               />
             ))}
         {!Array.isArray(this.resources) && <slot name="loading" />}

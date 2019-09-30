@@ -11,8 +11,8 @@ import { Error } from '../Error';
 const query = gql`
   query RESOURCE($resourceLabel: String!) {
     resource(label: $resourceLabel) {
+      id
       label
-      displayName
       plan {
         product {
           displayName
@@ -65,13 +65,12 @@ export class ManifoldResourceCard {
   @logger()
   render() {
     if (this.resource) {
-      const { label, displayName, plan, id, status } = this.resource;
+      const { label, plan, id, status } = this.resource;
       const { logoUrl } = (plan && plan.product) || {};
 
       return [
         <manifold-resource-card-view
           label={label}
-          name={displayName}
           logo={logoUrl}
           resourceId={id}
           resourceStatus={status.label}
