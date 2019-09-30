@@ -5,11 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## [Unreleased]
 
-### Changed
+## Changed
+
+- Deprecated friendly resource names in favor of kebab-case resource labels (#559)
 - Removed `resource-id` prop from `manifild-resource-card` (#537)
 - Converted `manifold-resource-card` to GraphQL (#537)
+
+## [v0.5.15]
+
+- Added `manifold-resource-load` event to `manifold-resource-container` (#556)
+
+## [v0.5.14]
+
+## Added
+
+- Added `disabled` attribute to `manifold-resource-rename` (#553)
+
+### Fixed
+
+- Fixed local testing addresses.
+- Fixed console warning about `loading="lazy"` (#552)
+- Prevent actions on `<manifold-credentials>` while awaiting a resourceLabel (#554)
+
+### Changed
+
+- Changed number of skeleton products that load (#551)
+
+## [v0.5.13]
+
+### Fixed
+
+- Credentials appear one-per-line (#546)
+- Fixed credential error message top margin (#545)
+- Fixed success event after a resource rename to include potentially modified label (#547)
 
 ## [v0.5.12]
 

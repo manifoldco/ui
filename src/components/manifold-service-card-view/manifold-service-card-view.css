@@ -87,8 +87,6 @@
     background: white;
     border: 2px solid white;
     border-radius: var(--manifold-radius);
-    opacity: 0.1;
-    transition: opacity 150ms linear 100ms;
 
     @media (--viewport-s) {
       width: var(--manifold-product-logo-m);
@@ -98,10 +96,6 @@
     @media (--viewport-m) {
       width: var(--manifold-product-logo-l);
       height: var(--manifold-product-logo-l);
-    }
-
-    &[data-loaded] {
-      opacity: 1;
     }
   }
 }

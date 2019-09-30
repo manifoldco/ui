@@ -45,6 +45,7 @@ export class ManifoldDataRenameButton {
   /** The id of the resource to rename, will be fetched if not set */
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
+  @Prop() disabled?: boolean;
   @Event({ eventName: 'manifold-renameButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-renameButton-invalid', bubbles: true }) invalid: EventEmitter;
   @Event({ eventName: 'manifold-renameButton-error', bubbles: true }) error: EventEmitter;
@@ -105,7 +106,7 @@ export class ManifoldDataRenameButton {
     };
 
     // rename
-    await this.restFetch({
+    const renamedResource = await this.restFetch<Marketplace.Resource>({
       service: 'marketplace',
       endpoint: `/resources/${this.resourceId}`,
       body,
@@ -121,6 +122,10 @@ export class ManifoldDataRenameButton {
       this.error.emit(errorMessage);
       return Promise.reject(errorMessage);
     });
+    if (renamedResource) {
+      this.newLabel = renamedResource.body.label;
+      resourceDetails.newLabel = this.newLabel;
+    }
 
     // Poll until rename complete
     await this.pollRename();
@@ -184,7 +189,7 @@ export class ManifoldDataRenameButton {
       <button
         type="submit"
         onClick={() => this.rename()}
-        disabled={!this.resourceId && !this.loading}
+        disabled={(!this.resourceId && !this.loading) || this.disabled}
       >
         <slot />
       </button>

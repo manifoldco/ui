@@ -205,6 +205,7 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton {
+    'disabled'?: boolean;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -298,11 +299,6 @@ export namespace Components {
     'pattern'?: string;
     'required'?: boolean;
     'type'?: string;
-  }
-  interface ManifoldLazyImage {
-    'alt': string;
-    'itemprop'?: string;
-    'src': string;
   }
   interface ManifoldMarketplace {
     /**
@@ -504,7 +500,6 @@ export namespace Components {
     'loading'?: boolean;
     'logo'?: string;
     'logoLabel'?: string;
-    'name'?: string;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
@@ -573,6 +568,7 @@ export namespace Components {
   }
   interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
+    'disabled'?: boolean;
     'loading': boolean;
     /**
     * The new label to give to the resource
@@ -800,12 +796,6 @@ declare global {
   var HTMLManifoldInputElement: {
     prototype: HTMLManifoldInputElement;
     new (): HTMLManifoldInputElement;
-  };
-
-  interface HTMLManifoldLazyImageElement extends Components.ManifoldLazyImage, HTMLStencilElement {}
-  var HTMLManifoldLazyImageElement: {
-    prototype: HTMLManifoldLazyImageElement;
-    new (): HTMLManifoldLazyImageElement;
   };
 
   interface HTMLManifoldMarketplaceElement extends Components.ManifoldMarketplace, HTMLStencilElement {}
@@ -1060,7 +1050,6 @@ declare global {
     'manifold-icon': HTMLManifoldIconElement;
     'manifold-image-gallery': HTMLManifoldImageGalleryElement;
     'manifold-input': HTMLManifoldInputElement;
-    'manifold-lazy-image': HTMLManifoldLazyImageElement;
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-mock-resource': HTMLManifoldMockResourceElement;
@@ -1286,6 +1275,7 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
+    'disabled'?: boolean;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1388,11 +1378,6 @@ declare namespace LocalJSX {
     'pattern'?: string;
     'required'?: boolean;
     'type'?: string;
-  }
-  interface ManifoldLazyImage extends JSXBase.HTMLAttributes<HTMLManifoldLazyImageElement> {
-    'alt'?: string;
-    'itemprop'?: string;
-    'src'?: string;
   }
   interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
     /**
@@ -1599,7 +1584,6 @@ declare namespace LocalJSX {
     'loading'?: boolean;
     'logo'?: string;
     'logoLabel'?: string;
-    'name'?: string;
     'onManifold-resource-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
     'resourceId'?: string;
@@ -1615,6 +1599,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'onManifold-resource-load'?: (event: CustomEvent<any>) => void;
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
@@ -1669,6 +1654,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
     'data'?: Gateway.Resource;
+    'disabled'?: boolean;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1779,7 +1765,6 @@ declare namespace LocalJSX {
     'manifold-icon': ManifoldIcon;
     'manifold-image-gallery': ManifoldImageGallery;
     'manifold-input': ManifoldInput;
-    'manifold-lazy-image': ManifoldLazyImage;
     'manifold-marketplace': ManifoldMarketplace;
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
     'manifold-mock-resource': ManifoldMockResource;

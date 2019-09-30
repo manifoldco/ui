@@ -100,10 +100,14 @@
 }
 
 .sidebar {
-  max-width: 20rem;
+  max-width: 12rem;
   margin-right: auto;
   margin-left: auto;
   padding-top: var(--overlap);
+
+  @media (min-width: 1106px) {
+    max-width: 20rem;
+  }
 }
 
 .sidebar-cta {
