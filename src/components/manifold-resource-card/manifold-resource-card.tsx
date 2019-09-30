@@ -64,7 +64,6 @@ export class ManifoldResourceCard {
     return this.resource ? (
       <manifold-resource-card-view
         label={this.resource.label}
-        name={this.resource.name}
         logo={this.resource.product && this.resource.product.logo_url}
         resourceId={this.resource.id}
         resourceStatus={this.resource.state}

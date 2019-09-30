@@ -24,7 +24,6 @@ export class ManifoldResourceCardView {
   @Prop() restFetch?: RestFetch = connection.restFetch;
 
   @Prop() label?: string;
-  @Prop() name?: string;
   @Prop() logo?: string;
   @Prop() logoLabel?: string;
   @Prop() resourceId?: string;
@@ -78,7 +77,6 @@ export class ManifoldResourceCardView {
       const detail: EventDetail = {
         resourceId: this.resourceId,
         resourceLabel: this.label,
-        resourceName: this.name,
       };
       this.resourceClick.emit(detail);
     }
@@ -97,7 +95,7 @@ export class ManifoldResourceCardView {
         onClick={this.onClick}
       >
         <h3 class="name" itemprop="name">
-          {this.name || this.label}
+          {this.label}
         </h3>
         <div class="status">
           <manifold-resource-status-view size="xsmall" resourceState={this.resourceStatus} />

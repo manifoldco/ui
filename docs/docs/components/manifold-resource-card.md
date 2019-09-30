@@ -25,9 +25,8 @@ The resource card can fetch the resource with either an ID or a resource label.
 
 ## Navigation
 
-By default, resource cards will only emit the `manifold-resource-click`
-event (above). But it can also be turned into an `<a>` tag by specifying
-`resource-link-format`:
+By default, resource cards will only emit the `manifold-resource-click` event (above). But it can
+also be turned into an `<a>` tag by specifying `resource-link-format`:
 
 ```html
 <manifold-resource-card resource-link-format="/resources/:resource"></manifold-resource-card>
@@ -36,15 +35,12 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 
 `:label` will be replaced with the url-friendly slug for the product.
 
-Note that this will disable the custom events unless `preserve-event` is
-passed as well.
+Note that this will disable the custom events unless `preserve-event` is passed as well.
 
 ## Events
 
-This component emits [custom
-events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
-when it updates. To listen to those events, add an event listener either on
-the component itself, or `document`:
+This component emits [custom events][custom-events] when it updates. To listen to those events, add
+an event listener either on the component itself, or `document`:
 
 ```js
 document.addEventListener('manifold-resource-click', { detail: { resourceLabel } } => {
@@ -55,17 +51,17 @@ document.addEventListener('manifold-resource-click', { detail: { resourceLabel }
 The following events are emitted:
 
 | Event Name                | Description                                      | Data                          |
-|---------------------------|--------------------------------------------------|-------------------------------|
+| ------------------------- | ------------------------------------------------ | ----------------------------- |
 | `manifold-resource-click` | Fires whenever a user has clicked on a resource. | `resourceId`, `resourceLabel` |
 
 ## Displaying without fetching
 
-The underlying `<manifold-resource-card-view>` component may be used to display the values for a resource without any fetch calls.
+The underlying `<manifold-resource-card-view>` component may be used to display the values for a
+resource without any fetch calls.
 
 ```html
 <manifold-resource-card-view
   label="my-resource"
-  name="my resource"
   logo="http://logo.png"
   resource-id="123456"
   resource-status="available"
@@ -85,10 +81,11 @@ The `<manifold-resource-card-view>` can display a loading status rather than the
 ```html
 <manifold-resource-card-view
   label="my-resource"
-  name="my resource"
   logo="http://logo.png"
   resource-id="123456"
   resource-status="unknown"
   loading
 ></manifold-resource-card-view>
 ```
+
+[custom-events]: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent
