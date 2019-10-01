@@ -101,7 +101,7 @@ export class ManifoldToast {
                 <manifold-icon icon={x} />
               </button>
             )}
-            <manifold-icon class="alert" icon={this.icon || this.alertTypeIcon} />
+            <manifold-icon icon={this.icon || this.alertTypeIcon} />
             <slot />
           </div>
         </p>
