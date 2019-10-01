@@ -119,6 +119,11 @@
     position: relative;
     padding-right: 4rem;
   }
+
+  & .alert {
+    align-self: flex-start;
+    padding-top: 0.25rem;
+  }
 }
 
 .close {
