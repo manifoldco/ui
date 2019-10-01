@@ -1,5 +1,6 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
+import { Resource } from '../../types/graphql';
 import { ManifoldResourceProduct } from './manifold-resource-product';
 
 const GraphqlResource = {
@@ -45,9 +46,7 @@ describe('<manifold-resource-product>', () => {
 
   it('Renders a product card if not loading', async () => {
     element.loading = false;
-    // TODO: Make good mocks or rethink the types, this ignore stops the compiler from wanting a complete resource
-    // @ts-ignore
-    element.gqlData = GraphqlResource;
+    element.gqlData = GraphqlResource as Resource;
     const root = page.root as HTMLElement;
     root.appendChild(element);
 

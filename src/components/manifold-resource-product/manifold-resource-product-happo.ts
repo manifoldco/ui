@@ -1,3 +1,5 @@
+import { Resource } from '../../types/graphql';
+
 export const skeleton = () => {
   const resourceProduct = document.createElement('manifold-resource-product');
   document.body.appendChild(resourceProduct);
@@ -21,9 +23,7 @@ export const loadedResource = () => {
 
   const resourceProduct = document.createElement('manifold-resource-product');
   resourceProduct.loading = false;
-  // TODO: Make good mocks or rethink the types, this ignore stops the compiler from wanting a complete resource
-  // @ts-ignore
-  resourceProduct.gqlData = GraphqlResource;
+  resourceProduct.gqlData = GraphqlResource as Resource;
 
   document.body.appendChild(resourceProduct);
   return resourceProduct.componentOnReady();
