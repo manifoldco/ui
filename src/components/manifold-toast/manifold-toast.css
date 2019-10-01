@@ -110,6 +110,7 @@
   grid-column: 1;
   grid-column-gap: calc(var(--padding) - 0.125rem);
   grid-template-columns: min-content auto;
+  align-items: baseline;
   padding-top: var(--padding);
   padding-right: var(--padding);
   padding-bottom: var(--padding);
@@ -118,11 +119,6 @@
   &[data-dismissable] {
     position: relative;
     padding-right: 4rem;
-  }
-
-  & .alert {
-    align-self: flex-start;
-    padding-top: 0.25rem;
   }
 }
 
