@@ -120,6 +120,10 @@
     position: relative;
     padding-right: 4rem;
   }
+
+  & .content {
+    align-self: flex-start;
+  }
 }
 
 .close {

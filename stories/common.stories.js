@@ -79,4 +79,21 @@ storiesOf('Common', module)
       >
         ${message}
       </manifold-toast>`;
+  })
+  .add('multi-line toast', () => {
+    const type = select(
+      'alert-type',
+      { default: '', error: 'error', warning: 'warning', success: 'success' },
+      ''
+    );
+    const dismissable = boolean('dismissable', true);
+    const message = text('message', 'This is a generic toast component.');
+    return `<manifold-toast
+        ${type ? `alert-type="${type}"` : ''}
+        ${dismissable ? 'dismissable' : ''}
+      >
+        ${message}
+        <br />
+        It spans multiple lines
+      </manifold-toast>`;
   });
