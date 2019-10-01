@@ -14,6 +14,7 @@ import {
   PlanConnection,
   Product,
   ProductEdge,
+  Resource,
 } from './types/graphql';
 import {
   Gateway,
@@ -564,7 +565,7 @@ export namespace Components {
   }
   interface ManifoldResourcePlan {}
   interface ManifoldResourceProduct {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading': boolean;
   }
   interface ManifoldResourceRename {
@@ -1652,7 +1653,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {}
   interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading'?: boolean;
   }
   interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {

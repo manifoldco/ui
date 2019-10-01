@@ -17,6 +17,7 @@ const query = gql`
         product {
           id
           displayName
+          tagline
           label
           logoUrl
         }

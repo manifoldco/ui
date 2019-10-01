@@ -16,6 +16,7 @@ const GraphqlResource = {
         product: {
           id: '1234',
           displayName: 'Product',
+          tagline: 'Amazing product',
           label: 'product',
           logoUrl: 'https://fillmurray.com/200/200',
         },
@@ -40,9 +41,11 @@ describe('<manifold-resource-credentials>', () => {
       endpoint: () => graphqlEndpoint,
     });
   });
+
   afterEach(() => {
     fetchMock.restore();
   });
+
   it('fetches resource on label change', () => {
     const newResource = 'new-resource';
     const resourceCreds = new ManifoldResourceContainer();
@@ -51,6 +54,7 @@ describe('<manifold-resource-credentials>', () => {
     resourceCreds.resourceChange(newResource);
     expect(resourceCreds.fetchResource).toHaveBeenCalledWith(newResource);
   });
+
   it('fetches resource on refetch change', () => {
     const resourceCreds = new ManifoldResourceContainer();
     resourceCreds.fetchResource = jest.fn();
@@ -58,6 +62,7 @@ describe('<manifold-resource-credentials>', () => {
     resourceCreds.refreshChange(true);
     expect(resourceCreds.fetchResource).toHaveBeenCalledWith('old-resource');
   });
+
   it('will fetch the resource on load', async () => {
     const resourceLabel = 'test-resource';
     fetchMock.mock(`${connections.prod.gateway}/resources/me/${resourceLabel}`, GatewayResource);
@@ -71,6 +76,7 @@ describe('<manifold-resource-credentials>', () => {
     );
     expect(fetchMock.called(graphqlEndpoint)).toBe(true);
   });
+
   it('will not fetch the resource if the component has no resource label', async () => {
     const resourceLabel = 'test-resource';
     fetchMock.mock(`${connections.prod.gateway}/resources/me/${resourceLabel}`, GatewayResource);
@@ -83,6 +89,7 @@ describe('<manifold-resource-credentials>', () => {
     );
     expect(fetchMock.called(graphqlEndpoint)).toBe(false);
   });
+
   it('will refetch the resource after load if given an invalid resource', async () => {
     const resourceLabel = 'test-resource';
     // @ts-ignore
@@ -104,6 +111,7 @@ describe('<manifold-resource-credentials>', () => {
     expect(fetchMock.called(graphqlEndpoint)).toBe(true);
     expect(window.setTimeout).toHaveBeenCalledTimes(1);
   });
+
   it('will refetch the resource after load if it received an error', async () => {
     const resourceLabel = 'test-resource';
     // @ts-ignore
