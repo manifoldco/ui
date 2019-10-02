@@ -3,16 +3,37 @@ import { refresh_cw } from '@manifoldco/icons';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
-const AVAILABLE = 'available';
+// Old statuses
+const AVAILABLE_OLD = 'available';
 const OFFLINE = 'offline';
 const PROVISIONING = 'provision';
 const DEGRADED = 'degraded';
 
+// New statuses
+const AVAILABLE = 'AVAILABLE';
+const CREATING = 'CREATING';
+const UPDATING = 'UPDATING';
+const DELETING = 'DELETING';
+const DELETED = 'DELETED';
+const ERROR_CREATING = 'ERROR_CREATING';
+const ERROR_UPDATING = 'ERROR_UPDATING';
+const ERROR_DELETING = 'ERROR_DELETING';
+
 const message: { [s: string]: string } = {
-  [AVAILABLE]: 'Available',
+  // Old
+  [AVAILABLE_OLD]: 'Available',
   [OFFLINE]: 'Offline',
   [PROVISIONING]: 'Provision',
   [DEGRADED]: 'Degraded',
+  // New
+  [AVAILABLE]: 'Available',
+  [CREATING]: 'Creating',
+  [UPDATING]: 'Updating',
+  [DELETING]: 'Deleting',
+  [DELETED]: 'Deleted',
+  [ERROR_CREATING]: 'Error Creating',
+  [ERROR_UPDATING]: 'Error Updating',
+  [ERROR_DELETING]: 'Error Deleting',
 };
 
 @Component({

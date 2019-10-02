@@ -1,9 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, Watch } from '@stencil/core';
 import { resource } from '@manifoldco/icons';
 
-import connection from '../../state/connection';
-import { Marketplace } from '../../types/marketplace';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -20,8 +17,6 @@ interface EventDetail {
 })
 export class ManifoldResourceCardView {
   @Element() el: HTMLElement;
-  /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
 
   @Prop() label?: string;
   @Prop() logo?: string;
@@ -33,42 +28,14 @@ export class ManifoldResourceCardView {
   @Prop() loading?: boolean = false;
   @Event({ eventName: 'manifold-resource-click', bubbles: true }) resourceClick: EventEmitter;
 
-  @Watch('label') resourceChange(newLabel: string) {
-    if (!this.loading && !this.resourceId) {
-      this.fetchResourceId(newLabel);
-    }
-  }
-
   @loadMark()
-  componentWillLoad() {
-    if (!this.loading && !this.resourceId && this.label) {
-      this.fetchResourceId(this.label);
-    }
-  }
+  componentWillLoad() {}
 
   get href() {
     if (!this.resourceLinkFormat || !this.label) {
       return '';
     }
     return this.resourceLinkFormat.replace(/:resource/gi, this.label);
-  }
-
-  async fetchResourceId(resourceLabel: string) {
-    if (!this.restFetch) {
-      return;
-    }
-
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
-    });
-
-    if (!response || !response.length) {
-      console.error(`${resourceLabel} resource not found`);
-      return;
-    }
-
-    this.resourceId = response[0].id;
   }
 
   onClick = (e: Event): void => {
