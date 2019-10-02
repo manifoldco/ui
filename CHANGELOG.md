@@ -10,6 +10,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## Changed
 
 - Deprecated friendly resource names in favor of kebab-case resource labels (#559)
+- Removed `resource-id` prop from `manifild-resource-card` (#537)
+- Converted `manifold-resource-card` to GraphQL (#537)
 
 ## [v0.5.15]
 
@@ -41,18 +43,19 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [v0.5.12]
 
-## Added
+### Added
 
 - Added `label` to `<manifold-data-has-resource>` (#542)
 
-## Changed
+### Changed
 
+- Removed `product-id` from `manifild-service-card` (#533)
 - Removed `product-id` from `manifold-service-card` (#533)
 - Converted `manifold-service-card` to GraphQL (#533)
 - Removed `resource-id` prop from `manifild-resource-card` (#537)
 - Converted `manifold-resource-card` to GraphQL (#537)
 
-## Fixed
+### Fixed
 
 - Fixed loading flicker of resource components while provisioning/deprovisioning. (#539)
 
