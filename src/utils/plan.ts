@@ -4,6 +4,13 @@ import { Gateway } from '../types/gateway';
 import { $ } from './currency';
 import { pluralize } from './string';
 import { RestFetch } from './restFetch';
+import {
+  Plan,
+  RegionEdge,
+  PlanFixedFeatureEdge,
+  PlanFixedFeatureConnection,
+  RegionConnection,
+} from '../types/graphql';
 
 interface PlanCostOptions {
   planID: string;
@@ -325,3 +332,63 @@ export function planCost(restFetch: RestFetch, { planID, features, init }: PlanC
     },
   });
 }
+
+const convertFixedFeatureData = (
+  features?: PlanFixedFeatureConnection | null | undefined
+): Catalog.ExpandedFeature[] => {
+  if (!features) {
+    return [];
+  }
+
+  const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
+    let value_string = feature.displayValue;
+    let type = 'string';
+
+    if (value_string === 'true') {
+      type = 'boolean';
+      value_string = 'Yes';
+    } else if (value_string === 'false') {
+      type = 'boolean';
+      value_string = 'No';
+    }
+
+    return {
+      label: feature.label,
+      name: feature.displayName,
+      type as 'string' | 'number' | 'boolean',
+      value_string,
+      value: {
+        value: feature.displayValue,
+        label: feature.displayValue,
+        name: feature.displayName,
+      },
+    };
+  });
+
+  return newFeatures;
+};
+
+const convertRegionData = (regions: RegionConnection | null | undefined): string[] =>
+  regions ? regions.edges.map(region => region.node.id) : [];
+
+export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => {
+  return {
+    id: plan.id,
+    type: 'plan',
+    version: 1,
+    body: {
+      cost: plan.cost, // QUESTION: should this even be here?
+      features: [],
+      label: plan.label,
+      name: plan.displayName,
+      product_id: (plan.product && plan.product.id) || '',
+      provider_id: (plan.product && plan.product.provider && plan.product.provider.id) || '',
+      regions: convertRegionData(plan.regions),
+      state: plan.state,
+      trial_days: 0,
+      defaultCost: plan.cost,
+      expanded_features: [...convertFixedFeatureData(plan.fixedFeatures)],
+      free: plan.free,
+    },
+  };
+};
