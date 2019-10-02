@@ -49,7 +49,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
-- Removed `product-id` from `manifild-service-card` (#533)
+- Removed `product-id` from `manifold-service-card` (#533)
 - Converted `manifold-service-card` to GraphQL (#533)
 
 ### Fixed
