@@ -203,6 +203,8 @@ export type Invoice = Node & {
   start: Scalars['Time'],
   /** End indicates when the invoice's period ends. */
   end: Scalars['Time'],
+  /** Status represents the current status of the invoice */
+  status: InvoiceStatus,
   /** List LineItems composing the invoice. */
   lineItems?: Maybe<LineItemConnection>,
 };
@@ -247,6 +249,7 @@ export enum InvoiceOrderByField {
 
 /** InvoiceStatus represents the current status of an Invoice */
 export enum InvoiceStatus {
+  Preview = 'PREVIEW',
   Pending = 'PENDING',
   Paid = 'PAID'
 }
@@ -257,6 +260,16 @@ export type InvoiceStatusInput = {
   action: InvoiceAction,
   reason?: Maybe<Scalars['String']>,
 };
+
+/** 
+ * IsDeleted is an enum indicating whether a query should search for deleted records.
+ * When value is MAYBE, query searches both deleted and non-deleted records
+ **/
+export enum IsDeleted {
+  False = 'FALSE',
+  True = 'TRUE',
+  Maybe = 'MAYBE'
+}
 
 /** LineItem represents the amount due for a resource. */
 export type LineItem = Node & {
@@ -906,6 +919,7 @@ export type Query = {
  * Fetch a resource for the specified `label` or `id`. When authenticated as a
    * profile user, fetches the resource associated with the profile. When
    * authenticated as a platform user and a label is specified, an owner must be provided.
+   * When `deleted` is not specified, it defaults to FALSE.
    * 
    * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
@@ -1039,7 +1053,8 @@ export type QueryResourcesArgs = {
 export type QueryResourceArgs = {
   id?: Maybe<Scalars['ID']>,
   label?: Maybe<Scalars['String']>,
-  owner?: Maybe<Scalars['ProfileIdentity']>
+  owner?: Maybe<Scalars['ProfileIdentity']>,
+  deleted?: Maybe<IsDeleted>
 };
 
 

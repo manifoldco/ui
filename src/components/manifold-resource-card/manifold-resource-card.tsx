@@ -1,78 +1,87 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
-import { Gateway } from '../../types/gateway';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { Resource } from '../../types/graphql';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
+import { Error } from '../Error';
+
+const query = gql`
+  query RESOURCE($resourceLabel: String!) {
+    resource(label: $resourceLabel) {
+      id
+      label
+      plan {
+        product {
+          displayName
+          logoUrl
+        }
+      }
+      status {
+        label
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
-
-  @Prop() resourceId?: string;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() label?: string;
   @Prop() resourceLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
-  @State() resource?: Gateway.Resource;
+  @State() resource?: Resource;
+  @State() errors?: GraphqlError[];
 
-  @Watch('resourceId') resourceIdChange(newResourceId: string) {
-    this.fetchResource({ id: newResourceId });
-  }
-  @Watch('label') resourceLabelChange(newlabel: string) {
-    this.fetchResource({ label: newlabel });
+  @Watch('label') resourceLabelChange(newLabel: string) {
+    this.fetchResource(newLabel);
   }
 
   @loadMark()
   componentWillLoad() {
-    this.fetchResource({ id: this.resourceId, label: this.label });
+    this.fetchResource(this.label);
   }
 
-  async fetchResource({ id, label }: { id?: string; label?: string }) {
-    if (!this.restFetch) {
+  async fetchResource(resourceLabel?: string) {
+    if (!this.graphqlFetch || !resourceLabel) {
       return;
     }
 
-    if (id) {
-      const response = await this.restFetch<Gateway.Resource>({
-        service: 'gateway',
-        endpoint: `/resources/${id}`,
-      });
+    const { data, errors } = await this.graphqlFetch({ query, variables: { resourceLabel } });
 
-      if (response instanceof Error) {
-        console.error(response);
-        return;
-      }
-      this.resource = response;
-    } else if (label) {
-      const resource = await this.restFetch<Gateway.Resource[]>({
-        service: 'gateway',
-        endpoint: `/resources/me/${label}`,
-      });
+    if (data && data.resource) {
+      this.resource = data.resource;
+    }
 
-      if (resource) {
-        // eslint-disable-next-line prefer-destructuring
-        this.resource = Array.isArray(resource) ? resource[0] : resource;
-      }
+    if (errors) {
+      this.errors = errors;
     }
   }
 
   @logger()
   render() {
-    return this.resource ? (
-      <manifold-resource-card-view
-        label={this.resource.label}
-        logo={this.resource.product && this.resource.product.logo_url}
-        resourceId={this.resource.id}
-        resourceStatus={this.resource.state}
-        resourceLinkFormat={this.resourceLinkFormat}
-        preserveEvent={this.preserveEvent}
-      />
-    ) : (
-      // ☠
-      <manifold-resource-card-view label="loading" loading={true} />
-    );
+    if (this.resource) {
+      const { label, plan, id, status } = this.resource;
+      const { logoUrl } = (plan && plan.product) || {};
+
+      return [
+        <manifold-resource-card-view
+          label={label}
+          logo={logoUrl}
+          resourceId={id}
+          resourceStatus={status.label}
+          resourceLinkFormat={this.resourceLinkFormat}
+          preserveEvent={this.preserveEvent}
+        />,
+        <Error errors={this.errors} />,
+      ];
+    }
+
+    // ☠
+    return <manifold-resource-card-view label="loading" loading={true} />;
   }
 }

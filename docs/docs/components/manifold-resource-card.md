@@ -5,6 +5,10 @@ example: |
   <manifold-resource-card-view label="my-resource" name="my resource" logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" resource-id="1234" resource-status="available"></manifold-resource-card-view>
 ---
 
+<manifold-toast alert-type="warning">
+  <div><code>resource-id</code> prop has been removed in favor of <code>resource-label</code> starting in version 0.5.12.</div>
+</manifold-toast>
+
 # 🔒 Resource Card
 
 Compact view of a user resource. 🔒 Requires authentication.
@@ -13,14 +17,12 @@ Compact view of a user resource. 🔒 Requires authentication.
 <manifold-resource-card label="my-resource"></manifold-resource-card>
 ```
 
-## Fetching by label or ID
+## Fetching by label
 
-The resource card can fetch the resource with either an ID or a resource label.
+The resource card can fetch the resource with a resource label.
 
 ```html
 <manifold-resource-card label="my-resource"></manifold-resource-card>
-<!-- OR -->
-<manifold-resource-card resource-id="123456"></manifold-resource-card>
 ```
 
 ## Navigation
@@ -69,10 +71,6 @@ resource without any fetch calls.
   preserve-event
 ></manifold-resource-card-view>
 ```
-
-### Fetching the resource ID
-
-If the resource ID is unknown, omitting it will make the component fetch the ID automatically.
 
 ### Loading status
 
