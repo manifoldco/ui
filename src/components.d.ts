@@ -504,10 +504,6 @@ export namespace Components {
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer {
     /**
@@ -1589,10 +1585,6 @@ declare namespace LocalJSX {
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
     /**
