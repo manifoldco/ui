@@ -342,7 +342,7 @@ const convertFixedFeatureData = (
 
   const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
     let value_string = feature.displayValue;
-    let type = 'string';
+    let type: 'string' | 'number' | 'boolean' = 'string';
 
     if (value_string === 'true') {
       type = 'boolean';
@@ -355,7 +355,7 @@ const convertFixedFeatureData = (
     return {
       label: feature.label,
       name: feature.displayName,
-      type as 'string' | 'number' | 'boolean',
+      type,
       value_string,
       value: {
         value: feature.displayValue,
@@ -377,7 +377,7 @@ export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => {
     type: 'plan',
     version: 1,
     body: {
-      cost: plan.cost, // QUESTION: should this even be here?
+      cost: plan.cost,
       features: [],
       label: plan.label,
       name: plan.displayName,

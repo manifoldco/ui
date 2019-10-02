@@ -29,7 +29,9 @@ import {
   stringFeatureDefaultValue,
   stringFeatureDisplayValue,
   planSort,
+  convertPlanData,
 } from './plan';
+import { Plan } from '../types/graphql';
 
 describe('default value methods', () => {
   it('string features return default value', () =>
@@ -184,5 +186,371 @@ describe('plan sort function', () => {
 
   it('filters to free-only plans', () => {
     expect(planSort(rightOrder, { free: true })).toEqual([freePlan, fauxFreePlan]);
+  });
+});
+
+const graphqlPlan = {
+  id: '235exy25wvzpxj52p87bh87gbnj4y',
+  displayName: 'Custom',
+  label: 'custom',
+  product: {
+    id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+    provider: {
+      id: '2346mdxcuca9ez2n93f72nb2fpjgu',
+    },
+  },
+  cost: 3300,
+  free: false,
+  state: 'AVAILABLE',
+  regions: {
+    edges: [
+      {
+        node: {
+          id: '235m2c51y0625vvtk6ptf55bhpkty',
+          displayName: 'AWS - EU West 1 (Ireland)',
+          platform: 'aws',
+          dataCenter: 'eu-west-1',
+        },
+      },
+      {
+        node: {
+          id: '235mhkk15ky7ha9qpu4gazrqjt2gr',
+          displayName: 'AWS - US East 1 (N. Virginia)',
+          platform: 'aws',
+          dataCenter: 'us-east-1',
+        },
+      },
+    ],
+  },
+  fixedFeatures: {
+    edges: [
+      {
+        node: {
+          id: 'cduq6x3fdnfq6x31ehmp6bbkd5q6e',
+          label: 'static-single-tenant',
+          displayName: 'Single Tenant',
+          displayValue: 'true',
+        },
+      },
+    ],
+  },
+  meteredFeatures: {
+    edges: [],
+  },
+  configurableFeatures: {
+    edges: [
+      {
+        node: {
+          id: 'cduq6x3fdnfp4rb3dduq0wr000000',
+          label: 'backups',
+          displayName: 'Backups',
+          type: 'NUMBER',
+          options: [
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: 'Backups',
+              displayValue: 'backups',
+            },
+          ],
+          numericDetails: {
+            increment: 1,
+            min: 0,
+            max: 35,
+            unit: 'Days',
+            costTiers: [
+              {
+                limit: 35,
+                cost: 0,
+              },
+            ],
+          },
+        },
+      },
+      {
+        node: {
+          id: 'cduq6x3fdnfpjvkkehgpwrv5bxhpr',
+          label: 'instance_class',
+          displayName: 'RAM',
+          type: 'STRING',
+          options: [
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '1 GB',
+              displayValue: 'db.t2.micro',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '2 GB',
+              displayValue: 'db.t2.small',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '4 GB',
+              displayValue: 'db.m3.medium',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '8 GB',
+              displayValue: 'db.m4.large',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '15 GB',
+              displayValue: 'db.r4.large',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '31 GB',
+              displayValue: 'db.r4.xlarge',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '61 GB',
+              displayValue: 'db.r4.2xlarge',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '122 GB',
+              displayValue: 'db.r4.4xlarge',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '244 GB',
+              displayValue: 'db.r4.8xlarge',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: '488 GB',
+              displayValue: 'db.r4.16xlarge',
+            },
+          ],
+          numericDetails: null,
+        },
+      },
+      {
+        node: {
+          id: 'cduq6x3fdnfq4tb4enq68rbecdwg0',
+          label: 'redundancy',
+          displayName: 'High Availability',
+          type: 'BOOLEAN',
+          options: [
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: 'Yes',
+              displayValue: 'true',
+            },
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: 'No',
+              displayValue: 'false',
+            },
+          ],
+          numericDetails: null,
+        },
+      },
+      {
+        node: {
+          id: 'cduq6x3fdnfq6x3fe9gpet8000000',
+          label: 'storage',
+          displayName: 'Storage',
+          type: 'NUMBER',
+          options: [
+            {
+              id: '00000000000000000000000000000',
+              label: '',
+              displayName: 'Storage',
+              displayValue: 'storage',
+            },
+          ],
+          numericDetails: {
+            increment: 1,
+            min: 0,
+            max: 16000,
+            unit: 'GB',
+            costTiers: [
+              {
+                limit: 16000,
+                cost: 200000000,
+              },
+            ],
+          },
+        },
+      },
+    ],
+  },
+};
+
+const restPlan = [
+  {
+    body: {
+      cost: 3300,
+      features: [
+        { feature: 'storage', value: 'storage' },
+        { feature: 'backups', value: 'backups' },
+        { feature: 'redundancy', value: 'false' },
+        { feature: 'instance_class', value: 'db.t2.micro' },
+        { feature: 'static-single-tenant', value: 'true' },
+      ],
+      label: 'custom',
+      name: 'Custom',
+      product_id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+      provider_id: '2346mdxcuca9ez2n93f72nb2fpjgu',
+      regions: ['235mhkk15ky7ha9qpu4gazrqjt2gr', '235m2c51y0625vvtk6ptf55bhpkty'],
+      resizable_to: ['235exy25wvzpxj52p87bh87gbnj4y'],
+      state: 'available',
+      customizable: true,
+      defaultCost: 3500,
+      expanded_features: [
+        {
+          label: 'static-single-tenant',
+          name: 'Single Tenant',
+          type: 'boolean',
+          values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+          value: { label: 'true', name: 'true' },
+          value_string: 'true',
+        },
+        {
+          customizable: true,
+          downgradable: true,
+          label: 'instance_class',
+          name: 'RAM',
+          type: 'string',
+          upgradable: true,
+          values: [
+            { label: 'db.t2.micro', name: '1 GB', price: {} },
+            { cost: 5400, label: 'db.t2.small', name: '2 GB', price: { cost: 5400 } },
+            { cost: 13400, label: 'db.m3.medium', name: '4 GB', price: { cost: 13400 } },
+            { cost: 31800, label: 'db.m4.large', name: '8 GB', price: { cost: 31800 } },
+            { cost: 54400, label: 'db.r4.large', name: '15 GB', price: { cost: 54400 } },
+            { cost: 89000, label: 'db.r4.xlarge', name: '31 GB', price: { cost: 89000 } },
+            { cost: 121000, label: 'db.r4.2xlarge', name: '61 GB', price: { cost: 121000 } },
+            { cost: 239000, label: 'db.r4.4xlarge', name: '122 GB', price: { cost: 239000 } },
+            { cost: 428000, label: 'db.r4.8xlarge', name: '244 GB', price: { cost: 428000 } },
+            { cost: 910000, label: 'db.r4.16xlarge', name: '488 GB', price: { cost: 910000 } },
+          ],
+          value: { label: 'db.t2.micro', name: '1 GB', price: {} },
+          value_string: '1 GB',
+        },
+        {
+          customizable: true,
+          label: 'storage',
+          name: 'Storage',
+          type: 'number',
+          upgradable: true,
+          values: [
+            {
+              label: 'storage',
+              name: 'Storage',
+              numeric_details: {
+                cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
+                increment: 1,
+                max: 16000,
+                min: 5,
+                suffix: 'GB',
+              },
+            },
+          ],
+          value: {
+            label: 'storage',
+            name: 'Storage',
+            numeric_details: {
+              cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
+              increment: 1,
+              max: 16000,
+              min: 5,
+              suffix: 'GB',
+            },
+          },
+          value_string: 'Storage',
+        },
+        {
+          customizable: true,
+          downgradable: true,
+          label: 'backups',
+          name: 'Backups',
+          type: 'number',
+          upgradable: true,
+          values: [
+            {
+              label: 'backups',
+              name: 'Backups',
+              numeric_details: {
+                cost_ranges: [{ limit: 35 }],
+                increment: 1,
+                max: 35,
+                min: 1,
+                suffix: 'Days',
+              },
+              price: {
+                description: 'Backups cost is directly related to storage size',
+                formula: '(* storage#cost backups#number)',
+              },
+            },
+          ],
+          value: {
+            label: 'backups',
+            name: 'Backups',
+            numeric_details: {
+              cost_ranges: [{ limit: 35 }],
+              increment: 1,
+              max: 35,
+              min: 1,
+              suffix: 'Days',
+            },
+            price: {
+              description: 'Backups cost is directly related to storage size',
+              formula: '(* storage#cost backups#number)',
+            },
+          },
+          value_string: 'Backups',
+        },
+        {
+          customizable: true,
+          downgradable: true,
+          label: 'redundancy',
+          name: 'High Availability',
+          type: 'boolean',
+          upgradable: true,
+          values: [
+            {
+              label: 'true',
+              name: 'Yes',
+              price: {
+                description: 'Creates a clone of the DB to rescue from potential outages',
+                formula: '(* plan#partial_cost redundancy#multiply_factor)',
+                multiply_factor: 0.8,
+              },
+            },
+            { label: 'false', name: 'No' },
+          ],
+          value: { label: 'false', name: 'No' },
+          value_string: 'No',
+        },
+      ],
+      free: false,
+    },
+    id: '235exy25wvzpxj52p87bh87gbnj4y',
+    type: 'plan',
+    version: 1,
+  },
+];
+
+describe('convertPlanData', () => {
+  it('converts a plan from GraphQL to REST', () => {
+    const result = convertPlanData(graphqlPlan as any);
+    expect(result).toEqual(restPlan);
   });
 });
