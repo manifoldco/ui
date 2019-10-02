@@ -9,7 +9,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Changed
 
-- Converted `manifold-resource-product` to use the GraphQL data fetched from the `manifold-resource-container`.
+- Converted `manifold-resource-product` to use the GraphQL data fetched from the
+  `manifold-resource-container`. (#566)
 
 ## [v0.5.16]
 
