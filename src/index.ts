@@ -1,6 +1,7 @@
-import fetchAllPages from './utils/fetchAllPages';
 import connection from './state/connection';
 import { waitForAuthToken } from './utils/auth';
+
+export * from './components';
 
 export async function getAuthToken() {
   if (connection.authToken) {
@@ -11,7 +12,3 @@ export async function getAuthToken() {
 
   return connection.authToken;
 }
-
-export * from './components';
-
-export { fetchAllPages };
