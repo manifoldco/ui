@@ -11,6 +11,7 @@ import {
   NumberFeatureMeasurable,
   StringFeatureCustom,
   BooleanFeatureCustom,
+  Product,
 } from '../spec/mock/catalog';
 import { Catalog } from '../types/catalog';
 import {
@@ -31,7 +32,7 @@ import {
   planSort,
   convertPlanData,
 } from './plan';
-import { Plan } from '../types/graphql';
+import { Plan, PlanState, RegionConnection, ProductState } from '../types/graphql';
 
 describe('default value methods', () => {
   it('string features return default value', () =>
@@ -189,22 +190,44 @@ describe('plan sort function', () => {
   });
 });
 
-const graphqlPlan = {
+const graphqlPlan: Plan = {
   id: '2352cvkk4f3rp17pbgbrmffe1jcw8',
   displayName: 'Standard',
   label: 'standard',
   product: {
     id: '234htwpkzvg1vuyez6uybfhv8rjb2',
+    displayName: '',
+    label: '',
+    logoUrl: '',
+    state: ProductState.Available,
+    tagline: '',
+    supportEmail: '',
+    documentationUrl: '',
+    termsUrl: '',
+    valueProps: [],
+    valuePropsHtml: '',
+    setupStepsHtml: '',
+    categories: [],
     provider: {
       id: '2343d7p36xwrydjy7120jxqxc7t22',
+      displayName: '',
+      label: '',
+      logoUrl: '',
+      supportEmail: '',
+      url: '',
     },
   },
   cost: 700,
   free: false,
-  state: 'AVAILABLE',
+  state: PlanState.Available,
   regions: {
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
     edges: [
       {
+        cursor: '',
         node: {
           id: '235n4f9pxf8eyraj3y159x89z6jer',
           displayName: 'All Regions',
@@ -215,8 +238,13 @@ const graphqlPlan = {
     ],
   },
   fixedFeatures: {
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
     edges: [
       {
+        cursor: '',
         node: {
           id: 'd1gpuvb5e9m6arb4bxtq8rbmd5hju',
           label: 'static-single-tenant',
@@ -225,6 +253,7 @@ const graphqlPlan = {
         },
       },
       {
+        cursor: '',
         node: {
           id: 'edu62vk4c5t68qv2c5q68xv9chu6g',
           label: 'bandwidth',
@@ -233,6 +262,7 @@ const graphqlPlan = {
         },
       },
       {
+        cursor: '',
         node: {
           id: 'edu62vk4c5t68qv6e9jpabb8dxuq4',
           label: 'free-hours',
@@ -241,6 +271,7 @@ const graphqlPlan = {
         },
       },
       {
+        cursor: '',
         node: {
           id: 'edu62vk4c5t68qv6e9jpabb9dngpe',
           label: 'free-imagga-images',
@@ -251,8 +282,13 @@ const graphqlPlan = {
     ],
   },
   meteredFeatures: {
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
     edges: [
       {
+        cursor: '',
         node: {
           id: 'edu62vk4c5t68qv9dngpetv15nmpu',
           label: 'imagga-images',
@@ -264,6 +300,7 @@ const graphqlPlan = {
         },
       },
       {
+        cursor: '',
         node: {
           id: 'edu62vk4c5t68qvge9qp6tbkedmpw',
           label: 'processing-duration',
@@ -280,6 +317,7 @@ const graphqlPlan = {
         },
       },
       {
+        cursor: '',
         node: {
           id: 'edu62vk4c5t68qvpd5j6avtdcnq66',
           label: 'video-encoding',
@@ -298,6 +336,10 @@ const graphqlPlan = {
     ],
   },
   configurableFeatures: {
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
     edges: [],
   },
 };
@@ -467,7 +509,7 @@ const restPlan: Catalog.ExpandedPlan = {
 
 describe('convertPlanData', () => {
   it('converts a plan from GraphQL to REST', () => {
-    const result = convertPlanData(graphqlPlan as any);
+    const result = convertPlanData(graphqlPlan);
     expect(result).toEqual(restPlan);
   });
 });
