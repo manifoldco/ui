@@ -10,6 +10,7 @@ import {
   PlanFixedFeatureEdge,
   PlanFixedFeatureConnection,
   RegionConnection,
+  PlanMeteredFeatureConnection,
 } from '../types/graphql';
 
 interface PlanCostOptions {
@@ -341,31 +342,83 @@ const convertFixedFeatureData = (
   }
 
   const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
-    let value_string = feature.displayValue;
+    const value_string = feature.displayValue;
     let type: 'string' | 'number' | 'boolean' = 'string';
 
-    if (value_string === 'true') {
+    if (value_string === 'true' || value_string === 'false') {
       type = 'boolean';
-      value_string = 'Yes';
-    } else if (value_string === 'false') {
-      type = 'boolean';
-      value_string = 'No';
     }
 
     return {
       label: feature.label,
       name: feature.displayName,
       type,
-      value_string,
       value: {
-        value: feature.displayValue,
-        label: feature.displayValue,
-        name: feature.displayName,
+        label: type === 'string' ? feature.label : feature.displayValue,
+        name: feature.displayValue,
       },
+      value_string,
     };
   });
 
   return newFeatures;
+};
+
+const convertMeteredFeatureData = (
+  features?: PlanMeteredFeatureConnection | null | undefined
+): Catalog.ExpandedFeature[] => {
+  if (!features) {
+    return [];
+  }
+
+  const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
+    return {
+      label: feature.label,
+      name: feature.displayName,
+      measurable: true,
+      type: 'number',
+      value: {
+        label: feature.label,
+        name: feature.displayName,
+        numeric_details: {
+          increment: 1,
+          suffix: feature.numericDetails.unit,
+          cost_ranges: feature.numericDetails.costTiers
+            ? feature.numericDetails.costTiers.map(({ cost, limit }) => ({
+                cost_multiple: cost,
+                limit,
+              }))
+            : [],
+        },
+      },
+      value_string: feature.displayName,
+    };
+  });
+
+  return newFeatures;
+};
+
+const convertPlanFeatures = (plan: Plan): Catalog.FeatureValue[] => {
+  const features: Catalog.FeatureValue[] = [];
+
+  if (plan.fixedFeatures) {
+    features.push(
+      ...plan.fixedFeatures.edges.map(({ node }) => ({
+        feature: node.label,
+        value: node.displayValue,
+      }))
+    );
+  }
+  if (plan.meteredFeatures) {
+    features.push(
+      ...plan.meteredFeatures.edges.map(({ node }) => ({
+        feature: node.label,
+        value: node.label,
+      }))
+    );
+  }
+
+  return features;
 };
 
 const convertRegionData = (regions: RegionConnection | null | undefined): string[] =>
@@ -378,16 +431,20 @@ export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => {
     version: 1,
     body: {
       cost: plan.cost,
-      features: [],
+      features: convertPlanFeatures(plan),
       label: plan.label,
       name: plan.displayName,
       product_id: (plan.product && plan.product.id) || '',
       provider_id: (plan.product && plan.product.provider && plan.product.provider.id) || '',
       regions: convertRegionData(plan.regions),
-      state: plan.state,
-      trial_days: 0,
-      defaultCost: plan.cost,
-      expanded_features: [...convertFixedFeatureData(plan.fixedFeatures)],
+      state: plan.state && plan.state.toLocaleLowerCase(),
+      expanded_features: [
+        ...convertFixedFeatureData(plan.fixedFeatures),
+        ...convertMeteredFeatureData(plan.meteredFeatures),
+      ],
+      ...(plan.configurableFeatures && plan.configurableFeatures.edges.length > 0
+        ? { customizable: true }
+        : {}),
       free: plan.free,
     },
   };

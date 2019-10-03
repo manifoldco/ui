@@ -190,34 +190,26 @@ describe('plan sort function', () => {
 });
 
 const graphqlPlan = {
-  id: '235exy25wvzpxj52p87bh87gbnj4y',
-  displayName: 'Custom',
-  label: 'custom',
+  id: '2352cvkk4f3rp17pbgbrmffe1jcw8',
+  displayName: 'Standard',
+  label: 'standard',
   product: {
-    id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
+    id: '234htwpkzvg1vuyez6uybfhv8rjb2',
     provider: {
-      id: '2346mdxcuca9ez2n93f72nb2fpjgu',
+      id: '2343d7p36xwrydjy7120jxqxc7t22',
     },
   },
-  cost: 3300,
+  cost: 700,
   free: false,
   state: 'AVAILABLE',
   regions: {
     edges: [
       {
         node: {
-          id: '235m2c51y0625vvtk6ptf55bhpkty',
-          displayName: 'AWS - EU West 1 (Ireland)',
-          platform: 'aws',
-          dataCenter: 'eu-west-1',
-        },
-      },
-      {
-        node: {
-          id: '235mhkk15ky7ha9qpu4gazrqjt2gr',
-          displayName: 'AWS - US East 1 (N. Virginia)',
-          platform: 'aws',
-          dataCenter: 'us-east-1',
+          id: '235n4f9pxf8eyraj3y159x89z6jer',
+          displayName: 'All Regions',
+          platform: 'all',
+          dataCenter: 'global',
         },
       },
     ],
@@ -226,42 +218,62 @@ const graphqlPlan = {
     edges: [
       {
         node: {
-          id: 'cduq6x3fdnfq6x31ehmp6bbkd5q6e',
+          id: 'd1gpuvb5e9m6arb4bxtq8rbmd5hju',
           label: 'static-single-tenant',
           displayName: 'Single Tenant',
           displayValue: 'true',
         },
       },
+      {
+        node: {
+          id: 'edu62vk4c5t68qv2c5q68xv9chu6g',
+          label: 'bandwidth',
+          displayName: 'Bandwidth',
+          displayValue: 'Unlimited',
+        },
+      },
+      {
+        node: {
+          id: 'edu62vk4c5t68qv6e9jpabb8dxuq4',
+          label: 'free-hours',
+          displayName: 'Free Hours',
+          displayValue: '2',
+        },
+      },
+      {
+        node: {
+          id: 'edu62vk4c5t68qv6e9jpabb9dngpe',
+          label: 'free-imagga-images',
+          displayName: 'Free Imagga Images',
+          displayValue: '100',
+        },
+      },
     ],
   },
   meteredFeatures: {
-    edges: [],
-  },
-  configurableFeatures: {
     edges: [
       {
         node: {
-          id: 'cduq6x3fdnfp4rb3dduq0wr000000',
-          label: 'backups',
-          displayName: 'Backups',
-          type: 'NUMBER',
-          options: [
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: 'Backups',
-              displayValue: 'backups',
-            },
-          ],
+          id: 'edu62vk4c5t68qv9dngpetv15nmpu',
+          label: 'imagga-images',
+          displayName: 'Imagga Images',
           numericDetails: {
-            increment: 1,
-            min: 0,
-            max: 35,
-            unit: 'Days',
+            unit: 'image',
+            costTiers: [],
+          },
+        },
+      },
+      {
+        node: {
+          id: 'edu62vk4c5t68qvge9qp6tbkedmpw',
+          label: 'processing-duration',
+          displayName: 'Processing Duration',
+          numericDetails: {
+            unit: 'hour',
             costTiers: [
               {
-                limit: 35,
-                cost: 0,
+                limit: -1,
+                cost: 790000000,
               },
             ],
           },
@@ -269,121 +281,15 @@ const graphqlPlan = {
       },
       {
         node: {
-          id: 'cduq6x3fdnfpjvkkehgpwrv5bxhpr',
-          label: 'instance_class',
-          displayName: 'RAM',
-          type: 'STRING',
-          options: [
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '1 GB',
-              displayValue: 'db.t2.micro',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '2 GB',
-              displayValue: 'db.t2.small',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '4 GB',
-              displayValue: 'db.m3.medium',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '8 GB',
-              displayValue: 'db.m4.large',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '15 GB',
-              displayValue: 'db.r4.large',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '31 GB',
-              displayValue: 'db.r4.xlarge',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '61 GB',
-              displayValue: 'db.r4.2xlarge',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '122 GB',
-              displayValue: 'db.r4.4xlarge',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '244 GB',
-              displayValue: 'db.r4.8xlarge',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: '488 GB',
-              displayValue: 'db.r4.16xlarge',
-            },
-          ],
-          numericDetails: null,
-        },
-      },
-      {
-        node: {
-          id: 'cduq6x3fdnfq4tb4enq68rbecdwg0',
-          label: 'redundancy',
-          displayName: 'High Availability',
-          type: 'BOOLEAN',
-          options: [
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: 'Yes',
-              displayValue: 'true',
-            },
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: 'No',
-              displayValue: 'false',
-            },
-          ],
-          numericDetails: null,
-        },
-      },
-      {
-        node: {
-          id: 'cduq6x3fdnfq6x3fe9gpet8000000',
-          label: 'storage',
-          displayName: 'Storage',
-          type: 'NUMBER',
-          options: [
-            {
-              id: '00000000000000000000000000000',
-              label: '',
-              displayName: 'Storage',
-              displayValue: 'storage',
-            },
-          ],
+          id: 'edu62vk4c5t68qvpd5j6avtdcnq66',
+          label: 'video-encoding',
+          displayName: 'Video Encoding',
           numericDetails: {
-            increment: 1,
-            min: 0,
-            max: 16000,
-            unit: 'GB',
+            unit: 'minute',
             costTiers: [
               {
-                limit: 16000,
-                cost: 200000000,
+                limit: -1,
+                cost: 38900000,
               },
             ],
           },
@@ -391,162 +297,173 @@ const graphqlPlan = {
       },
     ],
   },
+  configurableFeatures: {
+    edges: [],
+  },
 };
 
-const restPlan = [
-  {
-    body: {
-      cost: 3300,
-      features: [
-        { feature: 'storage', value: 'storage' },
-        { feature: 'backups', value: 'backups' },
-        { feature: 'redundancy', value: 'false' },
-        { feature: 'instance_class', value: 'db.t2.micro' },
-        { feature: 'static-single-tenant', value: 'true' },
-      ],
-      label: 'custom',
-      name: 'Custom',
-      product_id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
-      provider_id: '2346mdxcuca9ez2n93f72nb2fpjgu',
-      regions: ['235mhkk15ky7ha9qpu4gazrqjt2gr', '235m2c51y0625vvtk6ptf55bhpkty'],
-      resizable_to: ['235exy25wvzpxj52p87bh87gbnj4y'],
-      state: 'available',
-      customizable: true,
-      defaultCost: 3500,
-      expanded_features: [
-        {
-          label: 'static-single-tenant',
-          name: 'Single Tenant',
-          type: 'boolean',
-          values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
-          value: { label: 'true', name: 'true' },
-          value_string: 'true',
+const restPlan: Catalog.ExpandedPlan = {
+  body: {
+    cost: 700,
+    features: [
+      { feature: 'static-single-tenant', value: 'true' },
+      { feature: 'bandwidth', value: 'unlimited' },
+      { feature: 'free-hours', value: 'two' },
+      { feature: 'free-imagga-images', value: 'one-hundred' },
+      { feature: 'imagga-images', value: 'no-overage' },
+      { feature: 'processing-duration', value: 'processing-hours' },
+      { feature: 'video-encoding', value: 'video-encoding' },
+    ],
+    label: 'standard',
+    name: 'Standard',
+    product_id: '234htwpkzvg1vuyez6uybfhv8rjb2',
+    provider_id: '2343d7p36xwrydjy7120jxqxc7t22',
+    regions: ['235n4f9pxf8eyraj3y159x89z6jer'],
+    // Not in GraphQL API
+    // resizable_to: null,
+    state: 'available',
+    // Not in GraphQL API
+    // trial_days: 0,
+    // defaultCost: 700,
+    expanded_features: [
+      {
+        label: 'static-single-tenant',
+        name: 'Single Tenant',
+        type: 'boolean',
+        value: { label: 'true', name: 'true' },
+        value_string: 'true',
+        // Not in GraphQL API for fixed/metered features
+        // values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
+      },
+      {
+        label: 'bandwidth',
+        name: 'Bandwidth',
+        type: 'string',
+        // Not in GraphQL API for fixed/metered features
+        // values: [{ label: 'unlimited', name: 'Unlimited' }],
+        value: { label: 'unlimited', name: 'Unlimited' },
+        value_string: 'Unlimited',
+      },
+      {
+        label: 'free-hours',
+        name: 'Free Hours',
+        type: 'string',
+        // Not in GraphQL API for fixed/metered features
+        // values: [{ label: 'two', name: '2' }],
+        value: { label: 'two', name: '2' },
+        value_string: '2',
+      },
+      {
+        label: 'free-imagga-images',
+        name: 'Free Imagga Images',
+        type: 'string',
+        // Not in GraphQL API for fixed/metered features
+        // values: [{ label: 'one-hundred', name: '100' }],
+        value: { label: 'one-hundred', name: '100' },
+        value_string: '100',
+      },
+      {
+        label: 'imagga-images',
+        measurable: true,
+        name: 'Imagga Images',
+        type: 'number',
+        // Not in GraphQL API for fixed/metered features
+        // values: [
+        //   {
+        //     label: 'no-overage',
+        //     name: 'No Overage',
+        //     numeric_details: { cost_ranges: [], suffix: 'image' },
+        //   },
+        //   {
+        //     label: 'imagga-images',
+        //     name: 'Imagga Images',
+        //     numeric_details: {
+        //       cost_ranges: [{ cost_multiple: 10000000, limit: -1 }],
+        //       increment: 1,
+        //       suffix: 'image',
+        //     },
+        //   },
+        // ],
+        value: {
+          label: 'no-overage',
+          name: 'No Overage',
+          numeric_details: { cost_ranges: [], suffix: 'image' },
         },
-        {
-          customizable: true,
-          downgradable: true,
-          label: 'instance_class',
-          name: 'RAM',
-          type: 'string',
-          upgradable: true,
-          values: [
-            { label: 'db.t2.micro', name: '1 GB', price: {} },
-            { cost: 5400, label: 'db.t2.small', name: '2 GB', price: { cost: 5400 } },
-            { cost: 13400, label: 'db.m3.medium', name: '4 GB', price: { cost: 13400 } },
-            { cost: 31800, label: 'db.m4.large', name: '8 GB', price: { cost: 31800 } },
-            { cost: 54400, label: 'db.r4.large', name: '15 GB', price: { cost: 54400 } },
-            { cost: 89000, label: 'db.r4.xlarge', name: '31 GB', price: { cost: 89000 } },
-            { cost: 121000, label: 'db.r4.2xlarge', name: '61 GB', price: { cost: 121000 } },
-            { cost: 239000, label: 'db.r4.4xlarge', name: '122 GB', price: { cost: 239000 } },
-            { cost: 428000, label: 'db.r4.8xlarge', name: '244 GB', price: { cost: 428000 } },
-            { cost: 910000, label: 'db.r4.16xlarge', name: '488 GB', price: { cost: 910000 } },
-          ],
-          value: { label: 'db.t2.micro', name: '1 GB', price: {} },
-          value_string: '1 GB',
-        },
-        {
-          customizable: true,
-          label: 'storage',
-          name: 'Storage',
-          type: 'number',
-          upgradable: true,
-          values: [
-            {
-              label: 'storage',
-              name: 'Storage',
-              numeric_details: {
-                cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
-                increment: 1,
-                max: 16000,
-                min: 5,
-                suffix: 'GB',
-              },
-            },
-          ],
-          value: {
-            label: 'storage',
-            name: 'Storage',
-            numeric_details: {
-              cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
-              increment: 1,
-              max: 16000,
-              min: 5,
-              suffix: 'GB',
-            },
+        value_string: 'No Overage',
+      },
+      {
+        label: 'processing-duration',
+        measurable: true,
+        name: 'Processing Duration',
+        type: 'number',
+        // Not in GraphQL API for fixed/metered features
+        // values: [
+        //   {
+        //     label: 'no-overtime',
+        //     name: 'No Overtime',
+        //     numeric_details: { cost_ranges: [], suffix: 'hour' },
+        //   },
+        //   {
+        //     label: 'processing-hours',
+        //     name: 'Processing Hours',
+        //     numeric_details: {
+        //       cost_ranges: [{ cost_multiple: 790000000, limit: -1 }],
+        //       increment: 1,
+        //       suffix: 'hour',
+        //     },
+        //   },
+        // ],
+        value: {
+          label: 'processing-hours',
+          name: 'Processing Hours',
+          numeric_details: {
+            cost_ranges: [{ cost_multiple: 790000000, limit: -1 }],
+            increment: 1,
+            suffix: 'hour',
           },
-          value_string: 'Storage',
         },
-        {
-          customizable: true,
-          downgradable: true,
-          label: 'backups',
-          name: 'Backups',
-          type: 'number',
-          upgradable: true,
-          values: [
-            {
-              label: 'backups',
-              name: 'Backups',
-              numeric_details: {
-                cost_ranges: [{ limit: 35 }],
-                increment: 1,
-                max: 35,
-                min: 1,
-                suffix: 'Days',
-              },
-              price: {
-                description: 'Backups cost is directly related to storage size',
-                formula: '(* storage#cost backups#number)',
-              },
-            },
-          ],
-          value: {
-            label: 'backups',
-            name: 'Backups',
-            numeric_details: {
-              cost_ranges: [{ limit: 35 }],
-              increment: 1,
-              max: 35,
-              min: 1,
-              suffix: 'Days',
-            },
-            price: {
-              description: 'Backups cost is directly related to storage size',
-              formula: '(* storage#cost backups#number)',
-            },
+        value_string: 'Processing Hours',
+      },
+      {
+        label: 'video-encoding',
+        measurable: true,
+        name: 'Video Encoding',
+        type: 'number',
+        // Not in GraphQL API for fixed features
+        // values: [
+        //   {
+        //     label: 'no-overage',
+        //     name: 'No Overage',
+        //     numeric_details: { cost_ranges: [], suffix: 'minute' },
+        //   },
+        //   {
+        //     label: 'video-encoding',
+        //     name: 'Video Encoding',
+        //     numeric_details: {
+        //       cost_ranges: [{ cost_multiple: 38900000, limit: -1 }],
+        //       increment: 1,
+        //       suffix: 'minute',
+        //     },
+        //   },
+        // ],
+        value: {
+          label: 'video-encoding',
+          name: 'Video Encoding',
+          numeric_details: {
+            cost_ranges: [{ cost_multiple: 38900000, limit: -1 }],
+            increment: 1,
+            suffix: 'minute',
           },
-          value_string: 'Backups',
         },
-        {
-          customizable: true,
-          downgradable: true,
-          label: 'redundancy',
-          name: 'High Availability',
-          type: 'boolean',
-          upgradable: true,
-          values: [
-            {
-              label: 'true',
-              name: 'Yes',
-              price: {
-                description: 'Creates a clone of the DB to rescue from potential outages',
-                formula: '(* plan#partial_cost redundancy#multiply_factor)',
-                multiply_factor: 0.8,
-              },
-            },
-            { label: 'false', name: 'No' },
-          ],
-          value: { label: 'false', name: 'No' },
-          value_string: 'No',
-        },
-      ],
-      free: false,
-    },
-    id: '235exy25wvzpxj52p87bh87gbnj4y',
-    type: 'plan',
-    version: 1,
+        value_string: 'Video Encoding',
+      },
+    ],
+    free: false,
   },
-];
+  id: '2352cvkk4f3rp17pbgbrmffe1jcw8',
+  type: 'plan',
+  version: 1,
+};
 
 describe('convertPlanData', () => {
   it('converts a plan from GraphQL to REST', () => {
