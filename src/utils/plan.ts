@@ -6,8 +6,6 @@ import { pluralize } from './string';
 import { RestFetch } from './restFetch';
 import {
   Plan,
-  RegionEdge,
-  PlanFixedFeatureEdge,
   PlanFixedFeatureConnection,
   RegionConnection,
   PlanMeteredFeatureConnection,
