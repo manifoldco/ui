@@ -86,8 +86,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### TypeScript + JSX setup
 
-When using inside TypeScript, you’ll likely see this error ( `manifold-connection` could be any
-custom element):
+When using UI with TypeScript, you’ll likely see an error like this:
 
 ```
 Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'
