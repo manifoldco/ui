@@ -4,6 +4,14 @@ import { Gateway } from '../types/gateway';
 import { $ } from './currency';
 import { pluralize } from './string';
 import { RestFetch } from './restFetch';
+import {
+  Plan,
+  PlanFixedFeatureConnection,
+  RegionConnection,
+  PlanMeteredFeatureConnection,
+  PlanConfigurableFeatureConnection,
+  PlanFeatureType,
+} from '../types/graphql';
 
 interface PlanCostOptions {
   planID: string;
@@ -325,3 +333,177 @@ export function planCost(restFetch: RestFetch, { planID, features, init }: PlanC
     },
   });
 }
+
+const convertFixedFeatureData = (
+  features?: PlanFixedFeatureConnection | null | undefined
+): Catalog.ExpandedFeature[] => {
+  if (!features) {
+    return [];
+  }
+
+  const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
+    const value_string = feature.displayValue;
+    let type: 'string' | 'number' | 'boolean' = 'string';
+
+    if (value_string === 'true' || value_string === 'false') {
+      type = 'boolean';
+    }
+
+    return {
+      label: feature.label,
+      name: feature.displayName,
+      type,
+      value: {
+        label: type === 'string' ? feature.label : feature.displayValue,
+        name: feature.displayValue,
+      },
+      value_string,
+    };
+  });
+
+  return newFeatures;
+};
+
+const convertMeteredFeatureData = (
+  features?: PlanMeteredFeatureConnection | null | undefined
+): Catalog.ExpandedFeature[] => {
+  if (!features) {
+    return [];
+  }
+
+  const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
+    return {
+      label: feature.label,
+      name: feature.displayName,
+      measurable: true,
+      type: 'number',
+      value: {
+        label: feature.label,
+        name: feature.displayName,
+        numeric_details: {
+          ...(feature.numericDetails.costTiers && feature.numericDetails.costTiers.length > 0
+            ? { increment: 1 }
+            : {}),
+          suffix: feature.numericDetails.unit,
+          cost_ranges: feature.numericDetails.costTiers
+            ? feature.numericDetails.costTiers.map(({ cost, limit }) => ({
+                cost_multiple: cost,
+                limit,
+              }))
+            : [],
+        },
+      },
+      value_string: feature.displayName,
+    };
+  });
+
+  return newFeatures;
+};
+
+const convertConfigurableFeatureData = (
+  features?: PlanConfigurableFeatureConnection | null | undefined
+): Catalog.ExpandedFeature[] => {
+  if (!features) {
+    return [];
+  }
+
+  const newFeatures: Catalog.ExpandedFeature[] = features.edges.map(({ node: feature }) => {
+    let type: 'boolean' | 'string' | 'number' = 'string';
+    if (feature.type === PlanFeatureType.Boolean) {
+      type = 'boolean';
+    }
+    if (feature.type === PlanFeatureType.Number) {
+      type = 'number';
+    }
+
+    const [firstOption] = feature.options || [];
+
+    const value =
+      feature.type === PlanFeatureType.Number
+        ? {
+            label: feature.label,
+            name: feature.displayName,
+            numeric_details: feature.numericDetails
+              ? {
+                  max: feature.numericDetails.max,
+                  min: feature.numericDetails.min,
+                  increment: feature.numericDetails.increment || 1,
+                  suffix: feature.numericDetails.unit,
+                  cost_ranges: feature.numericDetails.costTiers
+                    ? feature.numericDetails.costTiers.map(({ cost, limit }) => ({
+                        cost_multiple: cost,
+                        limit,
+                      }))
+                    : [],
+                }
+              : undefined,
+          }
+        : {
+            label: firstOption.label,
+            name: firstOption.displayValue,
+          };
+
+    return {
+      customizable: true,
+      label: feature.label,
+      name: feature.displayName,
+      type,
+      value,
+      values: feature.options
+        ? feature.options.map(option => ({
+            label: option.label,
+            name: option.displayValue,
+          }))
+        : [],
+      value_string: firstOption ? firstOption.displayValue : feature.displayName,
+    };
+  });
+
+  return newFeatures;
+};
+
+const convertPlanFeaturesData = (plan: Plan) => {
+  if (plan.configurableFeatures) {
+    return plan.configurableFeatures.edges.map(({ node }) => {
+      const [firstOption] = node.options || [];
+      return {
+        feature: node.label,
+        value: node.numericDetails
+          ? `${node.numericDetails.min} ${node.numericDetails.unit}`
+          : firstOption.label,
+      };
+    });
+  }
+
+  return [];
+};
+
+const convertRegionData = (regions: RegionConnection | null | undefined): string[] =>
+  regions ? regions.edges.map(region => region.node.id) : [];
+
+export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => {
+  return {
+    id: plan.id,
+    type: 'plan',
+    version: 1,
+    body: {
+      cost: plan.cost,
+      features: convertPlanFeaturesData(plan),
+      label: plan.label,
+      name: plan.displayName,
+      product_id: (plan.product && plan.product.id) || '',
+      provider_id: (plan.product && plan.product.provider && plan.product.provider.id) || '',
+      regions: convertRegionData(plan.regions),
+      state: plan.state && plan.state.toLocaleLowerCase(),
+      expanded_features: [
+        ...convertFixedFeatureData(plan.fixedFeatures),
+        ...convertMeteredFeatureData(plan.meteredFeatures),
+        ...convertConfigurableFeatureData(plan.configurableFeatures),
+      ],
+      ...(plan.configurableFeatures && plan.configurableFeatures.edges.length > 0
+        ? { customizable: true }
+        : {}),
+      free: plan.free,
+    },
+  };
+};
