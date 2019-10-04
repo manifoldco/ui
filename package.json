@@ -108,7 +108,7 @@
     "fs-extra": "^8.1.0",
     "graphql": "^14.5.8",
     "happo-plugin-typescript": "^1.0.0",
-    "happo.io": "^3.25.2",
+    "happo.io": "^3.25.3",
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
     "postcss-preset-env": "^6.7.0",
