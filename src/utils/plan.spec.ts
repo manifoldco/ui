@@ -347,15 +347,17 @@ const graphqlPlan: Plan = {
 const restPlan: Catalog.ExpandedPlan = {
   body: {
     cost: 700,
-    features: [
-      { feature: 'static-single-tenant', value: 'true' },
-      { feature: 'bandwidth', value: 'unlimited' },
-      { feature: 'free-hours', value: 'two' },
-      { feature: 'free-imagga-images', value: 'one-hundred' },
-      { feature: 'imagga-images', value: 'no-overage' },
-      { feature: 'processing-duration', value: 'processing-hours' },
-      { feature: 'video-encoding', value: 'video-encoding' },
-    ],
+    // Features not needed for fixed/metered features
+    // features: [
+    //   { feature: 'static-single-tenant', value: 'true' },
+    //   { feature: 'bandwidth', value: 'unlimited' },
+    //   { feature: 'free-hours', value: 'two' },
+    //   { feature: 'free-imagga-images', value: 'one-hundred' },
+    //   { feature: 'imagga-images', value: 'no-overage' },
+    //   { feature: 'processing-duration', value: 'processing-hours' },
+    //   { feature: 'video-encoding', value: 'video-encoding' },
+    // ],
+    features: [],
     label: 'standard',
     name: 'Standard',
     product_id: '234htwpkzvg1vuyez6uybfhv8rjb2',
@@ -377,13 +379,14 @@ const restPlan: Catalog.ExpandedPlan = {
         // Not in GraphQL API for fixed/metered features
         // values: [{ label: 'true', name: 'true' }, { label: 'false', name: 'false' }],
       },
+      // NOTE: all value.label values have been changed to match the feature label in order to reflect GraphQL limitations
       {
         label: 'bandwidth',
         name: 'Bandwidth',
         type: 'string',
         // Not in GraphQL API for fixed/metered features
         // values: [{ label: 'unlimited', name: 'Unlimited' }],
-        value: { label: 'unlimited', name: 'Unlimited' },
+        value: { label: 'bandwidth', name: 'Unlimited' },
         value_string: 'Unlimited',
       },
       {
@@ -392,7 +395,7 @@ const restPlan: Catalog.ExpandedPlan = {
         type: 'string',
         // Not in GraphQL API for fixed/metered features
         // values: [{ label: 'two', name: '2' }],
-        value: { label: 'two', name: '2' },
+        value: { label: 'free-hours', name: '2' },
         value_string: '2',
       },
       {
@@ -401,7 +404,7 @@ const restPlan: Catalog.ExpandedPlan = {
         type: 'string',
         // Not in GraphQL API for fixed/metered features
         // values: [{ label: 'one-hundred', name: '100' }],
-        value: { label: 'one-hundred', name: '100' },
+        value: { label: 'free-imagga-images', name: '100' },
         value_string: '100',
       },
       {
@@ -427,11 +430,11 @@ const restPlan: Catalog.ExpandedPlan = {
         //   },
         // ],
         value: {
-          label: 'no-overage',
-          name: 'No Overage',
+          label: 'imagga-images',
+          name: 'Imagga Images',
           numeric_details: { cost_ranges: [], suffix: 'image' },
         },
-        value_string: 'No Overage',
+        value_string: 'Imagga Images',
       },
       {
         label: 'processing-duration',
@@ -456,15 +459,15 @@ const restPlan: Catalog.ExpandedPlan = {
         //   },
         // ],
         value: {
-          label: 'processing-hours',
-          name: 'Processing Hours',
+          label: 'processing-duration',
+          name: 'Processing Duration',
           numeric_details: {
             cost_ranges: [{ cost_multiple: 790000000, limit: -1 }],
             increment: 1,
             suffix: 'hour',
           },
         },
-        value_string: 'Processing Hours',
+        value_string: 'Processing Duration',
       },
       {
         label: 'video-encoding',

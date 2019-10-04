@@ -379,7 +379,9 @@ const convertMeteredFeatureData = (
         label: feature.label,
         name: feature.displayName,
         numeric_details: {
-          increment: 1,
+          ...(feature.numericDetails.costTiers && feature.numericDetails.costTiers.length > 0
+            ? { increment: 1 }
+            : {}),
           suffix: feature.numericDetails.unit,
           cost_ranges: feature.numericDetails.costTiers
             ? feature.numericDetails.costTiers.map(({ cost, limit }) => ({
@@ -396,29 +398,6 @@ const convertMeteredFeatureData = (
   return newFeatures;
 };
 
-const convertPlanFeatures = (plan: Plan): Catalog.FeatureValue[] => {
-  const features: Catalog.FeatureValue[] = [];
-
-  if (plan.fixedFeatures) {
-    features.push(
-      ...plan.fixedFeatures.edges.map(({ node }) => ({
-        feature: node.label,
-        value: node.displayValue,
-      }))
-    );
-  }
-  if (plan.meteredFeatures) {
-    features.push(
-      ...plan.meteredFeatures.edges.map(({ node }) => ({
-        feature: node.label,
-        value: node.label,
-      }))
-    );
-  }
-
-  return features;
-};
-
 const convertRegionData = (regions: RegionConnection | null | undefined): string[] =>
   regions ? regions.edges.map(region => region.node.id) : [];
 
@@ -429,7 +408,7 @@ export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => {
     version: 1,
     body: {
       cost: plan.cost,
-      features: convertPlanFeatures(plan),
+      features: [],
       label: plan.label,
       name: plan.displayName,
       product_id: (plan.product && plan.product.id) || '',
