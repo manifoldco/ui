@@ -31,7 +31,7 @@ import {
   planSort,
   convertPlanData,
 } from './plan';
-import { Plan, PlanState, RegionConnection, ProductState, PlanFeatureType } from '../types/graphql';
+import { Plan, PlanState, ProductState, PlanFeatureType } from '../types/graphql';
 
 describe('default value methods', () => {
   it('string features return default value', () =>
