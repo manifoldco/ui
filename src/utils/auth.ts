@@ -8,7 +8,7 @@ import { report } from './errorReport';
 export function withAuth(authToken: string, options?: RequestInit): RequestInit | undefined {
   /* FIXME: This is being used as a fallback for our demo apps during the transition to
    * oauth and GraphQL. The authToken being passed in will only be present if the app
-   * that renders our web components uses oauth. But we have demo apps that are keeping
+   * that renders our Web Components uses oauth. But we have demo apps that are keeping
    * our old tokens in local storage in order for REST calls to work. This keeps them
    * working.
    */

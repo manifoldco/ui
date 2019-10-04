@@ -4,7 +4,7 @@
 
 # 🍱 Manifold UI
 
-Manifold’s [web component][web-components] UI library, powered by [Stencil][stencil].
+Manifold’s [Web Component][web-components] UI library, powered by [Stencil][stencil].
 
 ## Installation
 
@@ -86,8 +86,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ### TypeScript + JSX setup
 
-When using inside TypeScript, you’ll likely see this error ( `manifold-connection` could be any
-custom element):
+When using UI with TypeScript, you’ll likely see an error like this:
 
 ```
 Property 'manifold-connection' does not exist on type 'JSX.IntrinsicElements'
