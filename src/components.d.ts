@@ -1093,14 +1093,14 @@ declare global {
 }
 
 declare namespace LocalJSX {
-  interface ManifoldActivePlan extends JSXBase.HTMLAttributes<HTMLManifoldActivePlanElement> {
+  interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
     'plans'?: Catalog.ExpandedPlan[];
     'product'?: Product;
     'regions'?: string[];
     'selectedResource'?: Gateway.Resource;
   }
-  interface ManifoldAuthToken extends JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement> {
+  interface ManifoldAuthToken {
     'authType'?: AuthType;
     'onManifold-token-clear'?: (event: CustomEvent<any>) => void;
     'onManifold-token-receive'?: (event: CustomEvent<{ token: string }>) => void;
@@ -1114,8 +1114,8 @@ declare namespace LocalJSX {
     'subscribe'?: (s: Subscriber) => () => void;
     'token'?: string;
   }
-  interface ManifoldBadge extends JSXBase.HTMLAttributes<HTMLManifoldBadgeElement> {}
-  interface ManifoldButton extends JSXBase.HTMLAttributes<HTMLManifoldButtonElement> {
+  interface ManifoldBadge {}
+  interface ManifoldButton {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'disabled'?: boolean;
     'href'?: string;
@@ -1124,7 +1124,7 @@ declare namespace LocalJSX {
     'stencilClickEvent'?: (e: MouseEvent) => void;
     'type'?: 'button' | 'submit';
   }
-  interface ManifoldButtonLink extends JSXBase.HTMLAttributes<HTMLManifoldButtonLinkElement> {
+  interface ManifoldButtonLink {
     'color'?: 'black' | 'gray' | 'orange' | 'pink' | 'white';
     'href'?: string;
     'onManifold-buttonLink-click'?: (event: CustomEvent<any>) => void;
@@ -1134,11 +1134,11 @@ declare namespace LocalJSX {
     'stencilClickEvent'?: (e: MouseEvent) => void;
     'target'?: string;
   }
-  interface ManifoldConnection extends JSXBase.HTMLAttributes<HTMLManifoldConnectionElement> {
+  interface ManifoldConnection {
     'env'?: 'local' | 'stage' | 'prod';
     'waitTime'?: number;
   }
-  interface ManifoldCopyCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCopyCredentialsElement> {
+  interface ManifoldCopyCredentials {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1150,25 +1150,25 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
   }
-  interface ManifoldCostDisplay extends JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement> {
+  interface ManifoldCostDisplay {
     'baseCost'?: number;
     'compact'?: boolean;
     'measuredFeatures'?: Catalog.ExpandedFeature[];
     'startingAt'?: boolean;
   }
-  interface ManifoldCredentials extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement> {
+  interface ManifoldCredentials {
     /**
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
     'resourceLabel'?: string;
   }
-  interface ManifoldCredentialsView extends JSXBase.HTMLAttributes<HTMLManifoldCredentialsViewElement> {
+  interface ManifoldCredentialsView {
     'credentials'?: CredentialEdge[];
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
   }
-  interface ManifoldDataDeprovisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement> {
+  interface ManifoldDataDeprovisionButton {
     'loading'?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
@@ -1183,7 +1183,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldDataHasResource extends JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement> {
+  interface ManifoldDataHasResource {
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1195,7 +1195,7 @@ declare namespace LocalJSX {
     'onManifold-hasResource-load'?: (event: CustomEvent<any>) => void;
     'paused'?: boolean;
   }
-  interface ManifoldDataManageButton extends JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement> {
+  interface ManifoldDataManageButton {
     'features'?: Gateway.FeatureMap;
     'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-manageButton-error'?: (event: CustomEvent<any>) => void;
@@ -1212,7 +1212,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldDataProductLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement> {
+  interface ManifoldDataProductLogo {
     /**
     * _(optional)_ `alt` attribute
     */
@@ -1230,7 +1230,7 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
   }
-  interface ManifoldDataProductName extends JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement> {
+  interface ManifoldDataProductName {
     /**
     * _(hidden)_
     */
@@ -1244,7 +1244,7 @@ declare namespace LocalJSX {
     */
     'resourceLabel'?: string;
   }
-  interface ManifoldDataProvisionButton extends JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement> {
+  interface ManifoldDataProvisionButton {
     /**
     * _(hidden)_
     */
@@ -1275,7 +1275,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldDataRenameButton extends JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement> {
+  interface ManifoldDataRenameButton {
     'disabled'?: boolean;
     'loading'?: boolean;
     /**
@@ -1299,7 +1299,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldDataResourceList extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement> {
+  interface ManifoldDataResourceList {
     /**
     * _(hidden)_
     */
@@ -1318,7 +1318,7 @@ declare namespace LocalJSX {
     */
     'resourceLinkFormat'?: string;
   }
-  interface ManifoldDataResourceLogo extends JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement> {
+  interface ManifoldDataResourceLogo {
     /**
     * _(optional)_ `alt` attribute
     */
@@ -1332,7 +1332,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldDataSsoButton extends JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement> {
+  interface ManifoldDataSsoButton {
     'loading'?: boolean;
     'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
@@ -1350,8 +1350,8 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldForwardSlot extends JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement> {}
-  interface ManifoldIcon extends JSXBase.HTMLAttributes<HTMLManifoldIconElement> {
+  interface ManifoldForwardSlot {}
+  interface ManifoldIcon {
     /**
     * a CSS variable starting with `--manifold-c-*`
     */
@@ -1367,10 +1367,10 @@ declare namespace LocalJSX {
     'marginLeft'?: boolean;
     'marginRight'?: boolean;
   }
-  interface ManifoldImageGallery extends JSXBase.HTMLAttributes<HTMLManifoldImageGalleryElement> {
+  interface ManifoldImageGallery {
     'images'?: string[];
   }
-  interface ManifoldInput extends JSXBase.HTMLAttributes<HTMLManifoldInputElement> {
+  interface ManifoldInput {
     'defaultValue'?: string;
     'disabled'?: boolean;
     'inputId'?: string;
@@ -1380,7 +1380,7 @@ declare namespace LocalJSX {
     'required'?: boolean;
     'type'?: string;
   }
-  interface ManifoldMarketplace extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement> {
+  interface ManifoldMarketplace {
     /**
     * Comma-separated list of featured products (labels)
     */
@@ -1419,7 +1419,7 @@ declare namespace LocalJSX {
     */
     'templateLinkFormat'?: string;
   }
-  interface ManifoldMarketplaceGrid extends JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement> {
+  interface ManifoldMarketplaceGrid {
     'featured'?: string[];
     'freeProducts'?: string[];
     'hideCategories'?: boolean;
@@ -1432,11 +1432,11 @@ declare namespace LocalJSX {
     'skeleton'?: boolean;
     'templateLinkFormat'?: string;
   }
-  interface ManifoldMockResource extends JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement> {
+  interface ManifoldMockResource {
     'gqlMock'?: Resource;
     'mock'?: Gateway.Resource;
   }
-  interface ManifoldNumberInput extends JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement> {
+  interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
     'error'?: string;
     'increment'?: number;
@@ -1448,14 +1448,14 @@ declare namespace LocalJSX {
     'suffix'?: string;
     'value'?: number;
   }
-  interface ManifoldOauth extends JSXBase.HTMLAttributes<HTMLManifoldOauthElement> {
+  interface ManifoldOauth {
     'onReceiveManifoldToken'?: (event: CustomEvent<AuthToken>) => void;
     'tick'?: string;
   }
-  interface ManifoldPerformance extends JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement> {
+  interface ManifoldPerformance {
     'ddLogs'?: any;
   }
-  interface ManifoldPlan extends JSXBase.HTMLAttributes<HTMLManifoldPlanElement> {
+  interface ManifoldPlan {
     /**
     * _(hidden)_
     */
@@ -1473,7 +1473,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldPlanCost extends JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement> {
+  interface ManifoldPlanCost {
     /**
     * All plan features
     */
@@ -1499,7 +1499,7 @@ declare namespace LocalJSX {
     */
     'selectedFeatures'?: Gateway.FeatureMap;
   }
-  interface ManifoldPlanDetails extends JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement> {
+  interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
@@ -1510,13 +1510,13 @@ declare namespace LocalJSX {
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;
   }
-  interface ManifoldPlanMenu extends JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement> {
+  interface ManifoldPlanMenu {
     'oldPlans'?: Catalog.ExpandedPlan[];
     'plans'?: PlanConnection;
     'selectPlan'?: Function;
     'selectedPlanId'?: string;
   }
-  interface ManifoldPlanSelector extends JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement> {
+  interface ManifoldPlanSelector {
     /**
     * Show only free plans?
     */
@@ -1543,7 +1543,7 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldProduct extends JSXBase.HTMLAttributes<HTMLManifoldProductElement> {
+  interface ManifoldProduct {
     /**
     * _(hidden)_
     */
@@ -1554,13 +1554,13 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
   }
-  interface ManifoldProductDetails extends JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement> {
+  interface ManifoldProductDetails {
     'product'?: Product;
   }
-  interface ManifoldProductPage extends JSXBase.HTMLAttributes<HTMLManifoldProductPageElement> {
+  interface ManifoldProductPage {
     'product'?: Product;
   }
-  interface ManifoldRegionSelector extends JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement> {
+  interface ManifoldRegionSelector {
     'allowedRegions'?: string[];
     'ariaLabel'?: string;
     'name'?: string;
@@ -1573,7 +1573,7 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
     'value'?: string;
   }
-  interface ManifoldResourceCard extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement> {
+  interface ManifoldResourceCard {
     /**
     * _(hidden)_
     */
@@ -1582,7 +1582,7 @@ declare namespace LocalJSX {
     'preserveEvent'?: boolean;
     'resourceLinkFormat'?: string;
   }
-  interface ManifoldResourceCardView extends JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement> {
+  interface ManifoldResourceCardView {
     'label'?: string;
     'loading'?: boolean;
     'logo'?: string;
@@ -1593,7 +1593,7 @@ declare namespace LocalJSX {
     'resourceLinkFormat'?: string;
     'resourceStatus'?: string;
   }
-  interface ManifoldResourceContainer extends JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement> {
+  interface ManifoldResourceContainer {
     /**
     * _(hidden)_
     */
@@ -1612,19 +1612,19 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldResourceCredentials extends JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement> {
+  interface ManifoldResourceCredentials {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
   }
-  interface ManifoldResourceDeprovision extends JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement> {
+  interface ManifoldResourceDeprovision {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
   }
-  interface ManifoldResourceDetails extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement> {}
-  interface ManifoldResourceDetailsView extends JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement> {
+  interface ManifoldResourceDetails {}
+  interface ManifoldResourceDetailsView {
     'data'?: Gateway.Resource;
   }
-  interface ManifoldResourceList extends JSXBase.HTMLAttributes<HTMLManifoldResourceListElement> {
+  interface ManifoldResourceList {
     /**
     * _(hidden)_
     */
@@ -1646,15 +1646,15 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldResourcePlan extends JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement> {
+  interface ManifoldResourcePlan {
     'gqlData'?: Resource;
     'loading'?: boolean;
   }
-  interface ManifoldResourceProduct extends JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement> {
+  interface ManifoldResourceProduct {
     'gqlData'?: Resource;
     'loading'?: boolean;
   }
-  interface ManifoldResourceRename extends JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement> {
+  interface ManifoldResourceRename {
     'data'?: Gateway.Resource;
     'disabled'?: boolean;
     'loading'?: boolean;
@@ -1663,28 +1663,28 @@ declare namespace LocalJSX {
     */
     'newLabel'?: string;
   }
-  interface ManifoldResourceSso extends JSXBase.HTMLAttributes<HTMLManifoldResourceSsoElement> {
+  interface ManifoldResourceSso {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
   }
-  interface ManifoldResourceStatus extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement> {
+  interface ManifoldResourceStatus {
     'data'?: Gateway.Resource;
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
-  interface ManifoldResourceStatusView extends JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement> {
+  interface ManifoldResourceStatusView {
     'loading'?: boolean;
     'resourceState'?: string;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
-  interface ManifoldSelect extends JSXBase.HTMLAttributes<HTMLManifoldSelectElement> {
+  interface ManifoldSelect {
     'defaultValue'?: string;
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
     'options'?: Option[];
     'required'?: boolean;
   }
-  interface ManifoldServiceCard extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement> {
+  interface ManifoldServiceCard {
     /**
     * _(hidden)_
     */
@@ -1695,7 +1695,7 @@ declare namespace LocalJSX {
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }
-  interface ManifoldServiceCardView extends JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement> {
+  interface ManifoldServiceCardView {
     'description'?: string;
     'isFeatured'?: boolean;
     'isFree'?: boolean;
@@ -1708,15 +1708,15 @@ declare namespace LocalJSX {
     'productLinkFormat'?: string;
     'skeleton'?: boolean;
   }
-  interface ManifoldSkeletonImg extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement> {}
-  interface ManifoldSkeletonText extends JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement> {}
-  interface ManifoldTemplateCard extends JSXBase.HTMLAttributes<HTMLManifoldTemplateCardElement> {
+  interface ManifoldSkeletonImg {}
+  interface ManifoldSkeletonText {}
+  interface ManifoldTemplateCard {
     'category'?: string;
     'onManifold-template-click'?: (event: CustomEvent<any>) => void;
     'preserveEvent'?: boolean;
     'templateLinkFormat'?: string;
   }
-  interface ManifoldToast extends JSXBase.HTMLAttributes<HTMLManifoldToastElement> {
+  interface ManifoldToast {
     /**
     * `success` | `warning` | `error`
     */
@@ -1730,7 +1730,7 @@ declare namespace LocalJSX {
     */
     'icon'?: string;
   }
-  interface ManifoldToggle extends JSXBase.HTMLAttributes<HTMLManifoldToggleElement> {
+  interface ManifoldToggle {
     'ariaLabelledby'?: string;
     'defaultValue'?: boolean;
     'disabled'?: boolean;
@@ -1738,7 +1738,7 @@ declare namespace LocalJSX {
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
   }
-  interface ManifoldTooltip extends JSXBase.HTMLAttributes<HTMLManifoldTooltipElement> {
+  interface ManifoldTooltip {
     'labelText'?: string;
   }
 
@@ -1813,7 +1813,70 @@ export { LocalJSX as JSX };
 
 declare module "@stencil/core" {
   export namespace JSX {
-    interface IntrinsicElements extends LocalJSX.IntrinsicElements {}
+    interface IntrinsicElements {
+      'manifold-active-plan': LocalJSX.ManifoldActivePlan & JSXBase.HTMLAttributes<HTMLManifoldActivePlanElement>;
+      'manifold-auth-token': LocalJSX.ManifoldAuthToken & JSXBase.HTMLAttributes<HTMLManifoldAuthTokenElement>;
+      'manifold-badge': LocalJSX.ManifoldBadge & JSXBase.HTMLAttributes<HTMLManifoldBadgeElement>;
+      'manifold-button': LocalJSX.ManifoldButton & JSXBase.HTMLAttributes<HTMLManifoldButtonElement>;
+      'manifold-button-link': LocalJSX.ManifoldButtonLink & JSXBase.HTMLAttributes<HTMLManifoldButtonLinkElement>;
+      'manifold-connection': LocalJSX.ManifoldConnection & JSXBase.HTMLAttributes<HTMLManifoldConnectionElement>;
+      'manifold-copy-credentials': LocalJSX.ManifoldCopyCredentials & JSXBase.HTMLAttributes<HTMLManifoldCopyCredentialsElement>;
+      'manifold-cost-display': LocalJSX.ManifoldCostDisplay & JSXBase.HTMLAttributes<HTMLManifoldCostDisplayElement>;
+      'manifold-credentials': LocalJSX.ManifoldCredentials & JSXBase.HTMLAttributes<HTMLManifoldCredentialsElement>;
+      'manifold-credentials-view': LocalJSX.ManifoldCredentialsView & JSXBase.HTMLAttributes<HTMLManifoldCredentialsViewElement>;
+      'manifold-data-deprovision-button': LocalJSX.ManifoldDataDeprovisionButton & JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement>;
+      'manifold-data-has-resource': LocalJSX.ManifoldDataHasResource & JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement>;
+      'manifold-data-manage-button': LocalJSX.ManifoldDataManageButton & JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement>;
+      'manifold-data-product-logo': LocalJSX.ManifoldDataProductLogo & JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement>;
+      'manifold-data-product-name': LocalJSX.ManifoldDataProductName & JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement>;
+      'manifold-data-provision-button': LocalJSX.ManifoldDataProvisionButton & JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement>;
+      'manifold-data-rename-button': LocalJSX.ManifoldDataRenameButton & JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement>;
+      'manifold-data-resource-list': LocalJSX.ManifoldDataResourceList & JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement>;
+      'manifold-data-resource-logo': LocalJSX.ManifoldDataResourceLogo & JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement>;
+      'manifold-data-sso-button': LocalJSX.ManifoldDataSsoButton & JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement>;
+      'manifold-forward-slot': LocalJSX.ManifoldForwardSlot & JSXBase.HTMLAttributes<HTMLManifoldForwardSlotElement>;
+      'manifold-icon': LocalJSX.ManifoldIcon & JSXBase.HTMLAttributes<HTMLManifoldIconElement>;
+      'manifold-image-gallery': LocalJSX.ManifoldImageGallery & JSXBase.HTMLAttributes<HTMLManifoldImageGalleryElement>;
+      'manifold-input': LocalJSX.ManifoldInput & JSXBase.HTMLAttributes<HTMLManifoldInputElement>;
+      'manifold-marketplace': LocalJSX.ManifoldMarketplace & JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement>;
+      'manifold-marketplace-grid': LocalJSX.ManifoldMarketplaceGrid & JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement>;
+      'manifold-mock-resource': LocalJSX.ManifoldMockResource & JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement>;
+      'manifold-number-input': LocalJSX.ManifoldNumberInput & JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement>;
+      'manifold-oauth': LocalJSX.ManifoldOauth & JSXBase.HTMLAttributes<HTMLManifoldOauthElement>;
+      'manifold-performance': LocalJSX.ManifoldPerformance & JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement>;
+      'manifold-plan': LocalJSX.ManifoldPlan & JSXBase.HTMLAttributes<HTMLManifoldPlanElement>;
+      'manifold-plan-cost': LocalJSX.ManifoldPlanCost & JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement>;
+      'manifold-plan-details': LocalJSX.ManifoldPlanDetails & JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement>;
+      'manifold-plan-menu': LocalJSX.ManifoldPlanMenu & JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement>;
+      'manifold-plan-selector': LocalJSX.ManifoldPlanSelector & JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement>;
+      'manifold-product': LocalJSX.ManifoldProduct & JSXBase.HTMLAttributes<HTMLManifoldProductElement>;
+      'manifold-product-details': LocalJSX.ManifoldProductDetails & JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement>;
+      'manifold-product-page': LocalJSX.ManifoldProductPage & JSXBase.HTMLAttributes<HTMLManifoldProductPageElement>;
+      'manifold-region-selector': LocalJSX.ManifoldRegionSelector & JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement>;
+      'manifold-resource-card': LocalJSX.ManifoldResourceCard & JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement>;
+      'manifold-resource-card-view': LocalJSX.ManifoldResourceCardView & JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement>;
+      'manifold-resource-container': LocalJSX.ManifoldResourceContainer & JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement>;
+      'manifold-resource-credentials': LocalJSX.ManifoldResourceCredentials & JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement>;
+      'manifold-resource-deprovision': LocalJSX.ManifoldResourceDeprovision & JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement>;
+      'manifold-resource-details': LocalJSX.ManifoldResourceDetails & JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement>;
+      'manifold-resource-details-view': LocalJSX.ManifoldResourceDetailsView & JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsViewElement>;
+      'manifold-resource-list': LocalJSX.ManifoldResourceList & JSXBase.HTMLAttributes<HTMLManifoldResourceListElement>;
+      'manifold-resource-plan': LocalJSX.ManifoldResourcePlan & JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement>;
+      'manifold-resource-product': LocalJSX.ManifoldResourceProduct & JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement>;
+      'manifold-resource-rename': LocalJSX.ManifoldResourceRename & JSXBase.HTMLAttributes<HTMLManifoldResourceRenameElement>;
+      'manifold-resource-sso': LocalJSX.ManifoldResourceSso & JSXBase.HTMLAttributes<HTMLManifoldResourceSsoElement>;
+      'manifold-resource-status': LocalJSX.ManifoldResourceStatus & JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement>;
+      'manifold-resource-status-view': LocalJSX.ManifoldResourceStatusView & JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement>;
+      'manifold-select': LocalJSX.ManifoldSelect & JSXBase.HTMLAttributes<HTMLManifoldSelectElement>;
+      'manifold-service-card': LocalJSX.ManifoldServiceCard & JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement>;
+      'manifold-service-card-view': LocalJSX.ManifoldServiceCardView & JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement>;
+      'manifold-skeleton-img': LocalJSX.ManifoldSkeletonImg & JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement>;
+      'manifold-skeleton-text': LocalJSX.ManifoldSkeletonText & JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement>;
+      'manifold-template-card': LocalJSX.ManifoldTemplateCard & JSXBase.HTMLAttributes<HTMLManifoldTemplateCardElement>;
+      'manifold-toast': LocalJSX.ManifoldToast & JSXBase.HTMLAttributes<HTMLManifoldToastElement>;
+      'manifold-toggle': LocalJSX.ManifoldToggle & JSXBase.HTMLAttributes<HTMLManifoldToggleElement>;
+      'manifold-tooltip': LocalJSX.ManifoldTooltip & JSXBase.HTMLAttributes<HTMLManifoldTooltipElement>;
+    }
   }
 }
 

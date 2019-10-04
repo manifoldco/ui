@@ -14,12 +14,105 @@ const query = gql`
   query RESOURCE($resourceLabel: String!) {
     resource(label: $resourceLabel) {
       plan {
+        id
+        label
+        displayName
+        state
+        cost
+        free
+        regions(first: 20) {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          edges {
+            node {
+              id
+              displayName
+              platform
+              dataCenter
+            }
+            cursor
+          }
+        }
         product {
           id
           displayName
           tagline
           label
           logoUrl
+        }
+        fixedFeatures(first: 20) {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              label
+              displayName
+              displayValue
+            }
+          }
+        }
+        meteredFeatures(first: 20) {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              label
+              displayName
+              numericDetails {
+                unit
+                costTiers {
+                  limit
+                  cost
+                }
+              }
+            }
+          }
+        }
+        configurableFeatures(first: 20) {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          edges {
+            cursor
+            node {
+              id
+              label
+              displayName
+              type
+              options {
+                id
+                label
+                displayName
+                displayValue
+              }
+              numericDetails {
+                unit
+                costTiers {
+                  limit
+                  cost
+                }
+              }
+            }
+          }
         }
       }
     }
