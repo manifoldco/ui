@@ -14,9 +14,8 @@ example: |
 
 Retrieve a product’s full name from a `:productLabel` as an unstyled text node.
 
-Can’t remember a product’s capitalization? Want to receive automatic updates
-if a service rebrands? We’ve got you covered with a simple name web
-component.
+Can’t remember a product’s capitalization? Want to receive automatic updates if a service rebrands?
+We’ve got you covered with a simple name Web Component.
 
 ## Usage
 

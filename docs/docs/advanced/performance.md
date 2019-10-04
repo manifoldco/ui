@@ -8,7 +8,7 @@ path: /advanced/performance
 ## Code splitting
 
 Arguably the biggest difference you can make speeding up your user experience is by using [dynamic
-imports][import] in your code. This splits out the web component loader into a lazy-loading chunk
+imports][import] in your code. This splits out the Web Component loader into a lazy-loading chunk
 that doesn’t block your main bundle.
 
 ```js
@@ -25,7 +25,7 @@ import(/* webpackChunkName: manifold-ui */ '@manifoldco/ui/dist/loader').then(
 > 💁 **Tip:** `webpackChunkName` is useful in webpack setups to ensure if you use this code more
 > than once, it’ll re-use the same chunk each time rather than create multiple copies.
 
-Though this may _technically_ delay the web components’ loading (because it’s fetching an async
+Though this may _technically_ delay the Web Components’ loading (because it’s fetching an async
 request to get the loader, rather than being bundled already by the time this is executed), overall
 this is generally a win for users, and lets you deliver a [first meaningful paint][fmp] sooner.
 
@@ -55,7 +55,7 @@ things like `15.js` and `53.js`, each weighing only a few KB.
 
 ### Polyfill bloat
 
-Stencil’s web components work for more browsers than even have web component support [via a
+Stencil’s Web Components work for more browsers than even have Web Component support [via a
 polyfill][stencil-browsers]. It’s great to have built-in support, but sometimes webpack can
 accidentally bundle the polyfill when it doesn’t need to. We’ve found the best fix to be **code
 splitting** (above).

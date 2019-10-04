@@ -10,8 +10,8 @@ path: /data/auth-token
   setting tokens directly on <code>&lt;manifold-connection/&gt;</code></div>
 </manifold-toast>
 
-For all resource-specific operations (creating resources, viewing resources, etc.) the web
-components will need user-level authentication. This component supports two methods of
+For all resource-specific operations (creating resources, viewing resources, etc.) the Web
+Components will need user-level authentication. This component supports two methods of
 authentication: **OAuth** (default) and **manual**.
 
 ## Authenticating with OAuth (default)

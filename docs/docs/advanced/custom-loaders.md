@@ -25,7 +25,7 @@ is still fetching, you can leverage `componentOnReady` as described below.
 
 ## Use your loading indicator
 
-Our web components expose a `componentOnReady()` function. This returns a promise that resolves as
+Our Web Components expose a `componentOnReady()` function. This returns a promise that resolves as
 soon as the component has rendered. If you are using `hide-until-ready`, this promise will not
 resolve until the component has finished fetching data and rendered all its contents. This allows
 you to to add a `.then(...)` call to that promise, which gives you the opportunity to flip a loading
