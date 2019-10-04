@@ -160,8 +160,8 @@ document.addEventListener('manifold-token-receive', ({ detail }) => {
 ### Invalid token
 
 If the token sent to a component is invalid, endpoints return a `401` error and the token is
-refreshed automatically. Use the [error handling capabilities](/advanced/errors) of our web
-components to detect and act on such errors.
+refreshed automatically. Use the [error handling capabilities](/advanced/errors) of our Web
+Components to detect and act on such errors.
 
 ### OAuth timeout
 

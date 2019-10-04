@@ -4,7 +4,7 @@
 
 # 🍱 Manifold UI
 
-Manifold’s [web component][web-components] UI library, powered by [Stencil][stencil].
+Manifold’s [Web Component][web-components] UI library, powered by [Stencil][stencil].
 
 ## Installation
 

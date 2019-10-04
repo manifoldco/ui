@@ -340,7 +340,7 @@ https://js.cdn.manifold.co/@manifoldco/ui@0.5.7-alpha.0/ # specific version for 
 
 ### Attributes vs Properties
 
-An important concept to understand when working with web components is the differences between an
+An important concept to understand when working with Web Components is the differences between an
 HTML attribute and a DOM node property. A simple example would involve an input element:
 
 ```html

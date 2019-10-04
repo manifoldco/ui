@@ -5,7 +5,7 @@ path: /connection
 
 # Connection
 
-The connection is necessary for API calls to be issues by our web components. It can also be used to
+The connection is necessary for API calls to be issues by our Web Components. It can also be used to
 set the base URL (production or staging) for all API calls.
 
 ## Usage

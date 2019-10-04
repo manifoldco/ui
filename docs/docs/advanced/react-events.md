@@ -5,17 +5,17 @@ path: /advanced/using-with-react
 
 # Using with React
 
-Since Manifold UI components are standard web components, React is fully-supported. However, if
-you’re new to web components, there can be some gotchas. Here are the tough parts we’ve found while
+Since Manifold UI components are standard Web Components, React is fully-supported. However, if
+you’re new to Web Components, there can be some gotchas. Here are the tough parts we’ve found while
 implementing UI in a React environment, and the rules to absorb.
 
 ## Rule 1: Events must be handled with listeners
 
-Handling web component events in React is arguably the hardest part. In React, you may be used to
-handy `onClick={() => }` props for easy callbacks. Unfortunately that’s not yet possible with web
-components. Listeners are required. In the React projects we’ve worked in, we’ve found [React
-Hooks][hooks] (specifically `useState` and `useRef`) helpful for managing event listeners on web
-components.
+Handling Web Component events in React is arguably the hardest part. In React, you may be used to
+handy `onClick={() => }` props for easy callbacks. Unfortunately that’s not yet possible with Web
+Components. Listeners are required. In the React projects we’ve worked in, we’ve found [React
+Hooks][hooks] (specifically `useState` and `useRef`) helpful for managing event listeners on Web
+Components.
 
 ### Example
 
@@ -85,8 +85,8 @@ the **Events** section of that component’s documentation.
 
 ## Rule 2: Every prop is a string
 
-Another reason consuming web component events can be difficult within React is because **web
-components can only accept strings as props** because they’re just regular HTML element:
+Another reason consuming Web Component events can be difficult within React is because **Web
+Components can only accept strings as props** because they’re just regular HTML element:
 
 ```jsx
 const MyComponent = () => {
