@@ -73,7 +73,7 @@ To break down what’s happening here:
 1. Whenever `update()` fires, we’re telling React to re-render with the new props for
    `<manifold-data-provision-button>`.
 
-Lastly, the `if (planSelectorRef.current)(` check may be a little confusing. It’s here because if
+Lastly, the `if (planSelectorRef.current)` check may be a little confusing. It’s here because if
 using TypeScript you’ll find you’ll need to handle the case `ref.current` isn’t a DOM element. But
 as long as `<manifold-plan-selector>` is present on the page (i.e. isn’t conditionally rendered or
 not), we should have no problems here.
