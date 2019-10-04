@@ -5,23 +5,23 @@ path: /advanced/using-with-react
 
 # Using with React
 
-Since UI are standard web components, that means React support is fully-built in since web
-components are now a fully-supported browser standard. However, if you’re new to web components,
-there can be some gotchas. Here are the tough parts we’ve found while implementing UI in a React
-environment.
+Since Manifold UI components are standard web components, React is fully-supported. However, if
+you’re new to web components, there can be some gotchas. Here are the tough parts we’ve found while
+implementing UI in a React environment, and the rules to absorb.
 
 ## Rule 1: Events must be handled with listeners
 
 Handling web component events in React is arguably the hardest part. In React, you may be used to
 handy `onClick={() => }` props for easy callbacks. Unfortunately that’s not yet possible with web
 components. Listeners are required. In the React projects we’ve worked in, we’ve found [React
-Hooks][hooks] (specifically `useState` and `useRef`) to be the simplest form of handling this.
+Hooks][hooks] (specifically `useState` and `useRef`) helpful for managing event listeners on web
+components.
 
 ### Example
 
 Say you’re integrating the [Plan Selector][plan-selector] component in React, and you want to be
-notified every time a user changes their plan to pass to the [provision-button]. This is what that
-would look like:
+notified when the plan changes in order to pass the selected plan to the [provision-button]. This is
+what that would look like:
 
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
@@ -85,9 +85,8 @@ the **Events** section of that component’s documentation.
 
 ## Rule 2: Every prop is a string
 
-Another reason consuming web component events can be difficult within React is because whereas React
-has no problem passing any data type (`object`, `array`, `number`, etc.) as a prop, **web components
-can only accept strings** as they’re HTML:
+Another reason consuming web component events can be difficult within React is because **web
+components can only accept strings as props** because they’re just regular HTML element:
 
 ```jsx
 const MyComponent = () => {
@@ -127,7 +126,7 @@ Fortunately, the **number of times we require you set a non-string prop on a UI 
 but resource features is, sadly, one such time. We’re working on making this less painful in future
 versions!
 
-## React + TypeScript
+## Extra Info: React + TypeScript
 
 When using UI with TypeScript, you’ll likely see an error like this:
 
