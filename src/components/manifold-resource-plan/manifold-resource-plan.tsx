@@ -1,42 +1,47 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
-import ResourceTunnel, { ResourceState } from '../../data/resource';
-import { convertPlan } from '../../utils/gatewayToCatalog';
+import ResourceTunnel from '../../data/resource';
+import { convertPlanData } from '../../utils/plan';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { Product, Plan, Resource } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
+  @Prop() gqlData?: Resource;
+  @Prop() loading: boolean = true;
+
   @loadMark()
   componentWillLoad() {}
 
   @logger()
   render() {
+    let product: Product | null | undefined;
+    let plan: Plan | null = null;
+    if (!this.loading && this.gqlData) {
+      if (this.gqlData.plan) {
+        plan = this.gqlData.plan;
+        product = this.gqlData.plan.product;
+      }
+    }
+
+    if (this.loading || !product || !plan) {
+      return (
+        // ☠
+        <manifold-plan-details scrollLocked={false} data-test-loading="true" />
+      );
+    }
+
     return (
-      <ResourceTunnel.Consumer>
-        {(state: ResourceState) =>
-          !state.loading &&
-          state.data &&
-          state.data.product &&
-          state.data.plan &&
-          state.data.product.provider ? (
-            <manifold-plan-details
-              scrollLocked={false}
-              plan={convertPlan(
-                state.data.plan,
-                state.data.product.id || '',
-                state.data.product.provider.id || ''
-              )}
-              product={
-                (state.gqlData && state.gqlData.plan && state.gqlData.plan.product) || undefined
-              }
-            />
-          ) : (
-            // ☠
-            <manifold-plan-details />
-          )
-        }
-      </ResourceTunnel.Consumer>
+      <manifold-plan-details
+        data-test-loading="false"
+        data-test-plan-label={plan.label}
+        scrollLocked={false}
+        plan={convertPlanData(plan as Plan)}
+        product={product as Product}
+      />
     );
   }
 }
+
+ResourceTunnel.injectProps(ManifoldResourcePlan, ['gqlData', 'loading']);
