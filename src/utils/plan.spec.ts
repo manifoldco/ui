@@ -11,7 +11,6 @@ import {
   NumberFeatureMeasurable,
   StringFeatureCustom,
   BooleanFeatureCustom,
-  Product,
 } from '../spec/mock/catalog';
 import { Catalog } from '../types/catalog';
 import {
