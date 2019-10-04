@@ -32,7 +32,7 @@ import {
   planSort,
   convertPlanData,
 } from './plan';
-import { Plan, PlanState, RegionConnection, ProductState } from '../types/graphql';
+import { Plan, PlanState, RegionConnection, ProductState, PlanFeatureType } from '../types/graphql';
 
 describe('default value methods', () => {
   it('string features return default value', () =>
@@ -340,7 +340,58 @@ const graphqlPlan: Plan = {
       hasNextPage: false,
       hasPreviousPage: false,
     },
-    edges: [],
+    edges: [
+      {
+        cursor: '',
+        node: {
+          id: '',
+          label: 'instance_class',
+          displayName: 'RAM',
+          type: PlanFeatureType.String,
+          options: [
+            { id: '', label: 'db.t2.micro', displayName: 'RAM', displayValue: '1 GB' },
+            { id: '', label: 'db.t2.small', displayName: 'RAM', displayValue: '2 GB' },
+            { id: '', label: 'db.m3.medium', displayName: 'RAM', displayValue: '4 GB' },
+            { id: '', label: 'db.m4.large', displayName: 'RAM', displayValue: '8 GB' },
+            { id: '', label: 'db.r4.large', displayName: 'RAM', displayValue: '15 GB' },
+            { id: '', label: 'db.r4.xlarge', displayName: 'RAM', displayValue: '31 GB' },
+            { id: '', label: 'db.r4.2xlarge', displayName: 'RAM', displayValue: '61 GB' },
+            { id: '', label: 'db.r4.4xlarge', displayName: 'RAM', displayValue: '122 GB' },
+            { id: '', label: 'db.r4.8xlarge', displayName: 'RAM', displayValue: '244 GB' },
+            { id: '', label: 'db.r4.16xlarge', displayName: 'RAM', displayValue: '488 GB' },
+          ],
+        },
+      },
+      {
+        cursor: '',
+        node: {
+          id: '',
+          label: 'storage',
+          displayName: 'Storage',
+          type: PlanFeatureType.Number,
+          numericDetails: {
+            costTiers: [{ cost: 200000000, limit: 16000 }],
+            increment: 1,
+            max: 16000,
+            min: 5,
+            unit: 'GB',
+          },
+        },
+      },
+      {
+        cursor: '',
+        node: {
+          id: '',
+          label: 'redundancy',
+          displayName: 'High Availability',
+          type: PlanFeatureType.Boolean,
+          options: [
+            { id: '', label: 'false', displayName: 'High Availability', displayValue: 'No' },
+            { id: '', label: 'true', displayName: 'High Availability', displayValue: 'Yes' },
+          ],
+        },
+      },
+    ],
   },
 };
 
@@ -357,9 +408,14 @@ const restPlan: Catalog.ExpandedPlan = {
     //   { feature: 'processing-duration', value: 'processing-hours' },
     //   { feature: 'video-encoding', value: 'video-encoding' },
     // ],
-    features: [],
+    features: [
+      { feature: 'instance_class', value: 'db.t2.micro' },
+      { feature: 'storage', value: '5 GB' },
+      { feature: 'redundancy', value: 'false' },
+    ],
     label: 'standard',
     name: 'Standard',
+    customizable: true,
     product_id: '234htwpkzvg1vuyez6uybfhv8rjb2',
     provider_id: '2343d7p36xwrydjy7120jxqxc7t22',
     regions: ['235n4f9pxf8eyraj3y159x89z6jer'],
@@ -501,6 +557,62 @@ const restPlan: Catalog.ExpandedPlan = {
           },
         },
         value_string: 'Video Encoding',
+      },
+      {
+        customizable: true,
+        // downgradable: true,
+        label: 'instance_class',
+        name: 'RAM',
+        type: 'string',
+        value: { label: 'db.t2.micro', name: '1 GB' },
+        values: [
+          { label: 'db.t2.micro', name: '1 GB' },
+          { label: 'db.t2.small', name: '2 GB' },
+          { label: 'db.m3.medium', name: '4 GB' },
+          { label: 'db.m4.large', name: '8 GB' },
+          { label: 'db.r4.large', name: '15 GB' },
+          { label: 'db.r4.xlarge', name: '31 GB' },
+          { label: 'db.r4.2xlarge', name: '61 GB' },
+          { label: 'db.r4.4xlarge', name: '122 GB' },
+          { label: 'db.r4.8xlarge', name: '244 GB' },
+          { label: 'db.r4.16xlarge', name: '488 GB' },
+        ],
+        value_string: '1 GB',
+        // upgradable: true,
+      },
+      {
+        customizable: true,
+        label: 'storage',
+        name: 'Storage',
+        type: 'number',
+        value: {
+          label: 'storage',
+          name: 'Storage',
+          numeric_details: {
+            cost_ranges: [{ cost_multiple: 200000000, limit: 16000 }],
+            increment: 1,
+            max: 16000,
+            min: 5,
+            suffix: 'GB',
+          },
+        },
+        values: [],
+        value_string: 'Storage',
+        // upgradable: true,
+      },
+      {
+        customizable: true,
+        // downgradable: true,
+        label: 'redundancy',
+        name: 'High Availability',
+        type: 'boolean',
+        // upgradable: true,
+        value: {
+          label: 'false',
+          name: 'No',
+        },
+        values: [{ label: 'false', name: 'No' }, { label: 'true', name: 'Yes' }],
+        value_string: 'No',
       },
     ],
     free: false,
