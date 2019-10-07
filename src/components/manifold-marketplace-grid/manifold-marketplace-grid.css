@@ -92,7 +92,7 @@
 
 .category-list-scroll {
   position: sticky;
-  top: 0;
+  top: var(--manifold-categoryMenu-top, 0);
   display: flex;
   flex-direction: column;
   margin-left: auto;
