@@ -28,14 +28,12 @@ export class ManifoldResourcePlan {
     if (this.loading || !product || !plan) {
       return (
         // ☠
-        <manifold-plan-details scrollLocked={false} data-test-loading="true" />
+        <manifold-plan-details scrollLocked={false} />
       );
     }
 
     return (
       <manifold-plan-details
-        data-test-loading="false"
-        data-test-plan-label={plan.label}
         scrollLocked={false}
         plan={convertPlanData(plan as Plan)}
         product={product as Product}
