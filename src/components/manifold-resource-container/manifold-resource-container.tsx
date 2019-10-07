@@ -13,6 +13,8 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 const query = gql`
   query RESOURCE($resourceLabel: String!) {
     resource(label: $resourceLabel) {
+      id
+      label
       plan {
         id
         label
