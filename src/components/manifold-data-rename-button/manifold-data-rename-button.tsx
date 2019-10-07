@@ -1,8 +1,8 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
-import { Marketplace } from '../../types/marketplace';
-import { RestFetch } from '../../utils/restFetch';
+import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -33,11 +33,31 @@ interface ErrorMessage {
   resourceId?: string;
 }
 
+const queryResourceId = gql`
+  query GET_RESOURCE_ID($resourceLabel: String!) {
+    resource(label: $resourceLabel) {
+      id
+    }
+  }
+`;
+
+const queryResourceRename = gql`
+  mutation RENAME_RESOURCE($resourceId: ID!, $newLabel: String!) {
+    updateResource(
+      input: { resourceId: $resourceId, newLabel: $newLabel, newDisplayName: $newLabel }
+    ) {
+      data {
+        label
+      }
+    }
+  }
+`;
+
 @Component({ tag: 'manifold-data-rename-button' })
 export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The new label to give to the resource */
@@ -50,11 +70,8 @@ export class ManifoldDataRenameButton {
   @Event({ eventName: 'manifold-renameButton-invalid', bubbles: true }) invalid: EventEmitter;
   @Event({ eventName: 'manifold-renameButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-renameButton-success', bubbles: true }) success: EventEmitter;
-
   @Watch('resourceLabel') labelChange(newLabel: string) {
-    if (!this.resourceId) {
-      this.fetchResourceId(newLabel);
-    }
+    this.fetchResourceId(newLabel);
   }
 
   @loadMark()
@@ -65,7 +82,7 @@ export class ManifoldDataRenameButton {
   }
 
   async rename() {
-    if (!this.restFetch || this.loading) {
+    if (!this.graphqlFetch || this.loading) {
       return;
     }
 
@@ -80,6 +97,7 @@ export class ManifoldDataRenameButton {
       resourceId: this.resourceId,
     };
 
+    // invalid event
     if (this.newLabel.length < 3) {
       const message: InvalidMessage = {
         ...resourceDetails,
@@ -97,39 +115,30 @@ export class ManifoldDataRenameButton {
       return;
     }
 
-    // fire click event
+    // click event
     const clickMessage: ClickMessage = { ...resourceDetails };
     this.click.emit(clickMessage);
 
-    const body: Marketplace.PublicUpdateResource = {
-      body: { name: this.newLabel, label: this.newLabel },
-    };
-
-    // rename
-    const renamedResource = await this.restFetch<Marketplace.Resource>({
-      service: 'marketplace',
-      endpoint: `/resources/${this.resourceId}`,
-      body,
-      options: {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+    // attempt rename
+    const { data, errors } = await this.graphqlFetch({
+      query: queryResourceRename,
+      variables: {
+        resourceId: this.resourceId,
+        newLabel: this.newLabel,
       },
-    }).catch(e => {
-      const errorMessage: ErrorMessage = {
-        ...resourceDetails,
-        message: e.message,
-      };
-      this.error.emit(errorMessage);
-      return Promise.reject(errorMessage);
     });
-    if (renamedResource) {
-      this.newLabel = renamedResource.body.label;
+
+    // error event
+    if (errors) {
+      this.reportErrors(errors);
+    }
+
+    if (data && data.resource) {
+      this.newLabel = data.resource.label;
       resourceDetails.newLabel = this.newLabel;
     }
 
-    // Poll until rename complete
-    await this.pollRename();
-
+    // success event
     const successMessage: SuccessMessage = {
       ...resourceDetails,
       message: `${this.resourceLabel} renamed to ${this.newLabel}`,
@@ -139,48 +148,39 @@ export class ManifoldDataRenameButton {
   }
 
   async fetchResourceId(resourceLabel: string) {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
+    const { data, errors } = await this.graphqlFetch({
+      query: queryResourceId,
+      variables: { resourceLabel },
     });
 
-    if (!Array.isArray(response) || !response.length) {
-      console.error(`${resourceLabel} product not found`);
-      return;
+    if (errors) {
+      this.reportErrors(errors);
     }
 
-    this.resourceId = response[0].id;
-  }
-
-  async pollRename() {
-    const pollInterval = 300;
-
-    return new Promise((resolve, reject) => {
-      if (this.restFetch) {
-        const start = performance.now();
-        return this.restFetch<Marketplace.Resource[]>({
-          service: 'marketplace',
-          endpoint: `/resources/?me&label=${this.newLabel}`,
-        }).then(renamedResource => {
-          if (Array.isArray(renamedResource) && renamedResource.length) {
-            resolve();
-          } else {
-            // wait till interval has passed at least to continue
-            const diff = Math.round(performance.now() - start - pollInterval);
-            setTimeout(() => this.pollRename(), Math.max(diff, 0));
-          }
-        });
-      }
-      return reject();
-    });
+    if (data && data.resource) {
+      this.resourceId = data.resource.id;
+    }
   }
 
   validate(input: string) {
     return /^[a-z][a-z0-9]*/.test(input);
+  }
+
+  reportErrors(errors: GraphqlError[]) {
+    errors.forEach(({ message }) => {
+      const detail: ErrorMessage = {
+        message,
+        newLabel: this.newLabel,
+        resourceId: this.resourceId,
+        resourceLabel: this.resourceLabel || '',
+      };
+      console.error(detail.message);
+      this.error.emit(detail);
+    });
   }
 
   @logger()
@@ -189,7 +189,7 @@ export class ManifoldDataRenameButton {
       <button
         type="submit"
         onClick={() => this.rename()}
-        disabled={(!this.resourceId && !this.loading) || this.disabled}
+        disabled={(!this.resourceId && this.loading) || this.disabled}
       >
         <slot />
       </button>

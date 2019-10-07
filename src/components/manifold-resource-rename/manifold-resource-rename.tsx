@@ -1,13 +1,13 @@
 import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
-import { Gateway } from '../../types/gateway';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { Resource } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
-  @Prop() data?: Gateway.Resource;
+  @Prop() gqlData?: Resource;
   @Prop() loading: boolean = true;
   @Prop() disabled?: boolean;
   /** The new label to give to the resource */
@@ -20,8 +20,8 @@ export class ManifoldResourceRename {
   render() {
     return (
       <manifold-data-rename-button
-        resourceId={this.data && this.data.id}
-        resourceLabel={this.data && this.data.label}
+        resourceId={this.gqlData && this.gqlData.id}
+        resourceLabel={this.gqlData && this.gqlData.label}
         loading={this.loading}
         disabled={this.disabled}
         newLabel={this.newLabel}
@@ -32,4 +32,4 @@ export class ManifoldResourceRename {
   }
 }
 
-ResourceTunnel.injectProps(ManifoldResourceRename, ['data', 'loading']);
+ResourceTunnel.injectProps(ManifoldResourceRename, ['gqlData', 'loading']);
