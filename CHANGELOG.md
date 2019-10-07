@@ -15,6 +15,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `manifold-resource-container`. (#578)
 - Converted `manifold-resource-credentials` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#584)
+- Converted `manifold-resource-deprovision` to use the GraphQL data fetched from the
+  `manifold-resource-container`. (#595)
 
 ## [v0.5.16]
 
