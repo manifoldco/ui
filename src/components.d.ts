@@ -526,7 +526,7 @@ export namespace Components {
     'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading': boolean;
   }
   interface ManifoldResourceDeprovision {
@@ -1613,7 +1613,7 @@ declare namespace LocalJSX {
     'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading'?: boolean;
   }
   interface ManifoldResourceDeprovision {
