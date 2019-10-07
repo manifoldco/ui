@@ -354,6 +354,7 @@ export namespace Components {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
+    'gqlMock': Resource;
     'mock': Gateway.Resource;
   }
   interface ManifoldNumberInput {
@@ -558,7 +559,10 @@ export namespace Components {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldResourcePlan {}
+  interface ManifoldResourcePlan {
+    'gqlData'?: Resource;
+    'loading': boolean;
+  }
   interface ManifoldResourceProduct {
     'gqlData'?: Resource;
     'loading': boolean;
@@ -1429,6 +1433,7 @@ declare namespace LocalJSX {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
+    'gqlMock'?: Resource;
     'mock'?: Gateway.Resource;
   }
   interface ManifoldNumberInput {
@@ -1641,7 +1646,10 @@ declare namespace LocalJSX {
     */
     'restFetch'?: RestFetch;
   }
-  interface ManifoldResourcePlan {}
+  interface ManifoldResourcePlan {
+    'gqlData'?: Resource;
+    'loading'?: boolean;
+  }
   interface ManifoldResourceProduct {
     'gqlData'?: Resource;
     'loading'?: boolean;
