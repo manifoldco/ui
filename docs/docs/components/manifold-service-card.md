@@ -20,9 +20,8 @@ Compact view of a Manifold Product. Available as a self-fetching component or a 
 
 ## CTA
 
-You can pass in your own CTA content in the right of the component
-by passing in any element with `slot="cta"` as an attribute. [Read more about
-slots][slot].
+You can pass in your own CTA content in the right of the component by passing in any element with
+`slot="cta"` as an attribute. [Read more about slots][slot].
 
 ```jsx
 <manifold-service-card product-label="jawsdb-mysql">
@@ -40,9 +39,8 @@ The `manifold-service-card` component can be used to fetch a product's data with
 
 ## Navigation
 
-By default, service cards will only emit the `manifold-marketplace-click`
-event (above). But it can also be turned into an `<a>` tag by specifying
-`product-link-format`:
+By default, service cards will only emit the `manifold-marketplace-click` event (above). But it can
+also be turned into an `<a>` tag by specifying `product-link-format`:
 
 ```html
 <manifold-service-card
@@ -54,15 +52,14 @@ event (above). But it can also be turned into an `<a>` tag by specifying
 
 `:product` will be replaced with the url-friendly slug for the product.
 
-Note that this will disable the custom events unless `preserve-event` is
-passed as well.
+Note that this will disable the custom events unless `preserve-event` is passed as well.
 
 ## Events
 
-This component emits [custom
-events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent)
-when it updates. To listen to those events, add an event listener either on
-the component itself, or `document`:
+This component emits
+[custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) when it
+updates. To listen to those events, add an event listener either on the component itself, or
+`document`:
 
 ```js
 document.addEventListener('manifold-marketplace-click', { detail } => {
@@ -73,5 +70,5 @@ document.addEventListener('manifold-marketplace-click', { detail } => {
 The following events are emitted:
 
 | Event Name                   | Description                                     | Data                                       |
-|------------------------------|-------------------------------------------------|--------------------------------------------|
+| ---------------------------- | ----------------------------------------------- | ------------------------------------------ |
 | `manifold-marketplace-click` | Fires whenever a user has clicked on a product. | `productId`, `productLabel`, `productName` |

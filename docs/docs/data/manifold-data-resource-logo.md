@@ -8,8 +8,7 @@ example: |
 
 # Data Resource Logo
 
-Retrieve an unstyled `<img>` tag with the resource's product logo from a
-`:resourceLabel`.
+Retrieve an unstyled `<img>` tag with the resource's product logo from a `:resourceLabel`.
 
 ## Usage
 
@@ -20,9 +19,12 @@ Retrieve an unstyled `<img>` tag with the resource's product logo from a
 
 ## Alt attribute
 
-By default, the `<img>` tag’s `alt` attribute is the resource's product name. But you
-can override this by specifying one of your own:
+By default, the `<img>` tag’s `alt` attribute is the resource's product name. But you can override
+this by specifying one of your own:
 
 ```html
-<manifold-data-resource-logo resource-label="iron_cache" alt="My alternate text"></manifold-data-resource-logo>
+<manifold-data-resource-logo
+  resource-label="iron_cache"
+  alt="My alternate text"
+></manifold-data-resource-logo>
 ```

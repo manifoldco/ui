@@ -27,6 +27,7 @@ module.exports = {
     'class-methods-use-this': 'off', // component lifecycle methods sometimes don't use `this`
     'import/prefer-default-export': 'off', // named exports are perfectly fine
     'lines-between-class-members': 'off', // class members don’t need that space!
+    'prettier/prettier': 'error',
     'react/jsx-filename-extension': 'off', // allow .tsx
     'react/jsx-props-no-spreading': 'off', // we like this
     'react/prop-types': 'off', // use TS

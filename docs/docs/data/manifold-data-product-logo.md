@@ -15,8 +15,7 @@ example: |
 
 # Data Product Logo
 
-Retrieve an unstyled `<img>` tag with the product’s logo from a
-`:productLabel`.
+Retrieve an unstyled `<img>` tag with the product’s logo from a `:productLabel`.
 
 ## Usage
 
@@ -27,9 +26,12 @@ Retrieve an unstyled `<img>` tag with the product’s logo from a
 
 ## Alt attribute
 
-By default, the `<img>` tag’s `alt` attribute is the product name. But you
-can override this by specifying one of your own:
+By default, the `<img>` tag’s `alt` attribute is the product name. But you can override this by
+specifying one of your own:
 
 ```html
-<manifold-data-product-logo product-label="iron_cache" alt="My alternate text"></manifold-data-product-logo>
+<manifold-data-product-logo
+  product-label="iron_cache"
+  alt="My alternate text"
+></manifold-data-product-logo>
 ```

@@ -23,9 +23,8 @@ You can find the `:product` label for each at `https://manifold.co/services/:pro
 
 ## CTA
 
-You can pass in your own button or link in left sidebar of the component
-by passing in any element with `slot="cta"` as an attribute. [Read more about
-slots][slot].
+You can pass in your own button or link in left sidebar of the component by passing in any element
+with `slot="cta"` as an attribute. [Read more about slots][slot].
 
 ```html
 <manifold-product product-label="jawsdb-mysql">
