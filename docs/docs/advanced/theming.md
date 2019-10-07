@@ -5,7 +5,8 @@ path: /advanced/theming
 
 # Theming
 
-Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of components.
+Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of
+components.
 
 <manifold-toast alert-type="warning">
   Theming is still a work-in-progress. This documentation may not be entirely accurate.
@@ -18,23 +19,21 @@ Manifold UI offers a simple, yet versitle, theming API for customizing the look 
 
 ### CSS Custom Properties
 
-For the purposes of theming, we need to be able to apply styles within the
-shadow DOM. Although selectors can't penetrate the shadow DOM, properties can
-still be inherited from ancestor elements. This includes [CSS Custom
-Properites][custom-properties]. The use of custom properties within Manifold
-UI components means that components will inherit theme values defined outside
-of their shadow DOM. This preserves style encapsulation and allows certain
-style properties within components to be customizable.
+For the purposes of theming, we need to be able to apply styles within the shadow DOM. Although
+selectors can't penetrate the shadow DOM, properties can still be inherited from ancestor elements.
+This includes [CSS Custom Properites][custom-properties]. The use of custom properties within
+Manifold UI components means that components will inherit theme values defined outside of their
+shadow DOM. This preserves style encapsulation and allows certain style properties within components
+to be customizable.
 
 ### Base Theme
 
-Manifold UI comes with a base theme that provides various levels of
-abstraction. This allows for easy theming at a high level for all components
-with just a small set of valiables, while also exposing lower level variables
-for more precise theming of individual components.
+Manifold UI comes with a base theme that provides various levels of abstraction. This allows for
+easy theming at a high level for all components with just a small set of valiables, while also
+exposing lower level variables for more precise theming of individual components.
 
-We recommend that you use this base theme as a starting point for building
-your own custom theme. To add the base theme to your project:
+We recommend that you use this base theme as a starting point for building your own custom theme. To
+add the base theme to your project:
 
 ```js
 import '@manifoldco/ui/dist/manifold/manifold.css';
@@ -42,11 +41,10 @@ import '@manifoldco/ui/dist/manifold/manifold.css';
 
 ### Global Theming
 
-Global theming is the easiest way to set theme values that will be
-propagrated throughout the Manifold UI components.
+Global theming is the easiest way to set theme values that will be propagrated throughout the
+Manifold UI components.
 
-We recommend setting variables on `:root`, which will override variables from
-the base theme:
+We recommend setting variables on `:root`, which will override variables from the base theme:
 
 ```css
 /* Import the base theme somewhere before this. */
@@ -58,13 +56,18 @@ the base theme:
 }
 ```
 
-Some variables will work regardless of which element they are set on. However, to ensure that overrides propagate through the base theme as intended, it's important to define them on the `:root` element.
+Some variables will work regardless of which element they are set on. However, to ensure that
+overrides propagate through the base theme as intended, it's important to define them on the `:root`
+element.
 
-These variables should also be set after the base theme import, because overriding these variables replies on [precedence](https://css-tricks.com/precedence-css-order-css-matters/).
+These variables should also be set after the base theme import, because overriding these variables
+replies on [precedence](https://css-tricks.com/precedence-css-order-css-matters/).
 
 ### Component Theming [Coming Soon]
 
-Component theming allows fine-tuning of theme values on a component level. Each component has its own set of variables that inherit from the global theme. Overriding a component's theme variables can be done by defining variables on the component's element selector.
+Component theming allows fine-tuning of theme values on a component level. Each component has its
+own set of variables that inherit from the global theme. Overriding a component's theme variables
+can be done by defining variables on the component's element selector.
 
 <!--
 Global theme variables are prefixed with `--manifold-*` to avoid potential name collisions, while internal component variables are not prefixed.
@@ -86,9 +89,14 @@ manifold-marketplace {
 | `--manifold-grayscale-base`          | `0, 0, 0`       | The darkest color on your grayscale in RGB values  |
 | `--manifold-grayscale-base-inverted` | `255, 255, 255` | The lightest color on your grayscale in RGB values |
 
-These grayscale bases provide the foundation for your theme. These two values, define a grayscale range. Intermediate values are then derived by varying the opacity of each base and used throughout Manifold UI components.
+These grayscale bases provide the foundation for your theme. These two values, define a grayscale
+range. Intermediate values are then derived by varying the opacity of each base and used throughout
+Manifold UI components.
 
-By default, `--manifold-grayscale-[opacity]` values range from solid black down to transparent, and `--manifold-grayscale-[opacity]i` (notice the `i` for _inverted_) values range from solid white down to transparent. The main advantage to using these two contrasting grascales, is that a dark theme can be created simply by swapping these base values:
+By default, `--manifold-grayscale-[opacity]` values range from solid black down to transparent, and
+`--manifold-grayscale-[opacity]i` (notice the `i` for _inverted_) values range from solid white down
+to transparent. The main advantage to using these two contrasting grascales, is that a dark theme
+can be created simply by swapping these base values:
 
 #### Light Theme (Default)
 
@@ -119,9 +127,11 @@ There are four theming levels:
 | Common Components                                               | Reusable UI elements like cards, buttons, and tags                   |
 | <span class="tag not-implemented" /> Unique Components (lowest) | Specific use components like Marketplace, Plan Selector, and Product |
 
-Each level recieves its default values from the level above. Redefining a lower level value will override the value from the higher level.
+Each level recieves its default values from the level above. Redefining a lower level value will
+override the value from the higher level.
 
-For example, the CTA button background in the Plan Selector component is customizable with one the following properties:
+For example, the CTA button background in the Plan Selector component is customizable with one the
+following properties:
 
 ```css
 :root {
@@ -165,11 +175,15 @@ Text styles follow a similar hierarchy:
 
 #### Missing Properties?
 
-Even at the lowest level, some properties are not exposed in the theming API. If there are additional styles that you would like to customize for your theme, please let us know and we can work to make them available.
+Even at the lowest level, some properties are not exposed in the theming API. If there are
+additional styles that you would like to customize for your theme, please let us know and we can
+work to make them available.
 
 ### State
 
-Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements, `*-focus` styles will only be applied to focusable elements.
+Some variables that are for a specific state `*-hover`, `*-focus`, `*-active` will only applied to
+cetain elements. `*-hover` styles will only be applied on interactive (clickable) elements,
+`*-focus` styles will only be applied to focusable elements.
 
 ## API Reference
 

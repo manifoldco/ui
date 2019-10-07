@@ -34,8 +34,8 @@ Navigating client-side happens via the `manifold-resourceList-click` custom even
 
 ## Link format
 
-To navigate using a traditional `<a>` tag, specify a `resource-link-format`
-attribute, using `:resource` as a placeholder:
+To navigate using a traditional `<a>` tag, specify a `resource-link-format` attribute, using
+`:resource` as a placeholder:
 
 ```html
 <manifold-data-resource-list
@@ -43,13 +43,12 @@ attribute, using `:resource` as a placeholder:
 ></manifold-data-resource-list>
 ```
 
-Note that this will disable the custom event unless `preserve-event` is
-passed as well.
+Note that this will disable the custom event unless `preserve-event` is passed as well.
 
 ## Pausing updates
 
-By default, this component will subscribe to updates from the server. To
-disable that, pass the `paused` attribute:
+By default, this component will subscribe to updates from the server. To disable that, pass the
+`paused` attribute:
 
 ```html
 <manifold-data-resource-list paused></manifold-data-resource-list>

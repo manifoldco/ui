@@ -30,8 +30,8 @@ example: |
 
 ## Prevent routing
 
-By default, the `<a>` tag generated will… well, act like an `<a>` tag. To
-prevent that, add `preserve-event` and add an event listener:
+By default, the `<a>` tag generated will… well, act like an `<a>` tag. To prevent that, add
+`preserve-event` and add an event listener:
 
 ```html
 <manifold-button-link href="/about" preserve-event>Return home</manifold-button>
