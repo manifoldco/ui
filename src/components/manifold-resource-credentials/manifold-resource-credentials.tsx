@@ -3,11 +3,11 @@ import { h, Component, Prop } from '@stencil/core';
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Gateway } from '../../types/gateway';
+import { Resource } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-credentials' })
 export class ManifoldResourceCredentials {
-  @Prop() data?: Gateway.Resource;
+  @Prop() gqlData?: Resource;
   @Prop() loading: boolean = true;
 
   @loadMark()
@@ -15,8 +15,12 @@ export class ManifoldResourceCredentials {
 
   @logger()
   render() {
+    if (!this.gqlData || this.loading) {
+      return <manifold-credentials-view loading={true} />;
+    }
+
     return (
-      <manifold-credentials resourceLabel={this.data && this.data.label}>
+      <manifold-credentials resourceLabel={this.gqlData.label}>
         <manifold-forward-slot slot="show-button">
           <slot name="show-button" />
         </manifold-forward-slot>
@@ -28,4 +32,4 @@ export class ManifoldResourceCredentials {
   }
 }
 
-ResourceTunnel.injectProps(ManifoldResourceCredentials, ['data', 'loading']);
+ResourceTunnel.injectProps(ManifoldResourceCredentials, ['gqlData', 'loading']);
