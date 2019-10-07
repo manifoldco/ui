@@ -5,9 +5,9 @@ import { resource } from '../../spec/mock/graphql';
 import { ManifoldResourcePlan } from './manifold-resource-plan';
 import { ManifoldPlanDetails } from '../manifold-plan-details/manifold-plan-details';
 
-describe('<manifold-resource-product>', () => {
+describe('<manifold-resource-plan>', () => {
   let page: SpecPage;
-  let element: HTMLManifoldResourceProductElement;
+  let element: HTMLManifoldResourcePlanElement;
   beforeEach(async () => {
     page = await newSpecPage({
       components: [ManifoldResourcePlan, ManifoldPlanDetails],

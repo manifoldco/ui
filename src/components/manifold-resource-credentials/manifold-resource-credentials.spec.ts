@@ -8,7 +8,7 @@ import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-c
 
 global.setTimeout = jest.fn();
 
-describe('<manifold-resource-product>', () => {
+describe('<manifold-resource-credentials>', () => {
   let page: SpecPage;
   let element: HTMLManifoldResourceCredentialsElement;
   beforeEach(async () => {

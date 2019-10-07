@@ -530,7 +530,7 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldResourceDeprovision {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading': boolean;
   }
   interface ManifoldResourceDetails {}
@@ -1617,7 +1617,7 @@ declare namespace LocalJSX {
     'loading'?: boolean;
   }
   interface ManifoldResourceDeprovision {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading'?: boolean;
   }
   interface ManifoldResourceDetails {}
