@@ -6,6 +6,8 @@ import { ManifoldResourceCredentials } from './manifold-resource-credentials';
 import { ManifoldCredentials } from '../manifold-credentials/manifold-credentials';
 import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-credentials-view';
 
+global.setTimeout = jest.fn();
+
 describe('<manifold-resource-product>', () => {
   let page: SpecPage;
   let element: HTMLManifoldResourceCredentialsElement;
