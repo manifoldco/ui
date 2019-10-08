@@ -1161,6 +1161,11 @@ export type Resource = Node & {
  **/
   plan?: Maybe<Plan>,
   /** 
+ * The region for which this resource is provisioned. The region can be null if the
+   * resource is a custom resource, or if a transient failure occurred.
+ **/
+  region?: Maybe<Region>,
+  /** 
  * The profile which owns the resource.
    * 
    * Note: If the resource is not owned by a Platform Profile, the value is null.
@@ -1333,3 +1338,4 @@ export type WithUsage = {
   /** End allows fetching profiles used before this date. */
   end?: Maybe<Scalars['Time']>,
 };
+
