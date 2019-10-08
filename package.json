@@ -67,8 +67,8 @@
       "compression": "none"
     },
     {
-      "path": "./dist/esm/manifold-!(mock)*.js",
-      "maxSize": "42 kB",
+      "path": "./dist/esm/manifold-!(mock|number-input)*.js",
+      "maxSize": "32 kB",
       "compression": "none"
     }
   ],
