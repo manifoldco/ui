@@ -22,16 +22,13 @@
         return;
       }
 
-      const buttons = ['manifold-data-manage-button', 'manifold-data-provision-button'];
-      planSelector.addEventListener('manifold-planSelector-change', update);
-      planSelector.addEventListener('manifold-planSelector-load', update);
       function update({ detail }) {
-        buttons.forEach(selector => {
+        ['manifold-data-manage-button', 'manifold-data-provision-button'].forEach(selector => {
           const button = document.querySelector(selector);
           if (button) {
-            button.planID = detail.planID;
-            button.planLabel = detail.planLabel;
+            button.planId = detail.planId;
             button.productLabel = detail.productLabel;
+            button.regionId = detail.regionId;
             button.features = detail.features;
             button.addEventListener('manifold-manageButton-error', ({ detail }) =>
               console.error(detail)
@@ -48,6 +45,9 @@
           }
         });
       }
+
+      planSelector.addEventListener('manifold-planSelector-change', update);
+      planSelector.addEventListener('manifold-planSelector-load', update);
     }
 
     initSSO();

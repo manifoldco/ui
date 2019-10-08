@@ -187,7 +187,11 @@ export namespace Components {
     /**
     * Plan to provision (slug)
     */
-    'planLabel'?: string;
+    'planId'?: string;
+    /**
+    * Product ID
+    */
+    'productId'?: string;
     /**
     * Product to provision (slug)
     */
@@ -200,10 +204,6 @@ export namespace Components {
     * The label of the resource to provision
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton {
     'disabled'?: boolean;
@@ -1257,7 +1257,11 @@ declare namespace LocalJSX {
     /**
     * Plan to provision (slug)
     */
-    'planLabel'?: string;
+    'planId'?: string;
+    /**
+    * Product ID
+    */
+    'productId'?: string;
     /**
     * Product to provision (slug)
     */
@@ -1270,10 +1274,6 @@ declare namespace LocalJSX {
     * The label of the resource to provision
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataRenameButton {
     'disabled'?: boolean;
