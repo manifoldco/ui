@@ -20,11 +20,7 @@ export class ManifoldResourceDetails {
 
   @logger()
   render() {
-    return [
-      <pre>{JSON.stringify(this.gqlData, null, 2)}</pre>,
-      this.loading,
-      <DetailsView gqlData={this.gqlData} loading={this.loading} />,
-    ];
+    return <DetailsView gqlData={this.gqlData} loading={this.loading} />;
   }
 }
 
