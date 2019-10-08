@@ -1,0 +1,204 @@
+{
+  "body": {
+    "billing": {
+      "currency": "usd",
+      "type": "monthly-prorated"
+    },
+    "documentation_url": "http://helpdocs.blitline.com/",
+    "feature_types": [
+      {
+        "label": "free-hours",
+        "name": "Free Hours",
+        "type": "string",
+        "values": [
+          {
+            "label": "two",
+            "name": "2"
+          }
+        ]
+      },
+      {
+        "label": "free-imagga-images",
+        "name": "Free Imagga Images",
+        "type": "string",
+        "values": [
+          {
+            "label": "one-hundred",
+            "name": "100"
+          }
+        ]
+      },
+      {
+        "label": "bandwidth",
+        "name": "Bandwidth",
+        "type": "string",
+        "values": [
+          {
+            "label": "unlimited",
+            "name": "Unlimited"
+          }
+        ]
+      },
+      {
+        "label": "processing-duration",
+        "measurable": true,
+        "name": "Processing Duration",
+        "type": "number",
+        "values": [
+          {
+            "label": "no-overtime",
+            "name": "No Overtime",
+            "numeric_details": {
+              "cost_ranges": [],
+              "suffix": "hour"
+            }
+          },
+          {
+            "label": "processing-hours",
+            "name": "Processing Hours",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 790000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "hour"
+            }
+          }
+        ]
+      },
+      {
+        "label": "imagga-images",
+        "measurable": true,
+        "name": "Imagga Images",
+        "type": "number",
+        "values": [
+          {
+            "label": "no-overage",
+            "name": "No Overage",
+            "numeric_details": {
+              "cost_ranges": [],
+              "suffix": "image"
+            }
+          },
+          {
+            "label": "imagga-images",
+            "name": "Imagga Images",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 10000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "image"
+            }
+          }
+        ]
+      },
+      {
+        "label": "video-encoding",
+        "measurable": true,
+        "name": "Video Encoding",
+        "type": "number",
+        "values": [
+          {
+            "label": "no-overage",
+            "name": "No Overage",
+            "numeric_details": {
+              "cost_ranges": [],
+              "suffix": "minute"
+            }
+          },
+          {
+            "label": "video-encoding",
+            "name": "Video Encoding",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 38900000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "minute"
+            }
+          }
+        ]
+      }
+    ],
+    "images": [
+      "https://cdn.manifold.co/providers/blitline/screenshots/1.png",
+      "https://cdn.manifold.co/providers/blitline/screenshots/2.png",
+      "https://cdn.manifold.co/providers/blitline/screenshots/3.png",
+      "https://cdn.manifold.co/providers/blitline/screenshots/4.png"
+    ],
+    "integration": {
+      "base_url": "https://www.blitline.com/manifold/",
+      "features": {
+        "access_code": false,
+        "plan_change": true,
+        "region": "unspecified",
+        "sso": true,
+        "credential": "unknown"
+      },
+      "provisioning": "public",
+      "sso_url": "https://www.blitline.com/manifold/",
+      "version": "v1"
+    },
+    "label": "blitline",
+    "listing": {
+      "listed": true,
+      "marketing": {
+        "beta": false,
+        "featured": false,
+        "new": true
+      },
+      "public": true
+    },
+    "logo_url": "https://cdn.manifold.co/providers/blitline/logos/blitline.png",
+    "name": "Blitline",
+    "provider_id": "2343d7p36xwrydjy7120jxqxc7t22",
+    "setup_steps": null,
+    "state": "new",
+    "support_email": "support@blitline.com",
+    "tagline": "Premium image processing and rasterization API for enterprise systems",
+    "tags": ["optimization"],
+    "terms": {
+      "provided": true,
+      "url": "http://www.blitline.com/terms"
+    },
+    "value_props": [
+      {
+        "body": "Blitline drastically reduces the amount of work you need to develop an application\nthat does any image processing. Stop rebuilding the same image processing functionality,\nlet us do it for much less than it would cost you to make and support it.\nPay for only the image processing time that your jobs use!\n",
+        "header": "Reduce Your Costs"
+      },
+      {
+        "body": "Need to process PDFs? Need to take screenshots of your website? Need HTML\nfor SEO? Want to run your own ImageMagick or other image processing scripts on\nour cloud? We do that!\n",
+        "header": "Broad spectrum functionality"
+      },
+      {
+        "body": "Instantly support thousands of concurrent image requests. Stop worrying about\nif you image processing is going to scale, we handle that for you, and we are\ngood at it. Blitline scales to let you manipulate hundreds of thousands images\nper hour, and millions per day.\n",
+        "header": "Massively Scalable"
+      },
+      {
+        "body": "We can push stuff into your S3 bucket for you. We can even read stuff out\nof your buckets so that you don’t have to make you images public.\n",
+        "header": "S3/Azure Integration"
+      },
+      {
+        "body": "Our customer support is top notch. Talk to developers, not support agents.",
+        "header": "Excellent Support"
+      },
+      {
+        "body": "Since we offer a language agnostic simple JSON API, you can do whatever you\nwant with Blitline from any language. You can manage your images with any language\nfrom Ruby to javascript. With our open and extensible API, you control the process,\nyou control you images, and you control your distribution. Since we operate strictly\nvia JSON, you are never locked in to using Blitline.\n",
+        "header": "Flexibility"
+      }
+    ]
+  },
+  "id": "234htwpkzvg1vuyez6uybfhv8rjb2",
+  "type": "product",
+  "version": 1
+}
