@@ -1,200 +1,89 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import { Resource } from '../../spec/mock/marketplace';
-import { connections } from '../../utils/connections';
 import { ManifoldDataDeprovisionButton } from './manifold-data-deprovision-button';
-import { createRestFetch } from '../../utils/restFetch';
+import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
+import { resource } from '../../spec/mock/graphql';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-const proto = ManifoldDataDeprovisionButton.prototype as any;
-const oldCallback = proto.componentWillLoad;
+interface Props {
+  ownerId?: string;
+  resourceId?: string;
+  resourceLabel?: string;
+}
 
-proto.componentWillLoad = function() {
-  (this as any).restFetch = createRestFetch({
+const graphqlEndpoint = 'http://test.com/graphql';
+const profile = { profile: { id: '1234' } };
+
+async function setup(props: Props) {
+  const page = await newSpecPage({
+    components: [ManifoldDataDeprovisionButton],
+    html: '<div></div>',
+  });
+  const component = page.doc.createElement('manifold-data-deprovision-button');
+  component.graphqlFetch = createGraphqlFetch({
+    endpoint: () => graphqlEndpoint,
     getAuthToken: jest.fn(() => '1234'),
     wait: () => 10,
     setAuthToken: jest.fn(),
   });
+  component.ownerId = props.ownerId;
+  component.resourceId = props.resourceId;
+  component.resourceLabel = props.resourceLabel;
 
-  if (oldCallback) {
-    oldCallback.call(this);
-  }
-};
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
 
 describe('<manifold-data-deprovision-button>', () => {
-  it('fetches the resource id on load if not set', () => {
-    const resourceLabel = 'test-resource';
-
-    const provisionButton = new ManifoldDataDeprovisionButton();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = resourceLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
+  beforeEach(async () => {
+    fetchMock.mock(graphqlEndpoint, (_, req) => {
+      const body = (req.body && req.body.toString()) || '';
+      const { variables } = JSON.parse(body);
+      const errors: GraphqlError[] = [{ message: 'something went wrong' }];
+      if (body.includes('mutation DELETE_RESOURCE')) {
+        // return new label in response
+        const newResource = {
+          ...resource,
+          id: variables.resourceId || resource.id,
+        };
+        return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
+      }
+      if (body.includes('query PROFILE_ID')) {
+        return body.includes('error') ? { data: null, errors } : { data: profile };
+      }
+      if (body.includes('query RESOURCE_ID')) {
+        return body.includes('error') ? { data: null, errors } : { data: resource };
+      }
+      return { data: null, errors };
+    });
   });
 
-  it('does not fetch the resource id on load if set', () => {
-    const resourceLabel = 'test-resource';
+  afterEach(() => fetchMock.restore());
 
-    const provisionButton = new ManifoldDataDeprovisionButton();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = resourceLabel;
-    provisionButton.resourceId = resourceLabel;
-    provisionButton.componentWillLoad();
-    expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
-  });
-
-  it('fetches resource id on change if not set', () => {
-    const resourceLabel = 'new-resource';
-
-    const provisionButton = new ManifoldDataDeprovisionButton();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = 'old-resource';
-
-    provisionButton.labelChange(resourceLabel);
-    expect(provisionButton.fetchResourceId).toHaveBeenCalledWith(resourceLabel);
-  });
-
-  it('does not resource id on change if set', () => {
-    const resourceLabel = 'new-resource';
-
-    const provisionButton = new ManifoldDataDeprovisionButton();
-    provisionButton.fetchResourceId = jest.fn();
-    provisionButton.resourceLabel = 'old-resource';
-    provisionButton.resourceId = '1234';
-
-    provisionButton.labelChange(resourceLabel);
-    expect(provisionButton.fetchResourceId).not.toHaveBeenCalled();
-  });
-
-  describe('when created without a resource ID', () => {
-    afterEach(() => {
-      fetchMock.restore();
+  describe('v0 props', () => {
+    it('[resource-label]: fetches ID', async () => {
+      await setup({ ownerId: 'owner-id', resourceLabel: 'resource-label' });
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
     });
 
-    it('will fetch the resource id', async () => {
-      const resourceLabel = 'new-resource';
-
-      fetchMock.mock(/\/resources\/\?me/, [Resource]);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="${resourceLabel}"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
+    it('[resource-id]: doesn’t fetch ID if set', async () => {
+      await setup({
+        ownerId: 'owner-id',
+        resourceId: 'resource-id',
+        resourceLabel: 'resource-label',
       });
-
-      expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
-      ).toBe(true);
-
-      const root = page.rootInstance as ManifoldDataDeprovisionButton;
-      expect(root.resourceId).toEqual(Resource.id);
-    });
-
-    it('will do nothing on a fetch error', async () => {
-      const resourceLabel = 'new-resource';
-
-      fetchMock.mock(/\/resources\/\?me/, []);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="${resourceLabel}"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
-      });
-
-      expect(
-        fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
-      ).toBe(true);
-
-      const root = page.rootInstance as ManifoldDataDeprovisionButton;
-      expect(root.resourceId).not.toEqual(Resource.id);
-    });
-  });
-
-  describe('When sending a request to deprovision', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
-    beforeEach(() => {
-      fetchMock.mock('path:/v1/resources/', [Resource]);
-    });
-
-    it('will do nothing if still loading', async () => {
-      fetchMock.mock(/\/id\/resource\//, 200);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="test"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.loading = true;
-
-      await instance.deprovision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
-        false
-      );
-    });
-
-    it('will do nothing if no resourceId is provided', async () => {
-      fetchMock.mock(/\/id\/resource\//, 200);
-
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="test"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
-      });
-
-      const instance = page.rootInstance as ManifoldDataDeprovisionButton;
-      instance.resourceId = undefined;
-
-      await instance.deprovision();
-
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(
-        false
-      );
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(false);
     });
   });
 
   describe('events', () => {
-    beforeEach(() => {
-      fetchMock.mock(/\/resources\/\?me/, [Resource]);
-    });
-    afterEach(() => {
-      fetchMock.restore();
-    });
-
     it('click', async () => {
-      fetchMock.mock(/\/id\/resource\//, 202);
-
       const resourceLabel = 'click-label';
 
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="${resourceLabel}"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
-      });
-
-      const component = page.root as HTMLManifoldDataDeprovisionButtonElement;
-      component.restFetch = createRestFetch({});
+      const { page } = await setup({ ownerId: 'owner-id', resourceId: resource.id, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -206,32 +95,22 @@ describe('<manifold-data-deprovision-button>', () => {
       button.click();
       await page.waitForChanges();
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(mockClick).toHaveBeenCalledWith(
         expect.objectContaining({
           detail: {
             resourceLabel,
-            resourceId: Resource.id,
+            resourceId: resource.id,
           },
         })
       );
     });
 
     it('error', async () => {
-      const message = 'ohnoes';
-
-      fetchMock.mock(/\/id\/resource\//, { status: 500, body: { message } });
-
+      const resourceId = 'error-id';
       const resourceLabel = 'error-label';
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="${resourceLabel}"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
-      });
 
+      const { page } = await setup({ ownerId: 'owner-id', resourceId, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -245,31 +124,25 @@ describe('<manifold-data-deprovision-button>', () => {
         button.click();
       });
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(mockClick).toHaveBeenCalledWith(
         expect.objectContaining({
           detail: {
-            message,
+            message: 'something went wrong',
             resourceLabel,
-            resourceId: Resource.id,
+            resourceId,
           },
         })
       );
     });
 
     it('success', async () => {
-      fetchMock.mock(/\/id\/resource\//, 202);
-
-      const resourceLabel = 'success-label';
-      const page = await newSpecPage({
-        components: [ManifoldDataDeprovisionButton],
-        html: `
-          <manifold-data-deprovision-button
-            resource-label="${resourceLabel}"
-          >Deprovision</manifold-data-deprovision-button>
-        `,
+      const resourceId = 'success-id';
+      const { page } = await setup({
+        ownerId: 'owner-id',
+        resourceId,
+        resourceLabel: 'success-label',
       });
-
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -283,13 +156,13 @@ describe('<manifold-data-deprovision-button>', () => {
         button.click();
       });
 
-      expect(fetchMock.called(`${connections.prod.gateway}/id/resource/${Resource.id}`)).toBe(true);
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
       expect(mockClick).toHaveBeenCalledWith(
         expect.objectContaining({
           detail: {
-            message: `${resourceLabel} successfully deprovisioned`,
-            resourceLabel,
-            resourceId: Resource.id,
+            message: `${resource.label} successfully deleted`,
+            resourceLabel: resource.label,
+            resourceId,
           },
         })
       );

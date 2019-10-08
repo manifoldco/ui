@@ -110,16 +110,23 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldDataDeprovisionButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
+    /**
+    * Pass in an ownerId if desired
+    */
+    'ownerId'?: string;
+    /**
+    * resource ID
+    */
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataHasResource {
     /**
@@ -1151,19 +1158,26 @@ declare namespace LocalJSX {
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldDataDeprovisionButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
+    /**
+    * Pass in an ownerId if desired
+    */
+    'ownerId'?: string;
+    /**
+    * resource ID
+    */
     'resourceId'?: string;
     /**
     * The label of the resource to deprovision
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataHasResource {
     /**

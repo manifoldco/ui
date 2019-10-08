@@ -27,4 +27,4 @@ export class ManifoldResourceDeprovision {
   }
 }
 
-ResourceTunnel.injectProps(ManifoldResourceDeprovision, ['data', 'loading']);
+ResourceTunnel.injectProps(ManifoldResourceDeprovision, ['gqlData', 'loading']);

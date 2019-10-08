@@ -13,12 +13,19 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Converted `manifold-resource-plan` to use the GraphQL data fetched from the
+  `manifold-resource-container`. (#578)
+- Converted `manifold-resource-credentials` to use the GraphQL data fetched from the
+  `manifold-resource-container`. (#584)
+- Converted `manifold-resource-deprovision` to use the GraphQL data fetched from the
+  `manifold-resource-container`. (#595)
 - Converted `<manifold-data-provision-button>` to use GraphQL data (#600)
 - Converted `manifold-resource-rename` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#602)
 - Converted `<manifold-data-rename-button>` to use GraphQL (#596)
 - Converted `manifold-resource-sso` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#603)
+- Converted `<manifold-data-deprovision-button>` to use GraphQL (#604)
 
 ### Breaking Changes:
 
@@ -30,12 +37,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Converted `manifold-resource-product` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#566)
-- Converted `manifold-resource-plan` to use the GraphQL data fetched from the
-  `manifold-resource-container`. (#578)
-- Converted `manifold-resource-credentials` to use the GraphQL data fetched from the
-  `manifold-resource-container`. (#584)
-- Converted `manifold-resource-deprovision` to use the GraphQL data fetched from the
-  `manifold-resource-container`. (#595)
 
 ## [v0.5.16]
 
