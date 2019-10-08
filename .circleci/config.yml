@@ -121,7 +121,6 @@ jobs:
           condition: << parameters.latest >>
           steps:
             - run: gsutil -m rsync -r gs://manifold-js/@manifoldco/ui@${CIRCLE_TAG//v} gs://manifold-js/@manifoldco/ui
-            - run: gcloud compute url-maps invalidate-cdn-cache manifold-js-cdn-urlmap --path "/@manifoldco/ui/*" --async
 
 workflows:
   version: 2
