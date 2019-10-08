@@ -207,6 +207,10 @@ export namespace Components {
   }
   interface ManifoldDataRenameButton {
     'disabled'?: boolean;
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -220,10 +224,6 @@ export namespace Components {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList {
     /**
@@ -564,8 +564,8 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldResourceRename {
-    'data'?: Gateway.Resource;
     'disabled'?: boolean;
+    'gqlData'?: Resource;
     'loading': boolean;
     /**
     * The new label to give to the resource
@@ -1259,6 +1259,10 @@ declare namespace LocalJSX {
   }
   interface ManifoldDataRenameButton {
     'disabled'?: boolean;
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1276,10 +1280,6 @@ declare namespace LocalJSX {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataResourceList {
     /**
@@ -1633,8 +1633,8 @@ declare namespace LocalJSX {
     'loading'?: boolean;
   }
   interface ManifoldResourceRename {
-    'data'?: Gateway.Resource;
     'disabled'?: boolean;
+    'gqlData'?: Resource;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
