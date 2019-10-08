@@ -1,4 +1,3 @@
-import { Resource } from '../../types/graphql';
 import { resource } from '../../spec/mock/graphql';
 
 export const skeleton = () => {
@@ -9,9 +8,12 @@ export const skeleton = () => {
   return resourcePlan.componentOnReady();
 };
 
-export const loadedResource = () => {
+export const loadedResource = async () => {
   const resourcePlan = document.createElement('manifold-resource-plan');
-  resourcePlan.gqlData = resource as Resource;
+  await resourcePlan.componentOnReady();
+
+  resourcePlan.gqlData = resource;
+  resourcePlan.loading = false;
 
   document.body.appendChild(resourcePlan);
   return resourcePlan.componentOnReady();
