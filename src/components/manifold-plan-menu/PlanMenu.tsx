@@ -2,6 +2,7 @@ import { h, FunctionalComponent } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 import { PlanEdge, Plan } from '../../types/graphql';
 import { Catalog } from '../../types/catalog';
+import { initialFeatures } from '../../utils/plan';
 
 interface PlanButtonProps {
   checked?: boolean;
@@ -31,17 +32,19 @@ interface CostProps {
   id: string;
 }
 
-const Cost: FunctionalComponent<CostProps> = ({ cost, plan, id }) => (
-  <div class="cost">
-    <manifold-plan-cost
-      defaultCost={cost}
-      allFeatures={plan && plan.body.expanded_features}
-      selectedFeatures={plan && plan.body.features}
-      planId={id}
-      compact={true}
-    />
-  </div>
-);
+const Cost: FunctionalComponent<CostProps> = ({ cost, plan, id }) => {
+  const features = plan && plan.body.expanded_features;
+  return (
+    <div class="cost">
+      <manifold-plan-cost
+        defaultCost={cost}
+        selectedFeatures={features && initialFeatures(features)}
+        planId={id}
+        compact={true}
+      />
+    </div>
+  );
+};
 
 interface PlanMenuProps {
   plans: PlanEdge[];

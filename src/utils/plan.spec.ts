@@ -91,12 +91,12 @@ describe('cost utilities', () => {
 
   it('sorts & returns pricing tiers for complex measured features', () =>
     expect(pricingTiers(NumberFeatureMeasurableValueTiered)).toEqual([
-      { cost: 0, from: 0, per: 1, suffix: 'hour', to: 10 },
-      { cost: 900000000, from: 11, per: 1, suffix: 'hour', to: 100 },
-      { cost: 600000000, from: 101, per: 1, suffix: 'hour', to: 200 },
-      { cost: 500000000, from: 201, per: 1, suffix: 'hour', to: 300 },
-      { cost: 300000000, from: 301, per: 1, suffix: 'hour', to: 400 },
-      { cost: 250000000, from: 401, per: 1, suffix: 'hour', to: Infinity },
+      { cost: 0, from: 0, per: 1, unit: 'hour', to: 10 },
+      { cost: 900000000, from: 11, per: 1, unit: 'hour', to: 100 },
+      { cost: 600000000, from: 101, per: 1, unit: 'hour', to: 200 },
+      { cost: 500000000, from: 201, per: 1, unit: 'hour', to: 300 },
+      { cost: 300000000, from: 301, per: 1, unit: 'hour', to: 400 },
+      { cost: 250000000, from: 401, per: 1, unit: 'hour', to: Infinity },
     ]));
 
   it('pricingTiers converts seconds for display', () => {
@@ -111,8 +111,8 @@ describe('cost utilities', () => {
     };
 
     expect(pricingTiers(ziggeo)).toEqual([
-      { cost: 0, from: 0, per: 1, suffix: 'hour', to: 58 },
-      { cost: 720000000, from: 58, per: 1, suffix: 'hour', to: Infinity },
+      { cost: 0, from: 0, per: 1, unit: 'hour', to: 58 },
+      { cost: 720000000, from: 58, per: 1, unit: 'hour', to: Infinity },
     ]);
   });
 });

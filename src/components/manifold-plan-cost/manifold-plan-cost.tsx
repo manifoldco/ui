@@ -1,29 +1,80 @@
 import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
+import { gql } from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
 import { Gateway } from '../../types/gateway';
 import connection from '../../state/connection';
-import { planCost, hasCustomizableFeatures, initialFeatures } from '../../utils/plan';
+import { initialGqlFeatures, planCost } from '../../utils/plan';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { Plan } from '../../types/graphql';
+
+const planQuery = gql`
+  query PLAN_FEATURES($planId: ID!) {
+    plan(id: $planId) {
+      meteredFeatures(first: 50) {
+        edges {
+          node {
+            label
+            displayName
+            displayValue
+            numericDetails {
+              min
+              max
+              unit
+              costTiers {
+                cost
+                limit
+              }
+            }
+          }
+        }
+      }
+      configurableFeatures(first: 50) {
+        edges {
+          node {
+            label
+            displayName
+            displayValue
+            options {
+              label
+              displayName
+              displayValue
+            }
+            numericDetails {
+              min
+              max
+              unit
+              costTiers {
+                cost
+                limit
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  /** _(hidden)_ */
   @Prop() restFetch?: RestFetch = connection.restFetch;
-  /** All plan features */
-  @Prop() allFeatures: Catalog.ExpandedFeature[] = [];
+  /** TEMPORARY: Plan ID */
+  @Prop() planId?: string;
   /** Compact mode (for plan selector sidebar) */
   @Prop() compact?: boolean = false;
   /** Plan default cost */
   @Prop({ mutable: true }) defaultCost?: number = 0;
-  /** Plan ID */
-  @Prop() planId?: string;
   /** User-selected plan features (needed only for customizable) */
-  @Prop() selectedFeatures?: Gateway.FeatureMap = {};
+  @Prop() selectedFeatures?: Gateway.FeatureMap = undefined;
   @State() controller?: AbortController;
+  @State() plan?: Plan;
   @Watch('allFeatures') featuresChanged() {
     this.fetchCustomCost();
   }
@@ -36,39 +87,38 @@ export class ManifoldPlanCost {
     return this.fetchCustomCost(); // If we’re calculating custom features, wait to render until call finishes
   }
 
-  get isCustomizable() {
-    return hasCustomizableFeatures(this.allFeatures);
-  }
+  async fetchCustomCost() {
+    if (!this.restFetch || !this.graphqlFetch || !this.planId) {
+      return null;
+    }
 
-  measuredFeatures(features: Catalog.ExpandedFeature[]): Catalog.ExpandedFeature[] {
-    return features
-      .filter(({ measurable }) => measurable === true)
-      .filter(({ value }) => {
-        if (!value || !value.numeric_details || !value.numeric_details.cost_ranges) {
-          return false;
-        }
-        return value.numeric_details.cost_ranges.find(
-          ({ cost_multiple }) => typeof cost_multiple === 'number' && cost_multiple > 0
-        );
+    // TODO: remove this and pass plan as a whole prop
+    if (!this.plan) {
+      const { data } = await this.graphqlFetch({
+        query: planQuery,
+        variables: {
+          planId: this.planId,
+        },
       });
-  }
 
-  fetchCustomCost() {
-    if (!this.restFetch) {
+      if (data && data.plan) {
+        this.plan = data.plan;
+      }
+
+      return null; // if couldn’t fetch plan, return
+    }
+    // TODO: end remove this
+
+    // Only call the API with configurableFeatures
+    if (!this.plan.configurableFeatures || this.plan.configurableFeatures.edges.length < 1) {
       return null;
     }
 
-    // If this doesn’t have customizable features, then don’t call the API
-    if (!this.isCustomizable) {
-      return null;
-    }
+    const allFeatures = {
+      ...initialGqlFeatures(this.plan.configurableFeatures.edges),
+      ...this.selectedFeatures,
+    };
 
-    const allFeatures = { ...initialFeatures(this.allFeatures), ...this.selectedFeatures };
-
-    // Fetch base cost from cost API (and cancel in-flight reqs)
-    if (!this.planId) {
-      return Promise.resolve();
-    }
     // Hide display while calculating
     this.defaultCost = undefined;
     if (this.controller) {
@@ -78,7 +128,7 @@ export class ManifoldPlanCost {
 
     // Returning the promise is necessary for componentWillLoad()
     return planCost(this.restFetch, {
-      planID: this.planId,
+      planID: this.plan.id,
       features: allFeatures,
       init: { signal: this.controller.signal },
     }).then(({ cost }: Gateway.Price) => {
@@ -91,10 +141,17 @@ export class ManifoldPlanCost {
   render() {
     return (
       <manifold-cost-display
-        baseCost={this.defaultCost}
+        baseCost={(this.plan && this.plan.cost) || this.defaultCost}
         compact={this.compact}
-        measuredFeatures={this.measuredFeatures(this.allFeatures)}
-        startingAt={this.isCustomizable && this.compact}
+        meteredFeatures={
+          (this.plan && this.plan.meteredFeatures && this.plan.meteredFeatures.edges) || undefined
+        }
+        configurable={
+          (this.plan &&
+            this.plan.configurableFeatures &&
+            this.plan.configurableFeatures.edges.length > 0) ||
+          false
+        }
       />
     );
   }

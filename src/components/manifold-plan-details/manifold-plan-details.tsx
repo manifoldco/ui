@@ -249,7 +249,7 @@ export class ManifoldPlanDetails {
   render() {
     if (this.plan && this.product) {
       const { logoUrl, displayName } = this.product;
-      const { defaultCost, cost, expanded_features, name: planName } = this.plan.body;
+      const { defaultCost, cost, name: planName } = this.plan.body;
 
       return (
         <section
@@ -276,9 +276,8 @@ export class ManifoldPlanDetails {
             {this.regionSelector}
             <footer class="footer">
               <manifold-plan-cost
-                planId={this.plan.id}
-                allFeatures={expanded_features}
                 defaultCost={defaultCost || cost}
+                planId={this.plan.id}
                 selectedFeatures={this.features}
               />
               <slot name="cta" />
