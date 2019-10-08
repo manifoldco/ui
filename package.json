@@ -68,7 +68,7 @@
     },
     {
       "path": "./dist/esm/manifold-!(mock)*.js",
-      "maxSize": "32 kB",
+      "maxSize": "42 kB",
       "compression": "none"
     }
   ],
