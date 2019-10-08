@@ -1,12 +1,8 @@
 import { h, Component, Prop, Element, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { Gateway } from '../../types/gateway';
 import connection from '../../state/connection';
-import { globalRegion } from '../../data/region';
-import { Catalog } from '../../types/catalog';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -17,7 +13,6 @@ interface ClickMessage {
 }
 
 interface SuccessMessage {
-  createdAt: string;
   message: string;
   planId: string;
   productLabel: string;
@@ -39,10 +34,59 @@ interface ErrorMessage {
   resourceLabel: string;
 }
 
-const query = gql`
-  query ProfileId {
+// we only care if there are 2 or more regions
+const planRegionsQuery = gql`
+  query PLAN_REGIONS($planId: ID!) {
+    plan(id: $planId) {
+      regions(first: 2) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
+const profileIdQuery = gql`
+  query PROFILE_ID {
     profile {
       id
+    }
+  }
+`;
+
+const productIdQuery = gql`
+  query GET_PRODUCT_ID($productLabel: String!) {
+    product(label: $productLabel) {
+      id
+    }
+  }
+`;
+
+const createResourceMutation = gql`
+  mutation CREATE_RESOURCE(
+    $ownerId: ID!
+    $planId: ID!
+    $productId: ID!
+    $regionId: ID!
+    $resourceLabel: String!
+  ) {
+    createResource(
+      input: {
+        displayName: $resourceLabel
+        label: $resourceLabel
+        ownerId: $ownerId
+        planId: $planId
+        productId: $productId
+        regionId: $regionId
+      }
+    ) {
+      data {
+        id
+        label
+      }
     }
   }
 `;
@@ -51,47 +95,53 @@ const query = gql`
 export class ManifoldDataProvisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
-  /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  /** Product ID */
+  @Prop({ mutable: true }) productId?: string = '';
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
-  @Prop() planLabel?: string;
+  @Prop() planId?: string;
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
   @Prop({ mutable: true }) ownerId?: string = '';
   /** Region to provision (ID) */
-  @Prop() regionId?: string = globalRegion.id;
-  @State() planId?: string = '';
-  @State() productId?: string = '';
+  @Prop({ mutable: true }) regionId?: string;
   @State() provisioning: boolean = false;
   @Event({ eventName: 'manifold-provisionButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-invalid', bubbles: true }) invalid: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-provisionButton-success', bubbles: true }) success: EventEmitter;
 
-  @Watch('productLabel') productChange(newProduct: string) {
-    this.fetchProductPlanId(newProduct, this.planLabel);
+  @Watch('planId') planChange(newPlan: string) {
+    if (newPlan) {
+      this.updateRegions(newPlan);
+    }
   }
-  @Watch('planLabel') planChange(newPlan: string) {
-    if (this.productLabel) {
-      this.fetchProductPlanId(this.productLabel, newPlan);
+  @Watch('productLabel') productChange(newProduct: string) {
+    if (newProduct) {
+      this.fetchProductId(newProduct);
     }
   }
 
   @loadMark()
   componentWillLoad() {
-    if (this.productLabel) {
-      this.fetchProductPlanId(this.productLabel, this.planLabel);
+    // fetch product ID
+    if (this.productLabel && !this.productId) {
+      this.fetchProductId(this.productLabel);
     }
+    // fetch owner ID
     if (!this.ownerId) {
       this.fetchProfileId();
+    }
+    // if resource missing, fetch (will only save if there’s only 1 region)
+    if (this.planId && !this.regionId) {
+      this.updateRegions(this.planId);
     }
   }
 
   async provision() {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
@@ -106,9 +156,11 @@ export class ManifoldDataProvisionButton {
       resourceLabel: this.resourceLabel as string,
     };
 
+    // click event
     const clickMessage: ClickMessage = { ...detail };
     this.click.emit(clickMessage);
 
+    // invalid event
     if (this.resourceLabel) {
       if (this.resourceLabel.length < 3) {
         const message: InvalidMessage = { ...detail, message: 'Must be at least 3 characters' };
@@ -126,80 +178,55 @@ export class ManifoldDataProvisionButton {
       }
     }
 
-    // We use Gateway b/c it’s much easier to provision w/o generating a base32 ID
-    const req: Gateway.ResourceCreateRequest = {
-      label: this.resourceLabel,
-      owner: {
-        id: this.ownerId,
-        type: 'user',
+    // disable button & attempt provision
+    this.provisioning = true;
+    const { data, errors } = await this.graphqlFetch({
+      query: createResourceMutation,
+      variables: {
+        ownerId: this.ownerId,
+        planId: this.planId,
+        productId: this.productId,
+        regionId: this.regionId,
+        resourceLabel: this.resourceLabel,
       },
-      plan_id: this.planId,
-      product_id: this.productId,
-      region_id: this.regionId,
-      source: 'catalog',
-      features: {},
-    };
+    });
+    this.provisioning = false;
 
-    try {
-      this.provisioning = true;
-      const response = await this.restFetch<Gateway.Resource>({
-        service: 'gateway',
-        endpoint: `/resource/`,
-        body: req,
-        options: {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        },
+    // success event
+    if (data && data.data) {
+      const success: SuccessMessage = {
+        ...detail,
+        message: `${data.data.label} successfully provisioned`,
+        resourceId: data.data.id,
+        resourceLabel: data.data.label,
+      };
+      this.success.emit(success);
+    }
+
+    // error event
+    if (errors) {
+      errors.forEach(({ message }) => {
+        const e: ErrorMessage = { ...detail, message };
+        this.error.emit(e);
       });
-
-      if (response) {
-        const label = response.label || (this.resourceLabel as string);
-        const success: SuccessMessage = {
-          ...detail,
-          createdAt: response.created_at,
-          message: label ? `${label} successfully provisioned` : 'successfully provisioned',
-          resourceId: response.id || '',
-          resourceLabel: label,
-        };
-        this.success.emit(success);
-        this.provisioning = false;
-      }
-    } catch (error) {
-      this.provisioning = false;
-      const e: ErrorMessage = { ...detail, message: error.message };
-      this.error.emit(e);
-      throw e;
     }
   }
 
-  async fetchProductPlanId(productLabel: string, planLabel?: string) {
-    // TODO: Add region fetching too
-    if (!productLabel || !this.restFetch) {
+  async fetchProductId(productLabel: string) {
+    if (!productLabel || !this.graphqlFetch) {
       return;
     }
 
-    const products = await this.restFetch<Catalog.Product[]>({
-      service: 'catalog',
-      endpoint: `/products/?label=${productLabel}`,
+    const { data } = await this.graphqlFetch({
+      query: productIdQuery,
+      variables: {
+        productLabel,
+      },
     });
 
-    if (!products || !products.length) {
-      console.error(`${productLabel} product not found`);
-      return;
+    if (data && data.product) {
+      this.productId = data.product.id;
     }
-
-    const plans = await this.restFetch<Catalog.Plan[]>({
-      service: 'catalog',
-      endpoint: `/plans/?product_id=${products[0].id}${planLabel ? `&label=${planLabel}` : ''}`,
-    });
-
-    if (!plans || !plans.length) {
-      console.error(`${productLabel} plans not found`);
-      return;
-    }
-
-    this.productId = products[0].id;
-    this.planId = plans[0].id;
   }
 
   async fetchProfileId() {
@@ -207,10 +234,30 @@ export class ManifoldDataProvisionButton {
       return;
     }
 
-    const { data } = await this.graphqlFetch({ query });
+    const { data } = await this.graphqlFetch({ query: profileIdQuery });
 
-    if (data) {
+    if (data && data.profile) {
       this.ownerId = data.profile.id;
+    }
+  }
+
+  async updateRegions(planId: string) {
+    if (!this.graphqlFetch) {
+      return;
+    }
+
+    const { data } = await this.graphqlFetch({
+      query: planRegionsQuery,
+      variables: {
+        planId,
+      },
+    });
+
+    if (data && data.plan && data.plan.regions) {
+      // if a plan only has one region, use that
+      if (data.plan.regions.edges.length === 1) {
+        this.regionId = data.plan.regions.edges[0].node.id;
+      }
     }
   }
 
@@ -224,7 +271,7 @@ export class ManifoldDataProvisionButton {
       <button
         type="submit"
         onClick={() => this.provision()}
-        disabled={!this.planId || !this.productId || this.provisioning}
+        disabled={!this.planId || !this.productId || !this.regionId || this.provisioning}
       >
         <slot />
       </button>

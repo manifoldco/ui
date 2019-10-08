@@ -1,5 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { Query } from '../types/graphql';
+import { Query, Resource } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
 
@@ -25,8 +25,13 @@ export interface GraphqlError {
   };
 }
 
+// TODO remove this in favor of GraphQL documents
+export interface GraphqlData extends Query {
+  data?: Resource; // CreateResourcePayload, etc.
+}
+
 export interface GraphqlResponseBody {
-  data: Query | null;
+  data: GraphqlData | null;
   errors?: GraphqlError[];
 }
 
