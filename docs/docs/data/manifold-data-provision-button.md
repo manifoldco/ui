@@ -23,22 +23,20 @@ An unstyled button for provisioning resources. 🔒 Requires authentication.
 ## Using with Plan Selector
 
 This component needs a lot of information to do its job. For that reason, we recommend relying on
-listening for events from the [plan selector](#manifold-plan-selector) component. You could do that
-like so:
+listening for events from the [plan selector][plan-selector] component. You could do that like so:
 
 ```js
-const userId = ''; // Note: Can be omitted, will be fetched automatically.
 const resourceLabel = ''; // Can be obtained from your own input
 
-function updateButton({ detail: { features, planLabel, productLabel, regionId } }) {
+function updateButton({ detail: { features, planId, productLabel, regionId } }) {
   const provisionButton = document.querySelector('manifold-data-provision-button');
   provisionButton.features = features;
-  provisionButton.planLabel = planLabel;
+  provisionButton.planId = planId;
   provisionButton.productLabel = productLabel;
   provisionButton.regionId = regionId;
   provisionButton.resourceLabel = resourceLabel;
 
-  provisionButton.ownerId = userId;
+  // provisionButton.ownerId = '[ownerID]'; // OPTIONAL: only needed if provisioning for a different user (current user must have authorization to do so)
 }
 
 document.addEventListener('manifold-planSelector-load', updateButton);
@@ -73,8 +71,6 @@ document.addEventListener('manifold-provisionButton-click', ({ detail }) => cons
 // }
 document.addEventListener('manifold-provisionButton-success', ({ detail }) => console.log(detail));
 // {
-//   createdAt: '2019-01-01 00:00:00',
-//   planId: '2358fw1rfjtjv0ubty0waymvd204c',
 //   message: 'my-resource succesfully provisioned',
 //   planId: '2358fw1rfjtjv0ubty0waymvd204c',
 //   productLabel: 'logdna',
@@ -95,12 +91,12 @@ document.addEventListener('manifold-provisionButton-invalid', ({ detail }) => co
 // }
 ```
 
-| Name                               | Returns                                                                        | Description                                                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-provisionButton-click`   | `resourceLabel`, `productLabel`, `planId`                                      | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-provisionButton-success` | `message`, `resourceLabel`, `resourceId`, `productLabel`, `planId` `createdAt` | Successful provision. Returns name, along with a resource ID                                                                |
-| `manifold-provisionButton-error`   | `message`, `resourceLabel`, `productLabel`, `planId`                           | Erred provision, along with information on what went wrong.                                                                 |
-| `manifold-provisionButton-invalid` | `message`, `resourceLabel`, `productLabel`, `planId`                           | Fires if the resource name isn’t named properly.                                                                            |
+| Name                               | Returns                                                            | Description                                                                                                                 |
+| ---------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-provisionButton-click`   | `resourceLabel`, `productLabel`, `planId`                          | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-provisionButton-success` | `message`, `resourceLabel`, `resourceId`, `productLabel`, `planId` | Successful provision. Returns name, along with a resource ID                                                                |
+| `manifold-provisionButton-error`   | `message`, `resourceLabel`, `productLabel`, `planId`               | Erred provision, along with information on what went wrong.                                                                 |
+| `manifold-provisionButton-invalid` | `message`, `resourceLabel`, `productLabel`, `planId`               | Fires if the resource name isn’t named properly.                                                                            |
 
 ## Styling
 
@@ -111,3 +107,4 @@ plain ol’ CSS.
 
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
 [slot]: https://stenciljs.com/docs/templating-jsx/
+[plan-selector]: /components/plan-selector

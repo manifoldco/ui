@@ -11,6 +11,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Removed `manifold-resource-details` component. (#597)
 
+### Changed
+
+- Converted `<manifold-data-provision-button>` to use GraphQL data (#600)
+
+### Breaking Changes:
+
+- `<manifold-data-provision-button>` now requires `plan-id` rather than `plan-label` as a prop
+
 ## [v0.5.17]
 
 ### Changed

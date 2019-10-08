@@ -75,7 +75,7 @@ storiesOf('Resource', module)
       </manifold-copy-credentials>
     `;
   })
-  .add('provision', () => {
+  .add('create', () => {
     const newResource = text('resource-label', 'pdfshift');
     const productLabel = select('product-label', productLabels, 'pdfshift');
     const ownerId = text('owner-id', localStorage.getItem('manifold_user_id') || '');
@@ -89,7 +89,7 @@ storiesOf('Resource', module)
           margin-top: 1em;
         }
       </style>
-      <h2>Provision</h2>
+      <h2>Create Resource</h2>
       <manifold-plan-selector product-label="${productLabel}"></manifold-plan-selector>
       <menu>
         <manifold-data-provision-button
