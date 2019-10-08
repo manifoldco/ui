@@ -7,7 +7,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [v0.5.17]
 
-## Changed
+### Removed
+
+- Removed `manifold-resource-details` component. (#597)
+
+### Changed
 
 - Converted `manifold-resource-product` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#566)
@@ -20,7 +24,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [v0.5.16]
 
-## Added
+### Added
 
 - `manifold-product-load` event (#560)
 
