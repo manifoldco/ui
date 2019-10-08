@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Removed
+
+- Removed `manifold-resource-details` component. (#597)
+
 ### Changed
 
 - Converted `<manifold-data-provision-button>` to use GraphQL data (#600)

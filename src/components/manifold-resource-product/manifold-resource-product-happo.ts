@@ -1,4 +1,4 @@
-import { Resource } from '../../types/graphql';
+import { resource } from '../../spec/mock/graphql';
 
 export const skeleton = () => {
   const resourceProduct = document.createElement('manifold-resource-product');
@@ -6,25 +6,13 @@ export const skeleton = () => {
   return resourceProduct.componentOnReady();
 };
 
-export const loadedResource = () => {
-  const GraphqlResource = {
-    id: '1234',
-    plan: {
-      id: '1234',
-      product: {
-        id: '1234',
-        displayName: 'Product',
-        tagline: 'Amazing product',
-        label: 'product',
-        logoUrl: 'https://fillmurray.com/200/200',
-      },
-    },
-  };
-
+export const loadedResource = async () => {
   const resourceProduct = document.createElement('manifold-resource-product');
-  resourceProduct.loading = false;
-  resourceProduct.gqlData = GraphqlResource as Resource;
-
   document.body.appendChild(resourceProduct);
+  await resourceProduct.componentOnReady();
+
+  resourceProduct.gqlData = resource;
+  resourceProduct.loading = false;
+
   return resourceProduct.componentOnReady();
 };
