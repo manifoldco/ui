@@ -18,10 +18,7 @@ const planQuery = gql`
           node {
             label
             displayName
-            displayValue
             numericDetails {
-              min
-              max
               unit
               costTiers {
                 cost
@@ -36,11 +33,9 @@ const planQuery = gql`
           node {
             label
             displayName
-            displayValue
             options {
               label
               displayName
-              displayValue
             }
             numericDetails {
               min
