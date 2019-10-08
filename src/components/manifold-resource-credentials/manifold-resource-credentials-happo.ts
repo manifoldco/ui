@@ -8,11 +8,11 @@ export const skeleton = () => {
 
 export const loadedResource = async () => {
   const resourceCreds = document.createElement('manifold-resource-credentials');
+  document.body.appendChild(resourceCreds);
   await resourceCreds.componentOnReady();
 
   resourceCreds.gqlData = resource;
   resourceCreds.loading = false;
 
-  document.body.appendChild(resourceCreds);
   return resourceCreds.componentOnReady();
 };

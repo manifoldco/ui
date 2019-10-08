@@ -8,11 +8,11 @@ export const skeleton = () => {
 
 export const loadedResource = async () => {
   const resourceDeprovision = document.createElement('manifold-resource-deprovision');
+  document.body.appendChild(resourceDeprovision);
   await resourceDeprovision.componentOnReady();
 
   resourceDeprovision.gqlData = resource;
   resourceDeprovision.loading = false;
 
-  document.body.appendChild(resourceDeprovision);
   return resourceDeprovision.componentOnReady();
 };
