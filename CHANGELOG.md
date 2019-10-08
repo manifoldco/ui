@@ -17,6 +17,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `manifold-resource-rename` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#602)
 - Converted `<manifold-data-rename-button>` to use GraphQL (#596)
+- Converted `manifold-resource-sso` to use the GraphQL data fetched from the
+  `manifold-resource-container`. (#603)
 
 ### Breaking Changes:
 
