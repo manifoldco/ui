@@ -564,8 +564,8 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldResourceRename {
-    'data'?: Gateway.Resource;
     'disabled'?: boolean;
+    'gqlData'?: Resource;
     'loading': boolean;
     /**
     * The new label to give to the resource
@@ -1633,8 +1633,8 @@ declare namespace LocalJSX {
     'loading'?: boolean;
   }
   interface ManifoldResourceRename {
-    'data'?: Gateway.Resource;
     'disabled'?: boolean;
+    'gqlData'?: Resource;
     'loading'?: boolean;
     /**
     * The new label to give to the resource
