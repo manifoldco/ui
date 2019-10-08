@@ -533,10 +533,6 @@ export namespace Components {
     'gqlData'?: Resource;
     'loading': boolean;
   }
-  interface ManifoldResourceDetails {
-    'gqlData'?: Resource;
-    'loading': boolean;
-  }
   interface ManifoldResourceList {
     /**
     * _(hidden)_
@@ -919,12 +915,6 @@ declare global {
     new (): HTMLManifoldResourceDeprovisionElement;
   };
 
-  interface HTMLManifoldResourceDetailsElement extends Components.ManifoldResourceDetails, HTMLStencilElement {}
-  var HTMLManifoldResourceDetailsElement: {
-    prototype: HTMLManifoldResourceDetailsElement;
-    new (): HTMLManifoldResourceDetailsElement;
-  };
-
   interface HTMLManifoldResourceListElement extends Components.ManifoldResourceList, HTMLStencilElement {}
   var HTMLManifoldResourceListElement: {
     prototype: HTMLManifoldResourceListElement;
@@ -1065,7 +1055,6 @@ declare global {
     'manifold-resource-container': HTMLManifoldResourceContainerElement;
     'manifold-resource-credentials': HTMLManifoldResourceCredentialsElement;
     'manifold-resource-deprovision': HTMLManifoldResourceDeprovisionElement;
-    'manifold-resource-details': HTMLManifoldResourceDetailsElement;
     'manifold-resource-list': HTMLManifoldResourceListElement;
     'manifold-resource-plan': HTMLManifoldResourcePlanElement;
     'manifold-resource-product': HTMLManifoldResourceProductElement;
@@ -1613,10 +1602,6 @@ declare namespace LocalJSX {
     'gqlData'?: Resource;
     'loading'?: boolean;
   }
-  interface ManifoldResourceDetails {
-    'gqlData'?: Resource;
-    'loading'?: boolean;
-  }
   interface ManifoldResourceList {
     /**
     * _(hidden)_
@@ -1780,7 +1765,6 @@ declare namespace LocalJSX {
     'manifold-resource-container': ManifoldResourceContainer;
     'manifold-resource-credentials': ManifoldResourceCredentials;
     'manifold-resource-deprovision': ManifoldResourceDeprovision;
-    'manifold-resource-details': ManifoldResourceDetails;
     'manifold-resource-list': ManifoldResourceList;
     'manifold-resource-plan': ManifoldResourcePlan;
     'manifold-resource-product': ManifoldResourceProduct;
@@ -1850,7 +1834,6 @@ declare module "@stencil/core" {
       'manifold-resource-container': LocalJSX.ManifoldResourceContainer & JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement>;
       'manifold-resource-credentials': LocalJSX.ManifoldResourceCredentials & JSXBase.HTMLAttributes<HTMLManifoldResourceCredentialsElement>;
       'manifold-resource-deprovision': LocalJSX.ManifoldResourceDeprovision & JSXBase.HTMLAttributes<HTMLManifoldResourceDeprovisionElement>;
-      'manifold-resource-details': LocalJSX.ManifoldResourceDetails & JSXBase.HTMLAttributes<HTMLManifoldResourceDetailsElement>;
       'manifold-resource-list': LocalJSX.ManifoldResourceList & JSXBase.HTMLAttributes<HTMLManifoldResourceListElement>;
       'manifold-resource-plan': LocalJSX.ManifoldResourcePlan & JSXBase.HTMLAttributes<HTMLManifoldResourcePlanElement>;
       'manifold-resource-product': LocalJSX.ManifoldResourceProduct & JSXBase.HTMLAttributes<HTMLManifoldResourceProductElement>;
