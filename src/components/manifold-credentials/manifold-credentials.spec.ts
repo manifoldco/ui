@@ -1,4 +1,4 @@
-import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldCredentials } from './manifold-credentials';
@@ -26,26 +26,35 @@ const credentialsHTML = credentials
   )
   .join('');
 
+interface Props {
+  resourceLabel?: string;
+}
+
+async function setup(props: Props) {
+  const page = await newSpecPage({
+    components: [ManifoldCredentials, ManifoldCredentialsView],
+    html: '<div></div>',
+  });
+
+  const component = page.doc.createElement('manifold-credentials');
+  component.graphqlFetch = createGraphqlFetch({
+    endpoint: () => graphqlEndpoint,
+    getAuthToken: jest.fn(() => '1234'),
+    wait: () => 10,
+    setAuthToken: jest.fn(),
+  });
+  component.resourceLabel = props.resourceLabel;
+
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
+
 describe('<manifold-credentials>', () => {
-  let page: SpecPage;
-  let element: HTMLManifoldCredentialsElement;
-
-  beforeEach(async () => {
-    // set up test page
-    page = await newSpecPage({
-      components: [ManifoldCredentials, ManifoldCredentialsView],
-      html: `<div></div>`,
-    });
-    element = page.doc.createElement('manifold-credentials');
-    element.graphqlFetch = createGraphqlFetch({
-      endpoint: () => graphqlEndpoint,
-      getAuthToken: jest.fn(() => '1234'),
-      wait: () => 10,
-      setAuthToken: jest.fn(),
-    });
-
+  beforeEach(() => {
     // mock graphql (a resource with “error” in the name will throw)
-    fetchMock.reset();
     fetchMock.mock(graphqlEndpoint, (_, req) => {
       const body = (req.body && req.body.toString()) || '';
       return body.includes('error')
@@ -61,16 +70,14 @@ describe('<manifold-credentials>', () => {
     });
   });
 
+  afterEach(() => fetchMock.restore());
+
   describe('v0 props', () => {
     it('[resource-label]: displays credentials when clicked', async () => {
-      element.resourceLabel = 'success-resource';
-      if (!page.root) {
-        throw new Error('<manifold-credentials> not in document');
-      }
-      page.root.appendChild(element);
+      const { page, component } = await setup({ resourceLabel: 'success-resource' });
 
       // simulate button click to fetch credentials, and wait for page to update
-      element.showCredentials();
+      await component.showCredentials();
       await page.waitForChanges();
 
       const view = page.root && page.root.querySelector('manifold-credentials-view');
@@ -84,17 +91,13 @@ describe('<manifold-credentials>', () => {
     });
 
     it('[resource-label]: displays errors if not found', async () => {
-      element.resourceLabel = 'error-resource';
-      if (!page.root) {
-        throw new Error('<manifold-credentials> not in document');
-      }
-      page.root.appendChild(element);
+      const { page, component } = await setup({ resourceLabel: 'error-resource' });
 
       // simulate button click to fetch credentials, and wait for page to update
-      element.showCredentials();
+      await component.showCredentials();
       await page.waitForChanges();
 
-      const toast = page.root.querySelector('manifold-toast');
+      const toast = page.root && page.root.querySelector('manifold-toast');
       expect(toast).not.toBeNull();
       expect(toast && toast.innerText).toBe('resource not found');
     });
