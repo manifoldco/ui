@@ -1,31 +1,33 @@
-import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
-
-import { ManifoldDataDeprovisionButton } from './manifold-data-deprovision-button';
+import { newSpecPage } from '@stencil/core/testing';
+import { ManifoldDataResizeButton } from './manifold-data-resize-button';
 import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { resource } from '../../spec/mock/graphql';
 
 interface Props {
-  resourceId?: string;
+  planId?: string;
   resourceLabel?: string;
+  resourceId?: string;
 }
 
 const graphqlEndpoint = 'http://test.com/graphql';
 
 async function setup(props: Props) {
   const page = await newSpecPage({
-    components: [ManifoldDataDeprovisionButton],
+    components: [ManifoldDataResizeButton],
     html: '<div></div>',
   });
-  const component = page.doc.createElement('manifold-data-deprovision-button');
+
+  const component = page.doc.createElement('manifold-data-resize-button');
   component.graphqlFetch = createGraphqlFetch({
     endpoint: () => graphqlEndpoint,
     getAuthToken: jest.fn(() => '1234'),
     wait: () => 10,
     setAuthToken: jest.fn(),
   });
-  component.resourceId = props.resourceId;
+  component.planId = props.planId;
   component.resourceLabel = props.resourceLabel;
+  component.resourceId = props.resourceId;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -34,22 +36,22 @@ async function setup(props: Props) {
   return { page, component };
 }
 
-describe('<manifold-data-deprovision-button>', () => {
+describe('<manifold-data-resize-button>', () => {
   beforeEach(async () => {
     fetchMock.mock(graphqlEndpoint, (_, req) => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);
+      // return id in response
+      const newResource = {
+        ...resource,
+        id: variables.resourceId || resource.id,
+      };
       const errors: GraphqlError[] = [{ message: 'something went wrong' }];
-      if (body.includes('mutation DELETE_RESOURCE')) {
-        // return new label in response
-        const newResource = {
-          ...resource,
-          id: variables.resourceId || resource.id,
-        };
+      if (body.includes('mutation RESOURCE_CHANGE_PLAN')) {
         return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
       }
       if (body.includes('query RESOURCE_ID')) {
-        return body.includes('error') ? { data: null, errors } : { data: resource };
+        return body.includes('error') ? { data: null, errors } : { data: newResource };
       }
       return { data: null, errors };
     });
@@ -59,48 +61,46 @@ describe('<manifold-data-deprovision-button>', () => {
 
   describe('v0 props', () => {
     it('[resource-label]: fetches ID', async () => {
-      await setup({ resourceLabel: 'resource-label' });
+      await setup({ resourceLabel: 'my-resource' });
       expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
-    });
-
-    it('[resource-id]: doesn’t fetch ID if set', async () => {
-      await setup({ resourceId: 'resource-id', resourceLabel: 'resource-label' });
-      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(false);
     });
   });
 
   describe('v0 events', () => {
     it('click', async () => {
-      const resourceLabel = 'click-label';
+      const planId = 'plan-id';
+      const resourceLabel = 'click-resource-label';
+      const resourceId = 'click-resource-id';
 
-      const { page } = await setup({ resourceId: resource.id, resourceLabel });
+      const mockClick = jest.fn();
+
+      const { page } = await setup({ planId, resourceId, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
       }
 
       // listen for event and fire
-      const mockClick = jest.fn();
-      page.doc.addEventListener('manifold-deprovisionButton-click', mockClick);
+      page.doc.addEventListener('manifold-resizeButton-click', mockClick);
       button.click();
-      await page.waitForChanges();
 
-      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
-      expect(mockClick).toHaveBeenCalledWith(
+      expect(mockClick).toBeCalledWith(
         expect.objectContaining({
           detail: {
+            planId,
             resourceLabel,
-            resourceId: resource.id,
+            resourceId,
           },
         })
       );
     });
 
     it('error', async () => {
-      const resourceId = 'error-id';
-      const resourceLabel = 'error-label';
+      const planId = 'plan-id';
+      const resourceLabel = 'error-resource-label';
+      const resourceId = 'error-resource-id';
 
-      const { page } = await setup({ resourceId, resourceLabel });
+      const { page } = await setup({ planId, resourceId, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -110,25 +110,28 @@ describe('<manifold-data-deprovision-button>', () => {
       await new Promise(resolve => {
         // listen for event and fire
         mockClick.mockImplementation(() => resolve());
-        page.doc.addEventListener('manifold-deprovisionButton-error', mockClick);
+        page.doc.addEventListener('manifold-resizeButton-error', mockClick);
         button.click();
       });
 
-      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
-      expect(mockClick).toHaveBeenCalledWith(
+      expect(mockClick).toBeCalledWith(
         expect.objectContaining({
           detail: {
             message: 'something went wrong',
-            resourceLabel,
+            planId,
             resourceId,
+            resourceLabel,
           },
         })
       );
     });
 
     it('success', async () => {
-      const resourceId = 'success-id';
-      const { page } = await setup({ resourceId, resourceLabel: 'success-label' });
+      const planId = 'plan-id';
+      const resourceLabel = 'success-resource-label';
+      const resourceId = 'success-resource-id';
+
+      const { page } = await setup({ planId, resourceId, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -138,17 +141,17 @@ describe('<manifold-data-deprovision-button>', () => {
       await new Promise(resolve => {
         // listen for event and fire
         mockClick.mockImplementation(() => resolve());
-        page.doc.addEventListener('manifold-deprovisionButton-success', mockClick);
+        page.doc.addEventListener('manifold-resizeButton-success', mockClick);
         button.click();
       });
 
-      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
-      expect(mockClick).toHaveBeenCalledWith(
+      expect(mockClick).toBeCalledWith(
         expect.objectContaining({
           detail: {
-            message: `${resource.label} successfully deleted`,
-            resourceLabel: resource.label,
+            message: `${resource.label} successfully updated to ${planId}`,
+            planId,
             resourceId,
+            resourceLabel: resource.label, // we’re mocking the response here so it’ll be different
           },
         })
       );

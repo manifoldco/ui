@@ -78,10 +78,6 @@ storiesOf('Resource', module)
   .add('create', () => {
     const newResource = text('resource-label', 'pdfshift');
     const productLabel = select('product-label', productLabels, 'pdfshift');
-    const ownerId = text('owner-id', localStorage.getItem('manifold_user_id') || '');
-    if (ownerId) {
-      localStorage.setItem('manifold_user_id', ownerId);
-    }
     return `
       <style>
         menu {
@@ -93,7 +89,6 @@ storiesOf('Resource', module)
       <manifold-plan-selector product-label="${productLabel}"></manifold-plan-selector>
       <menu>
         <manifold-data-provision-button
-          owner-id="${ownerId}"
           product-label="${productLabel}"
           resource-label="${newResource}"
         >

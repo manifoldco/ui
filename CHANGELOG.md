@@ -29,6 +29,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `<manifold-plan-cost>` to GraphQL (#605)
 - Updated Stencil to v1.6.1 (#606)
 - Owner ID no longer fetched to create/delete resources (#608)
+- Converted `<manifold-data-resize-button>` to use GraphQL
 
 ### Breaking Changes:
 
