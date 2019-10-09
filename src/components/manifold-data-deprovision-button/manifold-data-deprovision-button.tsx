@@ -27,20 +27,12 @@ const resourceIdQuery = gql`
 `;
 
 const deleteMutation = gql`
-  mutation DELETE_RESOURCE($resourceId: ID!, $ownerId: ID) {
-    deleteResource(input: { resourceId: $resourceId, ownerId: $ownerId }) {
+  mutation DELETE_RESOURCE($resourceId: ID!) {
+    deleteResource(input: { resourceId: $resourceId }) {
       data {
         id
         label
       }
-    }
-  }
-`;
-
-const profileIdQuery = gql`
-  query PROFILE_ID {
-    profile {
-      id
     }
   }
 `;
@@ -50,8 +42,6 @@ export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-  /** Pass in an ownerId if desired */
-  @Prop({ mutable: true }) ownerId?: string;
   /** resource ID */
   @Prop({ mutable: true }) resourceId?: string = '';
   /** The label of the resource to deprovision */
@@ -71,10 +61,6 @@ export class ManifoldDataDeprovisionButton {
     // fetch resource ID
     if (this.resourceLabel && !this.resourceId) {
       this.fetchResourceId(this.resourceLabel);
-    }
-    // fetch owner ID
-    if (!this.ownerId) {
-      this.fetchProfileId();
     }
   }
 
@@ -97,7 +83,6 @@ export class ManifoldDataDeprovisionButton {
       query: deleteMutation,
       variables: {
         resourceId: this.resourceId,
-        ownerId: this.ownerId,
       },
     });
 
@@ -123,18 +108,6 @@ export class ManifoldDataDeprovisionButton {
     }
   }
 
-  async fetchProfileId() {
-    if (!this.graphqlFetch || this.ownerId) {
-      return;
-    }
-
-    const { data } = await this.graphqlFetch({ query: profileIdQuery });
-
-    if (data && data.profile) {
-      this.ownerId = data.profile.id;
-    }
-  }
-
   async fetchResourceId(resourceLabel: string) {
     if (!this.graphqlFetch) {
       return;
@@ -155,11 +128,7 @@ export class ManifoldDataDeprovisionButton {
   @logger()
   render() {
     return (
-      <button
-        type="submit"
-        onClick={() => this.deprovision()}
-        disabled={!this.resourceId || !this.ownerId}
-      >
+      <button type="submit" onClick={() => this.deprovision()} disabled={!this.resourceId}>
         <slot />
       </button>
     );

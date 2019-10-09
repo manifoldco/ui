@@ -6,7 +6,6 @@ import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { resource } from '../../spec/mock/graphql';
 
 interface Props {
-  ownerId?: string;
   resourceId?: string;
   resourceLabel?: string;
 }
@@ -26,7 +25,6 @@ async function setup(props: Props) {
     wait: () => 10,
     setAuthToken: jest.fn(),
   });
-  component.ownerId = props.ownerId;
   component.resourceId = props.resourceId;
   component.resourceLabel = props.resourceLabel;
 
@@ -65,16 +63,12 @@ describe('<manifold-data-deprovision-button>', () => {
 
   describe('v0 props', () => {
     it('[resource-label]: fetches ID', async () => {
-      await setup({ ownerId: 'owner-id', resourceLabel: 'resource-label' });
+      await setup({ resourceLabel: 'resource-label' });
       expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
     });
 
     it('[resource-id]: doesn’t fetch ID if set', async () => {
-      await setup({
-        ownerId: 'owner-id',
-        resourceId: 'resource-id',
-        resourceLabel: 'resource-label',
-      });
+      await setup({ resourceId: 'resource-id', resourceLabel: 'resource-label' });
       expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(false);
     });
   });
@@ -83,7 +77,7 @@ describe('<manifold-data-deprovision-button>', () => {
     it('click', async () => {
       const resourceLabel = 'click-label';
 
-      const { page } = await setup({ ownerId: 'owner-id', resourceId: resource.id, resourceLabel });
+      const { page } = await setup({ resourceId: resource.id, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -110,7 +104,7 @@ describe('<manifold-data-deprovision-button>', () => {
       const resourceId = 'error-id';
       const resourceLabel = 'error-label';
 
-      const { page } = await setup({ ownerId: 'owner-id', resourceId, resourceLabel });
+      const { page } = await setup({ resourceId, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -138,11 +132,7 @@ describe('<manifold-data-deprovision-button>', () => {
 
     it('success', async () => {
       const resourceId = 'success-id';
-      const { page } = await setup({
-        ownerId: 'owner-id',
-        resourceId,
-        resourceLabel: 'success-label',
-      });
+      const { page } = await setup({ resourceId, resourceLabel: 'success-label' });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');

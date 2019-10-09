@@ -116,10 +116,6 @@ export namespace Components {
     'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
     /**
-    * Pass in an ownerId if desired
-    */
-    'ownerId'?: string;
-    /**
     * resource ID
     */
     'resourceId'?: string;
@@ -1166,10 +1162,6 @@ declare namespace LocalJSX {
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
-    /**
-    * Pass in an ownerId if desired
-    */
-    'ownerId'?: string;
     /**
     * resource ID
     */
