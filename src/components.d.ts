@@ -573,7 +573,7 @@ export namespace Components {
     'newLabel': string;
   }
   interface ManifoldResourceSso {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading': boolean;
   }
   interface ManifoldResourceStatus {
@@ -1642,7 +1642,7 @@ declare namespace LocalJSX {
     'newLabel'?: string;
   }
   interface ManifoldResourceSso {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading'?: boolean;
   }
   interface ManifoldResourceStatus {
