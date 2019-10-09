@@ -20,6 +20,14 @@ interface RestFetchArguments {
   emitter?: EventEmitter;
 }
 
+interface RestFetchEventDetail {
+  type: 'manifold-rest-fetch-duration';
+  endpoint: string;
+  duration: number;
+  status: number;
+  errorMessage?: string;
+}
+
 type Success = undefined;
 
 export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
@@ -66,28 +74,36 @@ export function createRestFetch({
     }
 
     const body = await response.json();
+
+    const fetchDuration = performance.now() - rttStart;
+    const detail: RestFetchEventDetail = {
+      type: 'manifold-rest-fetch-duration',
+      endpoint: args.endpoint,
+      duration: fetchDuration,
+      status: response.status,
+    };
+
+    const message = Array.isArray(body) ? body[0].message : body.message;
+    if (message) {
+      detail.errorMessage = message;
+    }
+    if (args.emitter) {
+      args.emitter.emit(detail);
+    } else {
+      document.dispatchEvent(
+        new CustomEvent('manifold-rest-fetch-duration', {
+          bubbles: true,
+          detail,
+        })
+      );
+    }
+
     if (response.status >= 200 && response.status < 300) {
-      const fetchDuration = performance.now() - rttStart;
-      if (args.emitter) {
-        args.emitter.emit({
-          type: 'manifold-rest-fetch-duration',
-          endpoint: args.endpoint,
-          duration: fetchDuration,
-        });
-      } else {
-        document.dispatchEvent(
-          new CustomEvent('manifold-rest-fetch-duration', {
-            bubbles: true,
-            detail: { endpoint: args.endpoint, duration: fetchDuration },
-          })
-        );
-      }
       return body;
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!
     report(response);
-    const message = Array.isArray(body) ? body[0].message : body.message;
     throw new Error(message);
   }
 
