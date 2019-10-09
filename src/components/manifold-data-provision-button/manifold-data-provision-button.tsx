@@ -49,14 +49,6 @@ const planRegionsQuery = gql`
   }
 `;
 
-const profileIdQuery = gql`
-  query PROFILE_ID {
-    profile {
-      id
-    }
-  }
-`;
-
 const productIdQuery = gql`
   query GET_PRODUCT_ID($productLabel: String!) {
     product(label: $productLabel) {
@@ -66,18 +58,11 @@ const productIdQuery = gql`
 `;
 
 const createResourceMutation = gql`
-  mutation CREATE_RESOURCE(
-    $ownerId: ID!
-    $planId: ID!
-    $productId: ID!
-    $regionId: ID!
-    $resourceLabel: String!
-  ) {
+  mutation CREATE_RESOURCE($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!) {
     createResource(
       input: {
         displayName: $resourceLabel
         label: $resourceLabel
-        ownerId: $ownerId
         planId: $planId
         productId: $productId
         regionId: $regionId
@@ -104,7 +89,6 @@ export class ManifoldDataProvisionButton {
   @Prop() planId?: string;
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
-  @Prop({ mutable: true }) ownerId?: string = '';
   /** Region to provision (ID) */
   @Prop({ mutable: true }) regionId?: string;
   @State() provisioning: boolean = false;
@@ -130,10 +114,6 @@ export class ManifoldDataProvisionButton {
     if (this.productLabel && !this.productId) {
       this.fetchProductId(this.productLabel);
     }
-    // fetch owner ID
-    if (!this.ownerId) {
-      this.fetchProfileId();
-    }
     // if resource missing, fetch (will only save if there’s only 1 region)
     if (this.planId && !this.regionId) {
       this.updateRegions(this.planId);
@@ -142,11 +122,6 @@ export class ManifoldDataProvisionButton {
 
   async provision() {
     if (!this.graphqlFetch) {
-      return;
-    }
-
-    if (!this.ownerId) {
-      console.error('Property “ownerId” is missing');
       return;
     }
 
@@ -183,7 +158,6 @@ export class ManifoldDataProvisionButton {
     const { data, errors } = await this.graphqlFetch({
       query: createResourceMutation,
       variables: {
-        ownerId: this.ownerId,
         planId: this.planId,
         productId: this.productId,
         regionId: this.regionId,
@@ -226,18 +200,6 @@ export class ManifoldDataProvisionButton {
 
     if (data && data.product) {
       this.productId = data.product.id;
-    }
-  }
-
-  async fetchProfileId() {
-    if (!this.graphqlFetch || this.ownerId) {
-      return;
-    }
-
-    const { data } = await this.graphqlFetch({ query: profileIdQuery });
-
-    if (data && data.profile) {
-      this.ownerId = data.profile.id;
     }
   }
 
