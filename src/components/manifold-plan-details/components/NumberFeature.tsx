@@ -36,19 +36,19 @@ export const NumberFeature: FunctionalComponent<NumberFeatureProps> = ({
   if (feature.measurable) {
     const tiers = pricingTiers(feature.value);
     if (tiers.length > 1) {
-      const [{ suffix, per }] = tiers;
+      const [{ unit, per }] = tiers;
       return (
         <table class="feature-table">
           <tbody>
             {tiers.map(({ from, to, cost }) => {
-              const unitDisplay = per === 1 ? ` / ${suffix}` : ` per ${withCommas(per)}`;
+              const unitDisplay = per === 1 ? ` / ${unit}` : ` per ${withCommas(per)}`;
 
               return (
                 <tr>
                   <td>
                     {withCommas(from)}
                     {to === Infinity ? '+' : ` – ${withCommas(to)}`}
-                    {` ${pluralize(suffix)}`}
+                    {` ${pluralize(unit)}`}
                   </td>
                   <td>{cost === 0 ? 'Free' : `${$(featureCost(cost * per))}${unitDisplay}`}</td>
                 </tr>

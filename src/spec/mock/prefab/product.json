@@ -1,0 +1,198 @@
+{
+  "body": {
+    "billing": {
+      "currency": "usd",
+      "type": "monthly-prorated"
+    },
+    "documentation_url": "https://www.prefab.cloud/documentation/getting_started",
+    "feature_types": [
+      {
+        "label": "feature-flags",
+        "name": "Feature flags",
+        "type": "string",
+        "values": [
+          {
+            "label": "free",
+            "name": "Free",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "instant-updates",
+        "name": "Instant Updates",
+        "type": "boolean",
+        "values": [
+          {
+            "label": "true",
+            "name": "Yes"
+          },
+          {
+            "label": "false",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "label": "redundant-backends",
+        "name": "Redundant Backends",
+        "type": "boolean",
+        "values": [
+          {
+            "label": "true",
+            "name": "Yes"
+          },
+          {
+            "label": "false",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "label": "audit-logs",
+        "name": "Audit Logs",
+        "type": "boolean",
+        "values": [
+          {
+            "label": "true",
+            "name": "Yes"
+          },
+          {
+            "label": "false",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "label": "email-support",
+        "name": "Email Support",
+        "type": "boolean",
+        "values": [
+          {
+            "label": "true",
+            "name": "Yes"
+          },
+          {
+            "label": "false",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "label": "limitcheck",
+        "measurable": true,
+        "name": "Limitcheck",
+        "type": "number",
+        "values": [
+          {
+            "label": "unavailable",
+            "name": "Unavailable",
+            "numeric_details": {
+              "cost_ranges": [],
+              "increment": 1,
+              "max": 1000,
+              "suffix": "check"
+            }
+          },
+          {
+            "label": "basic",
+            "name": "Basic",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 5000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "check"
+            }
+          },
+          {
+            "label": "upgrade",
+            "name": "Upgrade",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 2000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "check"
+            }
+          }
+        ]
+      }
+    ],
+    "images": [
+      "https://cdn.manifold.co/providers/prefab/screenshots/f7c125bc-6049-4b76-8f50-db594797f4fb.png",
+      "https://cdn.manifold.co/providers/prefab/screenshots/36fde154-2e26-4447-9f08-72eae58d4f2b.png",
+      "https://cdn.manifold.co/providers/prefab/screenshots/f31a0889-e1dc-4eca-a1a5-08e23abc2d86.png"
+    ],
+    "integration": {
+      "base_url": "https://www.prefab.cloud",
+      "features": {
+        "access_code": false,
+        "plan_change": true,
+        "region": "unspecified",
+        "sso": true,
+        "credential": "unknown"
+      },
+      "provisioning": "public",
+      "sso_url": "https://www.prefab.cloud",
+      "version": "v1"
+    },
+    "label": "prefab",
+    "listing": {
+      "listed": true,
+      "marketing": {
+        "beta": false,
+        "featured": true,
+        "new": true
+      },
+      "public": true
+    },
+    "logo_url": "https://cdn.manifold.co/providers/prefab/logos/b0f0b014-4063-4588-bc65-1da31f3fc187.png",
+    "name": "Prefab.cloud",
+    "provider_id": "2340cfzebyhmuhemk5qubj0w3zvz4",
+    "setup_steps": null,
+    "state": "new",
+    "support_email": "hello@prefab.cloud",
+    "tagline": "Feature Flags, RateLimits & RemoteConfig. Microservices as a Service.",
+    "tags": ["utility"],
+    "terms": {
+      "provided": true,
+      "url": "https://www.prefab.cloud/terms_of_service"
+    },
+    "value_props": [
+      {
+        "body": "Fast, efficient, bombproof and cost-effective rate limiting libraries that don't require any Redis/Memcached on your end.",
+        "header": "Rate Limits"
+      },
+      {
+        "body": "Don't leave home without them. Feature flags enable Moving Fast and Breaking Less. Our flags can be: on, off, on for a percentage of your traffic and on for specific users or users that match specific criteria.",
+        "header": "Feature Flags"
+      },
+      {
+        "body": "Want a reliable distributed config like Consul / Zookeeper that works out of the box and is cost-effective?",
+        "header": "Distributed/Remote Config"
+      },
+      {
+        "body": "Only want to send the 'Welcome Email' once per person, but have some nasty race conditions that could lead to doing it twice? Put an eternal semaphore for 'welcome-email:bob@example.com' and let us store that forever. Easy idempotency as a service.",
+        "header": "Deduplication"
+      },
+      {
+        "body": "Paying your usage tracking service by the event? Do you really need to send an event for Bob _every_ time he clicks? How about only sending bob's unique events every 5 minutes? Let's decimate that bill.",
+        "header": "Scales to millions of individual limits"
+      },
+      {
+        "body": "Open source libraries included for Node, Ruby, Java & C#. gRPC provides robust extensible support for other languages.",
+        "header": "Batteries Included"
+      }
+    ]
+  },
+  "id": "234j199gnaggg2qj6fvey2m3gw1nc",
+  "type": "product",
+  "version": 1
+}

@@ -1,0 +1,169 @@
+{
+  "body": {
+    "billing": {
+      "currency": "usd",
+      "type": "monthly-prorated"
+    },
+    "documentation_url": "https://www.ximilar.com/services/generic-tagging/",
+    "feature_types": [
+      {
+        "label": "requests-month",
+        "name": "Requests per month",
+        "type": "string",
+        "values": [
+          {
+            "label": "5000",
+            "name": "5000",
+            "price": {}
+          },
+          {
+            "label": "100000",
+            "name": "100000",
+            "price": {}
+          },
+          {
+            "label": "1000000",
+            "name": "1000000",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "recognition-tasks",
+        "name": "Recognition tasks",
+        "type": "string",
+        "values": [
+          {
+            "label": "03",
+            "name": "3",
+            "price": {}
+          },
+          {
+            "label": "10",
+            "name": "10",
+            "price": {}
+          },
+          {
+            "label": "20",
+            "name": "20",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "parallel-processing-requests",
+        "name": "Parallel processing of requests",
+        "type": "boolean",
+        "values": [
+          {
+            "label": "true",
+            "name": "Yes"
+          },
+          {
+            "label": "false",
+            "name": "No"
+          }
+        ]
+      },
+      {
+        "label": "support",
+        "name": "Support",
+        "type": "string",
+        "values": [
+          {
+            "label": "limited",
+            "name": "Limited Email",
+            "price": {}
+          },
+          {
+            "label": "standard",
+            "name": "Standard",
+            "price": {}
+          },
+          {
+            "label": "priority",
+            "name": "Priority",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "request",
+        "measurable": true,
+        "name": "Requests",
+        "type": "number",
+        "values": [
+          {
+            "label": "image-requests",
+            "name": "Image Requests",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 950000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "request"
+            }
+          }
+        ]
+      }
+    ],
+    "images": [
+      "https://cdn.manifold.co/providers/ximilar/screenshots/39d5a682-8532-405d-952b-c9b58f787fa2.png"
+    ],
+    "integration": {
+      "base_url": "https://api.ximilar.com/manifold/",
+      "features": {
+        "access_code": false,
+        "plan_change": true,
+        "region": "unspecified",
+        "sso": false,
+        "credential": "unknown"
+      },
+      "provisioning": "public",
+      "sso_url": "https://api.ximilar.com/manifold/",
+      "version": "v1"
+    },
+    "label": "generic-tagging",
+    "listing": {
+      "listed": true,
+      "marketing": {
+        "beta": false,
+        "featured": false,
+        "new": true
+      },
+      "public": true
+    },
+    "logo_url": "https://cdn.manifold.co/providers/ximilar/logos/9ef978f9-309e-4e0b-a9d8-ee99b78a4ac3.png",
+    "name": "Generic Image Tagging",
+    "provider_id": "2342x6jwx1xrqcnfe6nn2n89c2fc8",
+    "setup_steps": null,
+    "state": "new",
+    "support_email": "tech@ximilar.com",
+    "tagline": "Automatic tagging of everyday photos. Powerful computer vision & machine learning with blazing speed.",
+    "tags": ["optimization"],
+    "terms": {
+      "provided": true,
+      "url": "https://www.ximilar.com/terms-of-use-privacy/"
+    },
+    "value_props": [
+      {
+        "body": "The service can recognises 1,000 concepts in your everyday photos.",
+        "header": "We Spot Everything"
+      },
+      {
+        "body": "You do not have to train anything, the service is ready for you.",
+        "header": "Ready To Use"
+      },
+      {
+        "body": "Performance is a key - image analysis is quick and can be processed in batches.",
+        "header": "Swift & Scalable"
+      }
+    ]
+  },
+  "id": "234hyjj2qbkpyw4z0g0bwgjgtydnj",
+  "type": "product",
+  "version": 1
+}

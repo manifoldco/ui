@@ -9,149 +9,147 @@ describe('<manifold-plan-cost>', () => {
     expect(el).toEqualHtml('<div class="cost"></div>');
   });
 
-  it('displays “Free” (no badge) when large', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 0;
-      elm.measuredFeatures = [];
+  describe('v0 props', () => {
+    it('[compact]: displays no badge when false', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 0;
+        elm.meteredFeatures = [];
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml('<span itemprop="price">Free</span>');
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml('<span itemprop="price">Free</span>');
-  });
 
-  it('displays “Free” (badge) when small', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 0;
-      elm.compact = true;
-      elm.measuredFeatures = [];
+    it('[compact]: displays badge when true', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 0;
+        elm.compact = true;
+        elm.meteredFeatures = [];
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml(
+        '<span itemprop="price"><manifold-badge class="hydrated" data-tag="free">Free</manifold-badge></span>'
+      );
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml(
-      '<span itemprop="price"><manifold-badge class="hydrated" data-tag="free">Free</manifold-badge></span>'
-    );
-  });
 
-  it('displays “$2.00 / mo” in fixed view', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 200;
-      elm.measuredFeatures = [];
+    it('[compact]: hides “ / mo” when true', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 200;
+        elm.compact = true;
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml('<span itemprop="price">$2</span>');
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml('<span itemprop="price">$2<small>&nbsp;/&nbsp;mo</small></span>');
-  });
 
-  it('hides “ / mo” when compact', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 200;
-      elm.compact = true;
+    it('[metered-features]: displays monthly charge if none', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 200;
+        elm.meteredFeatures = [];
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml('<span itemprop="price">$2<small>&nbsp;/&nbsp;mo</small></span>');
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml('<span itemprop="price">$2</span>');
-  });
 
-  it('displays “$0.25 / hr” when measurable', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 0;
-      elm.measuredFeatures = [
-        {
-          type: 'number',
-          measurable: true,
-          value: {
-            numeric_details: {
-              suffix: 'hr',
-              cost_ranges: [{ cost_multiple: 250000000, limit: -1 }],
+    it('[metered-features]: displays “$0.25 / hr” when metered', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 0;
+        elm.meteredFeatures = [
+          {
+            node: {
+              numericDetails: {
+                unit: 'hr',
+                costTiers: [{ cost: 250000000, limit: -1 }],
+              },
             },
           },
-        },
-      ];
+        ];
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml(`
+  <span itemprop="price">
+    $0.25
+    <small>&nbsp;/&nbsp;hr</small>
+  </span>`);
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml(`
-<span itemprop="price">
-  $0.25
-  <small>&nbsp;/&nbsp;hr</small>
-</span>`);
-  });
 
-  it('displays “$0.25 per 1000 hrs” when feature is very cheap', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 0;
-      elm.measuredFeatures = [
-        {
-          type: 'number',
-          measurable: true,
-          value: {
-            numeric_details: {
-              suffix: 'hr',
-              cost_ranges: [{ cost_multiple: 250000, limit: -1 }],
+    it('[metered-features]: displays cost in cents if feature is cheap', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 0;
+        elm.meteredFeatures = [
+          {
+            node: {
+              numericDetails: {
+                unit: 'hr',
+                costTiers: [{ cost: 250000, limit: -1 }],
+              },
             },
           },
-        },
-      ];
+        ];
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml(`
+  <span itemprop="price">
+    $0.25
+    <small>&nbsp;per&nbsp;1,000 hrs</small>
+  </span>`);
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml(`
-<span itemprop="price">
-  $0.25
-  <small>&nbsp;per&nbsp;1,000 hrs</small>
-</span>`);
-  });
 
-  it('displays “Starting at” when compact & too many measurable costs', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.compact = true;
-      elm.baseCost = 500;
-      elm.measuredFeatures = [{}, {}, {}];
+    it('[metered-features]: displays “+ metered” when too many metered costs', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.compact = true;
+        elm.baseCost = 500;
+        elm.meteredFeatures = [{}, {}, {}];
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml(`
+  <span itemprop="price">
+    $5 + <small>metered usage</small>
+  </span>`);
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml(`
-<span itemprop="price">
-  <span class="starting">Starting at</span>
-  $5
-</span>`);
-  });
 
-  it('displays “Starting at” when compact & customizable', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 400;
-      elm.compact = true;
-      elm.startingAt = true;
+    it('[configurable]: displays “Starting at” when compact', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 400;
+        elm.compact = true;
+        elm.configurable = true;
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml(`
+  <span itemprop="price">
+    <span class="starting">Starting at</span>
+    $4
+  </span>`);
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml(`
-<span itemprop="price">
-  <span class="starting">Starting at</span>
-  $4
-</span>`);
-  });
 
-  it('doesn’t display “Starting at” when customizable, but not compact', async () => {
-    const page = await newE2EPage({ html: `<manifold-cost-display />` });
-    await page.$eval('manifold-cost-display', (elm: any) => {
-      elm.baseCost = 400;
-      elm.startingAt = true;
+    it('[configurable]: doesn’t display “Starting at” when not compact', async () => {
+      const page = await newE2EPage({ html: `<manifold-cost-display />` });
+      await page.$eval('manifold-cost-display', (elm: any) => {
+        elm.baseCost = 400;
+        elm.compact = false;
+        elm.configurable = true;
+      });
+      await page.waitForChanges();
+      const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
+      expect(el).toEqualHtml(`
+  <span itemprop="price">
+    $4
+    <small>&nbsp;/&nbsp;mo</small>
+  </span>`);
     });
-    await page.waitForChanges();
-    const el = await page.find('manifold-cost-display >>> [itemprop="price"]');
-    expect(el).toEqualHtml(`
-<span itemprop="price">
-  $4
-  <small>&nbsp;/&nbsp;mo</small>
-</span>`);
   });
 });

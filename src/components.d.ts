@@ -12,6 +12,7 @@ import {
 import {
   CredentialEdge,
   PlanConnection,
+  PlanMeteredFeatureEdge,
   Product,
   ProductEdge,
   Resource,
@@ -94,8 +95,8 @@ export namespace Components {
   interface ManifoldCostDisplay {
     'baseCost'?: number;
     'compact'?: boolean;
-    'measuredFeatures': Catalog.ExpandedFeature[];
-    'startingAt'?: boolean;
+    'configurable'?: boolean;
+    'meteredFeatures': PlanMeteredFeatureEdge[];
   }
   interface ManifoldCredentials {
     /**
@@ -397,10 +398,6 @@ export namespace Components {
   }
   interface ManifoldPlanCost {
     /**
-    * All plan features
-    */
-    'allFeatures': Catalog.ExpandedFeature[];
-    /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
@@ -409,7 +406,11 @@ export namespace Components {
     */
     'defaultCost'?: number;
     /**
-    * Plan ID
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
+    * TEMPORARY: Plan ID
     */
     'planId'?: string;
     /**
@@ -1138,8 +1139,8 @@ declare namespace LocalJSX {
   interface ManifoldCostDisplay {
     'baseCost'?: number;
     'compact'?: boolean;
-    'measuredFeatures'?: Catalog.ExpandedFeature[];
-    'startingAt'?: boolean;
+    'configurable'?: boolean;
+    'meteredFeatures'?: PlanMeteredFeatureEdge[];
   }
   interface ManifoldCredentials {
     /**
@@ -1463,10 +1464,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlanCost {
     /**
-    * All plan features
-    */
-    'allFeatures'?: Catalog.ExpandedFeature[];
-    /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
@@ -1475,7 +1472,11 @@ declare namespace LocalJSX {
     */
     'defaultCost'?: number;
     /**
-    * Plan ID
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
+    * TEMPORARY: Plan ID
     */
     'planId'?: string;
     /**

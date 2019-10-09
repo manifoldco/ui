@@ -1,0 +1,223 @@
+{
+  "body": {
+    "billing": {
+      "currency": "usd",
+      "type": "monthly-prorated"
+    },
+    "documentation_url": "https://zerosix.ai/frequently-asked-questions/",
+    "feature_types": [
+      {
+        "label": "hourly-price",
+        "measurable": true,
+        "name": "Hourly Price",
+        "type": "number",
+        "values": [
+          {
+            "label": "dual-nvidia-1070ti-500-gb-ssd",
+            "name": "Dual NVIDIA 1070ti 500 GB SSD",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 900000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "hour"
+            }
+          },
+          {
+            "label": "nvidia-1060-250-gb-ssd",
+            "name": "NVIDIA 1060 250 GB SSD",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 250000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "hour"
+            }
+          },
+          {
+            "label": "nvidia-1070-50-gb-ssd",
+            "name": "NVIDIA 1070 50 GB SSD",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 300000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "hour"
+            }
+          },
+          {
+            "label": "nvidia-1080ti-100gb-ssd",
+            "name": "NVIDIA 1080ti 100GB SSD",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 500000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "hour"
+            }
+          },
+          {
+            "label": "nvidia-1080ti-250-gb-ssd",
+            "name": "NVIDIA 1080ti 250 GB SSD",
+            "numeric_details": {
+              "cost_ranges": [
+                {
+                  "cost_multiple": 600000000,
+                  "limit": -1
+                }
+              ],
+              "increment": 1,
+              "suffix": "hour"
+            }
+          }
+        ]
+      },
+      {
+        "label": "frame-buffer",
+        "name": "Frame Buffer",
+        "type": "string",
+        "values": [
+          {
+            "label": "11-gb-gddr5x",
+            "name": "11 GB GDDR5X",
+            "price": {}
+          },
+          {
+            "label": "8-gb-gddr5",
+            "name": "8 GB GDDR5",
+            "price": {}
+          },
+          {
+            "label": "6-gb-gddr5x",
+            "name": "6 GB GDDR5X",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "architecture",
+        "name": "Architecture",
+        "type": "string",
+        "values": [
+          {
+            "label": "pascal",
+            "name": "Pascal",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "ssd",
+        "name": "SSD",
+        "type": "string",
+        "values": [
+          {
+            "label": "500-gb",
+            "name": "500 GB",
+            "price": {}
+          },
+          {
+            "label": "250-gb",
+            "name": "250 GB",
+            "price": {}
+          },
+          {
+            "label": "50-gb",
+            "name": "50 GB",
+            "price": {}
+          },
+          {
+            "label": "100-gb",
+            "name": "100 GB",
+            "price": {}
+          }
+        ]
+      },
+      {
+        "label": "email-support",
+        "name": "Email Support",
+        "type": "string",
+        "values": [
+          {
+            "label": "yes",
+            "name": "Yes",
+            "price": {}
+          }
+        ]
+      }
+    ],
+    "images": [],
+    "integration": {
+      "base_url": "https://zerosix.ai/wp-json/manifold/",
+      "features": {
+        "access_code": false,
+        "plan_change": false,
+        "region": "unspecified",
+        "sso": false,
+        "credential": "unknown"
+      },
+      "provisioning": "public",
+      "sso_url": "https://zerosix.ai/wp-json/manifold/sso",
+      "version": "v1"
+    },
+    "label": "zerosix",
+    "listing": {
+      "listed": true,
+      "marketing": {
+        "beta": false,
+        "featured": false,
+        "new": true
+      },
+      "public": true
+    },
+    "logo_url": "https://cdn.manifold.co/providers/zerosix/logos/4b9a4431-7ced-497d-b575-7ea741113bf3.png",
+    "name": "ZeroSix Cloud Compute Platform",
+    "provider_id": "234a6uzew2vfe1j69ntn67bf24ac0",
+    "setup_steps": null,
+    "state": "new",
+    "support_email": "support@zerosix.ai",
+    "tagline": "ZeroSix Marketplace provides access to compute power specifically for Machine Learning and Artificial Intelligence.",
+    "tags": ["worker", "ai-ml"],
+    "terms": {
+      "provided": true,
+      "url": "https://zerosix.ai/privacy-policy/"
+    },
+    "value_props": [
+      {
+        "body": "Spend less time worrying about how much funding you need to train your models and more time working on your projects. Fully setup instances are available by the hour and come pre-installed with Docker, Keras, Scikit , NumPy, TensorFlow, Pytorch and more.",
+        "header": "Powerful GPUs for up to 1/5th the price of the other cloud platforms"
+      },
+      {
+        "body": "We support a number of the most popular frameworks out of the box (and if you need something specific we can pre-configure it for you). Sometimes you might want to leverage some containers to fully unlock your agile operation. We fully support docker and nvidia-docker to ensure there are no roadblocks.",
+        "header": "Docker Support"
+      },
+      {
+        "body": "Our support team is ready to help you every step of the way. You can reach us through direct email, chat on our website or even a phone call with a real person.",
+        "header": "Real Support"
+      },
+      {
+        "body": "Made with security in mind, your data and models are available to only you. Connect via SSH with identity files.",
+        "header": "Security"
+      },
+      {
+        "body": "All of our instances GPU enabled. This means your models get trained faster and we provide better processing power per dollar than traditional cloud vendors.",
+        "header": "Speed"
+      }
+    ]
+  },
+  "id": "234nbp17j5zrvb2ym49647kgtyv2a",
+  "type": "product",
+  "version": 1
+}

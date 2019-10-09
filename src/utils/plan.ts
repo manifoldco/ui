@@ -11,6 +11,9 @@ import {
   PlanMeteredFeatureConnection,
   PlanConfigurableFeatureConnection,
   PlanFeatureType,
+  PlanMeteredFeature,
+  PlanMeteredFeatureNumericDetails,
+  PlanConfigurableFeatureEdge,
 } from '../types/graphql';
 
 interface PlanCostOptions {
@@ -24,12 +27,16 @@ export interface PricingTier {
   from: number;
   to: number;
   per: number;
-  suffix: string;
+  unit: string;
 }
 
+// numeric details constants
+export const NUMBER_FEATURE_COIN = 10000000; // Numeric features are a ten-millionth of a cent, because floats stink
+const SECONDS_IN_HOUR = 60 * 60;
+
+// boolean feature display values
 export const NO = 'No';
 export const YES = 'Yes';
-export const NUMBER_FEATURE_COIN = 10000000; // Numeric features are a ten-millionth of a cent, because floats stink
 
 /**
  * Convert number feature costs to float cents (NOT DOLLARS)
@@ -141,9 +148,9 @@ export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): 
 
   // Features can be really, really (really) cheap. Let’s make things easier.
   let per = 1;
-  const suffix = numeric_details.suffix || '';
+  const unit = numeric_details.suffix || '';
   if (!Array.isArray(numeric_details.cost_ranges)) {
-    return [{ from: 0, to: Infinity, cost: 0, suffix, per }];
+    return [{ from: 0, to: Infinity, cost: 0, unit, per }];
   }
 
   const cheapestNonZeroCost = numeric_details.cost_ranges.reduce((cost, tier) => {
@@ -183,13 +190,13 @@ export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): 
     }
 
     // Special case: convert seconds for users
-    if (suffix.toLowerCase() === 'seconds') {
+    if (unit.toLowerCase() === 'seconds') {
       const hours = 60 * 60;
       return {
         cost: (cost_multiple || 0) * hours,
         from: Math.round(from / hours),
         to: to === Infinity ? Infinity : Math.round(to / hours),
-        suffix: 'hour',
+        unit: 'hour',
         per: 1,
       };
     }
@@ -198,9 +205,78 @@ export function pricingTiers({ numeric_details }: Catalog.FeatureValueDetails): 
       cost: cost_multiple || 0,
       from,
       to,
-      suffix,
+      unit,
       per,
     };
+  });
+}
+
+/**
+ * Calculate pricing tiers for GQL metered features
+ */
+
+export function pricingGqlTiers({
+  costTiers,
+  unit,
+}: PlanMeteredFeatureNumericDetails): PricingTier[] {
+  if (!costTiers) {
+    return [];
+  }
+
+  // Features can be really, really (really) cheap. Let’s make things easier.
+  let per = 1;
+  if (costTiers.length === 0) {
+    return [{ from: 0, to: Infinity, cost: 0, unit, per }];
+  }
+
+  const cheapestNonZeroCost = costTiers.reduce((totalCost, tier) => {
+    if (!tier.cost || tier.cost === 0) {
+      return totalCost;
+    }
+    return tier.cost < totalCost ? tier.cost : totalCost;
+  }, Infinity);
+
+  if (cheapestNonZeroCost < NUMBER_FEATURE_COIN) {
+    per = oneCent(cheapestNonZeroCost);
+  }
+
+  // Sort tiers, with -1 (Infinity) at the end
+  const sorted = costTiers.sort((a, b) => {
+    if (a.limit === -1) {
+      return 1;
+    }
+    if (b.limit === -1) {
+      return -1;
+    }
+    return (a.limit || 0) - (b.limit || 0);
+  });
+
+  return sorted.map(({ cost = 0, limit }, i) => {
+    // Each tier starts at previous + 1 (not other way around)
+    let from = 0;
+    const lastTier = sorted[i - 1];
+    if (lastTier && typeof lastTier.limit === 'number') {
+      from = lastTier.limit + 1;
+    }
+
+    // Use Infinity rather than -1
+    let to = typeof limit === 'number' ? limit : Infinity;
+    if (to === -1) {
+      to = Infinity;
+    }
+
+    // Special case: convert seconds for users
+    if (unit.toLowerCase() === 'seconds') {
+      return {
+        cost: cost * SECONDS_IN_HOUR,
+        from: Math.round(from / SECONDS_IN_HOUR),
+        to: to === Infinity ? Infinity : Math.round(to / SECONDS_IN_HOUR),
+        unit: 'hour',
+        per: 1,
+      };
+    }
+
+    return { cost, from, to, unit, per };
   });
 }
 
@@ -226,7 +302,7 @@ export function numberFeatureMeasurableDisplayValue(
 
   // Flat cost
   if (tiers.length === 1) {
-    const [{ cost, suffix, per }] = tiers;
+    const [{ cost, unit, per }] = tiers;
 
     if (cost === 0) {
       return 'Free';
@@ -234,13 +310,35 @@ export function numberFeatureMeasurableDisplayValue(
 
     // If features are really really cheap, let’s make it more readable
     if (per > 1) {
-      return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(suffix)}`;
+      return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(unit)}`;
     }
 
-    return `${$(featureCost(cost))} / ${suffix}`;
+    return `${$(featureCost(cost))} / ${unit}`;
   }
 
   return undefined;
+}
+
+/**
+ * User-friendly display for a measurable number feature value
+ */
+export function meteredFeatureDisplayValue({ numericDetails }: PlanMeteredFeature): string {
+  const withCommas = new Intl.NumberFormat().format;
+  const tiers = pricingGqlTiers(numericDetails);
+
+  // Flat cost
+  const [{ cost, unit, per }] = tiers;
+
+  if (cost === 0) {
+    return 'Free';
+  }
+
+  // If features are really really cheap, let’s make it more readable
+  if (per > 1) {
+    return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(unit)}`;
+  }
+
+  return `${$(featureCost(cost))} / ${unit}`;
 }
 
 /**
@@ -276,6 +374,26 @@ export function initialFeatures(features: Catalog.ExpandedFeature[]): Gateway.Fe
     }
 
     return obj;
+  }, {});
+}
+
+/**
+ * Get initial features for GraphQL features
+ */
+
+export function initialGqlFeatures(
+  features: PlanConfigurableFeatureEdge[]
+): { [key: string]: string | boolean | number } {
+  return features.reduce((featureMap, feature) => {
+    if (feature.node.type === PlanFeatureType.Number) {
+      const { min } = feature.node.numericDetails || {};
+      return { ...featureMap, [feature.node.label]: min };
+    }
+    const [firstOption] = feature.node.options || [];
+    return {
+      ...featureMap,
+      [feature.node.label]: firstOption.displayValue,
+    };
   }, {});
 }
 
@@ -481,29 +599,27 @@ const convertPlanFeaturesData = (plan: Plan) => {
 const convertRegionData = (regions: RegionConnection | null | undefined): string[] =>
   regions ? regions.edges.map(region => region.node.id) : [];
 
-export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => {
-  return {
-    id: plan.id,
-    type: 'plan',
-    version: 1,
-    body: {
-      cost: plan.cost,
-      features: convertPlanFeaturesData(plan),
-      label: plan.label,
-      name: plan.displayName,
-      product_id: (plan.product && plan.product.id) || '',
-      provider_id: (plan.product && plan.product.provider && plan.product.provider.id) || '',
-      regions: convertRegionData(plan.regions),
-      state: plan.state && plan.state.toLocaleLowerCase(),
-      expanded_features: [
-        ...convertFixedFeatureData(plan.fixedFeatures),
-        ...convertMeteredFeatureData(plan.meteredFeatures),
-        ...convertConfigurableFeatureData(plan.configurableFeatures),
-      ],
-      ...(plan.configurableFeatures && plan.configurableFeatures.edges.length > 0
-        ? { customizable: true }
-        : {}),
-      free: plan.free,
-    },
-  };
-};
+export const convertPlanData = (plan: Plan): Catalog.ExpandedPlan => ({
+  id: plan.id,
+  type: 'plan',
+  version: 1,
+  body: {
+    cost: plan.cost,
+    features: convertPlanFeaturesData(plan),
+    label: plan.label,
+    name: plan.displayName,
+    product_id: (plan.product && plan.product.id) || '',
+    provider_id: (plan.product && plan.product.provider && plan.product.provider.id) || '',
+    regions: convertRegionData(plan.regions),
+    state: plan.state && plan.state.toLocaleLowerCase(),
+    expanded_features: [
+      ...convertFixedFeatureData(plan.fixedFeatures),
+      ...convertMeteredFeatureData(plan.meteredFeatures),
+      ...convertConfigurableFeatureData(plan.configurableFeatures),
+    ],
+    ...(plan.configurableFeatures && plan.configurableFeatures.edges.length > 0
+      ? { customizable: true }
+      : {}),
+    free: plan.free,
+  },
+});
