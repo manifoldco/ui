@@ -27,6 +27,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `manifold-resource-container`. (#603)
 - Converted `<manifold-data-deprovision-button>` to use GraphQL (#604)
 - Converted `<manifold-plan-cost>` to GraphQL (#605)
+- Updated Stencil to v1.6.1 (#606)
 
 ### Breaking Changes:
 

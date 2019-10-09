@@ -736,7 +736,10 @@ export type Product = Node & {
   setupStepsHtml: Scalars['String'],
   /** List Plans associated with the product */
   plans?: Maybe<PlanConnection>,
+  /** Categories are the catalog categories associated with this product. */
   categories: Array<Category>,
+  /** Settings describes how the product integrates with the marketplace. */
+  settings: ProductSettings,
 };
 
 
@@ -755,6 +758,20 @@ export type ProductConnection = {
   edges: Array<ProductEdge>,
   pageInfo: PageInfo,
 };
+
+/** 
+ * ProductCredentialsSupportType describes product credentials support.
+ * 
+ * * `NONE`: means that no credentials are necessary to access the product.
+ *     This can happen for products that are only usable through their dashboard.
+ * * `SINGLE`: means that the product only supports one credential set at a single time.
+ * * `MULTIPLE`: means that the product supports multiple credential sets at a single time.
+ **/
+export enum ProductCredentialsSupportType {
+  None = 'NONE',
+  Single = 'SINGLE',
+  Multiple = 'MULTIPLE'
+}
 
 /** A ProductEdge is an edge of a ProductConnection. */
 export type ProductEdge = {
@@ -779,6 +796,15 @@ export type ProductScreenshot = {
    __typename?: 'ProductScreenshot',
   url: Scalars['String'],
   order: Scalars['Int'],
+};
+
+/** ProductSettings describes how the product integrates with the marketplace. */
+export type ProductSettings = {
+   __typename?: 'ProductSettings',
+  /** Whether or not the product supports SSO allowing users to visit its dashboard. */
+  ssoSupported: Scalars['Boolean'],
+  /** Describes product credentials support. */
+  credentialsSupport: ProductCredentialsSupportType,
 };
 
 /** ProductState is an enum of possible product states. */
@@ -1141,9 +1167,9 @@ export enum RenewalPoint {
 export type Resource = Node & {
    __typename?: 'Resource',
   id: Scalars['ID'],
-  /**  A human-readable display name for this resource.  */
+  /** A human-readable display name for this resource.  */
   displayName: Scalars['String'],
-  /**  A machine-readable label for this resource, unique per owner.  */
+  /** A machine-readable label for this resource, unique per owner.  */
   label: Scalars['String'],
   /** Whether or not a user can SSO into this resource's product dashboard. */
   ssoSupported: Scalars['Boolean'],
@@ -1153,7 +1179,7 @@ export type Resource = Node & {
    * not used, the URL will expire after around 5 minutes and another one will need to be requested.
  **/
   ssoUrl: Scalars['String'],
-  /**  Indicates the availability status of the resource  */
+  /** Indicates the availability status of the resource  */
   status: ResourceStatus,
   /** 
  * The plan for which this resource is provisioned. The plan can be null if the
@@ -1171,6 +1197,8 @@ export type Resource = Node & {
    * Note: If the resource is not owned by a Platform Profile, the value is null.
  **/
   owner?: Maybe<Profile>,
+  /**  The time the resource was created at. */
+  createdAt?: Maybe<Scalars['Time']>,
   /** A list of credentials which can be used to access the Resource. */
   credentials?: Maybe<CredentialConnection>,
 };
