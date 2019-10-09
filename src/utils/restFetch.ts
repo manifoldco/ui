@@ -83,7 +83,12 @@ export function createRestFetch({
       status: response.status,
     };
 
-    const message = Array.isArray(body) ? body[0].message : body.message;
+    let message: string | undefined;
+    if (Array.isArray(body) && body.length > 0) {
+      message = body[0].message;
+    } else if (typeof body === 'object') {
+      message = body.message;
+    }
     if (message) {
       detail.errorMessage = message;
     }

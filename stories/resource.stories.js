@@ -2,6 +2,9 @@ import { storiesOf } from '@storybook/html';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { manifoldConnectionDecorator } from './data/connectionDecorator';
 import productLabels from './data/product-labels';
+import productLabelsStage from './data/product-labels-stage';
+
+const env = localStorage.getItem('manifold_auth_env');
 
 storiesOf('Resource', module)
   .addDecorator(manifoldConnectionDecorator)
@@ -77,7 +80,11 @@ storiesOf('Resource', module)
   })
   .add('create', () => {
     const newResource = text('resource-label', 'pdfshift');
-    const productLabel = select('product-label', productLabels, 'pdfshift');
+    const productLabel = select(
+      'product-label',
+      env === 'stage' ? productLabelsStage : productLabels,
+      'pdfshift'
+    );
     return `
       <style>
         menu {
@@ -105,6 +112,11 @@ storiesOf('Resource', module)
       localStorage.getItem('manifold-resource-label') || 'my-resource'
     );
     localStorage.setItem('manifold-resource-label', resourceLabel);
+    const productLabel = select(
+      'product-label',
+      env === 'stage' ? productLabelsStage : productLabels,
+      'pdfshift'
+    );
 
     // see .storybook/preview-head.html for resize setup
 
@@ -116,13 +128,13 @@ storiesOf('Resource', module)
         }
       </style>
       <manifold-resource-container resource-label="${resourceLabel}">
-        <manifold-plan-selector resource-label="${resourceLabel}"></manifold-plan-selector>
+        <manifold-plan-selector product-label="${productLabel}"></manifold-plan-selector>
         <menu>
-          <manifold-data-manage-button
+          <manifold-data-resize-button
             resource-label="${resourceLabel}"
           >
             Resize
-          </manifold-data-manage-button>
+          </manifold-data-resize-button>
         </menu>
       </manifold-resource-container>
     `;

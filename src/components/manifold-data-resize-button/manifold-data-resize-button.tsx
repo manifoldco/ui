@@ -35,7 +35,7 @@ const resourceIdQuery = gql`
 `;
 
 const resourcePlanMutation = gql`
-  mutation RESOURCE_CHANGE_PLAN($resourceId: String!, $planId: ID!) {
+  mutation RESOURCE_CHANGE_PLAN($resourceId: ID!, $planId: ID!) {
     updateResourcePlan(input: { resourceId: $resourceId, newPlanID: $planId }) {
       data {
         id
