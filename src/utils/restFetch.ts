@@ -20,6 +20,14 @@ interface RestFetchArguments {
   emitter?: EventEmitter;
 }
 
+interface RestFetchEventDetail {
+  type: 'manifold-rest-fetch-duration';
+  endpoint: string;
+  duration: number;
+  status: number;
+  errorMessage?: string;
+}
+
 type Success = undefined;
 
 export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
@@ -66,15 +74,19 @@ export function createRestFetch({
     }
 
     const body = await response.json();
+
     const fetchDuration = performance.now() - rttStart;
-    const message = Array.isArray(body) ? body[0].message : body.message;
-    const detail = {
+    const detail: RestFetchEventDetail = {
       type: 'manifold-rest-fetch-duration',
       endpoint: args.endpoint,
       duration: fetchDuration,
       status: response.status,
-      errorMessage: message,
     };
+
+    const message = Array.isArray(body) ? body[0].message : body.message;
+    if (message) {
+      detail.errorMessage = message;
+    }
     if (args.emitter) {
       args.emitter.emit(detail);
     } else {
@@ -85,6 +97,7 @@ export function createRestFetch({
         })
       );
     }
+
     if (response.status >= 200 && response.status < 300) {
       return body;
     }

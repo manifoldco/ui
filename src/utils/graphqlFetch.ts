@@ -25,6 +25,13 @@ export interface GraphqlError {
   };
 }
 
+interface GraphqlFetchEventDetail {
+  type: 'manifold-graphql-fetch-duration';
+  request: GraphqlArgs;
+  duration: number;
+  errors?: GraphqlError[];
+}
+
 // TODO remove this in favor of GraphQL documents
 export interface GraphqlData extends Query {
   data?: Resource; // CreateResourcePayload, etc.
@@ -85,7 +92,7 @@ export function createGraphqlFetch({
     }
 
     const fetchDuration = performance.now() - rttStart;
-    const detail = {
+    const detail: GraphqlFetchEventDetail = {
       type: 'manifold-graphql-fetch-duration',
       request,
       duration: fetchDuration,
