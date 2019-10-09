@@ -16,7 +16,7 @@ describe('<manifold-resource-sso>', () => {
     element = page.doc.createElement('manifold-resource-sso');
   });
 
-  it('Renders a skeleton if loading', async () => {
+  it('Renders a loading button if loading', async () => {
     element.loading = true;
     const root = page.root as HTMLElement;
     root.appendChild(element);
@@ -31,7 +31,7 @@ describe('<manifold-resource-sso>', () => {
     }
   });
 
-  it('Renders if not loading', async () => {
+  it('Renders a complete button if not loading', async () => {
     element.loading = false;
     element.gqlData = resource as Resource;
     const root = page.root as HTMLElement;
