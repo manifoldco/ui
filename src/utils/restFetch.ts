@@ -66,28 +66,31 @@ export function createRestFetch({
     }
 
     const body = await response.json();
+    const fetchDuration = performance.now() - rttStart;
+    const message = Array.isArray(body) ? body[0].message : body.message;
+    const detail = {
+      type: 'manifold-rest-fetch-duration',
+      endpoint: args.endpoint,
+      duration: fetchDuration,
+      status: response.status,
+      errorMessage: message,
+    };
+    if (args.emitter) {
+      args.emitter.emit(detail);
+    } else {
+      document.dispatchEvent(
+        new CustomEvent('manifold-rest-fetch-duration', {
+          bubbles: true,
+          detail,
+        })
+      );
+    }
     if (response.status >= 200 && response.status < 300) {
-      const fetchDuration = performance.now() - rttStart;
-      if (args.emitter) {
-        args.emitter.emit({
-          type: 'manifold-rest-fetch-duration',
-          endpoint: args.endpoint,
-          duration: fetchDuration,
-        });
-      } else {
-        document.dispatchEvent(
-          new CustomEvent('manifold-rest-fetch-duration', {
-            bubbles: true,
-            detail: { endpoint: args.endpoint, duration: fetchDuration },
-          })
-        );
-      }
       return body;
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!
     report(response);
-    const message = Array.isArray(body) ? body[0].message : body.message;
     throw new Error(message);
   }
 

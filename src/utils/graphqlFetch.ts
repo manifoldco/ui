@@ -84,6 +84,25 @@ export function createGraphqlFetch({
       };
     }
 
+    const fetchDuration = performance.now() - rttStart;
+    const detail = {
+      type: 'manifold-graphql-fetch-duration',
+      request,
+      duration: fetchDuration,
+      errors: body.errors,
+    };
+
+    if (emitter) {
+      emitter.emit(detail);
+    } else {
+      document.dispatchEvent(
+        new CustomEvent('manifold-graphql-fetch-duration', {
+          bubbles: true,
+          detail,
+        })
+      );
+    }
+
     if (body.errors) {
       report(body.errors);
 
@@ -99,22 +118,6 @@ export function createGraphqlFetch({
 
         throw new Error('Auth token expired');
       }
-    }
-
-    const fetchDuration = performance.now() - rttStart;
-    if (emitter) {
-      emitter.emit({
-        type: 'manifold-graphql-fetch-duration',
-        request,
-        duration: fetchDuration,
-      });
-    } else {
-      document.dispatchEvent(
-        new CustomEvent('manifold-graphql-fetch-duration', {
-          bubbles: true,
-          detail: { request, duration: fetchDuration },
-        })
-      );
     }
 
     // return everything to the user
