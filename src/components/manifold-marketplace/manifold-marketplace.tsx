@@ -5,7 +5,12 @@ import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Query, ProductEdge, ProductState } from '../../types/graphql';
+import {
+  Query,
+  ProductEdge,
+  ProductState,
+  ProductCredentialsSupportType,
+} from '../../types/graphql';
 import fetchAllPages from '../../utils/fetchAllPages';
 import skeletonProducts from '../../data/marketplace';
 import { Catalog } from '../../types/catalog';
@@ -20,6 +25,10 @@ function transformSkeleton(skel: Catalog.Product): ProductEdge {
       label: skel.body.label,
       logoUrl: skel.body.logo_url,
       tagline: skel.body.tagline,
+      settings: {
+        ssoSupported: true,
+        credentialsSupport: ProductCredentialsSupportType.Single,
+      },
       setupStepsHtml: '',
       state: ProductState.Available,
       supportEmail: skel.body.support_email,
