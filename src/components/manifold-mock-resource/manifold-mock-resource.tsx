@@ -1,6 +1,12 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { Gateway } from '../../types/gateway';
-import { PlanState, ProductState, Resource, ResourceStatusLabel } from '../../types/graphql';
+import {
+  PlanState,
+  ProductState,
+  Resource,
+  ResourceStatusLabel,
+  ProductCredentialsSupportType,
+} from '../../types/graphql';
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -52,6 +58,10 @@ const GraphQLResource: Resource = {
       displayName: 'LogDNA',
       tagline:
         'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
+      settings: {
+        ssoSupported: true,
+        credentialsSupport: ProductCredentialsSupportType.Single,
+      },
       state: ProductState.Available,
       logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
       supportEmail: 'support@logdna.com',

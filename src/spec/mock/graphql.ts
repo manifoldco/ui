@@ -1,9 +1,10 @@
 import {
-  Product,
-  ProductState,
-  Provider,
   Plan,
   PlanState,
+  Product,
+  ProductCredentialsSupportType,
+  ProductState,
+  Provider,
   Resource,
   ResourceStatusLabel,
 } from '../../types/graphql';
@@ -45,6 +46,10 @@ export const product: Product = {
     order: index,
     url: image,
   })),
+  settings: {
+    ssoSupported: true,
+    credentialsSupport: ProductCredentialsSupportType.Single,
+  },
   valueProps: prodMock.body.value_props.map(valueProp => ({
     __typename: 'ValueProp',
     body: valueProp.body,
@@ -337,6 +342,10 @@ export const resource: Resource = {
         logoUrl: '',
         url: '',
         supportEmail: '',
+      },
+      settings: {
+        ssoSupported: true,
+        credentialsSupport: ProductCredentialsSupportType.Single,
       },
       valueProps: [
         {

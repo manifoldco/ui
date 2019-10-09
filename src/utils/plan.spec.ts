@@ -31,7 +31,13 @@ import {
   planSort,
   convertPlanData,
 } from './plan';
-import { Plan, PlanState, ProductState, PlanFeatureType } from '../types/graphql';
+import {
+  Plan,
+  PlanFeatureType,
+  PlanState,
+  ProductCredentialsSupportType,
+  ProductState,
+} from '../types/graphql';
 
 describe('default value methods', () => {
   it('string features return default value', () =>
@@ -207,6 +213,10 @@ const graphqlPlan: Plan = {
     valuePropsHtml: '',
     setupStepsHtml: '',
     categories: [],
+    settings: {
+      ssoSupported: true,
+      credentialsSupport: ProductCredentialsSupportType.Single,
+    },
     provider: {
       id: '2343d7p36xwrydjy7120jxqxc7t22',
       displayName: '',
