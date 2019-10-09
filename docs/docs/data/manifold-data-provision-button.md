@@ -35,8 +35,6 @@ function updateButton({ detail: { features, planId, productLabel, regionId } }) 
   provisionButton.productLabel = productLabel;
   provisionButton.regionId = regionId;
   provisionButton.resourceLabel = resourceLabel;
-
-  // provisionButton.ownerId = '[ownerID]'; // OPTIONAL: only needed if provisioning for a different user (current user must have authorization to do so)
 }
 
 document.addEventListener('manifold-planSelector-load', updateButton);
