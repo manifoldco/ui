@@ -1,9 +1,34 @@
 import { Config } from '@stencil/core';
 import { postcss } from '@stencil/postcss';
 import postCSSPresetEnv from 'postcss-preset-env';
-import replace from "rollup-plugin-replace";
+import replace from 'rollup-plugin-replace';
+import { createFilter } from 'rollup-pluginutils';
 
 // https://stenciljs.com/docs/config
+
+interface Options {
+  include?: string;
+  exclude?: string;
+}
+
+function gql(opts: Options = {}) {
+  if (!opts.include) {
+    opts.include = '**/*.graphql';
+  }
+
+  const filter = createFilter(opts.include, opts.exclude);
+
+  return {
+    name: 'gql',
+    transform(code, id) {
+      if (filter(id)) {
+        return {
+          code: `export default ${JSON.stringify(code)}`,
+        };
+      }
+    },
+  };
+}
 
 export const config: Config = {
   namespace: 'manifold',
@@ -12,6 +37,7 @@ export const config: Config = {
   outputTargets: [{ type: 'dist' }],
   excludeSrc: ['**/*-happo.*', '**/spec/mock/*'],
   plugins: [
+    gql(),
     postcss({
       plugins: [
         postCSSPresetEnv({
@@ -23,12 +49,12 @@ export const config: Config = {
       ],
     }),
     replace({
-      exclude: "node_modules/**",
-      delimiters: ["<@", "@>"],
+      exclude: 'node_modules/**',
+      delimiters: ['<@', '@>'],
       values: {
-        DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN
-      }
-    })
+        DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN,
+      },
+    }),
   ],
   testing: {
     testPathIgnorePatterns: [

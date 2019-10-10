@@ -1,0 +1,20 @@
+query PRODUCTS($first: Int!, $after: String!) {
+  products(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        label
+        tagline
+        logoUrl
+        displayName
+        categories {
+          label
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
