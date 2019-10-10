@@ -19,12 +19,7 @@ async function setup(props: Props) {
   });
 
   const component = page.doc.createElement('manifold-data-resize-button');
-  component.graphqlFetch = createGraphqlFetch({
-    endpoint: () => graphqlEndpoint,
-    getAuthToken: jest.fn(() => '1234'),
-    wait: () => 10,
-    setAuthToken: jest.fn(),
-  });
+  component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
   component.planId = props.planId;
   component.resourceLabel = props.resourceLabel;
   component.resourceId = props.resourceId;
@@ -72,8 +67,6 @@ describe('<manifold-data-resize-button>', () => {
       const resourceLabel = 'click-resource-label';
       const resourceId = 'click-resource-id';
 
-      const mockClick = jest.fn();
-
       const { page } = await setup({ planId, resourceId, resourceLabel });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
@@ -81,8 +74,10 @@ describe('<manifold-data-resize-button>', () => {
       }
 
       // listen for event and fire
+      const mockClick = jest.fn();
       page.doc.addEventListener('manifold-resizeButton-click', mockClick);
       button.click();
+      await page.waitForChanges();
 
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({
@@ -106,13 +101,11 @@ describe('<manifold-data-resize-button>', () => {
         throw new Error('button not found in document');
       }
 
+      // listen for event and fire
       const mockClick = jest.fn();
-      await new Promise(resolve => {
-        // listen for event and fire
-        mockClick.mockImplementation(() => resolve());
-        page.doc.addEventListener('manifold-resizeButton-error', mockClick);
-        button.click();
-      });
+      page.doc.addEventListener('manifold-resizeButton-error', mockClick);
+      button.click();
+      await page.waitForChanges();
 
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({
@@ -137,13 +130,11 @@ describe('<manifold-data-resize-button>', () => {
         throw new Error('button not found in document');
       }
 
+      // listen for event and fire
       const mockClick = jest.fn();
-      await new Promise(resolve => {
-        // listen for event and fire
-        mockClick.mockImplementation(() => resolve());
-        page.doc.addEventListener('manifold-resizeButton-success', mockClick);
-        button.click();
-      });
+      page.doc.addEventListener('manifold-resizeButton-success', mockClick);
+      button.click();
+      await page.waitForChanges();
 
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({
