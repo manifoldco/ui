@@ -1,5 +1,6 @@
 overwrite: true
 schema: 'https://api.manifold.co/graphql'
+documents: src/**/*.graphql
 generates:
   src/types/graphql.ts:
     plugins:

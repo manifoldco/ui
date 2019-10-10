@@ -9,13 +9,14 @@ import {
   Method,
   Watch,
 } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 import * as clipboard from 'clipboard-polyfill';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import query from './credentials.graphql';
+import { ResourceWithCredentialsQuery } from '../../types/graphql';
 
 interface ErrorDetail {
   message: string;
@@ -65,21 +66,8 @@ export class ManifoldCopyCredentials {
     // disable button while loading
     this.credentials = undefined;
 
-    const { data, errors } = await this.graphqlFetch({
-      query: gql`
-        query RESOURCE_WITH_CREDENTIALS($resourceLabel: String!) {
-          resource(label: $resourceLabel) {
-            credentials(first: 100) {
-              edges {
-                node {
-                  key
-                  value
-                }
-              }
-            }
-          }
-        }
-      `,
+    const { data, errors } = await this.graphqlFetch<ResourceWithCredentialsQuery>({
+      query,
       variables: { resourceLabel: this.resourceLabel },
     });
 

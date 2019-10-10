@@ -16,6 +16,7 @@ import {
   Product,
   ProductEdge,
   Resource,
+  ResourceWithCredentialsQuery,
 } from './types/graphql';
 import {
   Gateway,
