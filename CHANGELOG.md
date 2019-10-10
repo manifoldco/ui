@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Added a `sidebar` slot to `<manifold-marketplace>` (#612)
+
 ### Removed
 
 - Removed `manifold-resource-details` component. (#597)

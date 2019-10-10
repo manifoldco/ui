@@ -79,7 +79,7 @@ describe('<manifold-marketplace-grid>', () => {
     });
   });
 
-  describe('v0 API', () => {
+  describe('v0 props', () => {
     it('[featured] features specified products', async () => {
       const featured = ['dumper', 'blitline'];
 
@@ -333,6 +333,25 @@ describe('<manifold-marketplace-grid>', () => {
       // Also ensure category titles are hidden when searching
       const categoryTitles = await page.findAll('manifold-marketplace-grid >>> [id^="category-"]');
       expect(categoryTitles).toHaveLength(0);
+    });
+  });
+
+  describe('v0 slots', () => {
+    it('[slot="sidebar"]', async () => {
+      const page = await newE2EPage({
+        html: `<manifold-marketplace-grid><div slot="sidebar">Sidebar text</div></manifold-marketplace-grid>`,
+      });
+      await page.$eval(
+        'manifold-marketplace-grid',
+        (elm: any, props: any) => {
+          elm.services = props.services;
+        },
+        { services }
+      );
+      await page.waitForChanges();
+
+      const sidebar = await page.find('manifold-marketplace-grid >>> slot[name="sidebar"]');
+      expect(sidebar).not.toBeNull();
     });
   });
 });
