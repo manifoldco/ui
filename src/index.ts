@@ -3,7 +3,7 @@ import { waitForAuthToken } from './utils/auth';
 
 export * from './components';
 
-export async function getAuthToken() {
+export async function ensureAuthToken() {
   if (connection.authToken) {
     return connection.authToken;
   }

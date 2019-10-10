@@ -31,3 +31,16 @@ The `<manifold-connection>` component is only needed once, and can be placed any
 API calls will not be made if this component is not present somewhere in the DOM.
 
 If you omit the `env` property, `manifold-connection` will point to production by default.
+
+## Authentication timeout
+
+Many API calls will require authentication. If no auth token is present, we will wait for the auth
+token to be received and then try the call again. This process will eventually timeout and throw an
+exception. The default wait time is 15 seconds, but this is can be configured by setting the
+`waitTime` property on this component.
+
+```html
+<manifold-connection waitTime="20">
+  <manifold-product product-label="ant-hill-stage"></manifold-product>
+</manifold-connection>
+```

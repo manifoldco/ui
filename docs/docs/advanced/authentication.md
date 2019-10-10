@@ -196,6 +196,36 @@ minor performance boost (“minor” because typically our services detect an in
 within milliseconds, which does take time but in many instances your users may not notice a
 difference of milliseconds).
 
+## Using our GraphQL API
+
+If you are calling our GraphQL API directly from your client code, and the call that you're making
+requires authentication, you can ask us for the auth token by calling the `ensureAuthToken`
+function:
+
+```js
+import { ensureAuthToken } from '@manifoldco/ui';
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await ensureAuthToken();
+
+  return {
+    headers: {
+      ...headers,
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+      'content-type': 'application/json',
+      'access-control-allow-origin': '*',
+      Connection: 'keep-alive',
+    },
+  };
+});
+```
+
+This function will return the auth token as soon as authentication has completed. If the
+authentication process does not occur, the function will eventually timeout and throw an exception.
+The wait time defaults to 15 seconds, but is configurable through [the
+manifold-connection][connection] component. You should only use this function if the call you're
+making requires authentication, since public calls to our catalog don't require an auth token.
+
 [authentication]: https://docs.manifold.co/docs/platforms-auth-AzsO1HvPT1Hnojsrsb10L
 [connection]: /connection
 [oauth2]: https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request
