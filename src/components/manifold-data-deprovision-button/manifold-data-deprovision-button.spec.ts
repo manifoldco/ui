@@ -11,7 +11,6 @@ interface Props {
 }
 
 const graphqlEndpoint = 'http://test.com/graphql';
-const profile = { profile: { id: '1234' } };
 
 async function setup(props: Props) {
   const page = await newSpecPage({
@@ -49,9 +48,6 @@ describe('<manifold-data-deprovision-button>', () => {
         };
         return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
       }
-      if (body.includes('query PROFILE_ID')) {
-        return body.includes('error') ? { data: null, errors } : { data: profile };
-      }
       if (body.includes('query RESOURCE_ID')) {
         return body.includes('error') ? { data: null, errors } : { data: resource };
       }
@@ -73,7 +69,7 @@ describe('<manifold-data-deprovision-button>', () => {
     });
   });
 
-  describe('events', () => {
+  describe('v0 events', () => {
     it('click', async () => {
       const resourceLabel = 'click-label';
 

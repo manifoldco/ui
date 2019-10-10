@@ -7,7 +7,6 @@ import { product, resource, plan } from '../../spec/mock/graphql';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const graphqlEndpoint = 'http://test.com/graphql';
-const profile = { profile: { id: '1234' } };
 
 interface Props {
   planId?: string;
@@ -57,9 +56,6 @@ describe('<manifold-data-provision-button>', () => {
         };
         return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
       }
-      if (body.includes('query PROFILE_ID')) {
-        return body.includes('error') ? { data: null, errors } : { data: profile };
-      }
       if (body.includes('query GET_PRODUCT_ID')) {
         return body.includes('error') ? { data: null, errors } : { data: product };
       }
@@ -72,7 +68,7 @@ describe('<manifold-data-provision-button>', () => {
 
   afterEach(() => fetchMock.restore());
 
-  describe('v0 API', () => {
+  describe('v0 props', () => {
     it('[product-label]: fetches product by label', async () => {
       const { page } = await setup({ productLabel: 'test-product' });
       const provisionButton =
@@ -88,7 +84,7 @@ describe('<manifold-data-provision-button>', () => {
       expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(false);
     });
 
-    describe('events', () => {
+    describe('v0 events', () => {
       it('click', async () => {
         const planId = 'plan-id';
         const productLabel = 'click-product';

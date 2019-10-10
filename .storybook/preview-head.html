@@ -23,7 +23,7 @@
       }
 
       function update({ detail }) {
-        ['manifold-data-manage-button', 'manifold-data-provision-button'].forEach(selector => {
+        ['manifold-data-provision-button', 'manifold-data-resize-button'].forEach(selector => {
           const button = document.querySelector(selector);
           if (button) {
             button.planId = detail.planId;

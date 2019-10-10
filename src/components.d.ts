@@ -136,20 +136,6 @@ export namespace Components {
     'label'?: string;
     'paused'?: boolean;
   }
-  interface ManifoldDataManageButton {
-    'features'?: Gateway.FeatureMap;
-    'planId'?: string;
-    'productId'?: string;
-    'regionId'?: string;
-    /**
-    * Name of resource
-    */
-    'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-  }
   interface ManifoldDataProductLogo {
     /**
     * _(optional)_ `alt` attribute
@@ -226,6 +212,15 @@ export namespace Components {
     /**
     * The label of the resource to rename
     */
+    'resourceLabel'?: string;
+  }
+  interface ManifoldDataResizeButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'planId'?: string;
+    'resourceId'?: string;
     'resourceLabel'?: string;
   }
   interface ManifoldDataResourceList {
@@ -726,12 +721,6 @@ declare global {
     new (): HTMLManifoldDataHasResourceElement;
   };
 
-  interface HTMLManifoldDataManageButtonElement extends Components.ManifoldDataManageButton, HTMLStencilElement {}
-  var HTMLManifoldDataManageButtonElement: {
-    prototype: HTMLManifoldDataManageButtonElement;
-    new (): HTMLManifoldDataManageButtonElement;
-  };
-
   interface HTMLManifoldDataProductLogoElement extends Components.ManifoldDataProductLogo, HTMLStencilElement {}
   var HTMLManifoldDataProductLogoElement: {
     prototype: HTMLManifoldDataProductLogoElement;
@@ -754,6 +743,12 @@ declare global {
   var HTMLManifoldDataRenameButtonElement: {
     prototype: HTMLManifoldDataRenameButtonElement;
     new (): HTMLManifoldDataRenameButtonElement;
+  };
+
+  interface HTMLManifoldDataResizeButtonElement extends Components.ManifoldDataResizeButton, HTMLStencilElement {}
+  var HTMLManifoldDataResizeButtonElement: {
+    prototype: HTMLManifoldDataResizeButtonElement;
+    new (): HTMLManifoldDataResizeButtonElement;
   };
 
   interface HTMLManifoldDataResourceListElement extends Components.ManifoldDataResourceList, HTMLStencilElement {}
@@ -1026,11 +1021,11 @@ declare global {
     'manifold-credentials-view': HTMLManifoldCredentialsViewElement;
     'manifold-data-deprovision-button': HTMLManifoldDataDeprovisionButtonElement;
     'manifold-data-has-resource': HTMLManifoldDataHasResourceElement;
-    'manifold-data-manage-button': HTMLManifoldDataManageButtonElement;
     'manifold-data-product-logo': HTMLManifoldDataProductLogoElement;
     'manifold-data-product-name': HTMLManifoldDataProductNameElement;
     'manifold-data-provision-button': HTMLManifoldDataProvisionButtonElement;
     'manifold-data-rename-button': HTMLManifoldDataRenameButtonElement;
+    'manifold-data-resize-button': HTMLManifoldDataResizeButtonElement;
     'manifold-data-resource-list': HTMLManifoldDataResourceListElement;
     'manifold-data-resource-logo': HTMLManifoldDataResourceLogoElement;
     'manifold-data-sso-button': HTMLManifoldDataSsoButtonElement;
@@ -1183,23 +1178,6 @@ declare namespace LocalJSX {
     'onManifold-hasResource-load'?: (event: CustomEvent<any>) => void;
     'paused'?: boolean;
   }
-  interface ManifoldDataManageButton {
-    'features'?: Gateway.FeatureMap;
-    'onManifold-manageButton-click'?: (event: CustomEvent<any>) => void;
-    'onManifold-manageButton-error'?: (event: CustomEvent<any>) => void;
-    'onManifold-manageButton-success'?: (event: CustomEvent<any>) => void;
-    'planId'?: string;
-    'productId'?: string;
-    'regionId'?: string;
-    /**
-    * Name of resource
-    */
-    'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-  }
   interface ManifoldDataProductLogo {
     /**
     * _(optional)_ `alt` attribute
@@ -1284,6 +1262,18 @@ declare namespace LocalJSX {
     /**
     * The label of the resource to rename
     */
+    'resourceLabel'?: string;
+  }
+  interface ManifoldDataResizeButton {
+    /**
+    * _(hidden)_ Passed by `<manifold-connection>`
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'onManifold-resizeButton-click'?: (event: CustomEvent<any>) => void;
+    'onManifold-resizeButton-error'?: (event: CustomEvent<any>) => void;
+    'onManifold-resizeButton-success'?: (event: CustomEvent<any>) => void;
+    'planId'?: string;
+    'resourceId'?: string;
     'resourceLabel'?: string;
   }
   interface ManifoldDataResourceList {
@@ -1738,11 +1728,11 @@ declare namespace LocalJSX {
     'manifold-credentials-view': ManifoldCredentialsView;
     'manifold-data-deprovision-button': ManifoldDataDeprovisionButton;
     'manifold-data-has-resource': ManifoldDataHasResource;
-    'manifold-data-manage-button': ManifoldDataManageButton;
     'manifold-data-product-logo': ManifoldDataProductLogo;
     'manifold-data-product-name': ManifoldDataProductName;
     'manifold-data-provision-button': ManifoldDataProvisionButton;
     'manifold-data-rename-button': ManifoldDataRenameButton;
+    'manifold-data-resize-button': ManifoldDataResizeButton;
     'manifold-data-resource-list': ManifoldDataResourceList;
     'manifold-data-resource-logo': ManifoldDataResourceLogo;
     'manifold-data-sso-button': ManifoldDataSsoButton;
@@ -1807,11 +1797,11 @@ declare module "@stencil/core" {
       'manifold-credentials-view': LocalJSX.ManifoldCredentialsView & JSXBase.HTMLAttributes<HTMLManifoldCredentialsViewElement>;
       'manifold-data-deprovision-button': LocalJSX.ManifoldDataDeprovisionButton & JSXBase.HTMLAttributes<HTMLManifoldDataDeprovisionButtonElement>;
       'manifold-data-has-resource': LocalJSX.ManifoldDataHasResource & JSXBase.HTMLAttributes<HTMLManifoldDataHasResourceElement>;
-      'manifold-data-manage-button': LocalJSX.ManifoldDataManageButton & JSXBase.HTMLAttributes<HTMLManifoldDataManageButtonElement>;
       'manifold-data-product-logo': LocalJSX.ManifoldDataProductLogo & JSXBase.HTMLAttributes<HTMLManifoldDataProductLogoElement>;
       'manifold-data-product-name': LocalJSX.ManifoldDataProductName & JSXBase.HTMLAttributes<HTMLManifoldDataProductNameElement>;
       'manifold-data-provision-button': LocalJSX.ManifoldDataProvisionButton & JSXBase.HTMLAttributes<HTMLManifoldDataProvisionButtonElement>;
       'manifold-data-rename-button': LocalJSX.ManifoldDataRenameButton & JSXBase.HTMLAttributes<HTMLManifoldDataRenameButtonElement>;
+      'manifold-data-resize-button': LocalJSX.ManifoldDataResizeButton & JSXBase.HTMLAttributes<HTMLManifoldDataResizeButtonElement>;
       'manifold-data-resource-list': LocalJSX.ManifoldDataResourceList & JSXBase.HTMLAttributes<HTMLManifoldDataResourceListElement>;
       'manifold-data-resource-logo': LocalJSX.ManifoldDataResourceLogo & JSXBase.HTMLAttributes<HTMLManifoldDataResourceLogoElement>;
       'manifold-data-sso-button': LocalJSX.ManifoldDataSsoButton & JSXBase.HTMLAttributes<HTMLManifoldDataSsoButtonElement>;
