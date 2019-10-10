@@ -1,37 +1,32 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
-import { createRestFetch } from '../../utils/restFetch';
+import {} from '../../types/graphql';
 import { ManifoldPlanSelector } from './manifold-plan-selector';
-import { ExpandedPlan } from '../../spec/mock/catalog';
-import { Resource } from '../../spec/mock/marketplace';
-import { connections } from '../../utils/connections';
-import { Product } from '../../types/graphql';
+import { ManifoldPlanMenu } from '../manifold-plan-menu/manifold-plan-menu';
+import { ManifoldPlanDetails } from '../manifold-plan-details/manifold-plan-details';
+import { ManifoldActivePlan } from '../manifold-active-plan/manifold-active-plan';
+import { ExpandedPlanCustom } from '../../spec/mock/catalog';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
+import { product } from '../../spec/mock/graphql';
 
-const product: Partial<Product> = {
-  id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
-  displayName: 'JawsDB MySQL',
-  label: 'jawsdb-mysql',
-  logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
-};
+const graphqlEndpoint = 'http://test.com/graphql';
 
-const mockProduct = {
-  data: {
-    product,
-  },
-};
+const mockLoad = jest.fn();
 
-async function setup(productLabel?: string, resourceLabel?: string) {
+async function setup() {
   const page = await newSpecPage({
-    components: [ManifoldPlanSelector],
-    html: '<manifold-connection></manifold-connection>',
+    components: [ManifoldPlanSelector, ManifoldActivePlan, ManifoldPlanMenu, ManifoldPlanDetails],
+    html: '<div></div>',
   });
 
-  const component = page.doc.createElement('manifold-plan-selector');
-  component.productLabel = productLabel;
-  component.resourceLabel = resourceLabel;
-  component.restFetch = createRestFetch({});
-  component.graphqlFetch = createGraphqlFetch({});
+  const component = page.doc.createElement('manifold-data-provision-button');
+  component.graphqlFetch = createGraphqlFetch({
+    endpoint: () => graphqlEndpoint,
+  });
+  component.productLabel = 'test-product';
+
+  // add load event listener for later
+  component.addEventListener('manifold-planSelector-load', mockLoad);
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -40,88 +35,41 @@ async function setup(productLabel?: string, resourceLabel?: string) {
   return { page, component };
 }
 
-describe('<manifold-plan-selector>', () => {
+describe(`<manifold-plan-details>`, () => {
+  beforeEach(async () => fetchMock.mock(graphqlEndpoint, { data: product }));
   afterEach(() => {
     fetchMock.restore();
+    mockLoad.mockReset();
   });
 
-  it('fetches product and plans by label on load, if given', async () => {
-    const productLabel = 'test-label';
-    fetchMock.mock(connections.prod.graphql, mockProduct);
-    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`, [
-      ExpandedPlan,
-    ]);
-
-    await setup(productLabel);
-
-    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
-    expect(
-      fetchMock.called(
-        `${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`
-      )
-    ).toBe(true);
+  describe('v0 props', () => {
+    it('[product-label]', async () => {
+      await setup();
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
+    });
   });
 
-  it('fetches new product by label on change, if given', async () => {
-    const newProduct = 'new-product';
-    fetchMock.once('*', []);
+  describe('v0 events', async () => {
+    it('load', async () => {
+      await setup();
+      expect(mockLoad).toHaveBeenCalledWith(expect.objectContaining({ planId: '' }));
+    });
 
-    const { component, page } = await setup('old-product');
+    it('change', async () => {
+      const { page } = await setup();
 
-    fetchMock.mock(connections.prod.graphql, mockProduct);
-    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`, [
-      ExpandedPlan,
-    ]);
-    component.productLabel = newProduct;
-    await page.waitForChanges();
+      const mockClick = jest.fn();
+      const component = page.root && page.root.querySelector('manifold-plan-selector');
+      const plans = page.root && page.root.querySelectorAll('[type="radio"]');
+      if (!component || !plans) {
+        throw new Error('plan selector not in document');
+      }
+      component.addEventListener('manifold-planSelector-change', mockClick);
 
-    expect(fetchMock.called(connections.prod.graphql)).toBe(true);
-    expect(
-      fetchMock.called(
-        `${connections.prod.catalog}/plans/?product_id=${mockProduct.data.product.id}`
-      )
-    ).toBe(true);
-  });
-
-  it('fetches resource on load by resource name, if given', async () => {
-    const resourceLabel = 'my-resource';
-    fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`, [
-      Resource,
-    ]);
-    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${Resource.body.product_id}`, [
-      ExpandedPlan,
-    ]);
-
-    await setup(undefined, resourceLabel);
-
-    expect(
-      fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${resourceLabel}`)
-    ).toBe(true);
-    expect(
-      fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Resource.body.product_id}`)
-    ).toBe(true);
-  });
-
-  it('fetches resource on change by resource name, if given', async () => {
-    const newResource = 'new-resource';
-    fetchMock.once('*', []);
-
-    const { component, page } = await setup(undefined, 'old-resource');
-
-    fetchMock.mock(`${connections.prod.marketplace}/resources/?me&label=${newResource}`, [
-      Resource,
-    ]);
-    fetchMock.mock(`${connections.prod.catalog}/plans/?product_id=${Resource.body.product_id}`, [
-      ExpandedPlan,
-    ]);
-    component.resourceLabel = newResource;
-    await page.waitForChanges();
-
-    expect(
-      fetchMock.called(`${connections.prod.marketplace}/resources/?me&label=${newResource}`)
-    ).toBe(true);
-    expect(
-      fetchMock.called(`${connections.prod.catalog}/plans/?product_id=${Resource.body.product_id}`)
-    ).toBe(true);
+      const plan = plans[0];
+      (plan as HTMLInputElement).click();
+      await page.waitForChanges();
+      expect(mockClick).toHaveBeenCalledWith(expect.objectContaining({ planId: '' }));
+    });
   });
 });

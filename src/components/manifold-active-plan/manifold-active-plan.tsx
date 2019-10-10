@@ -4,7 +4,7 @@ import loadMark from '../../utils/loadMark';
 import { Product, PlanEdge, Resource } from '../../types/graphql';
 @Component({
   tag: 'manifold-active-plan',
-  styleUrl: 'plan-selector.css',
+  styleUrl: 'manifold-active-plan.css',
   shadow: true,
 })
 export class ManifoldActivePlan {

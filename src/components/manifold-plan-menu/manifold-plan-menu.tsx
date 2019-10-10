@@ -29,7 +29,7 @@ const PlanButton: FunctionalComponent<PlanButtonProps> = (props, children) => (
 
 @Component({
   tag: 'manifold-plan-menu',
-  styleUrl: 'plan-menu.css',
+  styleUrl: 'manifold-plan-menu.css',
   shadow: true,
 })
 export class ManifoldPlanMenu {
