@@ -43,9 +43,15 @@ export class ManifoldPlanMenu {
   @logger()
   render() {
     if (this.plans) {
+      // TODO: re-add custom plans when GraphQL supports resource features
+      const noCustomPlans = this.plans.filter(
+        ({ node: { configurableFeatures } }) =>
+          !configurableFeatures || configurableFeatures.edges.length === 0
+      );
+
       return (
         <ul class="plan-list">
-          {this.plans.map(({ node: plan }) => (
+          {noCustomPlans.map(({ node: plan }) => (
             <PlanButton
               checked={this.selectedPlanId === plan.id}
               value={plan.id}
