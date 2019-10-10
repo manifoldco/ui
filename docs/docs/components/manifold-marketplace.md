@@ -61,6 +61,20 @@ You can add a “Featured” tag to select products by specifing a comma-separat
 <manifold-marketplace featured="piio,zerosix"></manifold-marketplace>
 ```
 
+## Slots
+
+Slots in web components allow you to place content in the middle of a web component. Each component
+will have different areas. Any HTML element can be used, so long as it has `slot="[slot-name]"` as a
+property. [Read more about slots][slot].
+
+```html
+<manifold-marketplace>
+  <div slot="sidebar">
+    This will appear in the sidebar (if visible)
+  </div>
+</manifold-marketplace>
+```
+
 ## Events
 
 This component emits
@@ -99,3 +113,5 @@ custom resource templates.
 
 Note that use of either of these two attributes will disable the custom events unless
 `preserve-event` is passed as well.
+
+[slot]: https://stenciljs.com/docs/templating-jsx/

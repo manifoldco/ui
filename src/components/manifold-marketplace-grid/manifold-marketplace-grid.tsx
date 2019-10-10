@@ -269,6 +269,7 @@ export class ManifoldMarketplaceGrid {
                 {formatCategoryLabel(category)}
               </a>
             ))}
+            <slot name="sidebar" />
           </div>
         </aside>
         <div class="service-grid" data-categorized={this.showCategories}>

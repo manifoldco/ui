@@ -185,7 +185,11 @@ export class ManifoldMarketplace {
         skeleton={this.isLoading}
         services={this.isLoading ? accurateSkeletonCount.map(transformSkeleton) : this.services}
         templateLinkFormat={this.templateLinkFormat}
-      />
+      >
+        <manifold-forward-slot slot="sidebar">
+          <slot name="sidebar" />
+        </manifold-forward-slot>
+      </manifold-marketplace-grid>
     );
   }
 }
