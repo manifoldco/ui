@@ -63,5 +63,8 @@ export const config: Config = {
       '<rootDir>/pkg/',
       '/node_modules/',
     ],
+    transform: {
+      '\\.graphql$': './jest-transform-graphql',
+    },
   },
 };
