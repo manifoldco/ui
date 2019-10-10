@@ -200,10 +200,19 @@ difference of milliseconds).
 
 If you are calling our GraphQL API directly from your client code, and the call that you're making
 requires authentication, you can ask us for the auth token by calling the `ensureAuthToken`
-function:
+function. Here's how you might use this with ApolloClient to add our token to your request headers:
 
 ```js
 import { ensureAuthToken } from '@manifoldco/ui';
+import ApolloClient from 'apollo-client';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { setContext } from 'apollo-link-context';
+
+const cache = new InMemoryCache();
+const link = new createHttpLink({
+  uri: 'https://api.manifold.co/graphql',
+});
 
 const authLink = setContext(async (_, { headers }) => {
   const token = await ensureAuthToken();
@@ -218,6 +227,13 @@ const authLink = setContext(async (_, { headers }) => {
     },
   };
 });
+
+const manifoldAuthenticatedClient = new ApolloClient({
+  link: authLink.concat(link),
+  cache,
+});
+
+export default manifoldAuthenticatedClient;
 ```
 
 This function will return the auth token as soon as authentication has completed. If the
