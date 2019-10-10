@@ -19,7 +19,7 @@ interface Args<Edge> {
   graphqlFetch?: GraphqlFetch;
 }
 
-class MissingPageInfo extends Error {
+export class MissingPageInfo extends Error {
   constructor(query: string) {
     const message = `
       You've requested all pages of a GraphQL connection, but you
