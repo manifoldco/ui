@@ -10,7 +10,7 @@ const INITIALIZED = 'manifold-connection-initialize';
 
 interface Initialization {
   env?: 'local' | 'stage' | 'prod';
-  waitTime?: number;
+  waitTime?: number | string;
   authToken?: string;
 }
 
@@ -25,7 +25,7 @@ export class ConnectionState {
 
   initialize = ({ env = 'prod', waitTime = baseWait }: Initialization) => {
     this.env = env;
-    this.waitTime = waitTime;
+    this.waitTime = typeof waitTime === 'number' ? waitTime : parseInt(waitTime, 10);
     this.initialized = true;
     const event = new CustomEvent(INITIALIZED);
     document.dispatchEvent(event);

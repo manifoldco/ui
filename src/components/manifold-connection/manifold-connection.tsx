@@ -8,7 +8,7 @@ import connection from '../../state/connection';
 @Component({ tag: 'manifold-connection' })
 export class ManifoldConnection {
   @Prop() env?: 'local' | 'stage' | 'prod';
-  @Prop() waitTime?: number;
+  @Prop() waitTime?: number | string;
 
   @loadMark()
   componentWillLoad() {

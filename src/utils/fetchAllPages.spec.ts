@@ -1,7 +1,7 @@
 import { gql } from '@manifoldco/gql-zero';
 import fetchMock from 'fetch-mock';
 import { Query } from '../types/graphql';
-import fetchAllPages from './fetchAllPages';
+import fetchAllPages, { MissingPageInfo } from './fetchAllPages';
 import { createGraphqlFetch } from './graphqlFetch';
 
 const query = gql`
@@ -235,6 +235,28 @@ const secondPage = {
 
 describe('Fetching all pages of a GraphQL connection', () => {
   afterEach(fetchMock.reset);
+
+  describe('when pageInfo is missing', () => {
+    it('throws an exception', async () => {
+      const data = { categories: { ...firstPage.categories, pageInfo: undefined } };
+
+      fetchMock.mock('https://api.manifold.co/graphql', {
+        status: 200,
+        body: { data },
+      });
+
+      expect.assertions(1);
+
+      return fetchAllPages({
+        query,
+        nextPage: { first: 3, after: '' },
+        getConnection: (q: Query) => q.categories,
+        graphqlFetch: createGraphqlFetch({}),
+      }).catch(e => {
+        expect(e).toBeInstanceOf(MissingPageInfo);
+      });
+    });
+  });
 
   it('fetches all the pages', async () => {
     fetchMock
