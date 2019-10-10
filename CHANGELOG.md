@@ -40,6 +40,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Breaking Changes:
 
 - `<manifold-data-provision-button>` now requires `plan-id` rather than `plan-label` as a prop
+- `<manifold-plan>` now requires `plan-id` rather than `plan-label` as a prop
 
 ## [v0.5.17]
 

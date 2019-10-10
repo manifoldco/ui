@@ -37,9 +37,8 @@ export class ManifoldActivePlan {
     }
 
     // return selectedPlanID plan, or the first plan if that fails
-    const [firstPlan] = this.plans;
     const plan = this.plans.find(({ node: { id } }) => id === this.selectedPlanId);
-    return (plan && plan.node) || firstPlan.node;
+    return (plan && plan.node) || this.plans[0].node;
   }
 
   @loadMark()

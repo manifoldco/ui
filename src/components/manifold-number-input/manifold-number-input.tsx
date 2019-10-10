@@ -5,7 +5,7 @@ import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-number-input',
-  styleUrl: 'mf-number-input.css',
+  styleUrl: 'manifold-number-input.css',
   shadow: true,
 })
 export class ManifoldNumberInput {

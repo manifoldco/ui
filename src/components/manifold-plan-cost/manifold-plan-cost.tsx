@@ -39,7 +39,7 @@ export class ManifoldPlanCost {
 
     // if not configurable, return plan cost
     if (!this.plan.configurableFeatures || !this.plan.configurableFeatures.edges.length) {
-      this.calculatedCost = this.plan.cost;
+      this.calculatedCost = this.plan.cost || 0;
       return undefined;
     }
 

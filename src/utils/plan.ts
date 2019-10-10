@@ -106,12 +106,17 @@ export function pricingTiers(numericDetails: PlanMeteredFeatureNumericDetails): 
   });
 }
 
+interface MeteredDisplayCost {
+  cost: string;
+  per?: string;
+}
+
 /**
  * User-friendly display for a measurable number feature value
  */
 export function meteredFeatureDisplayValue(
   numericDetails: PlanMeteredFeatureNumericDetails
-): string {
+): MeteredDisplayCost {
   const withCommas = new Intl.NumberFormat().format;
   const tiers = pricingTiers(numericDetails);
 
@@ -119,15 +124,15 @@ export function meteredFeatureDisplayValue(
   const [{ cost, unit, per }] = tiers;
 
   if (cost === 0) {
-    return 'Free';
+    return { cost: 'Free' };
   }
 
   // If features are really really cheap, let’s make it more readable
   if (per > 1) {
-    return `${$(featureCost(cost * per))} per ${withCommas(per)} ${pluralize(unit)}`;
+    return { cost: $(featureCost(cost * per)), per: `per ${withCommas(per)} ${pluralize(unit)}` };
   }
 
-  return `${$(featureCost(cost))} / ${unit}`;
+  return { cost: $(featureCost(cost)), per: `/ ${unit}` };
 }
 
 /**

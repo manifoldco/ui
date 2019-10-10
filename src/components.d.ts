@@ -376,10 +376,8 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    /**
-    * URL-friendly slug (e.g. `"kitefin"`)
-    */
-    'planLabel'?: string;
+    'hideUntilReady'?: boolean;
+    'planId'?: string;
   }
   interface ManifoldPlanCost {
     /**
@@ -406,7 +404,7 @@ export namespace Components {
   }
   interface ManifoldPlanMenu {
     'plans'?: PlanEdge[];
-    'selectPlan': Function;
+    'selectPlan': (planId: string) => void;
     'selectedPlanId'?: string;
   }
   interface ManifoldPlanSelector {
@@ -1392,10 +1390,8 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    /**
-    * URL-friendly slug (e.g. `"kitefin"`)
-    */
-    'planLabel'?: string;
+    'hideUntilReady'?: boolean;
+    'planId'?: string;
   }
   interface ManifoldPlanCost {
     /**
@@ -1424,7 +1420,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldPlanMenu {
     'plans'?: PlanEdge[];
-    'selectPlan'?: Function;
+    'selectPlan'?: (planId: string) => void;
     'selectedPlanId'?: string;
   }
   interface ManifoldPlanSelector {

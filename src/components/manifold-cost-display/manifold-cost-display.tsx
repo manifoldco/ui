@@ -49,7 +49,9 @@ const MeteredCost: FunctionalComponent<MeteredCostProps> = ({ meteredFeatures })
     return <small>metered usage</small>;
   }
 
-  return meteredFeatureDisplayValue(meteredFeatures[0].node.numericDetails) || '';
+  const displayValue = meteredFeatureDisplayValue(meteredFeatures[0].node.numericDetails);
+
+  return [displayValue.cost, displayValue.per ? <small>&nbsp;{displayValue.per}</small> : ''];
 };
 
 /**

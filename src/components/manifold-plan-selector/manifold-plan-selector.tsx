@@ -17,7 +17,9 @@ const plansQuery = gql`
       logoUrl
       plans(first: 25, orderBy: { field: COST, direction: ASC }) {
         edges {
-          node ${planData}
+          node {
+            ${planData}
+          }
         }
       }
     }
@@ -31,9 +33,11 @@ const freePlansQuery = gql`
       displayName
       label
       logoUrl
-      freePlans(first: 25) {
+      plans(first: 25, free: true, orderBy: { field: COST, direction: ASC }) {
         edges {
-          node ${planData}
+          node {
+            ${planData}
+          }
         }
       }
     }

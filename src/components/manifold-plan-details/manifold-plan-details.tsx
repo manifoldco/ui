@@ -14,13 +14,15 @@ interface EventDetail {
   planId: string;
   planLabel: string;
   planName: string;
+  productId?: string;
   productLabel: string | undefined;
   regionId?: string;
+  regionName?: string;
 }
 
 @Component({
   tag: 'manifold-plan-details',
-  styleUrl: 'plan-details.css',
+  styleUrl: 'manifold-plan-details.css',
   shadow: true,
 })
 export class ManifoldPlanDetails {
@@ -41,13 +43,17 @@ export class ManifoldPlanDetails {
       planId: newPlan.id,
       planLabel: newPlan.label,
       planName: newPlan.displayName,
+      productId: this.product && this.product.id,
       productLabel: this.product && this.product.label,
       regionId: defaultRegion && defaultRegion.id,
+      regionName: defaultRegion && defaultRegion.displayName,
     };
 
     if (!oldPlan) {
+      // load event if first time
       this.planLoad.emit(detail);
     } else {
+      // change event if updating
       this.planUpdate.emit(detail);
     }
 
@@ -66,6 +72,19 @@ export class ManifoldPlanDetails {
     }
 
     if (this.plan) {
+      // load event
+      const defaultRegion = this.getDefaultRegion(this.plan, this.regionId, this.regions);
+      const detail: EventDetail = {
+        planId: this.plan.id,
+        planLabel: this.plan.label,
+        planName: this.plan.displayName,
+        productId: this.product && this.product.id,
+        productLabel: this.product && this.product.label,
+        regionId: defaultRegion && defaultRegion.id,
+        regionName: defaultRegion && defaultRegion.displayName,
+      };
+      this.planLoad.emit(detail);
+      // reset features
       this.resetFeatures(this.plan);
     }
   }
@@ -74,12 +93,15 @@ export class ManifoldPlanDetails {
     const features = { ...this.features, [name]: value };
     this.features = features; // User-selected features
     if (this.plan && this.product) {
+      const defaultRegion = this.getDefaultRegion(this.plan, this.regionId, this.regions);
       const detail: EventDetail = {
         planId: this.plan.id,
         planLabel: this.plan.label,
         planName: this.plan.displayName,
+        productId: this.product.id,
         productLabel: this.product.label,
-        regionId: this.regionId,
+        regionId: defaultRegion && defaultRegion.id,
+        regionName: defaultRegion && defaultRegion.displayName,
       };
       this.planUpdate.emit(detail);
     }
@@ -91,12 +113,15 @@ export class ManifoldPlanDetails {
     }
     this.regionId = e.detail.value;
     if (this.plan && this.product) {
+      const defaultRegion = this.getDefaultRegion(this.plan, e.detail.value, this.regions);
       const detail: EventDetail = {
         planId: this.plan.id,
         planName: this.plan.displayName,
         planLabel: this.plan.label,
+        productId: this.product.id,
         productLabel: this.product.label,
         regionId: e.detail.value,
+        regionName: defaultRegion && defaultRegion.displayName,
       };
       this.planUpdate.emit(detail);
     }

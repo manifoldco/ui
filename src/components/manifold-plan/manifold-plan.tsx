@@ -9,8 +9,8 @@ import loadMark from '../../utils/loadMark';
 import planData from '../../data/plan-details-query';
 
 const planQuery = gql`
-  query PRODUCT_AND_PLAN($planLabel: String!) {
-    plan(label: $planLabel) {
+  query PRODUCT_AND_PLAN($planId: ID!) {
+    plan(id: $planId) {
       ${planData}
       product {
         id
@@ -27,22 +27,29 @@ export class ManifoldPlan {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-  /** URL-friendly slug (e.g. `"kitefin"`) */
-  @Prop() planLabel?: string;
+  @Prop() hideUntilReady?: boolean = false;
+  @Prop() planId?: string;
   @State() plan?: Plan;
-  @Watch('planLabel') planChange(newPlan: string) {
+  @Watch('planId') planChange(newPlan: string) {
     this.fetchPlan(newPlan);
   }
 
   @loadMark()
-  @loadMark()
   componentWillLoad() {
-    if (this.planLabel) {
-      this.fetchPlan(this.planLabel);
+    let call;
+
+    if (this.planId) {
+      call = this.fetchPlan(this.planId);
     }
+
+    if (this.hideUntilReady) {
+      return call;
+    }
+
+    return undefined;
   }
 
-  async fetchPlan(planLabel: string) {
+  async fetchPlan(planId: string) {
     if (!this.graphqlFetch) {
       return;
     }
@@ -50,7 +57,7 @@ export class ManifoldPlan {
     const { data } = await this.graphqlFetch({
       query: planQuery,
       variables: {
-        planLabel,
+        planId,
       },
     });
 

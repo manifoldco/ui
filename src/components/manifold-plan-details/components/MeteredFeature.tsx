@@ -32,7 +32,8 @@ function meteredFeatureCost(numericDetails: PlanMeteredFeatureNumericDetails) {
     );
   }
 
-  return meteredFeatureDisplayValue(numericDetails);
+  const displayValue = meteredFeatureDisplayValue(numericDetails);
+  return [displayValue.cost, displayValue.per ? <small>&nbsp;{displayValue.per}</small> : ''];
 }
 
 const MeteredFeature: FunctionalComponent<{ meteredFeature?: PlanMeteredFeatureEdge }> = ({

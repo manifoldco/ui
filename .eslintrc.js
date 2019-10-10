@@ -52,11 +52,13 @@ module.exports = {
     'func-names': 'off',
     'function-paren-newline': 'off', // let Prettier decide
     'implicit-arrow-linebreak': 'off', // let Prettier decide
+    'import/no-named-as-default': 'off',
     'import/no-extraneous-dependencies': 'off', // We need zero deps for npm
     'import/prefer-default-export': 'off', // named exports are perfectly fine
     'lines-between-class-members': 'off', // class members don’t need that space!
     'max-len': 'off', // let Prettier decide
     'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-irregular-whitespace': 'off',
     'object-curly-newline': 'off', // let Prettier decide,
     'prettier/prettier': 'error',
   },

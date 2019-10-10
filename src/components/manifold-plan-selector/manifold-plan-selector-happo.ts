@@ -7,7 +7,6 @@ import productMailgun from '../../spec/mock/mailgun/product.json';
 import productZerosix from '../../spec/mock/zerosix/product.json';
 import productZiggeo from '../../spec/mock/ziggeo/product.json';
 import connection from '../../state/connection';
-import { RestFetch } from '../../utils/restFetch';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 export const skeleton = async () => {
@@ -17,19 +16,12 @@ export const skeleton = async () => {
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = productJawsDB.body.label;
 
-  const mockFetch = (async (...args) => {
-    // Simulate a delay so we see the skeletons
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return connection.restFetch(...args);
-  }) as RestFetch;
-
   const mockGqlFetch = (async (...args) => {
     // Simulate a delay so we see the skeletons
     await new Promise(resolve => setTimeout(resolve, 1000));
     return connection.graphqlFetch(...args);
   }) as GraphqlFetch;
 
-  selector.restFetch = mockFetch;
   selector.graphqlFetch = mockGqlFetch;
 
   document.body.appendChild(selector);
@@ -149,13 +141,13 @@ export const delayedJawsDB = async () => {
   selector.productLabel = productJawsDB.body.label;
   selector.hideUntilReady = true;
 
-  const mockFetch = (async (...args) => {
+  const mockGqlFetch = (async (...args) => {
     // Even with a delay, we should not see skeletons
     await new Promise(resolve => setTimeout(resolve, 1000));
-    return connection.restFetch(...args);
-  }) as RestFetch;
+    return connection.graphqlFetch(...args);
+  }) as GraphqlFetch;
 
-  selector.restFetch = mockFetch;
+  selector.graphqlFetch = mockGqlFetch;
 
   document.body.appendChild(selector);
 
@@ -169,22 +161,10 @@ export const planError = async () => {
   const selector = document.createElement('manifold-plan-selector');
   selector.productLabel = productJawsDB.body.label;
 
-  const mockFetch = (async args => {
-    if (args.endpoint === `/plans/?product_id=${productJawsDB.id}`) {
-      return [
-        {
-          id: productJawsDB.id,
-          get body() {
-            throw new Error('oops');
-          },
-        },
-      ];
-    }
+  const mockGqlFetch = () =>
+    new Promise(resolve => resolve({ data: null, errors: [{ message: 'something went wrong' }] }));
 
-    return connection.restFetch(args);
-  }) as RestFetch;
-
-  selector.restFetch = mockFetch;
+  selector.graphqlFetch = mockGqlFetch as GraphqlFetch;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);

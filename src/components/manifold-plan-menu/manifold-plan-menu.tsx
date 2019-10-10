@@ -1,31 +1,9 @@
-import { h, FunctionalComponent, Prop, Component } from '@stencil/core';
+import { h, Prop, Component } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 
 import { PlanEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-
-interface PlanButtonProps {
-  checked?: boolean;
-  isConfigurable?: boolean;
-  value?: string;
-  onChange?: (e: Event) => void;
-}
-
-const PlanButton: FunctionalComponent<PlanButtonProps> = (props, children) => (
-  <li class="plan-button">
-    <label>
-      <input name="plan" type="radio" {...props} />
-      <div class="plan-button-inner">
-        {children}
-        <manifold-icon class="check-icon" icon={check} />
-        {props.isConfigurable && (
-          <manifold-icon class="custom-icon" icon={sliders} data-hidden={props.checked} />
-        )}
-      </div>
-    </label>
-  </li>
-);
 
 @Component({
   tag: 'manifold-plan-menu',
@@ -35,7 +13,7 @@ const PlanButton: FunctionalComponent<PlanButtonProps> = (props, children) => (
 export class ManifoldPlanMenu {
   @Prop() plans?: PlanEdge[];
   @Prop() selectedPlanId?: string;
-  @Prop() selectPlan: Function = () => {};
+  @Prop() selectPlan: (planId: string) => void = () => null;
 
   @loadMark()
   componentWillLoad() {}
@@ -43,29 +21,45 @@ export class ManifoldPlanMenu {
   @logger()
   render() {
     if (this.plans) {
-      // TODO: re-add custom plans when GraphQL supports resource features
-      const noCustomPlans = this.plans.filter(
+      // TODO: re-add configurable plans when GraphQL supports resource features
+      const TEMP_HIDE_CONFIGURABLE_PLANS = this.plans.filter(
         ({ node: { configurableFeatures } }) =>
           !configurableFeatures || configurableFeatures.edges.length === 0
       );
 
       return (
         <ul class="plan-list">
-          {noCustomPlans.map(({ node: plan }) => (
-            <PlanButton
-              checked={this.selectedPlanId === plan.id}
-              value={plan.id}
-              onChange={() => this.selectPlan(plan.id)}
-              isConfigurable={
-                (plan.configurableFeatures && plan.configurableFeatures.edges.length > 0) || false
-              }
-            >
-              {plan.displayName}
-              <div class="cost">
-                <manifold-plan-cost compact={true} plan={plan} />
-              </div>
-            </PlanButton>
-          ))}
+          {TEMP_HIDE_CONFIGURABLE_PLANS.map(({ node: plan }) => {
+            const isConfigurable =
+              plan.configurableFeatures && plan.configurableFeatures.edges.length > 0;
+            return (
+              <li class="plan-button">
+                <label>
+                  <input
+                    name="plan"
+                    type="radio"
+                    checked={plan.id === this.selectedPlanId}
+                    onChange={() => this.selectPlan(plan.id)}
+                    value={plan.id}
+                  />
+                  <div class="plan-button-inner">
+                    {plan.displayName}
+                    <div class="cost">
+                      <manifold-plan-cost compact={true} plan={plan} />
+                    </div>
+                    <manifold-icon class="check-icon" icon={check} />
+                    {isConfigurable && (
+                      <manifold-icon
+                        class="custom-icon"
+                        icon={sliders}
+                        data-hidden={plan.id === this.selectedPlanId}
+                      />
+                    )}
+                  </div>
+                </label>
+              </li>
+            );
+          })}
         </ul>
       );
     }
@@ -74,12 +68,15 @@ export class ManifoldPlanMenu {
     return (
       <ul class="plan-list">
         {[1, 2, 3, 4].map((_, i) => (
-          <PlanButton checked={i === 0}>
-            <manifold-skeleton-text>Plan placeholder</manifold-skeleton-text>
-            <div class="cost">
-              <manifold-skeleton-text>Free</manifold-skeleton-text>
-            </div>
-          </PlanButton>
+          <li class="plan-button">
+            <label>
+              <input name="plan" type="radio" checked={i === 0} />
+              <manifold-skeleton-text>Plan placeholder</manifold-skeleton-text>
+              <div class="cost">
+                <manifold-skeleton-text>Free</manifold-skeleton-text>
+              </div>
+            </label>
+          </li>
         ))}
       </ul>
     );
