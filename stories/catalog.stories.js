@@ -48,7 +48,7 @@ storiesOf('Catalog', module)
         'zerosix (only-metered pricing)': 'zerosix', // metered pricing
         'ziggeo (tiered pricing)': 'ziggeo', // tiered pricing
       },
-      'ziggeo'
+      'jawsdb-mysql'
     );
     const freePlans = boolean('free-plans', false);
     return `

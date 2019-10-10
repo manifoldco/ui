@@ -15,8 +15,8 @@ export class ManifoldNumberInput {
   @Prop() increment: number = 1;
   @Prop() max: number = Infinity;
   @Prop() min: number = 0;
-  @Prop() name: string = '';
-  @Prop() suffix: string = '';
+  @Prop() name?: string;
+  @Prop() unit?: string;
   @Prop({ mutable: true }) value: number = 0;
   @Event() updateValue: EventEmitter;
   @Watch('value')
@@ -115,7 +115,7 @@ export class ManifoldNumberInput {
           </button>
         </manifold-tooltip>
         <div class="display-units">
-          {this.min.toLocaleString()} - {this.max.toLocaleString()} {this.suffix}
+          {this.min.toLocaleString()} - {this.max.toLocaleString()} {this.unit}
         </div>
       </div>
     );

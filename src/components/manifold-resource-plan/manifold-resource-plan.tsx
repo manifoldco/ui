@@ -1,7 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
-import { convertPlanData } from '../../utils/plan';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { Product, Plan, Resource } from '../../types/graphql';
@@ -32,13 +31,7 @@ export class ManifoldResourcePlan {
       );
     }
 
-    return (
-      <manifold-plan-details
-        scrollLocked={false}
-        plan={convertPlanData(plan as Plan)}
-        product={product as Product}
-      />
-    );
+    return <manifold-plan-details scrollLocked={false} plan={plan} product={product as Product} />;
   }
 }
 

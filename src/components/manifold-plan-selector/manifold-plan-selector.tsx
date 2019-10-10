@@ -1,106 +1,57 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
-import { Catalog } from '../../types/catalog';
-import { Gateway } from '../../types/gateway';
 import connection from '../../state/connection';
-import { Marketplace } from '../../types/marketplace';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { planSort } from '../../utils/plan';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { Product, PlanConnection } from '../../types/graphql';
+import planData from '../../data/plan-details-query';
+import { Product, Resource } from '../../types/graphql';
 
-const query = gql`
+const plansQuery = gql`
   query PLAN_LIST($productLabel: String!) {
     product(label: $productLabel) {
       id
       displayName
       label
       logoUrl
-      plans(first: 500, orderBy: { field: COST, direction: ASC }) {
+      plans(first: 25, orderBy: { field: COST, direction: ASC }) {
         edges {
-          node {
-            id
-            displayName
-            label
-            free
-            cost
-            fixedFeatures(first: 500) {
-              edges {
-                node {
-                  displayValue
-                  displayValue
-                }
-              }
-            }
-            meteredFeatures(first: 500) {
-              edges {
-                node {
-                  label
-                  displayName
-                  numericDetails {
-                    unit
-                    costTiers {
-                      limit
-                      cost
-                    }
-                  }
-                }
-              }
-            }
-            configurableFeatures(first: 500) {
-              edges {
-                node {
-                  label
-                  displayName
-                  type
-                  options {
-                    displayName
-                    displayValue
-                  }
-                  numericDetails {
-                    increment
-                    min
-                    max
-                    unit
-                    costTiers {
-                      limit
-                      cost
-                    }
-                  }
-                }
-              }
-            }
-            regions(first: 500) {
-              edges {
-                node {
-                  id
-                  displayName
-                  platform
-                  dataCenter
-                }
-              }
-            }
-          }
+          node ${planData}
         }
       }
     }
   }
 `;
 
-const filterFreePlans = (product: Product): Product => {
-  const freePlans: PlanConnection = {
-    ...(product.plans as PlanConnection),
-    edges: product.plans ? product.plans.edges.filter(plan => plan.node.free) : [],
-  };
+const freePlansQuery = gql`
+  query FREE_PLAN_LIST($productLabel: String!) {
+    product(label: $productLabel) {
+      id
+      displayName
+      label
+      logoUrl
+      freePlans(first: 25) {
+        edges {
+          node ${planData}
+        }
+      }
+    }
+  }
+`;
 
-  return {
-    ...product,
-    plans: freePlans,
-  };
-};
+const resourceQuery = gql`
+  query RESOURCE_PRODUCT($resourceLabel: String!) {
+    resource(label: $resourceLabel) {
+      plan {
+        id
+        product {
+          label
+        }
+      }
+    }
+  }
+`;
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
@@ -109,21 +60,18 @@ export class ManifoldPlanSelector {
   @Prop() freePlans?: boolean;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-  /** _(hidden)_ Passed by `<manifold-connection>` */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
-  /** Specify region order */
+  /** Specify regions visible */
   @Prop() regions?: string;
   /** Is this tied to an existing resource? */
   @Prop() resourceLabel?: string;
   @Prop() hideUntilReady?: boolean = false;
   @State() product?: Product;
-  @State() plans?: Catalog.Plan[];
-  @State() resource?: Gateway.Resource;
+  @State() resource?: Resource;
   @State() parsedRegions: string[];
   @Watch('productLabel') productChange(newProduct: string) {
-    this.fetchProductByLabel(newProduct);
+    this.fetchPlans(newProduct);
   }
   @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
@@ -138,10 +86,10 @@ export class ManifoldPlanSelector {
   componentWillLoad(): Promise<void> | void {
     let call;
 
-    if (this.productLabel) {
-      call = this.fetchProductByLabel(this.productLabel);
-    } else if (this.resourceLabel) {
+    if (this.resourceLabel) {
       call = this.fetchResource(this.resourceLabel);
+    } else if (this.productLabel) {
+      call = this.fetchPlans(this.productLabel);
     }
 
     if (this.hideUntilReady) {
@@ -151,59 +99,44 @@ export class ManifoldPlanSelector {
     return undefined;
   }
 
-  async fetchProductByLabel(productLabel: string) {
+  async fetchPlans(productLabel: string) {
     if (!this.graphqlFetch) {
       return;
     }
 
+    this.product = undefined;
+
     const { data } = await this.graphqlFetch({
-      query,
-      variables: { productLabel },
+      query: this.freePlans ? freePlansQuery : plansQuery,
+      variables: {
+        productLabel,
+      },
     });
 
     if (data && data.product) {
-      this.product = this.freePlans ? filterFreePlans(data.product) : data.product;
-      this.fetchPlans(data.product.id);
-    }
-  }
-
-  async fetchPlans(productId: string) {
-    if (!this.restFetch) {
-      return;
-    }
-
-    this.plans = undefined;
-
-    const response = await this.restFetch<Catalog.ExpandedPlan[]>({
-      service: 'catalog',
-      endpoint: `/plans/?product_id=${productId}`,
-    });
-
-    if (response) {
-      this.plans = planSort(response, { free: this.freePlans });
+      this.product = data.product;
     }
   }
 
   async fetchResource(resourceLabel: string) {
-    if (!this.restFetch) {
+    if (!this.graphqlFetch) {
       return;
     }
 
     this.resource = undefined;
 
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
+    const { data } = await this.graphqlFetch({
+      query: resourceQuery,
+      variables: {
+        resourceLabel,
+      },
     });
 
-    if (response && response.length) {
-      const resource = response[0];
-      if (!resource.body.product_id) {
-        console.error('No resource found');
-        return;
+    if (data && data.resource) {
+      this.resource = data.resource;
+      if (data.resource && data.resource.plan && data.resource.plan.product) {
+        this.fetchPlans(data.resource.plan.product.label);
       }
-
-      await this.fetchPlans(resource.body.product_id);
     }
   }
 
@@ -215,7 +148,7 @@ export class ManifoldPlanSelector {
   render() {
     return (
       <manifold-active-plan
-        plans={this.plans}
+        plans={(this.product && this.product.plans && this.product.plans.edges) || []}
         product={this.product}
         regions={this.parsedRegions}
         selectedResource={this.resource}
