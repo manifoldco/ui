@@ -47,7 +47,7 @@ In any setup, you can use our CDN for UI:
 </head>
 <body>
   <manifold-connection>
-    <manifold-marketplace />
+    <manifold-marketplace></manifold-marketplace>
   </manifold-connection>
   <script type="module">
     import { defineCustomElements } from 'https://js.cdn.manifold.co/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
@@ -68,7 +68,7 @@ In any setup, you can use our CDN for UI:
 </head>
 <body>
   <manifold-connection>
-    <manifold-marketplace />
+    <manifold-marketplace></manifold-marketplace>
   </manifold-connection>
   <script src="https://js.cdn.manifold.co/@manifoldco/ui/dist/manifold.js"></script>
 </body>
@@ -91,7 +91,7 @@ import(/* webpackChunkName: "manifold-ui" */ '@manifoldco/ui/dist/loader').then(
 
 const App = () => (
   <manifold-connection>
-    <manifold-marketplace />
+    <manifold-marketplace></manifold-marketplace>
   </manifold-connection>
 );
 
@@ -110,7 +110,7 @@ defineCustomElements(window);
 
 const App = () => (
   <manifold-connection>
-    <manifold-marketplace />
+    <manifold-marketplace></manifold-marketplace>
   </manifold-connection>
 );
 
