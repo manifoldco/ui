@@ -36,6 +36,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Updated Stencil to v1.6.1 (#606)
 - Owner ID no longer fetched to create/delete resources (#608)
 - Converted `<manifold-data-resize-button>` to use GraphQL
+- Updated `<manifold-product>` ahead of a GraphQL deprecation (#619)
 
 ### Breaking Changes:
 
