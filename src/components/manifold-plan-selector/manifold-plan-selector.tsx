@@ -6,7 +6,7 @@ import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import planData from '../../data/plan-details-query';
-import { Product, Resource } from '../../types/graphql';
+import { Product, Resource, PlanEdge } from '../../types/graphql';
 
 const plansQuery = gql`
   query PLAN_LIST($productLabel: String!) {
@@ -72,6 +72,7 @@ export class ManifoldPlanSelector {
   @Prop() resourceLabel?: string;
   @Prop() hideUntilReady?: boolean = false;
   @State() product?: Product;
+  @State() plans?: PlanEdge[];
   @State() resource?: Resource;
   @State() parsedRegions: string[];
   @Watch('productLabel') productChange(newProduct: string) {
@@ -119,6 +120,23 @@ export class ManifoldPlanSelector {
 
     if (data && data.product) {
       this.product = data.product;
+
+      if (data.product.plans) {
+        // if plan is free then move to front (needed because GQL only sorts base cost not truly free plans)
+        const freePlansFirst = [...data.product.plans.edges].sort(a => {
+          if (a.node.free) {
+            return -1;
+          }
+          return 0;
+        });
+
+        // TODO: re-add configurable plans when GraphQL supports resource features
+        const TEMP_HIDE_CONFIGURABLE_PLANS = freePlansFirst.filter(
+          ({ node: { configurableFeatures } }) =>
+            !configurableFeatures || configurableFeatures.edges.length === 0
+        );
+        this.plans = TEMP_HIDE_CONFIGURABLE_PLANS;
+      }
     }
   }
 
@@ -152,7 +170,7 @@ export class ManifoldPlanSelector {
   render() {
     return (
       <manifold-active-plan
-        plans={(this.product && this.product.plans && this.product.plans.edges) || []}
+        plans={this.plans}
         product={this.product}
         regions={this.parsedRegions}
         selectedResource={this.resource}
