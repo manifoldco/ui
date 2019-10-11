@@ -4,9 +4,9 @@ import { product } from '../../spec/mock/graphql';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
-const productWithoutScreenshots: Product = {
+const productWithoutImages: Product = {
   ...product,
-  screenshots: [],
+  images: [],
 };
 
 describe(`<manifold-product-details>`, () => {
@@ -48,7 +48,7 @@ describe(`<manifold-product-details>`, () => {
       (elm: any, props: any) => {
         elm.product = props.product;
       },
-      { product: productWithoutScreenshots }
+      { product: productWithoutImages }
     );
     await page.waitForChanges();
 
