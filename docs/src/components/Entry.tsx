@@ -63,6 +63,11 @@ const Readme = styled.div`
     border-radius: 0.625rem;
   }
 
+  & iframe,
+  & img {
+    max-width: 100%;
+  }
+
   & h1,
   & h2,
   & h3,
