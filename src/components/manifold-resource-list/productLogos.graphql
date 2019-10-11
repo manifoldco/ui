@@ -1,0 +1,11 @@
+query ProductLogos {
+  products(first: 500) {
+    edges {
+      node {
+        id
+        displayName
+        logoUrl
+      }
+    }
+  }
+}

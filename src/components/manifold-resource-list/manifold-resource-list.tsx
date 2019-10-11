@@ -1,5 +1,4 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import { Marketplace } from '../../types/marketplace';
 import { Provisioning } from '../../types/provisioning';
@@ -8,6 +7,8 @@ import { RestFetch } from '../../utils/restFetch';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import query from './productLogos.graphql';
+import { ProductLogosQuery } from '../../types/graphql';
 
 interface FoundResource {
   id: string;
@@ -113,21 +114,7 @@ export class ManifoldResourceList {
       endpoint: `/resources/?me`,
     });
 
-    const fetchProducts = this.graphqlFetch({
-      query: gql`
-        query PRODUCT_LOGOS {
-          products(first: 500) {
-            edges {
-              node {
-                id
-                displayName
-                logoUrl
-              }
-            }
-          }
-        }
-      `,
-    });
+    const fetchProducts = this.graphqlFetch<ProductLogosQuery>({ query });
 
     let operationsResp;
     let resourcesResp;

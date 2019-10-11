@@ -12,10 +12,10 @@ interface NextPage {
   after: string;
 }
 
-interface Args<Edge> {
+interface Args<Edge, T> {
   query: string;
   nextPage: NextPage;
-  getConnection: (q: Query) => Connection<Edge> | null | undefined;
+  getConnection: (q: T) => Connection<Edge> | null | undefined;
   graphqlFetch?: GraphqlFetch;
 }
 
@@ -51,13 +51,13 @@ export class MissingPageInfo extends Error {
   }
 }
 
-export default async function fetchAllPages<Edge>({
+export default async function fetchAllPages<Edge, T = Query>({
   query,
   nextPage,
   getConnection,
   graphqlFetch = connection.graphqlFetch,
-}: Args<Edge>): Promise<Edge[]> {
-  const page = await graphqlFetch({ query, variables: nextPage });
+}: Args<Edge, T>): Promise<Edge[]> {
+  const page = await graphqlFetch<T>({ query, variables: nextPage });
 
   if (page.errors || !page.data) {
     throw new Error(`Could not fetch all pages of query: ${query}`);

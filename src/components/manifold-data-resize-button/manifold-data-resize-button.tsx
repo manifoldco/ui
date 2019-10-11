@@ -5,6 +5,8 @@ import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import updatePlan from './updatePlan.graphql';
+import { ResourceChangePlanMutation } from '../../types/graphql';
 
 interface ClickMessage {
   planId?: string;
@@ -30,17 +32,6 @@ const resourceIdQuery = gql`
   query RESOURCE_ID($resourceLabel: String!) {
     resource(label: $resourceLabel) {
       id
-    }
-  }
-`;
-
-const resourcePlanMutation = gql`
-  mutation RESOURCE_CHANGE_PLAN($resourceId: ID!, $planId: ID!) {
-    updateResourcePlan(input: { resourceId: $resourceId, newPlanID: $planId }) {
-      data {
-        id
-        label
-      }
     }
   }
 `;
@@ -96,21 +87,21 @@ export class ManifoldDataResizeButton {
     };
     this.click.emit(clickDetail);
 
-    const { data, errors } = await this.graphqlFetch({
-      query: resourcePlanMutation,
+    const { data, errors } = await this.graphqlFetch<ResourceChangePlanMutation>({
+      query: updatePlan,
       variables: {
         resourceId: this.resourceId,
         planId: this.planId,
       },
     });
 
-    if (data && data.data) {
+    if (data && data.updateResourcePlan) {
       // success event
       const success: SuccessMessage = {
-        message: `${data.data.label} successfully updated to ${this.planId}`,
+        message: `${data.updateResourcePlan.data.label} successfully updated to ${this.planId}`,
         planId: this.planId,
         resourceId: this.resourceId,
-        resourceLabel: data.data.label,
+        resourceLabel: data.updateResourcePlan.data.label,
       };
       this.success.emit(success);
     }

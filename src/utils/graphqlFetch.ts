@@ -1,5 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { Query, Resource } from '../types/graphql';
+import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
 
@@ -32,17 +32,12 @@ interface GraphqlFetchEventDetail {
   errors?: GraphqlError[];
 }
 
-// TODO remove this in favor of GraphQL documents
-export interface GraphqlData extends Query {
-  data?: Resource; // CreateResourcePayload, etc.
-}
-
-export interface GraphqlResponseBody {
+export interface GraphqlResponseBody<GraphqlData> {
   data: GraphqlData | null;
   errors?: GraphqlError[];
 }
 
-export type GraphqlFetch = (args: GraphqlArgs) => Promise<GraphqlResponseBody>;
+export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody<T>>;
 
 export function createGraphqlFetch({
   endpoint = () => 'https://api.manifold.co/graphql',
@@ -52,7 +47,10 @@ export function createGraphqlFetch({
   setAuthToken = () => {},
   onReady = () => new Promise(resolve => resolve()),
 }: CreateGraphqlFetch): GraphqlFetch {
-  async function graphqlFetch(args: GraphqlArgs, attempts: number): Promise<GraphqlResponseBody> {
+  async function graphqlFetch<T = Query>(
+    args: GraphqlArgs,
+    attempts: number
+  ): Promise<GraphqlResponseBody<T>> {
     await onReady();
 
     const rttStart = performance.now();
@@ -77,7 +75,7 @@ export function createGraphqlFetch({
       return Promise.reject(e);
     });
 
-    const body: GraphqlResponseBody = await response.json();
+    const body: GraphqlResponseBody<T> = await response.json();
 
     // handle non-GQL responses from errors
     if (!body.data && !Array.isArray(body.errors)) {

@@ -5,6 +5,8 @@ import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import deleteMutation from './delete.graphql';
+import { DeleteResourceMutation } from '../../types/graphql';
 
 interface SuccessMessage {
   message: string;
@@ -22,17 +24,6 @@ const resourceIdQuery = gql`
   query RESOURCE_ID($resourceLabel: String!) {
     resource(label: $resourceLabel) {
       id
-    }
-  }
-`;
-
-const deleteMutation = gql`
-  mutation DELETE_RESOURCE($resourceId: ID!) {
-    deleteResource(input: { resourceId: $resourceId }) {
-      data {
-        id
-        label
-      }
     }
   }
 `;
@@ -79,19 +70,19 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    const { data, errors } = await this.graphqlFetch({
+    const { data, errors } = await this.graphqlFetch<DeleteResourceMutation>({
       query: deleteMutation,
       variables: {
         resourceId: this.resourceId,
       },
     });
 
-    if (data && data.data) {
+    if (data && data.deleteResource) {
       // success
       const success: SuccessMessage = {
-        message: `${data.data.label} successfully deleted`,
-        resourceLabel: data.data.label,
-        resourceId: data.data.id,
+        message: `${data.deleteResource.data.label} successfully deleted`,
+        resourceLabel: data.deleteResource.data.label,
+        resourceId: data.deleteResource.data.id,
       };
       this.success.emit(success);
     }

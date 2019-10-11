@@ -42,8 +42,10 @@ describe('<manifold-data-resize-button>', () => {
         id: variables.resourceId || resource.id,
       };
       const errors: GraphqlError[] = [{ message: 'something went wrong' }];
-      if (body.includes('mutation RESOURCE_CHANGE_PLAN')) {
-        return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
+      if (body.includes('mutation ResourceChangePlan')) {
+        return body.includes('error')
+          ? { data: null, errors }
+          : { data: { updateResourcePlan: { data: newResource } } };
       }
       if (body.includes('query RESOURCE_ID')) {
         return body.includes('error') ? { data: null, errors } : { data: newResource };

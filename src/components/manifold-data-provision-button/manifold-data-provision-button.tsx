@@ -5,6 +5,8 @@ import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import createResource from './create.graphql';
+import { CreateResourceMutation } from '../../types/graphql';
 
 interface ClickMessage {
   planId: string;
@@ -53,25 +55,6 @@ const productIdQuery = gql`
   query GET_PRODUCT_ID($productLabel: String!) {
     product(label: $productLabel) {
       id
-    }
-  }
-`;
-
-const createResourceMutation = gql`
-  mutation CREATE_RESOURCE($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!) {
-    createResource(
-      input: {
-        displayName: $resourceLabel
-        label: $resourceLabel
-        planId: $planId
-        productId: $productId
-        regionId: $regionId
-      }
-    ) {
-      data {
-        id
-        label
-      }
     }
   }
 `;
@@ -155,8 +138,8 @@ export class ManifoldDataProvisionButton {
 
     // disable button & attempt provision
     this.provisioning = true;
-    const { data, errors } = await this.graphqlFetch({
-      query: createResourceMutation,
+    const { data, errors } = await this.graphqlFetch<CreateResourceMutation>({
+      query: createResource,
       variables: {
         planId: this.planId,
         productId: this.productId,
@@ -167,12 +150,12 @@ export class ManifoldDataProvisionButton {
     this.provisioning = false;
 
     // success event
-    if (data && data.data) {
+    if (data && data.createResource) {
       const success: SuccessMessage = {
         ...detail,
-        message: `${data.data.label} successfully provisioned`,
-        resourceId: data.data.id,
-        resourceLabel: data.data.label,
+        message: `${data.createResource.data.label} successfully provisioned`,
+        resourceId: data.createResource.data.id,
+        resourceLabel: data.createResource.data.label,
       };
       this.success.emit(success);
     }

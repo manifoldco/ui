@@ -40,13 +40,15 @@ describe('<manifold-data-deprovision-button>', () => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);
       const errors: GraphqlError[] = [{ message: 'something went wrong' }];
-      if (body.includes('mutation DELETE_RESOURCE')) {
+      if (body.includes('mutation DeleteResource')) {
         // return new label in response
         const newResource = {
           ...resource,
           id: variables.resourceId || resource.id,
         };
-        return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
+        return body.includes('error')
+          ? { data: null, errors }
+          : { data: { deleteResource: { data: newResource } } };
       }
       if (body.includes('query RESOURCE_ID')) {
         return body.includes('error') ? { data: null, errors } : { data: resource };

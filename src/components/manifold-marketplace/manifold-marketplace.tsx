@@ -1,5 +1,4 @@
 import { h, Component, Prop, State, Element } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -14,6 +13,7 @@ import {
 import fetchAllPages from '../../utils/fetchAllPages';
 import skeletonProducts from '../../data/marketplace';
 import { Catalog } from '../../types/catalog';
+import productQuery from './products.graphql';
 
 function transformSkeleton(skel: Catalog.Product): ProductEdge {
   return {
@@ -50,29 +50,6 @@ function transformSkeleton(skel: Catalog.Product): ProductEdge {
     },
   };
 }
-
-const productQuery = gql`
-  query PRODUCTS($first: Int!, $after: String!) {
-    products(first: $first, after: $after) {
-      edges {
-        node {
-          id
-          label
-          tagline
-          logoUrl
-          displayName
-          categories {
-            label
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`;
 
 // TODO: fix the freePlans query in GraphQL
 const TEMPORARY_FREE_PRODUCTS = [

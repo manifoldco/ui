@@ -95,7 +95,7 @@ export type CreateResourceInput = {
   /** A URL friendly label for this Resource. Globally unique. */
   label: Scalars['String'],
   /** A human readble display name for this Resource. */
-  displayName: Scalars['String'],
+  displayName?: Maybe<Scalars['String']>,
   /** The id of the owner for this resource. Omit to use the current user ID. */
   ownerId?: Maybe<Scalars['ID']>,
   /** The product to provision for this resource. */
@@ -293,6 +293,8 @@ export type LineItem = Node & {
   chargeTime: ChargeTime,
   /** Resource is the resource associated with this line item. */
   resource?: Maybe<Resource>,
+  /** Product is the product associated with this line item. */
+  product?: Maybe<Product>,
   /** List SubLineItems composing the line item. */
   subLineItems?: Maybe<SubLineItemConnection>,
 };
@@ -1197,7 +1199,7 @@ export type Resource = Node & {
    * Note: If the resource is not owned by a Platform Profile, the value is null.
  **/
   owner?: Maybe<Profile>,
-  /**  The time the resource was created at. */
+  /** The time the resource was created at. */
   createdAt?: Maybe<Scalars['Time']>,
   /** A list of credentials which can be used to access the Resource. */
   credentials?: Maybe<CredentialConnection>,
@@ -1367,3 +1369,120 @@ export type WithUsage = {
   end?: Maybe<Scalars['Time']>,
 };
 
+export type ResourceWithCredentialsQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceWithCredentialsQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { credentials: Maybe<(
+      { __typename?: 'CredentialConnection' }
+      & { edges: Array<(
+        { __typename?: 'CredentialEdge' }
+        & { node: Maybe<(
+          { __typename?: 'Credential' }
+          & Pick<Credential, 'key' | 'value'>
+        )> }
+      )> }
+    )> }
+  )> }
+);
+
+export type DeleteResourceMutationVariables = {
+  resourceId: Scalars['ID']
+};
+
+
+export type DeleteResourceMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteResource: (
+    { __typename?: 'DeleteResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
+export type CreateResourceMutationVariables = {
+  planId: Scalars['ID'],
+  productId: Scalars['ID'],
+  regionId: Scalars['ID'],
+  resourceLabel: Scalars['String']
+};
+
+
+export type CreateResourceMutation = (
+  { __typename?: 'Mutation' }
+  & { createResource: (
+    { __typename?: 'CreateResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
+export type ResourceChangePlanMutationVariables = {
+  resourceId: Scalars['ID'],
+  planId: Scalars['ID']
+};
+
+
+export type ResourceChangePlanMutation = (
+  { __typename?: 'Mutation' }
+  & { updateResourcePlan: (
+    { __typename?: 'UpdateResourcePlanPayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
+export type ProductsQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String']
+};
+
+
+export type ProductsQuery = (
+  { __typename?: 'Query' }
+  & { products: Maybe<(
+    { __typename?: 'ProductConnection' }
+    & { edges: Array<(
+      { __typename?: 'ProductEdge' }
+      & { node: (
+        { __typename?: 'Product' }
+        & Pick<Product, 'id' | 'label' | 'tagline' | 'logoUrl' | 'displayName'>
+        & { categories: Array<(
+          { __typename?: 'Category' }
+          & Pick<Category, 'label'>
+        )> }
+      ) }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
+  )> }
+);
+
+export type ProductLogosQueryVariables = {};
+
+
+export type ProductLogosQuery = (
+  { __typename?: 'Query' }
+  & { products: Maybe<(
+    { __typename?: 'ProductConnection' }
+    & { edges: Array<(
+      { __typename?: 'ProductEdge' }
+      & { node: (
+        { __typename?: 'Product' }
+        & Pick<Product, 'id' | 'displayName' | 'logoUrl'>
+      ) }
+    )> }
+  )> }
+);
