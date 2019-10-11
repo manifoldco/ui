@@ -57,7 +57,7 @@ storiesOf('Catalog', module)
     }></manifold-plan-selector>`;
   })
   .add('plan card', () => {
-    const productLabel = select('product-label', productLabels, 'jawsdb-mysql');
+    const productLabel = select('product-label', productLabels, 'ziggeo');
     const planLabel = select('plan-label', planLabels, 'custom');
     return `<manifold-plan product-label="${productLabel}" plan-label="${planLabel}"></manifold-plan>`;
   })
