@@ -68,7 +68,7 @@
     },
     {
       "path": "./dist/esm/manifold-!(mock|number-input)*.js",
-      "maxSize": "32 kB",
+      "maxSize": "16 kB",
       "compression": "none"
     }
   ],
