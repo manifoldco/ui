@@ -52,10 +52,10 @@ document.addEventListener('manifold-planSelector-change', ({ detail }) => {
 
 The following events are emitted:
 
-| Event Name                     | Description                                                                                                                | Data                                                          |
-| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------ |
-| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
-| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productLabel`, `features` |
+| Event Name                     | Description                                                                                                                | Data                                                                                     |
+| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------- |
+| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productId`, `productLabel`, `regionId`, `regionName` |
+| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productId`, `productLabel`, `regionId`, `regionName` |
 
 ## Free plans only
 

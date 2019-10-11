@@ -171,17 +171,17 @@
 }
 
 .value {
-  &[data-value='No'],
-  &[data-value='Yes'] {
+  &[data-value='false'],
+  &[data-value='true'] {
     font-weight: 600;
     text-transform: uppercase;
   }
 
-  &[data-value='No'] {
+  &[data-value='false'] {
     color: var(--no-color);
   }
 
-  &[data-value='Yes'] {
+  &[data-value='true'] {
     color: var(--yes-color);
 
     & .icon {

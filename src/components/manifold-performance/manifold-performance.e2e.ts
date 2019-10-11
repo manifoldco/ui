@@ -3,9 +3,12 @@ import { newE2EPage } from '@stencil/core/testing';
 describe('<manifold-performance>', () => {
   it('should receive manifold-time-to-render event', async () => {
     const page = await newE2EPage();
-    await page.setContent(
-      `<manifold-connection><manifold-performance><manifold-plan product-label="elegant-cms" plan-label="manifold-developer"></manifold-plan></manifold-performance></manifold-connection>`
-    );
+    await page.setContent(`
+      <manifold-connection>
+        <manifold-performance>
+          <manifold-plan plan-id="2351kz26adxddkbewu644wx4b186y"></manifold-plan>
+        </manifold-performance>
+      </manifold-connection>`);
     const evtSpy = await page.spyOnEvent('manifold-time-to-render');
     await new Promise(resolve => {
       const interval = setInterval(async () => {

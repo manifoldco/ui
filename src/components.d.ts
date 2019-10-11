@@ -7,20 +7,15 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  Catalog,
-} from './types/catalog';
-import {
   CredentialEdge,
-  PlanConnection,
+  Plan,
+  PlanEdge,
   PlanMeteredFeatureEdge,
   Product,
   ProductEdge,
   Resource,
   ResourceWithCredentialsQuery,
 } from './types/graphql';
-import {
-  Gateway,
-} from './types/gateway';
 import {
   Subscriber,
 } from './state/connection';
@@ -34,6 +29,9 @@ import {
   RestFetch,
 } from './utils/restFetch';
 import {
+  Gateway,
+} from './types/gateway';
+import {
   AuthToken,
 } from './types/auth';
 import {
@@ -43,10 +41,10 @@ import {
 export namespace Components {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
+    'plans'?: PlanEdge[];
     'product'?: Product;
     'regions'?: string[];
-    'selectedResource'?: Gateway.Resource;
+    'selectedResource'?: Resource;
   }
   interface ManifoldAuthToken {
     'authType'?: AuthType;
@@ -363,8 +361,8 @@ export namespace Components {
     'incrementDisabledLabel'?: string;
     'max': number;
     'min': number;
-    'name': string;
-    'suffix': string;
+    'name'?: string;
+    'unit'?: string;
     'value': number;
   }
   interface ManifoldOauth {
@@ -378,36 +376,15 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    /**
-    * URL-friendly slug (e.g. `"kitefin"`)
-    */
-    'planLabel'?: string;
-    /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
+    'hideUntilReady'?: boolean;
+    'planId'?: string;
   }
   interface ManifoldPlanCost {
     /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    /**
-    * Plan default cost
-    */
-    'defaultCost'?: number;
-    /**
-    * _(hidden)_
-    */
-    'graphqlFetch'?: GraphqlFetch;
-    /**
-    * TEMPORARY: Plan ID
-    */
-    'planId'?: string;
+    'plan'?: Plan;
     /**
     * _(hidden)_
     */
@@ -419,17 +396,15 @@ export namespace Components {
   }
   interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
-    'plan'?: Catalog.ExpandedPlan;
+    'plan'?: Plan;
     'product'?: Product;
     'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
-    'oldPlans': Catalog.ExpandedPlan[];
-    'plans'?: PlanConnection;
-    'selectPlan': Function;
+    'plans'?: PlanEdge[];
+    'selectPlan': (planId: string) => void;
     'selectedPlanId'?: string;
   }
   interface ManifoldPlanSelector {
@@ -447,17 +422,13 @@ export namespace Components {
     */
     'productLabel'?: string;
     /**
-    * Specify region order
+    * Specify regions visible
     */
     'regions'?: string;
     /**
     * Is this tied to an existing resource?
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct {
     /**
@@ -474,18 +445,6 @@ export namespace Components {
   }
   interface ManifoldProductPage {
     'product'?: Product;
-  }
-  interface ManifoldRegionSelector {
-    'allowedRegions': string[];
-    'ariaLabel': string;
-    'name': string;
-    'preferredRegions'?: string[];
-    'regions'?: Catalog.Region[];
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    'value'?: string;
   }
   interface ManifoldResourceCard {
     /**
@@ -596,6 +555,7 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
     'product'?: Product;
@@ -878,12 +838,6 @@ declare global {
     new (): HTMLManifoldProductPageElement;
   };
 
-  interface HTMLManifoldRegionSelectorElement extends Components.ManifoldRegionSelector, HTMLStencilElement {}
-  var HTMLManifoldRegionSelectorElement: {
-    prototype: HTMLManifoldRegionSelectorElement;
-    new (): HTMLManifoldRegionSelectorElement;
-  };
-
   interface HTMLManifoldResourceCardElement extends Components.ManifoldResourceCard, HTMLStencilElement {}
   var HTMLManifoldResourceCardElement: {
     prototype: HTMLManifoldResourceCardElement;
@@ -1048,7 +1002,6 @@ declare global {
     'manifold-product': HTMLManifoldProductElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
-    'manifold-region-selector': HTMLManifoldRegionSelectorElement;
     'manifold-resource-card': HTMLManifoldResourceCardElement;
     'manifold-resource-card-view': HTMLManifoldResourceCardViewElement;
     'manifold-resource-container': HTMLManifoldResourceContainerElement;
@@ -1076,10 +1029,10 @@ declare global {
 declare namespace LocalJSX {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: Catalog.ExpandedPlan[];
+    'plans'?: PlanEdge[];
     'product'?: Product;
     'regions'?: string[];
-    'selectedResource'?: Gateway.Resource;
+    'selectedResource'?: Resource;
   }
   interface ManifoldAuthToken {
     'authType'?: AuthType;
@@ -1423,7 +1376,7 @@ declare namespace LocalJSX {
     'min'?: number;
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'suffix'?: string;
+    'unit'?: string;
     'value'?: number;
   }
   interface ManifoldOauth {
@@ -1438,36 +1391,15 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    /**
-    * URL-friendly slug (e.g. `"kitefin"`)
-    */
-    'planLabel'?: string;
-    /**
-    * URL-friendly slug (e.g. `"jawsdb-mysql"`)
-    */
-    'productLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
+    'hideUntilReady'?: boolean;
+    'planId'?: string;
   }
   interface ManifoldPlanCost {
     /**
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    /**
-    * Plan default cost
-    */
-    'defaultCost'?: number;
-    /**
-    * _(hidden)_
-    */
-    'graphqlFetch'?: GraphqlFetch;
-    /**
-    * TEMPORARY: Plan ID
-    */
-    'planId'?: string;
+    'plan'?: Plan;
     /**
     * _(hidden)_
     */
@@ -1481,17 +1413,15 @@ declare namespace LocalJSX {
     'isExistingResource'?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
-    'plan'?: Catalog.ExpandedPlan;
+    'plan'?: Plan;
     'product'?: Product;
     'regions'?: string[];
-    'resourceFeatures'?: Gateway.ResolvedFeature[];
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
-    'oldPlans'?: Catalog.ExpandedPlan[];
-    'plans'?: PlanConnection;
-    'selectPlan'?: Function;
+    'plans'?: PlanEdge[];
+    'selectPlan'?: (planId: string) => void;
     'selectedPlanId'?: string;
   }
   interface ManifoldPlanSelector {
@@ -1509,17 +1439,13 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
     /**
-    * Specify region order
+    * Specify regions visible
     */
     'regions'?: string;
     /**
     * Is this tied to an existing resource?
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldProduct {
     /**
@@ -1537,19 +1463,6 @@ declare namespace LocalJSX {
   }
   interface ManifoldProductPage {
     'product'?: Product;
-  }
-  interface ManifoldRegionSelector {
-    'allowedRegions'?: string[];
-    'ariaLabel'?: string;
-    'name'?: string;
-    'onUpdateValue'?: (event: CustomEvent<any>) => void;
-    'preferredRegions'?: string[];
-    'regions'?: Catalog.Region[];
-    /**
-    * _(hidden)_ Passed by `<manifold-connection>`
-    */
-    'restFetch'?: RestFetch;
-    'value'?: string;
   }
   interface ManifoldResourceCard {
     /**
@@ -1663,6 +1576,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
     'product'?: Product;
@@ -1755,7 +1669,6 @@ declare namespace LocalJSX {
     'manifold-product': ManifoldProduct;
     'manifold-product-details': ManifoldProductDetails;
     'manifold-product-page': ManifoldProductPage;
-    'manifold-region-selector': ManifoldRegionSelector;
     'manifold-resource-card': ManifoldResourceCard;
     'manifold-resource-card-view': ManifoldResourceCardView;
     'manifold-resource-container': ManifoldResourceContainer;
@@ -1824,7 +1737,6 @@ declare module "@stencil/core" {
       'manifold-product': LocalJSX.ManifoldProduct & JSXBase.HTMLAttributes<HTMLManifoldProductElement>;
       'manifold-product-details': LocalJSX.ManifoldProductDetails & JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement>;
       'manifold-product-page': LocalJSX.ManifoldProductPage & JSXBase.HTMLAttributes<HTMLManifoldProductPageElement>;
-      'manifold-region-selector': LocalJSX.ManifoldRegionSelector & JSXBase.HTMLAttributes<HTMLManifoldRegionSelectorElement>;
       'manifold-resource-card': LocalJSX.ManifoldResourceCard & JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement>;
       'manifold-resource-card-view': LocalJSX.ManifoldResourceCardView & JSXBase.HTMLAttributes<HTMLManifoldResourceCardViewElement>;
       'manifold-resource-container': LocalJSX.ManifoldResourceContainer & JSXBase.HTMLAttributes<HTMLManifoldResourceContainerElement>;

@@ -1,121 +1,70 @@
-import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldServiceCard } from './manifold-service-card';
-import { connections } from '../../utils/connections';
+import { ManifoldServiceCardView } from '../manifold-service-card-view/manifold-service-card-view';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
+import product from '../../spec/mock/graphql/product';
 
-const Product: any = {
-  id: '234qkjvrptpy3thna4qttwt7m2nf6',
-  displayName: 'LogDNA',
-  tagline: 'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
-  label: 'logdna',
-  logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
-  plans: {
-    edges: [{ node: { free: true } }, { node: { free: false } }],
-  },
-};
+const graphqlEndpoint = 'http://test.com/graphql';
+
+interface Props {
+  preserveEvent?: boolean;
+  productLabel?: string;
+  productLinkFormat?: string;
+}
+
+async function setup(props: Props) {
+  const page = await newSpecPage({
+    components: [ManifoldServiceCard, ManifoldServiceCardView],
+    html: '<div></div>',
+  });
+
+  const component = page.doc.createElement('manifold-service-card');
+  component.graphqlFetch = createGraphqlFetch({
+    endpoint: () => graphqlEndpoint,
+  });
+  component.productLabel = props.productLabel;
+  component.productLinkFormat = props.productLinkFormat;
+  component.preserveEvent = props.preserveEvent;
+
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
 
 describe('<manifold-service-card>', () => {
-  let page: SpecPage;
-  let card: HTMLManifoldServiceCardElement;
+  beforeEach(async () => fetchMock.mock(graphqlEndpoint, { data: { product } }));
+  afterEach(() => fetchMock.restore());
 
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [ManifoldServiceCard],
-      html: `<div></div>`,
-    });
-    card = page.doc.createElement('manifold-service-card');
-    card.graphqlFetch = createGraphqlFetch({
-      getAuthToken: jest.fn(() => '1234'),
-      wait: () => 10,
-      setAuthToken: jest.fn(),
-    });
-  });
-
-  afterEach(() => {
-    fetchMock.restore();
-  });
-
-  it('fetches product by label on label change', () => {
-    const newProduct = 'new-product';
-
-    const provisionButton = new ManifoldServiceCard();
-    provisionButton.fetchProduct = jest.fn();
-    provisionButton.productLabel = 'old-product';
-
-    provisionButton.productLabelChange(newProduct);
-    expect(provisionButton.fetchProduct).toHaveBeenCalledWith(newProduct);
-  });
-
-  describe('when created with a product label', () => {
-    it('will fetch the products', async () => {
-      const productLabel = 'test-product';
-
-      fetchMock.mock(connections.prod.graphql, { data: { product: Product } });
-
-      const root = page.root as HTMLElement;
-      card.productLabel = productLabel;
-      card.productLinkFormat = '/product/:product';
-      root.appendChild(card);
-      await page.waitForChanges();
-
-      expect(fetchMock.called(connections.prod.graphql)).toBe(true);
-
-      expect(card.querySelector('manifold-service-card-view')).toEqualHtml(`
-        <manifold-service-card-view
-          description="${Product.tagline}"
-          isfree=""
-          logo="${Product.logoUrl}"
-          name="${Product.displayName}"
-          productid="${Product.id}"
-          productlabel="${Product.label}"
-          productlinkformat="${card.productLinkFormat}"
-        >
-          <manifold-forward-slot slot="cta"></manifold-forward-slot>
-        </manifold-service-card-view>
-      `);
+  describe('v0 props', () => {
+    it('[product-label]: fetches if given', async () => {
+      await setup({ productLabel: 'new-product' });
+      expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
     });
 
-    it('will show loading state if no product label is given', async () => {
-      fetchMock.mock(connections.prod.graphql, { data: { product: Product } });
-
-      const root = page.root as HTMLElement;
-      root.appendChild(card);
-      await page.waitForChanges();
-
-      expect(fetchMock.called(connections.prod.graphql)).toBe(false);
-      expect(card.querySelector('manifold-service-card-view')).toEqualHtml(`
-        <manifold-service-card-view
-          description="Awesome product description"
-          logo="product.jpg"
-          name="Awesome product"
-          skeleton=""
-        >
-          <manifold-forward-slot slot="cta"></manifold-forward-slot>
-        </manifold-service-card-view>
-      `);
-    });
-  });
-
-  describe('when fetching if the product is free', () => {
-    it('will set is free to false if no free plan is found', async () => {
-      fetchMock.mock(connections.prod.graphql, {
-        data: {
-          product: {
-            ...Product,
-            plans: { edges: [Product.plans.edges[1]] },
-          },
-        },
+    it('[product-link-format]: formats links correctly', async () => {
+      const { page } = await setup({
+        productLabel: product.label,
+        productLinkFormat: '/product/:product',
       });
 
-      const root = page.root as HTMLElement;
-      card.productLabel = Product.label;
-      root.appendChild(card);
-      await page.waitForChanges();
+      const view = page.root && page.root.querySelector('manifold-service-card-view');
+      const link = view && view.shadowRoot && view.shadowRoot.querySelector('a');
+      const href = link && link.getAttribute('href');
+      expect(href).toBe(`/product/${product.label}`);
+    });
 
-      const rendered = card.querySelector('manifold-service-card-view');
-      expect(rendered && rendered.attributes.getNamedItem('isfree')).toBe(null);
+    it('[preserve-event]: it passes result to child', async () => {
+      const { page } = await setup({
+        productLabel: 'my-product',
+        productLinkFormat: '/product/:product',
+        preserveEvent: true,
+      });
+      const view = page.root && page.root.querySelector('manifold-service-card-view');
+      expect(view && view.preserveEvent).toBe(true);
     });
   });
 });

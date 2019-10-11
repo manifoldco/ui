@@ -49,19 +49,9 @@ const MeteredCost: FunctionalComponent<MeteredCostProps> = ({ meteredFeatures })
     return <small>metered usage</small>;
   }
 
-  const displayString = meteredFeatureDisplayValue(meteredFeatures[0].node) || '';
+  const displayValue = meteredFeatureDisplayValue(meteredFeatures[0].node.numericDetails);
 
-  if (displayString.indexOf('per') > 0) {
-    const [cost, suffix] = displayString.split(' per ');
-    return [cost, <small>&nbsp;per&nbsp;{suffix}</small>];
-  }
-
-  if (displayString.indexOf('/') > 0) {
-    const [cost, suffix] = displayString.split(' / ');
-    return [cost, <small>&nbsp;/&nbsp;{suffix}</small>];
-  }
-
-  return displayString;
+  return [displayValue.cost, displayValue.per ? <small>&nbsp;{displayValue.per}</small> : ''];
 };
 
 /**

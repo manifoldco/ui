@@ -1,22 +1,19 @@
 import { h, Prop, Component } from '@stencil/core';
+import { check, sliders } from '@manifoldco/icons';
 
-import { PlanMenu, SkeletonPlanMenu } from './PlanMenu';
-
-import { PlanConnection } from '../../types/graphql';
+import { PlanEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Catalog } from '../../types/catalog';
 
 @Component({
   tag: 'manifold-plan-menu',
-  styleUrl: 'plan-menu.css',
+  styleUrl: 'manifold-plan-menu.css',
   shadow: true,
 })
 export class ManifoldPlanMenu {
-  @Prop() plans?: PlanConnection;
-  @Prop() oldPlans: Catalog.ExpandedPlan[] = [];
+  @Prop() plans?: PlanEdge[];
   @Prop() selectedPlanId?: string;
-  @Prop() selectPlan: Function = () => {};
+  @Prop() selectPlan: (planId: string) => void = () => null;
 
   @loadMark()
   componentWillLoad() {}
@@ -25,16 +22,56 @@ export class ManifoldPlanMenu {
   render() {
     if (this.plans) {
       return (
-        <PlanMenu
-          plans={this.plans.edges}
-          oldPlans={this.oldPlans}
-          selectedPlanId={this.selectedPlanId}
-          selectPlan={this.selectPlan}
-        />
+        <ul class="plan-list">
+          {this.plans.map(({ node: plan }, i) => {
+            const isSelected = this.selectedPlanId ? plan.id === this.selectedPlanId : i === 0;
+            const isConfigurable =
+              plan.configurableFeatures && plan.configurableFeatures.edges.length > 0;
+            return (
+              <li class="plan-button">
+                <label>
+                  <input
+                    name="plan"
+                    type="radio"
+                    checked={isSelected}
+                    onChange={() => this.selectPlan(plan.id)}
+                    value={plan.id}
+                  />
+                  <div class="plan-button-inner">
+                    {plan.displayName}
+                    <div class="cost">
+                      <manifold-plan-cost compact={true} plan={plan} />
+                    </div>
+                    <manifold-icon class="check-icon" icon={check} />
+                    {isConfigurable && (
+                      <manifold-icon class="custom-icon" icon={sliders} data-hidden={isSelected} />
+                    )}
+                  </div>
+                </label>
+              </li>
+            );
+          })}
+        </ul>
       );
     }
 
     // 💀
-    return <SkeletonPlanMenu />;
+    return (
+      <ul class="plan-list">
+        {[1, 2, 3, 4].map((_, i) => (
+          <li class="plan-button">
+            <label>
+              <input name="plan" type="radio" checked={i === 0} />
+              <div class="plan-button-inner">
+                <manifold-skeleton-text>Plan placeholder</manifold-skeleton-text>
+                <div class="cost">
+                  <manifold-skeleton-text>Free</manifold-skeleton-text>
+                </div>
+              </div>
+            </label>
+          </li>
+        ))}
+      </ul>
+    );
   }
 }
