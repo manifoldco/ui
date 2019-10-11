@@ -1,7 +1,7 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
 import { Resource } from '../../types/graphql';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/graphql/resource';
 import { ManifoldResourceRename } from './manifold-resource-rename';
 import { ManifoldDataRenameButton } from '../manifold-data-rename-button/manifold-data-rename-button';
 

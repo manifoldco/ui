@@ -3,7 +3,9 @@ import fetchMock from 'fetch-mock';
 
 import { ManifoldDataProvisionButton } from './manifold-data-provision-button';
 import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import { product, resource, plan } from '../../spec/mock/graphql';
+import product from '../../spec/mock/graphql/product';
+import resource from '../../spec/mock/graphql/resource';
+import paidPlan from '../../spec/mock/graphql/plan-paid';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const graphqlEndpoint = 'http://test.com/graphql';
@@ -62,7 +64,7 @@ describe('<manifold-data-provision-button>', () => {
         return body.includes('error') ? { data: null, errors } : { data: product };
       }
       if (body.includes('query PLAN_REGIONS')) {
-        return body.includes('error') ? { data: null, errors } : { data: plan };
+        return body.includes('error') ? { data: null, errors } : { data: paidPlan };
       }
       return { data: null, errors };
     });

@@ -1,4 +1,4 @@
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/graphql/resource';
 
 export const skeleton = () => {
   const resourceProduct = document.createElement('manifold-resource-product');

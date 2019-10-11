@@ -3,7 +3,7 @@ import fetchMock from 'fetch-mock';
 
 import { ManifoldDataDeprovisionButton } from './manifold-data-deprovision-button';
 import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/graphql/resource';
 
 interface Props {
   resourceId?: string;

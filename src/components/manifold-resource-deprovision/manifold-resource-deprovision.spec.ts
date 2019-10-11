@@ -1,7 +1,7 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
 import { Resource } from '../../types/graphql';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/graphql/resource';
 import { ManifoldResourceDeprovision } from './manifold-resource-deprovision';
 import { ManifoldDataDeprovisionButton } from '../manifold-data-deprovision-button/manifold-data-deprovision-button';
 

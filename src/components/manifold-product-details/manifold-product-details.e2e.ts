@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 import { Product } from '../../types/graphql';
-import { product } from '../../spec/mock/graphql';
+import product from '../../spec/mock/graphql/product';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 

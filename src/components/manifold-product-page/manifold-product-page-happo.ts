@@ -28,3 +28,23 @@ export const jawsDB = () => {
 
   return productPage.componentOnReady();
 };
+
+export const noScreenshots = () => {
+  const productPage = document.createElement('manifold-product-page');
+  const withoutScreens = { ...jawsdbMock, images: [] };
+  productPage.product = fromJSON(withoutScreens);
+
+  const buttonWrapper = document.createElement('div');
+  buttonWrapper.style.width = '100%';
+  buttonWrapper.slot = 'cta';
+
+  const button = document.createElement('manifold-button');
+  button.color = 'orange';
+  button.textContent = 'Get JawsDB MySQL';
+
+  buttonWrapper.appendChild(button);
+  productPage.appendChild(buttonWrapper);
+  document.body.appendChild(productPage);
+
+  return productPage.componentOnReady();
+};

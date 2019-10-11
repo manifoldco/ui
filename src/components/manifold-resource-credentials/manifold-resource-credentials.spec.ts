@@ -1,7 +1,7 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
 import { Resource } from '../../types/graphql';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/graphql/resource';
 import { ManifoldResourceCredentials } from './manifold-resource-credentials';
 import { ManifoldCredentials } from '../manifold-credentials/manifold-credentials';
 import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-credentials-view';
