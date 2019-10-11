@@ -121,7 +121,7 @@ describe('<manifold-data-resize-button>', () => {
       );
     });
 
-    it.only('success', async () => {
+    it('success', async () => {
       const planId = 'plan-id';
       const resourceLabel = 'success-resource-label';
       const resourceId = 'success-resource-id';
