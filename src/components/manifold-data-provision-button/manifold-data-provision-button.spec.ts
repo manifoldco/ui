@@ -48,13 +48,15 @@ describe('<manifold-data-provision-button>', () => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);
       const errors: GraphqlError[] = [{ message: 'something went wrong' }];
-      if (body.includes('mutation CREATE_RESOURCE')) {
+      if (body.includes('mutation CreateResource')) {
         // return new label in response
         const newResource = {
           ...resource,
           label: variables.resourceLabel || resource.label,
         };
-        return body.includes('error') ? { data: null, errors } : { data: { data: newResource } };
+        return body.includes('error')
+          ? { data: null, errors }
+          : { data: { createResource: { data: newResource } } };
       }
       if (body.includes('query GET_PRODUCT_ID')) {
         return body.includes('error') ? { data: null, errors } : { data: product };

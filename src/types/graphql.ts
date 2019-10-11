@@ -293,6 +293,8 @@ export type LineItem = Node & {
   chargeTime: ChargeTime,
   /** Resource is the resource associated with this line item. */
   resource?: Maybe<Resource>,
+  /** Product is the product associated with this line item. */
+  product?: Maybe<Product>,
   /** List SubLineItems composing the line item. */
   subLineItems?: Maybe<SubLineItemConnection>,
 };
@@ -1387,6 +1389,41 @@ export type ResourceWithCredentialsQuery = (
       )> }
     )> }
   )> }
+);
+
+export type DeleteResourceMutationVariables = {
+  resourceId: Scalars['ID']
+};
+
+
+export type DeleteResourceMutation = (
+  { __typename?: 'Mutation' }
+  & { deleteResource: (
+    { __typename?: 'DeleteResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
+export type CreateResourceMutationVariables = {
+  planId: Scalars['ID'],
+  productId: Scalars['ID'],
+  regionId: Scalars['ID'],
+  resourceLabel: Scalars['String']
+};
+
+
+export type CreateResourceMutation = (
+  { __typename?: 'Mutation' }
+  & { createResource: (
+    { __typename?: 'CreateResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
 );
 
 export type ResourceChangePlanMutationVariables = {
