@@ -2,7 +2,8 @@ import { storiesOf } from '@storybook/html';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { manifoldConnectionDecorator } from './data/connectionDecorator';
 import productLabels from './data/product-labels';
-import planLabels from './data/plan-labels';
+import planIDs from './data/plan-ids';
+import planIDsStage from './data/plan-ids-stage';
 
 storiesOf('Catalog', module)
   .addDecorator(manifoldConnectionDecorator)
@@ -57,9 +58,12 @@ storiesOf('Catalog', module)
     }></manifold-plan-selector>`;
   })
   .add('plan card', () => {
-    const productLabel = select('product-label', productLabels, 'ziggeo');
-    const planLabel = select('plan-label', planLabels, 'custom');
-    return `<manifold-plan product-label="${productLabel}" plan-label="${planLabel}"></manifold-plan>`;
+    const planID = select(
+      'plan-id',
+      localStorage.getItem('manifold_auth_env') === 'stage' ? planIDsStage : planIDs,
+      planIDs['ziggeo starter']
+    );
+    return `<manifold-plan plan-id="${planID}"></manifold-plan>`;
   })
   .add('service card', () => {
     const productLabel = select('product-label', productLabels, 'timber-logging');
