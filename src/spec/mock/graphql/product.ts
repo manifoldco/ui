@@ -11,8 +11,8 @@ const emptyProducts: ProductConnection = {
   pageInfo: { hasNextPage: false, hasPreviousPage: false },
 };
 
-// https://graphqlbin.com/v2/ZzgWFo
-export const product: Product = {
+// https://graphqlbin.com/v2/gnyDsm
+const product: Product = {
   categories: [
     { label: 'logging', products: emptyProducts },
     { label: 'monitoring', products: emptyProducts },
