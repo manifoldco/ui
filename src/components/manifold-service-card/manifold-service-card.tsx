@@ -36,6 +36,7 @@ export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() hideUntilReady?: boolean = false;
   @Prop({ reflect: true }) isFeatured?: boolean;
   @Prop({ mutable: true }) product?: Product;
   @Prop() productLabel?: string;
@@ -58,7 +59,16 @@ export class ManifoldServiceCard {
 
   @loadMark()
   componentWillLoad() {
-    this.fetchProduct(this.productLabel);
+    let call;
+
+    if (this.productLabel) {
+      call = this.fetchProduct(this.productLabel);
+    }
+
+    if (this.hideUntilReady) {
+      return call;
+    }
+    return undefined;
   }
 
   get href() {
@@ -68,7 +78,7 @@ export class ManifoldServiceCard {
     return ''; // if no format, or product is loading, don’t calculate href
   }
 
-  async fetchProduct(productLabel?: string) {
+  async fetchProduct(productLabel: string) {
     if (!this.graphqlFetch || !productLabel) {
       return;
     }
