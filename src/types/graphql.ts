@@ -1389,6 +1389,23 @@ export type ResourceWithCredentialsQuery = (
   )> }
 );
 
+export type ResourceChangePlanMutationVariables = {
+  resourceId: Scalars['ID'],
+  planId: Scalars['ID']
+};
+
+
+export type ResourceChangePlanMutation = (
+  { __typename?: 'Mutation' }
+  & { updateResourcePlan: (
+    { __typename?: 'UpdateResourcePlanPayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
 export type ProductsQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String']

@@ -1,0 +1,8 @@
+mutation ResourceChangePlan($resourceId: ID!, $planId: ID!) {
+  updateResourcePlan(input: { resourceId: $resourceId, newPlanID: $planId }) {
+    data {
+      id
+      label
+    }
+  }
+}
