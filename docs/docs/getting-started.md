@@ -46,7 +46,9 @@ In any setup, you can use our CDN for UI:
   />
 </head>
 <body>
-  <manifold-marketplace></manifold-marketplace>
+  <manifold-connection>
+    <manifold-marketplace></manifold-marketplace>
+  </manifold-connection>
   <script type="module">
     import { defineCustomElements } from 'https://js.cdn.manifold.co/@manifoldco/ui/dist/esm/es2017/manifold.define.js';
     defineCustomElements(window);
@@ -65,7 +67,9 @@ In any setup, you can use our CDN for UI:
   />
 </head>
 <body>
-  <manifold-marketplace></manifold-marketplace>
+  <manifold-connection>
+    <manifold-marketplace></manifold-marketplace>
+  </manifold-connection>
   <script src="https://js.cdn.manifold.co/@manifoldco/ui/dist/manifold.js"></script>
 </body>
 ```
@@ -85,7 +89,11 @@ import(/* webpackChunkName: "manifold-ui" */ '@manifoldco/ui/dist/loader').then(
   ({ defineCustomElements }) => defineCustomElements(window)
 );
 
-const App = () => <manifold-marketplace />;
+const App = () => (
+  <manifold-connection>
+    <manifold-marketplace></manifold-marketplace>
+  </manifold-connection>
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
@@ -100,7 +108,11 @@ import { defineCustomElements } from '@manifoldco/ui/dist/loader';
 
 defineCustomElements(window);
 
-const App = () => <manifold-marketplace />;
+const App = () => (
+  <manifold-connection>
+    <manifold-marketplace></manifold-marketplace>
+  </manifold-connection>
+);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
