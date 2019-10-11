@@ -23,6 +23,7 @@ export const product: Product = {
   logoUrl: prodMock.body.logo_url,
   state: prodMock.body.state as ProductState,
   tagline: prodMock.body.tagline,
+  images: prodMock.body.images,
   supportEmail: prodMock.body.support_email,
   documentationUrl: prodMock.body.documentation_url,
   termsUrl: prodMock.body.terms.provided && prodMock.body.terms.url ? prodMock.body.terms.url : '',

@@ -9,6 +9,12 @@
   "supportEmail": "support@jawsdb.com",
   "documentationUrl": "https://jawsdb.com/docs",
   "termsUrl": "",
+  "images": [
+    "https://cdn.manifold.co/providers/jawsdb/screenshots/ss1.PNG",
+    "https://cdn.manifold.co/providers/jawsdb/screenshots/ss2.PNG",
+    "https://cdn.manifold.co/providers/jawsdb/screenshots/ss3.PNG",
+    "https://cdn.manifold.co/providers/jawsdb/screenshots/ss4.PNG"
+  ],
   "categories": [
     {
       "__typename": "Category",
