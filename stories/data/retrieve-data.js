@@ -1,4 +1,4 @@
-// TODO(dom): we can get this data from graphql now, so why not do it?
+// TODO(dom): we can add a generate step to story book to generate this data from graphql.
 import productLabels from './product-labels';
 import productLabelsStage from './product-labels-stage';
 import productLabelsLocal from './product-labels-local';
