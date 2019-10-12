@@ -1,10 +1,7 @@
 import { storiesOf } from '@storybook/html';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { manifoldConnectionDecorator } from './data/connectionDecorator';
-import productLabels from './data/product-labels';
-import productLabelsStage from './data/product-labels-stage';
-
-const env = localStorage.getItem('manifold_auth_env');
+import { getProductLabels } from './data/retrieve-data';
 
 storiesOf('Resource', module)
   .addDecorator(manifoldConnectionDecorator)
@@ -79,12 +76,10 @@ storiesOf('Resource', module)
     `;
   })
   .add('create', () => {
-    const newResource = text('resource-label', 'pdfshift');
-    const productLabel = select(
-      'product-label',
-      env === 'stage' ? productLabelsStage : productLabels,
-      'pdfshift'
-    );
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const newResource = text('resource-label', 'my-resource');
+    const productLabel = select('product-label', labels, labels[0]);
     return `
       <style>
         menu {
@@ -112,11 +107,9 @@ storiesOf('Resource', module)
       localStorage.getItem('manifold-resource-label') || 'my-resource'
     );
     localStorage.setItem('manifold-resource-label', resourceLabel);
-    const productLabel = select(
-      'product-label',
-      env === 'stage' ? productLabelsStage : productLabels,
-      'pdfshift'
-    );
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const productLabel = select('product-label', labels, labels[0]);
 
     // see .storybook/preview-head.html for resize setup
 
