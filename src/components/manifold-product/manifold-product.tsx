@@ -13,6 +13,7 @@ const query = gql`
       documentationUrl
       supportEmail
       displayName
+      images
       label
       logoUrl
       categories {
@@ -24,10 +25,6 @@ const query = gql`
         body
       }
       tagline
-      screenshots {
-        url
-        order
-      }
       provider {
         displayName
       }

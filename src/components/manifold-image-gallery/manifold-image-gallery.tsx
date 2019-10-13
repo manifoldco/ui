@@ -18,7 +18,7 @@ const Thumbnail: FunctionalComponent<ThumbnailProps> = ({ isSelected, onClick, .
 
 @Component({
   tag: 'manifold-image-gallery',
-  styleUrl: 'image-gallery.css',
+  styleUrl: 'manifold-image-gallery.css',
   shadow: true,
 })
 export class ImageGallery {

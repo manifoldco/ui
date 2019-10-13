@@ -19,7 +19,7 @@ export class ManifoldProductDetails {
   @logger()
   render() {
     if (this.product) {
-      const { tagline, valueProps, screenshots } = this.product;
+      const { images, tagline, valueProps } = this.product;
       return (
         <div>
           <h1 class="title" itemprop="tagline">
@@ -34,14 +34,8 @@ export class ManifoldProductDetails {
                 </li>
               ))}
           </ul>
-          {screenshots && screenshots.length > 0 && (
-            <manifold-image-gallery
-              images={[...screenshots]
-                .sort((image1, image2) => image1.order - image2.order)
-                .map(image => image.url)}
-            >
-              Screenshots
-            </manifold-image-gallery>
+          {images && images.length > 0 && (
+            <manifold-image-gallery images={images}>Screenshots</manifold-image-gallery>
           )}
         </div>
       );
