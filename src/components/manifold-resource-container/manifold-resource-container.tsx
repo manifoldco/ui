@@ -15,6 +15,9 @@ const query = gql`
     resource(label: $resourceLabel) {
       id
       label
+      status {
+        label
+      }
       plan {
         id
         label

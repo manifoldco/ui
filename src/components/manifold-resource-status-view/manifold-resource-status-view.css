@@ -32,6 +32,15 @@
 }
 
 .status {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 2.75rem;
+  padding-right: 1.5rem;
+  padding-left: 1rem;
+  color: var(--manifold-grayscale-60);
+  text-transform: lowercase;
+
   &[data-status='available'],
   &[data-status='AVAILABLE'] {
     --status-color: var(--manifold-color-success);
@@ -55,18 +64,11 @@
     --status-color: var(--manifold-grayscale-20);
   }
 
+  &[data-status='deprovision'],
   &[data-status='offline'],
   &[data-status='DELETED'] {
     --status-color: var(--manifold-color-error);
   }
-
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  height: 2.75rem;
-  padding-right: 1.5rem;
-  padding-left: 1rem;
-  color: var(--manifold-grayscale-60);
 
   &::before {
     position: absolute;
@@ -78,6 +80,10 @@
     border-radius: var(--manifold-tag-radius, var(--manifold-radius));
     opacity: 0.1;
     content: '';
+  }
+
+  & span::first-letter {
+    text-transform: uppercase;
   }
 
   & .icon,

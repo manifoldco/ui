@@ -528,6 +528,8 @@ export type Plan = Node & {
   free: Scalars['Boolean'],
   /** The data centers associated with this plan. */
   regions?: Maybe<RegionConnection>,
+  /** A list of plans that this plan is resizable to. */
+  resizableTo?: Maybe<PlanConnection>,
 };
 
 
@@ -560,6 +562,13 @@ export type PlanRegionsArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<RegionsOrderBy>
+};
+
+
+/** Plan is the product plan. */
+export type PlanResizableToArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>
 };
 
 /** PlanConfigurableFeature is a configurable feature of a plan. */

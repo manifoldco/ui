@@ -535,7 +535,7 @@ export namespace Components {
     'loading': boolean;
   }
   interface ManifoldResourceStatus {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading': boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
@@ -1555,7 +1555,7 @@ declare namespace LocalJSX {
     'loading'?: boolean;
   }
   interface ManifoldResourceStatus {
-    'data'?: Gateway.Resource;
+    'gqlData'?: Resource;
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }

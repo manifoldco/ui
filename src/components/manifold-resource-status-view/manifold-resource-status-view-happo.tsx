@@ -43,3 +43,30 @@ export const resourceLoading = () => {
 
   return status.componentOnReady();
 };
+
+export const creating = () => {
+  const status = document.createElement('manifold-resource-status-view');
+  status.resourceState = 'CREATING';
+
+  document.body.appendChild(status);
+
+  return status.componentOnReady();
+};
+
+export const errorCreating = () => {
+  const status = document.createElement('manifold-resource-status-view');
+  status.resourceState = 'ERROR_CREATING';
+
+  document.body.appendChild(status);
+
+  return status.componentOnReady();
+};
+
+export const deleted = () => {
+  const status = document.createElement('manifold-resource-status-view');
+  status.resourceState = 'DELETED';
+
+  document.body.appendChild(status);
+
+  return status.componentOnReady();
+};
