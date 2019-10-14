@@ -65,7 +65,7 @@ export class ManifoldResourceCard {
   @logger()
   render() {
     if (this.resource) {
-      const { label, plan, id, status } = this.resource;
+      const { label, plan, id } = this.resource;
       const { logoUrl } = (plan && plan.product) || {};
 
       return [
@@ -73,7 +73,6 @@ export class ManifoldResourceCard {
           label={label}
           logo={logoUrl}
           resourceId={id}
-          resourceStatus={status.label}
           resourceLinkFormat={this.resourceLinkFormat}
           preserveEvent={this.preserveEvent}
         />,

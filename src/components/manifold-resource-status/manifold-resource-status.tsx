@@ -1,13 +1,13 @@
 import { h, Component, Prop } from '@stencil/core';
 
-import Tunnel from '../../data/resource';
+import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Gateway } from '../../types/gateway';
+import { Resource } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-status' })
 export class ManifoldResourceStatus {
-  @Prop() data?: Gateway.Resource;
+  @Prop() gqlData?: Resource;
   @Prop() loading: boolean = true;
   @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
@@ -19,11 +19,11 @@ export class ManifoldResourceStatus {
     return (
       <manifold-resource-status-view
         size={this.size}
-        resourceState={this.data && (this.data.state as string)}
+        resourceState={this.gqlData && this.gqlData.status && this.gqlData.status.label}
         loading={this.loading}
       />
     );
   }
 }
 
-Tunnel.injectProps(ManifoldResourceStatus, ['data', 'loading']);
+ResourceTunnel.injectProps(ManifoldResourceStatus, ['gqlData', 'loading']);

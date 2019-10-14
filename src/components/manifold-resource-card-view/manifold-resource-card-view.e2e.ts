@@ -21,7 +21,7 @@ describe('<manifold-resource-card-view>', () => {
       await page.waitForChanges();
       const el = await page.find('manifold-resource-card-view >>> manifold-resource-status-view');
       const status = el.shadowRoot.querySelector('[role="status"]');
-      expect(status && status.innerHTML).toBe('Provision');
+      expect(status && status.innerHTML).toBe('provision');
     });
   });
 });

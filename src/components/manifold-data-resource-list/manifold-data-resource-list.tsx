@@ -25,6 +25,9 @@ const query = gql`
           owner {
             id
           }
+          status {
+            label
+          }
         }
       }
     }
