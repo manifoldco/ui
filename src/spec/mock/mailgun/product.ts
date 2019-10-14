@@ -2,8 +2,8 @@ import {
   PlanState,
   Product,
   ProductConnection,
-  ProductState,
   ProductCredentialsSupportType,
+  ProductState,
 } from '../../../types/graphql';
 
 const emptyProducts: ProductConnection = {
@@ -25,19 +25,28 @@ const product: Product = {
   label: 'mailgun',
   logoUrl: 'https://cdn.manifold.co/providers/mailgun/logos/q922nwncyuw263chbg86e0rw1m.png',
   plans: {
-    pageInfo: { hasNextPage: false, hasPreviousPage: false },
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
     edges: [
       {
         cursor: 'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1k60h2r8kfe9j6awh279xquz8',
         node: {
           configurableFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           cost: 0,
           displayName: 'Pistol',
           fixedFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -64,11 +73,17 @@ const product: Product = {
           id: '2350zr1ha983rd1mpqbh6h6h826ty',
           label: 'pistol',
           meteredFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           regions: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -89,13 +104,19 @@ const product: Product = {
         cursor: 'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1kc5hk2ttp60h2r8kfe9j6awh279xquz8',
         node: {
           configurableFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           cost: 5000,
           displayName: 'Musket',
           fixedFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -122,11 +143,17 @@ const product: Product = {
           id: '2354vwq0xapn9zxnh58zx6nuv512w',
           label: 'musket',
           meteredFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           regions: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -147,13 +174,19 @@ const product: Product = {
         cursor: 'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1k6hj3jttp61t308hc49qq4t35e8h3myvxfm',
         node: {
           configurableFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           cost: 25000,
           displayName: 'Shotgun',
           fixedFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -180,11 +213,17 @@ const product: Product = {
           id: '2356ckx1rrjw4k3yy8nqu8r2ggv9a',
           label: 'shotgun',
           meteredFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           regions: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -205,13 +244,19 @@ const product: Product = {
         cursor: 'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1kc5hk2ttp61t308hc49qq4t35e8h3myvxfm',
         node: {
           configurableFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           cost: 50000,
           displayName: 'Rifle',
           fixedFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -238,11 +283,17 @@ const product: Product = {
           id: '235buzawyzcc0gu4hacya2nvvx28a',
           label: 'rifle',
           meteredFeatures: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [],
           },
           regions: {
-            pageInfo: { hasNextPage: false, hasPreviousPage: false },
+            pageInfo: {
+              hasNextPage: false,
+              hasPreviousPage: false,
+            },
             edges: [
               {
                 cursor:
@@ -269,7 +320,10 @@ const product: Product = {
     supportEmail: '',
     url: '',
   },
-  settings: { ssoSupported: true, credentialsSupport: ProductCredentialsSupportType.Single },
+  settings: {
+    ssoSupported: true,
+    credentialsSupport: ProductCredentialsSupportType.Single,
+  },
   setupStepsHtml: '',
   state: ProductState.Available,
   supportEmail: 'help@mailgun.com',

@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldDataHasResource } from './manifold-data-has-resource';
-import resource from '../../spec/mock/graphql/resource';
+import resource from '../../spec/mock/elegant-cms/resource';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 const graphqlEndpoint = 'http://test.com/graphql';

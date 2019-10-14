@@ -1,5 +1,5 @@
-import planPaid from '../../spec/mock/graphql/plan-paid';
-import planFree from '../../spec/mock/graphql/plan-free';
+import planPaid from '../../spec/mock/aiven-cassandra/plan-paid';
+import planFree from '../../spec/mock/prefab/plan-free';
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 

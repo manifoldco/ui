@@ -1,11 +1,10 @@
-import productBlitline from '../../spec/mock/blitline/product.json';
-import productGenericTagging from '../../spec/mock/generic-tagging/product.json';
-import productJawsDB from '../../spec/mock/jawsdb/product.json';
-import productLogdna from '../../spec/mock/logdna/product.json';
-import productPrefab from '../../spec/mock/prefab/product.json';
-import productMailgun from '../../spec/mock/mailgun/product.json';
-import productZerosix from '../../spec/mock/zerosix/product.json';
-import productZiggeo from '../../spec/mock/ziggeo/product.json';
+import productBlitline from '../../spec/mock/blitline/product';
+import productGenericTagging from '../../spec/mock/generic-tagging/product';
+import productJawsDB from '../../spec/mock/jawsdb/product';
+import productLogdna from '../../spec/mock/logdna/product';
+import productPrefab from '../../spec/mock/prefab/product';
+import productMailgun from '../../spec/mock/mailgun/product';
+import productZiggeo from '../../spec/mock/ziggeo/product';
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
@@ -14,7 +13,7 @@ export const skeleton = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productJawsDB.body.label;
+  selector.productLabel = productJawsDB.label;
 
   const mockGqlFetch = (async (...args) => {
     // Simulate a delay so we see the skeletons
@@ -32,7 +31,7 @@ export const blitline = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productBlitline.body.label;
+  selector.productLabel = productBlitline.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
@@ -45,7 +44,7 @@ export const genericTagging = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productGenericTagging.body.label;
+  selector.productLabel = productGenericTagging.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
@@ -58,7 +57,7 @@ export const jawsDB = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productJawsDB.body.label;
+  selector.productLabel = productJawsDB.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
@@ -71,7 +70,7 @@ export const logdna = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productLogdna.body.label;
+  selector.productLabel = productLogdna.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
@@ -84,7 +83,7 @@ export const prefab = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productPrefab.body.label;
+  selector.productLabel = productPrefab.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
@@ -97,20 +96,7 @@ export const mailgun = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productMailgun.body.label;
-  selector.hideUntilReady = true;
-
-  document.body.appendChild(selector);
-
-  await selector.componentOnReady();
-};
-
-export const zerosix = async () => {
-  const conn = document.createElement('manifold-connection');
-  document.body.appendChild(conn);
-
-  const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productZerosix.body.label;
+  selector.productLabel = productMailgun.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);
@@ -123,7 +109,7 @@ export const ziggeo = async () => {
   document.body.appendChild(conn);
 
   const selector = document.createElement('manifold-service-card');
-  selector.productLabel = productZiggeo.body.label;
+  selector.productLabel = productZiggeo.label;
   selector.hideUntilReady = true;
 
   document.body.appendChild(selector);

@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Resource } from '../../types/graphql';
-import resource from '../../spec/mock/graphql/resource';
+import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourcePlan } from './manifold-resource-plan';
 import { ManifoldPlanDetails } from '../manifold-plan-details/manifold-plan-details';
 

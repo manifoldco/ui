@@ -3,9 +3,9 @@ import fetchMock from 'fetch-mock';
 
 import { ManifoldDataProvisionButton } from './manifold-data-provision-button';
 import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import product from '../../spec/mock/graphql/product';
-import resource from '../../spec/mock/graphql/resource';
-import paidPlan from '../../spec/mock/graphql/plan-paid';
+import product from '../../spec/mock/logdna/product';
+import resource from '../../spec/mock/elegant-cms/resource';
+import paidPlan from '../../spec/mock/aiven-cassandra/plan-paid';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const graphqlEndpoint = 'http://test.com/graphql';

@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 import serviceTemplates from '../../data/templates';
-import services from '../../spec/mock/products.json';
+import services from '../../spec/mock/products.json.js.js';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 

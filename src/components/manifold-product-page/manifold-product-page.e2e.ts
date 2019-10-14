@@ -1,5 +1,5 @@
 import { newE2EPage } from '@stencil/core/testing';
-import product from '../../spec/mock/graphql/product';
+import product from '../../spec/mock/logdna/product';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 

@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import resource from '../../spec/mock/graphql/resource';
+import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldDataRenameButton } from './manifold-data-rename-button';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 

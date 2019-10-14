@@ -1,4 +1,4 @@
-import resource from '../../spec/mock/graphql/resource';
+import resource from '../../spec/mock/elegant-cms/resource';
 
 export const skeleton = () => {
   const resourcePlan = document.createElement('manifold-resource-plan');
