@@ -1,9 +1,7 @@
 import { storiesOf } from '@storybook/html';
 import { withKnobs, boolean, select, text } from '@storybook/addon-knobs';
 import { manifoldConnectionDecorator } from './data/connectionDecorator';
-import productLabels from './data/product-labels';
-import planIDs from './data/plan-ids';
-import planIDsStage from './data/plan-ids-stage';
+import { getProductLabels, getPlanIds } from './data/retrieve-data';
 
 storiesOf('Catalog', module)
   .addDecorator(manifoldConnectionDecorator)
@@ -26,7 +24,9 @@ storiesOf('Catalog', module)
     ></manifold-marketplace>`;
   })
   .add('product page', () => {
-    const productLabel = select('product-label', productLabels, 'jawsdb-mysql');
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const productLabel = select('product-label', labels, labels[0]);
     return `
       <manifold-product product-label="${productLabel}">
         <manifold-button slot="cta">
@@ -35,42 +35,31 @@ storiesOf('Catalog', module)
       </manifold-product>`;
   })
   .add('plan selector', () => {
-    // these plans are important to focus in on
-    const productLabel = select(
-      'product-label',
-      {
-        'blitline (metered features)': 'blitline',
-        'logdna (popular)': 'logdna',
-        'mailgun (popular)': 'mailgun',
-        'jawsdb-mysql (custom plan)': 'jawsdb-mysql',
-        'memcachier-cache (many plans)': 'memcachier-cache',
-        'prefab (tiny metered pricing)': 'prefab',
-        'generic-tagging (mixed metered & non-metered plans)': 'generic-tagging',
-        'zerosix (only-metered pricing)': 'zerosix', // metered pricing
-        'ziggeo (tiered pricing)': 'ziggeo', // tiered pricing
-      },
-      'jawsdb-mysql'
-    );
     const freePlans = boolean('free-plans', false);
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const productLabel = select('product-label', labels, labels[0]);
     return `
     <manifold-plan-selector product-label="${productLabel}" ${
       freePlans ? 'free-plans' : ''
     }></manifold-plan-selector>`;
   })
   .add('plan card', () => {
-    const planID = select(
-      'plan-id',
-      localStorage.getItem('manifold_auth_env') === 'stage' ? planIDsStage : planIDs,
-      planIDs['ziggeo starter']
-    );
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getPlanIds(env);
+    const planID = select('product-label', labels, labels[Object.keys(labels)[0]]);
     return `<manifold-plan plan-id="${planID}"></manifold-plan>`;
   })
   .add('service card', () => {
-    const productLabel = select('product-label', productLabels, 'timber-logging');
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const productLabel = select('product-label', labels, labels[0]);
     return `<manifold-service-card product-label="${productLabel}"></manifold-service-card>`;
   })
   .add('name', () => {
-    const productLabel = select('product-label', productLabels, 'jawsdb-postgres');
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const productLabel = select('product-label', labels, labels[0]);
     return `<manifold-data-product-name product-label="${productLabel}"></manifold-data-product-name>`;
   })
   .add('name (from resource)', () => {
@@ -82,7 +71,9 @@ storiesOf('Catalog', module)
     return `<manifold-data-product-name resource-label="${resourceLabel}"></manifold-data-product-name>`;
   })
   .add('logo', () => {
-    const productLabel = select('product-label', productLabels, 'aiven-redis');
+    const env = localStorage.getItem('manifold_auth_env');
+    const labels = getProductLabels(env);
+    const productLabel = select('product-label', labels, labels[0]);
     return `
       <style>img { height: 256px; width: 256px; }</style>
       <manifold-data-product-logo product-label="${productLabel}"></manifold-data-product-logo>`;
