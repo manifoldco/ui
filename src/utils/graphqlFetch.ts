@@ -64,6 +64,7 @@ export function createGraphqlFetch({
     const response = await fetch(endpoint(), {
       method: 'POST',
       headers: {
+        'X-Manifold-Sample': 'Platform',
         Connection: 'keep-alive',
         'Content-type': 'application/json',
         ...auth,
