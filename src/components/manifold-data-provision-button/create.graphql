@@ -6,9 +6,7 @@ mutation CreateResource($planId: ID!, $productId: ID!, $regionId: ID!, $resource
       planId: $planId
       productId: $productId
       regionId: $regionId
-      owner: {
-        id: $ownerId
-      }
+      ownerId: $ownerId
     }
   ) {
     data {
