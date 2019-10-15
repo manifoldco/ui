@@ -1,6 +1,8 @@
+import { ResourceStatusLabel } from '../../types/graphql';
+
 export const available = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'AVAILABLE';
+  status.resourceState = ResourceStatusLabel.Available;
 
   document.body.appendChild(status);
 
@@ -9,7 +11,7 @@ export const available = () => {
 
 export const availableSmall = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'AVAILABLE';
+  status.resourceState = ResourceStatusLabel.Available;
   status.size = 'small';
 
   document.body.appendChild(status);
@@ -19,7 +21,7 @@ export const availableSmall = () => {
 
 export const availableXSmall = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'AVAILABLE';
+  status.resourceState = ResourceStatusLabel.Available;
   status.size = 'xsmall';
 
   document.body.appendChild(status);
@@ -46,7 +48,7 @@ export const resourceLoading = () => {
 
 export const creating = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'CREATING';
+  status.resourceState = ResourceStatusLabel.Creating;
 
   document.body.appendChild(status);
 
@@ -55,7 +57,7 @@ export const creating = () => {
 
 export const errorCreating = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'ERROR_CREATING';
+  status.resourceState = ResourceStatusLabel.ErrorCreating;
 
   document.body.appendChild(status);
 
@@ -64,7 +66,7 @@ export const errorCreating = () => {
 
 export const deleted = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'DELETED';
+  status.resourceState = ResourceStatusLabel.Deleted;
 
   document.body.appendChild(status);
 

@@ -1,4 +1,4 @@
-import { ResourceStatusLabel } from 'types/graphql';
+import { ResourceStatusLabel } from '../../types/graphql';
 
 export const skeleton = async () => {
   const card = document.createElement('manifold-resource-card-view');

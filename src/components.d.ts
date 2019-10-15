@@ -15,7 +15,7 @@ import {
   Product,
   ProductEdge,
   Resource,
-  ResourceStatusLabel as ResourceStatusLabel1,
+  ResourceStatusLabel,
   ResourceWithCredentialsQuery,
 } from './types/graphql';
 import {
@@ -36,9 +36,6 @@ import {
 import {
   AuthToken,
 } from './types/auth';
-import {
-  ResourceStatusLabel,
-} from 'types/graphql';
 import {
   Option,
 } from './types/Select';
