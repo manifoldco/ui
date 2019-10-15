@@ -66,6 +66,8 @@ export class ManifoldDataProvisionButton {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Product ID */
   @Prop({ mutable: true }) productId?: string = '';
+  /** Owner ID */
+  @Prop() ownerId?: string;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
@@ -145,6 +147,7 @@ export class ManifoldDataProvisionButton {
         productId: this.productId,
         regionId: this.regionId,
         resourceLabel: this.resourceLabel,
+        ownerId: this.ownerId,
       },
     });
     this.provisioning = false;

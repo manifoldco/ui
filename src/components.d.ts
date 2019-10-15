@@ -174,6 +174,10 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
+    * Owner ID
+    */
+    'ownerId'?: string;
+    /**
     * Plan to provision (slug)
     */
     'planId'?: string;
@@ -1174,6 +1178,10 @@ declare namespace LocalJSX {
     'onManifold-provisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
+    /**
+    * Owner ID
+    */
+    'ownerId'?: string;
     /**
     * Plan to provision (slug)
     */
