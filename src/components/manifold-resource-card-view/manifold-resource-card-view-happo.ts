@@ -1,3 +1,5 @@
+import { ResourceStatusLabel } from 'types/graphql';
+
 export const skeleton = async () => {
   const card = document.createElement('manifold-resource-card-view');
   card.label = 'loading';
@@ -14,7 +16,7 @@ export const logDNA = async () => {
   card.label = 'custom-resource';
   card.logo = 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png';
   card.resourceId = 'test';
-  card.resourceStatus = 'available';
+  card.resourceStatus = ResourceStatusLabel.Available;
 
   document.body.appendChild(card);
 
@@ -25,7 +27,7 @@ export const logoPlaceholder = async () => {
   const card = document.createElement('manifold-resource-card-view');
   card.label = 'custom-resource';
   card.resourceId = 'test';
-  card.resourceStatus = 'available';
+  card.resourceStatus = ResourceStatusLabel.Available;
 
   document.body.appendChild(card);
 

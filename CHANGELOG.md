@@ -38,6 +38,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `<manifold-data-resize-button>` to use GraphQL
 - Updated `<manifold-product>` ahead of a GraphQL deprecation (#619)
 - Converted `<manifold-data-resource-logo>` to use GraphQL (#635)
+- Updated `<manifold-product>` ahead of a GraphQL deprecation (#619)
+- Converted `<manifold-resource-status>` to use GraphQL (#611)
+- Converted `<manifold-resource-list>` to use GraphQL (#627)
+
 
 ### Breaking Changes:
 

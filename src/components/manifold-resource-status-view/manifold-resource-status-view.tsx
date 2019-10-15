@@ -1,9 +1,9 @@
 import { h, Component, Prop } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
+
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-
-const OFFLINE = 'offline';
+import { ResourceStatusLabel } from '../../types/graphql';
 
 @Component({
   tag: 'manifold-resource-status-view',
@@ -12,7 +12,7 @@ const OFFLINE = 'offline';
 })
 export class ManifoldResourceStatusView {
   @Prop() loading?: boolean = false;
-  @Prop() resourceState?: string = OFFLINE;
+  @Prop() resourceState?: ResourceStatusLabel;
   @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
   @loadMark()

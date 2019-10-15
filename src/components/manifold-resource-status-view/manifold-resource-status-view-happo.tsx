@@ -1,6 +1,6 @@
 export const available = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'available';
+  status.resourceState = 'AVAILABLE';
 
   document.body.appendChild(status);
 
@@ -9,7 +9,7 @@ export const available = () => {
 
 export const availableSmall = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'available';
+  status.resourceState = 'AVAILABLE';
   status.size = 'small';
 
   document.body.appendChild(status);
@@ -19,7 +19,7 @@ export const availableSmall = () => {
 
 export const availableXSmall = () => {
   const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = 'available';
+  status.resourceState = 'AVAILABLE';
   status.size = 'xsmall';
 
   document.body.appendChild(status);

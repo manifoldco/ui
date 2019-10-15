@@ -41,19 +41,16 @@
   color: var(--manifold-grayscale-60);
   text-transform: lowercase;
 
-  &[data-status='available'],
   &[data-status='AVAILABLE'] {
     --status-color: var(--manifold-color-success);
   }
 
-  &[data-status='provision'],
   &[data-status='CREATING'],
   &[data-status='UPDATING'],
   &[data-status='DELETING'] {
     --status-color: var(--manifold-color-info);
   }
 
-  &[data-status='degraded'],
   &[data-status='ERROR_CREATING'],
   &[data-status='ERROR_UPDATING'],
   &[data-status='ERROR_DELETING'] {
@@ -64,8 +61,6 @@
     --status-color: var(--manifold-grayscale-20);
   }
 
-  &[data-status='deprovision'],
-  &[data-status='offline'],
   &[data-status='DELETED'] {
     --status-color: var(--manifold-color-error);
   }

@@ -1,0 +1,24 @@
+query RESOURCES {
+  resources(first: 500) {
+    edges {
+      node {
+        id
+        displayName
+        label
+        owner {
+          id
+        }
+        status {
+          label
+        }
+        plan {
+          product {
+            id
+            label
+            logoUrl
+          }
+        }
+      }
+    }
+  }
+}

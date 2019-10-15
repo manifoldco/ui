@@ -15,6 +15,7 @@ import {
   Product,
   ProductEdge,
   Resource,
+  ResourceStatusLabel as ResourceStatusLabel1,
   ResourceWithCredentialsQuery,
 } from './types/graphql';
 import {
@@ -35,6 +36,9 @@ import {
 import {
   AuthToken,
 } from './types/auth';
+import {
+  ResourceStatusLabel,
+} from 'types/graphql';
 import {
   Option,
 } from './types/Select';
@@ -464,7 +468,7 @@ export namespace Components {
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-    'resourceStatus'?: string;
+    'resourceStatus'?: ResourceStatusLabel;
   }
   interface ManifoldResourceContainer {
     /**
@@ -509,10 +513,6 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan {
     'gqlData'?: Resource;
@@ -542,7 +542,7 @@ export namespace Components {
   }
   interface ManifoldResourceStatusView {
     'loading'?: boolean;
-    'resourceState'?: string;
+    'resourceState'?: ResourceStatusLabel;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldSelect {
@@ -1483,7 +1483,7 @@ declare namespace LocalJSX {
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-    'resourceStatus'?: string;
+    'resourceStatus'?: ResourceStatusLabel;
   }
   interface ManifoldResourceContainer {
     /**
@@ -1529,10 +1529,6 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan {
     'gqlData'?: Resource;
@@ -1562,7 +1558,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceStatusView {
     'loading'?: boolean;
-    'resourceState'?: string;
+    'resourceState'?: ResourceStatusLabel;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldSelect {
