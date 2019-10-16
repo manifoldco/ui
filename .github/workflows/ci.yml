@@ -26,10 +26,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Install dependencies
+        uses: actions/checkout@v1
         run: npm install
-        working-directory: ../
       - name: Where the hell am I?
         run: pwd
       - name: Run TestCafe
         run: npm run testcafe
-        working-directory: ../
