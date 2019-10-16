@@ -6,6 +6,13 @@ on:
       - sslotsky/test-cafe-action
 
 jobs:
+  spit:
+    steps:
+      - name: Tell me some stuff
+        run: |
+          echo ${{ github.event.deployment_status.deployment_url }},
+          echo ${{ github.event.deployment_status.state }},
+          echo ${{ github.event.deployment_status.creator.login }},
   test:
     env:
       DEPLOY_URL: ${{ github.event.deployment_status.deployment_url }}
