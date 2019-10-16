@@ -106,3 +106,14 @@ plain ol’ CSS.
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
 [slot]: https://stenciljs.com/docs/templating-jsx/
 [plan-selector]: /components/plan-selector
+
+## Context (team, org, etc.)
+
+By default, Manifold assumes the user creating the resource will own it. But 
+when creating a resource owned by another context (e.g. a team, or 
+organization, or whatever your platform calls it), you’ll need to specify an 
+owner-id different from their own:
+
+```html
+<manifold-data-provision-button owner-id="team-123">
+```

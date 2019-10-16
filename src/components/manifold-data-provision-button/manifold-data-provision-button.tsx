@@ -6,6 +6,7 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import createResource from './create.graphql';
+import createResourceWithOwner from './create-with-owner.graphql';
 import { CreateResourceMutation } from '../../types/graphql';
 
 interface ClickMessage {
@@ -66,6 +67,8 @@ export class ManifoldDataProvisionButton {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Product ID */
   @Prop({ mutable: true }) productId?: string = '';
+  /** Owner ID */
+  @Prop() ownerId?: string;
   /** Product to provision (slug) */
   @Prop() productLabel?: string;
   /** Plan to provision (slug) */
@@ -139,12 +142,13 @@ export class ManifoldDataProvisionButton {
     // disable button & attempt provision
     this.provisioning = true;
     const { data, errors } = await this.graphqlFetch<CreateResourceMutation>({
-      query: createResource,
+      query: this.ownerId ? createResourceWithOwner : createResource,
       variables: {
         planId: this.planId,
         productId: this.productId,
         regionId: this.regionId,
         resourceLabel: this.resourceLabel,
+        ownerId: this.ownerId,
       },
     });
     this.provisioning = false;
