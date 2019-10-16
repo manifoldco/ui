@@ -247,13 +247,13 @@ export namespace Components {
     */
     'alt'?: string;
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Look up product logo from resource
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataSsoButton {
     'loading'?: boolean;
@@ -1256,13 +1256,13 @@ declare namespace LocalJSX {
     */
     'alt'?: string;
     /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    /**
     * Look up product logo from resource
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldDataSsoButton {
     'loading'?: boolean;

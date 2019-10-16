@@ -1,0 +1,10 @@
+query ResourceLogo($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    plan {
+      product {
+        displayName
+        logoUrl
+      }
+    }
+  }
+}

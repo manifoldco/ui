@@ -55,6 +55,8 @@ storiesOf('Resource', module)
             Show credentials
           </manifold-button>
         </manifold-resource-credentials>
+        <h2>Logo</h2>
+        <manifold-data-resource-logo resource-label="${resourceLabel}"></manifold-data-resource-logo>
       </manifold-resource-container>
     </div>`;
   })

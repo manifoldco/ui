@@ -37,6 +37,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Owner ID no longer fetched to create/delete resources (#608)
 - Converted `<manifold-data-resize-button>` to use GraphQL
 - Updated `<manifold-product>` ahead of a GraphQL deprecation (#619)
+- Converted `<manifold-data-resource-logo>` to use GraphQL (#635)
 
 ### Breaking Changes:
 
