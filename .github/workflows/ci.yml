@@ -6,16 +6,6 @@ on:
       - sslotsky/test-cafe-action
 
 jobs:
-  spit:
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Tell me some stuff
-        run: |
-          echo deployment_url ${{ github.event.deployment_status.deployment_url }},
-          echo deployment.url ${{ github.event.deployment_status.deployment.url }},
-          echo target_url ${{ github.event.deployment_status.target_url }},
-          echo state ${{ github.event.deployment_status.state }},
-          echo login ${{ github.event.deployment_status.creator.login }},
   test:
     env:
       DEPLOY_URL: ${{ github.event.deployment_status.target_url }}
@@ -31,4 +21,4 @@ jobs:
       - name: Pull the Docker image
         run: docker pull testcafe/testcafe
       - name: Run TestCafe
-        run: docker run -e DEPLOY_URL -v e2e:/tests -it testcafe/testcafe chrome e2e/
+        run: docker run -e DEPLOY_URL -v e2e:/tests -i testcafe/testcafe chrome e2e/
