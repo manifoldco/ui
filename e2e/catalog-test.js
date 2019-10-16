@@ -1,5 +1,6 @@
 import { Selector } from 'testcafe';
 
+// eslint-disable-next-line
 fixture`marketplace`.page`${process.env.DEPLOY_URL}/?path=/story/catalog--marketplace`;
 
 test('filtering', async t => {

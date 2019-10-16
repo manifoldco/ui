@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - name: Install dependencies
-        run: npm install
       - name: Pull the Docker image
         run: docker pull testcafe/testcafe
       - name: Run TestCafe
