@@ -8,6 +8,8 @@ import { CredentialEdge } from '../../types/graphql';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+global.setTimeout = jest.fn();
+
 const graphqlEndpoint = 'http://test.com/graphql';
 const credentials: Partial<CredentialEdge[]> = [
   { cursor: '', node: { key: 'KEY_1', value: 'SECRET_1' } },
