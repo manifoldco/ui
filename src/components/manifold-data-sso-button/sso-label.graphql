@@ -1,0 +1,7 @@
+query ResourceSSOByID($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    label
+    id
+    ssoUrl
+  }
+}

@@ -1,128 +1,93 @@
-import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, State, Event, EventEmitter } from '@stencil/core';
 
 import connection from '../../state/connection';
-import { Marketplace } from '../../types/marketplace';
-import { Connector } from '../../types/connector';
-import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+import ssoByLabel from './sso-label.graphql';
+import ssoByID from './sso-id.graphql';
+import { ResourceSsoByIdQuery, ResourceSsoByLabelQuery } from '../../types/graphql';
 
 interface ClickMessage {
-  resourceLabel: string;
-  resourceId: string;
+  resourceLabel?: string;
+  resourceId?: string;
 }
 
 interface SuccessMessage {
   message: string;
-  resourceLabel: string;
-  resourceId: string;
+  resourceLabel?: string;
+  resourceId?: string;
   redirectUrl: string;
 }
 
 interface ErrorMessage {
   message: string;
-  resourceLabel: string;
-  resourceId: string;
+  resourceLabel?: string;
+  resourceId?: string;
 }
 
 @Component({ tag: 'manifold-data-sso-button' })
 export class ManifoldDataSsoButton {
-  @Element() el: HTMLElement;
   /** _(hidden)_ */
-  @Prop() restFetch?: RestFetch = connection.restFetch;
+  @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The id of the resource to rename, will be fetched if not set */
-  @Prop({ mutable: true }) resourceId?: string = '';
+  @Prop() resourceId?: string;
   @Prop() loading?: boolean = false;
+  @State() ssoUrl?: string;
   @Event({ eventName: 'manifold-ssoButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-ssoButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-ssoButton-success', bubbles: true }) success: EventEmitter;
 
-  @Watch('resourceLabel') labelChange(newLabel: string) {
-    if (!this.resourceId) {
-      this.fetchResourceId(newLabel);
-    }
-  }
-
   @loadMark()
-  componentWillLoad() {
-    if (this.resourceLabel && !this.resourceId) {
-      this.fetchResourceId(this.resourceLabel);
-    }
-  }
+  componentWillLoad() {}
 
   sso = async () => {
-    if (!this.restFetch || this.loading) {
-      return;
-    }
-
-    if (!this.resourceId) {
-      console.error('Property “resourceId” is missing');
+    if (!this.graphqlFetch || this.loading) {
       return;
     }
 
     const clickMessage: ClickMessage = {
-      resourceLabel: this.resourceLabel || '',
+      resourceLabel: this.resourceLabel,
       resourceId: this.resourceId,
     };
     this.click.emit(clickMessage);
 
-    const body: Connector.AuthCodeRequest = {
-      body: {
-        resource_id: this.resourceId,
+    const { data, errors } = await this.graphqlFetch<
+      ResourceSsoByIdQuery | ResourceSsoByLabelQuery
+    >({
+      query: this.resourceId ? ssoByID : ssoByLabel,
+      variables: {
+        resourceLabel: this.resourceLabel,
+        resourceId: this.resourceId,
       },
-    };
-
-    try {
-      const response = await this.restFetch<Connector.AuthorizationCode>({
-        service: 'connector',
-        endpoint: `/sso`,
-        body,
-        options: {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-        },
-      });
-
-      const success: SuccessMessage = {
-        message: `${this.resourceLabel} successfully ssoed`,
-        resourceLabel: this.resourceLabel || '',
-        resourceId: this.resourceId,
-        redirectUrl: response ? response.body.redirect_uri : '',
-      };
-
-      this.success.emit(success);
-    } catch (e) {
-      const error: ErrorMessage = {
-        message: e.message,
-        resourceLabel: this.resourceLabel || '',
-        resourceId: this.resourceId,
-      };
-
-      this.error.emit(error);
-    }
-  };
-
-  async fetchResourceId(resourceLabel: string) {
-    if (!this.restFetch) {
-      return;
-    }
-
-    this.loading = true;
-    const response = await this.restFetch<Marketplace.Resource[]>({
-      service: 'marketplace',
-      endpoint: `/resources/?me&label=${resourceLabel}`,
     });
 
-    if (!response || !response.length) {
-      console.error(`${resourceLabel} resource not found`);
-      return;
+    if (data && data.resource) {
+      const success: SuccessMessage = {
+        message: `${this.resourceLabel} successfully authenticated`,
+        resourceLabel: data.resource.label,
+        resourceId: data.resource.id,
+        redirectUrl: data.resource.ssoUrl,
+      };
+      this.success.emit(success);
+
+      this.ssoUrl = data.resource.ssoUrl;
     }
 
-    this.loading = false;
-    this.resourceId = response[0].id;
-  }
+    if (errors) {
+      errors.forEach(({ message }) => {
+        const error: ErrorMessage = {
+          message,
+          resourceLabel: this.resourceLabel,
+          resourceId: this.resourceId,
+        };
+
+        this.error.emit(error);
+      });
+    }
+  };
 
   @logger()
   render() {
@@ -130,7 +95,7 @@ export class ManifoldDataSsoButton {
       <button
         type="submit"
         onClick={this.sso}
-        disabled={!this.resourceId || this.loading}
+        disabled={this.loading}
         data-resource-id={this.resourceId}
       >
         <slot />

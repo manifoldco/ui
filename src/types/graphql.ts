@@ -1491,6 +1491,32 @@ export type ResourceLogoQuery = (
   )> }
 );
 
+export type ResourceSsoByLabelQueryVariables = {
+  resourceID: Scalars['ID']
+};
+
+
+export type ResourceSsoByLabelQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & Pick<Resource, 'id' | 'label' | 'ssoUrl'>
+  )> }
+);
+
+export type ResourceSsoByIdQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceSsoByIdQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & Pick<Resource, 'label' | 'id' | 'ssoUrl'>
+  )> }
+);
+
 export type ProductsQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String']
