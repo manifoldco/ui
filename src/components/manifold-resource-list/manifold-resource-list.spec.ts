@@ -3,13 +3,22 @@ import fetchMock from 'fetch-mock';
 
 import { ManifoldResourceList } from './manifold-resource-list';
 import { connections } from '../../utils/connections';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/elegant-cms/resource';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
+import { ResourceEdge } from '../../types/graphql';
 
-const resources = {
-  data: {
-    resources: {
-      edges: [{ node: resource }, { node: resource }],
+const resources: ResourceEdge[] = [
+  { node: resource, cursor: '1' },
+  { node: resource, cursor: '2' },
+];
+
+const data = {
+  resources: {
+    edges: resources,
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false,
+      endCursor: 'spookyboo',
     },
   },
 };
@@ -38,7 +47,7 @@ describe('<manifold-resource-list>', () => {
   });
 
   it('The resources list are rendered if given.', async () => {
-    fetchMock.mock(connections.prod.graphql, resources);
+    fetchMock.mock(connections.prod.graphql, { data });
 
     const page = await newSpecPage({
       components: [ManifoldResourceList],
@@ -55,12 +64,12 @@ describe('<manifold-resource-list>', () => {
     // to replace the 'processes resources properly' here.
     expect(page.root.shadowRoot.querySelector('.wrapper')).toBeTruthy();
     expect(page.root.shadowRoot.querySelectorAll('manifold-resource-card-view')).toHaveLength(
-      resources.data.resources.edges.length
+      resources.length
     );
   });
 
   it('processes resources properly', async () => {
-    fetchMock.mock(connections.prod.graphql, resources);
+    fetchMock.mock(connections.prod.graphql, { data });
 
     const page = await newSpecPage({
       components: [ManifoldResourceList],
@@ -69,8 +78,8 @@ describe('<manifold-resource-list>', () => {
 
     const instance = page.rootInstance as ManifoldResourceList;
 
-    expect(instance.resources).toHaveLength(resources.data.resources.edges.length);
-    expect(instance.resources).toEqual(resources.data.resources.edges);
+    expect(instance.resources).toHaveLength(resources.length);
+    expect(instance.resources).toEqual(resources);
   });
 
   it('renders a skeleton when no resources available', async () => {
@@ -123,7 +132,7 @@ describe('<manifold-resource-list>', () => {
     });
 
     it('slot="no-resources" is rendered if no resources are found.', async () => {
-      fetchMock.mock(connections.prod.graphql, { data: resources });
+      fetchMock.mock(connections.prod.graphql, data);
 
       const page = await newSpecPage({
         components: [ManifoldResourceList],

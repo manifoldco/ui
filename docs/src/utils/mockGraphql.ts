@@ -1,10 +1,14 @@
 import fetchMock from 'fetch-mock';
-import { resource } from '../../../src/spec/mock/graphql';
+import resource from '../../../src/spec/mock/elegant-cms/resource';
 
 const resourcesMock = {
   data: {
     resources: {
-      edges: [{ node: resource }, { node: resource }],
+      pageInfo: {
+        hasNextPage: false,
+        endCursor: 'spookyboo',
+      },
+      edges: [{ node: resource }, { node: resource }, { node: resource }, { node: resource }],
     },
   },
 };
@@ -25,6 +29,8 @@ export const mockGraphQl = () => {
     const { headers, body } = opts;
 
     const bodyString = body as string;
+    // TODO(dom): This ok right now but as we scale out our queries and such we should
+    // use a proper gql mocking tool that supports better field mocking ect.
     if (bodyString.includes('query RESOURCES')) {
       return resourcesMock;
     }

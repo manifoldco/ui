@@ -1,5 +1,5 @@
-query RESOURCES {
-  resources(first: 500) {
+query RESOURCES($first: Int!, $after: String!) {
+  resources(first: $first, after: $after) {
     edges {
       node {
         id
@@ -19,6 +19,10 @@ query RESOURCES {
           }
         }
       }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
     }
   }
 }

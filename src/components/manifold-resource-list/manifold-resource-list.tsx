@@ -1,12 +1,12 @@
 import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import connection from '../../state/connection';
-
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import query from './resources.graphql';
-import { ResourceEdge } from '../../types/graphql';
+import { Query, ResourceEdge } from '../../types/graphql';
+import fetchAllPages from '../../utils/fetchAllPages';
 
 @Component({
   tag: 'manifold-resource-list',
@@ -53,14 +53,15 @@ export class ManifoldResourceList {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({
-      query,
-    });
-
-    if (data) {
-      this.resources = (data.resources && data.resources.edges) || [];
-    } else if (errors) {
-      console.error(errors);
+    try {
+      this.resources = await fetchAllPages<ResourceEdge>({
+        query,
+        nextPage: { first: 50, after: '' },
+        getConnection: (q: Query) => q.resources,
+        graphqlFetch: this.graphqlFetch,
+      });
+    } catch (e) {
+      console.error(e);
     }
   };
 
