@@ -84,22 +84,6 @@ export const skeleton = () => {
 };
 ```
 
-Components that use data can add mocked data to the element objects with the `fromJSON` util:
-
-```js
-import resource from '../../spec/mock/cms-stage/resource.json';
-import fromJSON from '../../spec/mock/fromJSON';
-
-export const available = () => {
-  const status = document.createElement('manifold-resource-status-view');
-  status.resourceState = { loading: false, data: fromJSON(resource) };
-
-  document.body.appendChild(status);
-
-  return status.componentOnReady();
-};
-```
-
 Components that have slots can have the slot elements appended to them using `appendChild` before
 the element is returned:
 
@@ -108,14 +92,18 @@ import fromJSON from '../../spec/mock/fromJSON';
 
 export const jawsDB = () => {
   const productPage = document.createElement('manifold-product-page');
-  productPage.product = fromJSON(jawsdbMock);
-  productPage.provider = fromJSON(jawsdbProvider);
+  productPage.product = jawsdbMock;
+
+  const buttonWrapper = document.createElement('div');
+  buttonWrapper.style.width = '100%';
+  buttonWrapper.slot = 'cta';
 
   const button = document.createElement('manifold-button');
+  button.color = 'orange';
   button.textContent = 'Get JawsDB MySQL';
-  button.slot = 'cta';
 
-  productPage.appendChild(button);
+  buttonWrapper.appendChild(button);
+  productPage.appendChild(buttonWrapper);
   document.body.appendChild(productPage);
 
   return productPage.componentOnReady();

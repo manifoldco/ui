@@ -1,7 +1,7 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
 import { Resource } from '../../types/graphql';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourceSso } from './manifold-resource-sso';
 import { ManifoldDataSsoButton } from '../manifold-data-sso-button/manifold-data-sso-button';
 

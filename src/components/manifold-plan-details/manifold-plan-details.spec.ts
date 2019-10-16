@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldPlanDetails } from './manifold-plan-details';
-import product from '../../spec/mock/graphql/product';
-import freePlan from '../../spec/mock/graphql/plan-free';
-import paidPlan from '../../spec/mock/graphql/plan-paid';
+import product from '../../spec/mock/logdna/product';
+import freePlan from '../../spec/mock/prefab/plan-free';
+import paidPlan from '../../spec/mock/aiven-cassandra/plan-paid';
 
 async function setup(loadCallback?: jest.Mock) {
   const page = await newSpecPage({

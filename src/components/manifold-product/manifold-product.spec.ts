@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { ManifoldProduct } from './manifold-product';
-import { product } from '../../spec/mock/graphql';
+import product from '../../spec/mock/logdna/product';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 
 const graphqlEndpoint = 'http://test.com/graphql';

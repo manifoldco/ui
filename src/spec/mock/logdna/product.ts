@@ -1,9 +1,9 @@
 import {
   PlanState,
   Product,
+  ProductConnection,
   ProductCredentialsSupportType,
   ProductState,
-  ProductConnection,
 } from '../../../types/graphql';
 
 const emptyProducts: ProductConnection = {
@@ -11,8 +11,8 @@ const emptyProducts: ProductConnection = {
   pageInfo: { hasNextPage: false, hasPreviousPage: false },
 };
 
-// https://graphqlbin.com/v2/ZzgWFo
-export const product: Product = {
+// https://graphqlbin.com/v2/gnyDsm
+const product: Product = {
   categories: [
     { label: 'logging', products: emptyProducts },
     { label: 'monitoring', products: emptyProducts },
@@ -27,7 +27,6 @@ export const product: Product = {
   ],
   label: 'logdna',
   logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
-
   plans: {
     pageInfo: {
       hasNextPage: false,
@@ -1013,13 +1012,12 @@ export const product: Product = {
     displayName: 'LogDNA',
     label: 'logdna',
     logoUrl: '',
-    products: emptyProducts,
     supportEmail: '',
     url: '',
   },
   settings: {
-    credentialsSupport: ProductCredentialsSupportType.Single,
     ssoSupported: true,
+    credentialsSupport: ProductCredentialsSupportType.Single,
   },
   setupStepsHtml:
     '<ol><li><p><a href="https://docs.logdna.com" rel="nofollow">Select a code library from the LogDNA documentation</a></p>\n</li><li><p>Copy your API credentials from our dashboard</p>\n</li><li><p>Configure the logger with your API key</p>\n</li><li><p>Start your application</p>\n</li><li><p>Monitor your logs from the LogDNA dashboard</p>\n</li></ol>',

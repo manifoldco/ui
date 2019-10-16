@@ -1,15 +1,12 @@
-import product from '../../spec/mock/jawsdb/product.json';
-import fromJSON from '../../spec/mock/fromJSON';
-
-const { id, body } = fromJSON(product);
+import product from '../../spec/mock/jawsdb/product';
 
 export const skeleton = async () => {
   const card = document.createElement('manifold-service-card-view');
-  card.description = body.tagline;
-  card.logo = body.logo_url;
-  card.productId = id;
-  card.name = body.name;
-  card.productLabel = body.label;
+  card.description = product.tagline;
+  card.logo = product.logoUrl;
+  card.productId = product.id;
+  card.name = product.displayName;
+  card.productLabel = product.label;
   card.skeleton = true;
 
   document.body.appendChild(card);
@@ -19,11 +16,11 @@ export const skeleton = async () => {
 
 export const jawsDB = async () => {
   const card = document.createElement('manifold-service-card-view');
-  card.description = body.tagline;
-  card.logo = body.logo_url;
-  card.productId = id;
-  card.name = body.name;
-  card.productLabel = body.label;
+  card.description = product.tagline;
+  card.logo = product.logoUrl;
+  card.productId = product.id;
+  card.name = product.displayName;
+  card.productLabel = product.label;
 
   document.body.appendChild(card);
 
@@ -32,11 +29,11 @@ export const jawsDB = async () => {
 
 export const free = async () => {
   const card = document.createElement('manifold-service-card-view');
-  card.description = body.tagline;
-  card.logo = body.logo_url;
-  card.productId = id;
-  card.name = body.name;
-  card.productLabel = body.label;
+  card.description = product.tagline;
+  card.logo = product.logoUrl;
+  card.productId = product.id;
+  card.name = product.displayName;
+  card.productLabel = product.label;
   card.isFree = true;
 
   document.body.appendChild(card);
@@ -46,11 +43,11 @@ export const free = async () => {
 
 export const featured = async () => {
   const card = document.createElement('manifold-service-card-view');
-  card.description = body.tagline;
-  card.logo = body.logo_url;
-  card.productId = id;
-  card.name = body.name;
-  card.productLabel = body.label;
+  card.description = product.tagline;
+  card.logo = product.logoUrl;
+  card.productId = product.id;
+  card.name = product.displayName;
+  card.productLabel = product.label;
   card.isFeatured = true;
 
   document.body.appendChild(card);
@@ -60,11 +57,11 @@ export const featured = async () => {
 
 export const cta = async () => {
   const card = document.createElement('manifold-service-card-view');
-  card.description = body.tagline;
-  card.logo = body.logo_url;
-  card.productId = id;
-  card.name = body.name;
-  card.productLabel = body.label;
+  card.description = product.tagline;
+  card.logo = product.logoUrl;
+  card.productId = product.id;
+  card.name = product.displayName;
+  card.productLabel = product.label;
   card.innerHTML = `<button slot="cta">CTA Slot</button>`;
 
   document.body.appendChild(card);
@@ -74,11 +71,11 @@ export const cta = async () => {
 
 export const skeletonWithCTA = async () => {
   const card = document.createElement('manifold-service-card-view');
-  card.description = body.tagline;
-  card.logo = body.logo_url;
-  card.productId = id;
-  card.name = body.name;
-  card.productLabel = body.label;
+  card.description = product.tagline;
+  card.logo = product.logoUrl;
+  card.productId = product.id;
+  card.name = product.displayName;
+  card.productLabel = product.label;
   card.skeleton = true;
   card.innerHTML = `<button slot="cta">CTA Slot</button>`;
 

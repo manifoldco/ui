@@ -1,4 +1,4 @@
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/elegant-cms/resource';
 
 export const loading = () => {
   const status = document.createElement('manifold-resource-status');

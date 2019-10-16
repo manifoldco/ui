@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 import { ManifoldServiceCard } from './manifold-service-card';
 import { ManifoldServiceCardView } from '../manifold-service-card-view/manifold-service-card-view';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
-import product from '../../spec/mock/graphql/product';
+import product from '../../spec/mock/logdna/product';
 
 const graphqlEndpoint = 'http://test.com/graphql';
 

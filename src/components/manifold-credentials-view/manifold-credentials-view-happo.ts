@@ -1,5 +1,4 @@
-import credentials from '../../spec/mock/cms-stage/credentials.json';
-import fromJSON from '../../spec/mock/fromJSON';
+import credentials from '../../spec/mock/elegant-cms/credentials';
 
 export const credsHidden = () => {
   const creds = document.createElement('manifold-credentials-view');
@@ -11,7 +10,7 @@ export const credsHidden = () => {
 
 export const credsShown = () => {
   const creds = document.createElement('manifold-credentials-view');
-  creds.credentials = fromJSON(credentials);
+  creds.credentials = credentials;
 
   document.body.appendChild(creds);
 
@@ -47,7 +46,7 @@ export const credsHiddenWithCustomButton = () => {
 
 export const credsShownWithCustomButton = () => {
   const creds = document.createElement('manifold-credentials-view');
-  creds.credentials = fromJSON(credentials);
+  creds.credentials = credentials;
 
   const button = document.createElement('manifold-button');
   button.color = 'orange';

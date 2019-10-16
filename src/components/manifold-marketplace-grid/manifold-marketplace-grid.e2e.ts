@@ -1,6 +1,6 @@
 import { newE2EPage } from '@stencil/core/testing';
 import serviceTemplates from '../../data/templates';
-import services from '../../spec/mock/products.json';
+import services from '../../spec/mock/products';
 
 /* eslint-disable no-param-reassign, @typescript-eslint/no-explicit-any */
 
@@ -16,7 +16,6 @@ const testCategories: string[] = [
   'monitoring',
   'optimization',
   'search',
-  'sell-your-service',
   'utility',
   'worker',
 ];
@@ -67,7 +66,7 @@ describe('<manifold-marketplace-grid>', () => {
     await page.waitForChanges();
 
     const cards = await page.findAll('manifold-marketplace-grid >>> manifold-service-card-view');
-    const freeProducts = services.filter(s => s.node.plans.edges.length);
+    const freeProducts = services.filter(s => s.node.plans && s.node.plans.edges.length);
 
     await freeProducts.forEach(async p => {
       const card = await cards.find(async c => {

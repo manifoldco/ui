@@ -2,7 +2,7 @@ import fetchMock from 'fetch-mock';
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldDataResizeButton } from './manifold-data-resize-button';
 import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import { resource } from '../../spec/mock/graphql';
+import resource from '../../spec/mock/elegant-cms/resource';
 
 interface Props {
   planId?: string;
