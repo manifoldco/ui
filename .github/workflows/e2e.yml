@@ -13,4 +13,7 @@ jobs:
     name: Run e2e tests with test cafe
     runs-on: ubuntu-18.04
     steps:
-      - run: npm run testcafe
+      - name: Install dependencies
+        run: npm install
+      - name: Run TestCafe
+        run: npm run testcafe
