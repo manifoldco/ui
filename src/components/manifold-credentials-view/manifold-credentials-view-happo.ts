@@ -1,4 +1,4 @@
-import credentials from '../../spec/mock/elegant-cms/resource';
+import credentials from '../../spec/mock/elegant-cms/credentials';
 
 export const credsHidden = () => {
   const creds = document.createElement('manifold-credentials-view');
