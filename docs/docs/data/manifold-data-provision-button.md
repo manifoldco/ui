@@ -106,3 +106,13 @@ plain ol’ CSS.
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
 [slot]: https://stenciljs.com/docs/templating-jsx/
 [plan-selector]: /components/plan-selector
+
+## Owner ID
+
+You can pass a platform specific owner ID to be attached to the created resource like this:
+
+```html
+<manifold-data-provision-button owner-id="user-1234">
+  Provision Resource
+</manifold-data-provision-button>
+```
