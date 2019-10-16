@@ -1416,6 +1416,26 @@ export type DeleteResourceMutation = (
   ) }
 );
 
+export type CreateResourceWithOwnerMutationVariables = {
+  planId: Scalars['ID'],
+  productId: Scalars['ID'],
+  regionId: Scalars['ID'],
+  resourceLabel: Scalars['String'],
+  ownerId: Scalars['ID']
+};
+
+
+export type CreateResourceWithOwnerMutation = (
+  { __typename?: 'Mutation' }
+  & { createResource: (
+    { __typename?: 'CreateResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
 export type CreateResourceMutationVariables = {
   planId: Scalars['ID'],
   productId: Scalars['ID'],

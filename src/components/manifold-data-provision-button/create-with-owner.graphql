@@ -1,4 +1,4 @@
-mutation CreateResource($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!, $ownerId: ID!) {
+mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!, $ownerId: ID!) {
   createResource(
     input: {
       displayName: $resourceLabel
