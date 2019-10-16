@@ -97,7 +97,6 @@
     "@typescript-eslint/parser": "^1.13.0",
     "babel-loader": "^8.0.6",
     "concurrently": "^5.0.0",
-    "core-js": "^3.2.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.4.0",
