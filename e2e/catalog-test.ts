@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
 
-fixture`marketplace`.page`http://localhost:6006/?path=/story/catalog--marketplace`;
+fixture`marketplace`.page`${process.env.DEPLOY_URL}/?path=/story/catalog--marketplace`;
 
 test('filtering', async t => {
   const iframe = Selector('iframe#storybook-preview-iframe');
