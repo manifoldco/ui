@@ -25,11 +25,10 @@ jobs:
     name: Run e2e tests with test cafe
     runs-on: ubuntu-18.04
     steps:
-      - name: Copy source code
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
       - name: Install dependencies
         run: npm install
-      - name: Where the hell am I?
-        run: pwd
+      - name: Pull the Docker image
+        run: docker pull testcafe/testcafe
       - name: Run TestCafe
-        run: npm run testcafe
+        run: docker run -e DEPLOY_URL -v e2e:/tests -it testcafe/testcafe chrome e2e/
