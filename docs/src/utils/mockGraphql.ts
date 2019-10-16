@@ -1,4 +1,13 @@
 import fetchMock from 'fetch-mock';
+import { resource } from '../../../src/spec/mock/graphql';
+
+const resourcesMock = {
+  data: {
+    resources: {
+      edges: [{ node: resource }, { node: resource }],
+    },
+  },
+};
 
 let realFetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 if (typeof window !== 'undefined') {
@@ -13,7 +22,12 @@ export const mockGraphQl = () => {
   fetchMock.mock('express:/graphql', async (url, opts) => {
     await waitForDuration(300);
 
-    const { headers } = opts;
+    const { headers, body } = opts;
+
+    const bodyString = body as string;
+    if (bodyString.includes('query RESOURCES')) {
+      return resourcesMock;
+    }
     // @ts-ignore
     delete headers.authorization;
     const result = await realFetch(url, {
