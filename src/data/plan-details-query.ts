@@ -52,7 +52,7 @@ export default gql`
       }
     }
   }
-  regions(first: 25) {
+  regions(first: 25, orderBy: { field: DISPLAY_NAME, direction: ASC }) {
     edges {
       node {
         id
