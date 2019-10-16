@@ -21,4 +21,4 @@ jobs:
       - name: Pull the Docker image
         run: docker pull testcafe/testcafe
       - name: Run TestCafe
-        run: docker run -e DEPLOY_URL -v e2e:/tests -i testcafe/testcafe chrome e2e/
+        run: docker run -e DEPLOY_URL -v e2e:/tests -i testcafe/testcafe chromium e2e/
