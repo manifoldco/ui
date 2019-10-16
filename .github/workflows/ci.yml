@@ -7,6 +7,7 @@ on:
 
 jobs:
   spit:
+    runs-on: ubuntu-18.04
     steps:
       - name: Tell me some stuff
         run: |
