@@ -1,11 +1,15 @@
 import { h, Component, Prop, State, Watch } from '@stencil/core';
 
-import { Product } from '../../types/graphql';
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import resourceQuery from './resource.graphql';
+
+interface ProductState {
+  logoUrl: string;
+  displayName: string;
+}
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
@@ -15,7 +19,7 @@ export class ManifoldDataResourceLogo {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Look up product logo from resource */
   @Prop() resourceLabel?: string;
-  @State() product?: Product;
+  @State() product?: ProductState;
 
   @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
@@ -43,7 +47,7 @@ export class ManifoldDataResourceLogo {
         displayName: data.resource.plan.product.displayName,
         logoUrl: data.resource.plan.product.logoUrl,
       };
-      this.product = newProduct as Product;
+      this.product = newProduct as ProductState;
     }
   };
 
