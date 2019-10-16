@@ -42,6 +42,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `<manifold-data-resource-logo>` to use GraphQL (#635)
 - Converted `<manifold-resource-status>` to use GraphQL (#611)
 - Converted `<manifold-resource-list>` to use GraphQL (#627)
+- Converted `<manifold-data-sso-button>` to use GraphQL (#640)
 
 ### Breaking Changes:
 
