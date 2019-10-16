@@ -53,16 +53,12 @@ export class ManifoldResourceList {
       return;
     }
 
-    try {
-      this.resources = await fetchAllPages<ResourceEdge>({
-        query,
-        nextPage: { first: 50, after: '' },
-        getConnection: (q: Query) => q.resources,
-        graphqlFetch: this.graphqlFetch,
-      });
-    } catch (e) {
-      console.error(e);
-    }
+    this.resources = await fetchAllPages<ResourceEdge>({
+      query,
+      nextPage: { first: 50, after: '' },
+      getConnection: (q: Query) => q.resources,
+      graphqlFetch: this.graphqlFetch,
+    });
   };
 
   @logger()
