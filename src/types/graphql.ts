@@ -1400,6 +1400,29 @@ export type ResourceWithCredentialsQuery = (
   )> }
 );
 
+export type Resource_CredentialsQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type Resource_CredentialsQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { credentials: Maybe<(
+      { __typename?: 'CredentialConnection' }
+      & { edges: Array<(
+        { __typename?: 'CredentialEdge' }
+        & Pick<CredentialEdge, 'cursor'>
+        & { node: Maybe<(
+          { __typename?: 'Credential' }
+          & Pick<Credential, 'key' | 'value'>
+        )> }
+      )> }
+    )> }
+  )> }
+);
+
 export type DeleteResourceMutationVariables = {
   resourceId: Scalars['ID']
 };
