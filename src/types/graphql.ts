@@ -1518,19 +1518,32 @@ export type ProductsQuery = (
   )> }
 );
 
-export type ProductLogosQueryVariables = {};
+export type ResourcesQueryVariables = {};
 
 
-export type ProductLogosQuery = (
+export type ResourcesQuery = (
   { __typename?: 'Query' }
-  & { products: Maybe<(
-    { __typename?: 'ProductConnection' }
+  & { resources: Maybe<(
+    { __typename?: 'ResourceConnection' }
     & { edges: Array<(
-      { __typename?: 'ProductEdge' }
-      & { node: (
-        { __typename?: 'Product' }
-        & Pick<Product, 'id' | 'displayName' | 'logoUrl'>
-      ) }
+      { __typename?: 'ResourceEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Resource' }
+        & Pick<Resource, 'id' | 'displayName' | 'label'>
+        & { owner: Maybe<(
+          { __typename?: 'Profile' }
+          & Pick<Profile, 'id'>
+        )>, status: (
+          { __typename?: 'ResourceStatus' }
+          & Pick<ResourceStatus, 'label'>
+        ), plan: Maybe<(
+          { __typename?: 'Plan' }
+          & { product: Maybe<(
+            { __typename?: 'Product' }
+            & Pick<Product, 'id' | 'label' | 'logoUrl'>
+          )> }
+        )> }
+      )> }
     )> }
   )> }
 );
