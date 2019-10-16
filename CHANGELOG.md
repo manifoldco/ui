@@ -19,6 +19,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Converted `manifold-resource-container` to use the GraphQL.
 - Converted `manifold-resource-plan` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#578)
 - Converted `manifold-resource-credentials` to use the GraphQL data fetched from the
