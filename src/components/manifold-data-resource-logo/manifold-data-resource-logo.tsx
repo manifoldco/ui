@@ -5,6 +5,7 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import resourceQuery from './resource.graphql';
+import { ResourceLogoQuery } from '../../types/graphql';
 
 interface ProductState {
   logoUrl: string;
@@ -37,12 +38,12 @@ export class ManifoldDataResourceLogo {
 
     this.product = undefined;
 
-    const { data } = await this.graphqlFetch({
+    const { data } = await this.graphqlFetch<ResourceLogoQuery>({
       query: resourceQuery,
       variables: { resourceLabel },
     });
 
-    if (data) {
+    if (data && data.resource && data.resource.plan && data.resource.plan.product) {
       const newProduct = {
         displayName: data.resource.plan.product.displayName,
         logoUrl: data.resource.plan.product.logoUrl,

@@ -1452,6 +1452,25 @@ export type ResourceChangePlanMutation = (
   ) }
 );
 
+export type ResourceLogoQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceLogoQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { plan: Maybe<(
+      { __typename?: 'Plan' }
+      & { product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'displayName' | 'logoUrl'>
+      )> }
+    )> }
+  )> }
+);
+
 export type ProductsQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String']
