@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  deployment_status:
+    branches:
+      - sslotsky/test-cafe
+        
+jobs:
+  test:
+    env:
+      DEPLOY_URL: ${{ github.event.deployment_status.deployment_url }}
+    if: github.event.deployment_status.state == 'success' && github.event.deployment_status.creator.login == 'now'
+    name: Run e2e tests with test cafe
+    runs-on: ubuntu-18.04
+    steps:
+      - run: npm run testcafe
