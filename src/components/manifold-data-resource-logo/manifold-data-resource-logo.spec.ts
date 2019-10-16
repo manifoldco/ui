@@ -33,7 +33,7 @@ describe('<manifold-data-resource-logo>', () => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);
       const errors: GraphqlError[] = [{ message: 'something went wrong' }];
-      if (body.includes('query RESOURCE')) {
+      if (body.includes('query RESOURCE_LOGO')) {
         // return new label in response
         const newResource = {
           ...resource,

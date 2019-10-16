@@ -1,4 +1,4 @@
-query RESOURCE($resourceLabel: String!) {
+query RESOURCE_LOGO($resourceLabel: String!) {
   resource(label: $resourceLabel) {
     plan {
       product {
