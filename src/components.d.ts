@@ -27,14 +27,14 @@ import {
   GraphqlFetch,
 } from './utils/graphqlFetch';
 import {
-  RestFetch,
-} from './utils/restFetch';
-import {
   Gateway,
 } from './types/gateway';
 import {
   AuthToken,
 } from './types/auth';
+import {
+  RestFetch,
+} from './utils/restFetch';
 import {
   Option,
 } from './types/Select';

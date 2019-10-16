@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
@@ -40,7 +40,6 @@ export class ManifoldDataSsoButton {
   /** The id of the resource to rename, will be fetched if not set */
   @Prop() resourceId?: string;
   @Prop() loading?: boolean = false;
-  @State() ssoUrl?: string;
   @Event({ eventName: 'manifold-ssoButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-ssoButton-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-ssoButton-success', bubbles: true }) success: EventEmitter;
@@ -78,8 +77,6 @@ export class ManifoldDataSsoButton {
         redirectUrl: data.resource.ssoUrl,
       };
       this.success.emit(success);
-
-      this.ssoUrl = data.resource.ssoUrl;
     }
 
     if (errors) {
