@@ -1,5 +1,5 @@
-query ResourceSSOByLabel($resourceID: ID!) {
-  resource(id: $resourceID) {
+query ResourceSSOByLabel($resourceId: ID!) {
+  resource(id: $resourceId) {
     id
     label
     ssoUrl

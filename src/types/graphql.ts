@@ -1492,7 +1492,7 @@ export type ResourceLogoQuery = (
 );
 
 export type ResourceSsoByLabelQueryVariables = {
-  resourceID: Scalars['ID']
+  resourceId: Scalars['ID']
 };
 
 

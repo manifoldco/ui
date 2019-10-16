@@ -6,7 +6,12 @@ import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import ssoByLabel from './sso-label.graphql';
 import ssoByID from './sso-id.graphql';
-import { ResourceSsoByIdQuery, ResourceSsoByLabelQuery } from '../../types/graphql';
+import {
+  ResourceSsoByIdQuery,
+  ResourceSsoByLabelQuery,
+  ResourceSsoByIdQueryVariables,
+  ResourceSsoByLabelQueryVariables,
+} from '../../types/graphql';
 
 interface ClickMessage {
   resourceLabel?: string;
@@ -54,14 +59,15 @@ export class ManifoldDataSsoButton {
     };
     this.click.emit(clickMessage);
 
+    const variables: ResourceSsoByIdQueryVariables | ResourceSsoByLabelQueryVariables = this
+      .resourceId
+      ? { resourceId: this.resourceId }
+      : { resourceLabel: this.resourceLabel || '' };
     const { data, errors } = await this.graphqlFetch<
       ResourceSsoByIdQuery | ResourceSsoByLabelQuery
     >({
       query: this.resourceId ? ssoByID : ssoByLabel,
-      variables: {
-        resourceLabel: this.resourceLabel,
-        resourceId: this.resourceId,
-      },
+      variables,
     });
 
     if (data && data.resource) {
