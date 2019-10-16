@@ -55,6 +55,8 @@ storiesOf('Resource', module)
             Show credentials
           </manifold-button>
         </manifold-resource-credentials>
+        <h2>Logo</h2>
+        <manifold-data-resource-logo resource-label="${resourceLabel}"></manifold-data-resource-logo>
       </manifold-resource-container>
     </div>`;
   })
@@ -187,15 +189,4 @@ storiesOf('Resource', module)
           </manifold-data-deprovision-button>
         </menu>
       </manifold-resource-container>`;
-  })
-  .add('logo', () => {
-    const resourceLabel = text(
-      'resource-label',
-      localStorage.getItem('manifold-resource-label') || 'my-resource'
-    );
-    localStorage.setItem('manifold-resource-label', resourceLabel);
-
-    return `
-      <manifold-data-resource-logo resource-label="${resourceLabel}"></manifold-data-resource-logo>
-    `;
   });
