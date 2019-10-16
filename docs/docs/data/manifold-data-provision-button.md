@@ -107,12 +107,13 @@ plain ol’ CSS.
 [slot]: https://stenciljs.com/docs/templating-jsx/
 [plan-selector]: /components/plan-selector
 
-## Owner ID
+## Context (team, org, etc.)
 
-You can pass a platform specific owner ID to be attached to the created resource like this:
+By default, Manifold assumes the user creating the resource will own it. But 
+when creating a resource owned by another context (e.g. a team, or 
+organization, or whatever your platform calls it), you’ll need to specify an 
+owner-id different from their own:
 
 ```html
-<manifold-data-provision-button owner-id="user-1234">
-  Provision Resource
-</manifold-data-provision-button>
+<manifold-data-provision-button owner-id="team-123">
 ```
