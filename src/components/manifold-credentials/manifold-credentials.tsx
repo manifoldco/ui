@@ -33,6 +33,7 @@ export class ManifoldCredentials {
 
     this.errors = undefined;
     this.loading = true;
+    this.credentials = undefined;
 
     const { data, errors } = await this.graphqlFetch<Resource_CredentialsQuery>({
       query: resourceCredentialsQuery,
@@ -42,8 +43,6 @@ export class ManifoldCredentials {
     if (errors) {
       this.errors = errors;
     }
-
-    this.credentials = undefined;
 
     if (data && data.resource && data.resource.credentials && data.resource.credentials.edges) {
       this.credentials = data.resource.credentials.edges;

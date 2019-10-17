@@ -8,10 +8,25 @@ if (typeof window !== 'undefined') {
 
 const waitForDuration = (time: number) => new Promise(resolve => setTimeout(resolve, time));
 
+const credentialResourceMock = {
+  data: {
+    resource: {
+      credentials: {
+        edges: [{ node: { key: 'API_KEY', value: 'xxxxxxxxxxxxxxxxxxxxxxxxx' } }],
+      },
+    },
+  },
+};
+
 // TODO: Modify the gatsby plugin so we can fetch this data at build time
 export const mockGraphQl = () => {
   fetchMock.mock('express:/graphql', async (url, opts) => {
     await waitForDuration(300);
+
+    // Mocks manifold-credentials component.
+    if (opts && opts.body && String(opts.body).includes('query RESOURCE_CREDENTIALS')) {
+      return JSON.stringify(credentialResourceMock);
+    }
 
     const { headers } = opts;
     // @ts-ignore
