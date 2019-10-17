@@ -5,14 +5,6 @@ example: |
   <manifold-data-product-logo product-label="aiven-redis"></manifold-data-product-logo>
 ---
 
-<manifold-toast alert-type="warning">
-  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
-</manifold-toast>
-
-<manifold-toast alert-type="warning">
-  <div><code>resource-label</code> has been deprecated in favor of <code>manifold-data-resource-logo</code> starting in version 0.5.1.</div>
-</manifold-toast>
-
 # Data Product Logo
 
 Retrieve an unstyled `<img>` tag with the product’s logo from a `:productLabel`.

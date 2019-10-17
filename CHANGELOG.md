@@ -43,7 +43,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `<manifold-resource-status>` to use GraphQL (#611)
 - Converted `<manifold-resource-list>` to use GraphQL (#627)
 
-
 ### Breaking Changes:
 
 - `<manifold-data-provision-button>` now requires `plan-id` rather than `plan-label` as a prop
@@ -97,6 +96,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed success event after a resource rename to include potentially modified label (#547)
 
 ## [v0.5.12]
+
+### Breaking changes
+
+- `resource-id` renamed to `resource-label` in `<manifold-resource-card>`
+- `product-id` renamed to `product-label` in `<manifold-service-card>`
 
 ### Added
 
@@ -286,6 +290,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   component.
 - Improved `plan-selector` performance by reducing API calls for non-custom plans.
 
+## [v0.5.1]
+
+### Breaking changes
+
+- `resource-label` removed from `<manifold-data-product-logo>` in favor of new
+  `<manifold-data-resource-logo>` component
+
 ## [v0.5.0]
 
 ### Added
@@ -334,6 +345,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Changed how the `manifold-service-card` works to have it fetch the product unless given. This
   allows it to be used standalone or in the `marketplace`.
+
+### Breaking changes
+
+- `resource-name` renamed to `resource-label` in the following components:
+  `<manifold-resource-list>`, `<manifold-resource-plan>`, `<manifold-resource-product>`,
+  `<manifold-data-product-logo>`, `<manifold-data-product-name>`,
+  `<manifold-data-provision-button>`, `<manifold-data-resource-list>`
 
 ## [0.3.1]
 

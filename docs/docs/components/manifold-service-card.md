@@ -6,10 +6,6 @@ example: |
   </manifold-service-card>
 ---
 
-<manifold-toast alert-type="warning">
-  <div><code>product-id</code> has been removed in favor of <code>product-label</code> starting in version 0.5.12.</div>
-</manifold-toast>
-
 # Service Card
 
 Compact view of a Manifold Product. Available as a self-fetching component or a view component.

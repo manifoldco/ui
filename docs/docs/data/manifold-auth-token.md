@@ -5,11 +5,6 @@ path: /data/auth-token
 
 # Auth Token
 
-<manifold-toast alert-type="warning">
-  <div>This component may be deprecated in the near-future in favor of
-  setting tokens directly on <code>&lt;manifold-connection/&gt;</code></div>
-</manifold-toast>
-
 For all resource-specific operations (creating resources, viewing resources, etc.) the Web
 Components will need user-level authentication. This component supports two methods of
 authentication: **OAuth** (default) and **manual**.

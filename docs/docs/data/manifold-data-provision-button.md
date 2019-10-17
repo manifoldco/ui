@@ -13,13 +13,6 @@ example: |
 
 An unstyled button for provisioning resources. 🔒 Requires authentication.
 
-<manifold-toast alert-type="warning">
-  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
-</manifold-toast>
-<manifold-toast alert-type="warning">
-  <div><code>region-name</code> has been deprecated in favor of <code>region-id</code> starting in version 0.5.1.</div>
-</manifold-toast>
-
 ## Using with Plan Selector
 
 This component needs a lot of information to do its job. For that reason, we recommend relying on
@@ -109,11 +102,10 @@ plain ol’ CSS.
 
 ## Context (team, org, etc.)
 
-By default, Manifold assumes the user creating the resource will own it. But 
-when creating a resource owned by another context (e.g. a team, or 
-organization, or whatever your platform calls it), you’ll need to specify an 
-owner-id different from their own:
+By default, Manifold assumes the user creating the resource will own it. But when creating a
+resource owned by another context (e.g. a team, or organization, or whatever your platform calls
+it), you’ll need to specify an owner-id different from their own:
 
 ```html
-<manifold-data-provision-button owner-id="team-123">
+<manifold-data-provision-button owner-id="team-123"></manifold-data-provision-button>
 ```

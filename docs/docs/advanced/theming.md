@@ -8,10 +8,6 @@ path: /advanced/theming
 Manifold UI offers a simple, yet versitle, theming API for customizing the look and feel of
 components.
 
-<manifold-toast alert-type="warning">
-  Theming is still a work-in-progress. This documentation may not be entirely accurate.
-</manifold-toast>
-
 <span class="tag part-implemented" /> = Partially Implemented <br />
 <span class="tag not-implemented" /> = Not Implemented
 
@@ -283,72 +279,9 @@ Cards are used in Marketplace (service cards) and Plan Selector (plan buttons, p
 
 #### Marketplace
 
-| Name                                                                   | Default                                | Description                             |
-| ---------------------------------------------------------------------- | -------------------------------------- | --------------------------------------- |
-| `--manifold-categoryMenu-top`                                          | `0`                                    | Category menu top sticky position       |
-| <span class="tag not-implemented" /> `--link-text-color`               | `var(--manifold-text-color-secondary)` | Category menu link text color           |
-| <span class="tag not-implemented" /> `--link-font-weight`              | `inherit`                              | Category menu link font weight          |
-| <span class="tag not-implemented" /> `--link-text-color-hover`         | `var(--manifold-text-color-primary)`   | Category menu link text color (hover)   |
-| <span class="tag not-implemented" /> `--link-font-weight-hover`        | `var(--link-font-weight)`              | Category menu link font weight (hover)  |
-| <span class="tag not-implemented" /> `--link-text-color-active`        | `var(--link-text-color-hover)`         | Category menu link text color (active)  |
-| <span class="tag not-implemented" /> `--link-font-weight-active`       | `var(--link-font-weight-hover)`        | Category menu link font weight (active) |
-|                                                                        |                                        |                                         |
-| <span class="tag not-implemented" /> `--search-background`             | `var(--manifold-input-background)`     | Search field background                 |
-| <span class="tag not-implemented" /> `--search-border`                 | `var(--manifold-input-border)`         | Search field border                     |
-| <span class="tag not-implemented" /> `--search-radius`                 | `var(--manifold-input-radius)`         | Search field border radius              |
-| <span class="tag not-implemented" /> `--search-shadow`                 | `var(--manifold-input-shadow)`         | Search field shadow                     |
-| <span class="tag not-implemented" /> `--search-text-color`             | `var(--manifold-text-color)`           | Search field text color                 |
-| <span class="tag not-implemented" /> `--search-placeholder-text-color` | `var(--manifold-text-color-secondary)` | Search field text color                 |
-| <span class="tag not-implemented" /> `--search-background-focus`       | `var(--search-background)`             | Search field background (focus)         |
-| <span class="tag not-implemented" /> `--search-border-focus`           | `var(--search-border)`                 | Search field border (focus)             |
-| <span class="tag not-implemented" /> `--search-shadow-focus`           | `var(--search-shadow)`                 | Search field shadow (focus)             |
-|                                                                        |                                        |                                         |
-| <span class="tag not-implemented" /> `--heading-color`                 | `var(--manifold-text-color-secondary)` | Category heading text color             |
-| <span class="tag not-implemented" /> `--heading-font-size`             | `--`                                   | Category heading font size              |
-| <span class="tag not-implemented" /> `--heading-font-weight`           | `inherit`                              | Category heading font weight            |
-|                                                                        |                                        |                                         |
-| <span class="tag not-implemented" /> `--grid-gap`                      | `1rem`                                 | Gap between product/service cards       |
-
-#### Plan Selector
-
-| Name                                                                      | Default                            | Description                   |
-| ------------------------------------------------------------------------- | ---------------------------------- | ----------------------------- |
-| <span class="tag not-implemented" /> `--plan-menu-grid-gap`               | `1rem`                             | Gap between plan menu buttons |
-|                                                                           |                                    |                               |
-| <span class="tag not-implemented" /> `--plan-menu-card-background`        | `var(--manifold-card-background)`  | Background                    |
-| <span class="tag not-implemented" /> `--plan-menu-card-border`            | `var(--manifold-card-border)`      | Border                        |
-| <span class="tag not-implemented" /> `--plan-menu-card-radius`            | `var(--manifold-card-radius)`      | Corner radius                 |
-| <span class="tag not-implemented" /> `--plan-menu-card-shadow`            | `var(--manifold-card-shadow)`      | Box shadow                    |
-|                                                                           |                                    |                               |
-| <span class="tag not-implemented" /> `--plan-menu-card-background-hover`  | `var(--plan-menu-card-background)` | Hover background              |
-| <span class="tag not-implemented" /> `--plan-menu-card-border-hover`      | `var(--plan-menu-card-border)`     | Hover border                  |
-| <span class="tag not-implemented" /> `--plan-menu-card-shadow-hover`      | `var(--plan-menu-card-shadow)`     | Box shadow                    |
-|                                                                           |                                    |                               |
-| <span class="tag not-implemented" /> `--plan-menu-card-background-active` | `var(--plan-menu-card-background)` | Active background             |
-| <span class="tag not-implemented" /> `--plan-menu-card-border-active`     | `var(--plan-menu-border-active)`   | Active border                 |
-| <span class="tag not-implemented" /> `--plan-menu-card-text-color-active` | `var(--plan-menu-text-color)`      | Active text color             |
-|                                                                           |                                    |                               |
-| <span class="tag not-implemented" /> `--plan-details-card-background`     | `var(--manifold-card-background)`  | Plan details panel background |
-| <span class="tag not-implemented" /> `--plan-details-card-border`         | `var(--manifold-card-border)`      | Plan details panel border     |
-| <span class="tag not-implemented" /> `--plan-details-card-radius`         | `var(--manifold-card-radius)`      | Plan details panel radius     |
-| <span class="tag not-implemented" /> `--plan-details-card-shadow`         | `var(--manifold-card-shadow)`      | Plan details panel box shadow |
-
-#### Product
-
-| Name                                                                    | Default                                | Description                      |
-| ----------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
-| <span class="tag not-implemented" /> `--product-card-background`        | Branded Gradient                       | Background                       |
-| <span class="tag not-implemented" /> `--product-card-border`            | `var(--manifold-border)`               | Border                           |
-| <span class="tag not-implemented" /> `--product-card-radius`            | `var(--manifold-radius)`               | Corner radius                    |
-| <span class="tag not-implemented" /> `--product-card-shadow`            | `none`                                 | Box shadow                       |
-|                                                                         |                                        |                                  |
-| <span class="tag not-implemented" /> `--sidebar-text-color-heading`     | `var(--manifold-text-color-heading)`   | Text color for sidebar headings. |
-| <span class="tag not-implemented" /> `--sidebar-font-family-heading`    | `var(--manifold-font-family-heading)`  | Font family for sidebar headings |
-| <span class="tag not-implemented" /> `--sidebar-font-weight-heading`    | `var(--manifold-font-weight-heading)`  | Weight for sidebar headings      |
-| <span class="tag not-implemented" /> `--sidebar-font-size-heading`      | `var(--manifold-font-size-h4)`         | Font size for sidebar headings   |
-|                                                                         |                                        |                                  |
-| <span class="tag not-implemented" /> `--sidebar-text-color-links`       | `var(--manifold-text-color-secondary)` | Text color for sidebar links.    |
-| <span class="tag not-implemented" /> `--sidebar-text-color-links-hover` | `var(--manifold-color-primary)`        | Text color for sidebar links.    |
+| Name                          | Default | Description                       |
+| ----------------------------- | ------- | --------------------------------- |
+| `--manifold-categoryMenu-top` | `0`     | Category menu top sticky position |
 
 [css-part]: https://meowni.ca/posts/part-theme-explainer/
 [shadow-dom]: https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM
