@@ -58,8 +58,6 @@ document.addEventListener('manifold-planSelector-load', updateButton);
 document.addEventListener('manifold-planSelector-change', updateButton);
 ```
 
-Note that `userId` is the only piece of information required from the identity.
-
 ## Context (team, org, etc.)
 
 By default, **Manifold assumes the user creating the resource will own it**. But when creating a
