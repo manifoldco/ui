@@ -1,6 +1,9 @@
 overwrite: true
 schema: 'https://api.manifold.co/graphql'
 documents: src/**/*.graphql
+config:
+  avoidOptionals: false # generate optionals
+  maybeValue: T # use optionals to determine nullability, not Maybe
 generates:
   src/types/graphql.ts:
     plugins:
