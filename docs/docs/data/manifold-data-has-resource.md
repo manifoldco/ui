@@ -2,7 +2,7 @@
 title: 🔒 Has Resources
 path: /data/has-resource
 example: |
-  <manifold-data-has-resource paused="">
+  <manifold-data-has-resource paused="true">
     <span slot="loading">Loading</span>
     <span slot="no-resource">No resources</span>
     <span slot="has-resource">Has resources</span>

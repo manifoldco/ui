@@ -115,7 +115,7 @@ function Sidebar({ pages }: SidebarProps) {
               </li>
             ))}
           </ul>
-          <h3>UI Components</h3>
+          <h3>Styled Components</h3>
           <ul role="menu">
             {uiMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
@@ -125,7 +125,7 @@ function Sidebar({ pages }: SidebarProps) {
               </li>
             ))}
           </ul>
-          <h3>Data Components</h3>
+          <h3>Unstyled Components</h3>
           <ul role="menu">
             {dataMenu.map(([path, title]) => (
               <li key={path} role="menuitem">
@@ -135,7 +135,7 @@ function Sidebar({ pages }: SidebarProps) {
               </li>
             ))}
           </ul>
-          <h3>Advanced</h3>
+          <h3>Guides</h3>
           <ul role="menu">
             {advancedMenu.map(([path, title]) => (
               <li key={path} role="menuitem">

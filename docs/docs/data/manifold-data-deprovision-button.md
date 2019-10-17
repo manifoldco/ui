@@ -9,24 +9,17 @@ example: |
 
 # 🔒 Deprovision Button
 
-An unstyled button for deprovisioning resources. 🔒 Requires authentication.
-
-## CTA text
-
-Set the CTA text by adding anything between the opening and closing tags:
+An unstyled button for deleting (deprovisioning) resources. 🔒 Requires [authentication][auth].
 
 ```html
 <manifold-data-deprovision-button resource-label="my-resource">
-  Deprovision My Resource
+  Delete my-resource
 </manifold-data-deprovision-button>
 ```
 
-`slot` can be attached to any HTML or JSX element. To read more about slots, see [Stencil’s
-Documentation][stencil-slot]
-
 ## Events
 
-For validation, error, and success messages, it will emit custom events.
+For validation, error, and success messages, this button will emit custom events.
 
 ```js
 document.addEventListener('manifold-deprovisionButton-click', ({ detail: { resourceLabel } }) =>
@@ -56,5 +49,5 @@ ease of use, we figured this component should be customizable. As such, style it
 We recommend attaching styles to a parent element using any CSS-in-JS framework of your choice, or
 plain ol’ CSS.
 
+[auth]: /advanced/authentication
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
-[stencil-slot]: https://stenciljs.com/docs/templating-jsx/

@@ -7,21 +7,22 @@ path: /advanced/errors
 
 ## Automatic reporting
 
-Any error our components have while rendering logs out to `console.error()`. Many frontend APM tools
-such as [Datadog][datadog] and [Rollbar][rollbar] will automatically pick up on this, and log
-accordingly. For many of these tools, you should see error reporting automatically happen there with
-no action on your part.
+Any error that occurs during component rendering is logged to `console.error()`. Many frontend APM
+tools such as [Datadog][datadog] and [Rollbar][rollbar] will automatically pick up on this, and log
+accordingly.
 
 ## Manual reporting
 
-If you’d optionally like to handle errors yourself, reporting can be handled safely via the
-`manifold-error` [custom event][custom-event]. This same custom event fires for all components:
+If you’d like to handle errors yourself, reporting can be handled safely via the `manifold-error`
+[custom event][custom-event]. This same custom event fires for all components:
 
 ```js
-document.addEventListener('manifold-error', e => {
-  const { component, error } = e.detail;
-  console.log(component); // ManifoldPlanSelector
-  console.log(error); // 'Something went wrong'
+document.addEventListener('manifold-error', ({ detail }) => {
+  console.log(detail);
+  // {
+  //   component: 'ManifoldPlanSelector',
+  //   error: 'Something went wrong',
+  // }
 
   // Report error message somewhere, or show something to the user…
 });
