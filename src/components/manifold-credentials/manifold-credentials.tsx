@@ -1,6 +1,6 @@
 import { h, Element, Component, Method, Prop, State } from '@stencil/core';
 
-import { Resource_CredentialsQuery, CredentialEdge } from '../../types/graphql';
+import { Resource_CredentialsQuery } from '../../types/graphql';
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
@@ -13,7 +13,7 @@ export class ManifoldCredentials {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() resourceLabel?: string = '';
-  @State() credentials?: CredentialEdge[];
+  @State() credentials?: any[];
   @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
   @State() shouldTransition: boolean = false;

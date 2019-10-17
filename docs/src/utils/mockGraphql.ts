@@ -17,7 +17,11 @@ const credentialResourceMock = {
   data: {
     resource: {
       credentials: {
-        edges: [{ node: { key: 'API_KEY', value: 'xxxxxxxxxxxxxxxxxxxxxxxxx' } }],
+        edges: [
+          { node: { key: 'API_KEY', value: 'xxxxxxxxxxxxxxxxxxxxxxxxx' } },
+          { node: { key: 'BEST_FRUIT', value: 'Kiwi' } },
+          { node: { key: 'BEST_VEGTABLE', value: 'Cabbage' } },
+        ],
       },
     },
   },
