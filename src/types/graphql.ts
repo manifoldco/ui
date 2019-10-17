@@ -1411,12 +1411,12 @@ export type ResourceWithCredentialsQuery = (
   )> }
 );
 
-export type Resource_CredentialsQueryVariables = {
+export type ResourceCredentialsQueryVariables = {
   resourceLabel: Scalars['String']
 };
 
 
-export type Resource_CredentialsQuery = (
+export type ResourceCredentialsQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }

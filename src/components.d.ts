@@ -15,7 +15,7 @@ import {
   Product,
   ProductEdge,
   Resource,
-  Resource_CredentialsQuery,
+  ResourceCredentialsQuery,
   ResourceStatusLabel,
   ResourceWithCredentialsQuery,
 } from './types/graphql';

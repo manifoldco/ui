@@ -1,6 +1,6 @@
 import { h, Element, Component, Method, Prop, State } from '@stencil/core';
 
-import { Resource_CredentialsQuery } from '../../types/graphql';
+import { ResourceCredentialsQuery, CredentialEdge } from '../../types/graphql';
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
@@ -13,7 +13,7 @@ export class ManifoldCredentials {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() resourceLabel?: string = '';
-  @State() credentials?: any[];
+  @State() credentials?: CredentialEdge[];
   @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
   @State() shouldTransition: boolean = false;
@@ -35,7 +35,7 @@ export class ManifoldCredentials {
     this.loading = true;
     this.credentials = undefined;
 
-    const { data, errors } = await this.graphqlFetch<Resource_CredentialsQuery>({
+    const { data, errors } = await this.graphqlFetch<ResourceCredentialsQuery>({
       query: resourceCredentialsQuery,
       variables: { resourceLabel: this.resourceLabel },
     });
@@ -45,7 +45,8 @@ export class ManifoldCredentials {
     }
 
     if (data && data.resource && data.resource.credentials && data.resource.credentials.edges) {
-      this.credentials = data.resource.credentials.edges;
+      const fetchCredentials = data.resource.credentials.edges;
+      this.credentials = fetchCredentials as CredentialEdge[];
     }
 
     this.loading = false;
