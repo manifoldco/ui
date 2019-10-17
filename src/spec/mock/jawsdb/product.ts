@@ -438,7 +438,6 @@ const product: Product = {
                   displayName: 'RAM',
                   id: 'cduq6x3fdnfpjvkkehgpwrv5bxhpr',
                   label: 'instance_class',
-                  numericDetails: null,
                   options: [
                     {
                       id: '00000000000000000000000000000',
@@ -511,7 +510,6 @@ const product: Product = {
                   displayName: 'High Availability',
                   id: 'cduq6x3fdnfq4tb4enq68rbecdwg0',
                   label: 'redundancy',
-                  numericDetails: null,
                   options: [
                     {
                       id: '00000000000000000000000000000',
