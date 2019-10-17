@@ -12,6 +12,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added a `sidebar` slot to `<manifold-marketplace>` (#612)
 - Exposed `ensureAuthToken` function for making authenticated GraphQL calls directly from platforms
   (#576)
+- Added `ownerId` prop to `<manifold-data-provision-button>`
 
 ### Removed
 
@@ -19,6 +20,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Converted `manifold-resource-container` to use the GraphQL.
 - Converted `manifold-resource-plan` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#578)
 - Converted `manifold-resource-credentials` to use the GraphQL data fetched from the
@@ -38,6 +40,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `<manifold-data-resize-button>` to use GraphQL
 - Updated `<manifold-product>` ahead of a GraphQL deprecation (#619)
 - Converted `<manifold-data-resource-logo>` to use GraphQL (#635)
+- Converted `<manifold-resource-status>` to use GraphQL (#611)
+- Converted `<manifold-resource-list>` to use GraphQL (#627)
+
 
 ### Breaking Changes:
 

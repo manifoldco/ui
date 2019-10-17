@@ -236,14 +236,25 @@ export type InvoiceEdge = {
   node?: Maybe<Invoice>,
 };
 
-/** InvoiceOrderBy defines how an invoice connection is to be ordered. */
+/** InvoicePreviewOrderBy defines how an invoice connection is to be ordered. */
 export type InvoiceOrderBy = {
   field: InvoiceOrderByField,
   direction: OrderByDirection,
 };
 
-/** InvoiceOrderByField is the field by which an Invoice list will be ordered. */
+/** InvoicePreviewOrderByField is the field by which an Invoice list will be ordered. */
 export enum InvoiceOrderByField {
+  End = 'END'
+}
+
+/** InvoicePreviewOrderBy defines how an invoice preview connection is to be ordered. */
+export type InvoicePreviewOrderBy = {
+  field: InvoicePreviewOrderByField,
+  direction: OrderByDirection,
+};
+
+/** InvoicePreviewOrderByField is the field by which an Invoice preview list will be ordered. */
+export enum InvoicePreviewOrderByField {
   CreatedAt = 'CREATED_AT'
 }
 
@@ -1413,7 +1424,6 @@ export type Resource_CredentialsQuery = (
       { __typename?: 'CredentialConnection' }
       & { edges: Array<(
         { __typename?: 'CredentialEdge' }
-        & Pick<CredentialEdge, 'cursor'>
         & { node: Maybe<(
           { __typename?: 'Credential' }
           & Pick<Credential, 'key' | 'value'>
@@ -1432,6 +1442,26 @@ export type DeleteResourceMutation = (
   { __typename?: 'Mutation' }
   & { deleteResource: (
     { __typename?: 'DeleteResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'id' | 'label'>
+    ) }
+  ) }
+);
+
+export type CreateResourceWithOwnerMutationVariables = {
+  planId: Scalars['ID'],
+  productId: Scalars['ID'],
+  regionId: Scalars['ID'],
+  resourceLabel: Scalars['String'],
+  ownerId: Scalars['ID']
+};
+
+
+export type CreateResourceWithOwnerMutation = (
+  { __typename?: 'Mutation' }
+  & { createResource: (
+    { __typename?: 'CreateResourcePayload' }
     & { data: (
       { __typename?: 'Resource' }
       & Pick<Resource, 'id' | 'label'>
@@ -1521,19 +1551,38 @@ export type ProductsQuery = (
   )> }
 );
 
-export type ProductLogosQueryVariables = {};
+export type ResourcesQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String']
+};
 
 
-export type ProductLogosQuery = (
+export type ResourcesQuery = (
   { __typename?: 'Query' }
-  & { products: Maybe<(
-    { __typename?: 'ProductConnection' }
+  & { resources: Maybe<(
+    { __typename?: 'ResourceConnection' }
     & { edges: Array<(
-      { __typename?: 'ProductEdge' }
-      & { node: (
-        { __typename?: 'Product' }
-        & Pick<Product, 'id' | 'displayName' | 'logoUrl'>
-      ) }
-    )> }
+      { __typename?: 'ResourceEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Resource' }
+        & Pick<Resource, 'id' | 'displayName' | 'label'>
+        & { owner: Maybe<(
+          { __typename?: 'Profile' }
+          & Pick<Profile, 'id'>
+        )>, status: (
+          { __typename?: 'ResourceStatus' }
+          & Pick<ResourceStatus, 'label'>
+        ), plan: Maybe<(
+          { __typename?: 'Plan' }
+          & { product: Maybe<(
+            { __typename?: 'Product' }
+            & Pick<Product, 'id' | 'label' | 'logoUrl'>
+          )> }
+        )> }
+      )> }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
   )> }
 );

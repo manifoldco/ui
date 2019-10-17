@@ -1,0 +1,28 @@
+query RESOURCES($first: Int!, $after: String!) {
+  resources(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        displayName
+        label
+        owner {
+          id
+        }
+        status {
+          label
+        }
+        plan {
+          product {
+            id
+            label
+            logoUrl
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

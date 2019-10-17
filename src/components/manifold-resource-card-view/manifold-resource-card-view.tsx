@@ -3,6 +3,7 @@ import { resource } from '@manifoldco/icons';
 
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { ResourceStatusLabel } from '../../types/graphql';
 
 interface EventDetail {
   resourceId?: string;
@@ -22,7 +23,7 @@ export class ManifoldResourceCardView {
   @Prop() logo?: string;
   @Prop() logoLabel?: string;
   @Prop() resourceId?: string;
-  @Prop() resourceStatus?: string;
+  @Prop() resourceStatus?: ResourceStatusLabel;
   @Prop() resourceLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @Prop() loading?: boolean = false;

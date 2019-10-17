@@ -1,0 +1,17 @@
+mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!, $ownerId: ID!) {
+  createResource(
+    input: {
+      displayName: $resourceLabel
+      label: $resourceLabel
+      planId: $planId
+      productId: $productId
+      regionId: $regionId
+      ownerId: $ownerId
+    }
+  ) {
+    data {
+      id
+      label
+    }
+  }
+}

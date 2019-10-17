@@ -82,6 +82,7 @@ storiesOf('Resource', module)
     const labels = getProductLabels(env);
     const newResource = text('resource-label', 'my-resource');
     const productLabel = select('product-label', labels, labels[0]);
+    const ownerId = text('owner-id', '');
     return `
       <style>
         menu {
@@ -95,6 +96,7 @@ storiesOf('Resource', module)
         <manifold-data-provision-button
           product-label="${productLabel}"
           resource-label="${newResource}"
+          owner-id="${ownerId}"
         >
           Provision ${newResource}
         </manifold-data-provision-button>

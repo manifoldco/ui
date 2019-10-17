@@ -15,6 +15,7 @@ import {
   ProductEdge,
   Resource,
   Resource_CredentialsQuery,
+  ResourceStatusLabel,
   ResourceWithCredentialsQuery,
 } from './types/graphql';
 import {
@@ -173,6 +174,10 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    /**
+    * Owner ID
+    */
+    'ownerId'?: string;
     /**
     * Plan to provision (slug)
     */
@@ -464,7 +469,7 @@ export namespace Components {
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-    'resourceStatus'?: string;
+    'resourceStatus'?: ResourceStatusLabel;
   }
   interface ManifoldResourceContainer {
     /**
@@ -479,10 +484,6 @@ export namespace Components {
     * Which resource does this belong to?
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials {
     'gqlData'?: Resource;
@@ -509,10 +510,6 @@ export namespace Components {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan {
     'gqlData'?: Resource;
@@ -542,7 +539,7 @@ export namespace Components {
   }
   interface ManifoldResourceStatusView {
     'loading'?: boolean;
-    'resourceState'?: string;
+    'resourceState'?: ResourceStatusLabel;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldSelect {
@@ -1175,6 +1172,10 @@ declare namespace LocalJSX {
     'onManifold-provisionButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-provisionButton-success'?: (event: CustomEvent<any>) => void;
     /**
+    * Owner ID
+    */
+    'ownerId'?: string;
+    /**
     * Plan to provision (slug)
     */
     'planId'?: string;
@@ -1483,7 +1484,7 @@ declare namespace LocalJSX {
     'preserveEvent'?: boolean;
     'resourceId'?: string;
     'resourceLinkFormat'?: string;
-    'resourceStatus'?: string;
+    'resourceStatus'?: ResourceStatusLabel;
   }
   interface ManifoldResourceContainer {
     /**
@@ -1499,10 +1500,6 @@ declare namespace LocalJSX {
     * Which resource does this belong to?
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourceCredentials {
     'gqlData'?: Resource;
@@ -1529,10 +1526,6 @@ declare namespace LocalJSX {
     * Link format structure, with `:resource` placeholder
     */
     'resourceLinkFormat'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldResourcePlan {
     'gqlData'?: Resource;
@@ -1562,7 +1555,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceStatusView {
     'loading'?: boolean;
-    'resourceState'?: string;
+    'resourceState'?: ResourceStatusLabel;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldSelect {
