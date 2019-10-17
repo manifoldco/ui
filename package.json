@@ -13,7 +13,7 @@
     "node": ">=10.16.0"
   },
   "author": "manifoldco",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "files": [
     "dist/"
   ],
