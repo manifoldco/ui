@@ -9,11 +9,7 @@ example: |
 
 # 🔒 Rename Button
 
-An unstyled button for renaming resources. 🔒 Requires authentication.
-
-## CTA text
-
-Set the CTA text by adding anything between the opening and closing tags:
+An unstyled button for renaming resources. 🔒 Requires [authentication][auth].
 
 ```html
 <manifold-data-rename-button>
@@ -21,12 +17,9 @@ Set the CTA text by adding anything between the opening and closing tags:
 </manifold-data-provision-button>
 ```
 
-`slot` can be attached to any HTML or JSX element. To read more about slots, see [Stencil’s
-Documentation][stencil-slot]
-
 ## Events
 
-For validation, error, and success messages, it will emit custom events.
+For validation, error, and success messages, this button will emit custom events.
 
 ```js
 document.addEventListener(
@@ -58,9 +51,9 @@ document.addEventListener('manifold-renameButton-invalid', ({ detail }) => conso
 | Name                            |                       Returns                        | Description                                                                                                                 |
 | :------------------------------ | :--------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
 | `manifold-renameButton-click`   |      `resourceId`, `resourceLabel`, `newLabel`       | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-renameButton-success` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Successful renaming. Returns a resource ID and resource Label as well as a message and the new name for the resource.       |
+| `manifold-renameButton-success` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Successful renaming. Returns a resource ID and resource label as well as a message and the new name for the resource.       |
 | `manifold-renameButton-error`   | `message`, `resourceId`, `resourceLabel`, `newLabel` | Erred rename, along with information on what went wrong.                                                                    |
-| `manifold-renameButton-invalid` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Invalid renaming, along with information on what went wrong.                                                                |
+| `manifold-renameButton-invalid` | `message`, `resourceId`, `resourceLabel`, `newLabel` | Invalid renaming attempt, along with information on what went wrong.                                                        |
 
 ## Styling
 
@@ -69,5 +62,5 @@ ease of use, we figured this component should be customizable. As such, style it
 We recommend attaching styles to a parent element using any CSS-in-JS framework of your choice, or
 plain ol’ CSS.
 
+[auth]: /advanced/authentication
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
-[stencil-slot]: https://stenciljs.com/docs/templating-jsx/

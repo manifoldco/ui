@@ -19,8 +19,8 @@ Retrieve an unstyled `<img>` tag with the resource's product logo from a `:resou
 
 ## Alt attribute
 
-By default, the `<img>` tag’s `alt` attribute is the resource's product name. But you can override
-this by specifying one of your own:
+By default, the `<img>` tag’s `alt` attribute is the resource's product name. You can override this
+behavior with the `alt` attribute:
 
 ```html
 <manifold-data-resource-logo

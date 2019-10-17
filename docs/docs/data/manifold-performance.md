@@ -1,9 +1,9 @@
 ---
-title: 'Performance'
-path: '/components/performance'
+title: 'Performance Monitoring'
+path: '/data/performance'
 ---
 
-# Performance
+# Performance monitoring
 
 Our components by default contain **no performance monitoring**. We do this so that consumers
 control the amount of data sent to Manifold, and start at the bare-minimum (our core APIs).

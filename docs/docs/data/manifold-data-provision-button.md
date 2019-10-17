@@ -11,23 +11,47 @@ example: |
 
 # 🔒 Provision Button
 
-An unstyled button for provisioning resources. 🔒 Requires authentication.
+An unstyled button for creating resources. 🔒 Requires [authentication][auth].
+
+```html
+<manifold-data-provision-button
+  product-label="aiven-cassandra"
+  plan-id="2355hnm97ppy5cb0keb64ft7zq426"
+  region-id="235mhkk15ky7ha9qpu4gazrqjt2gr"
+  resource-label="new-resource"
+>
+  🚀 Create new-resource
+</manifold-data-provision-button>
+```
+
+| Attribute        | Required? | Description                                                                                                    |
+| :--------------- | :-------: | :------------------------------------------------------------------------------------------------------------- |
+| `product-label`  |    ✅     | Which product this is for, identified by its unique slug (e.g. `mailgun`)                                      |
+| `plan-id`        |    ✅     | Which plan a user has selected                                                                                 |
+| `region-id`      |    ✅     | Required only if this is a plan where the user must select a region (most plans do not have this)              |
+| `resource-label` |           | What the user has named this resource (we’ll generate a random name if this is blank)                          |
+| `features`       |           | Required only if this is a configurable plan that requires a user’s inputs (e.g. JawsDB MySQL **Custom** plan) |
+
+For a list of these values like `product-label` and `plan-id`, refer to our GraphQL API:
+
+<iframe src="https://graphqlbin.com/v2/ngX3Ix" width="800" height="400"></iframe>
 
 ## Using with Plan Selector
 
 This component needs a lot of information to do its job. For that reason, we recommend relying on
-listening for events from the [plan selector][plan-selector] component. You could do that like so:
+listening for events from the [plan selector][plan-selector] component rather than passing
+everything in manually. You could do that like so:
 
 ```js
 const resourceLabel = ''; // Can be obtained from your own input
 
 function updateButton({ detail: { features, planId, productLabel, regionId } }) {
   const provisionButton = document.querySelector('manifold-data-provision-button');
-  provisionButton.features = features;
-  provisionButton.planId = planId;
   provisionButton.productLabel = productLabel;
-  provisionButton.regionId = regionId;
   provisionButton.resourceLabel = resourceLabel;
+  provisionButton.planId = planId;
+  provisionButton.features = features; // only needed for configurable products such as JawsDB custom
+  provisionButton.regionId = regionId; // only needed for products that allow users to choose a region
 }
 
 document.addEventListener('manifold-planSelector-load', updateButton);
@@ -36,18 +60,15 @@ document.addEventListener('manifold-planSelector-change', updateButton);
 
 Note that `userId` is the only piece of information required from the identity.
 
-## CTA text
+## Context (team, org, etc.)
 
-Set the CTA text by adding anything between the opening and closing tags:
+By default, **Manifold assumes the user creating the resource will own it**. But when creating a
+resource owned by another context (e.g. a team, or organization, or whatever your platform calls
+it), you’ll need to specify an owner-id different from their own:
 
 ```html
-<manifold-data-provision-button>
-  🚀 Provision My Resource
-</manifold-data-provision-button>
+<manifold-data-provision-button owner-id="team-123"></manifold-data-provision-button>
 ```
-
-`slot` can be attached to any HTML or JSX element. To read more about slots, see [Stencil’s
-docs][slot].
 
 ## Events
 
@@ -74,7 +95,7 @@ document.addEventListener('manifold-provisionButton-error', ({ detail }) => cons
 //   productLabel: 'lodgna',
 //   planId: undefined,
 //   resourceLabel: 'my-resource'
-// }}
+// }
 document.addEventListener('manifold-provisionButton-invalid', ({ detail }) => console.log(detail));
 // {
 //   resourceLabel: 'MyResourceName',
@@ -96,16 +117,6 @@ ease of use, we figured this component should be customizable. As such, style it
 We recommend attaching styles to a parent element using any CSS-in-JS framework of your choice, or
 plain ol’ CSS.
 
+[auth]: /advanced/authentication
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
-[slot]: https://stenciljs.com/docs/templating-jsx/
 [plan-selector]: /components/plan-selector
-
-## Context (team, org, etc.)
-
-By default, Manifold assumes the user creating the resource will own it. But when creating a
-resource owned by another context (e.g. a team, or organization, or whatever your platform calls
-it), you’ll need to specify an owner-id different from their own:
-
-```html
-<manifold-data-provision-button owner-id="team-123"></manifold-data-provision-button>
-```

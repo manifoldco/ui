@@ -2,8 +2,9 @@
 title: Product Name
 path: /data/product-name
 example: |
-  <manifold-data-product-name product-label="iron_cache">
-  </manifold-data-product-name>
+  <manifold-data-product-name
+    product-label="iron_cache"
+  ></manifold-data-product-name>
 ---
 
 # Data Product Name

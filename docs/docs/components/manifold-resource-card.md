@@ -13,7 +13,7 @@ example: |
 
 # 🔒 Resource Card
 
-Compact view of a user resource. 🔒 Requires authentication.
+Compact view of a user resource. 🔒 Requires [authentication][auth].
 
 ```html
 <manifold-resource-card label="my-resource"></manifold-resource-card>
@@ -88,4 +88,5 @@ The `<manifold-resource-card-view>` can display a loading status rather than the
 ></manifold-resource-card-view>
 ```
 
+[auth]: /advanced/authentication
 [custom-events]: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent

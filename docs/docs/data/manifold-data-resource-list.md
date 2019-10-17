@@ -22,16 +22,29 @@ Creates an unstyled, unordered list with `<a>` tags.
 
 ## Events
 
-Navigating client-side happens via the `manifold-resourceList-click` custom event.
+By default, this component will only emit `click` events for you to decide how they are handled.
+This will be useful if you use a client-side router such as `react-router`, etc.
 
-| Name                          | Details                    | Data                                          |
-| ----------------------------- | -------------------------- | --------------------------------------------- |
-| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceName`, `resourceLabel` |
+| Name                          | Details                    | Data                          |
+| ----------------------------- | -------------------------- | ----------------------------- |
+| `manifold-resourceList-click` | User has clicked on a link | `resourceId`, `resourceLabel` |
+
+```js
+document.addEventListener('manifold-resourceList-click', ({ detail }) => {
+  console.log(detail);
+  // {
+  //   resourceId: '2358fw1rfjtjv0ubty0waymvd204c',
+  //   resourceLabel: 'my-resource'
+  // }
+
+  navigate(`/resource/${detail.resourceLabel}`); // your client-side router function
+});
+```
 
 ## Link format
 
-To navigate using a traditional `<a>` tag, specify a `resource-link-format` attribute, using
-`:resource` as a placeholder:
+To navigate using a traditional `<a>` tag (which would cause a full-page refresh), specify a
+`resource-link-format` attribute, using `:resource` as a placeholder:
 
 ```html
 <manifold-data-resource-list
@@ -39,12 +52,14 @@ To navigate using a traditional `<a>` tag, specify a `resource-link-format` attr
 ></manifold-data-resource-list>
 ```
 
-Note that this will disable the custom event unless `preserve-event` is passed as well.
+Note that specifying this attribute will disable the custom event unless `preserve-event` is passed
+as well.
 
 ## Pausing updates
 
-By default, this component will subscribe to updates from the server. To disable that, pass the
-`paused` attribute:
+By default, this component will subscribe to updates from the server (in case users add a new
+resource in a different tab, or rename a resource, etc.). To disable updates, pass the `paused`
+attribute:
 
 ```html
 <manifold-data-resource-list paused></manifold-data-resource-list>
