@@ -23,4 +23,4 @@ jobs:
       - name: Run TestCafe
         run:
           docker run -e DEPLOY_URL -v /home/runner/work/ui/ui/e2e:/tests -i testcafe/testcafe
-          chromium --no-sandbox --shm-size /tests/*.js
+          chromium --no-sandbox --shm-size /tests/catalog-test.js
