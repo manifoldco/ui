@@ -9,7 +9,8 @@ jobs:
   test:
     env:
       DEPLOY_URL: ${{ github.event.deployment_status.target_url }}
-    if: github.event.deployment_status.state == 'SUCCESS' &&
+    if:
+      github.event.deployment_status.state == 'SUCCESS' &&
       github.event.deployment_status.creator.login == 'now[bot]'
     name: Run e2e tests with test cafe
     runs-on: ubuntu-18.04
@@ -18,4 +19,6 @@ jobs:
       - name: Pull the Docker image
         run: docker pull testcafe/testcafe
       - name: Run TestCafe
-        run: docker run -e DEPLOY_URL -v /home/runner/work/ui/ui/e2e:/tests -i testcafe/testcafe chromium --no-sandbox --shm-size /tests/**/*.js
+        run:
+          ls /tests && docker run -e DEPLOY_URL -v /home/runner/work/ui/ui/e2e:/tests -i
+          testcafe/testcafe chromium --no-sandbox --shm-size /tests/*.js
