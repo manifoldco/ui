@@ -1544,6 +1544,67 @@ export type ResourceChangePlanMutation = (
   ) }
 );
 
+export type Data_Resources_With_OwnerQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String'],
+  owner: Scalars['ProfileIdentity']
+};
+
+
+export type Data_Resources_With_OwnerQuery = (
+  { __typename?: 'Query' }
+  & { resources: Maybe<(
+    { __typename?: 'ResourceConnection' }
+    & { edges: Array<(
+      { __typename?: 'ResourceEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Resource' }
+        & Pick<Resource, 'id' | 'displayName' | 'label'>
+        & { owner: Maybe<(
+          { __typename?: 'Profile' }
+          & Pick<Profile, 'id'>
+        )>, status: (
+          { __typename?: 'ResourceStatus' }
+          & Pick<ResourceStatus, 'label'>
+        ) }
+      )> }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
+  )> }
+);
+
+export type Data_ResourcesQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String']
+};
+
+
+export type Data_ResourcesQuery = (
+  { __typename?: 'Query' }
+  & { resources: Maybe<(
+    { __typename?: 'ResourceConnection' }
+    & { edges: Array<(
+      { __typename?: 'ResourceEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Resource' }
+        & Pick<Resource, 'id' | 'displayName' | 'label'>
+        & { owner: Maybe<(
+          { __typename?: 'Profile' }
+          & Pick<Profile, 'id'>
+        )>, status: (
+          { __typename?: 'ResourceStatus' }
+          & Pick<ResourceStatus, 'label'>
+        ) }
+      )> }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
+  )> }
+);
+
 export type ResourceLogoQueryVariables = {
   resourceLabel: Scalars['String']
 };
@@ -1609,6 +1670,43 @@ export type ProductsQuery = (
           & Pick<Category, 'label'>
         )> }
       ) }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
+  )> }
+);
+
+export type Resources_With_OwnerQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String'],
+  owner: Scalars['ProfileIdentity']
+};
+
+
+export type Resources_With_OwnerQuery = (
+  { __typename?: 'Query' }
+  & { resources: Maybe<(
+    { __typename?: 'ResourceConnection' }
+    & { edges: Array<(
+      { __typename?: 'ResourceEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Resource' }
+        & Pick<Resource, 'id' | 'displayName' | 'label'>
+        & { owner: Maybe<(
+          { __typename?: 'Profile' }
+          & Pick<Profile, 'id'>
+        )>, status: (
+          { __typename?: 'ResourceStatus' }
+          & Pick<ResourceStatus, 'label'>
+        ), plan: Maybe<(
+          { __typename?: 'Plan' }
+          & { product: Maybe<(
+            { __typename?: 'Product' }
+            & Pick<Product, 'id' | 'label' | 'logoUrl'>
+          )> }
+        )> }
+      )> }
     )>, pageInfo: (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'hasNextPage' | 'endCursor'>

@@ -1,0 +1,28 @@
+query RESOURCES_WITH_OWNER($first: Int!, $after: String!, $owner: ProfileIdentity!) {
+  resources(first: $first, after: $after, owner: $owner) {
+    edges {
+      node {
+        id
+        displayName
+        label
+        owner {
+          id
+        }
+        status {
+          label
+        }
+        plan {
+          product {
+            id
+            label
+            logoUrl
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

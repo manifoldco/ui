@@ -64,3 +64,12 @@ attribute:
 ```html
 <manifold-data-resource-list paused></manifold-data-resource-list>
 ```
+
+## Context (team, org, etc.)
+
+To filter the resource list by an owner-id that provides a different context than just the user 
+context (e.g. team resources), you can provide the owner-id to filter by:
+
+```html
+<manifold-data-resource-list owner-id="team-123"></manifold-data-resource-list>
+```

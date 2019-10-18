@@ -57,4 +57,13 @@ You can pass in your own "no resources" state for the componenent by passing in 
 </manifold-resource-list>
 ```
 
+## Context (team, org, etc.)
+
+To filter the resource list by an owner-id that provides a different context than just the user 
+context (e.g. team resources), you can provide the owner-id to filter by:
+
+```html
+<manifold-resource-list owner-id="team-123"></manifold-resource-list>
+```
+
 [slot]: https://stenciljs.com/docs/templating-jsx/

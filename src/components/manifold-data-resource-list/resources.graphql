@@ -1,0 +1,21 @@
+query DATA_RESOURCES($first: Int!, $after: String!) {
+  resources(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        displayName
+        label
+        owner {
+          id
+        }
+        status {
+          label
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

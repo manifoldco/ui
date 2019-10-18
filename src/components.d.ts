@@ -234,6 +234,10 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
+    * OwnerId to filter resources by
+    */
+    'ownerId'?: string;
+    /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
@@ -498,6 +502,10 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    /**
+    * Filter resource list by ownerId
+    */
+    'ownerId'?: string;
     /**
     * Disable auto-updates?
     */
@@ -1239,6 +1247,10 @@ declare namespace LocalJSX {
     'graphqlFetch'?: GraphqlFetch;
     'onManifold-resourceList-click'?: (event: CustomEvent<any>) => void;
     /**
+    * OwnerId to filter resources by
+    */
+    'ownerId'?: string;
+    /**
     * Disable auto-updates?
     */
     'paused'?: boolean;
@@ -1514,6 +1526,10 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    /**
+    * Filter resource list by ownerId
+    */
+    'ownerId'?: string;
     /**
     * Disable auto-updates?
     */

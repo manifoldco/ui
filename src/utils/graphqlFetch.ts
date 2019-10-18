@@ -13,8 +13,16 @@ interface CreateGraphqlFetch {
 }
 
 type GraphqlArgs =
-  | { mutation: string; variables?: object; emitter?: EventEmitter }
-  | { query: string; variables?: object; emitter?: EventEmitter }; // require query or mutation, but not both
+  | {
+      mutation: string;
+      variables?: { [key: string]: string | number | undefined };
+      emitter?: EventEmitter;
+    }
+  | {
+      query: string;
+      variables?: { [key: string]: string | number | undefined };
+      emitter?: EventEmitter;
+    }; // require query or mutation, but not both
 
 export interface GraphqlError {
   message: string;
