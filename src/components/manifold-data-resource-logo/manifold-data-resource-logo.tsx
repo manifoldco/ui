@@ -43,12 +43,12 @@ export class ManifoldDataResourceLogo {
       variables: { resourceLabel },
     });
 
-    if (data && data.resource && data.resource.plan && data.resource.plan.product) {
+    if (data) {
       const newProduct = {
         displayName: data.resource.plan.product.displayName,
         logoUrl: data.resource.plan.product.logoUrl,
       };
-      this.product = newProduct as ProductState;
+      this.product = newProduct;
     }
   };
 
