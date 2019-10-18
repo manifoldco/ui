@@ -3,6 +3,7 @@ import fetchMock from 'fetch-mock';
 
 import { ManifoldDataSsoButton } from './manifold-data-sso-button';
 import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
+import { ResourceSsoByIdQuery } from '../../types/graphql';
 
 const graphqlEndpoint = 'http://test.com/graphql';
 const resourceSSOUrl = 'https://test.com/sso';
@@ -38,17 +39,17 @@ describe('<manifold-data-sso-button>', () => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);
       const errors: GraphqlError[] = [{ message: 'something went wrong' }];
-      return body.includes('error')
-        ? { data: null, errors }
-        : {
-            data: {
-              resource: {
-                id: variables.resourceId,
-                label: variables.resourceLabel,
-                ssoUrl: resourceSSOUrl,
-              },
-            },
-          };
+      if (body.includes('error')) {
+        return { data: null, errors };
+      }
+      const data: ResourceSsoByIdQuery = {
+        resource: {
+          id: variables.resourceId,
+          label: variables.resourceLabel,
+          ssoUrl: resourceSSOUrl,
+        },
+      };
+      return { data };
     })
   );
   afterEach(() => fetchMock.restore());
@@ -141,7 +142,7 @@ describe('<manifold-data-sso-button>', () => {
         expect.objectContaining({
           detail: {
             message: `${resourceLabel} successfully authenticated`,
-            resourceLabel,
+            resourceLabel: undefined, // we queried by ID (ID takes priority) so don’t know the label
             resourceId,
             redirectUrl: resourceSSOUrl,
           },
