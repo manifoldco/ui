@@ -59,7 +59,7 @@ export class ManifoldResourceList {
     this.resources = await fetchAllPages<ResourceEdge>({
       query: this.ownerId ? queryWithOwner : query,
       nextPage: { first: 50, after: '' },
-      variables: { owner: this.ownerId || undefined },
+      variables: this.ownerId ? { owner: this.ownerId } : {},
       getConnection: (q: Query) => q.resources,
       graphqlFetch: this.graphqlFetch,
     });

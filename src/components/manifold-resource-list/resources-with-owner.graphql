@@ -1,4 +1,4 @@
-query RESOURCES($first: Int!, $after: String!, $owner: ProfileIdentity!) {
+query RESOURCES_WITH_OWNER($first: Int!, $after: String!, $owner: ProfileIdentity!) {
   resources(first: $first, after: $after, owner: $owner) {
     edges {
       node {
