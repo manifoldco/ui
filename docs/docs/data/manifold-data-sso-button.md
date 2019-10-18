@@ -9,8 +9,8 @@ example: |
 
 # 🔒 SSO Button
 
-The `<manifold-data-sso-button>` component allows a user to launch the dashboard of a provisioned
-resource without signing in.
+The `<manifold-data-sso-button>` component allows a user to quickly launch the dashboard of a
+provisioned resource without creating a user account. 🔒 Requires [authentication][auth].
 
 ```html
 <manifold-data-sso-button resource-label="my-resource">
@@ -23,6 +23,17 @@ link is created on-the-fly when a user clicks it and the token expires quickly f
 
 It’s for this reason that you **MUST handle the `manifold-ssoButton-success` event** manually to
 complete the integration.
+
+## Retrieving by ID
+
+Alternatively, if you’d like to fetch a resource by ID, you can use `resource-id=""`. If both
+`resource-label` and `resource-id` are specified, ID will take priority.
+
+```html
+<manifold-data-sso-button resource-id="2358fw1rfjtjv0ubty0waymvd204c">
+  Launch dashboard
+</manifold-data-sso-button>
+```
 
 ## Events
 
@@ -43,7 +54,7 @@ document.addEventListener('manifold-ssoButton-error', ({ detail }) => console.lo
 // {
 //   type: 'not_found',
 //   message: 'not_found: Resource not found',
-//   resourceid: '1234',
+//   resourceid: '2358fw1rfjtjv0ubty0waymvd204c',
 //   resourceLabel: 'my-resource',
 // }
 ```
@@ -72,6 +83,5 @@ ease of use, we figured this component should be customizable. As such, style it
 We recommend attaching styles to a parent element using any CSS-in-JS framework of your choice, or
 plain ol’ CSS.
 
-[container]: /advanced/resource-details
+[auth]: /advanced/authentication
 [shadow-dom]: https://developers.google.com/web/fundamentals/web-components/shadowdom
-[stencil-slot]: https://stenciljs.com/docs/templating-jsx/
