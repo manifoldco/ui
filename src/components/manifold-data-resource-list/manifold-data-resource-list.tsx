@@ -1,11 +1,13 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import { ResourceConnection, Resource, ResourceEdge } from '../../types/graphql';
+import fetchAllPages from '../../utils/fetchAllPages';
+import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { ResourceConnection, Resource, ResourceEdge, Query } from '../../types/graphql';
+import query from './resources.graphql';
+import queryWithOwner from './resources-with-owner.graphql';
 
 interface EventDetail {
   ownerId?: string;
@@ -13,46 +15,6 @@ interface EventDetail {
   resourceLabel: string;
   resourceName: string;
 }
-
-const query = gql`
-  query RESOURCES {
-    resources(first: 500) {
-      edges {
-        node {
-          id
-          displayName
-          label
-          owner {
-            id
-          }
-          status {
-            label
-          }
-        }
-      }
-    }
-  }
-`;
-
-const queryWithOwner = gql`
-  query RESOURCES($owner: ProfileIdentity!) {
-    resources(first: 500, owner: $owner) {
-      edges {
-        node {
-          id
-          displayName
-          label
-          owner {
-            id
-          }
-          status {
-            label
-          }
-        }
-      }
-    }
-  }
-`;
 
 @Component({ tag: 'manifold-data-resource-list' })
 export class ManifoldDataResourceList {
@@ -69,7 +31,6 @@ export class ManifoldDataResourceList {
   @Prop() ownerId?: string;
   @State() interval?: number;
   @State() resources?: ResourceEdge[];
-  @State() errors?: GraphqlError[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   @loadMark()
@@ -91,16 +52,13 @@ export class ManifoldDataResourceList {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({
+    this.resources = await fetchAllPages<ResourceEdge>({
       query: this.ownerId ? queryWithOwner : query,
+      nextPage: { first: 50, after: '' },
       variables: this.ownerId ? { owner: this.ownerId } : {},
+      getConnection: (q: Query) => q.resources,
+      graphqlFetch: this.graphqlFetch,
     });
-
-    if (data) {
-      this.resources = (data.resources && data.resources.edges) || [];
-    } else if (errors) {
-      this.errors = errors;
-    }
   };
 
   handleClick(resource: Resource, e: Event) {
@@ -133,10 +91,6 @@ export class ManifoldDataResourceList {
   render() {
     if (!Array.isArray(this.resources)) {
       return null;
-    }
-
-    if (this.errors) {
-      return 'Resources not found.';
     }
 
     return (
