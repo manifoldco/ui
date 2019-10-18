@@ -22,7 +22,6 @@ const GraphQLResource: Resource = {
   },
   ssoSupported: true,
   ssoUrl: '',
-  owner: null,
   plan: {
     id: '23558gd5kaw5z462e3mvaknj5veuj',
     label: 'quaco',

@@ -1,7 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter, Element, State } from '@stencil/core';
 import { eye, lock, loader } from '@manifoldco/icons';
 
-import { CredentialEdge } from '../../types/graphql';
+import { ResourceCredentialsQuery } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -12,7 +12,7 @@ import loadMark from '../../utils/loadMark';
 })
 export class ManifoldCredentialsView {
   @Element() private el: HTMLElement;
-  @Prop() credentials?: CredentialEdge[];
+  @Prop() credentials?: ResourceCredentialsQuery['resource']['credentials']['edges'];
   @Prop() loading: boolean = false;
   @State() shouldTransition: boolean = false;
   @Event() credentialsRequested: EventEmitter;

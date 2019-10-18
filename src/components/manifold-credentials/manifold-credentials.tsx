@@ -1,11 +1,11 @@
 import { h, Element, Component, Method, Prop, State } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
-import { CredentialEdge } from '../../types/graphql';
+import { ResourceCredentialsQuery } from '../../types/graphql';
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import resourceCredentialsQuery from './resourceCredentials.graphql';
 
 @Component({ tag: 'manifold-credentials' })
 export class ManifoldCredentials {
@@ -13,7 +13,7 @@ export class ManifoldCredentials {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() resourceLabel?: string = '';
-  @State() credentials?: CredentialEdge[];
+  @State() credentials?: ResourceCredentialsQuery['resource']['credentials']['edges'];
   @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
   @State() shouldTransition: boolean = false;
@@ -33,22 +33,10 @@ export class ManifoldCredentials {
 
     this.errors = undefined;
     this.loading = true;
+    this.credentials = undefined;
 
-    const { data, errors } = await this.graphqlFetch({
-      query: gql`
-        query RESOURCE_CREDENTIALS($resourceLabel: String!) {
-          resource(label: $resourceLabel) {
-            credentials(first: 25) {
-              edges {
-                node {
-                  key
-                  value
-                }
-              }
-            }
-          }
-        }
-      `,
+    const { data, errors } = await this.graphqlFetch<ResourceCredentialsQuery>({
+      query: resourceCredentialsQuery,
       variables: { resourceLabel: this.resourceLabel },
     });
 
@@ -56,9 +44,9 @@ export class ManifoldCredentials {
       this.errors = errors;
     }
 
-    this.credentials =
-      (data && data.resource && data.resource.credentials && data.resource.credentials.edges) ||
-      undefined;
+    if (data) {
+      this.credentials = data.resource.credentials.edges;
+    }
 
     this.loading = false;
   }
@@ -72,7 +60,7 @@ export class ManifoldCredentials {
   render() {
     return [
       <manifold-credentials-view
-        credentials={this.credentials}
+        credentials={this.credentials || undefined}
         loading={this.loading || !this.resourceLabel}
         onCredentialsRequested={this.credentialsRequested}
       >

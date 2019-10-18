@@ -1,8 +1,7 @@
-import { CredentialEdge } from '../../../types/graphql';
+import { ResourceCredentialsQuery } from '../../../types/graphql';
 
-const credentials: CredentialEdge[] = [
+const credentials: ResourceCredentialsQuery['resource']['credentials']['edges'] = [
   {
-    cursor: '',
     node: {
       key: 'JWT_API_KEY',
       value: 'HEAVILY-REDACTED',

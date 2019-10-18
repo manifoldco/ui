@@ -13,6 +13,20 @@ const resourcesMock = {
   },
 };
 
+const credentialResourceMock = {
+  data: {
+    resource: {
+      credentials: {
+        edges: [
+          { node: { key: 'API_KEY', value: 'xxxxxxxxxxxxxxxxxxxxxxxxx' } },
+          { node: { key: 'BEST_FRUIT', value: 'Kiwi' } },
+          { node: { key: 'BEST_VEGTABLE', value: 'Cabbage' } },
+        ],
+      },
+    },
+  },
+};
+
 let realFetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 if (typeof window !== 'undefined') {
   // @ts-ignore
@@ -33,6 +47,9 @@ export const mockGraphQl = () => {
     // use a proper gql mocking tool that supports better field mocking ect.
     if (bodyString.includes('query RESOURCES')) {
       return resourcesMock;
+    }
+    if (bodyString.includes('query ResourceCredentials')) {
+      return JSON.stringify(credentialResourceMock);
     }
     // @ts-ignore
     delete headers.authorization;

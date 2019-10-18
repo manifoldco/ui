@@ -8,13 +8,13 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  CredentialEdge,
   Plan,
   PlanEdge,
   PlanMeteredFeatureEdge,
   Product,
   ProductEdge,
   Resource,
+  ResourceCredentialsQuery,
   ResourceStatusLabel,
   ResourceWithCredentialsQuery,
 } from './types/graphql';
@@ -108,7 +108,7 @@ export namespace Components {
     'showCredentials': () => Promise<void>;
   }
   interface ManifoldCredentialsView {
-    'credentials'?: CredentialEdge[];
+    'credentials'?: ResourceCredentialsQuery['resource']['credentials']['edges'];
     'loading': boolean;
   }
   interface ManifoldDataDeprovisionButton {
@@ -1096,7 +1096,7 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldCredentialsView {
-    'credentials'?: CredentialEdge[];
+    'credentials'?: ResourceCredentialsQuery['resource']['credentials']['edges'];
     'loading'?: boolean;
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
   }

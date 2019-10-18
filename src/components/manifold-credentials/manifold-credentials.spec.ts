@@ -4,16 +4,16 @@ import fetchMock from 'fetch-mock';
 import { ManifoldCredentials } from './manifold-credentials';
 import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-credentials-view';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
-import { CredentialEdge } from '../../types/graphql';
+import { ResourceCredentialsQuery } from '../../types/graphql';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 global.setTimeout = jest.fn();
 
 const graphqlEndpoint = 'http://test.com/graphql';
-const credentials: Partial<CredentialEdge[]> = [
-  { cursor: '', node: { key: 'KEY_1', value: 'SECRET_1' } },
-  { cursor: '', node: { key: 'KEY_2', value: 'SECRET_2' } },
+const credentials: ResourceCredentialsQuery['resource']['credentials']['edges'] = [
+  { node: { key: 'KEY_1', value: 'SECRET_1' } },
+  { node: { key: 'KEY_2', value: 'SECRET_2' } },
 ];
 const credentialsHTML = credentials
   .reduce(
