@@ -182,7 +182,7 @@ export class ManifoldPlanDetails {
     if (resourceRegion) {
       regions = [resourceRegion.node];
     } else {
-      regions = this.plan.regions.edges.map(({ node }) => node);
+      regions = this.filterRegions(this.plan.regions.edges);
     }
 
     // hide if only one

@@ -7,7 +7,6 @@ import paidPlan from '../../spec/mock/aiven-cassandra/plan-paid';
 
 interface Props {
   loadCallback?: jest.Mock;
-  regions?: string[];
 }
 
 async function setup(props: Props) {
@@ -23,7 +22,6 @@ async function setup(props: Props) {
     page.doc.addEventListener('manifold-planSelector-load', props.loadCallback);
   }
 
-  component.regions = props.regions;
   component.plan = paidPlan;
   component.product = product;
 
@@ -35,28 +33,6 @@ async function setup(props: Props) {
 }
 
 describe('<manifold-plan-details>', () => {
-  describe('v0 props', () => {
-    it('[regions]', async () => {
-      const regions = ['us-west-1', 'us-west-2', 'us-east-2'];
-      const { page } = await setup({ regions });
-      const planDetails = page.root && page.root.querySelector('manifold-plan-details');
-      const select =
-        planDetails &&
-        planDetails.shadowRoot &&
-        planDetails.shadowRoot.querySelector('manifold-select');
-      const options = select && select.shadowRoot && select.shadowRoot.querySelectorAll('option');
-      if (!options) {
-        throw new Error('region select not in document');
-      }
-
-      const optionValues: string[] = [];
-      options.forEach(option => {
-        optionValues.push(`${option.getAttribute('value')}`);
-      });
-      expect(optionValues).toEqual(regions);
-    });
-  });
-
   describe('v0 events', () => {
     it('load', async () => {
       // set up listener
