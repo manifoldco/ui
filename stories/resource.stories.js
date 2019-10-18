@@ -8,14 +8,16 @@ storiesOf('Resource', module)
   .addDecorator(withKnobs)
   .add('list', () => {
     const paused = boolean('paused', true);
+    const ownerId = text('owner-id', '');
     return `
-      <manifold-resource-list
+      <manifold-resource-list owner-id="${ownerId}"
         ${paused ? 'paused' : ''}
       ></manifold-resource-list>`;
   })
   .add('list (unstyled)', () => {
     const paused = boolean('paused', true);
-    return `<manifold-data-resource-list resource-link-format="/resources/:resource"
+    const ownerId = text('owner-id', '');
+    return `<manifold-data-resource-list resource-link-format="/resources/:resource" owner-id="${ownerId}"
       ${paused ? 'paused' : ''}
     ></manifold-data-resource-list>`;
   })

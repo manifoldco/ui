@@ -5,6 +5,7 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import query from './resources.graphql';
+import queryWithOwner from './resources-with-owner.graphql';
 import { Query, ResourceEdge } from '../../types/graphql';
 import fetchAllPages from '../../utils/fetchAllPages';
 
@@ -23,6 +24,8 @@ export class ManifoldResourceList {
   @Prop() resourceLinkFormat?: string;
   /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent?: boolean = false;
+  /** Filter resource list by ownerId */
+  @Prop() ownerId?: string;
   @State() interval?: number;
   @State() resources?: ResourceEdge[];
 
@@ -54,8 +57,9 @@ export class ManifoldResourceList {
     }
 
     this.resources = await fetchAllPages<ResourceEdge>({
-      query,
+      query: this.ownerId ? queryWithOwner : query,
       nextPage: { first: 50, after: '' },
+      variables: { owner: this.ownerId || undefined },
       getConnection: (q: Query) => q.resources,
       graphqlFetch: this.graphqlFetch,
     });

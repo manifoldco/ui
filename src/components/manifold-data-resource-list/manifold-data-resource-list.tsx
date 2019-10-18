@@ -34,6 +34,26 @@ const query = gql`
   }
 `;
 
+const queryWithOwner = gql`
+  query RESOURCES($owner: ProfileIdentity!) {
+    resources(first: 500, owner: $owner) {
+      edges {
+        node {
+          id
+          displayName
+          label
+          owner {
+            id
+          }
+          status {
+            label
+          }
+        }
+      }
+    }
+  }
+`;
+
 @Component({ tag: 'manifold-data-resource-list' })
 export class ManifoldDataResourceList {
   @Element() el: HTMLElement;
@@ -45,6 +65,8 @@ export class ManifoldDataResourceList {
   @Prop() resourceLinkFormat?: string;
   /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent?: boolean = false;
+  /** OwnerId to filter resources by */
+  @Prop() ownerId?: string;
   @State() interval?: number;
   @State() resources?: ResourceEdge[];
   @State() errors?: GraphqlError[];
@@ -70,7 +92,8 @@ export class ManifoldDataResourceList {
     }
 
     const { data, errors } = await this.graphqlFetch({
-      query,
+      query: this.ownerId ? queryWithOwner : query,
+      variables: this.ownerId ? { owner: this.ownerId } : {},
     });
 
     if (data) {
