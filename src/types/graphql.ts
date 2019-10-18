@@ -205,6 +205,12 @@ export type Invoice = Node & {
   end: Scalars['Time'],
   /** Status represents the current status of the invoice */
   status: InvoiceStatus,
+  /** 
+ * RevenueShare represents revenue split between corresponding parties for
+   * this invoice. Note that revenue share is only calculated for invoices in
+   * PENDING or PAID state.
+ **/
+  revenueShare: RevenueShare,
   /** List LineItems composing the invoice. */
   lineItems?: Maybe<LineItemConnection>,
 };
@@ -236,14 +242,25 @@ export type InvoiceEdge = {
   node?: Maybe<Invoice>,
 };
 
-/** InvoiceOrderBy defines how an invoice connection is to be ordered. */
+/** InvoicePreviewOrderBy defines how an invoice connection is to be ordered. */
 export type InvoiceOrderBy = {
   field: InvoiceOrderByField,
   direction: OrderByDirection,
 };
 
-/** InvoiceOrderByField is the field by which an Invoice list will be ordered. */
+/** InvoicePreviewOrderByField is the field by which an Invoice list will be ordered. */
 export enum InvoiceOrderByField {
+  End = 'END'
+}
+
+/** InvoicePreviewOrderBy defines how an invoice preview connection is to be ordered. */
+export type InvoicePreviewOrderBy = {
+  field: InvoicePreviewOrderByField,
+  direction: OrderByDirection,
+};
+
+/** InvoicePreviewOrderByField is the field by which an Invoice preview list will be ordered. */
+export enum InvoicePreviewOrderByField {
   CreatedAt = 'CREATED_AT'
 }
 
@@ -1265,6 +1282,31 @@ export enum ResourceStatusLabel {
   ErrorDeleting = 'ERROR_DELETING'
 }
 
+/** RevenueShare represents revenue split between corresponding parties */
+export type RevenueShare = {
+   __typename?: 'RevenueShare',
+  /** 
+ * providers represents how much money in cents providers are expected to
+   * receive from this invoice.
+ **/
+  providers: Scalars['Int'],
+  /** 
+ * platform represents how much money in cents the platform is expected to
+   * receive from this invoice.
+ **/
+  platform: Scalars['Int'],
+  /** 
+ * manifold represents how much money in cents Manifold is expected to receive
+   * from this invoice.
+ **/
+  manifold: Scalars['Int'],
+  /** 
+ * fees represents amount of money in cents subtracted from the total cost
+   * before revenue.
+ **/
+  fees: Scalars['Int'],
+};
+
 /** 
  * SubLineItem represents the breakdown by base cost, features, and metered usage
  * of the amount due by resource.
@@ -1513,7 +1555,7 @@ export type ResourceSsoByIdQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }
-    & Pick<Resource, 'label' | 'id' | 'ssoUrl'>
+    & Pick<Resource, 'id' | 'label' | 'ssoUrl'>
   )> }
 );
 
@@ -1544,7 +1586,10 @@ export type ProductsQuery = (
   )> }
 );
 
-export type ResourcesQueryVariables = {};
+export type ResourcesQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String']
+};
 
 
 export type ResourcesQuery = (
@@ -1570,6 +1615,9 @@ export type ResourcesQuery = (
           )> }
         )> }
       )> }
-    )> }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
   )> }
 );

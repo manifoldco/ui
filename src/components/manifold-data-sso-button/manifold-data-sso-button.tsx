@@ -70,6 +70,7 @@ export class ManifoldDataSsoButton {
     });
 
     if (data && data.resource) {
+      // this event is VERY important! without redirectUrl this component is useless
       const success: SuccessMessage = {
         message: `${this.resourceLabel} successfully authenticated`,
         resourceLabel: data.resource.label,
