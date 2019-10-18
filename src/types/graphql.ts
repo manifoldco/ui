@@ -158,7 +158,11 @@ export enum Currency {
 export type DeleteResourceInput = {
   /** The ID of the resource to deprovision */
   resourceId: Scalars['ID'],
-  /** The id of the owner for this resource. Omit to use the current user ID. */
+  /** 
+ * The id of the owner for this resource. Omit to use the current user ID.
+   * 
+   * Deprecated: Not used.
+ **/
   ownerId?: Maybe<Scalars['ID']>,
 };
 
@@ -205,6 +209,12 @@ export type Invoice = Node & {
   end: Scalars['Time'],
   /** Status represents the current status of the invoice */
   status: InvoiceStatus,
+  /** 
+ * RevenueShare represents revenue split between corresponding parties for
+   * this invoice. Note that revenue share is only calculated for invoices in
+   * PENDING or PAID state.
+ **/
+  revenueShare: RevenueShare,
   /** List LineItems composing the invoice. */
   lineItems?: Maybe<LineItemConnection>,
 };
@@ -1276,6 +1286,31 @@ export enum ResourceStatusLabel {
   ErrorDeleting = 'ERROR_DELETING'
 }
 
+/** RevenueShare represents revenue split between corresponding parties */
+export type RevenueShare = {
+   __typename?: 'RevenueShare',
+  /** 
+ * providers represents how much money in cents providers are expected to
+   * receive from this invoice.
+ **/
+  providers: Scalars['Int'],
+  /** 
+ * platform represents how much money in cents the platform is expected to
+   * receive from this invoice.
+ **/
+  platform: Scalars['Int'],
+  /** 
+ * manifold represents how much money in cents Manifold is expected to receive
+   * from this invoice.
+ **/
+  manifold: Scalars['Int'],
+  /** 
+ * fees represents amount of money in cents subtracted from the total cost
+   * before revenue.
+ **/
+  fees: Scalars['Int'],
+};
+
 /** 
  * SubLineItem represents the breakdown by base cost, features, and metered usage
  * of the amount due by resource.
@@ -1360,7 +1395,11 @@ export type UpdateResourcePlanInput = {
   resourceId: Scalars['ID'],
   /** The id of the new plan to assign for this resource. */
   newPlanID: Scalars['ID'],
-  /** The id of the owner for this resource. Omit to use the current user ID. */
+  /** 
+ * The id of the owner for this resource. Omit to use the current user ID.
+   * 
+   * Deprecated: Not used.
+ **/
   ownerId?: Maybe<Scalars['ID']>,
 };
 
