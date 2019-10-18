@@ -4,10 +4,6 @@ path: /components/resource-list
 example: <manifold-resource-list paused="true"></manifold-resource-list>
 ---
 
-<manifold-toast alert-type="warning">
-  <div><code>resource-name</code> has been deprecated in favor of <code>resource-label</code> starting in version 0.4.0.</div>
-</manifold-toast>
-
 # 🔒 Resource List
 
 Creates a list of resource cards that lists all the resources the user owns directly.

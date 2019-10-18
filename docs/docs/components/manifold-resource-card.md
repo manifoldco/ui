@@ -2,16 +2,18 @@
 title: '🔒 Resource Card'
 path: '/components/manifold-resource-card'
 example: |
-  <manifold-resource-card-view label="my-resource" name="my resource" logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png" resource-id="1234" resource-status="available"></manifold-resource-card-view>
+  <manifold-resource-card-view
+    label="my-resource"
+    name="my resource"
+    logo="https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png"
+    resource-id="1234"
+    resource-status="available"
+  ></manifold-resource-card-view>
 ---
-
-<manifold-toast alert-type="warning">
-  <div><code>resource-id</code> prop has been removed in favor of <code>resource-label</code> starting in version 0.5.12.</div>
-</manifold-toast>
 
 # 🔒 Resource Card
 
-Compact view of a user resource. 🔒 Requires authentication.
+Compact view of a user resource. 🔒 Requires [authentication][auth].
 
 ```html
 <manifold-resource-card label="my-resource"></manifold-resource-card>
@@ -86,4 +88,5 @@ The `<manifold-resource-card-view>` can display a loading status rather than the
 ></manifold-resource-card-view>
 ```
 
+[auth]: /advanced/authentication
 [custom-events]: https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent

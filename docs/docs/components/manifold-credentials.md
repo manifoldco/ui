@@ -7,7 +7,7 @@ example: |
 
 # 🔒 Credentials
 
-Display credentials for a resource. 🔒 Requires authentication.
+Display credentials for a resource. 🔒 Requires [authentication][auth].
 
 The resource label needs to be provided for the component to be able to fetch the resource's
 credentials on demand.
@@ -29,4 +29,5 @@ more about slots][slot].
 </manifold-credentials>
 ```
 
+[auth]: /advanced/authentication
 [slot]: https://stenciljs.com/docs/templating-jsx/

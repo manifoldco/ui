@@ -25,9 +25,10 @@ import(/* webpackChunkName: manifold-ui */ '@manifoldco/ui/dist/loader').then(
 > 💁 **Tip:** `webpackChunkName` is useful in webpack setups to ensure if you use this code more
 > than once, it’ll re-use the same chunk each time rather than create multiple copies.
 
-Though this may _technically_ delay the Web Components’ loading (because it’s fetching an async
-request to get the loader, rather than being bundled already by the time this is executed), overall
-this is generally a win for users, and lets you deliver a [first meaningful paint][fmp] sooner.
+Though code splitting may _technically_ delay the Web Components’ loading (because it’s fetching an
+async request to get the loader, rather than being bundled already by the time this is executed),
+overall code splitting is generally a win for users, and lets you deliver a [first meaningful
+paint][fmp] sooner.
 
 Lazy-loading _everything_ indiscriminately across your application would slow down the user
 experience, but when used strategically like this it can have big payoffs.
@@ -47,18 +48,18 @@ Stencil is bundled as it affects your application.
 
 Stencil splits up custom elements into their own chunks. For our UI bundle, if you only use
 `<manifold-product>` and `<manifold-plan-selector>` on a page, your users will download the JS to
-render those two, and only those two. That means **as Manifold UI scales and adds components, it
-comes at almost no cost to your users.**
+render those two, and only those two. Over time, even **as Manifold UI adds more components, it
+comes at almost no performance cost to your users.**
 
 To see this in action, open your **Network** tab in Chrome, and filter to **JS**. You should see
 things like `15.js` and `53.js`, each weighing only a few KB.
 
 ### Polyfill bloat
 
-Stencil’s Web Components work for more browsers than even have Web Component support [via a
+Stencil’s Web Components work for browsers without Web Component support [via a
 polyfill][stencil-browsers]. It’s great to have built-in support, but sometimes webpack can
 accidentally bundle the polyfill when it doesn’t need to. We’ve found the best fix to be **code
-splitting** (above).
+splitting**.
 
 ## Metrics
 

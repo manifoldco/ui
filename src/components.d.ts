@@ -28,14 +28,14 @@ import {
   GraphqlFetch,
 } from './utils/graphqlFetch';
 import {
-  RestFetch,
-} from './utils/restFetch';
-import {
   Gateway,
 } from './types/gateway';
 import {
   AuthToken,
 } from './types/auth';
+import {
+  RestFetch,
+} from './utils/restFetch';
 import {
   Option,
 } from './types/Select';
@@ -261,6 +261,10 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldDataSsoButton {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
     /**
     * The id of the resource to rename, will be fetched if not set
@@ -270,10 +274,6 @@ export namespace Components {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
@@ -1266,6 +1266,10 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldDataSsoButton {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
     'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
@@ -1278,10 +1282,6 @@ declare namespace LocalJSX {
     * The label of the resource to rename
     */
     'resourceLabel'?: string;
-    /**
-    * _(hidden)_
-    */
-    'restFetch'?: RestFetch;
   }
   interface ManifoldForwardSlot {}
   interface ManifoldIcon {
