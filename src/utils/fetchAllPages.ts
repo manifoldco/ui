@@ -15,7 +15,7 @@ interface NextPage {
 interface Args<Edge, T> {
   query: string;
   nextPage: NextPage;
-  variables?: object;
+  variables?: { [key: string]: string | number | undefined };
   getConnection: (q: T) => Connection<Edge> | null | undefined;
   graphqlFetch?: GraphqlFetch;
 }
