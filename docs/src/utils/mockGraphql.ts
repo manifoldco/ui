@@ -48,7 +48,7 @@ export const mockGraphQl = () => {
     if (bodyString.includes('query RESOURCES')) {
       return resourcesMock;
     }
-    if (bodyString.includes('query RESOURCE_CREDENTIALS')) {
+    if (bodyString.includes('query ResourceCredentials')) {
       return JSON.stringify(credentialResourceMock);
     }
     // @ts-ignore
