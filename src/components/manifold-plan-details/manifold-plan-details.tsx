@@ -3,7 +3,7 @@ import { check } from '@manifoldco/icons';
 
 import { Option } from '../../types/Select';
 import { Gateway } from '../../types/gateway';
-import { Product, Plan, Region } from '../../types/graphql';
+import { Product, Plan, Region, RegionEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { configurableFeatureDefaults } from '../../utils/plan';
@@ -127,6 +127,15 @@ export class ManifoldPlanDetails {
     }
   };
 
+  filterRegions(regions: RegionEdge[], allowedRegions: string[] | undefined = this.regions) {
+    if (Array.isArray(allowedRegions) && allowedRegions.length) {
+      return regions
+        .filter(({ node: { id } }) => allowedRegions.includes(id))
+        .map(({ node }) => node);
+    }
+    return regions.map(({ node }) => node);
+  }
+
   fixedDisplayValue(displayValue: string) {
     // normalize true/false features
     if (['true', 'yes'].includes(displayValue.toLowerCase())) {
@@ -151,15 +160,13 @@ export class ManifoldPlanDetails {
       return undefined;
     }
 
-    const regions = allowedRegions
-      ? plan.regions.edges.filter(({ node: { id } }) => allowedRegions.includes(id))
-      : plan.regions.edges;
+    const regions = this.filterRegions(plan.regions.edges, allowedRegions);
     const [firstRegion] = regions;
     if (regionId) {
-      const region = regions.find(({ node: { id } }) => id === regionId);
-      return (region && region.node) || firstRegion.node;
+      const region = regions.find(({ id }) => id === regionId);
+      return region || firstRegion;
     }
-    return firstRegion.node;
+    return firstRegion;
   }
 
   get regionOptions() {
@@ -175,11 +182,11 @@ export class ManifoldPlanDetails {
     if (resourceRegion) {
       regions = [resourceRegion.node];
     } else {
-      regions = this.plan.regions.edges.map(({ node }) => node);
+      regions = this.filterRegions(this.plan.regions.edges);
     }
 
     // hide if only one
-    if (regions.length === 1) {
+    if (regions.length < 2) {
       return undefined;
     }
 

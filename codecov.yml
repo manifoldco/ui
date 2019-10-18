@@ -1,0 +1,8 @@
+ignore:
+  - 'docs/**/*'
+  - 'scripts/**/*'
+  - 'src/spec/**/*'
+  - 'stories/**/*'
+  - '*-happo.ts'
+  - '*.spec.ts'
+  - '*.e2e.ts*'

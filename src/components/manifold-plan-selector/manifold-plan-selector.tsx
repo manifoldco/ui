@@ -1,4 +1,4 @@
-import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
+import { h, Component, State, Prop, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
@@ -59,7 +59,6 @@ const resourceQuery = gql`
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
-  @Element() el: HTMLElement;
   /** Show only free plans? */
   @Prop() freePlans?: boolean;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -80,11 +79,6 @@ export class ManifoldPlanSelector {
   }
   @Watch('resourceLabel') resourceChange(newResource: string) {
     this.fetchResource(newResource);
-  }
-  @Watch('regions') regionsChange(newRegions: string) {
-    if (newRegions) {
-      this.parsedRegions = this.parseRegions(newRegions);
-    }
   }
 
   @loadMark()
@@ -162,17 +156,16 @@ export class ManifoldPlanSelector {
     }
   }
 
-  parseRegions(regions: string) {
-    return regions.split(',').map(region => region.trim().toLowerCase());
-  }
-
   @logger()
   render() {
+    const regions =
+      (this.regions && this.regions.split(',').map(region => region.trim())) || undefined;
+
     return (
       <manifold-active-plan
         plans={this.plans}
         product={this.product}
-        regions={this.parsedRegions}
+        regions={regions}
         selectedResource={this.resource}
       >
         <manifold-forward-slot slot="cta">

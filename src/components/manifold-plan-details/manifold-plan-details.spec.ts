@@ -1,20 +1,25 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldPlanDetails } from './manifold-plan-details';
-import product from '../../spec/mock/logdna/product';
+import { ManifoldSelect } from '../manifold-select/manifold-select';
 import freePlan from '../../spec/mock/prefab/plan-free';
+import product from '../../spec/mock/aiven-cassandra/product';
 import paidPlan from '../../spec/mock/aiven-cassandra/plan-paid';
 
-async function setup(loadCallback?: jest.Mock) {
+interface Props {
+  loadCallback?: jest.Mock;
+}
+
+async function setup(props: Props) {
   const page = await newSpecPage({
-    components: [ManifoldPlanDetails],
+    components: [ManifoldPlanDetails, ManifoldSelect],
     html: '<div></div>',
   });
 
   const component = page.doc.createElement('manifold-plan-details');
 
   // add load event listener for later
-  if (loadCallback) {
-    page.doc.addEventListener('manifold-planSelector-load', loadCallback);
+  if (props.loadCallback) {
+    page.doc.addEventListener('manifold-planSelector-load', props.loadCallback);
   }
 
   component.plan = paidPlan;
@@ -32,7 +37,7 @@ describe('<manifold-plan-details>', () => {
     it('load', async () => {
       // set up listener
       const loadCallback = jest.fn();
-      await setup(loadCallback);
+      await setup({ loadCallback });
       const region = paidPlan.regions && paidPlan.regions.edges[0].node;
       expect(loadCallback).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -50,7 +55,7 @@ describe('<manifold-plan-details>', () => {
     });
 
     it('change', async () => {
-      const { page, component } = await setup();
+      const { page, component } = await setup({});
 
       // set up listener
       const changeCallback = jest.fn();

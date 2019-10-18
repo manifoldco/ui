@@ -39,10 +39,13 @@ storiesOf('Catalog', module)
     const env = localStorage.getItem('manifold_auth_env');
     const labels = getProductLabels(env);
     const productLabel = select('product-label', labels, labels[0]);
+    const regions = text('regions', '');
     return `
-    <manifold-plan-selector product-label="${productLabel}" ${
-      freePlans ? 'free-plans' : ''
-    }></manifold-plan-selector>`;
+    <manifold-plan-selector
+      ${freePlans ? 'free-plans' : ''}
+      product-label="${productLabel}"
+      regions="${regions}"
+    ></manifold-plan-selector>`;
   })
   .add('plan card', () => {
     const env = localStorage.getItem('manifold_auth_env');

@@ -5,8 +5,8 @@ import loadMark from '../../utils/loadMark';
 
 @Component({
   tag: 'manifold-select',
-  styleUrl: 'mf-select.css',
-  scoped: true,
+  styleUrl: 'manifold-select.css',
+  shadow: true,
 })
 export class ManifoldSelect {
   @Prop() defaultValue?: string;

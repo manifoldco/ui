@@ -70,6 +70,11 @@
       "path": "./dist/esm/manifold-!(mock|number-input)*.js",
       "maxSize": "16 kB",
       "compression": "none"
+    },
+    {
+      "path": "./dist/esm/manifold-number-input*.js",
+      "maxSize": "36 kB",
+      "compression": "none"
     }
   ],
   "dependencies": {
