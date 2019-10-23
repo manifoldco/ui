@@ -123,7 +123,7 @@
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^19.0.0",
-    "ts-loader": "^6.2.0",
+    "ts-loader": "^6.2.1",
     "wait-on": "^3.3.0",
     "webpack": "^4.41.2"
   }
