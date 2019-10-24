@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v0.6.1]
 
 ### Changed
 
 - Removed Node version restriction on package (#659)
+- Updated Stencil to v1.7.4 (#652)
 
 ## [v0.6.0]
 
@@ -43,7 +44,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `manifold-resource-container`. (#603)
 - Converted `<manifold-data-deprovision-button>` to use GraphQL (#604)
 - Converted `<manifold-plan-cost>` to GraphQL (#605)
-- Updated Stencil to v1.6.1 (#606)
+- Updated Stencil to v1.7.2 (#631)
 - Owner ID no longer fetched to create/delete resources (#608)
 - Converted `<manifold-data-resize-button>` to use GraphQL
 - Updated `<manifold-product>` ahead of a GraphQL deprecation (#619)
