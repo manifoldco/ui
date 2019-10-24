@@ -9,7 +9,7 @@ const prettier = require('prettier');
 
 // Settings
 const WD = resolve(__dirname, '..', 'pkg'); // Working directory: pkg/
-const FILES_TO_COPY = ['README.md', 'CHANGELOG.md', 'LICENSE.md']; // other files to copy to WD
+const FILES_TO_COPY = ['README.md', 'CHANGELOG.md', 'LICENSE']; // other files to copy to WD
 
 const oldDistDir = resolve(__dirname, '..', 'dist');
 const newDistDir = resolve(WD, 'dist');
