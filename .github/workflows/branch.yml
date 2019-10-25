@@ -34,8 +34,7 @@ jobs:
       - run: npm run build
       - run: npm run generate:gql
       - run:
-          export CHANGE_URL=https://github.com/${{ github.repository }}$(echo $GITHUB_REF | sed
-          's|refs||g')
-      - run:
           PREVIOUS_SHA=$(git rev-parse origin/master) CURRENT_SHA=${{ github.sha }}
-          node_modules/.bin/happo-ci
+          CHANGE_URL=https://github.com/${{ github.repository }}$(echo $GITHUB_REF | sed 's|refs||g'
+          | sed 's|\/merge||g') HAPPO_API_KEY=${{ secrets.HAPPO_API_KEY}} HAPPO_API_SECRET=${{
+          secrets.HAAPO_API_SECRET }} node_modules/.bin/happo-ci
