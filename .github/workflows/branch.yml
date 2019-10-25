@@ -36,5 +36,5 @@ jobs:
       - run:
           PREVIOUS_SHA=$(git rev-parse origin/master) CURRENT_SHA=${{ github.sha }}
           CHANGE_URL=https://github.com/${{ github.repository }}$(echo $GITHUB_REF | sed 's|refs||g'
-          | sed 's|\/merge||g') HAPPO_API_KEY=${{ secrets.HAPPO_API_KEY}} HAPPO_API_SECRET=${{
-          secrets.HAAPO_API_SECRET }} node_modules/.bin/happo-ci
+          | sed 's|\/merge||g') HAPPO_API_KEY=${{ secrets.HAPPO_API_KEY }} HAPPO_API_SECRET=${{
+          secrets.HAPPO_API_SECRET }} node_modules/.bin/happo-ci
