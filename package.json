@@ -50,10 +50,10 @@
     "prepare:package": "npm run build && node scripts/prepublish",
     "publish": "npm run prepare:package && node scripts/publish",
     "storybook": "start-storybook -p 6006",
-    "test": "stencil test --spec --e2e --maxWorkers=2",
+    "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",
     "test:spec": "stencil test --spec",
-    "test:coverage": "stencil test --spec --e2e --coverage --maxWorkers=2",
+    "test:coverage": "stencil test --spec --e2e --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll"
   },
