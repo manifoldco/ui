@@ -8,12 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
+      - run: npm install
       - run: npm run bundlesize
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
+      - run: npm install
       - run: npm run test:coverage
       - run: npx codecov
   lint:
@@ -21,12 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
+      - run: npm install
       - run: npm run lint
   vrt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
+      - run: npm install
       - run: npm run build
       - run: npm run generate:gql
       - run: happo-ci
