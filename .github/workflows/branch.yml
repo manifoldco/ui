@@ -1,0 +1,40 @@
+name: branch
+
+on: [pull_request]
+
+jobs:
+  bundlesize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run bundlesize
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run test:coverage
+      - run: npx codecov
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run lint
+  vrt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run build
+      - run: npm run generate:gql
+      - run:
+          PREVIOUS_SHA=$(git rev-parse origin/master) CURRENT_SHA=${{ github.sha }}
+          CHANGE_URL=https://github.com/${{ github.repository }}$(echo $GITHUB_REF | sed 's|refs||g'
+          | sed 's|\/merge||g') HAPPO_API_KEY=${{ secrets.HAPPO_API_KEY }} HAPPO_API_SECRET=${{
+          secrets.HAPPO_API_SECRET }} node_modules/.bin/happo-ci
