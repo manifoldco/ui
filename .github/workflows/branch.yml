@@ -26,6 +26,7 @@ jobs:
       - run: npm install
       - run: npm run lint
   vrt:
+    needs: [lint, test, bundlesize]
     env:
       PREVIOUS_SHA: ${{ github.event.pull_request.base.sha }}
       CURRENT_SHA: ${{ github.event.pull_request.head.sha }}
