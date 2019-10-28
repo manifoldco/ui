@@ -26,6 +26,12 @@ jobs:
       - run: npm install
       - run: npm run lint
   vrt:
+    env:
+      PREVIOUS_SHA: ${{ github.event.pull_request.base.sha }}
+      CURRENT_SHA: ${{ github.event.pull_request.head.sha }}
+      CHANGE_URL: ${{ github.event.pull_request.url }}
+      HAPPO_API_KEY: ${{ secrets.HAPPO_API_KEY }}
+      HAPPO_API_SECRET: ${{ secrets.HAPPO_API_SECRET }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -33,8 +39,4 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run generate:gql
-      - run:
-          PREVIOUS_SHA=$(git rev-parse origin/master) CURRENT_SHA=${{ github.sha }}
-          CHANGE_URL=https://github.com/${{ github.repository }}$(echo $GITHUB_REF | sed 's|refs||g'
-          | sed 's|\/merge||g') HAPPO_API_KEY=${{ secrets.HAPPO_API_KEY }} HAPPO_API_SECRET=${{
-          secrets.HAPPO_API_SECRET }} node_modules/.bin/happo-ci
+      - run: node_modules/.bin/happo-ci
