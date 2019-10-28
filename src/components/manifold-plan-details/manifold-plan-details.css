@@ -38,6 +38,7 @@
   padding-top: var(--padding);
   padding-right: var(--padding);
   padding-left: var(--padding);
+  font-family: Papyrus;
   color: var(--card-text-color);
   background-color: var(--card-background);
   border: var(--card-border);
