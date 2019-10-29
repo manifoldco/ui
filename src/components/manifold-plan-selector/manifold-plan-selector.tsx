@@ -111,7 +111,7 @@ export class ManifoldPlanSelector {
       variables: {
         productLabel,
       },
-      el: this.el,
+      element: this.el,
     });
 
     if (data && data.product) {
@@ -148,7 +148,7 @@ export class ManifoldPlanSelector {
       variables: {
         resourceLabel,
       },
-      el: this.el,
+      element: this.el,
     });
 
     if (data && data.resource) {

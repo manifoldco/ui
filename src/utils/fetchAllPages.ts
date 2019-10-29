@@ -18,7 +18,7 @@ interface Args<Edge, T> {
   variables?: { [key: string]: string | number | undefined };
   getConnection: (q: T) => Connection<Edge> | null | undefined;
   graphqlFetch?: GraphqlFetch;
-  el?: HTMLElement;
+  element?: HTMLElement;
 }
 
 export class MissingPageInfo extends Error {
@@ -59,12 +59,12 @@ export default async function fetchAllPages<Edge, T = Query>({
   variables,
   getConnection,
   graphqlFetch = connection.graphqlFetch,
-  el,
+  element,
 }: Args<Edge, T>): Promise<Edge[]> {
   const page = await graphqlFetch<T>({
     query,
     variables: { ...nextPage, ...variables },
-    el,
+    element,
   });
 
   if (page.errors || !page.data) {
@@ -91,7 +91,7 @@ export default async function fetchAllPages<Edge, T = Query>({
       variables,
       getConnection,
       graphqlFetch,
-      el,
+      element,
     });
     return edges.concat(remaining);
   }
