@@ -13,7 +13,7 @@ interface Options {
 
 function gql(opts: Options = {}) {
   if (!opts.include) {
-    opts.include = '**/*.graphql';
+    opts.include = '**/*.graphql'; // eslint-disable-line no-param-reassign
   }
 
   const filter = createFilter(opts.include, opts.exclude);
