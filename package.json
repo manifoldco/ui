@@ -1,6 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
+  "version": "0.6.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -23,10 +24,10 @@
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
-    "build": "NPM_PACKAGE_VERSION=$(git describe --abbrev=0 --tags | sed 's/^v//') stencil build",
+    "build": "npm run update-version && stencil build",
     "build:docs": "npm run prepare:docs && cd docs && npm i && npm run build",
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
-    "build:watch": "NPM_PACKAGE_VERSION=$(git describe --abbrev=0 --tags | sed 's/^v//') stencil build --watch",
+    "build:watch": "npm run update-version && stencil build --watch",
     "bundlesize": "npm run build && npx bundlesize",
     "copy-changelog": "node scripts/copy-changelog",
     "dev": "npm run build:watch & rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook",
@@ -53,7 +54,8 @@
     "test:spec": "stencil test --spec",
     "test:coverage": "stencil test --spec --e2e --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
-    "test:watch": "stencil test --spec --e2e --watchAll"
+    "test:watch": "stencil test --spec --e2e --watchAll",
+    "update-version": "npm --no-git-tag-version version from-git > /dev/null || true"
   },
   "bundlesize": [
     {

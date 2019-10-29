@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { Config } from '@stencil/core';
 import { postcss } from '@stencil/postcss';
 import postCSSPresetEnv from 'postcss-preset-env';
@@ -5,6 +6,8 @@ import replace from 'rollup-plugin-replace';
 import { createFilter } from 'rollup-pluginutils';
 
 // https://stenciljs.com/docs/config
+
+const pkgManifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 
 interface Options {
   include?: string;
@@ -54,7 +57,7 @@ export const config: Config = {
       delimiters: ['<@', '@>'],
       values: {
         DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN,
-        NPM_PACKAGE_VERSION: process.env.NPM_PACKAGE_VERSION,
+        NPM_PACKAGE_VERSION: pkgManifest.version,
       },
     }),
   ],
