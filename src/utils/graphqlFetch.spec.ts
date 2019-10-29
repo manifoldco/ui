@@ -1,5 +1,6 @@
-import { EventEmitter } from '@stencil/core';
 import fetchMock from 'fetch-mock';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const errorReporter = jest.fn();
 jest.mock('./errorReport', () => ({ report: errorReporter }));
@@ -79,10 +80,9 @@ describe('graphqlFetch', () => {
       const fetcher = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
       await fetcher({ query: '', element });
 
-      const [_, req] = fetchMock.calls()[0];
+      const [, req] = fetchMock.calls()[0];
       const headers = (req && req.headers) as any;
       expect(headers['x-manifold-component']).toBe(tagName.toUpperCase()); // expect our component name to be there
-      expect(headers['x-manifold-ui-version']).toBe('<@NPM_PACKAGE_VERSION@>'); // expect this to be Rollup-replaceable semver
     });
   });
 
@@ -365,7 +365,6 @@ describe('graphqlFetch', () => {
           detail: expect.objectContaining({
             componentName: undefined,
             errors: [{ locations: [], message: 'no results' }],
-            npmVersion: '<@NPM_PACKAGE_VERSION@>',
             request: { query: '' },
             type: 'manifold-graphql-fetch-duration',
           }),
@@ -398,7 +397,6 @@ describe('graphqlFetch', () => {
           detail: expect.objectContaining({
             componentName: 'MY-ELEMENT',
             errors: [{ locations: [], message: 'no results' }],
-            npmVersion: '<@NPM_PACKAGE_VERSION@>',
             request: { query: '' },
             type: 'manifold-graphql-fetch-duration',
           }),

@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { Config } from '@stencil/core';
 import { postcss } from '@stencil/postcss';
 import postCSSPresetEnv from 'postcss-preset-env';
@@ -7,8 +6,6 @@ import { createFilter } from 'rollup-pluginutils';
 
 // https://stenciljs.com/docs/config
 
-const pkgManifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-
 interface Options {
   include?: string;
   exclude?: string;
@@ -16,14 +13,13 @@ interface Options {
 
 function gql(opts: Options = {}) {
   if (!opts.include) {
-    opts.include = '**/*.graphql'; // eslint-disable-line no-param-reassign
+    opts.include = '**/*.graphql';
   }
 
   const filter = createFilter(opts.include, opts.exclude);
 
   return {
     name: 'gql',
-    // eslint-disable-next-line consistent-return
     transform(code, id) {
       if (filter(id)) {
         return {
@@ -57,7 +53,6 @@ export const config: Config = {
       delimiters: ['<@', '@>'],
       values: {
         DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN,
-        NPM_PACKAGE_VERSION: pkgManifest.version,
       },
     }),
   ],

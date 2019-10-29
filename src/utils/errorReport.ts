@@ -3,7 +3,6 @@ export function report<Detail>(detail: Detail, element?: HTMLElement) {
     ? {
         ...detail,
         componentName: element.tagName,
-        npmVersion: '<@NPM_PACKAGE_VERSION@>',
       }
     : detail;
   console.error(d); // report error (Rollbar, Datadog, etc.)
