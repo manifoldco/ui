@@ -1,4 +1,4 @@
-import { h, Component, Prop, State } from '@stencil/core';
+import { h, Component, Element, Prop, State } from '@stencil/core';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -81,6 +81,7 @@ const TEMPORARY_FREE_PRODUCTS = [
 
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
+  @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Comma-separated list of featured products (labels) */
@@ -124,7 +125,7 @@ export class ManifoldMarketplace {
       nextPage: { first: 50, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
-      component: 'manifold-marketplace',
+      el: this.el,
     });
     this.isLoading = false;
   }

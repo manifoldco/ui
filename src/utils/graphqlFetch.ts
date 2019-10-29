@@ -1,4 +1,3 @@
-import { EventEmitter } from '@stencil/core';
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -16,14 +15,12 @@ type GraphqlArgs =
   | {
       mutation: string;
       variables?: { [key: string]: string | number | undefined };
-      emitter?: EventEmitter;
-      component?: string;
+      el?: HTMLElement;
     }
   | {
       query: string;
       variables?: { [key: string]: string | number | undefined };
-      emitter?: EventEmitter;
-      component?: string;
+      el?: HTMLElement;
     }; // require query or mutation, but not both
 
 export interface GraphqlError {
@@ -64,7 +61,7 @@ export function createGraphqlFetch({
     await onReady();
 
     const rttStart = performance.now();
-    const { emitter, ...request } = args;
+    const { el, ...request } = args;
 
     const token = getAuthToken();
     // yes sometimes the auth token can be 'undefined'
@@ -78,7 +75,7 @@ export function createGraphqlFetch({
         'Content-type': 'application/json',
         ...auth,
         'x-manifold-ui-version': '<@NPM_PACKAGE_VERSION@>',
-        ...(args.component ? { 'x-manifold-component': args.component } : {}),
+        ...(el ? { 'x-manifold-component': el.tagName } : {}),
       },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
@@ -109,16 +106,12 @@ export function createGraphqlFetch({
       errors: body.errors,
     };
 
-    if (emitter) {
-      emitter.emit(detail);
-    } else {
-      document.dispatchEvent(
-        new CustomEvent('manifold-graphql-fetch-duration', {
-          bubbles: true,
-          detail,
-        })
-      );
-    }
+    (el || document).dispatchEvent(
+      new CustomEvent('manifold-graphql-fetch-duration', {
+        bubbles: true,
+        detail,
+      })
+    );
 
     if (body.errors) {
       report(body.errors);
