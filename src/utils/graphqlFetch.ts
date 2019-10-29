@@ -77,7 +77,7 @@ export function createGraphqlFetch({
         Connection: 'keep-alive',
         'Content-type': 'application/json',
         ...auth,
-        'x-manifold-version': '<@NPM_PACKAGE_VERSION@>',
+        'x-manifold-ui-version': '<@NPM_PACKAGE_VERSION@>',
         ...(args.component ? { 'x-manifold-component': args.component } : {}),
       },
       body: JSON.stringify(request),
