@@ -17,11 +17,13 @@ type GraphqlArgs =
       mutation: string;
       variables?: { [key: string]: string | number | undefined };
       emitter?: EventEmitter;
+      component?: string;
     }
   | {
       query: string;
       variables?: { [key: string]: string | number | undefined };
       emitter?: EventEmitter;
+      component?: string;
     }; // require query or mutation, but not both
 
 export interface GraphqlError {
@@ -75,6 +77,8 @@ export function createGraphqlFetch({
         Connection: 'keep-alive',
         'Content-type': 'application/json',
         ...auth,
+        'x-manifold-version': '<@NPM_PACKAGE_VERSION@>',
+        ...(args.component ? { 'x-manifold-component': args.component } : {}),
       },
       body: JSON.stringify(request),
     }).catch((e: Response) => {

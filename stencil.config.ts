@@ -20,6 +20,7 @@ function gql(opts: Options = {}) {
 
   return {
     name: 'gql',
+    // eslint-disable-next-line consistent-return
     transform(code, id) {
       if (filter(id)) {
         return {
@@ -53,6 +54,7 @@ export const config: Config = {
       delimiters: ['<@', '@>'],
       values: {
         DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN,
+        NPM_PACKAGE_VERSION: process.env.NPM_PACKAGE_VERSION,
       },
     }),
   ],
