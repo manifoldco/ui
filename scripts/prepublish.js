@@ -19,7 +19,7 @@ mkdirSync(WD);
 copySync(oldDistDir, newDistDir);
 FILES_TO_COPY.forEach(file => copySync(resolve(__dirname, '..', file), resolve(WD, file)));
 
-// 2. Copy package.json, cleanup
+// 2. Copy package.json, clean up
 const packageJSON = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8'));
 delete packageJSON.scripts; // Don’t need this on npm
 delete packageJSON.files; // Ship all files in pkg/
