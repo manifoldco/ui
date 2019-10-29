@@ -82,7 +82,7 @@ describe('graphqlFetch', () => {
       const [_, req] = fetchMock.calls()[0];
       const headers = (req && req.headers) as any;
       expect(headers['x-manifold-component']).toBe(tagName.toUpperCase()); // expect our component name to be there
-      expect(headers['x-manifold-ui-version']).toBe('<@NPM_PACKAGE_VERSION@>'); // expect this to be Rollup-replacable semver
+      expect(headers['x-manifold-ui-version']).toBe('<@NPM_PACKAGE_VERSION@>'); // expect this to be Rollup-replaceable semver
     });
   });
 
