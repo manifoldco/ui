@@ -76,6 +76,7 @@ export function createGraphqlFetch({
         'Content-type': 'application/json',
         ...auth,
         ...(element ? { 'x-manifold-component': element.tagName } : {}),
+        'x-manifold-ui-version': '<@NPM_PACKAGE_VERSION@>',
       },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
