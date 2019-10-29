@@ -125,6 +125,7 @@ export class ManifoldMarketplace {
       nextPage: { first: 50, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
+      element: this.el,
     });
     this.isLoading = false;
   }
