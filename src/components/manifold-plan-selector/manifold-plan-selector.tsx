@@ -1,4 +1,4 @@
-import { h, Component, State, Prop, Watch } from '@stencil/core';
+import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
@@ -59,6 +59,7 @@ const resourceQuery = gql`
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
+  @Element() el: HTMLElement;
   /** Show only free plans? */
   @Prop() freePlans?: boolean;
   /** _(hidden)_ Passed by `<manifold-connection>` */
@@ -110,6 +111,7 @@ export class ManifoldPlanSelector {
       variables: {
         productLabel,
       },
+      element: this.el,
     });
 
     if (data && data.product) {
@@ -146,6 +148,7 @@ export class ManifoldPlanSelector {
       variables: {
         resourceLabel,
       },
+      element: this.el,
     });
 
     if (data && data.resource) {

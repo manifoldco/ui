@@ -246,13 +246,13 @@ export type InvoiceEdge = {
   node?: Maybe<Invoice>,
 };
 
-/** InvoicePreviewOrderBy defines how an invoice connection is to be ordered. */
+/** InvoiceOrderBy defines how an invoice connection is to be ordered. */
 export type InvoiceOrderBy = {
   field: InvoiceOrderByField,
   direction: OrderByDirection,
 };
 
-/** InvoicePreviewOrderByField is the field by which an Invoice list will be ordered. */
+/** InvoiceOrderByField is the field by which an Invoice list will be ordered. */
 export enum InvoiceOrderByField {
   End = 'END'
 }
