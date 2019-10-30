@@ -8,9 +8,8 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  Plan,
-  PlanEdge,
   PlanMeteredFeatureEdge,
+  PlansQuery,
   Product,
   ProductEdge,
   Resource,
@@ -43,8 +42,8 @@ import {
 export namespace Components {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: PlanEdge[];
-    'product'?: Product;
+    'plans'?: Plans;
+    'product'?: PlansQuery['product'];
     'regions'?: string[];
     'selectedResource'?: Resource;
   }
@@ -394,7 +393,7 @@ export namespace Components {
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    'plan'?: Plan;
+    'plan'?: PlansQuery['product']['paidPlans']['edges'][0]['node'];
     /**
     * _(hidden)_
     */
@@ -413,7 +412,7 @@ export namespace Components {
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
-    'plans'?: PlanEdge[];
+    'plans'?: PlansQuery['product']['paidPlans']['edges'];
     'selectPlan': (planId: string) => void;
     'selectedPlanId'?: string;
   }
@@ -1035,8 +1034,8 @@ declare global {
 declare namespace LocalJSX {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: PlanEdge[];
-    'product'?: Product;
+    'plans'?: Plans;
+    'product'?: PlansQuery['product'];
     'regions'?: string[];
     'selectedResource'?: Resource;
   }
@@ -1413,7 +1412,7 @@ declare namespace LocalJSX {
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    'plan'?: Plan;
+    'plan'?: PlansQuery['product']['paidPlans']['edges'][0]['node'];
     /**
     * _(hidden)_
     */
@@ -1434,7 +1433,7 @@ declare namespace LocalJSX {
     'scrollLocked'?: boolean;
   }
   interface ManifoldPlanMenu {
-    'plans'?: PlanEdge[];
+    'plans'?: PlansQuery['product']['paidPlans']['edges'];
     'selectPlan'?: (planId: string) => void;
     'selectedPlanId'?: string;
   }

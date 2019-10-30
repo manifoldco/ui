@@ -1677,6 +1677,359 @@ export type ProductsQuery = (
   )> }
 );
 
+export type PlansQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type PlansQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'displayName' | 'id' | 'label' | 'logoUrl'>
+    & { freePlans: Maybe<(
+      { __typename?: 'PlanConnection' }
+      & { edges: Array<(
+        { __typename?: 'PlanEdge' }
+        & { node: (
+          { __typename?: 'Plan' }
+          & Pick<Plan, 'cost' | 'displayName' | 'free' | 'id' | 'label'>
+          & { configurableFeatures: Maybe<(
+            { __typename?: 'PlanConfigurableFeatureConnection' }
+            & { edges: Array<(
+              { __typename?: 'PlanConfigurableFeatureEdge' }
+              & { node: (
+                { __typename?: 'PlanConfigurableFeature' }
+                & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+                & { options: Maybe<Array<(
+                  { __typename?: 'PlanFixedFeature' }
+                  & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+                )>>, numericDetails: Maybe<(
+                  { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+                  & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+                  & { costTiers: Maybe<Array<(
+                    { __typename?: 'PlanFeatureCostTier' }
+                    & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                  )>> }
+                )> }
+              ) }
+            )> }
+          )>, fixedFeatures: Maybe<(
+            { __typename?: 'PlanFixedFeatureConnection' }
+            & { edges: Array<(
+              { __typename?: 'PlanFixedFeatureEdge' }
+              & { node: (
+                { __typename?: 'PlanFixedFeature' }
+                & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+              ) }
+            )> }
+          )>, meteredFeatures: Maybe<(
+            { __typename?: 'PlanMeteredFeatureConnection' }
+            & { edges: Array<(
+              { __typename?: 'PlanMeteredFeatureEdge' }
+              & { node: (
+                { __typename?: 'PlanMeteredFeature' }
+                & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+                & { numericDetails: (
+                  { __typename?: 'PlanMeteredFeatureNumericDetails' }
+                  & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+                  & { costTiers: Maybe<Array<(
+                    { __typename?: 'PlanFeatureCostTier' }
+                    & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                  )>> }
+                ) }
+              ) }
+            )> }
+          )>, regions: Maybe<(
+            { __typename?: 'RegionConnection' }
+            & { edges: Array<(
+              { __typename?: 'RegionEdge' }
+              & { node: (
+                { __typename?: 'Region' }
+                & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+              ) }
+            )> }
+          )> }
+        ) }
+      )> }
+    )>, paidPlans: Maybe<(
+      { __typename?: 'PlanConnection' }
+      & { edges: Array<(
+        { __typename?: 'PlanEdge' }
+        & { node: (
+          { __typename?: 'Plan' }
+          & Pick<Plan, 'cost' | 'displayName' | 'free' | 'id' | 'label'>
+          & { configurableFeatures: Maybe<(
+            { __typename?: 'PlanConfigurableFeatureConnection' }
+            & { edges: Array<(
+              { __typename?: 'PlanConfigurableFeatureEdge' }
+              & { node: (
+                { __typename?: 'PlanConfigurableFeature' }
+                & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+                & { options: Maybe<Array<(
+                  { __typename?: 'PlanFixedFeature' }
+                  & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+                )>>, numericDetails: Maybe<(
+                  { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+                  & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+                  & { costTiers: Maybe<Array<(
+                    { __typename?: 'PlanFeatureCostTier' }
+                    & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                  )>> }
+                )> }
+              ) }
+            )> }
+          )>, fixedFeatures: Maybe<(
+            { __typename?: 'PlanFixedFeatureConnection' }
+            & { edges: Array<(
+              { __typename?: 'PlanFixedFeatureEdge' }
+              & { node: (
+                { __typename?: 'PlanFixedFeature' }
+                & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+              ) }
+            )> }
+          )>, meteredFeatures: Maybe<(
+            { __typename?: 'PlanMeteredFeatureConnection' }
+            & { edges: Array<(
+              { __typename?: 'PlanMeteredFeatureEdge' }
+              & { node: (
+                { __typename?: 'PlanMeteredFeature' }
+                & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+                & { numericDetails: (
+                  { __typename?: 'PlanMeteredFeatureNumericDetails' }
+                  & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+                  & { costTiers: Maybe<Array<(
+                    { __typename?: 'PlanFeatureCostTier' }
+                    & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                  )>> }
+                ) }
+              ) }
+            )> }
+          )>, regions: Maybe<(
+            { __typename?: 'RegionConnection' }
+            & { edges: Array<(
+              { __typename?: 'RegionEdge' }
+              & { node: (
+                { __typename?: 'Region' }
+                & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+              ) }
+            )> }
+          )> }
+        ) }
+      )> }
+    )> }
+  )> }
+);
+
+export type ResourcePlansQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourcePlansQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { plan: Maybe<(
+      { __typename?: 'Plan' }
+      & Pick<Plan, 'cost' | 'displayName' | 'free' | 'id' | 'label'>
+      & { configurableFeatures: Maybe<(
+        { __typename?: 'PlanConfigurableFeatureConnection' }
+        & { edges: Array<(
+          { __typename?: 'PlanConfigurableFeatureEdge' }
+          & { node: (
+            { __typename?: 'PlanConfigurableFeature' }
+            & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+            & { options: Maybe<Array<(
+              { __typename?: 'PlanFixedFeature' }
+              & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+            )>>, numericDetails: Maybe<(
+              { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+              & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+              & { costTiers: Maybe<Array<(
+                { __typename?: 'PlanFeatureCostTier' }
+                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+              )>> }
+            )> }
+          ) }
+        )> }
+      )>, fixedFeatures: Maybe<(
+        { __typename?: 'PlanFixedFeatureConnection' }
+        & { edges: Array<(
+          { __typename?: 'PlanFixedFeatureEdge' }
+          & { node: (
+            { __typename?: 'PlanFixedFeature' }
+            & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+          ) }
+        )> }
+      )>, meteredFeatures: Maybe<(
+        { __typename?: 'PlanMeteredFeatureConnection' }
+        & { edges: Array<(
+          { __typename?: 'PlanMeteredFeatureEdge' }
+          & { node: (
+            { __typename?: 'PlanMeteredFeature' }
+            & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+            & { numericDetails: (
+              { __typename?: 'PlanMeteredFeatureNumericDetails' }
+              & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+              & { costTiers: Maybe<Array<(
+                { __typename?: 'PlanFeatureCostTier' }
+                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+              )>> }
+            ) }
+          ) }
+        )> }
+      )>, product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'displayName' | 'id' | 'label' | 'logoUrl'>
+        & { freePlans: Maybe<(
+          { __typename?: 'PlanConnection' }
+          & { edges: Array<(
+            { __typename?: 'PlanEdge' }
+            & { node: (
+              { __typename?: 'Plan' }
+              & Pick<Plan, 'cost' | 'displayName' | 'free' | 'id' | 'label'>
+              & { configurableFeatures: Maybe<(
+                { __typename?: 'PlanConfigurableFeatureConnection' }
+                & { edges: Array<(
+                  { __typename?: 'PlanConfigurableFeatureEdge' }
+                  & { node: (
+                    { __typename?: 'PlanConfigurableFeature' }
+                    & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+                    & { options: Maybe<Array<(
+                      { __typename?: 'PlanFixedFeature' }
+                      & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+                    )>>, numericDetails: Maybe<(
+                      { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+                      & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+                      & { costTiers: Maybe<Array<(
+                        { __typename?: 'PlanFeatureCostTier' }
+                        & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                      )>> }
+                    )> }
+                  ) }
+                )> }
+              )>, fixedFeatures: Maybe<(
+                { __typename?: 'PlanFixedFeatureConnection' }
+                & { edges: Array<(
+                  { __typename?: 'PlanFixedFeatureEdge' }
+                  & { node: (
+                    { __typename?: 'PlanFixedFeature' }
+                    & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+                  ) }
+                )> }
+              )>, meteredFeatures: Maybe<(
+                { __typename?: 'PlanMeteredFeatureConnection' }
+                & { edges: Array<(
+                  { __typename?: 'PlanMeteredFeatureEdge' }
+                  & { node: (
+                    { __typename?: 'PlanMeteredFeature' }
+                    & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+                    & { numericDetails: (
+                      { __typename?: 'PlanMeteredFeatureNumericDetails' }
+                      & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+                      & { costTiers: Maybe<Array<(
+                        { __typename?: 'PlanFeatureCostTier' }
+                        & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                      )>> }
+                    ) }
+                  ) }
+                )> }
+              )>, regions: Maybe<(
+                { __typename?: 'RegionConnection' }
+                & { edges: Array<(
+                  { __typename?: 'RegionEdge' }
+                  & { node: (
+                    { __typename?: 'Region' }
+                    & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+                  ) }
+                )> }
+              )> }
+            ) }
+          )> }
+        )>, paidPlans: Maybe<(
+          { __typename?: 'PlanConnection' }
+          & { edges: Array<(
+            { __typename?: 'PlanEdge' }
+            & { node: (
+              { __typename?: 'Plan' }
+              & Pick<Plan, 'cost' | 'displayName' | 'free' | 'id' | 'label'>
+              & { configurableFeatures: Maybe<(
+                { __typename?: 'PlanConfigurableFeatureConnection' }
+                & { edges: Array<(
+                  { __typename?: 'PlanConfigurableFeatureEdge' }
+                  & { node: (
+                    { __typename?: 'PlanConfigurableFeature' }
+                    & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+                    & { options: Maybe<Array<(
+                      { __typename?: 'PlanFixedFeature' }
+                      & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+                    )>>, numericDetails: Maybe<(
+                      { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+                      & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+                      & { costTiers: Maybe<Array<(
+                        { __typename?: 'PlanFeatureCostTier' }
+                        & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                      )>> }
+                    )> }
+                  ) }
+                )> }
+              )>, fixedFeatures: Maybe<(
+                { __typename?: 'PlanFixedFeatureConnection' }
+                & { edges: Array<(
+                  { __typename?: 'PlanFixedFeatureEdge' }
+                  & { node: (
+                    { __typename?: 'PlanFixedFeature' }
+                    & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+                  ) }
+                )> }
+              )>, meteredFeatures: Maybe<(
+                { __typename?: 'PlanMeteredFeatureConnection' }
+                & { edges: Array<(
+                  { __typename?: 'PlanMeteredFeatureEdge' }
+                  & { node: (
+                    { __typename?: 'PlanMeteredFeature' }
+                    & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+                    & { numericDetails: (
+                      { __typename?: 'PlanMeteredFeatureNumericDetails' }
+                      & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+                      & { costTiers: Maybe<Array<(
+                        { __typename?: 'PlanFeatureCostTier' }
+                        & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+                      )>> }
+                    ) }
+                  ) }
+                )> }
+              )>, regions: Maybe<(
+                { __typename?: 'RegionConnection' }
+                & { edges: Array<(
+                  { __typename?: 'RegionEdge' }
+                  & { node: (
+                    { __typename?: 'Region' }
+                    & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+                  ) }
+                )> }
+              )> }
+            ) }
+          )> }
+        )> }
+      )>, regions: Maybe<(
+        { __typename?: 'RegionConnection' }
+        & { edges: Array<(
+          { __typename?: 'RegionEdge' }
+          & { node: (
+            { __typename?: 'Region' }
+            & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+          ) }
+        )> }
+      )> }
+    )>, region: Maybe<(
+      { __typename?: 'Region' }
+      & Pick<Region, 'dataCenter' | 'displayName' | 'id' | 'platform'>
+    )> }
+  )> }
+);
+
 export type Resources_With_OwnerQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String'],

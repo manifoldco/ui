@@ -1,7 +1,7 @@
 import { h, Prop, Component } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 
-import { PlanEdge } from '../../types/graphql';
+import { PlansQuery } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -11,7 +11,7 @@ import loadMark from '../../utils/loadMark';
   shadow: true,
 })
 export class ManifoldPlanMenu {
-  @Prop() plans?: PlanEdge[];
+  @Prop() plans?: PlansQuery['product']['paidPlans']['edges'];
   @Prop() selectedPlanId?: string;
   @Prop() selectPlan: (planId: string) => void = () => null;
 

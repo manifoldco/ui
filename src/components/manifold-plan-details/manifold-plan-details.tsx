@@ -3,21 +3,22 @@ import { check } from '@manifoldco/icons';
 
 import { Option } from '../../types/Select';
 import { Gateway } from '../../types/gateway';
-import { Product, Plan, Region, RegionEdge } from '../../types/graphql';
+import { PlansQuery } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { configurableFeatureDefaults } from '../../utils/plan';
 import MeteredFeature from './components/MeteredFeature';
 import ConfigurableFeature from './components/ConfigurableFeature';
 
-interface EventDetail {
-  planId: string;
-  planLabel: string;
-  planName: string;
-  productId?: string;
-  productLabel: string | undefined;
+type Product = PlansQuery['product'];
+type Plan = Product['paidPlans']['edges'][0]['node'];
+type Regions = Plan['regions']['edges'];
+
+interface NotifyOptions {
+  product?: Product;
+  plan?: Plan;
   regionId?: string;
-  regionName?: string;
+  type?: 'load' | 'change';
 }
 
 @Component({
@@ -38,23 +39,12 @@ export class ManifoldPlanDetails {
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
   @Event({ eventName: 'manifold-planSelector-load', bubbles: true }) planLoad: EventEmitter;
   @Watch('plan') planChange(newPlan: Plan, oldPlan: Plan | undefined) {
-    const defaultRegion = this.getDefaultRegion(newPlan, this.regionId, this.regions);
-    const detail: EventDetail = {
-      planId: newPlan.id,
-      planLabel: newPlan.label,
-      planName: newPlan.displayName,
-      productId: this.product && this.product.id,
-      productLabel: this.product && this.product.label,
-      regionId: defaultRegion && defaultRegion.id,
-      regionName: defaultRegion && defaultRegion.displayName,
-    };
-
     if (!oldPlan) {
       // load event if first time
-      this.planLoad.emit(detail);
+      this.emitEvent({ plan: newPlan, type: 'load' });
     } else {
       // change event if updating
-      this.planUpdate.emit(detail);
+      this.emitEvent({ plan: newPlan });
     }
 
     // update features
@@ -71,20 +61,10 @@ export class ManifoldPlanDetails {
       this.regionId = this.resourceRegion;
     }
 
+    // if component loads before plan, this will fire in @Watch()
+    this.emitEvent({ type: 'load' });
+
     if (this.plan) {
-      // load event
-      const defaultRegion = this.getDefaultRegion(this.plan, this.regionId, this.regions);
-      const detail: EventDetail = {
-        planId: this.plan.id,
-        planLabel: this.plan.label,
-        planName: this.plan.displayName,
-        productId: this.product && this.product.id,
-        productLabel: this.product && this.product.label,
-        regionId: defaultRegion && defaultRegion.id,
-        regionName: defaultRegion && defaultRegion.displayName,
-      };
-      this.planLoad.emit(detail);
-      // reset features
       this.resetFeatures(this.plan);
     }
   }
@@ -92,19 +72,7 @@ export class ManifoldPlanDetails {
   handleChangeValue = ({ detail: { name, value } }: CustomEvent) => {
     const features = { ...this.features, [name]: value };
     this.features = features; // User-selected features
-    if (this.plan && this.product) {
-      const defaultRegion = this.getDefaultRegion(this.plan, this.regionId, this.regions);
-      const detail: EventDetail = {
-        planId: this.plan.id,
-        planLabel: this.plan.label,
-        planName: this.plan.displayName,
-        productId: this.product.id,
-        productLabel: this.product.label,
-        regionId: defaultRegion && defaultRegion.id,
-        regionName: defaultRegion && defaultRegion.displayName,
-      };
-      this.planUpdate.emit(detail);
-    }
+    this.emitEvent({});
   };
 
   handleChangeRegion = (e: CustomEvent) => {
@@ -112,28 +80,14 @@ export class ManifoldPlanDetails {
       return;
     }
     this.regionId = e.detail.value;
-    if (this.plan && this.product) {
-      const defaultRegion = this.getDefaultRegion(this.plan, e.detail.value, this.regions);
-      const detail: EventDetail = {
-        planId: this.plan.id,
-        planName: this.plan.displayName,
-        planLabel: this.plan.label,
-        productId: this.product.id,
-        productLabel: this.product.label,
-        regionId: e.detail.value,
-        regionName: defaultRegion && defaultRegion.displayName,
-      };
-      this.planUpdate.emit(detail);
-    }
+    this.emitEvent({ regionId: e.detail.value });
   };
 
-  filterRegions(regions: RegionEdge[], allowedRegions: string[] | undefined = this.regions) {
+  filterRegions(regions: Regions, allowedRegions: string[] | undefined = this.regions) {
     if (Array.isArray(allowedRegions) && allowedRegions.length) {
-      return regions
-        .filter(({ node: { id } }) => allowedRegions.includes(id))
-        .map(({ node }) => node);
+      return regions.filter(({ node: { id } }) => allowedRegions.includes(id));
     }
-    return regions.map(({ node }) => node);
+    return regions;
   }
 
   fixedDisplayValue(displayValue: string) {
@@ -163,7 +117,7 @@ export class ManifoldPlanDetails {
     const regions = this.filterRegions(plan.regions.edges, allowedRegions);
     const [firstRegion] = regions;
     if (regionId) {
-      const region = regions.find(({ id }) => id === regionId);
+      const region = regions.find(({ node: { id } }) => id === regionId);
       return region || firstRegion;
     }
     return firstRegion;
@@ -174,13 +128,13 @@ export class ManifoldPlanDetails {
       return undefined;
     }
 
-    let regions: Region[] = [];
+    let regions: Regions = [];
 
     const resourceRegion = this.plan.regions.edges.find(
       ({ node }) => node.id === this.resourceRegion
     );
     if (resourceRegion) {
-      regions = [resourceRegion.node];
+      regions = [resourceRegion];
     } else {
       regions = this.filterRegions(this.plan.regions.edges);
     }
@@ -190,12 +144,39 @@ export class ManifoldPlanDetails {
       return undefined;
     }
 
-    const options: Option[] = regions.map(({ id, displayName }) => ({
+    const options: Option[] = regions.map(({ node: { id, displayName } }) => ({
       label: displayName,
       value: id,
     }));
 
     return options;
+  }
+
+  emitEvent({
+    product = this.product,
+    plan = this.plan,
+    regionId = this.regionId,
+    type = 'change',
+  }: NotifyOptions) {
+    if (!product || !plan) {
+      return;
+    }
+
+    const defaultRegion = this.getDefaultRegion(plan, regionId, this.regions);
+    const detail = {
+      planId: plan.id,
+      planName: plan.displayName,
+      planLabel: plan.label,
+      productId: product.id,
+      productLabel: product.label,
+      regionId,
+      regionName: defaultRegion && defaultRegion.node.displayName,
+    };
+    if (type === 'load') {
+      this.planLoad.emit(detail);
+    } else {
+      this.planUpdate.emit(detail);
+    }
   }
 
   resetFeatures(plan: Plan) {

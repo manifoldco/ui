@@ -4,8 +4,8 @@ import { pluralize } from './string';
 import { RestFetch } from './restFetch';
 import {
   PlanMeteredFeatureNumericDetails,
-  PlanConfigurableFeatureEdge,
   PlanFeatureType,
+  ResourcePlansQuery,
 } from '../types/graphql';
 
 interface PlanCostOptions {
@@ -154,7 +154,8 @@ export function planCost(restFetch: RestFetch, { planID, features, init }: PlanC
 /**
  * Get default feature map for configurableFeatures
  */
-export function configurableFeatureDefaults(configurableFeatures: PlanConfigurableFeatureEdge[]) {
+type ConfigurableFeatures = ResourcePlansQuery['resource']['plan']['product']['paidPlans']['edges'][0]['node']['configurableFeatures']['edges'];
+export function configurableFeatureDefaults(configurableFeatures: ConfigurableFeatures) {
   const defaultFeatures: Gateway.FeatureMap = {};
 
   configurableFeatures.forEach(({ node: { label, numericDetails, options, type } }) => {
