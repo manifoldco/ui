@@ -75,6 +75,7 @@ export class ManifoldDataDeprovisionButton {
       variables: {
         resourceId: this.resourceId,
       },
+      element: this.el,
     });
 
     if (data && data.deleteResource) {
@@ -109,6 +110,7 @@ export class ManifoldDataDeprovisionButton {
       variables: {
         resourceLabel,
       },
+      element: this.el,
     });
 
     if (data && data.resource) {

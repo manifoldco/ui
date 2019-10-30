@@ -150,6 +150,7 @@ export class ManifoldDataProvisionButton {
         resourceLabel: this.resourceLabel,
         ownerId: this.ownerId,
       },
+      element: this.el,
     });
     this.provisioning = false;
 
@@ -183,6 +184,7 @@ export class ManifoldDataProvisionButton {
       variables: {
         productLabel,
       },
+      element: this.el,
     });
 
     if (data && data.product) {
@@ -200,6 +202,7 @@ export class ManifoldDataProvisionButton {
       variables: {
         planId,
       },
+      element: this.el,
     });
 
     if (data && data.plan && data.plan.regions) {

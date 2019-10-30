@@ -69,6 +69,7 @@ export class ManifoldCopyCredentials {
     const { data, errors } = await this.graphqlFetch<ResourceWithCredentialsQuery>({
       query,
       variables: { resourceLabel: this.resourceLabel },
+      element: this.el,
     });
 
     // if errors, report them but keep going

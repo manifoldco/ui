@@ -59,6 +59,7 @@ export class ManifoldPlan {
       variables: {
         planId,
       },
+      element: this.el,
     });
 
     if (data && data.plan) {

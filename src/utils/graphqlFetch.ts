@@ -15,12 +15,12 @@ type GraphqlArgs =
   | {
       mutation: string;
       variables?: { [key: string]: string | number | undefined };
-      element?: HTMLElement;
+      element: HTMLElement;
     }
   | {
       query: string;
       variables?: { [key: string]: string | number | undefined };
-      element?: HTMLElement;
+      element: HTMLElement;
     }; // require query or mutation, but not both
 
 export interface GraphqlError {
@@ -33,7 +33,7 @@ export interface GraphqlError {
 }
 
 interface GraphqlFetchEventDetail {
-  componentName?: string;
+  componentName: string;
   duration: number;
   errors?: GraphqlError[];
   npmVersion: string;
@@ -102,7 +102,7 @@ export function createGraphqlFetch({
 
     const fetchDuration = performance.now() - rttStart;
     const detail: GraphqlFetchEventDetail = {
-      componentName: (element && element.tagName) || undefined,
+      componentName: element.tagName,
       duration: fetchDuration,
       errors: body.errors,
       npmVersion: '<@NPM_PACKAGE_VERSION@>',

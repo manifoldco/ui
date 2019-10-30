@@ -77,6 +77,7 @@ export class ManifoldDataHasResource {
     const { data } = await this.graphqlFetch({
       query: label ? singleResource : allResources,
       variables: { resourceLabel: label },
+      element: this.el,
     });
 
     let hasAnyResources = false;

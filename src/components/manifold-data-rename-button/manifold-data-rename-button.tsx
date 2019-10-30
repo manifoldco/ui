@@ -126,6 +126,7 @@ export class ManifoldDataRenameButton {
         resourceId: this.resourceId,
         newLabel: this.newLabel,
       },
+      element: this.el,
     });
 
     // error event
@@ -155,6 +156,7 @@ export class ManifoldDataRenameButton {
     const { data, errors } = await this.graphqlFetch({
       query: queryResourceId,
       variables: { resourceLabel },
+      element: this.el,
     });
 
     if (errors) {

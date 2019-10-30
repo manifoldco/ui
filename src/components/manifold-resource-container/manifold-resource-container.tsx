@@ -163,7 +163,11 @@ export class ManifoldResourceContainer {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({ query, variables: { resourceLabel } });
+    const { data, errors } = await this.graphqlFetch({
+      query,
+      variables: { resourceLabel },
+      element: this.el,
+    });
 
     if (data && data.resource) {
       this.gqlData = data.resource;
