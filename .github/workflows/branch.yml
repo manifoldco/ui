@@ -3,30 +3,66 @@ name: branch
 on: [pull_request]
 
 jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - uses: actions/upload-artifact@v1
+        with:
+          name: dependencies
+          path: node_modules
+  build:
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - uses: actions/download-artifact@v1
+        with:
+          name: dependencies
+      - run: npm run build
+      - uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: dist
   bundlesize:
+    needs: [install, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - run: npm install
-      - run: npm run bundlesize
+      - uses: actions/download-artifact@v1
+        with:
+          name: dependencies
+      - uses: actions/download-artifact@v1
+        with:
+          name: build
+      - run: npx bundlesize
   test:
+    needs: [install]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - run: npm install
+      - uses: actions/download-artifact@v1
+        with:
+          name: dependencies
       - run: npm run test:coverage
       - run: npx codecov
   lint:
+    needs: [install]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - run: npm install
+      - uses: actions/download-artifact@v1
+        with:
+          name: dependencies
       - run: npm run lint
   vrt:
-    needs: [lint, test, bundlesize]
+    needs: [install, build, lint, test, bundlesize]
     env:
       PREVIOUS_SHA: ${{ github.event.pull_request.base.sha }}
       CURRENT_SHA: ${{ github.event.pull_request.head.sha }}
@@ -37,7 +73,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
-      - run: npm install
-      - run: npm run build
+      - uses: actions/download-artifact@v1
+        with:
+          name: dependencies
+      - uses: actions/download-artifact@v1
+        with:
+          name: build
       - run: npm run generate:gql
       - run: node_modules/.bin/happo-ci
