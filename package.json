@@ -30,7 +30,7 @@
     "copy-changelog": "node scripts/copy-changelog",
     "dev": "concurrently 'stencil build --watch' 'rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook'",
     "docs": "npm run prepare:docs && cd docs && npm start",
-    "generate:changelog": "npx generate-changelog",
+    "generate:changelog": "npx keep-a-changelog",
     "generate:gql": "graphql-codegen --config codegen.yml",
     "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace && npm run generate:specs:provisioning && npm run generate:specs:connector",
     "generate:specs:catalog": "npx @manifoldco/swagger-to-ts src/spec/catalog/v1.yaml -w 'export namespace Catalog' -o src/types/catalog.ts",
