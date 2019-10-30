@@ -366,7 +366,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Deprecated the `resource-name` attribute in all the resource components for `resource-label` as to
   be more consistent with the other components and our other codebases.
 
-## [0.3.1] - 2019-07-12
+## 0.3.1 - 2019-07-12
 
 ### Added
 
