@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { h, Element, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
@@ -124,6 +124,7 @@ const query = gql`
 
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
+  @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Which resource does this belong to? */
