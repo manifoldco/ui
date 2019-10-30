@@ -1,6 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
+  "version": "0.6.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -23,12 +24,13 @@
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
-    "build": "stencil build",
+    "build": "npm run update-version && stencil build",
     "build:docs": "npm run prepare:docs && cd docs && npm i && npm run build",
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
+    "build:watch": "npm run update-version && stencil build --watch",
     "bundlesize": "npm run build && npx bundlesize",
     "copy-changelog": "node scripts/copy-changelog",
-    "dev": "concurrently 'stencil build --watch' 'rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook'",
+    "dev": "npm run build:watch & rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook",
     "docs": "npm run prepare:docs && cd docs && npm start",
     "generate:gql": "graphql-codegen --config codegen.yml",
     "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace && npm run generate:specs:provisioning && npm run generate:specs:connector",
@@ -52,7 +54,8 @@
     "test:spec": "stencil test --spec",
     "test:coverage": "stencil test --spec --e2e --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
-    "test:watch": "stencil test --spec --e2e --watchAll"
+    "test:watch": "stencil test --spec --e2e --watchAll",
+    "update-version": "npm --no-git-tag-version version from-git > /dev/null || true"
   },
   "bundlesize": [
     {
@@ -95,7 +98,6 @@
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-loader": "^8.0.6",
-    "concurrently": "^5.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.5.0",
