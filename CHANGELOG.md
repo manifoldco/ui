@@ -1,10 +1,3 @@
-#### 2019-10-30
-
-##### Continuous Integration
-
-*  Fix Happo check ([#667](https://github.com/manifoldco/ui/pull/667)) ([856a22c9](https://github.com/manifoldco/ui/commit/856a22c9e55d7f0cef1e0ec88c9288ebba259c08))
-*  Move PR checks from CircleCI to GitHub Actions ([#661](https://github.com/manifoldco/ui/pull/661)) ([23f47deb](https://github.com/manifoldco/ui/commit/23f47deb244f113e415b6340f85cae9983597ea2))
-
 #### 0.6.1 (2019-10-25)
 
 ##### Bug Fixes
