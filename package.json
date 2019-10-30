@@ -28,7 +28,7 @@
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
     "bundlesize": "npm run build && npx bundlesize",
     "copy-changelog": "node scripts/copy-changelog",
-    "dev": "concurrently 'stencil build --watch' 'rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook'",
+    "dev": "concurrently 'stencil build --watch' 'rm -rf dist && wait-on dist/loader/index.cjs.js && npm run storybook'",
     "docs": "npm run prepare:docs && cd docs && npm start",
     "generate:gql": "graphql-codegen --config codegen.yml",
     "generate:specs": "npm run generate:specs:catalog && npm run generate:specs:gateway && npm run generate:specs:marketplace && npm run generate:specs:provisioning && npm run generate:specs:connector",
