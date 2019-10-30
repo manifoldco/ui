@@ -11,17 +11,17 @@ interface CreateGraphqlFetch {
   onReady?: () => Promise<unknown>;
 }
 
-type GraphqlArgs =
+type GraphqlRequest =
   | {
       mutation: string;
       variables?: { [key: string]: string | number | undefined };
-      element?: HTMLElement;
     }
   | {
       query: string;
       variables?: { [key: string]: string | number | undefined };
-      element?: HTMLElement;
     }; // require query or mutation, but not both
+
+type GraphqlArgs = GraphqlRequest & { element: HTMLElement };
 
 export interface GraphqlError {
   message: string;
@@ -33,11 +33,11 @@ export interface GraphqlError {
 }
 
 interface GraphqlFetchEventDetail {
-  componentName?: string;
+  componentName: string;
   duration: number;
   errors?: GraphqlError[];
   npmVersion: string;
-  request: GraphqlArgs;
+  request: GraphqlRequest;
   type: 'manifold-graphql-fetch-duration';
 }
 
@@ -102,7 +102,7 @@ export function createGraphqlFetch({
 
     const fetchDuration = performance.now() - rttStart;
     const detail: GraphqlFetchEventDetail = {
-      componentName: (element && element.tagName) || undefined,
+      componentName: element.tagName,
       duration: fetchDuration,
       errors: body.errors,
       npmVersion: '<@NPM_PACKAGE_VERSION@>',

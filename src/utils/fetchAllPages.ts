@@ -18,7 +18,7 @@ interface Args<Edge, T> {
   variables?: { [key: string]: string | number | undefined };
   getConnection: (q: T) => Connection<Edge> | null | undefined;
   graphqlFetch?: GraphqlFetch;
-  element?: HTMLElement;
+  element: HTMLElement;
 }
 
 export class MissingPageInfo extends Error {

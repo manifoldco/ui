@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Watch } from '@stencil/core';
+import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -18,6 +18,7 @@ const query = gql`
 
 @Component({ tag: 'manifold-data-product-logo' })
 export class ManifoldDataProductLogo {
+  @Element() el: HTMLElement;
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ */
@@ -44,7 +45,7 @@ export class ManifoldDataProductLogo {
 
     this.product = undefined;
     const variables = { productLabel };
-    const { data } = await this.graphqlFetch({ query, variables });
+    const { data } = await this.graphqlFetch({ query, variables, element: this.el });
 
     this.product = (data && data.product) || undefined;
   };

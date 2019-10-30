@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Element, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 
 import { AuthToken } from '../../types/auth';
 import logger from '../../utils/logger';
@@ -10,6 +10,7 @@ export type AuthType = 'oauth' | 'manual';
 
 @Component({ tag: 'manifold-auth-token' })
 export class ManifoldAuthToken {
+  @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() setAuthToken?: (s: string) => void = connection.setAuthToken;
   /** _(hidden)_ */
@@ -59,7 +60,7 @@ export class ManifoldAuthToken {
     const payload = e.detail as AuthToken;
 
     if (payload.error) {
-      report(payload.error);
+      report(payload.error, this.el);
       return;
     }
 

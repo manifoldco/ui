@@ -50,6 +50,7 @@ export class ManifoldDataProductName {
         }
       `,
       variables: { productLabel },
+      element: this.el,
     });
 
     if (data && data.product) {
@@ -79,6 +80,7 @@ export class ManifoldDataProductName {
         }
       `,
       variables: { resourceLabel },
+      element: this.el,
     });
 
     if (data && data.resource && data.resource.plan && data.resource.plan.product) {
