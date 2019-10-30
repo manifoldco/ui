@@ -11,14 +11,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Move checks from CircleCI to GitHub Actions (#661)
 
-## [0.6.1]
+## [0.6.1] - 2019-10-25
 
 ### Changed
 
 - Removed Node version restriction on package (#659)
 - Updated Stencil to v1.7.4 (#652)
 
-## [0.6.0]
+## [0.6.0] - 2019-10-22
 
 ### Added
 
@@ -61,14 +61,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Converted `<manifold-resource-list>` to use GraphQL (#627)
 - Converted `<manifold-data-sso-button>` to use GraphQL (#640)
 
-## [0.5.17]
+## [0.5.17] - 2019-10-02
 
 ### Changed
 
 - Converted `manifold-resource-product` to use the GraphQL data fetched from the
   `manifold-resource-container`. (#566)
 
-## [0.5.16]
+## [0.5.16] - 2019-09-30
 
 ### Added
 
@@ -80,11 +80,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Removed `resource-id` prop from `manifild-resource-card` (#537)
 - Converted `manifold-resource-card` to GraphQL (#537)
 
-## [0.5.15]
+## [0.5.15] - 2019-09-29
 
 - Added `manifold-resource-load` event to `manifold-resource-container` (#556)
 
-## [0.5.14]
+## [0.5.14] - 2019-09-29
 
 ### Added
 
@@ -100,7 +100,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Changed number of skeleton products that load (#551)
 
-## [0.5.13]
+## [0.5.13] - 2019-09-29
 
 ### Fixed
 
@@ -108,7 +108,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed credential error message top margin (#545)
 - Fixed success event after a resource rename to include potentially modified label (#547)
 
-## [0.5.12]
+## [0.5.12] - 2019-09-26
 
 ### Added
 
@@ -125,7 +125,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Fixed loading flicker of resource components while provisioning/deprovisioning. (#539)
 
-## [0.5.11]
+## [0.5.11] - 2019-09-19
 
 ### Added
 
@@ -147,7 +147,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `<manifold-credentials>` now uses GraphQL (#490)
 - `<manifold-marketplace>` fetches products in one request (#522)
 
-## [0.5.10]
+## [0.5.10] - 2019-09-09
 
 ### Added
 
@@ -162,7 +162,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Clarified documentation for multiple components. (#481)
 
-## [0.5.9]
+## [0.5.9] - 2019-09-05
 
 ### Added
 
@@ -184,7 +184,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed `manifold-data-product-name` to use GraphQL. (#463)
 - Changed `manifold-data-resource-list` to use GraphQL. (#474)
 
-## [0.5.8]
+## [0.5.8] - 2019-08-26
 
 ### Fixed
 
@@ -198,7 +198,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Enforce standard height on product cards for more consistency. (#435)
 - Replace auth token polling with an event based system. (#436)
 
-## [0.5.7]
+## [0.5.7] - 2019-08-23
 
 ### Added
 
@@ -223,7 +223,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `<manifold-performance>` component for partners to add opt-in metrics collection to their
   implementation (#427)
 
-## [0.5.5]
+## [0.5.6] - 2019-08-21
+
+### Added
+
+- Emit metrics events from restFetch and graphqlFetch (#396)
+
+### Fixed
+
+- Fixed flash of “No services found” on marketplace grid (#390)
+
+## [0.5.5] - 2019-08-16
 
 ### Fixed
 
@@ -232,7 +242,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed public endpoints trying to authenticate (#383)
 - Fixed “no services“ flash on `<manifold-marketplace>` (#390)
 
-## [0.5.4]
+## [0.5.4] - 2019-08-15
 
 ### Fixed
 
@@ -252,7 +262,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed issue where success event of `manifold-data-rename-resource` was emitted before renamed
   resource was ready. (#380)
 
-## [0.5.3]
+## [0.5.3] - 2019-08-12
 
 ### Fixed
 
@@ -271,7 +281,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added the terms of service to the product page component.
 - Added `<manifold-plan-selector free-plans>` filter flag
 
-## [0.5.2]
+## [0.5.2] - 2019-08-02
 
 ### Added
 
@@ -300,14 +310,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   component.
 - Improved `plan-selector` performance by reducing API calls for non-custom plans.
 
-## [0.5.1]
+## [0.5.1] - 2019-08-01
 
 ### Removed
 
 - `resource-label` removed from `<manifold-data-product-logo>` in favor of new
   `<manifold-data-resource-logo>` component
 
-## [0.5.0]
+## [0.5.0] - 2019-07-25
 
 ### Added
 
@@ -324,27 +334,27 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed the `manifold-auth-token` component to now use the shadowcat oauth system rather than only
   use the given token. This enables platforms to now use real authentication.
 
-## [0.4.3]
+## [0.4.3] - 2019-07-16
 
 ### Fixed
 
 - Fixed the rename and deprovision button not behaving properly when used in their resource warpers
 
-## [0.4.2]
+## [0.4.2] - 2019-07-16
 
 ### Changed
 
 - Changed the deprovision and rename button to not include a shadow dom root, they can now be styled
   from external stylesheets.
 
-## [0.4.1]
+## [0.4.1] - 2019-07-15
 
 ### Changed
 
 - Made all the internal attributes optional on the components to make sure TypeScript does not
   complain.
 
-## [0.4.0]
+## [0.4.0] - 2019-07-15
 
 ### Deprecated
 
@@ -360,7 +370,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   `<manifold-data-product-logo>`, `<manifold-data-product-name>`,
   `<manifold-data-provision-button>`, `<manifold-data-resource-list>`
 
-## [0.3.1]
+## [0.3.1] - 2019-07-12
 
 ### Added
 
@@ -381,11 +391,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed the `manifold-resource-credentials` component to use the standalone `manifold-credentials`
   component.
 
-[0.3.0]: https://github.com/manifoldco/ui/compare/v0.2.1...v0.3.0
+[0.3.0]: https://github.com/manifoldco/ui/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/manifoldco/ui/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/manifoldco/ui/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/manifoldco/ui/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/manifoldco/ui/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/manifoldco/ui/compare/v0.0.2...v0.1.0
 [0.1.0]: https://github.com/manifoldco/ui/compare/v0.0.2...v0.1.0
 [0.0.3]: https://github.com/manifoldco/ui/releases/tag/v0.0.3
