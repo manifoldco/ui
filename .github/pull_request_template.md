@@ -17,7 +17,6 @@
 
 <!-- are all the steps completed? -->
 
-- [ ] **CHANGELOG**: The **Unreleased** section of CHANGELOG was updated
 - [ ] **Prop changes**: [docs][docs] were updated
 - [ ] **Prop changes**: E2E tests were updated, testing from the highest level possible
 - [ ] **Platform testing**: If this change should be [tested against a platform][platform-testing], has it been?
