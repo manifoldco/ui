@@ -105,7 +105,7 @@ describe('graphqlFetch', () => {
       });
 
       await fetcher({ query: '', element: document.createElement('custom-element') });
-      expect(errorReporter).toHaveBeenCalledWith(errors, {});
+      expect(errorReporter.mock.calls[0][0]).toEqual(errors);
     });
 
     it('reports GraphQL errors', async () => {
@@ -125,7 +125,7 @@ describe('graphqlFetch', () => {
 
       await fetcher({ query: '', element: document.createElement('custom-element') });
       // graphql format
-      expect(errorReporter).toHaveBeenCalledWith(body.errors, {});
+      expect(errorReporter.mock.calls[0][0]).toEqual(body.errors);
     });
 
     it('reports unknown errors', async () => {
@@ -139,7 +139,7 @@ describe('graphqlFetch', () => {
 
       await fetcher({ query: '', element: document.createElement('custom-element') });
       // graphql format
-      expect(errorReporter).toHaveBeenCalledWith([{ message: 'Internal Server Error' }], {});
+      expect(errorReporter.mock.calls[0][0]).toEqual([{ message: 'Internal Server Error' }]);
     });
 
     it('reports auth errors', async () => {
@@ -164,7 +164,7 @@ describe('graphqlFetch', () => {
       fetchMock.mock(graphqlEndpoint, response);
 
       return fetcher({ query: '', element: document.createElement('custom-element') }).catch(() => {
-        expect(errorReporter).toHaveBeenCalledWith(body.errors, {});
+        expect(errorReporter.mock.calls[0][0]).toEqual(body.errors);
       });
     });
   });
