@@ -22,7 +22,7 @@ jobs:
         run: ls /home/runner/work/ui/ui/e2e
       - run: echo url ${{ github.event.deployment_status.url }}
       - run: echo deployment_url ${{ github.event.deployment_status.deployment_url }}
-      - run: echo deployment.url ${{ github.event.deployment_status.deployment.url }}
+      - run: echo deployment.url ${{ github.event.deployment.url }}
       - run: echo target_url ${{ github.event.deployment_status.target_url }}
       - name: Run TestCafe
         run:
