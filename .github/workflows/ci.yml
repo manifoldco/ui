@@ -20,6 +20,10 @@ jobs:
         run: docker pull testcafe/testcafe
       - name: Tests to Run
         run: ls /home/runner/work/ui/ui/e2e
+      - run: echo url ${{ github.event.deployment_status.url }}
+      - run: echo deployment_url ${{ github.event.deployment_status.deployment_url }}
+      - run: echo deployment.url ${{ github.event.deployment_status.deployment.url }}
+      - run: echo target_url ${{ github.event.deployment_status.target_url }}
       - name: Run TestCafe
         run:
           docker run -e DEPLOY_URL -v /home/runner/work/ui/ui/e2e:/tests -i testcafe/testcafe
