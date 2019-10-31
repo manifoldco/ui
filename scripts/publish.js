@@ -11,7 +11,7 @@ const { execSync } = require('child_process');
 /* eslint-disable no-console */
 
 const timeStart = process.hrtime();
-const SELECT_FLAG = /-.*/; // Selects anything after a hyphen, or nothing
+const SELECT_TAG = /-.*/; // Selects anything after a hyphen, or nothing
 
 // 1. Read package.json
 const pkgManifest = JSON.parse(
@@ -19,11 +19,10 @@ const pkgManifest = JSON.parse(
 );
 
 // 2. Determine if @latest or @[other]
-let npmTag = 'latest'; // default (“public”)
-const flag = SELECT_FLAG.exec(pkgManifest.version); // If no hyphen, this is a “private“ release
-if (flag && flag[0].length > 1) {
-  const flagClean = flag[0].replace('-', '');
-  npmTag = flagClean.includes('.') ? flagClean.split('.')[0] : flagClean;
+let npmTag = 'latest'; // default
+const tag = SELECT_TAG.exec(pkgManifest.version);
+if (tag && tag[0].length > 1) {
+  npmTag = tag[0].replace('-', '').replace(/\.[^.]+$/, '');
 }
 
 console.log(`📦 Publishing ${pkgManifest.version} to npm…`);
