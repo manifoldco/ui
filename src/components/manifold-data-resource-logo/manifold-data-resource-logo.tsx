@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Watch } from '@stencil/core';
+import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -14,6 +14,7 @@ interface ProductState {
 
 @Component({ tag: 'manifold-data-resource-logo' })
 export class ManifoldDataResourceLogo {
+  @Element() el: HTMLElement;
   /** _(optional)_ `alt` attribute */
   @Prop() alt?: string;
   /** _(hidden)_ */
@@ -41,6 +42,7 @@ export class ManifoldDataResourceLogo {
     const { data } = await this.graphqlFetch<ResourceLogoQuery>({
       query: resourceQuery,
       variables: { resourceLabel },
+      element: this.el,
     });
 
     if (data) {

@@ -2,8 +2,9 @@ import { h } from '@stencil/core';
 import { report } from './errorReport';
 
 interface ErrorDetail {
-  component?: string;
+  componentName?: string;
   error: string;
+  npmVersion: string;
 }
 
 interface StencilComponent {
@@ -64,8 +65,9 @@ export default function logger<T>() {
         return rendered;
       } catch (e) {
         const detail: ErrorDetail = {
-          component: target.constructor.name,
+          componentName: target.constructor.name,
           error: e.message,
+          npmVersion: '<@NPM_PACKAGE_VERSION@>',
         };
         report(detail);
         return <manifold-toast alert-type="error">{e.message}</manifold-toast>; // show error to user

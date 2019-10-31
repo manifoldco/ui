@@ -10,6 +10,13 @@ query PRODUCTS($first: Int!, $after: String!) {
         categories {
           label
         }
+        plans(first: 25) {
+          edges {
+            node {
+              free
+            }
+          }
+        }
       }
     }
     pageInfo {

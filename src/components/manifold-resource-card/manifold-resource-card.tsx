@@ -51,7 +51,11 @@ export class ManifoldResourceCard {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({ query, variables: { resourceLabel } });
+    const { data, errors } = await this.graphqlFetch({
+      query,
+      variables: { resourceLabel },
+      element: this.el,
+    });
 
     if (data && data.resource) {
       this.resource = data.resource;

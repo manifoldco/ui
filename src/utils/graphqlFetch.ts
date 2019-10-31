@@ -1,4 +1,3 @@
-import { EventEmitter } from '@stencil/core';
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
@@ -12,17 +11,17 @@ interface CreateGraphqlFetch {
   onReady?: () => Promise<unknown>;
 }
 
-type GraphqlArgs =
+type GraphqlRequest =
   | {
       mutation: string;
       variables?: { [key: string]: string | number | undefined };
-      emitter?: EventEmitter;
     }
   | {
       query: string;
       variables?: { [key: string]: string | number | undefined };
-      emitter?: EventEmitter;
     }; // require query or mutation, but not both
+
+type GraphqlArgs = GraphqlRequest & { element: HTMLElement };
 
 export interface GraphqlError {
   message: string;
@@ -34,10 +33,12 @@ export interface GraphqlError {
 }
 
 interface GraphqlFetchEventDetail {
-  type: 'manifold-graphql-fetch-duration';
-  request: GraphqlArgs;
+  componentName: string;
   duration: number;
   errors?: GraphqlError[];
+  npmVersion: string;
+  request: GraphqlRequest;
+  type: 'manifold-graphql-fetch-duration';
 }
 
 export interface GraphqlResponseBody<GraphqlData> {
@@ -62,7 +63,7 @@ export function createGraphqlFetch({
     await onReady();
 
     const rttStart = performance.now();
-    const { emitter, ...request } = args;
+    const { element, ...request } = args;
 
     const token = getAuthToken();
     // yes sometimes the auth token can be 'undefined'
@@ -75,11 +76,13 @@ export function createGraphqlFetch({
         Connection: 'keep-alive',
         'Content-type': 'application/json',
         ...auth,
+        ...(element ? { 'x-manifold-component': element.tagName } : {}),
+        'x-manifold-ui-version': '<@NPM_PACKAGE_VERSION@>',
       },
       body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors
-      report(e);
+      report(e, element);
       return Promise.reject(e);
     });
 
@@ -89,7 +92,7 @@ export function createGraphqlFetch({
     if (!body.data && !Array.isArray(body.errors)) {
       const errors = [{ message: response.statusText }] as GraphqlError[];
 
-      report(errors);
+      report(errors, element);
 
       return {
         data: null,
@@ -99,25 +102,20 @@ export function createGraphqlFetch({
 
     const fetchDuration = performance.now() - rttStart;
     const detail: GraphqlFetchEventDetail = {
-      type: 'manifold-graphql-fetch-duration',
-      request,
+      componentName: element.tagName,
       duration: fetchDuration,
       errors: body.errors,
+      npmVersion: '<@NPM_PACKAGE_VERSION@>',
+      request,
+      type: 'manifold-graphql-fetch-duration',
     };
 
-    if (emitter) {
-      emitter.emit(detail);
-    } else {
-      document.dispatchEvent(
-        new CustomEvent('manifold-graphql-fetch-duration', {
-          bubbles: true,
-          detail,
-        })
-      );
-    }
+    (element || document).dispatchEvent(
+      new CustomEvent('manifold-graphql-fetch-duration', { bubbles: true, detail })
+    );
 
     if (body.errors) {
-      report(body.errors);
+      report(body.errors, element);
 
       const authExpired = body.errors.some(e => {
         return e.extensions && e.extensions.type === 'AuthFailed';

@@ -1,4 +1,4 @@
-import { h, Component, Prop, Event, EventEmitter, Watch } from '@stencil/core';
+import { h, Component, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
 import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
@@ -38,6 +38,7 @@ const resourceIdQuery = gql`
 
 @Component({ tag: 'manifold-data-resize-button' })
 export class ManifoldDataResizeButton {
+  @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() planId?: string;
@@ -67,6 +68,7 @@ export class ManifoldDataResizeButton {
       variables: {
         resourceLabel,
       },
+      element: this.el,
     });
 
     if (data && data.resource) {
@@ -93,6 +95,7 @@ export class ManifoldDataResizeButton {
         resourceId: this.resourceId,
         planId: this.planId,
       },
+      element: this.el,
     });
 
     if (data && data.updateResourcePlan) {

@@ -1,5 +1,6 @@
-import { EventEmitter } from '@stencil/core';
 import fetchMock from 'fetch-mock';
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const errorReporter = jest.fn();
 jest.mock('./errorReport', () => ({ report: errorReporter }));
@@ -25,7 +26,7 @@ describe('graphqlFetch', () => {
         status: 200,
         body: { data: {} },
       });
-      await fetcher({ query: '' });
+      await fetcher({ query: '', element: document.createElement('custom-element') });
       expect(fetchMock.called('https://api.manifold.co/graphql')).toBe(true);
     });
 
@@ -46,7 +47,10 @@ describe('graphqlFetch', () => {
         body,
       });
 
-      const result = await fetcher({ query: '' });
+      const result = await fetcher({
+        query: '',
+        element: document.createElement('custom-element'),
+      });
 
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(result).toEqual(body);
@@ -65,10 +69,24 @@ describe('graphqlFetch', () => {
       expect.assertions(2);
       return fetcher({
         query: 'myQuery',
+        element: document.createElement('custom-element'),
       }).catch(result => {
         expect(fetchMock.called(graphqlEndpoint)).toBe(true);
         expect(result).toEqual(err);
       });
+    });
+
+    it('emits component name and npm version', async () => {
+      const tagName = 'my-custom-tag';
+      const element = document.createElement(tagName);
+
+      fetchMock.mock(graphqlEndpoint, { data: {} });
+      const fetcher = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
+      await fetcher({ query: '', element });
+
+      const [, req] = fetchMock.calls()[0];
+      const headers = (req && req.headers) as any;
+      expect(headers['x-manifold-component']).toBe(tagName.toUpperCase()); // expect our component name to be there
     });
   });
 
@@ -86,8 +104,8 @@ describe('graphqlFetch', () => {
         body: { data: null, errors },
       });
 
-      await fetcher({ query: '' });
-      expect(errorReporter).toHaveBeenCalledWith(errors);
+      await fetcher({ query: '', element: document.createElement('custom-element') });
+      expect(errorReporter.mock.calls[0][0]).toEqual(errors);
     });
 
     it('reports GraphQL errors', async () => {
@@ -105,9 +123,9 @@ describe('graphqlFetch', () => {
 
       fetchMock.mock(graphqlEndpoint, { status: 422, body });
 
-      await fetcher({ query: '' });
+      await fetcher({ query: '', element: document.createElement('custom-element') });
       // graphql format
-      expect(errorReporter).toHaveBeenCalledWith(body.errors);
+      expect(errorReporter.mock.calls[0][0]).toEqual(body.errors);
     });
 
     it('reports unknown errors', async () => {
@@ -119,9 +137,9 @@ describe('graphqlFetch', () => {
 
       fetchMock.mock(graphqlEndpoint, { status: 500, body: {} });
 
-      await fetcher({ query: '' });
+      await fetcher({ query: '', element: document.createElement('custom-element') });
       // graphql format
-      expect(errorReporter).toHaveBeenCalledWith([{ message: 'Internal Server Error' }]);
+      expect(errorReporter.mock.calls[0][0]).toEqual([{ message: 'Internal Server Error' }]);
     });
 
     it('reports auth errors', async () => {
@@ -145,8 +163,8 @@ describe('graphqlFetch', () => {
       const response = { status: 200, body };
       fetchMock.mock(graphqlEndpoint, response);
 
-      return fetcher({ query: '' }).catch(() => {
-        expect(errorReporter).toHaveBeenCalledWith(body.errors);
+      return fetcher({ query: '', element: document.createElement('custom-element') }).catch(() => {
+        expect(errorReporter.mock.calls[0][0]).toEqual(body.errors);
       });
     });
   });
@@ -166,10 +184,12 @@ describe('graphqlFetch', () => {
         });
 
         expect.assertions(2);
-        return fetcher({ query: '' }).catch(result => {
-          expect(fetchMock.called(graphqlEndpoint)).toBe(true);
-          expect(result).toEqual(new Error('Auth token expired'));
-        });
+        return fetcher({ query: '', element: document.createElement('custom-element') }).catch(
+          result => {
+            expect(fetchMock.called(graphqlEndpoint)).toBe(true);
+            expect(result).toEqual(new Error('Auth token expired'));
+          }
+        );
       });
     });
 
@@ -189,9 +209,11 @@ describe('graphqlFetch', () => {
         });
 
         expect.assertions(1);
-        return fetcher({ query: '' }).catch(() => {
-          expect(setAuthToken).toHaveBeenCalledWith('');
-        });
+        return fetcher({ query: '', element: document.createElement('custom-element') }).catch(
+          () => {
+            expect(setAuthToken).toHaveBeenCalledWith('');
+          }
+        );
       });
 
       it('Will retry if the token is refreshed', async () => {
@@ -213,7 +235,7 @@ describe('graphqlFetch', () => {
           })
           .mock(graphqlEndpoint, { status: 200, body }, { overwriteRoutes: false });
 
-        const fetch = fetcher({ query: '' });
+        const fetch = fetcher({ query: '', element: document.createElement('custom-element') });
 
         /* Queue the dispatch back a tick to allow listeners to be set up */
         await new Promise(resolve => {
@@ -252,7 +274,10 @@ describe('graphqlFetch', () => {
         body,
       });
 
-      const result = await fetcher({ query: '' });
+      const result = await fetcher({
+        query: '',
+        element: document.createElement('custom-element'),
+      });
 
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(result).toEqual(body);
@@ -281,6 +306,7 @@ describe('graphqlFetch', () => {
       expect.assertions(2);
       return fetcher({
         query: '',
+        element: document.createElement('custom-element'),
       }).catch(e => {
         expect(fetchMock.called(graphqlEndpoint)).toBe(true);
         expect(e.message).toEqual('Auth token expired');
@@ -300,7 +326,10 @@ describe('graphqlFetch', () => {
 
       fetchMock.mock(graphqlEndpoint, { status: 422, body });
 
-      const result = await fetcher({ query: '' });
+      const result = await fetcher({
+        query: '',
+        element: document.createElement('custom-element'),
+      });
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(result).toEqual(body);
     });
@@ -317,7 +346,10 @@ describe('graphqlFetch', () => {
         body: {},
       });
 
-      const result = await fetcher({ query: '' });
+      const result = await fetcher({
+        query: '',
+        element: document.createElement('custom-element'),
+      });
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(result).toEqual({
         data: null,
@@ -327,11 +359,11 @@ describe('graphqlFetch', () => {
   });
 
   describe('metrics', () => {
-    it('emits a metrics event from document when no EventEmitter supplied', async () => {
-      const body = {
-        data: null,
-        errors: [{ message: 'no results', locations: [] }],
-      };
+    it('emits a metrics event ', async () => {
+      const element = document.createElement('my-element');
+      const mockEvent = jest.fn();
+      element.addEventListener('manifold-graphql-fetch-duration', mockEvent);
+
       const fetcher = createGraphqlFetch({
         wait: () => 0,
         endpoint: () => graphqlEndpoint,
@@ -339,43 +371,25 @@ describe('graphqlFetch', () => {
       });
 
       fetchMock.mock(graphqlEndpoint, {
-        status: 200, // error code for DB error (e.g. nothing returned)
-        body,
-      });
-
-      let event: CustomEvent | undefined;
-      window.addEventListener('manifold-graphql-fetch-duration', e => {
-        event = e as CustomEvent;
-      });
-
-      await fetcher({ query: '' });
-      expect(event && event.detail && event.detail.duration).toBeDefined();
-    });
-
-    it('emits a metrics event from an EventEmitter when supplied', async () => {
-      const body = {
         data: null,
         errors: [{ message: 'no results', locations: [] }],
-      };
-      const fetcher = createGraphqlFetch({
-        wait: () => 0,
-        endpoint: () => graphqlEndpoint,
-        getAuthToken: () => '1234',
       });
+      await fetcher({ query: '', element });
 
-      fetchMock.mock(graphqlEndpoint, {
-        status: 200, // error code for DB error (e.g. nothing returned)
-        body,
-      });
-
-      const emitter: EventEmitter = {
-        emit: jest.fn(),
-      };
-
-      await fetcher({ query: '', emitter });
-      expect((emitter.emit as jest.Mock).mock.calls[0][0]).toMatchObject({
-        type: 'manifold-graphql-fetch-duration',
-      });
+      // test duration
+      expect(mockEvent.mock.calls[0][0].detail.duration).toBeGreaterThanOrEqual(0);
+      // test everything BUT duration
+      expect(mockEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          detail: expect.objectContaining({
+            componentName: 'MY-ELEMENT',
+            errors: [{ locations: [], message: 'no results' }],
+            npmVersion: '<@NPM_PACKAGE_VERSION@>', // expect Rollbar-replaceable string
+            request: { query: '' },
+            type: 'manifold-graphql-fetch-duration',
+          }),
+        })
+      );
     });
   });
 
@@ -390,7 +404,7 @@ describe('graphqlFetch', () => {
         status: 200,
         body: { data: null, errors: null },
       });
-      await fetcher({ query: '' });
+      await fetcher({ query: '', element: document.createElement('custom-element') });
       const body = fetchMock.calls()[0][1] as RequestInit;
       expect(body.headers).toEqual(expect.objectContaining({ Connection: 'keep-alive' }));
     });

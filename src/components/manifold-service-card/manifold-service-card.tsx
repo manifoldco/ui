@@ -83,7 +83,11 @@ export class ManifoldServiceCard {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({ query, variables: { productLabel } });
+    const { data, errors } = await this.graphqlFetch({
+      query,
+      variables: { productLabel },
+      element: this.el,
+    });
     if (data && data.product) {
       this.product = data.product;
     }

@@ -1,4 +1,4 @@
-import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
+import { h, Component, Element, Prop, Event, EventEmitter } from '@stencil/core';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
@@ -33,6 +33,7 @@ interface ErrorMessage {
 
 @Component({ tag: 'manifold-data-sso-button' })
 export class ManifoldDataSsoButton {
+  @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** The label of the resource to rename */
@@ -67,6 +68,7 @@ export class ManifoldDataSsoButton {
     >({
       query: this.resourceId ? ssoByID : ssoByLabel,
       variables,
+      element: this.el,
     });
 
     if (data && data.resource) {

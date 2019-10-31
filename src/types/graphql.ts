@@ -246,13 +246,13 @@ export type InvoiceEdge = {
   node?: Maybe<Invoice>,
 };
 
-/** InvoicePreviewOrderBy defines how an invoice connection is to be ordered. */
+/** InvoiceOrderBy defines how an invoice connection is to be ordered. */
 export type InvoiceOrderBy = {
   field: InvoiceOrderByField,
   direction: OrderByDirection,
 };
 
-/** InvoicePreviewOrderByField is the field by which an Invoice list will be ordered. */
+/** InvoiceOrderByField is the field by which an Invoice list will be ordered. */
 export enum InvoiceOrderByField {
   End = 'END'
 }
@@ -876,6 +876,13 @@ export type Profile = {
    * Note: This is currently only supported with a Platform API token.
  **/
   invoices?: Maybe<InvoiceConnection>,
+  /** 
+ * State represents the current state for the profile. Based on this state, the
+   * profile can either take certain actions or it can not.
+ **/
+  state: ProfileState,
+  /** stateModifiedBy represents who modified the state for this profile latest. */
+  stateModifiedBy: ProfileStateModifier,
 };
 
 
@@ -906,6 +913,22 @@ export type ProfileEdge = {
   node: Profile,
 };
 
+
+/** 
+ * ProfileState is the current state the profile is in. Based on this state,
+ * Manifold determines if a profile can take certain actions or not.
+ **/
+export enum ProfileState {
+  Active = 'ACTIVE',
+  Suspended = 'SUSPENDED',
+  Deleted = 'DELETED'
+}
+
+/** ProfileStateModifier represents the possible modifiers of the Profile's state. */
+export enum ProfileStateModifier {
+  Manifold = 'MANIFOLD',
+  Platform = 'PLATFORM'
+}
 
 /** A Provider in Manifold's catalog. Providers own products. */
 export type Provider = Node & {
@@ -1668,6 +1691,15 @@ export type ProductsQuery = (
         & { categories: Array<(
           { __typename?: 'Category' }
           & Pick<Category, 'label'>
+        )>, plans: Maybe<(
+          { __typename?: 'PlanConnection' }
+          & { edges: Array<(
+            { __typename?: 'PlanEdge' }
+            & { node: (
+              { __typename?: 'Plan' }
+              & Pick<Plan, 'free'>
+            ) }
+          )> }
         )> }
       ) }
     )>, pageInfo: (

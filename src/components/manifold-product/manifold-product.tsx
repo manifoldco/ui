@@ -59,7 +59,7 @@ export class ManifoldProduct {
     }
 
     const variables = { productLabel };
-    const { data } = await this.graphqlFetch({ query, variables });
+    const { data } = await this.graphqlFetch({ query, variables, element: this.el });
 
     this.product = (data && data.product) || undefined;
     this.loaded.emit(data && data.product);

@@ -252,6 +252,7 @@ describe('Fetching all pages of a GraphQL connection', () => {
         nextPage: { first: 3, after: '' },
         getConnection: (q: Query) => q.categories,
         graphqlFetch: createGraphqlFetch({}),
+        element: document.createElement('custom-element'),
       }).catch(e => {
         expect(e).toBeInstanceOf(MissingPageInfo);
       });
@@ -278,6 +279,7 @@ describe('Fetching all pages of a GraphQL connection', () => {
       nextPage: { first: 3, after: '' },
       getConnection: (q: Query) => q.categories,
       graphqlFetch: createGraphqlFetch({}),
+      element: document.createElement('custom-element'),
     });
 
     expect(fetchMock.calls).toHaveLength(2);

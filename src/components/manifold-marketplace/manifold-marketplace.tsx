@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, Element } from '@stencil/core';
+import { h, Component, Element, Prop, State } from '@stencil/core';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -51,34 +51,6 @@ function transformSkeleton(skel: Catalog.Product): ProductEdge {
   };
 }
 
-// TODO: fix the freePlans query in GraphQL
-const TEMPORARY_FREE_PRODUCTS = [
-  'blitline',
-  'bonsai-elasticsearch',
-  'cloudamqp',
-  'cloudcube',
-  'custom-recognition',
-  'degraffdb-generators-stage',
-  'elegant-cms',
-  'generic-tagging',
-  'hypdf',
-  'informant',
-  'logdna',
-  'mailgun',
-  'memcachier-cache',
-  'pdfshift',
-  'piio',
-  'posthook',
-  'prefab',
-  'scaledrone',
-  'scoutapp',
-  'till',
-  'timber-logging',
-  'timber-logging-staging',
-  'valence',
-  'websolr',
-];
-
 @Component({ tag: 'manifold-marketplace' })
 export class ManifoldMarketplace {
   @Element() el: HTMLElement;
@@ -125,6 +97,7 @@ export class ManifoldMarketplace {
       nextPage: { first: 50, after: '' },
       getConnection: (q: Query) => q.products,
       graphqlFetch: this.graphqlFetch,
+      element: this.el,
     });
     this.isLoading = false;
   }
@@ -148,11 +121,17 @@ export class ManifoldMarketplace {
       this.parsedProducts.length > 0 && this.parsedProducts.length < skeletonProducts.length
         ? skeletonProducts.slice(0, this.parsedProducts.length)
         : skeletonProducts;
+    const freeProducts = this.services
+      ? this.services.filter(
+          ({ node: { plans } }) =>
+            plans && plans.edges.findIndex(({ node: { free } }) => !!free) !== -1
+        )
+      : [];
 
     return (
       <manifold-marketplace-grid
         featured={this.parsedFeatured}
-        freeProducts={TEMPORARY_FREE_PRODUCTS}
+        freeProducts={freeProducts.map(({ node: { label } }) => label)}
         hideCategories={this.hideCategories}
         hideSearch={this.hideSearch}
         hideTemplates={this.hideTemplates}

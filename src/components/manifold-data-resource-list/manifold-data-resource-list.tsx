@@ -58,6 +58,7 @@ export class ManifoldDataResourceList {
       variables: this.ownerId ? { owner: this.ownerId } : {},
       getConnection: (q: Query) => q.resources,
       graphqlFetch: this.graphqlFetch,
+      element: this.el,
     });
   };
 
