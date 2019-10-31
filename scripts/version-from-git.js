@@ -21,5 +21,5 @@ if (version) {
   const pkgJSON = path.resolve(__dirname, '..', 'package.json');
   const pkgManifest = JSON.parse(fs.readFileSync(pkgJSON, 'utf8'));
   pkgManifest.version = version;
-  fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2), 'utf8');
+  fs.writeFileSync(pkgJSON, JSON.stringify(pkgManifest, null, 2).concat('\n'), 'utf8');
 }
