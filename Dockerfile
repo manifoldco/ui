@@ -1,4 +1,4 @@
-FROM node:13
+FROM node:13.0.1-alpine AS builder
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -13,6 +13,8 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-EXPOSE 6006
+RUN npm run build:storybook
 
-CMD [ "npm", "run", "dev" ]
+FROM nginx:1.16.0-alpine
+
+COPY --from=builder /usr/src/app/storybook-static /usr/share/nginx/html
