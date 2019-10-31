@@ -105,6 +105,7 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'noCredentials'?: boolean;
     'resourceLabel'?: string;
     'showCredentials': () => Promise<void>;
   }
@@ -365,6 +366,10 @@ export namespace Components {
     'gqlMock': Resource;
     'mock': Gateway.Resource;
   }
+  interface ManifoldNoCredentials {
+    'graphqlFetch'?: GraphqlFetch;
+    'resourceLabel'?: string;
+  }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
     'error'?: string;
@@ -494,6 +499,7 @@ export namespace Components {
   interface ManifoldResourceCredentials {
     'gqlData'?: Resource;
     'loading': boolean;
+    'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
     'gqlData'?: Resource;
@@ -780,6 +786,12 @@ declare global {
     new (): HTMLManifoldMockResourceElement;
   };
 
+  interface HTMLManifoldNoCredentialsElement extends Components.ManifoldNoCredentials, HTMLStencilElement {}
+  var HTMLManifoldNoCredentialsElement: {
+    prototype: HTMLManifoldNoCredentialsElement;
+    new (): HTMLManifoldNoCredentialsElement;
+  };
+
   interface HTMLManifoldNumberInputElement extends Components.ManifoldNumberInput, HTMLStencilElement {}
   var HTMLManifoldNumberInputElement: {
     prototype: HTMLManifoldNumberInputElement;
@@ -999,6 +1011,7 @@ declare global {
     'manifold-marketplace': HTMLManifoldMarketplaceElement;
     'manifold-marketplace-grid': HTMLManifoldMarketplaceGridElement;
     'manifold-mock-resource': HTMLManifoldMockResourceElement;
+    'manifold-no-credentials': HTMLManifoldNoCredentialsElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
     'manifold-oauth': HTMLManifoldOauthElement;
     'manifold-performance': HTMLManifoldPerformanceElement;
@@ -1103,6 +1116,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'noCredentials'?: boolean;
     'resourceLabel'?: string;
   }
   interface ManifoldCredentialsView {
@@ -1383,6 +1397,10 @@ declare namespace LocalJSX {
     'gqlMock'?: Resource;
     'mock'?: Gateway.Resource;
   }
+  interface ManifoldNoCredentials {
+    'graphqlFetch'?: GraphqlFetch;
+    'resourceLabel'?: string;
+  }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
     'error'?: string;
@@ -1519,6 +1537,7 @@ declare namespace LocalJSX {
   interface ManifoldResourceCredentials {
     'gqlData'?: Resource;
     'loading'?: boolean;
+    'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
     'gqlData'?: Resource;
@@ -1671,6 +1690,7 @@ declare namespace LocalJSX {
     'manifold-marketplace': ManifoldMarketplace;
     'manifold-marketplace-grid': ManifoldMarketplaceGrid;
     'manifold-mock-resource': ManifoldMockResource;
+    'manifold-no-credentials': ManifoldNoCredentials;
     'manifold-number-input': ManifoldNumberInput;
     'manifold-oauth': ManifoldOauth;
     'manifold-performance': ManifoldPerformance;
@@ -1739,6 +1759,7 @@ declare module "@stencil/core" {
       'manifold-marketplace': LocalJSX.ManifoldMarketplace & JSXBase.HTMLAttributes<HTMLManifoldMarketplaceElement>;
       'manifold-marketplace-grid': LocalJSX.ManifoldMarketplaceGrid & JSXBase.HTMLAttributes<HTMLManifoldMarketplaceGridElement>;
       'manifold-mock-resource': LocalJSX.ManifoldMockResource & JSXBase.HTMLAttributes<HTMLManifoldMockResourceElement>;
+      'manifold-no-credentials': LocalJSX.ManifoldNoCredentials & JSXBase.HTMLAttributes<HTMLManifoldNoCredentialsElement>;
       'manifold-number-input': LocalJSX.ManifoldNumberInput & JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement>;
       'manifold-oauth': LocalJSX.ManifoldOauth & JSXBase.HTMLAttributes<HTMLManifoldOauthElement>;
       'manifold-performance': LocalJSX.ManifoldPerformance & JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement>;

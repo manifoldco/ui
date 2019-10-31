@@ -13,6 +13,7 @@ export class ManifoldCredentials {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() resourceLabel?: string = '';
+  @Prop() noCredentials?: boolean = false;
   @State() credentials?: ResourceCredentialsQuery['resource']['credentials']['edges'];
   @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
@@ -59,6 +60,21 @@ export class ManifoldCredentials {
 
   @logger()
   render() {
+    if (this.noCredentials || (this.credentials && this.credentials.length === 0)) {
+      return (
+        <manifold-no-credentials resourceLabel={this.resourceLabel}>
+          <manifold-forward-slot slot="show-button">
+            <slot name="show-button" />
+          </manifold-forward-slot>
+          <manifold-forward-slot slot="hide-button">
+            <slot name="hide-button" />
+          </manifold-forward-slot>
+          <manifold-forward-slot slot="sso-button">
+            <slot name="sso-button" />
+          </manifold-forward-slot>
+        </manifold-no-credentials>
+      );
+    }
     return [
       <manifold-credentials-view
         credentials={this.credentials || undefined}
@@ -70,6 +86,9 @@ export class ManifoldCredentials {
         </manifold-forward-slot>
         <manifold-forward-slot slot="hide-button">
           <slot name="hide-button" />
+        </manifold-forward-slot>
+        <manifold-forward-slot slot="sso-button">
+          <slot name="sso-button" />
         </manifold-forward-slot>
       </manifold-credentials-view>,
       Array.isArray(this.errors)

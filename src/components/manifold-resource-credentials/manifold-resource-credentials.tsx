@@ -9,6 +9,7 @@ import { Resource } from '../../types/graphql';
 export class ManifoldResourceCredentials {
   @Prop() gqlData?: Resource;
   @Prop() loading: boolean = true;
+  @Prop() noCredentials?: boolean = false;
 
   @loadMark()
   componentWillLoad() {}
@@ -20,12 +21,15 @@ export class ManifoldResourceCredentials {
     }
 
     return (
-      <manifold-credentials resourceLabel={this.gqlData.label}>
+      <manifold-credentials resourceLabel={this.gqlData.label} noCredentials={this.noCredentials}>
         <manifold-forward-slot slot="show-button">
           <slot name="show-button" />
         </manifold-forward-slot>
         <manifold-forward-slot slot="hide-button">
           <slot name="hide-button" />
+        </manifold-forward-slot>
+        <manifold-forward-slot slot="sso-button">
+          <slot name="sso-button" />
         </manifold-forward-slot>
       </manifold-credentials>
     );

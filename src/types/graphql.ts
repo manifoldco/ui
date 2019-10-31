@@ -1709,6 +1709,31 @@ export type ProductsQuery = (
   )> }
 );
 
+export type ResourceNoCredentialsQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceNoCredentialsQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { plan: Maybe<(
+      { __typename?: 'Plan' }
+      & { product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'displayName'>
+      )> }
+    )>, owner: Maybe<(
+      { __typename?: 'Profile' }
+      & { platform: (
+        { __typename?: 'Platform' }
+        & Pick<Platform, 'domain'>
+      ) }
+    )> }
+  )> }
+);
+
 export type Resources_With_OwnerQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String'],
