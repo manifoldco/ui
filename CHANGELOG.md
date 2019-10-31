@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [v0.6.2]
+
 ### Added
 
 - Headers to send more helpful metadata (#668).
