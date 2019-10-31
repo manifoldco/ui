@@ -4,7 +4,6 @@
 const { mkdirSync, readFileSync, writeFileSync } = require('fs');
 const { resolve } = require('path');
 const { copySync, removeSync } = require('fs-extra');
-const prettier = require('prettier');
 
 // Settings
 const WD = resolve(__dirname, '..', 'pkg'); // Working directory: pkg/
@@ -23,7 +22,4 @@ FILES_TO_COPY.forEach(file => copySync(resolve(__dirname, '..', file), resolve(W
 const packageJSON = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'utf8'));
 delete packageJSON.scripts; // Don’t need this on npm
 delete packageJSON.files; // Ship all files in pkg/
-writeFileSync(
-  resolve(WD, 'package.json'),
-  prettier.format(JSON.stringify(packageJSON), { parser: 'json' })
-);
+writeFileSync(resolve(WD, 'package.json'), JSON.stringify(packageJSON, null, 2), 'utf8');

@@ -1,7 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
-  "version": "0.6.1",
+  "version": "0.6.2-rc.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -55,7 +55,7 @@
     "test:coverage": "stencil test --spec --e2e --coverage",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll",
-    "update-version": "npm --no-git-tag-version version from-git > /dev/null || true"
+    "update-version": "node scripts/version-from-git"
   },
   "bundlesize": [
     {
