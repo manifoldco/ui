@@ -11,6 +11,7 @@ export default gql`
       node {
         displayName
         displayValue
+        label
       }
     }
   }
@@ -38,6 +39,7 @@ export default gql`
         options {
           displayName
           displayValue
+          label
         }
         numericDetails {
           increment

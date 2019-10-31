@@ -26,24 +26,6 @@ const plansQuery = gql`
   }
 `;
 
-const freePlansQuery = gql`
-  query FREE_PLAN_LIST($productLabel: String!) {
-    product(label: $productLabel) {
-      id
-      displayName
-      label
-      logoUrl
-      plans(first: 25, free: true, orderBy: { field: COST, direction: ASC }) {
-        edges {
-          node {
-            ${planData}
-          }
-        }
-      }
-    }
-  }
-`;
-
 const resourceQuery = gql`
   query RESOURCE_PRODUCT($resourceLabel: String!) {
     resource(label: $resourceLabel) {
@@ -107,7 +89,7 @@ export class ManifoldPlanSelector {
     this.product = undefined;
 
     const { data } = await this.graphqlFetch({
-      query: this.freePlans ? freePlansQuery : plansQuery,
+      query: plansQuery,
       variables: {
         productLabel,
       },
@@ -118,20 +100,12 @@ export class ManifoldPlanSelector {
       this.product = data.product;
 
       if (data.product.plans) {
-        // if plan is free then move to front (needed because GQL only sorts base cost not truly free plans)
-        const freePlansFirst = [...data.product.plans.edges].sort(a => {
-          if (a.node.free) {
-            return -1;
-          }
-          return 0;
-        });
+        const plans = this.freePlans
+          ? this.filterFreeOnly(this.filterOutConfigurable(data.product.plans.edges))
+          : this.filterOutConfigurable(data.product.plans.edges);
 
-        // TODO: re-add configurable plans when GraphQL supports resource features
-        const TEMP_HIDE_CONFIGURABLE_PLANS = freePlansFirst.filter(
-          ({ node: { configurableFeatures } }) =>
-            !configurableFeatures || configurableFeatures.edges.length === 0
-        );
-        this.plans = TEMP_HIDE_CONFIGURABLE_PLANS;
+        // TODO: Make GraphQL sort by free AND cost
+        this.plans = [...plans].sort(a => (a.node.free ? -1 : 0));
       }
     }
   }
@@ -157,6 +131,18 @@ export class ManifoldPlanSelector {
         this.fetchPlans(data.resource.plan.product.label);
       }
     }
+  }
+
+  filterFreeOnly(plans: PlanEdge[]) {
+    return plans.filter(({ node: { free } }) => free);
+  }
+
+  // TODO: remove this once configurable plans are supported
+  filterOutConfigurable(plans: PlanEdge[]) {
+    return plans.filter(
+      ({ node: { configurableFeatures } }) =>
+        !configurableFeatures || configurableFeatures.edges.length === 0
+    );
   }
 
   @logger()
