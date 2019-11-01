@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Add a no credentials state to `<manifold-credentials>` (#683)
+
 ### Changed
 
 - Use GraphQL for free plan logic in `<manifold-marketplace>` and `<manifold-plan-selector>` (#684)
