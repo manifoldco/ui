@@ -13,6 +13,7 @@ import {
   PlanMeteredFeatureEdge,
   Product,
   ProductEdge,
+  Region,
   Resource,
   ResourceCredentialsQuery,
   ResourceStatusLabel,
@@ -408,6 +409,7 @@ export namespace Components {
     'isExistingResource'?: boolean;
     'plan'?: Plan;
     'product'?: Product;
+    'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;
@@ -1429,6 +1431,7 @@ declare namespace LocalJSX {
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
     'plan'?: Plan;
     'product'?: Product;
+    'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;
     'scrollLocked'?: boolean;

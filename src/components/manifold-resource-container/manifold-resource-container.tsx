@@ -13,6 +13,10 @@ const query = gql`
     resource(label: $resourceLabel) {
       id
       label
+      region {
+        id
+        displayName
+      }
       status {
         label
       }

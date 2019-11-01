@@ -63,6 +63,7 @@ export class ManifoldActivePlan {
         regions={this.regions}
         resourceRegion={resourceRegion}
         scrollLocked={true}
+        region={this.selectedResource && this.selectedResource.region}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

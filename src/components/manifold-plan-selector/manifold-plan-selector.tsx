@@ -29,6 +29,10 @@ const plansQuery = gql`
 const resourceQuery = gql`
   query RESOURCE_PRODUCT($resourceLabel: String!) {
     resource(label: $resourceLabel) {
+      region {
+        id
+        displayName
+      }
       plan {
         id
         product {
@@ -128,6 +132,7 @@ export class ManifoldPlanSelector {
     if (data && data.resource) {
       this.resource = data.resource;
       if (data.resource && data.resource.plan && data.resource.plan.product) {
+        // TODO move plan fetching to resource query
         this.fetchPlans(data.resource.plan.product.label);
       }
     }
@@ -156,6 +161,7 @@ export class ManifoldPlanSelector {
         product={this.product}
         regions={regions}
         selectedResource={this.resource}
+        isExistingResource={!!this.resource}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

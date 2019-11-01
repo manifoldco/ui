@@ -31,6 +31,7 @@ export class ManifoldPlanDetails {
   @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Plan;
   @Prop() product?: Product;
+  @Prop() region?: Region;
   @Prop() regions?: string[];
   @Prop() resourceRegion?: string;
   @State() features: Gateway.FeatureMap = {};
@@ -249,7 +250,7 @@ export class ManifoldPlanDetails {
                   />
                 ))}
             </dl>
-            {this.regionOptions && (
+            {(this.regionOptions || this.region) && (
               <div class="region">
                 <label
                   class="region-label"
@@ -258,16 +259,20 @@ export class ManifoldPlanDetails {
                 >
                   Region
                 </label>
-                <manifold-select
-                  aria-label="plan region selection"
-                  defaultValue={this.regionId}
-                  id="manifold-region-selector"
-                  name="manifold-region-selector"
-                  onUpdateValue={this.handleChangeRegion}
-                  options={this.regionOptions}
-                />
+                {!this.isExistingResource && this.regionOptions && (
+                  <manifold-select
+                    aria-label="plan region selection"
+                    defaultValue={this.regionId}
+                    id="manifold-region-selector"
+                    name="manifold-region-selector"
+                    onUpdateValue={this.handleChangeRegion}
+                    options={this.regionOptions}
+                  />
+                )}
+                {this.isExistingResource && this.region && this.region.displayName}
               </div>
             )}
+
             <footer class="footer">
               <manifold-plan-cost plan={this.plan} selectedFeatures={this.features} />
               <slot name="cta" />
