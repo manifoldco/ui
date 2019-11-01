@@ -28,7 +28,11 @@ export class ManifoldResourcePlan {
     if (this.loading || !product || !plan) {
       return (
         // ☠
-        <manifold-plan-details scrollLocked={false} />
+        <manifold-plan-details scrollLocked={false}>
+          <manifold-forward-slot slot="cta">
+            <slot name="cta" />
+          </manifold-forward-slot>
+        </manifold-plan-details>
       );
     }
 
@@ -39,7 +43,11 @@ export class ManifoldResourcePlan {
         product={product}
         region={region}
         isExistingResource
-      />
+      >
+        <manifold-forward-slot slot="cta">
+          <slot name="cta" />
+        </manifold-forward-slot>
+      </manifold-plan-details>
     );
   }
 }
