@@ -72,6 +72,9 @@ export class ManifoldCredentials {
           <manifold-forward-slot slot="sso-button">
             <slot name="sso-button" />
           </manifold-forward-slot>
+          <manifold-forward-slot slot="no-credentials">
+            <slot name="no-credentials" />
+          </manifold-forward-slot>
         </manifold-no-credentials>
       );
     }
@@ -89,6 +92,9 @@ export class ManifoldCredentials {
         </manifold-forward-slot>
         <manifold-forward-slot slot="sso-button">
           <slot name="sso-button" />
+        </manifold-forward-slot>
+        <manifold-forward-slot slot="no-credentials">
+          <slot name="no-credentials" />
         </manifold-forward-slot>
       </manifold-credentials-view>,
       Array.isArray(this.errors)

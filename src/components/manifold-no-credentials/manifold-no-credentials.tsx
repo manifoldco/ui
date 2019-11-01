@@ -9,7 +9,7 @@ import { ResourceNoCredentialsQuery } from '../../types/graphql';
 
 const PLATFORM_DISPLAY_NAMES: { [key: string]: string } = {
   'manifold.co': 'Manifold',
-  'digitalocean.com': 'Digital Ocean',
+  'digitalocean.com': 'DigitalOcean',
   'render.com': 'Render',
 };
 
@@ -26,9 +26,12 @@ export class ManifoldNoCredentials {
   message?: string =
     'Access to this resource is authorized through your account without credentials. SSO into the product dashboard to configure your service.';
 
+  noCredentialsEl?: Element;
+
   @loadMark()
   async componentWillLoad() {
-    if (!this.graphqlFetch || !this.resourceLabel) {
+    this.findNodes();
+    if (this.noCredentialsEl || !this.graphqlFetch || !this.resourceLabel) {
       return;
     }
 
@@ -44,25 +47,37 @@ export class ManifoldNoCredentials {
       'product'} dashboard to configure your service.`;
   }
 
+  componentDidUpdate() {
+    this.findNodes();
+  }
+
+  findNodes() {
+    this.el.childNodes.forEach((child: HTMLElement) => {
+      if (child.getAttribute('slot') === 'no-credentials') {
+        this.noCredentialsEl = child.querySelector('*:not(manifold-forward-slot)') || undefined;
+      }
+    });
+  }
+
   @logger()
   render() {
+    const noCredentials = this.noCredentialsEl ? (
+      <slot name="no-credentials" />
+    ) : (
+      <div>{this.message}</div>
+    );
+
     return [
       <div class="no-credentials">
-        <div class="message">{this.message}</div>
+        <div class="message">{noCredentials}</div>
         <div class="sso">
           <manifold-forward-slot slot="sso-button">
             <slot name="sso-button" />
           </manifold-forward-slot>
         </div>
       </div>,
-      <div style={{ display: 'none' }}>
-        <manifold-forward-slot slot="show-button">
-          <slot name="show-button" />
-        </manifold-forward-slot>
-        <manifold-forward-slot slot="hide-button">
-          <slot name="hide-button" />
-        </manifold-forward-slot>
-      </div>,
+      <manifold-forward-slot slot="show-button"></manifold-forward-slot>,
+      <manifold-forward-slot slot="hide-button"></manifold-forward-slot>,
     ];
   }
 }

@@ -31,6 +31,9 @@ export class ManifoldResourceCredentials {
         <manifold-forward-slot slot="sso-button">
           <slot name="sso-button" />
         </manifold-forward-slot>
+        <manifold-forward-slot slot="no-credentials">
+          <slot name="no-credentials" />
+        </manifold-forward-slot>
       </manifold-credentials>
     );
   }
