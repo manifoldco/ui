@@ -211,7 +211,6 @@ export class ManifoldPlanDetails {
   @logger()
   render() {
     if (this.plan && this.product) {
-      console.log(this.region);
       return (
         <section
           class="wrapper"
