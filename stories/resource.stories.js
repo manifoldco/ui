@@ -127,7 +127,7 @@ storiesOf('Resource', module)
         }
       </style>
       <manifold-resource-container resource-label="${resourceLabel}">
-        <manifold-plan-selector product-label="${productLabel}"></manifold-plan-selector>
+        <manifold-plan-selector product-label="${productLabel}" resource-label="${resourceLabel}"></manifold-plan-selector>
         <menu>
           <manifold-data-resize-button
             resource-label="${resourceLabel}"

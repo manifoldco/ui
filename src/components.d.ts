@@ -409,7 +409,6 @@ export namespace Components {
     'isExistingResource'?: boolean;
     'plan'?: Plan;
     'product'?: Product;
-    'readOnly'?: boolean;
     'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;
@@ -1432,7 +1431,6 @@ declare namespace LocalJSX {
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
     'plan'?: Plan;
     'product'?: Product;
-    'readOnly'?: boolean;
     'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;

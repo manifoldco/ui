@@ -34,7 +34,6 @@ export class ManifoldPlanDetails {
   @Prop() region?: Region;
   @Prop() regions?: string[];
   @Prop() resourceRegion?: string;
-  @Prop() readOnly?: boolean;
   @State() features: Gateway.FeatureMap = {};
   @State() regionId?: string;
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
@@ -251,7 +250,7 @@ export class ManifoldPlanDetails {
                   />
                 ))}
             </dl>
-            {this.regionOptions && (
+            {(this.regionOptions || this.region) && (
               <div class="region">
                 <label
                   class="region-label"
@@ -260,9 +259,7 @@ export class ManifoldPlanDetails {
                 >
                   Region
                 </label>
-                {this.readOnly ? (
-                  this.region && this.region.displayName
-                ) : (
+                {!this.isExistingResource && this.regionOptions && (
                   <manifold-select
                     aria-label="plan region selection"
                     defaultValue={this.regionId}
@@ -272,8 +269,10 @@ export class ManifoldPlanDetails {
                     options={this.regionOptions}
                   />
                 )}
+                {this.isExistingResource && this.region && this.region.displayName}
               </div>
             )}
+
             <footer class="footer">
               <manifold-plan-cost plan={this.plan} selectedFeatures={this.features} />
               <slot name="cta" />

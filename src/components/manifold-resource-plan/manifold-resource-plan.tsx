@@ -38,7 +38,7 @@ export class ManifoldResourcePlan {
         plan={plan}
         product={product}
         region={region}
-        readOnly
+        isExistingResource
       />
     );
   }
