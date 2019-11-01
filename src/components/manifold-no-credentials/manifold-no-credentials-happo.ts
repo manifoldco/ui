@@ -11,4 +11,3 @@ export const noCredsDefault = () => {
 
   return el.componentOnReady();
 };
-
