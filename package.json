@@ -42,7 +42,7 @@
     "happo": "npm run build && npm run generate:gql && manifold run -t manifold -p manifold-ui-ci -- happo run",
     "happo-ci-circleci": "npm run build && npm run generate:gql && happo-ci-circleci",
     "heroku-postbuild": "npm run build:docs",
-    "lint": "npm run lint:js && npm run lint:css && npm run prepare:docs && cd docs && npm i && npm run lint",
+    "lint": "npm run lint:js & npm run lint:css & npm run prepare:docs && cd docs && npm i && npm run lint",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",
