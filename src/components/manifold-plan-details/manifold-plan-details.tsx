@@ -31,8 +31,10 @@ export class ManifoldPlanDetails {
   @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Plan;
   @Prop() product?: Product;
+  @Prop() region?: Region;
   @Prop() regions?: string[];
   @Prop() resourceRegion?: string;
+  @Prop() readOnly?: boolean;
   @State() features: Gateway.FeatureMap = {};
   @State() regionId?: string;
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
@@ -209,6 +211,7 @@ export class ManifoldPlanDetails {
   @logger()
   render() {
     if (this.plan && this.product) {
+      console.log(this.region);
       return (
         <section
           class="wrapper"
@@ -258,14 +261,18 @@ export class ManifoldPlanDetails {
                 >
                   Region
                 </label>
-                <manifold-select
-                  aria-label="plan region selection"
-                  defaultValue={this.regionId}
-                  id="manifold-region-selector"
-                  name="manifold-region-selector"
-                  onUpdateValue={this.handleChangeRegion}
-                  options={this.regionOptions}
-                />
+                {this.readOnly ? (
+                  this.region && this.region.displayName
+                ) : (
+                  <manifold-select
+                    aria-label="plan region selection"
+                    defaultValue={this.regionId}
+                    id="manifold-region-selector"
+                    name="manifold-region-selector"
+                    onUpdateValue={this.handleChangeRegion}
+                    options={this.regionOptions}
+                  />
+                )}
               </div>
             )}
             <footer class="footer">
