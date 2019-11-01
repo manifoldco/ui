@@ -7,8 +7,8 @@ export type Scalars = {
   Int: number,
   Float: number,
   /** 
- * ProfileIdentity allows fetching a profile by its `id` or
-   * by its `subject`.
+ * ProfileIdentity can be a profile's `id` (Manifold's internal id) or
+   * by a profile's `subject` (platforms own id).
  **/
   ProfileIdentity: any,
   /** 
@@ -96,8 +96,10 @@ export type CreateResourceInput = {
   label: Scalars['String'],
   /** A human readble display name for this Resource. */
   displayName?: Maybe<Scalars['String']>,
-  /** The id of the owner for this resource. Omit to use the current user ID. */
+  /** The manifold id of the owner for this resource. Omit to use the current user ID. */
   ownerId?: Maybe<Scalars['ID']>,
+  /** The manifold id or plaform id of the owner for this resource. Omit to use the current user ID. */
+  owner?: Maybe<Scalars['ProfileIdentity']>,
   /** The product to provision for this resource. */
   productId: Scalars['ID'],
   /** The plan to provision for this resource on the given product. */
@@ -980,18 +982,19 @@ export type Query = {
   /** List all available products. */
   products?: Maybe<ProductConnection>,
   /** 
- * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
+ * Look up a profile based on the currently authenticated profile.
    * 
-   * Note: Subject owner is currently only supported with use of a Platform API token.
+   * Note: Only Platform API token are permitted to specify the id parameter to
+   * query for specific profiles by `id` or `subject`.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
   /** 
- *  Return a paginated list of resources. The return value can either contain
-   *  all available resources linked to the token, or can be filtered down to
-   *  fetch data for the specified profile. The owner can either be a ProfileID or
-   *  a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
+ * Return a paginated list of resources. The return value can either contain
+   * all available resources linked to the token, or can be filtered down to
+   * fetch data for the specified profile. The owner can either be a ProfileID or
+   * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
    * 
    * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
