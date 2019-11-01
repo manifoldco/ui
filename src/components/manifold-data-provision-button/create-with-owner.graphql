@@ -1,4 +1,4 @@
-mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!, $ownerId: ID!) {
+mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!, $ownerId: ProfileIdentity!) {
   createResource(
     input: {
       displayName: $resourceLabel
@@ -6,7 +6,7 @@ mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, 
       planId: $planId
       productId: $productId
       regionId: $regionId
-      ownerId: $ownerId
+      owner: $ownerId
     }
   ) {
     data {
