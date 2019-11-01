@@ -14,6 +14,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Dependabot config (#677)
+- Added missing `cta` slot to `<manifold-resource-plan>` (#689)
 
 ## [v0.6.2]
 
