@@ -490,7 +490,7 @@ export namespace Components {
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
-    'refetchUntilValid': boolean;
+    'refetchUntilValid'?: boolean;
     /**
     * Which resource does this belong to?
     */
