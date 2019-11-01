@@ -11,7 +11,7 @@ export class ManifoldResourceRename {
   @Prop() loading?: boolean = true;
   @Prop() disabled?: boolean;
   /** The new label to give to the resource */
-  @Prop() newLabel: string = '';
+  @Prop() newLabel?: string = '';
 
   @loadMark()
   componentWillLoad() {}

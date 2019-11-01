@@ -7,28 +7,28 @@ import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
 interface ClickMessage {
-  newLabel: string;
+  newLabel?: string;
   resourceLabel: string;
   resourceId: string;
 }
 
 interface InvalidMessage {
   message: string;
-  newLabel: string;
+  newLabel?: string;
   resourceLabel: string;
   resourceId: string;
 }
 
 interface SuccessMessage {
   message: string;
-  newLabel: string;
+  newLabel?: string;
   resourceLabel: string;
   resourceId: string;
 }
 
 interface ErrorMessage {
   message: string;
-  newLabel: string;
+  newLabel?: string;
   resourceLabel: string;
   resourceId?: string;
 }
@@ -61,7 +61,7 @@ export class ManifoldDataRenameButton {
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The new label to give to the resource */
-  @Prop() newLabel: string = '';
+  @Prop() newLabel?: string;
   /** The id of the resource to rename, will be fetched if not set */
   @Prop({ mutable: true }) resourceId?: string = '';
   @Prop() loading?: boolean = false;
@@ -82,7 +82,8 @@ export class ManifoldDataRenameButton {
   }
 
   async rename() {
-    if (!this.graphqlFetch || this.loading) {
+    const newLabel = this.newLabel; // eslint-disable-line prefer-destructuring
+    if (!this.graphqlFetch || this.loading || !newLabel) {
       return;
     }
 
@@ -93,12 +94,12 @@ export class ManifoldDataRenameButton {
 
     const resourceDetails = {
       resourceLabel: this.resourceLabel || '',
-      newLabel: this.newLabel,
+      newLabel,
       resourceId: this.resourceId,
     };
 
     // invalid event
-    if (this.newLabel.length < 3) {
+    if (newLabel.length < 3) {
       const message: InvalidMessage = {
         ...resourceDetails,
         message: 'Must be at least 3 characters',
@@ -106,7 +107,7 @@ export class ManifoldDataRenameButton {
       this.invalid.emit(message);
       return;
     }
-    if (!this.validate(this.newLabel)) {
+    if (!this.validate(newLabel)) {
       const message: InvalidMessage = {
         ...resourceDetails,
         message: 'Must start with a lowercase letter, and use only lowercase, numbers, and hyphens',
@@ -124,7 +125,7 @@ export class ManifoldDataRenameButton {
       query: queryResourceRename,
       variables: {
         resourceId: this.resourceId,
-        newLabel: this.newLabel,
+        newLabel,
       },
       element: this.el,
     });
@@ -136,13 +137,13 @@ export class ManifoldDataRenameButton {
 
     if (data && data.resource) {
       this.newLabel = data.resource.label;
-      resourceDetails.newLabel = this.newLabel;
+      resourceDetails.newLabel = newLabel;
     }
 
     // success event
     const successMessage: SuccessMessage = {
       ...resourceDetails,
-      message: `${this.resourceLabel} renamed to ${this.newLabel}`,
+      message: `${this.resourceLabel} renamed to ${newLabel}`,
     };
 
     this.success.emit(successMessage);

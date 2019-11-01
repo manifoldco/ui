@@ -211,7 +211,7 @@ export namespace Components {
     /**
     * The new label to give to the resource
     */
-    'newLabel': string;
+    'newLabel'?: string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -542,7 +542,7 @@ export namespace Components {
     /**
     * The new label to give to the resource
     */
-    'newLabel': string;
+    'newLabel'?: string;
   }
   interface ManifoldResourceSso {
     'gqlData'?: Resource;
