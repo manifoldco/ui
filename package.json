@@ -1,7 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
-  "version": "0.6.2",
+  "version": "0.6.3-rc.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -25,7 +25,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
     "build": "npm run update-version && stencil build",
-    "build:docs": "npm run prepare:docs && cd docs && npm i && npm run build",
+    "build:docs": "npm run copy-changelog && cd docs && npm i && npm run build",
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
     "build:watch": "npm run update-version && stencil build --watch",
     "bundlesize": "npm run build && npx bundlesize",
@@ -42,11 +42,10 @@
     "happo": "npm run build && npm run generate:gql && manifold run -t manifold -p manifold-ui-ci -- happo run",
     "happo-ci-circleci": "npm run build && npm run generate:gql && happo-ci-circleci",
     "heroku-postbuild": "npm run build:docs",
-    "lint": "npm run lint:js && npm run lint:css && npm run prepare:docs && cd docs && npm i && npm run lint",
+    "lint": "npm run lint:js & npm run lint:css & cd docs && npm i && npm run lint",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",
-    "prepare:docs": "npm run prepare:package && npm run copy-changelog",
     "prepare:package": "npm run build && node scripts/prepublish",
     "publish": "npm run prepare:package && node scripts/publish",
     "storybook": "start-storybook -p 6006",
