@@ -8,7 +8,7 @@ import { Product, Plan, Resource, Region } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
 
   @loadMark()
   componentWillLoad() {}

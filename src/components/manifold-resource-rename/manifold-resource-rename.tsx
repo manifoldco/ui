@@ -8,7 +8,7 @@ import { Resource } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
   @Prop() disabled?: boolean;
   /** The new label to give to the resource */
   @Prop() newLabel: string = '';

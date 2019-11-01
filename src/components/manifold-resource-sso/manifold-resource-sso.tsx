@@ -8,7 +8,7 @@ import { Resource } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-sso' })
 export class ManifoldResourceSso {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
 
   @loadMark()
   componentWillLoad() {}

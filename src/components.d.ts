@@ -111,7 +111,7 @@ export namespace Components {
   }
   interface ManifoldCredentialsView {
     'credentials'?: ResourceCredentialsQuery['resource']['credentials']['edges'];
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldDataDeprovisionButton {
     /**
@@ -498,12 +498,12 @@ export namespace Components {
   }
   interface ManifoldResourceCredentials {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
     'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceList {
     /**
@@ -529,16 +529,16 @@ export namespace Components {
   }
   interface ManifoldResourcePlan {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceRename {
     'disabled'?: boolean;
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
     /**
     * The new label to give to the resource
     */
@@ -546,11 +546,11 @@ export namespace Components {
   }
   interface ManifoldResourceSso {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceStatus {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldResourceStatusView {

@@ -8,7 +8,7 @@ import { Resource } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-credentials' })
 export class ManifoldResourceCredentials {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
   @Prop() noCredentials?: boolean = false;
 
   @loadMark()
