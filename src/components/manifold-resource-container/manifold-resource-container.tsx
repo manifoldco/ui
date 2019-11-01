@@ -134,7 +134,7 @@ export class ManifoldResourceContainer {
   /** Which resource does this belong to? */
   @Prop() resourceLabel?: string;
   /** Set whether or not to refetch the resource from the api until it is in an available and valid state */
-  @Prop() refetchUntilValid: boolean = false;
+  @Prop() refetchUntilValid?: boolean = false;
   @State() gqlData?: Resource;
   @State() loading: boolean = true;
   @State() timeout?: number;

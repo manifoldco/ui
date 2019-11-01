@@ -8,7 +8,7 @@ import loadMark from '../../utils/loadMark';
 @Component({ tag: 'manifold-resource-product' })
 export class ManifoldResourceProduct {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
 
   @loadMark()
   componentWillLoad() {}

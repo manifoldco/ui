@@ -8,7 +8,7 @@ import { Resource } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-deprovision' })
 export class ManifoldResourceDeprovision {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
 
   @loadMark()
   componentWillLoad() {}

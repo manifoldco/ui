@@ -111,7 +111,7 @@ export namespace Components {
   }
   interface ManifoldCredentialsView {
     'credentials'?: ResourceCredentialsQuery['resource']['credentials']['edges'];
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldDataDeprovisionButton {
     /**
@@ -211,7 +211,7 @@ export namespace Components {
     /**
     * The new label to give to the resource
     */
-    'newLabel': string;
+    'newLabel'?: string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -490,7 +490,7 @@ export namespace Components {
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
-    'refetchUntilValid': boolean;
+    'refetchUntilValid'?: boolean;
     /**
     * Which resource does this belong to?
     */
@@ -498,12 +498,12 @@ export namespace Components {
   }
   interface ManifoldResourceCredentials {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
     'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceList {
     /**
@@ -529,28 +529,28 @@ export namespace Components {
   }
   interface ManifoldResourcePlan {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceRename {
     'disabled'?: boolean;
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
     /**
     * The new label to give to the resource
     */
-    'newLabel': string;
+    'newLabel'?: string;
   }
   interface ManifoldResourceSso {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
   }
   interface ManifoldResourceStatus {
     'gqlData'?: Resource;
-    'loading': boolean;
+    'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
   interface ManifoldResourceStatusView {

@@ -19,6 +19,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Dependabot config (#677)
 - Added missing `cta` slot to `<manifold-resource-plan>` (#689)
+- Fixed `loading` being a required prop in TypeScript despite it being hidden (#687)
 
 ## [v0.6.2]
 
