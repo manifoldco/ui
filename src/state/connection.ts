@@ -4,7 +4,7 @@ import { createRestFetch } from '../utils/restFetch';
 
 const baseWait = 15000;
 
-export type Subscriber = (oldToken?: string, newToken?: string) => void;
+export type Subscriber = (newToken?: string) => void;
 
 const INITIALIZED = 'manifold-connection-initialize';
 
@@ -56,7 +56,7 @@ export class ConnectionState {
   };
 
   setAuthToken = (token: string) => {
-    this.subscribers.forEach(s => s(this.authToken, token));
+    this.subscribers.forEach(s => s(token));
     this.authToken = token;
   };
 
