@@ -148,7 +148,7 @@ export class ManifoldDataProvisionButton {
         productId: this.productId,
         regionId: this.regionId,
         resourceLabel: this.resourceLabel,
-        ownerId: this.ownerId,
+        owner: this.ownerId,
       },
       element: this.el,
     });

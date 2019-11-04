@@ -423,6 +423,19 @@ export type Mutation = {
    * Only Platform API tokens are able to change subjects.
  **/
   updateProfileSubject: UpdateProfileSubjectPayload,
+  /** 
+ * Update a profile state.
+   * 
+   * Changing the state will change the state of a platform profile.
+   * The state of the profile can be ACTIVE, SUSPENDED, or DELETED.
+   * The default state of a profile is ACTIVE.
+   * Changing this results in a change to the abilities of a platform profile.
+   * 
+   * The consequences are:
+   * * the profile will become SUSPENDED, DELETED, or ACTIVE
+   * * the abilities of the profile will reflect the new state
+ **/
+  updateProfileState: UpdateProfileStatePayload,
 };
 
 
@@ -500,6 +513,17 @@ export type MutationCreateProfileAuthTokenArgs = {
  **/
 export type MutationUpdateProfileSubjectArgs = {
   input: UpdateProfileSubjectInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateProfileStateArgs = {
+  input: UpdateProfileStateInput
 };
 
 export type Node = {
@@ -1383,6 +1407,22 @@ export type SubLineItemEdge = {
 
 
 /** 
+ * UpdateProfileStateInput accepts a new profile state for a given profile subject.
+ * The state is the new profile state.
+ * The subject is the profile subject.
+ **/
+export type UpdateProfileStateInput = {
+  subject: Scalars['String'],
+  state: ProfileState,
+};
+
+/** The payload from updating the profile state is the updated profile. */
+export type UpdateProfileStatePayload = {
+   __typename?: 'UpdateProfileStatePayload',
+  data: Profile,
+};
+
+/** 
  * UpdateProfileSubjectInput accepts a profile subject for a given profileId.
  * The subject is the new subject to update to.
  * The id is the profile identity, it can either be a subject (the platform's id) or a manifold internal profileId.
@@ -1392,7 +1432,7 @@ export type UpdateProfileSubjectInput = {
   id: Scalars['ProfileIdentity'],
 };
 
-/** The payload from updating the profile subject is the update profile. */
+/** The payload from updating the profile subject is the updated profile. */
 export type UpdateProfileSubjectPayload = {
    __typename?: 'UpdateProfileSubjectPayload',
   data: Profile,
@@ -1519,7 +1559,7 @@ export type CreateResourceWithOwnerMutationVariables = {
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
   resourceLabel: Scalars['String'],
-  ownerId: Scalars['ID']
+  owner: Scalars['ProfileIdentity']
 };
 
 
