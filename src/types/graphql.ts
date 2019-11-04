@@ -1777,7 +1777,7 @@ export type ResourceNoCredentialsQuery = (
   )> }
 );
 
-export type PlanDetailsFragment = (
+export type PlanFragment = (
   { __typename?: 'Plan' }
   & Pick<Plan, 'id' | 'displayName' | 'label' | 'free' | 'cost'>
   & { fixedFeatures: Maybe<(
@@ -1854,7 +1854,7 @@ export type PlanListQuery = (
         { __typename?: 'PlanEdge' }
         & { node: (
           { __typename?: 'Plan' }
-          & PlanDetailsFragment
+          & PlanFragment
         ) }
       )> }
     )> }
