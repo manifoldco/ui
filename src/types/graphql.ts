@@ -1559,7 +1559,7 @@ export type CreateResourceWithOwnerMutationVariables = {
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
   resourceLabel: Scalars['String'],
-  ownerId: Scalars['ProfileIdentity']
+  owner: Scalars['ProfileIdentity']
 };
 
 
