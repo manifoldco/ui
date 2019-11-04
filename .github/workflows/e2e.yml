@@ -12,7 +12,7 @@ jobs:
     if:
       github.event.deployment_status.state == 'SUCCESS' &&
       github.event.deployment_status.creator.login == 'now[bot]'
-    name: Run e2e tests with test cafe
+    name: Run e2e tests with TestCafe
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
