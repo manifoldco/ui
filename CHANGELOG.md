@@ -27,7 +27,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added missing `cta` slot to `<manifold-resource-plan>` (#689)
 - Fixed `loading` being a required prop in TypeScript despite it being hidden (#687)
 
-## [v0.6.2]
+## [0.6.2] - 2019-10-31
 
 ### Added
 
@@ -405,7 +405,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed the `manifold-resource-credentials` component to use the standalone `manifold-credentials`
   component.
 
-[unreleased]: https://github.com/manifoldco/ui/compare/v0.6.1...HEAD
+[0.6.4]: https://github.com/manifoldco/ui/compare/v0.6.3...v0.6.4
+[0.6.3]: https://github.com/manifoldco/ui/compare/v0.6.2...v0.6.3
+[0.6.2]: https://github.com/manifoldco/ui/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/manifoldco/ui/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/manifoldco/ui/compare/v0.5.17...v0.6.0
 [0.5.17]: https://github.com/manifoldco/ui/compare/v0.5.16...v0.5.17
