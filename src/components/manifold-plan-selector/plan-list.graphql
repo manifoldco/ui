@@ -1,0 +1,81 @@
+fragment plan on Plan {
+  id
+  displayName
+  label
+  free
+  cost
+  fixedFeatures(first: 25) {
+    edges {
+      node {
+        displayName
+        displayValue
+        label
+      }
+    }
+  }
+  meteredFeatures(first: 25) {
+    edges {
+      node {
+        label
+        displayName
+        numericDetails {
+          unit
+          costTiers {
+            limit
+            cost
+          }
+        }
+      }
+    }
+  }
+  configurableFeatures(first: 25) {
+    edges {
+      node {
+        label
+        displayName
+        type
+        options {
+          displayName
+          displayValue
+          label
+        }
+        numericDetails {
+          increment
+          min
+          max
+          unit
+          costTiers {
+            limit
+            cost
+          }
+        }
+      }
+    }
+  }
+  regions(first: 25, orderBy: { field: DISPLAY_NAME, direction: ASC }) {
+    edges {
+      node {
+        id
+        displayName
+        platform
+        dataCenter
+      }
+    }
+  }
+}
+
+query PlanList($productLabel: String!) {
+  product(label: $productLabel) {
+    id
+    displayName
+    label
+    logoUrl
+    plans(first: 25, orderBy: { field: COST, direction: ASC }) {
+      edges {
+        node {
+          ...plan
+        }
+      }
+    }
+  }
+}
