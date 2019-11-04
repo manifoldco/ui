@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Pull the Docker image
         run: docker pull testcafe/testcafe
+      - name: Tests to Run
+        run: ls /home/runner/work/ui/ui/e2e
       - name: Run TestCafe
         run:
           docker run -e DEPLOY_URL -v /home/runner/work/ui/ui/e2e:/tests -i testcafe/testcafe
