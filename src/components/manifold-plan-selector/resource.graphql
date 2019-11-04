@@ -1,0 +1,14 @@
+query Resource($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    region {
+      id
+      displayName
+    }
+    plan {
+      id
+      product {
+        label
+      }
+    }
+  }
+}

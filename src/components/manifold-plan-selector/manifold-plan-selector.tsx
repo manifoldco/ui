@@ -1,47 +1,13 @@
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import planData from '../../data/plan-details-query';
 import { Product, Resource, PlanEdge } from '../../types/graphql';
 
-const plansQuery = gql`
-  query PLAN_LIST($productLabel: String!) {
-    product(label: $productLabel) {
-      id
-      displayName
-      label
-      logoUrl
-      plans(first: 25, orderBy: { field: COST, direction: ASC }) {
-        edges {
-          node {
-            ${planData}
-          }
-        }
-      }
-    }
-  }
-`;
-
-const resourceQuery = gql`
-  query RESOURCE_PRODUCT($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      region {
-        id
-        displayName
-      }
-      plan {
-        id
-        product {
-          label
-        }
-      }
-    }
-  }
-`;
+import plansQuery from './plan-list.graphql';
+import resourceQuery from './resource.graphql';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {

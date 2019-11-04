@@ -1,6 +1,4 @@
-import { gql } from '@manifoldco/gql-zero';
-
-export default gql`
+fragment planDetails on Plan {
   id
   displayName
   label
@@ -64,4 +62,16 @@ export default gql`
       }
     }
   }
-`;
+}
+
+query Plan($planId: ID!) {
+  plan(id: $planId) {
+    ...planDetails
+    product {
+      id
+      displayName
+      label
+      logoUrl
+    }
+  }
+}
