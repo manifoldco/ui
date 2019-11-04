@@ -7,7 +7,7 @@ describe('connection state', () => {
     const subscriber = jest.fn();
     state.subscribe(subscriber);
     state.setAuthToken('new-token');
-    expect(subscriber).toHaveBeenCalledWith('old-token', 'new-token');
+    expect(subscriber).toHaveBeenCalledWith('new-token');
   });
 
   it('will not notify after unsubscribing', () => {
