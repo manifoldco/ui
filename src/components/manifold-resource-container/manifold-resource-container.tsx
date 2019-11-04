@@ -156,7 +156,7 @@ export class ManifoldResourceContainer {
 
   @loadMark()
   componentWillLoad() {
-    return this.fetchResource(this.resourceLabel);
+    this.fetchResource(this.resourceLabel);
   }
 
   componentDidUnload() {
