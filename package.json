@@ -40,6 +40,7 @@
     "generate:specs:provisioning": "npx @manifoldco/swagger-to-ts src/spec/provisioning/v1.yaml -w 'export namespace Provisioning' -o src/types/provisioning.ts",
     "generate:specs:connector": "npx @manifoldco/swagger-to-ts src/spec/connector/v1.yaml -w 'export namespace Connector' -o src/types/connector.ts",
     "happo": "npm run build && npm run generate:gql && manifold run -t manifold -p manifold-ui-ci -- happo run",
+    "testcafe:dev": "DEPLOY_URL=http://localhost:6006 npx testcafe chrome e2e/",
     "happo-ci-circleci": "npm run build && npm run generate:gql && happo-ci-circleci",
     "heroku-postbuild": "npm run build:docs",
     "lint": "npm run lint:js & npm run lint:css & cd docs && npm i && npm run lint",
@@ -120,6 +121,7 @@
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^19.0.0",
     "ts-loader": "^6.2.1",
+    "testcafe": "^1.5.0",
     "wait-on": "^3.3.0",
     "webpack": "^4.41.2"
   }
