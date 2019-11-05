@@ -27,6 +27,8 @@ storiesOf('Resource', module)
       localStorage.getItem('manifold-resource-label') || 'my-resource'
     );
     localStorage.setItem('manifold-resource-label', resourceLabel);
+    const noCredentials = boolean('no-credentials', false);
+    const noCredentialsSlot = boolean('no-credentials-slot', false);
 
     // see .storybook/preview-head.html for SSO setup
 
@@ -52,10 +54,18 @@ storiesOf('Resource', module)
         <h2>SSO</h2>
         <manifold-resource-sso>Log in to Dashboard</manifold-resource-sso>
         <h2>Credentials</h2>
-        <manifold-resource-credentials>
+        <manifold-resource-credentials no-credentials="${noCredentials}">
           <manifold-button color="pink" slot="show-button">
             Show credentials
           </manifold-button>
+          <manifold-resource-sso slot="sso-button">
+            SSO into Dashboard
+          </manifold-resource-sso>
+          ${noCredentialsSlot &&
+            `
+          <div slot="no-credentials">
+            Access to <manifold-data-product-name resource-label="${resourceLabel}"></manifold-data-product-name> is provided without credentials. SSO into your product dashboard to configure your service.
+          </div>`}
         </manifold-resource-credentials>
         <h2>Logo</h2>
         <manifold-data-resource-logo resource-label="${resourceLabel}"></manifold-data-resource-logo>
@@ -127,7 +137,7 @@ storiesOf('Resource', module)
         }
       </style>
       <manifold-resource-container resource-label="${resourceLabel}">
-        <manifold-plan-selector product-label="${productLabel}"></manifold-plan-selector>
+        <manifold-plan-selector product-label="${productLabel}" resource-label="${resourceLabel}"></manifold-plan-selector>
         <menu>
           <manifold-data-resize-button
             resource-label="${resourceLabel}"

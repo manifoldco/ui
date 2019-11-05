@@ -8,7 +8,7 @@ import { Resource } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-status' })
 export class ManifoldResourceStatus {
   @Prop() gqlData?: Resource;
-  @Prop() loading: boolean = true;
+  @Prop() loading?: boolean = true;
   @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
   @loadMark()

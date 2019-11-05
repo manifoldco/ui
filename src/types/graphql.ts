@@ -7,8 +7,8 @@ export type Scalars = {
   Int: number,
   Float: number,
   /** 
- * ProfileIdentity allows fetching a profile by its `id` or
-   * by its `subject`.
+ * ProfileIdentity can be a profile's `id` (Manifold's internal id) or
+   * by a profile's `subject` (platforms own id).
  **/
   ProfileIdentity: any,
   /** 
@@ -96,8 +96,10 @@ export type CreateResourceInput = {
   label: Scalars['String'],
   /** A human readble display name for this Resource. */
   displayName?: Maybe<Scalars['String']>,
-  /** The id of the owner for this resource. Omit to use the current user ID. */
+  /** The manifold id of the owner for this resource. Omit to use the current user ID. */
   ownerId?: Maybe<Scalars['ID']>,
+  /** The manifold id or plaform id of the owner for this resource. Omit to use the current user ID. */
+  owner?: Maybe<Scalars['ProfileIdentity']>,
   /** The product to provision for this resource. */
   productId: Scalars['ID'],
   /** The plan to provision for this resource on the given product. */
@@ -421,6 +423,19 @@ export type Mutation = {
    * Only Platform API tokens are able to change subjects.
  **/
   updateProfileSubject: UpdateProfileSubjectPayload,
+  /** 
+ * Update a profile state.
+   * 
+   * Changing the state will change the state of a platform profile.
+   * The state of the profile can be ACTIVE, SUSPENDED, or DELETED.
+   * The default state of a profile is ACTIVE.
+   * Changing this results in a change to the abilities of a platform profile.
+   * 
+   * The consequences are:
+   * * the profile will become SUSPENDED, DELETED, or ACTIVE
+   * * the abilities of the profile will reflect the new state
+ **/
+  updateProfileState: UpdateProfileStatePayload,
 };
 
 
@@ -498,6 +513,17 @@ export type MutationCreateProfileAuthTokenArgs = {
  **/
 export type MutationUpdateProfileSubjectArgs = {
   input: UpdateProfileSubjectInput
+};
+
+
+/** 
+ * Mutations for the Manifold GraphQL API
+ * 
+ * More details and usage available in our
+ * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
+ **/
+export type MutationUpdateProfileStateArgs = {
+  input: UpdateProfileStateInput
 };
 
 export type Node = {
@@ -980,18 +1006,19 @@ export type Query = {
   /** List all available products. */
   products?: Maybe<ProductConnection>,
   /** 
- * Look up a profile by `id`, by `subject`, or based on the currently authenticated profile.
+ * Look up a profile based on the currently authenticated profile.
    * 
-   * Note: Subject owner is currently only supported with use of a Platform API token.
+   * Note: Only Platform API token are permitted to specify the id parameter to
+   * query for specific profiles by `id` or `subject`.
  **/
   profile: Profile,
   /** Look up a node by its `id`. */
   node: Node,
   /** 
- *  Return a paginated list of resources. The return value can either contain
-   *  all available resources linked to the token, or can be filtered down to
-   *  fetch data for the specified profile. The owner can either be a ProfileID or
-   *  a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
+ * Return a paginated list of resources. The return value can either contain
+   * all available resources linked to the token, or can be filtered down to
+   * fetch data for the specified profile. The owner can either be a ProfileID or
+   * a Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.
    * 
    * Note: Subject owner is currently only supported with use of a Platform API token.
  **/
@@ -1380,6 +1407,22 @@ export type SubLineItemEdge = {
 
 
 /** 
+ * UpdateProfileStateInput accepts a new profile state for a given profile subject.
+ * The state is the new profile state.
+ * The subject is the profile subject.
+ **/
+export type UpdateProfileStateInput = {
+  subject: Scalars['String'],
+  state: ProfileState,
+};
+
+/** The payload from updating the profile state is the updated profile. */
+export type UpdateProfileStatePayload = {
+   __typename?: 'UpdateProfileStatePayload',
+  data: Profile,
+};
+
+/** 
  * UpdateProfileSubjectInput accepts a profile subject for a given profileId.
  * The subject is the new subject to update to.
  * The id is the profile identity, it can either be a subject (the platform's id) or a manifold internal profileId.
@@ -1389,7 +1432,7 @@ export type UpdateProfileSubjectInput = {
   id: Scalars['ProfileIdentity'],
 };
 
-/** The payload from updating the profile subject is the update profile. */
+/** The payload from updating the profile subject is the updated profile. */
 export type UpdateProfileSubjectPayload = {
    __typename?: 'UpdateProfileSubjectPayload',
   data: Profile,
@@ -1516,7 +1559,7 @@ export type CreateResourceWithOwnerMutationVariables = {
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
   resourceLabel: Scalars['String'],
-  ownerId: Scalars['ID']
+  owner: Scalars['ProfileIdentity']
 };
 
 
@@ -1706,6 +1749,216 @@ export type ProductsQuery = (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
     ) }
+  )> }
+);
+
+export type ResourceNoCredentialsQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceNoCredentialsQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { plan: Maybe<(
+      { __typename?: 'Plan' }
+      & { product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'displayName'>
+      )> }
+    )>, owner: Maybe<(
+      { __typename?: 'Profile' }
+      & { platform: (
+        { __typename?: 'Platform' }
+        & Pick<Platform, 'domain'>
+      ) }
+    )> }
+  )> }
+);
+
+export type PlanFragment = (
+  { __typename?: 'Plan' }
+  & Pick<Plan, 'id' | 'displayName' | 'label' | 'free' | 'cost'>
+  & { fixedFeatures: Maybe<(
+    { __typename?: 'PlanFixedFeatureConnection' }
+    & { edges: Array<(
+      { __typename?: 'PlanFixedFeatureEdge' }
+      & { node: (
+        { __typename?: 'PlanFixedFeature' }
+        & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+      ) }
+    )> }
+  )>, meteredFeatures: Maybe<(
+    { __typename?: 'PlanMeteredFeatureConnection' }
+    & { edges: Array<(
+      { __typename?: 'PlanMeteredFeatureEdge' }
+      & { node: (
+        { __typename?: 'PlanMeteredFeature' }
+        & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+        & { numericDetails: (
+          { __typename?: 'PlanMeteredFeatureNumericDetails' }
+          & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+          & { costTiers: Maybe<Array<(
+            { __typename?: 'PlanFeatureCostTier' }
+            & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+          )>> }
+        ) }
+      ) }
+    )> }
+  )>, configurableFeatures: Maybe<(
+    { __typename?: 'PlanConfigurableFeatureConnection' }
+    & { edges: Array<(
+      { __typename?: 'PlanConfigurableFeatureEdge' }
+      & { node: (
+        { __typename?: 'PlanConfigurableFeature' }
+        & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+        & { options: Maybe<Array<(
+          { __typename?: 'PlanFixedFeature' }
+          & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+        )>>, numericDetails: Maybe<(
+          { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+          & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+          & { costTiers: Maybe<Array<(
+            { __typename?: 'PlanFeatureCostTier' }
+            & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+          )>> }
+        )> }
+      ) }
+    )> }
+  )>, regions: Maybe<(
+    { __typename?: 'RegionConnection' }
+    & { edges: Array<(
+      { __typename?: 'RegionEdge' }
+      & { node: (
+        { __typename?: 'Region' }
+        & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+      ) }
+    )> }
+  )> }
+);
+
+export type PlanListQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type PlanListQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'displayName' | 'label' | 'logoUrl'>
+    & { plans: Maybe<(
+      { __typename?: 'PlanConnection' }
+      & { edges: Array<(
+        { __typename?: 'PlanEdge' }
+        & { node: (
+          { __typename?: 'Plan' }
+          & PlanFragment
+        ) }
+      )> }
+    )> }
+  )> }
+);
+
+export type ResourceQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { region: Maybe<(
+      { __typename?: 'Region' }
+      & Pick<Region, 'id' | 'displayName'>
+    )>, plan: Maybe<(
+      { __typename?: 'Plan' }
+      & Pick<Plan, 'id'>
+      & { product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'label'>
+      )> }
+    )> }
+  )> }
+);
+
+export type PlanDetailsFragment = (
+  { __typename?: 'Plan' }
+  & Pick<Plan, 'id' | 'displayName' | 'label' | 'free' | 'cost'>
+  & { fixedFeatures: Maybe<(
+    { __typename?: 'PlanFixedFeatureConnection' }
+    & { edges: Array<(
+      { __typename?: 'PlanFixedFeatureEdge' }
+      & { node: (
+        { __typename?: 'PlanFixedFeature' }
+        & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+      ) }
+    )> }
+  )>, meteredFeatures: Maybe<(
+    { __typename?: 'PlanMeteredFeatureConnection' }
+    & { edges: Array<(
+      { __typename?: 'PlanMeteredFeatureEdge' }
+      & { node: (
+        { __typename?: 'PlanMeteredFeature' }
+        & Pick<PlanMeteredFeature, 'label' | 'displayName'>
+        & { numericDetails: (
+          { __typename?: 'PlanMeteredFeatureNumericDetails' }
+          & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+          & { costTiers: Maybe<Array<(
+            { __typename?: 'PlanFeatureCostTier' }
+            & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+          )>> }
+        ) }
+      ) }
+    )> }
+  )>, configurableFeatures: Maybe<(
+    { __typename?: 'PlanConfigurableFeatureConnection' }
+    & { edges: Array<(
+      { __typename?: 'PlanConfigurableFeatureEdge' }
+      & { node: (
+        { __typename?: 'PlanConfigurableFeature' }
+        & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+        & { options: Maybe<Array<(
+          { __typename?: 'PlanFixedFeature' }
+          & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+        )>>, numericDetails: Maybe<(
+          { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+          & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>
+          & { costTiers: Maybe<Array<(
+            { __typename?: 'PlanFeatureCostTier' }
+            & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+          )>> }
+        )> }
+      ) }
+    )> }
+  )>, regions: Maybe<(
+    { __typename?: 'RegionConnection' }
+    & { edges: Array<(
+      { __typename?: 'RegionEdge' }
+      & { node: (
+        { __typename?: 'Region' }
+        & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+      ) }
+    )> }
+  )> }
+);
+
+export type PlanQueryVariables = {
+  planId: Scalars['ID']
+};
+
+
+export type PlanQuery = (
+  { __typename?: 'Query' }
+  & { plan: Maybe<(
+    { __typename?: 'Plan' }
+    & { product: Maybe<(
+      { __typename?: 'Product' }
+      & Pick<Product, 'id' | 'displayName' | 'label' | 'logoUrl'>
+    )> }
+    & PlanDetailsFragment
   )> }
 );
 

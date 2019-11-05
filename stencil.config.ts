@@ -66,6 +66,7 @@ export const config: Config = {
       '<rootDir>/dist/',
       '<rootDir>/docs/',
       '<rootDir>/pkg/',
+      '<rootDir>/e2e/',
       '/node_modules/',
     ],
     transform: {

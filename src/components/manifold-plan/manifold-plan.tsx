@@ -1,26 +1,12 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { Plan } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import planData from '../../data/plan-details-query';
 
-const planQuery = gql`
-  query PRODUCT_AND_PLAN($planId: ID!) {
-    plan(id: $planId) {
-      ${planData}
-      product {
-        id
-        displayName
-        label
-        logoUrl
-      }
-    }
-  }
-`;
+import planQuery from './plan.graphql';
 
 @Component({ tag: 'manifold-plan' })
 export class ManifoldPlan {

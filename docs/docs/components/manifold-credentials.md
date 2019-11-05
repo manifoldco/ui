@@ -29,5 +29,21 @@ more about slots][slot].
 </manifold-credentials>
 ```
 
+## No credentials
+
+Occasionally a resource will be authorized without credentials exposed to the user. In those cases
+the component will display a message and an SSO button to the user. Both the message and the SSO
+button can be customized via [slots][slot].
+
+```jsx
+<manifold-credentials resource-label="my-resource">
+  <manifold-resource-sso slot="sso-button">SSO into Dashboard</manifold-resource-sso>
+  <div slot="no-credentials">
+    Access to this resource is authorized without credentials. 
+    SSO into the resource dashboard to configure your service.
+  </div>
+</manifold-credentials>
+```
+
 [auth]: /advanced/authentication
 [slot]: https://stenciljs.com/docs/templating-jsx/

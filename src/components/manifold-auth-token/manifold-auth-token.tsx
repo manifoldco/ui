@@ -34,9 +34,9 @@ export class ManifoldAuthToken {
   componentWillLoad() {
     this.setExternalToken(this.token);
     if (this.subscribe) {
-      this.unsubscribe = this.subscribe((oldToken?: string, newToken?: string) => {
+      this.unsubscribe = this.subscribe((newToken?: string) => {
         this.internalToken = newToken;
-        if (oldToken && !newToken) {
+        if (!newToken) {
           // changing this to any new string will cause a token refresh. getTime() does that wonderfully.
           this.tick = new Date().getTime().toString();
           this.clear.emit();

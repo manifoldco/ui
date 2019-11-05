@@ -13,7 +13,7 @@ import loadMark from '../../utils/loadMark';
 export class ManifoldCredentialsView {
   @Element() private el: HTMLElement;
   @Prop() credentials?: ResourceCredentialsQuery['resource']['credentials']['edges'];
-  @Prop() loading: boolean = false;
+  @Prop() loading?: boolean = false;
   @State() shouldTransition: boolean = false;
   @Event() credentialsRequested: EventEmitter;
 

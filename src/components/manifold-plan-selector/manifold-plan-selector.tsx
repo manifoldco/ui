@@ -1,43 +1,13 @@
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import planData from '../../data/plan-details-query';
 import { Product, Resource, PlanEdge } from '../../types/graphql';
 
-const plansQuery = gql`
-  query PLAN_LIST($productLabel: String!) {
-    product(label: $productLabel) {
-      id
-      displayName
-      label
-      logoUrl
-      plans(first: 25, orderBy: { field: COST, direction: ASC }) {
-        edges {
-          node {
-            ${planData}
-          }
-        }
-      }
-    }
-  }
-`;
-
-const resourceQuery = gql`
-  query RESOURCE_PRODUCT($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      plan {
-        id
-        product {
-          label
-        }
-      }
-    }
-  }
-`;
+import plansQuery from './plan-list.graphql';
+import resourceQuery from './resource.graphql';
 
 @Component({ tag: 'manifold-plan-selector' })
 export class ManifoldPlanSelector {
@@ -128,6 +98,7 @@ export class ManifoldPlanSelector {
     if (data && data.resource) {
       this.resource = data.resource;
       if (data.resource && data.resource.plan && data.resource.plan.product) {
+        // TODO move plan fetching to resource query
         this.fetchPlans(data.resource.plan.product.label);
       }
     }
@@ -156,6 +127,7 @@ export class ManifoldPlanSelector {
         product={this.product}
         regions={regions}
         selectedResource={this.resource}
+        isExistingResource={!!this.resource}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />
