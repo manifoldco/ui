@@ -1,4 +1,4 @@
-import analytics from '../../packages/analytics';
+import analytics from '../packages/analytics';
 
 interface ErrorDetail {
   code?: string;
