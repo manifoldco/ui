@@ -15,7 +15,7 @@ export function report(detail: ErrorDetail, element?: HTMLElement) {
   };
 
   analytics({
-    name: 'error',
+    name: 'Error',
     type: 'error',
     properties: {
       code: detail.code || '',
