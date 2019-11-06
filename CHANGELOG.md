@@ -11,6 +11,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `<manifold-performance>` docs removed (#706)
 
+### Added
+
+- Error reporting to Manifold (#708)
+
 ## [0.6.4] - 2019-11-04
 
 ### Fixed
