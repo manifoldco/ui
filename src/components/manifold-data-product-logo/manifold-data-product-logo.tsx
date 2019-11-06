@@ -1,20 +1,12 @@
 import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { Product } from '../../types/graphql';
+import { Product, ProductLogoQuery } from '../../types/graphql';
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
-const query = gql`
-  query PRODUCT_LOGO($productLabel: String!) {
-    product(label: $productLabel) {
-      displayName
-      logoUrl
-    }
-  }
-`;
+import productLogoQuery from './product-logo.graphql';
 
 @Component({ tag: 'manifold-data-product-logo' })
 export class ManifoldDataProductLogo {
@@ -27,7 +19,7 @@ export class ManifoldDataProductLogo {
   @Prop() productLabel?: string;
   /** _(Deprecated)_ Look up product logo from resource */
   @Prop() resourceLabel?: string;
-  @State() product?: Product;
+  @State() product?: Pick<Product, 'displayName' | 'logoUrl'>;
 
   @Watch('productLabel') productChange(newProduct: string) {
     this.fetchProduct(newProduct);
@@ -45,7 +37,11 @@ export class ManifoldDataProductLogo {
 
     this.product = undefined;
     const variables = { productLabel };
-    const { data } = await this.graphqlFetch({ query, variables, element: this.el });
+    const { data } = await this.graphqlFetch<ProductLogoQuery>({
+      query: productLogoQuery,
+      variables,
+      element: this.el,
+    });
 
     this.product = (data && data.product) || undefined;
   };

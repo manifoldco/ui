@@ -1,4 +1,4 @@
-query ResourceSSOByID($resourceLabel: String!) {
+query ResourceSSOByLabel($resourceLabel: String!) {
   resource(label: $resourceLabel) {
     id
     label
