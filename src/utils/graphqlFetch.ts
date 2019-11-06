@@ -80,9 +80,15 @@ export function createGraphqlFetch({
         'x-manifold-ui-version': '<@NPM_PACKAGE_VERSION@>',
       },
       body: JSON.stringify(request),
-    }).catch((e: Response) => {
+    }).catch(e => {
       // handle unexpected errors
-      report(e, element);
+      report(
+        {
+          code: e.code,
+          message: e.message,
+        },
+        element
+      );
       return Promise.reject(e);
     });
 
@@ -90,9 +96,17 @@ export function createGraphqlFetch({
 
     // handle non-GQL responses from errors
     if (!body.data && !Array.isArray(body.errors)) {
-      const errors = [{ message: response.statusText }] as GraphqlError[];
+      const errors = [
+        { message: response.statusText, extensions: { type: response.status.toString() } },
+      ] as GraphqlError[];
 
-      report(errors, element);
+      report(
+        {
+          code: response.status.toString(),
+          message: response.statusText || response.status.toString(),
+        },
+        element
+      );
 
       return {
         data: null,
@@ -115,7 +129,15 @@ export function createGraphqlFetch({
     );
 
     if (body.errors) {
-      report(body.errors, element);
+      body.errors.forEach(e => {
+        report(
+          {
+            code: e.extensions && e.extensions.type,
+            message: e.message,
+          },
+          element
+        );
+      });
 
       const authExpired = body.errors.some(e => {
         return e.extensions && e.extensions.type === 'AuthFailed';

@@ -51,9 +51,9 @@ export function createRestFetch({
     const response = await fetch(`${endpoints()[args.service]}${args.endpoint}`, {
       ...options,
       body: JSON.stringify(args.body),
-    }).catch((e: Response) => {
+    }).catch(e => {
       /* Handle unexpected errors */
-      report(e);
+      report({ message: e.message || e });
       return Promise.reject(e);
     });
 
@@ -65,7 +65,10 @@ export function createRestFetch({
     /* Handle expected errors */
     if (response.status === 401) {
       setAuthToken('');
-      report(response);
+      report({
+        code: response.status.toString(),
+        message: response.statusText || response.status.toString(),
+      });
       if (attempts < retries) {
         return waitForAuthToken(getAuthToken, wait(), () => restFetch(args, attempts + 1));
       }
@@ -108,7 +111,10 @@ export function createRestFetch({
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!
-    report(response);
+    report({
+      code: response.status.toString(),
+      message,
+    });
     throw new Error(message);
   }
 
