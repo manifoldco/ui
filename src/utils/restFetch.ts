@@ -5,7 +5,7 @@ import { report } from './errorReport';
 
 export interface CreateRestFetch {
   endpoints?: () => Connection;
-  env?: 'local' | 'stage' | 'prod';
+  env?: () => 'local' | 'stage' | 'prod';
   wait?: () => number;
   retries?: number;
   getAuthToken?: () => string | undefined;
@@ -35,7 +35,7 @@ export type RestFetch = <T>(args: RestFetchArguments) => Promise<T | Success>;
 
 export function createRestFetch({
   endpoints = () => connections.prod,
-  env = 'prod',
+  env = () => 'prod',
   wait = () => 15000,
   retries = 0,
   getAuthToken = () => undefined,
@@ -67,7 +67,7 @@ export function createRestFetch({
     /* Handle expected errors */
     if (response.status === 401) {
       setAuthToken('');
-      report({ message: `${response.statusText || response.status}` }, { env });
+      report({ message: `${response.statusText || response.status}` }, { env: env() });
       if (attempts < retries) {
         return waitForAuthToken(getAuthToken, wait(), () => restFetch(args, attempts + 1));
       }
@@ -115,7 +115,7 @@ export function createRestFetch({
         code: response.status.toString(),
         message,
       },
-      { env }
+      { env: env() }
     );
     throw new Error(message);
   }

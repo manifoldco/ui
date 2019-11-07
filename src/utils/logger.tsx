@@ -59,9 +59,9 @@ export default function logger<T>() {
         return rendered;
       } catch (e) {
         report({
-          code: e.message,
+          code: e.name || e,
           componentName: target.constructor.name,
-          message: e.message,
+          message: e.message || e,
         });
         return <manifold-toast alert-type="error">{e.message}</manifold-toast>; // show error to user
       }
