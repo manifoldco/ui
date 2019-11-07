@@ -1,11 +1,13 @@
 /**
- *  Properties that should be found  in every analytics event
+ *  Properties that should be found in every analytics event
  */
-export interface RequiredProperties {
+interface SharedProperties {
+  description?: string;
   properties: {
     componentName: string;
     uiVersion: string;
   };
+  source?: 'ui';
 }
 
 /**
@@ -14,7 +16,6 @@ export interface RequiredProperties {
 export type EventTypes =
   | {
       name: 'load';
-      description: string;
       properties: {
         initialRender: number;
         renderWithData: number;
@@ -24,7 +25,6 @@ export type EventTypes =
     }
   | {
       name: 'render_with_data';
-      description: string;
       properties: {
         rttGraphql: number;
         time: number;
@@ -32,14 +32,12 @@ export type EventTypes =
     }
   | {
       name: 'rtt_graphql';
-      description: string;
       properties: {
         time: number;
       };
     }
   | {
       name: 'token_received';
-      description: string;
       properties: {
         time: number;
       };
@@ -47,21 +45,22 @@ export type EventTypes =
 
 export type EventEvent = {
   type: 'event';
-} & RequiredProperties &
+} & SharedProperties &
   EventTypes;
 
 /**
  *  Error analytics event
  */
-export interface ErrorEvent extends RequiredProperties {
+export interface ErrorEvent extends SharedProperties {
   type: 'error';
-  name: string;
+  name: 'ui_error';
   properties: {
     code: string;
     componentName: string;
     message: string;
     uiVersion: string;
   };
+  source?: 'ui';
 }
 
 export type AnalyticsEvent = ErrorEvent | EventEvent;

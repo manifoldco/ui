@@ -36,9 +36,9 @@ interface GraphqlFetchEventDetail {
   componentName: string;
   duration: number;
   errors?: GraphqlError[];
-  npmVersion: string;
   request: GraphqlRequest;
   type: 'manifold-graphql-fetch-duration';
+  uiVersion: string;
 }
 
 export interface GraphqlResponseBody<GraphqlData> {
@@ -119,9 +119,9 @@ export function createGraphqlFetch({
       componentName: element.tagName,
       duration: fetchDuration,
       errors: body.errors,
-      npmVersion: '<@NPM_PACKAGE_VERSION@>',
       request,
       type: 'manifold-graphql-fetch-duration',
+      uiVersion: '<@NPM_PACKAGE_VERSION@>',
     };
 
     (element || document).dispatchEvent(

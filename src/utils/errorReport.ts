@@ -11,17 +11,17 @@ export function report(detail: ErrorDetail, element?: HTMLElement) {
     ...detail,
     ...(element ? { componentName: element.tagName } : {}),
     ...(detail.componentName ? { componentName: detail.componentName } : {}),
-    npmVersion: '<@NPM_PACKAGE_VERSION@>',
+    uiVersion: '<@NPM_PACKAGE_VERSION@>',
   };
 
   analytics({
-    name: 'Error',
+    name: 'ui_error',
     type: 'error',
     properties: {
       code: detail.code || '',
       message: detail.message || '',
       componentName: detail.componentName || (element && element.tagName) || '',
-      uiVersion: extendedDetail.npmVersion,
+      uiVersion: extendedDetail.uiVersion,
     },
   });
 

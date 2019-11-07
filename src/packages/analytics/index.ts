@@ -28,5 +28,11 @@ export default function report(
     ...(userOptions || {}),
   };
   const url = endpoint[options.env || 'prod'];
-  return fetch(url, { method: 'POST', body: JSON.stringify(evt) });
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      ...evt,
+      source: 'ui', // add source
+    }),
+  });
 }

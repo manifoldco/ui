@@ -38,7 +38,7 @@ describe('@logger', () => {
     expect(eventDetail.detail).toEqual({
       componentName: 'MockComponent', // event should contain class name (above)
       error: 'oops', // event should contain original error message
-      npmVersion: '<@NPM_PACKAGE_VERSION@>',
+      uiVersion: '<@NPM_PACKAGE_VERSION@>',
     });
   });
 });

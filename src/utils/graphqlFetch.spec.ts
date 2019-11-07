@@ -384,9 +384,9 @@ describe('graphqlFetch', () => {
           detail: expect.objectContaining({
             componentName: 'MY-ELEMENT',
             errors: [{ locations: [], message: 'no results' }],
-            npmVersion: '<@NPM_PACKAGE_VERSION@>', // expect Rollbar-replaceable string
             request: { query: '' },
             type: 'manifold-graphql-fetch-duration',
+            uiVersion: '<@NPM_PACKAGE_VERSION@>', // expect Rollbar-replaceable string
           }),
         })
       );
