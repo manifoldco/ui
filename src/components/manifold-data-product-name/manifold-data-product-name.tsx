@@ -7,7 +7,12 @@ import loadMark from '../../utils/loadMark';
 
 import productNameQuery from './product-name.graphql';
 import resourceProductNameQuery from './resource-product-name.graphql';
-import { ProductNameQuery, ResourceProductNameQuery } from '../../types/graphql';
+import {
+  ProductNameQuery,
+  ProductNameQueryVariables,
+  ResourceProductNameQuery,
+  ResourceProductNameQueryVariables,
+} from '../../types/graphql';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
@@ -44,9 +49,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
+    const variables: ProductNameQueryVariables = { productLabel };
     const { data, errors } = await this.graphqlFetch<ProductNameQuery>({
       query: productNameQuery,
-      variables: { productLabel },
+      variables,
       element: this.el,
     });
 
@@ -64,9 +70,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
+    const variables: ResourceProductNameQueryVariables = { resourceLabel };
     const { data, errors } = await this.graphqlFetch<ResourceProductNameQuery>({
       query: resourceProductNameQuery,
-      variables: { resourceLabel },
+      variables,
       element: this.el,
     });
 

@@ -1,7 +1,7 @@
 import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { Product, ProductLogoQuery } from '../../types/graphql';
+import { Product, ProductLogoQuery, ProductLogoQueryVariables } from '../../types/graphql';
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -16,7 +16,7 @@ export class ManifoldDataProductLogo {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
-  @Prop() productLabel?: string;
+  @Prop() productLabel: string;
   /** _(Deprecated)_ Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: Pick<Product, 'displayName' | 'logoUrl'>;
@@ -30,13 +30,13 @@ export class ManifoldDataProductLogo {
     this.fetchProduct(this.productLabel);
   }
 
-  fetchProduct = async (productLabel?: string) => {
+  fetchProduct = async (productLabel: string) => {
     if (!this.graphqlFetch || !this.productLabel) {
       return;
     }
 
     this.product = undefined;
-    const variables = { productLabel };
+    const variables: ProductLogoQueryVariables = { productLabel };
     const { data } = await this.graphqlFetch<ProductLogoQuery>({
       query: productLogoQuery,
       variables,
