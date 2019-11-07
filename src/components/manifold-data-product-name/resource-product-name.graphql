@@ -1,0 +1,9 @@
+query ResourceProductName($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    plan {
+      product {
+        displayName
+      }
+    }
+  }
+}

@@ -1554,6 +1554,51 @@ export type DeleteResourceMutation = (
   ) }
 );
 
+export type ProductLogoQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type ProductLogoQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'displayName' | 'logoUrl'>
+  )> }
+);
+
+export type ProductNameQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type ProductNameQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'displayName'>
+  )> }
+);
+
+export type ResourceProductNameQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceProductNameQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { plan: Maybe<(
+      { __typename?: 'Plan' }
+      & { product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'displayName'>
+      )> }
+    )> }
+  )> }
+);
+
 export type CreateResourceWithOwnerMutationVariables = {
   planId: Scalars['ID'],
   productId: Scalars['ID'],
@@ -1690,12 +1735,12 @@ export type ResourceLogoQuery = (
   )> }
 );
 
-export type ResourceSsoByLabelQueryVariables = {
+export type ResourceSsoByIdQueryVariables = {
   resourceId: Scalars['ID']
 };
 
 
-export type ResourceSsoByLabelQuery = (
+export type ResourceSsoByIdQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }
@@ -1703,12 +1748,12 @@ export type ResourceSsoByLabelQuery = (
   )> }
 );
 
-export type ResourceSsoByIdQueryVariables = {
+export type ResourceSsoByLabelQueryVariables = {
   resourceLabel: Scalars['String']
 };
 
 
-export type ResourceSsoByIdQuery = (
+export type ResourceSsoByLabelQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }

@@ -1,0 +1,6 @@
+query ProductLogo($productLabel: String!) {
+  product(label: $productLabel) {
+    displayName
+    logoUrl
+  }
+}

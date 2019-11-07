@@ -1,10 +1,18 @@
 import { Component, Prop, State, Element, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+
+import productNameQuery from './product-name.graphql';
+import resourceProductNameQuery from './resource-product-name.graphql';
+import {
+  ProductNameQuery,
+  ProductNameQueryVariables,
+  ResourceProductNameQuery,
+  ResourceProductNameQueryVariables,
+} from '../../types/graphql';
 
 @Component({ tag: 'manifold-data-product-name' })
 export class ManifoldDataProductName {
@@ -41,15 +49,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const { data, errors } = await this.graphqlFetch({
-      query: gql`
-        query PRODUCT_NAME($productLabel: String!) {
-          product(label: $productLabel) {
-            displayName
-          }
-        }
-      `,
-      variables: { productLabel },
+    const variables: ProductNameQueryVariables = { productLabel };
+    const { data, errors } = await this.graphqlFetch<ProductNameQuery>({
+      query: productNameQuery,
+      variables,
       element: this.el,
     });
 
@@ -67,19 +70,10 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const { data, errors } = await this.graphqlFetch({
-      query: gql`
-        query RESOURCE($resourceLabel: String!) {
-          resource(label: $resourceLabel) {
-            plan {
-              product {
-                displayName
-              }
-            }
-          }
-        }
-      `,
-      variables: { resourceLabel },
+    const variables: ResourceProductNameQueryVariables = { resourceLabel };
+    const { data, errors } = await this.graphqlFetch<ResourceProductNameQuery>({
+      query: resourceProductNameQuery,
+      variables,
       element: this.el,
     });
 

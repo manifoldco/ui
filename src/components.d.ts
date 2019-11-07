@@ -151,7 +151,7 @@ export namespace Components {
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
-    'productLabel'?: string;
+    'productLabel': string;
     /**
     * _(Deprecated)_ Look up product logo from resource
     */
