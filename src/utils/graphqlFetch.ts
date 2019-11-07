@@ -80,15 +80,9 @@ export function createGraphqlFetch({
         'x-manifold-ui-version': '<@NPM_PACKAGE_VERSION@>',
       },
       body: JSON.stringify(request),
-    }).catch(e => {
+    }).catch((e: Response) => {
       // handle unexpected errors
-      report(
-        {
-          code: e.name,
-          message: e.message,
-        },
-        element
-      );
+      report({ message: `${e.statusText || e.status}` }, element);
       return Promise.reject(e);
     });
 
