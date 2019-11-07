@@ -36,8 +36,9 @@ describe('@logger', () => {
 
     expect(eventDetail.bubbles).toBe(true); // event should bubble
     expect(eventDetail.detail).toEqual({
+      code: 'oops',
       componentName: 'MockComponent', // event should contain class name (above)
-      error: 'oops', // event should contain original error message
+      message: 'oops', // event should contain original error message
       uiVersion: '<@NPM_PACKAGE_VERSION@>',
     });
   });

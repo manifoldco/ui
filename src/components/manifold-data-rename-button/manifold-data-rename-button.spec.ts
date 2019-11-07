@@ -40,6 +40,7 @@ async function setup(props: Props) {
 
 describe('<manifold-data-rename-button>', () => {
   beforeEach(() => {
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
     // fetch calls for all tests (name a resource “error-*” to throw)
     fetchMock.mock('begin:https://api.manifold.co/graphql', (_, req) => {
       const body = (req.body && req.body.toString()) || '';

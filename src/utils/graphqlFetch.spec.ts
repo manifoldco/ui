@@ -11,6 +11,8 @@ import { createGraphqlFetch } from './graphqlFetch';
 describe('graphqlFetch', () => {
   const graphqlEndpoint = 'http://test.test/graphql';
 
+  beforeEach(() => fetchMock.mock('begin:https://analytics.manifold.co', 200));
+
   afterEach(() => {
     errorReporter.mockReset();
     fetchMock.restore();
@@ -105,15 +107,17 @@ describe('graphqlFetch', () => {
       });
 
       await fetcher({ query: '', element: document.createElement('custom-element') });
-      expect(errorReporter.mock.calls[0][0]).toEqual(errors);
+      expect(errorReporter.mock.calls[0][0]).toEqual({
+        code: undefined,
+        message: 'bad query',
+      });
     });
 
     it('reports GraphQL errors', async () => {
-      const body = {
-        data: null,
-        errors: [
-          { message: 'User does not have permission to access the resource', path: ['resources'] },
-        ],
+      const error = {
+        extensions: { type: 'Permission' },
+        message: 'User does not have permission to access the resource',
+        path: ['resources'],
       };
       const fetcher = createGraphqlFetch({
         wait: () => 0,
@@ -121,11 +125,14 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      fetchMock.mock(graphqlEndpoint, { status: 422, body });
+      fetchMock.mock(graphqlEndpoint, { status: 422, body: { data: null, errors: [error] } });
 
       await fetcher({ query: '', element: document.createElement('custom-element') });
       // graphql format
-      expect(errorReporter.mock.calls[0][0]).toEqual(body.errors);
+      expect(errorReporter.mock.calls[0][0]).toEqual({
+        code: error.extensions.type,
+        message: error.message,
+      });
     });
 
     it('reports unknown errors', async () => {
@@ -139,19 +146,17 @@ describe('graphqlFetch', () => {
 
       await fetcher({ query: '', element: document.createElement('custom-element') });
       // graphql format
-      expect(errorReporter.mock.calls[0][0]).toEqual([{ message: 'Internal Server Error' }]);
+      expect(errorReporter.mock.calls[0][0]).toEqual({
+        code: '500',
+        message: 'Internal Server Error',
+      });
     });
 
     it('reports auth errors', async () => {
-      const body = {
-        data: null,
-        errors: [
-          {
-            message: 'User does not have permission to access the resource',
-            path: ['resources'],
-            extensions: { type: 'AuthFailed' },
-          },
-        ],
+      const error = {
+        extensions: { type: 'AuthFailed' },
+        message: 'User does not have permission to access the resource',
+        path: ['resources'],
       };
 
       const fetcher = createGraphqlFetch({
@@ -160,11 +165,13 @@ describe('graphqlFetch', () => {
         getAuthToken: () => '1234',
       });
 
-      const response = { status: 200, body };
-      fetchMock.mock(graphqlEndpoint, response);
+      fetchMock.mock(graphqlEndpoint, { data: null, errors: [error] });
 
       return fetcher({ query: '', element: document.createElement('custom-element') }).catch(() => {
-        expect(errorReporter.mock.calls[0][0]).toEqual(body.errors);
+        expect(errorReporter.mock.calls[0][0]).toEqual({
+          code: error.extensions.type,
+          message: error.message,
+        });
       });
     });
   });
@@ -353,7 +360,7 @@ describe('graphqlFetch', () => {
       expect(fetchMock.called(graphqlEndpoint)).toBe(true);
       expect(result).toEqual({
         data: null,
-        errors: [{ message: 'Internal Server Error' }],
+        errors: [{ extensions: { type: '500' }, message: 'Internal Server Error' }],
       });
     });
   });

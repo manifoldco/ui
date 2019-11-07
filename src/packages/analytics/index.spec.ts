@@ -6,13 +6,14 @@ const stage = 'https://analytics.stage.manifold.co';
 const prod = 'https://analytics.manifold.co';
 const error: ErrorEvent = {
   type: 'error',
-  name: 'Error',
+  name: 'ui_error',
   properties: {
     code: 'code',
     componentName: 'MANIFOLD-PRODUCT',
     message: 'message',
     uiVersion: '1.2.3',
   },
+  source: 'ui',
 };
 
 describe('analytics', () => {
@@ -33,13 +34,13 @@ describe('analytics', () => {
   });
 
   describe('type', () => {
-    beforeEach(() => {
-      fetchMock.mock(prod, {});
-    });
+    beforeEach(() => fetchMock.mock(prod, {}));
+
     describe('error', () => {
       it('error', async () => {
         await report(error);
-        expect(JSON.parse(fetchMock.calls()[0][1].body.toString())).toEqual(error);
+        const res = fetchMock.calls()[0][1];
+        expect(res && res.body && JSON.parse(res.body.toString())).toEqual(error);
       });
     });
   });

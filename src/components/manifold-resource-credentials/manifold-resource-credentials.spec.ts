@@ -1,4 +1,5 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import fetchMock from 'fetch-mock';
 
 import { Resource } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
@@ -7,6 +8,7 @@ import { ManifoldCredentials } from '../manifold-credentials/manifold-credential
 import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-credentials-view';
 
 global.setTimeout = jest.fn();
+fetchMock.mock('begin:https://analytics.manifold.co', 200);
 
 describe('<manifold-resource-credentials>', () => {
   let page: SpecPage;

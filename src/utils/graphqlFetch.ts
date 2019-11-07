@@ -84,7 +84,7 @@ export function createGraphqlFetch({
       // handle unexpected errors
       report(
         {
-          code: e.code,
+          code: e.name,
           message: e.message,
         },
         element

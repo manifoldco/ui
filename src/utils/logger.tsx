@@ -59,7 +59,7 @@ export default function logger<T>() {
         return rendered;
       } catch (e) {
         report({
-          code: e.code,
+          code: e.message,
           componentName: target.constructor.name,
           message: e.message,
         });

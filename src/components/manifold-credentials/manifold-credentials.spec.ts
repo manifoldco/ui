@@ -56,6 +56,7 @@ async function setup(props: Props) {
 
 describe('<manifold-credentials>', () => {
   beforeEach(() => {
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
     // mock graphql (a resource with “error” in the name will throw)
     fetchMock.mock(graphqlEndpoint, (_, req) => {
       const body = (req.body && req.body.toString()) || '';

@@ -47,8 +47,8 @@ describe('<manifold-copy-credentials>', () => {
     // reset clipboard calls
     copy.mockClear();
 
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
     // mock graphql (a resource with “error” in the name will throw)
-    fetchMock.reset();
     fetchMock.mock(graphqlEndpoint, (_, req) => {
       const body = (req.body && req.body.toString()) || '';
       return body.includes('error')
@@ -56,6 +56,8 @@ describe('<manifold-copy-credentials>', () => {
         : { data: { resource: { credentials: { edges: credentials } } } };
     });
   });
+
+  afterEach(() => fetchMock.restore());
 
   describe('v0 props', () => {
     it('[resource-label]: copies creds to clipboard', async () => {
