@@ -64,6 +64,7 @@ export class ConnectionState {
 
   restFetch = createRestFetch({
     endpoints: () => connections[this.env],
+    env: this.env,
     getAuthToken: this.getAuthToken,
     setAuthToken: this.setAuthToken,
     onReady: this.onReady,
@@ -76,6 +77,7 @@ export class ConnectionState {
     setAuthToken: this.setAuthToken,
     onReady: this.onReady,
     endpoint: () => connections[this.env].graphql,
+    env: this.env,
     wait: () => this.waitTime,
     retries: 1,
   });

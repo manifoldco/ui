@@ -1,12 +1,13 @@
 import { AnalyticsEvent } from './types';
 
 const endpoint = {
-  stage: 'https://analytics.stage.manifold.co',
-  prod: 'https://analytics.manifold.co',
+  local: 'https://analytics.arigato.tools/v1/ui/events',
+  stage: 'https://analytics.stage.manifold.co/v1/ui/events',
+  prod: 'https://analytics.manifold.co/v1/ui/events',
 };
 
 interface AnalyticsOptions {
-  env?: 'stage' | 'prod';
+  env?: 'local' | 'stage' | 'prod';
 }
 
 /**
@@ -16,6 +17,7 @@ interface AnalyticsOptions {
  * @param {string} eventData.name name_of_event (lowercase with underscores)
  * @param {string} [eventData.description] User-readable description of this event
  * @param {Object} eventData.properties Free-form object of event properties (different names will require different properties)
+ * @param {string} eventData.source Will be 'ui'
  * @param {Object} [options] Analytics options
  * @param {string} [options.env] 'prod' (default) or 'stage'
  */

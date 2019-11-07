@@ -4,6 +4,7 @@ import { waitForAuthToken } from './auth';
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
+  env?: 'local' | 'stage' | 'prod';
   wait?: () => number;
   retries?: number;
   getAuthToken?: () => string | undefined;
@@ -50,6 +51,7 @@ export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody
 
 export function createGraphqlFetch({
   endpoint = () => 'https://api.manifold.co/graphql',
+  env = 'prod',
   wait = () => 15000,
   retries = 0,
   getAuthToken = () => undefined,
@@ -82,7 +84,7 @@ export function createGraphqlFetch({
       body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors
-      report({ message: `${e.statusText || e.status}` }, element);
+      report({ message: `${e.statusText || e.status}` }, { env, element });
       return Promise.reject(e);
     });
 
@@ -99,7 +101,7 @@ export function createGraphqlFetch({
           code: response.status.toString(),
           message: response.statusText || response.status.toString(),
         },
-        element
+        { env, element }
       );
 
       return {
@@ -129,7 +131,7 @@ export function createGraphqlFetch({
             code: e.extensions && e.extensions.type,
             message: e.message,
           },
-          element
+          { env, element }
         );
       });
 

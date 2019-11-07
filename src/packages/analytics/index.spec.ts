@@ -2,8 +2,9 @@ import fetchMock from 'fetch-mock';
 import report from './index';
 import { ErrorEvent } from './types';
 
-const stage = 'https://analytics.stage.manifold.co';
-const prod = 'https://analytics.manifold.co';
+const local = 'begin:https://analytics.arigato.tools';
+const stage = 'begin:https://analytics.stage.manifold.co';
+const prod = 'begin:https://analytics.manifold.co';
 const error: ErrorEvent = {
   type: 'error',
   name: 'ui_error',
@@ -18,7 +19,13 @@ const error: ErrorEvent = {
 
 describe('analytics', () => {
   describe('env', () => {
-    afterEach(() => fetchMock.restore());
+    afterEach(fetchMock.restore);
+
+    it('local', async () => {
+      fetchMock.mock(local, {});
+      await report(error, { env: 'local' });
+      expect(fetchMock.called(local)).toBe(true);
+    });
 
     it('stage', async () => {
       fetchMock.mock(stage, {});
