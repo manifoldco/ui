@@ -30,7 +30,7 @@ describe('<manifold-data-product-name>', () => {
         setAuthToken: jest.fn(),
       });
 
-      fetchMock.reset();
+      fetchMock.mock('begin:https://analytics.manifold.co', 200);
 
       fetchMock.mock(graphqlEndpoint, (_, req) => {
         const body = (req.body && req.body.toString()) || '';
@@ -56,6 +56,8 @@ describe('<manifold-data-product-name>', () => {
           : { data: null, errors: [{ message: 'product not found' }] };
       });
     });
+
+    afterEach(() => fetchMock.restore());
 
     it('[product-name]: displays name to user', async () => {
       element.productLabel = 'jawsdb-postgres';

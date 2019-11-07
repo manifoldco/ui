@@ -60,7 +60,13 @@ export class ManifoldAuthToken {
     const payload = e.detail as AuthToken;
 
     if (payload.error) {
-      report(payload.error, this.el);
+      report(
+        {
+          code: payload.error.code.toString(),
+          message: payload.error.message,
+        },
+        this.el
+      );
       return;
     }
 

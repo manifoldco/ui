@@ -13,6 +13,7 @@ const nonCatalogServices: (keyof typeof connections.prod)[] = [
 ];
 
 describe('The fetcher created by createRestFetch', () => {
+  beforeEach(() => fetchMock.mock('begin:https://analytics.manifold.co', 200));
   afterEach(() => {
     fetchMock.restore();
   });

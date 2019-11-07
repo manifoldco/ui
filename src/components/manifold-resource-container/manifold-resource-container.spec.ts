@@ -41,6 +41,7 @@ describe('<manifold-resource-credentials>', () => {
     element.graphqlFetch = createGraphqlFetch({
       endpoint: () => graphqlEndpoint,
     });
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
   });
 
   afterEach(() => {

@@ -83,7 +83,7 @@ describe('<manifold-resource-list>', () => {
   });
 
   it('renders a skeleton when no resources available', async () => {
-    fetchMock.mock(connections.prod.graphql, {});
+    fetchMock.mock(connections.prod.graphql, 200);
 
     const page = await newSpecPage({
       components: [ManifoldResourceList],

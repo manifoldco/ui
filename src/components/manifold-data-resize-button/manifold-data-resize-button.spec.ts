@@ -33,6 +33,7 @@ async function setup(props: Props) {
 
 describe('<manifold-data-resize-button>', () => {
   beforeEach(async () => {
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
     fetchMock.mock(graphqlEndpoint, (_, req) => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);

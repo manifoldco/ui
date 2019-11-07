@@ -34,7 +34,8 @@ async function setup(props: Props) {
 }
 
 describe('<manifold-data-sso-button>', () => {
-  beforeEach(() =>
+  beforeEach(() => {
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
     fetchMock.mock(graphqlEndpoint, (_, req) => {
       const body = (req.body && req.body.toString()) || '';
       const { variables } = JSON.parse(body);
@@ -50,8 +51,8 @@ describe('<manifold-data-sso-button>', () => {
         },
       };
       return { data };
-    })
-  );
+    });
+  });
   afterEach(() => fetchMock.restore());
 
   describe('v0 props', () => {

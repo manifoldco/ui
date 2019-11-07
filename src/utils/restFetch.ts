@@ -53,7 +53,7 @@ export function createRestFetch({
       body: JSON.stringify(args.body),
     }).catch((e: Response) => {
       /* Handle unexpected errors */
-      report(e);
+      report({ message: `${e.statusText || e.status}` });
       return Promise.reject(e);
     });
 
@@ -65,7 +65,7 @@ export function createRestFetch({
     /* Handle expected errors */
     if (response.status === 401) {
       setAuthToken('');
-      report(response);
+      report({ message: `${response.statusText || response.status}` });
       if (attempts < retries) {
         return waitForAuthToken(getAuthToken, wait(), () => restFetch(args, attempts + 1));
       }
@@ -108,7 +108,10 @@ export function createRestFetch({
     }
 
     // Sometimes messages are an array, sometimes they aren’t. Different strokes!
-    report(response);
+    report({
+      code: response.status.toString(),
+      message,
+    });
     throw new Error(message);
   }
 

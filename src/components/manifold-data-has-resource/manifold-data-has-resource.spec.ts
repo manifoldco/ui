@@ -50,6 +50,7 @@ async function setup({ onLoad, label }: Setup) {
 }
 
 describe('<manifold-data-has-resource>', () => {
+  beforeEach(() => fetchMock.mock('begin:https://analytics.manifold.co', 200));
   afterEach(() => {
     fetchMock.restore();
   });

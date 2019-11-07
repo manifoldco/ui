@@ -36,9 +36,9 @@ interface GraphqlFetchEventDetail {
   componentName: string;
   duration: number;
   errors?: GraphqlError[];
-  npmVersion: string;
   request: GraphqlRequest;
   type: 'manifold-graphql-fetch-duration';
+  uiVersion: string;
 }
 
 export interface GraphqlResponseBody<GraphqlData> {
@@ -82,7 +82,7 @@ export function createGraphqlFetch({
       body: JSON.stringify(request),
     }).catch((e: Response) => {
       // handle unexpected errors
-      report(e, element);
+      report({ message: `${e.statusText || e.status}` }, element);
       return Promise.reject(e);
     });
 
@@ -90,9 +90,17 @@ export function createGraphqlFetch({
 
     // handle non-GQL responses from errors
     if (!body.data && !Array.isArray(body.errors)) {
-      const errors = [{ message: response.statusText }] as GraphqlError[];
+      const errors = [
+        { message: response.statusText, extensions: { type: response.status.toString() } },
+      ] as GraphqlError[];
 
-      report(errors, element);
+      report(
+        {
+          code: response.status.toString(),
+          message: response.statusText || response.status.toString(),
+        },
+        element
+      );
 
       return {
         data: null,
@@ -105,9 +113,9 @@ export function createGraphqlFetch({
       componentName: element.tagName,
       duration: fetchDuration,
       errors: body.errors,
-      npmVersion: '<@NPM_PACKAGE_VERSION@>',
       request,
       type: 'manifold-graphql-fetch-duration',
+      uiVersion: '<@NPM_PACKAGE_VERSION@>',
     };
 
     (element || document).dispatchEvent(
@@ -115,7 +123,15 @@ export function createGraphqlFetch({
     );
 
     if (body.errors) {
-      report(body.errors, element);
+      body.errors.forEach(e => {
+        report(
+          {
+            code: e.extensions && e.extensions.type,
+            message: e.message,
+          },
+          element
+        );
+      });
 
       const authExpired = body.errors.some(e => {
         return e.extensions && e.extensions.type === 'AuthFailed';
