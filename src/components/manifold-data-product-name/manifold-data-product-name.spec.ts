@@ -57,7 +57,7 @@ describe('<manifold-data-product-name>', () => {
       });
     });
 
-    afterEach(() => fetchMock.restore());
+    afterEach(fetchMock.restore);
 
     it('[product-name]: displays name to user', async () => {
       element.productLabel = 'jawsdb-postgres';

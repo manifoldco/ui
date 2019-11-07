@@ -53,7 +53,7 @@ describe('<manifold-data-sso-button>', () => {
       return { data };
     });
   });
-  afterEach(() => fetchMock.restore());
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('[loading]: disables button if true', async () => {

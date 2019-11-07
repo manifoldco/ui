@@ -30,9 +30,7 @@ async function setup(productLabel: string, onLoad?: (e: Event) => void) {
 }
 
 describe('<manifold-product>', () => {
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('fetches the product by label on load', async () => {

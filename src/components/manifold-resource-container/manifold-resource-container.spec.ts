@@ -44,9 +44,7 @@ describe('<manifold-resource-credentials>', () => {
     fetchMock.mock('begin:https://analytics.manifold.co', 200);
   });
 
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  afterEach(fetchMock.restore);
 
   it('fetches resource on label change', () => {
     const newResource = 'new-resource';

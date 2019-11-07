@@ -45,9 +45,7 @@ describe('<manifold-data-resource-logo>', () => {
     });
   });
 
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  afterEach(fetchMock.restore);
 
   it('fetches resource on load', async () => {
     const resourceLabel = 'my-resource';

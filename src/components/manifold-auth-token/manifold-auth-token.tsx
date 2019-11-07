@@ -65,7 +65,7 @@ export class ManifoldAuthToken {
           code: payload.error.code.toString(),
           message: payload.error.message,
         },
-        this.el
+        { element: this.el, env: connection.env }
       );
       return;
     }

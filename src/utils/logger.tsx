@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { report } from './errorReport';
+import connection from '../state/connection';
 
 interface StencilComponent {
   constructor: {
@@ -58,11 +59,14 @@ export default function logger<T>() {
         }
         return rendered;
       } catch (e) {
-        report({
-          code: e.message,
-          componentName: target.constructor.name,
-          message: e.message,
-        });
+        report(
+          {
+            code: e.name || e,
+            componentName: target.constructor.name,
+            message: e.message || e,
+          },
+          { env: connection.env }
+        );
         return <manifold-toast alert-type="error">{e.message}</manifold-toast>; // show error to user
       }
     };
