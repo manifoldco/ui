@@ -37,7 +37,7 @@ async function setup(props: Props) {
 
 describe('<manifold-service-card>', () => {
   beforeEach(async () => fetchMock.mock(graphqlEndpoint, { data: { product } }));
-  afterEach(() => fetchMock.restore());
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('[product-label]: fetches if given', async () => {

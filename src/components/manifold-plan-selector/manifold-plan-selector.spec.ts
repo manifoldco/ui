@@ -33,7 +33,7 @@ async function setup(props: Props) {
 
 describe(`<manifold-plan-selector>`, () => {
   beforeEach(() => fetchMock.mock(`begin:${graphqlEndpoint}`, { data: { product } }));
-  afterEach(() => fetchMock.restore());
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('[product-label]', async () => {

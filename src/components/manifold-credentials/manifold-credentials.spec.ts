@@ -73,7 +73,7 @@ describe('<manifold-credentials>', () => {
     });
   });
 
-  afterEach(() => fetchMock.restore());
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('[resource-label]: displays credentials when clicked', async () => {

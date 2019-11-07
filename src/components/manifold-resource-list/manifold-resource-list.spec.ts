@@ -42,9 +42,7 @@ proto.componentWillLoad = function() {
 describe('<manifold-resource-list>', () => {
   window.setInterval = jest.fn();
 
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  afterEach(fetchMock.restore);
 
   it('The resources list are rendered if given.', async () => {
     fetchMock.mock(connections.prod.graphql, { data });

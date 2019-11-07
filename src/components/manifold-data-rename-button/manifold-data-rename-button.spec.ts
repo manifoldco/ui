@@ -50,9 +50,7 @@ describe('<manifold-data-rename-button>', () => {
     });
   });
 
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('[resource-id]: fetches ID if missing', async () => {

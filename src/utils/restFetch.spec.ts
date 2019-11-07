@@ -14,9 +14,7 @@ const nonCatalogServices: (keyof typeof connections.prod)[] = [
 
 describe('The fetcher created by createRestFetch', () => {
   beforeEach(() => fetchMock.mock('begin:https://analytics.manifold.co', 200));
-  afterEach(() => {
-    fetchMock.restore();
-  });
+  afterEach(fetchMock.restore);
 
   it('Will return the result of the fetch function if given everything it needs', async () => {
     const body = {

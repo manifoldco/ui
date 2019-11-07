@@ -71,7 +71,7 @@ describe('<manifold-data-provision-button>', () => {
     });
   });
 
-  afterEach(() => fetchMock.restore());
+  afterEach(fetchMock.restore);
 
   describe('v0 props', () => {
     it('[product-label]: fetches product by label', async () => {
