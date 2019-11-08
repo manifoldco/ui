@@ -121,7 +121,7 @@ export function createGraphqlFetch({
         return e.extensions && e.extensions.type === 'AuthFailed';
       });
 
-      if (authExpired) {
+      if (authExpired && !document.hidden) {
         setAuthToken('');
         if (attempts < retries) {
           return waitForAuthToken(getAuthToken, wait(), () => graphqlFetch(args, attempts + 1));
