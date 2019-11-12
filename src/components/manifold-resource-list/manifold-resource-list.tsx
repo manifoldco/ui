@@ -52,7 +52,7 @@ export class ManifoldResourceList {
   }
 
   fetchResources = async () => {
-    if (!this.graphqlFetch) {
+    if (!this.graphqlFetch || document.hidden) {
       return;
     }
 

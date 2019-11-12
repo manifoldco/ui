@@ -1,6 +1,7 @@
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { waitForAuthToken } from './auth';
+import awaitPageVisibility from './awaitPageVisibility';
 
 interface CreateGraphqlFetch {
   endpoint?: () => string;
@@ -63,6 +64,7 @@ export function createGraphqlFetch({
     attempts: number
   ): Promise<GraphqlResponseBody<T>> {
     await onReady();
+    await awaitPageVisibility();
 
     const rttStart = performance.now();
     const { element, ...request } = args;
