@@ -9,22 +9,25 @@ export type Subscriber = (newToken?: string) => void;
 const INITIALIZED = 'manifold-connection-initialize';
 
 interface Initialization {
-  env?: 'local' | 'stage' | 'prod';
-  waitTime?: number | string;
   authToken?: string;
+  env?: 'local' | 'stage' | 'prod';
+  metrics?: boolean;
+  waitTime?: number | string;
 }
 
 export class ConnectionState {
   authToken?: string;
   env: 'local' | 'stage' | 'prod' = 'prod';
+  metrics: boolean = false; // IMPORTANT: metrics are OFF by default
   waitTime: number = baseWait;
 
   private subscribers: Subscriber[] = [];
 
   private initialized: boolean = false;
 
-  initialize = ({ env = 'prod', waitTime = baseWait }: Initialization) => {
+  initialize = ({ env = 'prod', metrics = false, waitTime = baseWait }: Initialization) => {
     this.env = env;
+    this.metrics = metrics;
     this.waitTime = typeof waitTime === 'number' ? waitTime : parseInt(waitTime, 10);
     this.initialized = true;
     const event = new CustomEvent(INITIALIZED);
@@ -66,20 +69,22 @@ export class ConnectionState {
     endpoints: () => connections[this.env],
     env: () => this.env,
     getAuthToken: this.getAuthToken,
-    setAuthToken: this.setAuthToken,
+    metrics: () => this.metrics,
     onReady: this.onReady,
-    wait: () => this.waitTime,
     retries: 1,
+    setAuthToken: this.setAuthToken,
+    wait: () => this.waitTime,
   });
 
   graphqlFetch = createGraphqlFetch({
-    getAuthToken: this.getAuthToken,
-    setAuthToken: this.setAuthToken,
-    onReady: this.onReady,
     endpoint: () => connections[this.env].graphql,
     env: () => this.env,
-    wait: () => this.waitTime,
+    getAuthToken: this.getAuthToken,
+    metrics: () => this.metrics,
+    onReady: this.onReady,
     retries: 1,
+    setAuthToken: this.setAuthToken,
+    wait: () => this.waitTime,
   });
 }
 
