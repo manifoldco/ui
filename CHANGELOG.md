@@ -10,6 +10,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Error reporting to Manifold (#708)
+- Pause API activity when tab is inactive (#716)
 
 ### Removed
 
