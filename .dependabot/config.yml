@@ -1,6 +1,9 @@
 version: 1
 update_configs:
-  - ignored_updates:
+  - package_manager: 'javascript'
+    directory: '/'
+    update_schedule: 'live'
+    ignored_updates:
       - match:
         dependency_name: '@types/jest' # Version-managed by Stencil
         version_requirement: '*'
