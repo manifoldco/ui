@@ -1,6 +1,7 @@
 import { EventEmitter } from '@stencil/core';
 import { Connection, connections } from './connections';
 import { withAuth, waitForAuthToken } from './auth';
+import awaitPageVisibility from './awaitPageVisibility';
 import { report } from './errorReport';
 
 export interface CreateRestFetch {
@@ -44,6 +45,7 @@ export function createRestFetch({
 }: CreateRestFetch): RestFetch {
   async function restFetch<T>(args: RestFetchArguments, attempts: number): Promise<T | Success> {
     await onReady();
+    await awaitPageVisibility();
 
     const rttStart = performance.now();
 

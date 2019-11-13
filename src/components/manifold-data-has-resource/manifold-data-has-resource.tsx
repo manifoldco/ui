@@ -70,7 +70,7 @@ export class ManifoldDataHasResource {
   }
 
   async fetchResources(label = this.label) {
-    if (!this.graphqlFetch) {
+    if (!this.graphqlFetch || document.hidden) {
       return;
     }
 
