@@ -10,6 +10,16 @@ interface AnalyticsOptions {
   env: 'local' | 'stage' | 'prod';
 }
 
+function stringifyProperties(evt: AnalyticsEvent) {
+  return {
+    ...evt,
+    properties: Object.entries(evt.properties).reduce(
+      (properties, [key, value]) => ({ ...properties, [key]: `${value}` }),
+      {}
+    ),
+  };
+}
+
 /**
  * Report an error or analytics event to Manifold
  * @param {Object} eventData Event data to send to Manifold
@@ -26,7 +36,7 @@ export default function report(evt: AnalyticsEvent, options: AnalyticsOptions) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify({
-      ...evt,
+      ...stringifyProperties(evt),
       source: 'ui', // add source
     }),
   });

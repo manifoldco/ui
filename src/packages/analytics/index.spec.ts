@@ -1,11 +1,21 @@
 import fetchMock from 'fetch-mock';
 import report from './index';
-import { ErrorEvent } from './types';
+import { AnalyticsEvent } from './types';
 
 const local = 'begin:https://analytics.arigato.tools';
 const stage = 'begin:https://analytics.stage.manifold.co';
 const prod = 'begin:https://analytics.manifold.co';
-const error: ErrorEvent = {
+const event: AnalyticsEvent = {
+  type: 'event',
+  name: 'rtt_graphql',
+  properties: {
+    componentName: 'MANIFOLD_PRODUCT',
+    duration: 123,
+    uiVersion: '1.2.3',
+  },
+  source: 'ui',
+};
+const error: AnalyticsEvent = {
   type: 'error',
   name: 'ui_error',
   properties: {
@@ -42,12 +52,25 @@ describe('analytics', () => {
 
   describe('type', () => {
     beforeEach(() => fetchMock.mock(prod, {}));
+    afterEach(fetchMock.restore);
 
     describe('error', () => {
       it('error', async () => {
         await report(error, { env: 'prod' });
         const res = fetchMock.calls()[0][1];
         expect(res && res.body && JSON.parse(res.body.toString())).toEqual(error);
+      });
+
+      it('event', async () => {
+        await report(event, { env: 'prod' });
+        const res = fetchMock.calls()[0][1];
+        expect(res && res.body && JSON.parse(res.body.toString())).toEqual({
+          ...event,
+          properties: {
+            ...event.properties,
+            duration: '123', // numbers should submit as strings
+          },
+        });
       });
     });
   });
