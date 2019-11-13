@@ -5,14 +5,14 @@ update_configs:
     update_schedule: 'live'
     ignored_updates:
       - match:
-        dependency_name: '@types/jest' # Version-managed by Stencil
-        version_requirement: '*'
+          dependency_name: '@types/jest' # Version-managed by Stencil
+          version_requirement: '*'
       - match:
-        dependency_name: 'jest' # Version-managed by Stencil
-        version_requirement: '*'
+          dependency_name: 'jest' # Version-managed by Stencil
+          version_requirement: '*'
       - match:
-        dependency_name: 'jest-cli' # Version-managed by Stencil
-        version_requirement: '*'
+          dependency_name: 'jest-cli' # Version-managed by Stencil
+          version_requirement: '*'
       - match:
-        dependency_name: 'puppeteer' # Version-managed by Stencil
-        version_requirement: '*'
+          dependency_name: 'puppeteer' # Version-managed by Stencil
+          version_requirement: '*'
