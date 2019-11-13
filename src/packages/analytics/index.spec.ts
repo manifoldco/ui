@@ -35,7 +35,7 @@ describe('analytics', () => {
 
     it('prod', async () => {
       fetchMock.mock(prod, {});
-      await report(error);
+      await report(error, { env: 'prod' });
       expect(fetchMock.called(prod)).toBe(true);
     });
   });
@@ -45,7 +45,7 @@ describe('analytics', () => {
 
     describe('error', () => {
       it('error', async () => {
-        await report(error);
+        await report(error, { env: 'prod' });
         const res = fetchMock.calls()[0][1];
         expect(res && res.body && JSON.parse(res.body.toString())).toEqual(error);
       });

@@ -1,6 +1,7 @@
 import { connections } from '../utils/connections';
 import { createGraphqlFetch } from '../utils/graphqlFetch';
 import { createRestFetch } from '../utils/restFetch';
+import { METRICS_ENABLED } from '../global/settings';
 
 const baseWait = 15000;
 
@@ -18,14 +19,18 @@ interface Initialization {
 export class ConnectionState {
   authToken?: string;
   env: 'local' | 'stage' | 'prod' = 'prod';
-  metrics: boolean = false; // IMPORTANT: metrics are OFF by default
+  metrics: boolean = METRICS_ENABLED;
   waitTime: number = baseWait;
 
   private subscribers: Subscriber[] = [];
 
   private initialized: boolean = false;
 
-  initialize = ({ env = 'prod', metrics = false, waitTime = baseWait }: Initialization) => {
+  initialize = ({
+    env = 'prod',
+    metrics = METRICS_ENABLED,
+    waitTime = baseWait,
+  }: Initialization) => {
     this.env = env;
     this.metrics = metrics;
     this.waitTime = typeof waitTime === 'number' ? waitTime : parseInt(waitTime, 10);
