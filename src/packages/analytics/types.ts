@@ -44,7 +44,7 @@ export type EventTypes =
     };
 
 export type EventEvent = {
-  type: 'event';
+  type: 'metric';
 } & SharedProperties &
   EventTypes;
 

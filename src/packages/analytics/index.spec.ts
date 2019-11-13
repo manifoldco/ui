@@ -5,8 +5,8 @@ import { AnalyticsEvent } from './types';
 const local = 'begin:https://analytics.arigato.tools';
 const stage = 'begin:https://analytics.stage.manifold.co';
 const prod = 'begin:https://analytics.manifold.co';
-const event: AnalyticsEvent = {
-  type: 'event',
+const metric: AnalyticsEvent = {
+  type: 'metric',
   name: 'rtt_graphql',
   properties: {
     componentName: 'MANIFOLD_PRODUCT',
@@ -61,13 +61,13 @@ describe('analytics', () => {
         expect(res && res.body && JSON.parse(res.body.toString())).toEqual(error);
       });
 
-      it('event', async () => {
-        await report(event, { env: 'prod' });
+      it('metric', async () => {
+        await report(metric, { env: 'prod' });
         const res = fetchMock.calls()[0][1];
         expect(res && res.body && JSON.parse(res.body.toString())).toEqual({
-          ...event,
+          ...metric,
           properties: {
-            ...event.properties,
+            ...metric.properties,
             duration: '123', // numbers should submit as strings
           },
         });

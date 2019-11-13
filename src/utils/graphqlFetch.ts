@@ -135,7 +135,7 @@ export function createGraphqlFetch({
       analytics(
         {
           name: 'rtt_graphql',
-          type: 'event',
+          type: 'metric',
           properties: {
             componentName: detail.componentName,
             duration: detail.duration,
