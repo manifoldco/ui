@@ -81,6 +81,7 @@ export namespace Components {
   }
   interface ManifoldConnection {
     'env'?: 'local' | 'stage' | 'prod';
+    'metrics'?: boolean;
     'waitTime'?: number | string;
   }
   interface ManifoldCopyCredentials {
@@ -1091,6 +1092,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldConnection {
     'env'?: 'local' | 'stage' | 'prod';
+    'metrics'?: boolean;
     'waitTime'?: number | string;
   }
   interface ManifoldCopyCredentials {

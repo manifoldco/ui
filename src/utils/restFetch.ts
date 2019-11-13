@@ -7,11 +7,12 @@ import { report } from './errorReport';
 export interface CreateRestFetch {
   endpoints?: () => Connection;
   env?: () => 'local' | 'stage' | 'prod';
-  wait?: () => number;
-  retries?: number;
   getAuthToken?: () => string | undefined;
-  setAuthToken?: (token: string) => void;
+  metrics?: () => boolean;
   onReady?: () => Promise<unknown>;
+  retries?: number;
+  setAuthToken?: (token: string) => void;
+  wait?: () => number;
 }
 
 interface RestFetchArguments {
