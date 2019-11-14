@@ -7,7 +7,17 @@ const endpoint = {
 };
 
 interface AnalyticsOptions {
-  env?: 'local' | 'stage' | 'prod';
+  env: 'local' | 'stage' | 'prod';
+}
+
+function stringifyProperties(evt: AnalyticsEvent) {
+  return {
+    ...evt,
+    properties: Object.entries(evt.properties).reduce(
+      (properties, [key, value]) => ({ ...properties, [key]: `${value}` }),
+      {}
+    ),
+  };
 }
 
 /**
@@ -21,19 +31,12 @@ interface AnalyticsOptions {
  * @param {Object} [options] Analytics options
  * @param {string} [options.env] 'prod' (default) or 'stage'
  */
-export default function report(
-  evt: AnalyticsEvent,
-  userOptions: AnalyticsOptions = { env: 'prod' }
-) {
-  const options: AnalyticsOptions = {
-    env: 'prod',
-    ...(userOptions || {}),
-  };
-  const url = endpoint[options.env || 'prod'];
+export default function report(evt: AnalyticsEvent, options: AnalyticsOptions) {
+  const url = endpoint[options.env];
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify({
-      ...evt,
+      ...stringifyProperties(evt),
       source: 'ui', // add source
     }),
   });

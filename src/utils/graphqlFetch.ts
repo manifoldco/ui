@@ -1,5 +1,7 @@
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
+import { METRICS_ENABLED } from '../global/settings';
+import analytics from '../packages/analytics';
 import { waitForAuthToken } from './auth';
 import awaitPageVisibility from './awaitPageVisibility';
 
@@ -54,11 +56,12 @@ export type GraphqlFetch = <T>(args: GraphqlArgs) => Promise<GraphqlResponseBody
 export function createGraphqlFetch({
   endpoint = () => 'https://api.manifold.co/graphql',
   env = () => 'prod',
-  wait = () => 15000,
-  retries = 0,
+  metrics = () => METRICS_ENABLED,
   getAuthToken = () => undefined,
-  setAuthToken = () => {},
   onReady = () => new Promise(resolve => resolve()),
+  retries = 0,
+  setAuthToken = () => {},
+  wait = () => 15000,
 }: CreateGraphqlFetch): GraphqlFetch {
   async function graphqlFetch<T = Query>(
     args: GraphqlArgs,
@@ -67,7 +70,6 @@ export function createGraphqlFetch({
     await onReady();
     await awaitPageVisibility();
 
-    const rttStart = performance.now();
     const { element, ...request } = args;
 
     const token = getAuthToken();
@@ -75,6 +77,7 @@ export function createGraphqlFetch({
     const auth: { [key: string]: string } =
       token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
 
+    const rttStart = performance.now(); // start RTT timer
     const response = await fetch(endpoint(), {
       method: 'POST',
       headers: {
@@ -90,6 +93,7 @@ export function createGraphqlFetch({
       report({ message: `${e.statusText || e.status}` }, { env: env(), element });
       return Promise.reject(e);
     });
+    const rttEnd = performance.now(); // end RTT timer
 
     const body: GraphqlResponseBody<T> = await response.json();
 
@@ -113,19 +117,34 @@ export function createGraphqlFetch({
       };
     }
 
-    const fetchDuration = performance.now() - rttStart;
     const detail: GraphqlFetchEventDetail = {
       componentName: element.tagName,
-      duration: fetchDuration,
+      duration: rttEnd - rttStart,
       errors: body.errors,
       request,
       type: 'manifold-graphql-fetch-duration',
       uiVersion: '<@NPM_PACKAGE_VERSION@>',
     };
 
+    // metric event: rtt_graphql
     (element || document).dispatchEvent(
       new CustomEvent('manifold-graphql-fetch-duration', { bubbles: true, detail })
     );
+    // emit metrics event only if permitted
+    if (metrics()) {
+      analytics(
+        {
+          name: 'rtt_graphql',
+          type: 'metric',
+          properties: {
+            componentName: detail.componentName,
+            duration: detail.duration,
+            uiVersion: detail.uiVersion,
+          },
+        },
+        { env: env() }
+      );
+    }
 
     if (body.errors) {
       body.errors.forEach(e => {

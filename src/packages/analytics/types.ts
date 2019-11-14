@@ -20,31 +20,31 @@ export type EventTypes =
         initialRender: number;
         renderWithData: number;
         rttGraphql: number;
-        time: number;
+        duration: number;
       };
     }
   | {
       name: 'render_with_data';
       properties: {
         rttGraphql: number;
-        time: number;
+        duration: number;
       };
     }
   | {
       name: 'rtt_graphql';
       properties: {
-        time: number;
+        duration: number;
       };
     }
   | {
       name: 'token_received';
       properties: {
-        time: number;
+        duration: number;
       };
     };
 
 export type EventEvent = {
-  type: 'event';
+  type: 'metric';
 } & SharedProperties &
   EventTypes;
 

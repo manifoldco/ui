@@ -15,7 +15,7 @@ export const manifoldConnectionDecorator = storyFn => {
   localStorage.setItem('manifold_api_token', token); // update localStorage to persist
 
   return `
-  <manifold-connection env="${env}">
+  <manifold-connection env="${env}" metrics>
     <manifold-auth-token token="${token}" auth-type="${authType}"></manifold-auth-token>
     ${storyFn()}
   </manifold-connection>
