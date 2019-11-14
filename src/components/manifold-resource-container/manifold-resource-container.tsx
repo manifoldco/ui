@@ -1,130 +1,12 @@
 import { h, Element, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Resource, ResourceStatusLabel } from '../../types/graphql';
+import { ResourceStatusLabel, GetResourceQuery } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-
-const query = gql`
-  query RESOURCE($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      id
-      label
-      region {
-        id
-        displayName
-      }
-      status {
-        label
-      }
-      plan {
-        id
-        label
-        displayName
-        state
-        cost
-        free
-        regions(first: 20) {
-          pageInfo {
-            startCursor
-            endCursor
-            hasNextPage
-            hasPreviousPage
-          }
-          edges {
-            node {
-              id
-              displayName
-              platform
-              dataCenter
-            }
-            cursor
-          }
-        }
-        product {
-          id
-          displayName
-          tagline
-          label
-          logoUrl
-        }
-        fixedFeatures(first: 20) {
-          pageInfo {
-            startCursor
-            endCursor
-            hasNextPage
-            hasPreviousPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              label
-              displayName
-              displayValue
-            }
-          }
-        }
-        meteredFeatures(first: 20) {
-          pageInfo {
-            startCursor
-            endCursor
-            hasNextPage
-            hasPreviousPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              label
-              displayName
-              numericDetails {
-                unit
-                costTiers {
-                  limit
-                  cost
-                }
-              }
-            }
-          }
-        }
-        configurableFeatures(first: 20) {
-          pageInfo {
-            startCursor
-            endCursor
-            hasNextPage
-            hasPreviousPage
-          }
-          edges {
-            cursor
-            node {
-              id
-              label
-              displayName
-              type
-              options {
-                id
-                label
-                displayName
-                displayValue
-              }
-              numericDetails {
-                unit
-                costTiers {
-                  limit
-                  cost
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+import query from './resource.graphql';
 
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
@@ -135,7 +17,7 @@ export class ManifoldResourceContainer {
   @Prop() resourceLabel?: string;
   /** Set whether or not to refetch the resource from the api until it is in an available and valid state */
   @Prop() refetchUntilValid?: boolean = false;
-  @State() gqlData?: Resource;
+  @State() gqlData?: GetResourceQuery['resource'];
   @State() loading: boolean = true;
   @State() timeout?: number;
   @Event({ eventName: 'manifold-resource-load' }) resourceLoad: EventEmitter;
@@ -168,7 +50,7 @@ export class ManifoldResourceContainer {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({
+    const { data, errors } = await this.graphqlFetch<GetResourceQuery>({
       query,
       variables: { resourceLabel },
       element: this.el,

@@ -1,6 +1,6 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
-import { Resource } from '../../types/graphql';
+import { GetResourceQuery } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourceDeprovision } from './manifold-resource-deprovision';
 import { ManifoldDataDeprovisionButton } from '../manifold-data-deprovision-button/manifold-data-deprovision-button';
@@ -33,7 +33,7 @@ describe('<manifold-resource-deprovision>', () => {
 
   it('Renders a product card if not loading', async () => {
     element.loading = false;
-    element.gqlData = resource as Resource;
+    element.gqlData = resource as GetResourceQuery['resource'];
     const root = page.root as HTMLElement;
     root.appendChild(element);
 

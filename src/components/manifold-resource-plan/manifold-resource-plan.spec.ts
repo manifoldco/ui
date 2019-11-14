@@ -1,12 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Resource } from '../../types/graphql';
+import { GetResourceQuery } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourcePlan } from './manifold-resource-plan';
 import { ManifoldPlanDetails } from '../manifold-plan-details/manifold-plan-details';
 
 interface Props {
-  gqlData?: Resource;
+  gqlData?: GetResourceQuery['resource'];
   loading?: boolean;
 }
 
@@ -40,7 +40,10 @@ describe('<manifold-resource-plan>', () => {
   });
 
   it('Renders a product card if not loading', async () => {
-    const { page } = await setup({ loading: false, gqlData: resource });
+    const { page } = await setup({
+      loading: false,
+      gqlData: resource as GetResourceQuery['resource'],
+    });
     const planDetails = page.root && page.root.querySelector('manifold-plan-details');
     const productName =
       planDetails &&

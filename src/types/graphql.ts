@@ -2045,6 +2045,104 @@ export type PlanQuery = (
   )> }
 );
 
+export type GetResourceQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type GetResourceQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & Pick<Resource, 'id' | 'label'>
+    & { region: Maybe<(
+      { __typename?: 'Region' }
+      & Pick<Region, 'id' | 'displayName'>
+    )>, status: (
+      { __typename?: 'ResourceStatus' }
+      & Pick<ResourceStatus, 'label' | 'message'>
+    ), plan: Maybe<(
+      { __typename?: 'Plan' }
+      & Pick<Plan, 'id' | 'label' | 'displayName' | 'state' | 'cost' | 'free'>
+      & { regions: Maybe<(
+        { __typename?: 'RegionConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'RegionEdge' }
+          & Pick<RegionEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'Region' }
+            & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+          ) }
+        )> }
+      )>, product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'id' | 'displayName' | 'tagline' | 'label' | 'logoUrl'>
+      )>, fixedFeatures: Maybe<(
+        { __typename?: 'PlanFixedFeatureConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'PlanFixedFeatureEdge' }
+          & Pick<PlanFixedFeatureEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'PlanFixedFeature' }
+            & Pick<PlanFixedFeature, 'id' | 'label' | 'displayName' | 'displayValue'>
+          ) }
+        )> }
+      )>, meteredFeatures: Maybe<(
+        { __typename?: 'PlanMeteredFeatureConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'PlanMeteredFeatureEdge' }
+          & Pick<PlanMeteredFeatureEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'PlanMeteredFeature' }
+            & Pick<PlanMeteredFeature, 'id' | 'label' | 'displayName'>
+            & { numericDetails: (
+              { __typename?: 'PlanMeteredFeatureNumericDetails' }
+              & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+              & { costTiers: Maybe<Array<(
+                { __typename?: 'PlanFeatureCostTier' }
+                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+              )>> }
+            ) }
+          ) }
+        )> }
+      )>, configurableFeatures: Maybe<(
+        { __typename?: 'PlanConfigurableFeatureConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'PlanConfigurableFeatureEdge' }
+          & Pick<PlanConfigurableFeatureEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'PlanConfigurableFeature' }
+            & Pick<PlanConfigurableFeature, 'id' | 'label' | 'displayName' | 'type'>
+            & { options: Maybe<Array<(
+              { __typename?: 'PlanFixedFeature' }
+              & Pick<PlanFixedFeature, 'id' | 'label' | 'displayName' | 'displayValue'>
+            )>>, numericDetails: Maybe<(
+              { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+              & Pick<PlanConfigurableFeatureNumericDetails, 'unit'>
+              & { costTiers: Maybe<Array<(
+                { __typename?: 'PlanFeatureCostTier' }
+                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+              )>> }
+            )> }
+          ) }
+        )> }
+      )> }
+    )> }
+  )> }
+);
+
 export type Resources_With_OwnerQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String'],

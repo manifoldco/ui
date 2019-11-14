@@ -8,6 +8,7 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
+  GetResourceQuery,
   Plan,
   PlanEdge,
   PlanMeteredFeatureEdge,
@@ -29,14 +30,14 @@ import {
   GraphqlFetch,
 } from './utils/graphqlFetch';
 import {
-  Gateway,
-} from './types/gateway';
-import {
   AuthToken,
 } from './types/auth';
 import {
   RestFetch,
 } from './utils/restFetch';
+import {
+  Gateway,
+} from './types/gateway';
 import {
   Option,
 } from './types/Select';
@@ -364,8 +365,7 @@ export namespace Components {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
-    'gqlMock': Resource;
-    'mock': Gateway.Resource;
+    'gqlMock': GetResourceQuery['resource'];
   }
   interface ManifoldNoCredentials {
     'graphqlFetch'?: GraphqlFetch;
@@ -495,12 +495,12 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldResourceCredentials {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceList {
@@ -526,7 +526,7 @@ export namespace Components {
     'resourceLinkFormat'?: string;
   }
   interface ManifoldResourcePlan {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
@@ -535,7 +535,7 @@ export namespace Components {
   }
   interface ManifoldResourceRename {
     'disabled'?: boolean;
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -543,11 +543,11 @@ export namespace Components {
     'newLabel'?: string;
   }
   interface ManifoldResourceSso {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceStatus {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
@@ -1386,8 +1386,7 @@ declare namespace LocalJSX {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
-    'gqlMock'?: Resource;
-    'mock'?: Gateway.Resource;
+    'gqlMock'?: GetResourceQuery['resource'];
   }
   interface ManifoldNoCredentials {
     'graphqlFetch'?: GraphqlFetch;
@@ -1524,12 +1523,12 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldResourceCredentials {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceList {
@@ -1555,7 +1554,7 @@ declare namespace LocalJSX {
     'resourceLinkFormat'?: string;
   }
   interface ManifoldResourcePlan {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
@@ -1564,7 +1563,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceRename {
     'disabled'?: boolean;
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1572,11 +1571,11 @@ declare namespace LocalJSX {
     'newLabel'?: string;
   }
   interface ManifoldResourceSso {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceStatus {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }

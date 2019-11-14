@@ -202,6 +202,12 @@ const resource: Resource = {
     },
     state: PlanState.Available,
   },
+  region: {
+    id: '235n4f9pxf8eyraj3y159x89z6jer',
+    platform: 'all',
+    dataCenter: 'global',
+    displayName: 'All Regions',
+  },
   ssoSupported: true,
   ssoUrl: '',
   status: {
