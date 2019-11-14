@@ -13,8 +13,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Removed
 
-- Data Dog logging removed (#9584)
-- Removed `manifold-performance` component (#9584)
+- Data Dog logging removed (#729)
+- Removed `manifold-performance` component (#729)
 
 ## [0.6.5] - 2019-11-13
 

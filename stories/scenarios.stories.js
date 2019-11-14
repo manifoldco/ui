@@ -25,11 +25,11 @@ storiesOf('Scenarios', module)
     const token = text('manifold_api_token', localStorage.getItem('manifold_api_token') || '');
 
     return `
-      <manifold-connection env="${env}">
+      <manifold-connection metrics env="${env}">
         <p><em>These resources are loaded from the server rather than mocks</em></p>
         <manifold-auth-token token="${token}" auth-type="${authType}"></manifold-auth-token>
         <manifold-resource-list></manifold-resource-list>
-      </manifold-connection>`;
+      </manifold-connection metrics>`;
   });
 
 /* TODO Re add metrics logging story once analytics-ingest is ready
@@ -41,8 +41,8 @@ storiesOf('Scenarios', module)
 //   const env = radios('env', options, 'stage');
 
 //   return `
-//     <manifold-connection env="${env}">
+//     <manifold-connection metrics env="${env}">
 //       <p>Shortly after this component loads, you should see <a href="https://app.datadoghq.com/logs?cols=%22%5B%5C%22core_host%5C%22%2C%5C%22core_service%5C%22%5D%22&event&from_ts=1566584997801&index=main&live=true&messageDisplay=inline&query=%40browser-source%3Amanifold-ui&stream_sort=desc&to_ts=1566585897801">logs in DataDog</a></p>
 //       <manifold-service-card product-label="fake-service"></manifold-service-card >
-//     </manifold-connection>`;
+//     </manifold-connection metrics>`;
 //  });
