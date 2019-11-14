@@ -56,7 +56,6 @@ export const config: Config = {
       exclude: 'node_modules/**',
       delimiters: ['<@', '@>'],
       values: {
-        DATADOG_CLIENT_TOKEN: process.env.DATADOG_CLIENT_TOKEN,
         NPM_PACKAGE_VERSION: pkgManifest.version,
       },
     }),

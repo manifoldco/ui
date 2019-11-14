@@ -385,9 +385,6 @@ export namespace Components {
   interface ManifoldOauth {
     'tick'?: string;
   }
-  interface ManifoldPerformance {
-    'ddLogs'?: any;
-  }
   interface ManifoldPlan {
     /**
     * _(hidden)_
@@ -805,12 +802,6 @@ declare global {
     new (): HTMLManifoldOauthElement;
   };
 
-  interface HTMLManifoldPerformanceElement extends Components.ManifoldPerformance, HTMLStencilElement {}
-  var HTMLManifoldPerformanceElement: {
-    prototype: HTMLManifoldPerformanceElement;
-    new (): HTMLManifoldPerformanceElement;
-  };
-
   interface HTMLManifoldPlanElement extends Components.ManifoldPlan, HTMLStencilElement {}
   var HTMLManifoldPlanElement: {
     prototype: HTMLManifoldPlanElement;
@@ -1015,7 +1006,6 @@ declare global {
     'manifold-no-credentials': HTMLManifoldNoCredentialsElement;
     'manifold-number-input': HTMLManifoldNumberInputElement;
     'manifold-oauth': HTMLManifoldOauthElement;
-    'manifold-performance': HTMLManifoldPerformanceElement;
     'manifold-plan': HTMLManifoldPlanElement;
     'manifold-plan-cost': HTMLManifoldPlanCostElement;
     'manifold-plan-details': HTMLManifoldPlanDetailsElement;
@@ -1419,9 +1409,6 @@ declare namespace LocalJSX {
     'onReceiveManifoldToken'?: (event: CustomEvent<AuthToken>) => void;
     'tick'?: string;
   }
-  interface ManifoldPerformance {
-    'ddLogs'?: any;
-  }
   interface ManifoldPlan {
     /**
     * _(hidden)_
@@ -1695,7 +1682,6 @@ declare namespace LocalJSX {
     'manifold-no-credentials': ManifoldNoCredentials;
     'manifold-number-input': ManifoldNumberInput;
     'manifold-oauth': ManifoldOauth;
-    'manifold-performance': ManifoldPerformance;
     'manifold-plan': ManifoldPlan;
     'manifold-plan-cost': ManifoldPlanCost;
     'manifold-plan-details': ManifoldPlanDetails;
@@ -1764,7 +1750,6 @@ declare module "@stencil/core" {
       'manifold-no-credentials': LocalJSX.ManifoldNoCredentials & JSXBase.HTMLAttributes<HTMLManifoldNoCredentialsElement>;
       'manifold-number-input': LocalJSX.ManifoldNumberInput & JSXBase.HTMLAttributes<HTMLManifoldNumberInputElement>;
       'manifold-oauth': LocalJSX.ManifoldOauth & JSXBase.HTMLAttributes<HTMLManifoldOauthElement>;
-      'manifold-performance': LocalJSX.ManifoldPerformance & JSXBase.HTMLAttributes<HTMLManifoldPerformanceElement>;
       'manifold-plan': LocalJSX.ManifoldPlan & JSXBase.HTMLAttributes<HTMLManifoldPlanElement>;
       'manifold-plan-cost': LocalJSX.ManifoldPlanCost & JSXBase.HTMLAttributes<HTMLManifoldPlanCostElement>;
       'manifold-plan-details': LocalJSX.ManifoldPlanDetails & JSXBase.HTMLAttributes<HTMLManifoldPlanDetailsElement>;

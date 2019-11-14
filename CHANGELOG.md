@@ -11,6 +11,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Added `metrics` property to `<manifold-connection>` to opt-in for metric collection (#724)
 
+### Removed
+
+- Data Dog logging removed (#9584)
+- Removed `manifold-performance` component (#9584)
+
 ## [0.6.5] - 2019-11-13
 
 ### Added
