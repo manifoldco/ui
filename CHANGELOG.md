@@ -11,6 +11,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Added `metrics` property to `<manifold-connection>` to opt-in for metric collection (#724)
 - Added performance monitoring of GraphQL endpoints (#726)
+- Added performance monitoring of oauth token handshake (#730)
 
 ### Removed
 
