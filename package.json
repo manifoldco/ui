@@ -30,7 +30,7 @@
     "build:watch": "npm run update-version && stencil build --watch",
     "bundlesize": "npm run build && npx bundlesize",
     "copy-changelog": "node scripts/copy-changelog",
-    "dev": "npm run build:watch & rm -rf dist && wait-on dist/loader/index.cjs.js && manifold run -p manifold-ui-local -- npm run storybook",
+    "dev": "npm run build:watch & rm -rf dist && wait-on dist/loader/index.cjs.js && npm run storybook",
     "docs": "npm run prepare:docs && cd docs && npm start",
     "docker": "docker build -t manifoldco/ui . && docker run -p 8080:80 manifoldco/ui",
     "format:changelog": "npx keep-a-changelog && prettier CHANGELOG.md --write",
