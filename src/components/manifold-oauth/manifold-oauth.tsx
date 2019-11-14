@@ -37,7 +37,7 @@ export class ManifoldOauth {
             name: 'token_received',
             type: 'metric',
             properties: {
-              componentName: 'manifold-oauth',
+              componentName: this.el.tagName,
               duration: receivedTime - this.loadTime,
               uiVersion: '<@NPM_PACKAGE_VERSION@>',
             },
