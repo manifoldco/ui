@@ -52,47 +52,30 @@ const GraphQLResource: Resource = {
       ],
     },
     product: {
-      id: '234qkjvrptpy3thna4qttwt7m2nf6',
-      label: 'logdna',
+      categories: [
+        {
+          displayName: 'Logging',
+          id: '00000000000000000000000000000',
+          label: 'logging',
+          products: { pageInfo: { hasNextPage: false, hasPreviousPage: false }, edges: [] },
+        },
+        {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
+          label: 'monitoring',
+          products: { pageInfo: { hasNextPage: false, hasPreviousPage: false }, edges: [] },
+        },
+      ],
       displayName: 'LogDNA',
-      tagline:
-        'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
-      settings: {
-        ssoSupported: true,
-        credentialsSupport: ProductCredentialsSupportType.Single,
-      },
-      state: ProductState.Available,
-      logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
-      supportEmail: 'support@logdna.com',
       documentationUrl: 'https://docs.logdna.com/docs/',
-      termsUrl: 'https://logdna.com/terms.html',
+      id: '234qkjvrptpy3thna4qttwt7m2nf6',
       images: [
         'https://cdn.manifold.co/providers/logdna/logdna/images/1ew2g2d9bahjjdvrcyd7k71nwr.png',
         'https://cdn.manifold.co/providers/logdna/logdna/images/4uy1kt8we9nzbnehyzev94117m.png',
         'https://cdn.manifold.co/providers/logdna/logdna/images/nawd3ffc9nwpkw6347b8y8whgw.png',
       ],
-      categories: [
-        {
-          label: 'logging',
-          products: {
-            pageInfo: {
-              hasNextPage: false,
-              hasPreviousPage: false,
-            },
-            edges: [],
-          },
-        },
-        {
-          label: 'monitoring',
-          products: {
-            pageInfo: {
-              hasNextPage: false,
-              hasPreviousPage: false,
-            },
-            edges: [],
-          },
-        },
-      ],
+      label: 'logdna',
+      logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
       provider: {
         id: '23409yv8yfy06gt8553wzz5x8k164',
         label: 'logdna',
@@ -101,6 +84,15 @@ const GraphQLResource: Resource = {
         url: '',
         supportEmail: '',
       },
+      settings: { ssoSupported: true, credentialsSupport: ProductCredentialsSupportType.Single },
+      setupStepsHtml:
+        '<ol><li><p><a href="https://docs.logdna.com" rel="nofollow">Select a code library from the LogDNA documentation</a></p>\n</li><li><p>Copy your API credentials from our dashboard</p>\n</li><li><p>Configure the logger with your API key</p>\n</li><li><p>Start your application</p>\n</li><li><p>Monitor your logs from the LogDNA dashboard</p>\n</li></ol>',
+      state: ProductState.Available,
+      supportEmail: 'support@logdna.com',
+      tagline:
+        'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
+      tags: ['logging', 'monitoring'],
+      termsUrl: 'https://logdna.com/terms.html',
       valueProps: [
         {
           header: 'Aggregate Logs & Analyze Events',
@@ -135,8 +127,6 @@ const GraphQLResource: Resource = {
       ],
       valuePropsHtml:
         '<h3>Aggregate Logs &amp; Analyze Events</h3><p>Centralize your logs in one place instead of tailing one file at a time. Aggregate, search &amp; filter from all your hosts and apps. See related events across your infrastructure on one screen.</p><h3>Powerful Search &amp; Alerts</h3><p>With our blazing fast speeds, search like a pro and set up alerts with just a few clicks. Easily send important event notifications through email, Slack, or even a custom webhook.</p><h3>Easy Setup</h3><p>Get up and running in mere minutes! Spend that saved time building your awesome product instead.</p><h3>Automatic Field Parsing</h3><p>Search for specific fields and values automatically picked up from common log formats, such as JSON, Redis, HTTP access logs, and a whole host of others.</p><h3>Debug &amp; Troubleshoot Faster</h3><p>Diagnose issues, chase down server errors and look up customer activity, fast! Use live streaming tail to instantly surface hard-to-find bugs.</p><h3>Modern User Interface</h3><p>Filter, search, live tail, jump back in time, create views and alerts, all from one interface without leaving the page.</p>',
-      setupStepsHtml:
-        '<ol><li><p><a href="https://docs.logdna.com" rel="nofollow">Select a code library from the LogDNA documentation</a></p>\n</li><li><p>Copy your API credentials from our dashboard</p>\n</li><li><p>Configure the logger with your API key</p>\n</li><li><p>Start your application</p>\n</li><li><p>Monitor your logs from the LogDNA dashboard</p>\n</li></ol>',
     },
     fixedFeatures: {
       pageInfo: {

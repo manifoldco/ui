@@ -13,7 +13,14 @@ const emptyProducts: ProductConnection = {
 
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
-  categories: [{ label: 'optimization', products: emptyProducts }],
+  categories: [
+    {
+      displayName: 'Optimization',
+      label: 'optimization',
+      id: '00000000000000000000000000000',
+      products: emptyProducts,
+    },
+  ],
   displayName: 'Generic Image Tagging',
   documentationUrl: 'https://www.ximilar.com/services/generic-tagging/',
   id: '234hyjj2qbkpyw4z0g0bwgjgtydnj',
@@ -322,6 +329,7 @@ const product: Product = {
   supportEmail: 'tech@ximilar.com',
   tagline:
     'Automatic tagging of everyday photos. Powerful computer vision & machine learning with blazing speed.',
+  tags: ['optimization'],
   termsUrl: 'https://www.ximilar.com/terms-of-use-privacy/',
   valueProps: [
     {

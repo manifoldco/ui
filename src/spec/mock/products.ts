@@ -29,6 +29,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
@@ -58,6 +60,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support-manifold@aiven.io',
       tagline: 'The most complete cloud Cassandra on the market',
+      tags: ['database'],
       termsUrl: 'https://aiven.io/terms',
       valueProps: [
         {
@@ -86,10 +89,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
         {
+          displayName: 'Search',
+          id: '00000000000000000000000000000',
           label: 'search',
           products: emptyProducts,
         },
@@ -119,6 +126,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support-manifold@aiven.io',
       tagline: 'The most complete cloud Elasticsearch on the market',
+      tags: ['database', 'search'],
       termsUrl: 'https://aiven.io/terms',
       valueProps: [
         {
@@ -147,6 +155,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -176,6 +186,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support-manifold@aiven.io',
       tagline: 'Your graphing and alerting needs in one platform',
+      tags: ['monitoring'],
       termsUrl: 'https://aiven.io/terms',
       valueProps: [
         {
@@ -194,10 +205,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
@@ -227,6 +242,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support-manifold@aiven.io',
       tagline: 'The benefits of Kafka without the headaches',
+      tags: ['database', 'messaging'],
       termsUrl: 'https://aiven.io/terms',
       valueProps: [
         {
@@ -255,6 +271,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
@@ -284,6 +302,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support-manifold@aiven.io',
       tagline: 'The most complete cloud Postgres on the market',
+      tags: ['database'],
       termsUrl: 'https://aiven.io/terms',
       valueProps: [
         {
@@ -312,10 +331,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
         {
+          displayName: 'Memory Store',
+          id: '00000000000000000000000000000',
           label: 'memory-store',
           products: emptyProducts,
         },
@@ -345,6 +368,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support-manifold@aiven.io',
       tagline: 'The most complete cloud Redis on the market',
+      tags: ['database', 'memory-store'],
       termsUrl: 'https://aiven.io/terms',
       valueProps: [
         {
@@ -362,6 +386,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -394,6 +420,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@blitline.com',
       tagline: 'Premium image processing and rasterization API for enterprise systems',
+      tags: ['optimization'],
       termsUrl: 'http://www.blitline.com/terms',
       valueProps: [
         {
@@ -436,6 +463,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Search',
+          id: '00000000000000000000000000000',
           label: 'search',
           products: emptyProducts,
         },
@@ -469,6 +498,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@onemorecloud.com',
       tagline: 'Elasticsearch, fully managed by the experts in hosted search.',
+      tags: ['search'],
       termsUrl: 'https://onemorecloud.com/info/terms',
       valueProps: [
         {
@@ -510,10 +540,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Memory Store',
+          id: '00000000000000000000000000000',
           label: 'memory-store',
           products: emptyProducts,
         },
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
@@ -548,6 +582,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@cloudamqp.com',
       tagline: 'Perfectly configured and optimized RabbitMQ clusters ready in 2 minutes.',
+      tags: ['memory-store', 'messaging'],
       termsUrl: 'https://www.cloudamqp.com/terms_of_service.html',
       valueProps: [
         {
@@ -590,6 +625,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Utility',
+          id: '00000000000000000000000000000',
           label: 'utility',
           products: emptyProducts,
         },
@@ -621,6 +658,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@cloudforged.com',
       tagline: 'Flexible AWS S3 file storage without the hassle.',
+      tags: ['utility'],
       termsUrl: 'https://cloudcube.cloudforged.com/terms',
       valueProps: [
         {
@@ -659,6 +697,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -690,6 +730,7 @@ const products: ProductEdge[] = [
       supportEmail: 'tech@ximilar.com',
       tagline:
         'Image classification & tagging by your labels. Powerful computer vision & machine learning with blazing speed.',
+      tags: ['optimization'],
       termsUrl: 'https://www.ximilar.com/terms-of-use-privacy/',
       valueProps: [
         {
@@ -727,6 +768,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
@@ -762,6 +805,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@dumper.io',
       tagline: 'Off-site backup-as-a-service for MySQL, PostgreSQL, MongoDB and Redis.',
+      tags: ['database'],
       termsUrl: '<https://dumper.io/help/terms>',
       valueProps: [
         {
@@ -805,6 +849,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'CMS',
+          id: '00000000000000000000000000000',
           label: 'cms',
           products: emptyProducts,
         },
@@ -839,6 +885,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@elegantcms.io',
       tagline:
         'Headless CMS with JSON-API interface. The essential power features to manage all content within your application.',
+      tags: ['cms'],
       termsUrl: 'https://www.elegantcms.io/terms-of-service',
       valueProps: [
         {
@@ -882,6 +929,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -913,6 +962,7 @@ const products: ProductEdge[] = [
       supportEmail: 'tech@ximilar.com',
       tagline:
         'Automatic tagging of everyday photos. Powerful computer vision & machine learning with blazing speed.',
+      tags: ['optimization'],
       termsUrl: 'https://www.ximilar.com/terms-of-use-privacy/',
       valueProps: [
         {
@@ -937,6 +987,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -969,6 +1021,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support@hypdf.com',
       tagline: 'Your Swiss Army knife for working with PDF',
+      tags: ['optimization'],
       termsUrl: 'https://www.hypdf.com/info/terms_of_service',
       valueProps: [
         {
@@ -1015,6 +1068,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -1048,6 +1103,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@hostedmetrics.com',
       tagline: 'Monitor your applications with InfluxDB, Grafana, and StatsD',
+      tags: ['monitoring'],
       termsUrl: 'https://hostedmetrics.com/terms-of-use/',
       valueProps: [
         {
@@ -1085,6 +1141,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -1117,6 +1175,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@informantapp.com',
       tagline: 'Form Validation Analytics for Ruby on Rails Applications',
+      tags: ['monitoring'],
       termsUrl: 'https://www.informantapp.com/terms.html',
       valueProps: [
         {
@@ -1154,6 +1213,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Memory Store',
+          id: '00000000000000000000000000000',
           label: 'memory-store',
           products: emptyProducts,
         },
@@ -1182,6 +1243,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@iron.io',
       tagline:
         'Elastic, scalable, highly available, secure cloud-based key/value store. Starting at $0/mo.',
+      tags: ['memory-store'],
       termsUrl: '<https://www.iron.io/terms>',
       valueProps: [
         {
@@ -1214,10 +1276,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
         {
+          displayName: 'Memory Store',
+          id: '00000000000000000000000000000',
           label: 'memory-store',
           products: emptyProducts,
         },
@@ -1245,6 +1311,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@iron.io',
       tagline: 'Highly Available, Lightning Fast Message Queue Starting at $9.99/mo.',
+      tags: ['messaging', 'memory-store'],
       termsUrl: '<https://www.iron.io/terms>',
       valueProps: [
         {
@@ -1278,6 +1345,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Worker',
+          id: '00000000000000000000000000000',
           label: 'worker',
           products: emptyProducts,
         },
@@ -1305,6 +1374,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@iron.io',
       tagline: 'Highly available and scalable task queue / worker service. Starting at $26/mo.',
+      tags: ['worker'],
       termsUrl: '<https://www.iron.io/terms>',
       valueProps: [
         {
@@ -1343,6 +1413,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
@@ -1375,6 +1447,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@jawsdb.com',
       tagline: 'Fast, reliable, no-bullshark MariaDB as a Service',
+      tags: ['database'],
       termsUrl: '',
       valueProps: [
         {
@@ -1418,6 +1491,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
@@ -1450,6 +1525,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@jawsdb.com',
       tagline: 'Fast, reliable, no-bullshark MySQL as a Service',
+      tags: ['database'],
       termsUrl: '',
       valueProps: [
         {
@@ -1493,6 +1569,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Database',
+          id: '00000000000000000000000000000',
           label: 'database',
           products: emptyProducts,
         },
@@ -1525,6 +1603,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@jawsdb.com',
       tagline: 'Fast, reliable, no-bullshark Postgres as a Service',
+      tags: ['database'],
       termsUrl: '',
       valueProps: [
         {
@@ -1567,10 +1646,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Logging',
+          id: '00000000000000000000000000000',
           label: 'logging',
           products: emptyProducts,
         },
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -1604,6 +1687,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@logdna.com',
       tagline:
         'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
+      tags: ['logging', 'monitoring'],
       termsUrl: 'https://logdna.com/terms.html',
       valueProps: [
         {
@@ -1646,6 +1730,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
@@ -1677,6 +1763,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'help@mailgun.com',
       tagline: 'The Email Service For Developers',
+      tags: ['messaging'],
       termsUrl: 'https://www.mailgun.com/terms',
       valueProps: [
         {
@@ -1719,6 +1806,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Memory Store',
+          id: '00000000000000000000000000000',
           label: 'memory-store',
           products: emptyProducts,
         },
@@ -1751,6 +1840,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@memcachier.com',
       tagline: 'Reliable and powerful memcache-as-a-service.',
+      tags: ['memory-store'],
       termsUrl: 'https://www.memcachier.com/legal/tos',
       valueProps: [
         {
@@ -1792,6 +1882,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Authentication',
+          id: '00000000000000000000000000000',
           label: 'authentication',
           products: emptyProducts,
         },
@@ -1827,6 +1919,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@oauth.io',
       tagline:
         'OAuth that just works. Choose from 100+ OAuth providers and integrate with them in minutes',
+      tags: ['authentication'],
       termsUrl: 'https://oauth.io/terms',
       valueProps: [],
       valuePropsHtml: '',
@@ -1837,6 +1930,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Worker',
+          id: '00000000000000000000000000000',
           label: 'worker',
           products: emptyProducts,
         },
@@ -1870,6 +1965,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@pdfshift.io',
       tagline: 'Convert HTML documents to PDF in one simple POST request!',
+      tags: ['worker'],
       termsUrl: 'https://pdfshift.io/terms',
       valueProps: [
         {
@@ -1904,6 +2000,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -1935,6 +2033,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@piio.co',
       tagline: 'Never optimize an image again, automatic image optimization for your website.',
+      tags: ['optimization'],
       termsUrl: '<https://app.piio.co/terms>',
       valueProps: [
         {
@@ -1985,10 +2084,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Worker',
+          id: '00000000000000000000000000000',
           label: 'worker',
           products: emptyProducts,
         },
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
@@ -2023,6 +2126,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@posthook.io',
       tagline: 'Simple, Robust Job Scheduling For Your Application',
+      tags: ['worker', 'messaging'],
       termsUrl: 'https://posthook.io/terms',
       valueProps: [
         {
@@ -2065,6 +2169,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Utility',
+          id: '00000000000000000000000000000',
           label: 'utility',
           products: emptyProducts,
         },
@@ -2097,6 +2203,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'hello@prefab.cloud',
       tagline: 'Feature Flags, RateLimits & RemoteConfig. Microservices as a Service.',
+      tags: ['utility'],
       termsUrl: 'https://www.prefab.cloud/terms_of_service',
       valueProps: [
         {
@@ -2140,6 +2247,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -2168,6 +2277,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support@hostedmetrics.com',
       tagline: 'Monitor your applications and infrastructure with Prometheus, Grafana, and StatsD',
+      tags: ['monitoring'],
       termsUrl: 'https://hostedmetrics.com/terms-of-use/',
       valueProps: [
         {
@@ -2206,6 +2316,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
@@ -2237,6 +2349,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'info@scaledrone.com',
       tagline: 'Send realtime data to your users',
+      tags: ['messaging'],
       termsUrl: 'https://www.scaledrone.com/terms',
       valueProps: [
         {
@@ -2264,6 +2377,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -2297,6 +2412,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@scoutapm.com',
       tagline:
         'Track down memory leaks, N+1s, slow code and more. For Ruby, Python, PHP, and Elixir apps',
+      tags: ['monitoring'],
       termsUrl: 'https://scoutapm.com/terms',
       valueProps: [
         {
@@ -2334,6 +2450,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Monitoring',
+          id: '00000000000000000000000000000',
           label: 'monitoring',
           products: emptyProducts,
         },
@@ -2366,6 +2484,7 @@ const products: ProductEdge[] = [
       state: ProductState.Hidden,
       supportEmail: 'support@statushub.com',
       tagline: 'Downtime? Communicate with customers and maintain trust.',
+      tags: ['monitoring'],
       termsUrl: 'https://statushub.com/terms/',
       valueProps: [
         {
@@ -2398,6 +2517,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Messaging',
+          id: '00000000000000000000000000000',
           label: 'messaging',
           products: emptyProducts,
         },
@@ -2430,6 +2551,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@tillmobile.com',
       tagline: 'Your two-way SMS & Voice Microservice',
+      tags: ['messaging'],
       termsUrl: 'https://tillmobile.com/terms-of-service/',
       valueProps: [
         {
@@ -2466,6 +2588,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Logging',
+          id: '00000000000000000000000000000',
           label: 'logging',
           products: emptyProducts,
         },
@@ -2498,6 +2622,7 @@ const products: ProductEdge[] = [
       state: ProductState.New,
       supportEmail: 'support@timber.io',
       tagline: 'Log better. Solve problems faster.',
+      tags: ['logging'],
       termsUrl: '&lt;https://timber.io/terms&gt;',
       valueProps: [
         {
@@ -2537,6 +2662,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -2567,6 +2694,7 @@ const products: ProductEdge[] = [
       state: ProductState.Grandfathered,
       supportEmail: 'dom@valence.net',
       tagline: 'Deployment Scaling, Performance Compliance, and Cost Optimization for Kubernetes',
+      tags: ['optimization'],
       termsUrl: 'https://github.com/valencenet/valence-manifests',
       valueProps: [
         {
@@ -2594,6 +2722,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Search',
+          id: '00000000000000000000000000000',
           label: 'search',
           products: emptyProducts,
         },
@@ -2627,6 +2757,7 @@ const products: ProductEdge[] = [
       state: ProductState.Available,
       supportEmail: 'support@websolr.com',
       tagline: 'Solr, fully managed by the experts in hosted search at One More Cloud.',
+      tags: ['search'],
       termsUrl: 'https://onemorecloud.com/info/terms',
       valueProps: [
         {
@@ -2670,10 +2801,14 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Worker',
+          id: '00000000000000000000000000000',
           label: 'worker',
           products: emptyProducts,
         },
         {
+          displayName: 'AI / ML',
+          id: '00000000000000000000000000000',
           label: 'ai-ml',
           products: emptyProducts,
         },
@@ -2704,6 +2839,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@zerosix.ai',
       tagline:
         'ZeroSix Marketplace provides access to compute power specifically for Machine Learning and Artificial Intelligence.',
+      tags: ['ai-ml', 'worker'],
       termsUrl: 'https://zerosix.ai/privacy-policy/',
       valueProps: [
         {
@@ -2741,6 +2877,8 @@ const products: ProductEdge[] = [
     node: {
       categories: [
         {
+          displayName: 'Optimization',
+          id: '00000000000000000000000000000',
           label: 'optimization',
           products: emptyProducts,
         },
@@ -2775,6 +2913,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@ziggeo.com',
       tagline:
         'Ziggeo is an award-winning cloud-based service for in-browser/in-app video recording, playback, transcoding, storage & video management.',
+      tags: ['optimization'],
       termsUrl: 'https://ziggeo.com/terms',
       valueProps: [
         {

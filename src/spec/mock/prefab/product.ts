@@ -13,7 +13,14 @@ const emptyProducts: ProductConnection = {
 
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
-  categories: [{ label: 'utility', products: emptyProducts }],
+  categories: [
+    {
+      displayName: 'Utility',
+      label: 'utility',
+      id: '00000000000000000000000000000',
+      products: emptyProducts,
+    },
+  ],
   displayName: 'Prefab.cloud',
   documentationUrl: 'https://www.prefab.cloud/documentation/getting_started',
   id: '234j199gnaggg2qj6fvey2m3gw1nc',
@@ -443,6 +450,7 @@ const product: Product = {
   state: ProductState.New,
   supportEmail: 'hello@prefab.cloud',
   tagline: 'Feature Flags, RateLimits & RemoteConfig. Microservices as a Service.',
+  tags: ['utility'],
   termsUrl: 'https://www.prefab.cloud/terms_of_service',
   valueProps: [
     {

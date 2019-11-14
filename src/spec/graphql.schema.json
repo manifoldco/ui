@@ -133,6 +133,16 @@
                   "ofType": null
                 },
                 "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": "",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryOrderBy",
+                  "ofType": null
+                },
+                "defaultValue": null
               }
             ],
             "type": {
@@ -149,19 +159,25 @@
           },
           {
             "name": "category",
-            "description": "Look up a category by its label.",
+            "description": "Look up a category by its `id` or `label`. Exactly one of `id` or `label` is\nrequired, and `id` has precedence over `label`.",
             "args": [
+              {
+                "name": "id",
+                "description": "",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
               {
                 "name": "label",
                 "description": "",
                 "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
                 },
                 "defaultValue": null
               }
@@ -729,6 +745,11 @@
           },
           {
             "kind": "OBJECT",
+            "name": "Category",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "Invoice",
             "ofType": null
           },
@@ -1253,7 +1274,7 @@
           },
           {
             "name": "categories",
-            "description": "Categories are the catalog categories associated with this product.",
+            "description": "Categories are the tags for a product. They were previously used as an alias for the freeformed tags.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1271,6 +1292,77 @@
                   }
                 }
               }
+            },
+            "isDeprecated": true,
+            "deprecationReason": "Categories are now their own types, moved the legacy categories into tags. See the Linked Categories for the product's catalog categories"
+          },
+          {
+            "name": "tags",
+            "description": "Tags are the free-formed tags associated with the product.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "linkedCategories",
+            "description": "Linked categories are the categories that this product is a part of. Do not confuse with the categories field,\nwhich will only return the product's tags",
+            "args": [
+              {
+                "name": "first",
+                "description": "",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "after",
+                "description": "",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": "",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryOrderBy",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CategoryConnection",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3254,8 +3346,24 @@
         "description": "Category represents the category an entity is in.",
         "fields": [
           {
-            "name": "label",
+            "name": "id",
             "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "label",
+            "description": "The URL friendly label for that category",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3270,8 +3378,36 @@
             "deprecationReason": null
           },
           {
+            "name": "displayName",
+            "description": "The user readable name for that category",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "icon",
+            "description": "The optional icon for that category. Icon namess are found in the manifold official icon repository",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "products",
-            "description": "",
+            "description": "The products found in this category",
             "args": [
               {
                 "name": "first",
@@ -3322,75 +3458,65 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
       {
-        "kind": "OBJECT",
-        "name": "ProductSettings",
-        "description": "ProductSettings describes how the product integrates with the marketplace.",
-        "fields": [
+        "kind": "INPUT_OBJECT",
+        "name": "CategoryOrderBy",
+        "description": "CategoryOrderBy defines how a category connection is to be ordered.",
+        "fields": null,
+        "inputFields": [
           {
-            "name": "ssoSupported",
-            "description": "Whether or not the product supports SSO allowing users to visit its dashboard.",
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "credentialsSupport",
-            "description": "Describes product credentials support.",
-            "args": [],
+            "name": "field",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "ENUM",
-                "name": "ProductCredentialsSupportType",
+                "name": "CategoryOrderByField",
                 "ofType": null
               }
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "defaultValue": null
+          },
+          {
+            "name": "direction",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
           }
         ],
-        "inputFields": null,
-        "interfaces": [],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
       {
         "kind": "ENUM",
-        "name": "ProductCredentialsSupportType",
-        "description": "ProductCredentialsSupportType describes product credentials support.\n\n* `NONE`: means that no credentials are necessary to access the product.\n    This can happen for products that are only usable through their dashboard.\n* `SINGLE`: means that the product only supports one credential set at a single time.\n* `MULTIPLE`: means that the product supports multiple credential sets at a single time.",
+        "name": "CategoryOrderByField",
+        "description": "CategoryOrderByField is the field by which the category list will be ordered.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
           {
-            "name": "NONE",
-            "description": "",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "SINGLE",
-            "description": "",
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "MULTIPLE",
+            "name": "DISPLAY_NAME",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
@@ -3490,6 +3616,78 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "ProductSettings",
+        "description": "ProductSettings describes how the product integrates with the marketplace.",
+        "fields": [
+          {
+            "name": "ssoSupported",
+            "description": "Whether or not the product supports SSO allowing users to visit its dashboard.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "credentialsSupport",
+            "description": "Describes product credentials support.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProductCredentialsSupportType",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "ProductCredentialsSupportType",
+        "description": "ProductCredentialsSupportType describes product credentials support.\n\n* `NONE`: means that no credentials are necessary to access the product.\n    This can happen for products that are only usable through their dashboard.\n* `SINGLE`: means that the product only supports one credential set at a single time.\n* `MULTIPLE`: means that the product supports multiple credential sets at a single time.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "NONE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SINGLE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MULTIPLE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {

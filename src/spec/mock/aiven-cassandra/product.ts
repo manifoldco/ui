@@ -15,6 +15,8 @@ const emptyProducts: ProductConnection = {
 const product: Product = {
   categories: [
     {
+      displayName: 'Database',
+      id: '00000000000000000000000000000',
       label: 'database',
       products: emptyProducts,
     },
@@ -533,6 +535,7 @@ const product: Product = {
   state: ProductState.New,
   supportEmail: 'support-manifold@aiven.io',
   tagline: 'The most complete cloud Cassandra on the market',
+  tags: ['database'],
   termsUrl: 'https://aiven.io/terms',
   valueProps: [
     {
