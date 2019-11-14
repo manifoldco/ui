@@ -19,7 +19,7 @@ export class ManifoldAuthToken {
   @Prop() token?: string;
   @Prop() authType?: AuthType = 'oauth';
   @State() tick?: string;
-  @State() internalToken?: string = connection.authToken;
+  @State() internalToken?: string;
   @Event({ eventName: 'manifold-token-receive', bubbles: true })
   manifoldOauthTokenChange: EventEmitter<{ token: string }>;
   @Event({ eventName: 'manifold-token-clear', bubbles: true }) clear: EventEmitter;
@@ -52,6 +52,7 @@ export class ManifoldAuthToken {
   setExternalToken(token?: string) {
     if (token && this.setAuthToken) {
       this.setAuthToken(token);
+      this.internalToken = token;
       this.manifoldOauthTokenChange.emit({ token });
     }
   }
