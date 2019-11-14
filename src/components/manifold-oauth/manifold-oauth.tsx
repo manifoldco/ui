@@ -1,8 +1,10 @@
 import { h, Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { AuthToken, PumaAuthToken } from '../../types/auth';
+import { METRICS_ENABLED } from '../../global/settings';
 import logger from '../../utils/logger';
 import connection from '../../state/connection';
 import { connections } from '../../utils/connections';
+import report from '../../packages/analytics';
 
 @Component({ tag: 'manifold-oauth' })
 export class ManifoldOauth {
@@ -13,7 +15,7 @@ export class ManifoldOauth {
     this.refreshIframe();
   }
 
-  private loadTime?: Date;
+  private loadTime?: number;
 
   get oauthURL() {
     return connections[connection.env].oauth;
@@ -21,19 +23,33 @@ export class ManifoldOauth {
 
   tokenListener = (ev: MessageEvent) => {
     const pumaToken = ev.data as PumaAuthToken;
+    const receivedTime = performance.now();
 
     if (ev.origin === new URL(this.oauthURL).origin) {
       this.receiveManifoldToken.emit({
         token: pumaToken.access_token,
         expiry: pumaToken.expiry,
         error: pumaToken.error,
-        duration: new Date().getTime() - (this.loadTime ? this.loadTime.getTime() : 0),
       });
+      if ((connection.metrics || METRICS_ENABLED) && this.loadTime){
+        report(
+          {
+            name: 'token_received',
+            type: 'metric',
+            properties: {
+              componentName: 'manifold-oauth',
+              duration: receivedTime - this.loadTime,
+              uiVersion: '<@NPM_PACKAGE_VERSION@>',
+            },
+          },
+          { env: connection.env }
+        );
+      }
     }
   };
 
   componentWillLoad() {
-    this.loadTime = new Date();
+    this.loadTime = performance.now();
     window.addEventListener('message', this.tokenListener);
     return connection.onReady();
   }

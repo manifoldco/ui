@@ -26,7 +26,7 @@ storiesOf('Scenarios', module)
     const token = text('manifold_api_token', localStorage.getItem('manifold_api_token') || '');
 
     return `
-      <manifold-connection env="${env}">
+      <manifold-connection env="${env}" metrics>
         <manifold-performance>
           <p><em>These resources are loaded from the server rather than mocks</em></p>
           <manifold-auth-token token="${token}" auth-type="${authType}"></manifold-auth-token>
