@@ -36,13 +36,7 @@ const resource: Resource = {
   label: 'cms-stage',
   displayName: 'cms-stage',
   plan: {
-    configurableFeatures: {
-      pageInfo: {
-        hasNextPage: false,
-        hasPreviousPage: false,
-      },
-      edges: [],
-    },
+    configurableFeatures: { pageInfo: { hasNextPage: false, hasPreviousPage: false }, edges: [] },
     cost: 0,
     displayName: 'FREE',
     fixedFeatures: {
@@ -122,7 +116,14 @@ const resource: Resource = {
       edges: [],
     },
     product: {
-      categories: [{ label: 'cms', products: emptyProducts }],
+      categories: [
+        {
+          displayName: 'CMS',
+          label: 'cms',
+          id: '00000000000000000000000000000',
+          products: emptyProducts,
+        },
+      ],
       displayName: 'Elegant CMS',
       documentationUrl: 'https://apps.elegantcms.io/documentation',
       id: '234qqzb2wm6gavkvaqr9e6b54j9dg',
@@ -144,6 +145,7 @@ const resource: Resource = {
       supportEmail: 'support@elegantcms.io',
       tagline:
         'Headless CMS with JSON-API interface. The essential power features to manage all content within your application.',
+      tags: ['cms'],
       termsUrl: 'https://www.elegantcms.io/terms-of-service',
       valueProps: [
         {

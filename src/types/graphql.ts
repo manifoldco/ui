@@ -27,9 +27,16 @@ export enum CalculationType {
 }
 
 /** Category represents the category an entity is in. */
-export type Category = {
+export type Category = Node & {
    __typename?: 'Category',
+  id: Scalars['ID'],
+  /** The URL friendly label for that category */
   label: Scalars['String'],
+  /** The user readable name for that category */
+  displayName: Scalars['String'],
+  /** The optional icon for that category. Icon namess are found in the manifold official icon repository */
+  icon?: Maybe<Scalars['String']>,
+  /** The products found in this category */
   products: ProductConnection,
 };
 
@@ -54,6 +61,17 @@ export type CategoryEdge = {
   node: Category,
   cursor: Scalars['String'],
 };
+
+/** CategoryOrderBy defines how a category connection is to be ordered. */
+export type CategoryOrderBy = {
+  field: CategoryOrderByField,
+  direction: OrderByDirection,
+};
+
+/** CategoryOrderByField is the field by which the category list will be ordered. */
+export enum CategoryOrderByField {
+  DisplayName = 'DISPLAY_NAME'
+}
 
 /** ChargeTime is representation of when the charge for a cycle occurs. */
 export enum ChargeTime {
@@ -794,8 +812,15 @@ export type Product = Node & {
   setupStepsHtml: Scalars['String'],
   /** List Plans associated with the product */
   plans?: Maybe<PlanConnection>,
-  /** Categories are the catalog categories associated with this product. */
+  /** Categories are the tags for a product. They were previously used as an alias for the freeformed tags. */
   categories: Array<Category>,
+  /** Tags are the free-formed tags associated with the product. */
+  tags: Array<Scalars['String']>,
+  /** 
+ * Linked categories are the categories that this product is a part of. Do not confuse with the categories field,
+   * which will only return the product's tags
+ **/
+  linkedCategories?: Maybe<CategoryConnection>,
   /** Settings describes how the product integrates with the marketplace. */
   settings: ProductSettings,
 };
@@ -808,6 +833,14 @@ export type ProductPlansArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<PlanOrderBy>
+};
+
+
+/** Product represents a provider's product. */
+export type ProductLinkedCategoriesArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>,
+  orderBy?: Maybe<CategoryOrderBy>
 };
 
 /** A ProductConnection is the connection containing Product edges. */
@@ -1001,7 +1034,10 @@ export type Query = {
   product?: Maybe<Product>,
   /** List all available categories in the system. */
   categories: CategoryConnection,
-  /** Look up a category by its label. */
+  /** 
+ * Look up a category by its `id` or `label`. Exactly one of `id` or `label` is
+   * required, and `id` has precedence over `label`.
+ **/
   category?: Maybe<Category>,
   /** List all available products. */
   products?: Maybe<ProductConnection>,
@@ -1089,7 +1125,8 @@ export type QueryProductArgs = {
  **/
 export type QueryCategoriesArgs = {
   first: Scalars['Int'],
-  after?: Maybe<Scalars['String']>
+  after?: Maybe<Scalars['String']>,
+  orderBy?: Maybe<CategoryOrderBy>
 };
 
 
@@ -1100,7 +1137,8 @@ export type QueryCategoriesArgs = {
  * [documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).
  **/
 export type QueryCategoryArgs = {
-  label: Scalars['String']
+  id?: Maybe<Scalars['ID']>,
+  label?: Maybe<Scalars['String']>
 };
 
 

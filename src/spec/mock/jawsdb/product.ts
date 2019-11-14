@@ -14,7 +14,14 @@ const emptyProducts: ProductConnection = {
 
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
-  categories: [{ label: 'database', products: emptyProducts }],
+  categories: [
+    {
+      displayName: 'Database',
+      id: '00000000000000000000000000000',
+      label: 'database',
+      products: emptyProducts,
+    },
+  ],
   displayName: 'JawsDB MySQL',
   documentationUrl: 'https://jawsdb.com/docs',
   id: '234w1jyaum5j0aqe3g3bmbqjgf20p',
@@ -1598,6 +1605,7 @@ const product: Product = {
   state: ProductState.Available,
   supportEmail: 'support@jawsdb.com',
   tagline: 'Fast, reliable, no-bullshark MySQL as a Service',
+  tags: ['database'],
   termsUrl: '',
   valueProps: [
     {

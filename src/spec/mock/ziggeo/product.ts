@@ -13,7 +13,14 @@ const emptyProducts: ProductConnection = {
 
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
-  categories: [{ label: 'optimization', products: emptyProducts }],
+  categories: [
+    {
+      displayName: 'Optimization',
+      label: 'optimization',
+      id: '00000000000000000000000000000',
+      products: emptyProducts,
+    },
+  ],
   displayName: 'Ziggeo',
   documentationUrl: 'https://ziggeo.com/docs',
   id: '234yycr3mf5f2hrw045vuxeatnd50',
@@ -187,7 +194,10 @@ const product: Product = {
                   label: 'playing_sd',
                   displayName: 'Video Player - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 1014000 }, { cost: 11667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 1014000 },
+                      { cost: 11667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -210,7 +220,10 @@ const product: Product = {
                   label: 'recording_sd',
                   displayName: 'Video Recorder - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 202680 }, { cost: 300000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 202680 },
+                      { cost: 300000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -233,7 +246,10 @@ const product: Product = {
                   label: 'storage_sd',
                   displayName: 'Video Storage - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 1216560 }, { cost: 21667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 1216560 },
+                      { cost: 21667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -376,7 +392,10 @@ const product: Product = {
                   label: 'analysis',
                   displayName: 'A.I. Video Analysis',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 230640 }, { cost: 416667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 230640 },
+                      { cost: 416667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -389,7 +408,10 @@ const product: Product = {
                   label: 'effects_hd',
                   displayName: 'Video Effects - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 135000 }, { cost: 666667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 135000 },
+                      { cost: 666667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -402,7 +424,10 @@ const product: Product = {
                   label: 'effects_sd',
                   displayName: 'Video Effects - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 191280 }, { cost: 333334, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 191280 },
+                      { cost: 333334, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -415,7 +440,10 @@ const product: Product = {
                   label: 'playing_hd',
                   displayName: 'Video Player - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 750000 }, { cost: 13334, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 750000 },
+                      { cost: 13334, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -428,7 +456,10 @@ const product: Product = {
                   label: 'playing_sd',
                   displayName: 'Video Player - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 807000 }, { cost: 6667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 807000 },
+                      { cost: 6667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -441,7 +472,10 @@ const product: Product = {
                   label: 'recording_hd',
                   displayName: 'Video Recorder - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 125640 }, { cost: 400000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 125640 },
+                      { cost: 400000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -454,7 +488,10 @@ const product: Product = {
                   label: 'recording_sd',
                   displayName: 'Video Recorder - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 210000 }, { cost: 200000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 210000 },
+                      { cost: 200000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -467,7 +504,10 @@ const product: Product = {
                   label: 'storage_hd',
                   displayName: 'Video Storage - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 717300 }, { cost: 30000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 717300 },
+                      { cost: 30000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -480,7 +520,10 @@ const product: Product = {
                   label: 'storage_sd',
                   displayName: 'Video Storage - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 1333320 }, { cost: 15000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 1333320 },
+                      { cost: 15000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -623,7 +666,10 @@ const product: Product = {
                   label: 'analysis',
                   displayName: 'A.I. Video Analysis',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 755880 }, { cost: 333334, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 755880 },
+                      { cost: 333334, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -636,7 +682,10 @@ const product: Product = {
                   label: 'effects_hd',
                   displayName: 'Video Effects - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 499980 }, { cost: 500000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 499980 },
+                      { cost: 500000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -649,7 +698,10 @@ const product: Product = {
                   label: 'effects_sd',
                   displayName: 'Video Effects - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 511740 }, { cost: 250000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 511740 },
+                      { cost: 250000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -662,7 +714,10 @@ const product: Product = {
                   label: 'playing_hd',
                   displayName: 'Video Player - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 2064840 }, { cost: 11667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 2064840 },
+                      { cost: 11667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -675,7 +730,10 @@ const product: Product = {
                   label: 'playing_sd',
                   displayName: 'Video Player - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 3000000 }, { cost: 6667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 3000000 },
+                      { cost: 6667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -688,7 +746,10 @@ const product: Product = {
                   label: 'recording_hd',
                   displayName: 'Video Recorder - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 422520 }, { cost: 300000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 422520 },
+                      { cost: 300000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -701,7 +762,10 @@ const product: Product = {
                   label: 'recording_sd',
                   displayName: 'Video Recorder - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 666660 }, { cost: 150000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 666660 },
+                      { cost: 150000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -714,7 +778,10 @@ const product: Product = {
                   label: 'storage_hd',
                   displayName: 'Video Storage - HD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 3150420 }, { cost: 21667, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 3150420 },
+                      { cost: 21667, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -727,7 +794,10 @@ const product: Product = {
                   label: 'storage_sd',
                   displayName: 'Video Storage - SD',
                   numericDetails: {
-                    costTiers: [{ cost: 0, limit: 3000000 }, { cost: 10000, limit: -1 }],
+                    costTiers: [
+                      { cost: 0, limit: 3000000 },
+                      { cost: 10000, limit: -1 },
+                    ],
                     unit: 'Seconds',
                   },
                 },
@@ -768,6 +838,7 @@ const product: Product = {
   supportEmail: 'support@ziggeo.com',
   tagline:
     'Ziggeo is an award-winning cloud-based service for in-browser/in-app video recording, playback, transcoding, storage & video management.',
+  tags: ['optimization'],
   termsUrl: 'https://ziggeo.com/terms',
   valueProps: [
     {

@@ -32,11 +32,14 @@ function transformSkeleton(skel: Catalog.Product): ProductEdge {
       setupStepsHtml: '',
       state: ProductState.Available,
       supportEmail: skel.body.support_email,
+      tags: skel.body.tags || [],
       termsUrl: '',
       valueProps: [],
       valuePropsHtml: '',
       categories: skel.body.tags
         ? skel.body.tags.map(t => ({
+            displayName: t,
+            id: '',
             label: t,
             products: {
               edges: [],

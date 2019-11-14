@@ -13,7 +13,14 @@ const emptyProducts: ProductConnection = {
 
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
-  categories: [{ label: 'optimization', products: emptyProducts }],
+  categories: [
+    {
+      displayName: 'Optimization',
+      label: 'optimization',
+      id: '00000000000000000000000000000',
+      products: emptyProducts,
+    },
+  ],
   displayName: 'Blitline',
   documentationUrl: 'http://helpdocs.blitline.com/',
   id: '234htwpkzvg1vuyez6uybfhv8rjb2',
@@ -358,6 +365,7 @@ const product: Product = {
   state: ProductState.New,
   supportEmail: 'support@blitline.com',
   tagline: 'Premium image processing and rasterization API for enterprise systems',
+  tags: ['optimization'],
   termsUrl: 'http://www.blitline.com/terms',
   valueProps: [
     {

@@ -13,7 +13,14 @@ const emptyProducts: ProductConnection = {
 
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
-  categories: [{ label: 'messaging', products: emptyProducts }],
+  categories: [
+    {
+      displayName: 'Messaging',
+      label: 'messaging',
+      id: '00000000000000000000000000000',
+      products: emptyProducts,
+    },
+  ],
   displayName: 'Mailgun',
   documentationUrl: 'https://documentation.mailgun.com/',
   id: '234mauvfd213a0a87q42eb0mmq5ye',
@@ -328,6 +335,7 @@ const product: Product = {
   state: ProductState.Available,
   supportEmail: 'help@mailgun.com',
   tagline: 'The Email Service For Developers',
+  tags: ['messaging'],
   termsUrl: 'https://www.mailgun.com/terms',
   valueProps: [
     {

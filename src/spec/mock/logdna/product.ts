@@ -14,8 +14,18 @@ const emptyProducts: ProductConnection = {
 // https://graphqlbin.com/v2/gnyDsm
 const product: Product = {
   categories: [
-    { label: 'logging', products: emptyProducts },
-    { label: 'monitoring', products: emptyProducts },
+    {
+      displayName: 'Logging',
+      id: '00000000000000000000000000000',
+      label: 'logging',
+      products: emptyProducts,
+    },
+    {
+      displayName: 'Monitoring',
+      label: 'monitoring',
+      id: '00000000000000000000000000000',
+      products: emptyProducts,
+    },
   ],
   displayName: 'LogDNA',
   documentationUrl: 'https://docs.logdna.com/docs/',
@@ -1024,6 +1034,7 @@ const product: Product = {
   state: ProductState.Available,
   supportEmail: 'support@logdna.com',
   tagline: 'Real-time log aggregation, monitoring, and analysis from any platform, at any volume',
+  tags: ['logging', 'monitoring'],
   termsUrl: 'https://logdna.com/terms.html',
   valueProps: [
     {
