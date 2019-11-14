@@ -24,7 +24,7 @@
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "scripts": {
-    "build": "npm run update-version && stencil build",
+    "build": "npm run update-version && stencil build && node scripts/minify",
     "build:docs": "npm run copy-changelog && cd docs && npm i && npm run build",
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
     "build:watch": "npm run update-version && stencil build --watch",
@@ -42,7 +42,6 @@
     "generate:specs:provisioning": "npx @manifoldco/swagger-to-ts src/spec/provisioning/v1.yaml -w 'export namespace Provisioning' -o src/types/provisioning.ts",
     "generate:specs:connector": "npx @manifoldco/swagger-to-ts src/spec/connector/v1.yaml -w 'export namespace Connector' -o src/types/connector.ts",
     "happo": "npm run build && npm run generate:gql && manifold run -t manifold -p manifold-ui-ci -- happo run",
-    "testcafe:dev": "DEPLOY_URL=http://localhost:6006 npx testcafe chrome e2e/",
     "happo-ci-circleci": "npm run build && npm run generate:gql && happo-ci-circleci",
     "heroku-postbuild": "npm run build:docs",
     "lint": "npm run lint:js & npm run lint:css & cd docs && npm i && npm run lint",
@@ -58,22 +57,28 @@
     "test:coverage": "stencil test --spec --e2e --coverage --maxWorkers=2",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
     "test:watch": "stencil test --spec --e2e --watchAll",
+    "testcafe:dev": "DEPLOY_URL=http://localhost:6006 npx testcafe chrome e2e/",
     "update-version": "node scripts/version-from-git"
   },
   "bundlesize": [
     {
       "path": "./dist/esm/loader.mjs",
+      "maxSize": "10 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/manifold-!(button_3|mock|number-input)*.@(js|mjs)",
+      "maxSize": "10 kB",
+      "compression": "none"
+    },
+    {
+      "path": "./dist/esm/manifold-button_3*.js",
       "maxSize": "15 kB",
       "compression": "none"
     },
     {
-      "path": "./dist/esm/manifold-!(mock|number-input|button_3)*.js",
-      "maxSize": "18 kB",
-      "compression": "none"
-    },
-    {
       "path": "./dist/esm/manifold-number-input*.js",
-      "maxSize": "36 kB",
+      "maxSize": "26 kB",
       "compression": "none"
     }
   ],
@@ -109,6 +114,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "fetch-mock": "^8.0.0",
     "fs-extra": "^8.1.0",
+    "glob": "^7.1.6",
     "graphql": "^14.5.8",
     "happo-plugin-typescript": "^1.0.0",
     "happo.io": "^4.0.0",
@@ -122,8 +128,9 @@
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^19.0.0",
-    "ts-loader": "^6.2.1",
+    "terser": "^4.4.0",
     "testcafe": "^1.5.0",
+    "ts-loader": "^6.2.1",
     "wait-on": "^3.3.0",
     "webpack": "^4.41.2"
   }
