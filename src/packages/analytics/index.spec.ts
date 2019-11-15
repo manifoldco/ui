@@ -2,7 +2,7 @@ import fetchMock from 'fetch-mock';
 import report from './index';
 import { AnalyticsEvent } from './types';
 
-const local = 'begin:https://analytics.arigato.tools';
+const local = 'begin:http://analytics.arigato.tools';
 const stage = 'begin:https://analytics.stage.manifold.co';
 const prod = 'begin:https://analytics.manifold.co';
 const metric: AnalyticsEvent = {
