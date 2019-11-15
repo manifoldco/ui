@@ -1,17 +1,15 @@
 import { h } from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
-import { Gateway } from '../types/gateway';
-import { Resource } from '../types/graphql';
+import { GetResourceQuery } from '../types/graphql';
 
 export interface ResourceState {
-  data?: Gateway.Resource;
-  gqlData?: Resource;
   loading: boolean;
+  gqlData?: GetResourceQuery['resource'];
 }
 
 export default createProviderConsumer<ResourceState>(
   {
-    data: undefined,
+    gqlData: undefined,
     loading: false,
   },
   (subscribe, child) => <context-consumer subscribe={subscribe} renderer={child} />

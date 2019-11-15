@@ -1,6 +1,6 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
-import { Resource } from '../../types/graphql';
+import { GetResourceQuery } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourceSso } from './manifold-resource-sso';
 import { ManifoldDataSsoButton } from '../manifold-data-sso-button/manifold-data-sso-button';
@@ -33,7 +33,7 @@ describe('<manifold-resource-sso>', () => {
 
   it('Renders a complete button if not loading', async () => {
     element.loading = false;
-    element.gqlData = resource as Resource;
+    element.gqlData = resource as GetResourceQuery['resource'];
     const root = page.root as HTMLElement;
     root.appendChild(element);
 

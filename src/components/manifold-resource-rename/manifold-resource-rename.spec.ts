@@ -1,6 +1,6 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 
-import { Resource } from '../../types/graphql';
+import { GetResourceQuery } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourceRename } from './manifold-resource-rename';
 import { ManifoldDataRenameButton } from '../manifold-data-rename-button/manifold-data-rename-button';
@@ -33,7 +33,7 @@ describe('<manifold-resource-rename>', () => {
 
   it('Renders if not loading', async () => {
     element.loading = false;
-    element.gqlData = resource as Resource;
+    element.gqlData = resource as GetResourceQuery['resource'];
     const root = page.root as HTMLElement;
     root.appendChild(element);
 

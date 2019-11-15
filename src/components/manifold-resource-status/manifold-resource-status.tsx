@@ -3,11 +3,11 @@ import { h, Component, Prop } from '@stencil/core';
 import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Resource } from '../../types/graphql';
+import { GetResourceQuery } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-status' })
 export class ManifoldResourceStatus {
-  @Prop() gqlData?: Resource;
+  @Prop() gqlData?: GetResourceQuery['resource'];
   @Prop() loading?: boolean = true;
   @Prop() size?: 'xsmall' | 'small' | 'medium' = 'medium';
 
@@ -19,7 +19,7 @@ export class ManifoldResourceStatus {
     return (
       <manifold-resource-status-view
         size={this.size}
-        resourceState={this.gqlData && this.gqlData.status && this.gqlData.status.label}
+        resourceState={this.gqlData && this.gqlData.status.label}
         loading={this.loading}
       />
     );
