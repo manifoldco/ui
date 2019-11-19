@@ -46,9 +46,7 @@ document.addEventListener('manifold-planSelector-change', ({ detail }) => {
 //   planLabel: 'nvidia-1080ti-100gb-ssd',
 //   planName: 'NVIDIA 1080TI',
 //   productLabel: 'zerosix',
-//   features: {
-//     free: false
-//   },
+//   freePlan: false
 // }
 ```
 
@@ -56,8 +54,8 @@ The following events are emitted:
 
 | Event Name                     | Description                                                                                                                | Data                                                                                                 |
 | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- |
-| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productId`, `productLabel`, `regionId`, `regionName`, `features` |
-| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productId`, `productLabel`, `regionId`, `regionName`, `features` |
+| `manifold-planSelector-change` | Fires whenever a user makes a change.                                                                                      | `planID`, `planLabel`, `planName`, `productId`, `productLabel`, `regionId`, `regionName`, `freePlan` |
+| `manifold-planSelector-load`   | Identical to `-update` above, but this fires once on DOM mount to set the initial state (i.e. user hasn’t interacted yet). | `planID`, `planLabel`, `planName`, `productId`, `productLabel`, `regionId`, `regionName`, `freePlan` |
 
 ## Free plans only
 

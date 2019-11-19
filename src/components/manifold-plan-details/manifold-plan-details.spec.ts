@@ -49,6 +49,7 @@ describe('<manifold-plan-details>', () => {
             productLabel: product.label,
             regionId: region && region.id,
             regionName: region && region.displayName,
+            freePlan: paidPlan.free,
           },
         })
       );
@@ -77,6 +78,7 @@ describe('<manifold-plan-details>', () => {
             productLabel: product.label,
             regionId: region && region.id,
             regionName: region && region.displayName,
+            freePlan: freePlan.free,
           },
         })
       );
