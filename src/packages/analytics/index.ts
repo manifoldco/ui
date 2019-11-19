@@ -1,7 +1,7 @@
 import { AnalyticsEvent } from './types';
 
 const endpoint = {
-  local: 'https://analytics.arigato.tools/v1/events',
+  local: 'http://analytics.arigato.tools/v1/events',
   stage: 'https://analytics.stage.manifold.co/v1/events',
   prod: 'https://analytics.manifold.co/v1/events',
 };
