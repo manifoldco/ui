@@ -18,6 +18,9 @@ interface EventDetail {
   productLabel: string | undefined;
   regionId?: string;
   regionName?: string;
+  feature?: {
+    free: boolean;
+  };
 }
 
 @Component({
@@ -48,6 +51,9 @@ export class ManifoldPlanDetails {
       productLabel: this.product && this.product.label,
       regionId: defaultRegion && defaultRegion.id,
       regionName: defaultRegion && defaultRegion.displayName,
+      feature: {
+        free: newPlan.free,
+      },
     };
 
     if (!oldPlan) {
@@ -83,6 +89,9 @@ export class ManifoldPlanDetails {
         productLabel: this.product && this.product.label,
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
+        feature: {
+          free: this.plan.free,
+        },
       };
       this.planLoad.emit(detail);
       // reset features
@@ -103,6 +112,9 @@ export class ManifoldPlanDetails {
         productLabel: this.product.label,
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
+        feature: {
+          free: this.plan.free,
+        },
       };
       this.planUpdate.emit(detail);
     }
@@ -123,6 +135,9 @@ export class ManifoldPlanDetails {
         productLabel: this.product.label,
         regionId: e.detail.value,
         regionName: defaultRegion && defaultRegion.displayName,
+        feature: {
+          free: this.plan.free,
+        },
       };
       this.planUpdate.emit(detail);
     }
