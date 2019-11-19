@@ -55,6 +55,21 @@ export default function logger<T>() {
               duration: this.performanceRenderedMark - this.performanceLoadMark,
             },
           });
+          if (this.el) {
+            const el = this.el as HTMLElement;
+            const nodeMapList = connection.nodeMap[el.tagName.toLowerCase()];
+            const nodeMapEntry = nodeMapList && nodeMapList.find(entry => entry.el === el);
+            if (nodeMapEntry) {
+              /* eslint-disable no-console */
+              console.log(
+                el.tagName.toLowerCase(),
+                performance.now() - nodeMapEntry.loadTime,
+                evt.detail.duration
+              );
+              /* eslint-enable no-console */
+            }
+          }
+
           document.dispatchEvent(evt);
         }
         return rendered;

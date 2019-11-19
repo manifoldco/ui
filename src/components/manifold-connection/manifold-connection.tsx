@@ -1,4 +1,4 @@
-import { h, Component, Prop } from '@stencil/core';
+import { h, Component, Prop, Element } from '@stencil/core';
 import '../../utils/fetchAllPages';
 
 import logger from '../../utils/logger';
@@ -7,13 +7,19 @@ import connection from '../../state/connection';
 
 @Component({ tag: 'manifold-connection' })
 export class ManifoldConnection {
+  @Element() el: HTMLElement;
   @Prop() env?: 'local' | 'stage' | 'prod';
   @Prop() metrics?: boolean;
   @Prop() waitTime?: number | string;
 
   @loadMark()
   componentWillLoad() {
-    connection.initialize({ env: this.env, metrics: this.metrics, waitTime: this.waitTime });
+    connection.initialize({
+      env: this.env,
+      metrics: this.metrics,
+      waitTime: this.waitTime,
+      connectionEl: this.el,
+    });
   }
 
   @logger()

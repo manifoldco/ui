@@ -31,7 +31,7 @@ export class ManifoldOauth {
         expiry: pumaToken.expiry,
         error: pumaToken.error,
       });
-      if ((connection.metrics || METRICS_ENABLED) && this.loadTime){
+      if ((connection.metrics || METRICS_ENABLED) && this.loadTime) {
         report(
           {
             name: 'token_received',
