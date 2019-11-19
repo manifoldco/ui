@@ -10,6 +10,7 @@ export default [
   'cloudamqp',
   'cloudcube',
   'custom-recognition',
+  'db33-mysql',
   'dumper',
   'elegant-cms',
   'generic-tagging',
