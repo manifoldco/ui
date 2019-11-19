@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Adds gradient for DB33 product. (#746)
+
 ## [0.7.1] - 2019-11-19
 
 ### Added
