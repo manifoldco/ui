@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.7.1] - 2019-11-19
+
 ### Added
 
 - Free features data to plan selector custom event. (#743)
