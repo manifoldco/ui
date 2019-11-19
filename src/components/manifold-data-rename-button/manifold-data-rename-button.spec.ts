@@ -58,6 +58,16 @@ describe('<manifold-data-rename-button>', () => {
       expect(fetchMock.called('begin:https://api.manifold.co/graphql')).toBe(true);
     });
 
+    it('[resource-id]: button disabled if missing', async () => {
+      const { page } = await setup({
+        loading: true,
+        newLabel: 'new-label',
+        resourceLabel: 'test-label',
+      });
+      const button = page.root && page.root.querySelector('button');
+      expect(button && button.getAttribute('disabled')).not.toBeNull();
+    });
+
     it('[resource-id]: doesn’t fetch ID if set', async () => {
       await setup({ newLabel: 'new-label', resourceId: '12345', resourceLabel: 'test-label' });
       expect(fetchMock.called('begin:https://api.manifold.co/graphql')).toBe(false);

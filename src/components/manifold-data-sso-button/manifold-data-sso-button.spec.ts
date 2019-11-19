@@ -10,6 +10,7 @@ const resourceSSOUrl = 'https://test.com/sso';
 
 interface Props {
   loading?: boolean;
+  disabled?: boolean;
   resourceId?: string;
   resourceLabel?: string;
 }
@@ -22,6 +23,7 @@ async function setup(props: Props) {
 
   const component = page.doc.createElement('manifold-data-sso-button');
   component.loading = props.loading;
+  component.disabled = props.disabled;
   component.resourceLabel = props.resourceLabel;
   component.resourceId = props.resourceId;
   component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });

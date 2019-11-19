@@ -118,6 +118,7 @@ export namespace Components {
     'loading'?: boolean;
   }
   interface ManifoldDataDeprovisionButton {
+    'disabled'?: boolean;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -271,6 +272,7 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldDataSsoButton {
+    'disabled'?: boolean;
     /**
     * _(hidden)_
     */
@@ -502,6 +504,7 @@ export namespace Components {
     'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
+    'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
@@ -532,7 +535,7 @@ export namespace Components {
     'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceRename {
@@ -545,6 +548,7 @@ export namespace Components {
     'newLabel'?: string;
   }
   interface ManifoldResourceSso {
+    'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
@@ -1119,6 +1123,7 @@ declare namespace LocalJSX {
     'onCredentialsRequested'?: (event: CustomEvent<any>) => void;
   }
   interface ManifoldDataDeprovisionButton {
+    'disabled'?: boolean;
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1288,6 +1293,7 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldDataSsoButton {
+    'disabled'?: boolean;
     /**
     * _(hidden)_
     */
@@ -1530,6 +1536,7 @@ declare namespace LocalJSX {
     'noCredentials'?: boolean;
   }
   interface ManifoldResourceDeprovision {
+    'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
@@ -1560,7 +1567,7 @@ declare namespace LocalJSX {
     'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
-    'gqlData'?: Resource;
+    'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceRename {
@@ -1573,6 +1580,7 @@ declare namespace LocalJSX {
     'newLabel'?: string;
   }
   interface ManifoldResourceSso {
+    'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
   }

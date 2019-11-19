@@ -33,6 +33,7 @@ export class ManifoldDataDeprovisionButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() disabled?: boolean;
   /** resource ID */
   @Prop({ mutable: true }) resourceId?: string = '';
   /** The label of the resource to deprovision */
@@ -121,7 +122,11 @@ export class ManifoldDataDeprovisionButton {
   @logger()
   render() {
     return (
-      <button type="submit" onClick={() => this.deprovision()} disabled={!this.resourceId}>
+      <button
+        type="submit"
+        onClick={() => this.deprovision()}
+        disabled={this.disabled || !this.resourceId}
+      >
         <slot />
       </button>
     );

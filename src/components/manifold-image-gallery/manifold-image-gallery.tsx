@@ -1,4 +1,4 @@
-import { h, Component, Prop, State, FunctionalComponent } from '@stencil/core';
+import { h, Component, Element, Prop, State, FunctionalComponent } from '@stencil/core';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
@@ -22,6 +22,7 @@ const Thumbnail: FunctionalComponent<ThumbnailProps> = ({ isSelected, onClick, .
   shadow: true,
 })
 export class ImageGallery {
+  @Element() el: HTMLElement;
   @Prop() images?: string[];
   @State() selectedImage?: string;
 

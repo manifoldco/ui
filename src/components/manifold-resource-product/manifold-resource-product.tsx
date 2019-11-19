@@ -1,28 +1,21 @@
 import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
-import { Product, Resource } from '../../types/graphql';
+import { GetResourceQuery } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
 @Component({ tag: 'manifold-resource-product' })
 export class ManifoldResourceProduct {
-  @Prop() gqlData?: Resource;
   @Prop() loading?: boolean = true;
+  @Prop() gqlData?: GetResourceQuery['resource'];
 
   @loadMark()
   componentWillLoad() {}
 
   @logger()
   render() {
-    let product: Product | null | undefined;
-    if (!this.loading && this.gqlData) {
-      if (this.gqlData.plan) {
-        product = this.gqlData.plan.product;
-      }
-    }
-
-    if (this.loading || !product) {
+    if (this.loading || !this.gqlData) {
       return (
         // ☠
         <manifold-service-card-view
@@ -37,6 +30,8 @@ export class ManifoldResourceProduct {
         </manifold-service-card-view>
       );
     }
+
+    const { product } = this.gqlData.plan;
 
     return (
       <manifold-service-card-view

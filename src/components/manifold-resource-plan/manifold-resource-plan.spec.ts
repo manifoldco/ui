@@ -17,9 +17,7 @@ async function setup(props: Props) {
   });
 
   const component = page.doc.createElement('manifold-resource-plan');
-  if (typeof props.loading === 'boolean') {
-    component.loading = props.loading;
-  }
+  component.loading = props.loading;
   component.gqlData = props.gqlData;
 
   const root = page.root as HTMLDivElement;
@@ -29,28 +27,43 @@ async function setup(props: Props) {
 }
 
 describe('<manifold-resource-plan>', () => {
-  it('Renders a skeleton if loading', async () => {
-    const { page } = await setup({ loading: true });
-    const planDetails = page.root && page.root.querySelector('manifold-plan-details');
-    const skeleton =
-      planDetails &&
-      planDetails.shadowRoot &&
-      planDetails.shadowRoot.querySelector('manifold-skeleton-text');
-    expect(skeleton).not.toBeNull();
-  });
-
-  it('Renders a product card if not loading', async () => {
-    const { page } = await setup({
-      loading: false,
-      gqlData: resource as GetResourceQuery['resource'],
+  describe('v0 props', () => {
+    it('[gqlData]: renders skeleton if missing', async () => {
+      const { page } = await setup({});
+      const planDetails = page.root && page.root.querySelector('manifold-plan-details');
+      const skeleton =
+        planDetails &&
+        planDetails.shadowRoot &&
+        planDetails.shadowRoot.querySelector('manifold-skeleton-text');
+      expect(skeleton).not.toBeNull();
     });
-    const planDetails = page.root && page.root.querySelector('manifold-plan-details');
-    const productName =
-      planDetails &&
-      planDetails.shadowRoot &&
-      planDetails.shadowRoot.querySelector('[itemprop="brand"]');
-    expect((productName as HTMLElement).innerText).toBe(
-      resource.plan && resource.plan.product && resource.plan.product.displayName
-    );
+
+    it('[gqlData]: renders product card', async () => {
+      const { page } = await setup({
+        loading: false,
+        gqlData: resource as GetResourceQuery['resource'],
+      });
+      const planDetails = page.root && page.root.querySelector('manifold-plan-details');
+      const productName =
+        planDetails &&
+        planDetails.shadowRoot &&
+        planDetails.shadowRoot.querySelector('[itemprop="brand"]');
+      expect((productName as HTMLElement).innerText).toBe(
+        resource.plan && resource.plan.product && resource.plan.product.displayName
+      );
+    });
+
+    it('[loading]: renders skeleton', async () => {
+      const { page } = await setup({
+        loading: true,
+        gqlData: resource as GetResourceQuery['resource'],
+      });
+      const planDetails = page.root && page.root.querySelector('manifold-plan-details');
+      const skeleton =
+        planDetails &&
+        planDetails.shadowRoot &&
+        planDetails.shadowRoot.querySelector('manifold-skeleton-text');
+      expect(skeleton).not.toBeNull();
+    });
   });
 });

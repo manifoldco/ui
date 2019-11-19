@@ -132,7 +132,7 @@ export class ManifoldCredentialsView {
         )}
         <div class="hidden">
           {this.loading ? (
-            <manifold-button color="black" disabled>
+            <manifold-button color="black" disabled data-testid="spinner">
               <span class="spin">
                 <manifold-icon icon={loader} />
               </span>
