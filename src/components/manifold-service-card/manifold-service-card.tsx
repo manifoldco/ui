@@ -2,13 +2,15 @@ import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import { ProductCardQuery } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
+import { ProductCardQuery, ProductCardQueryVariables } from '../../types/graphql';
+import { Unpack } from '../../types/unpack';
+
 import productCardQuery from './product-card.graphql';
 
-type PartialProduct = Pick<ProductCardQuery, 'product'>;
+type PartialProduct = Unpack<ProductCardQuery, 'product'>;
 
 // Product has at least one free plan.
 const isFree = (product: PartialProduct) =>
@@ -66,9 +68,10 @@ export class ManifoldServiceCard {
       return;
     }
 
+    const variables: ProductCardQueryVariables = { productLabel };
     const { data, errors } = await this.graphqlFetch<ProductCardQuery>({
       query: productCardQuery,
-      variables: { productLabel },
+      variables,
       element: this.el,
     });
     if (data && data.product) {

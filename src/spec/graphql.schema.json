@@ -1,7 +1,11 @@
 {
   "__schema": {
-    "queryType": { "name": "Query" },
-    "mutationType": { "name": "Mutation" },
+    "queryType": {
+      "name": "Query"
+    },
+    "mutationType": {
+      "name": "Mutation"
+    },
     "subscriptionType": null,
     "types": [
       {
@@ -16,17 +20,29 @@
               {
                 "name": "id",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "label",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Provider", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Provider",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -40,12 +56,20 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Plan", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Plan",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -56,17 +80,29 @@
               {
                 "name": "id",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "label",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Product", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Product",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -80,27 +116,43 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "CategoryOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "CategoryConnection", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CategoryConnection",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -112,17 +164,29 @@
               {
                 "name": "id",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "label",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Category", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Category",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -136,24 +200,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "ProductOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "ProductConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -164,14 +244,22 @@
               {
                 "name": "id",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ProfileIdentity",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Profile",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -186,7 +274,11 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
@@ -194,7 +286,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "INTERFACE", "name": "Node", "ofType": null }
+              "ofType": {
+                "kind": "INTERFACE",
+                "name": "Node",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -209,24 +305,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "owner",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ProfileIdentity",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "ResourceConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "ResourceConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -237,29 +349,49 @@
               {
                 "name": "id",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "label",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "owner",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ProfileIdentity",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "deleted",
                 "description": "",
-                "type": { "kind": "ENUM", "name": "IsDeleted", "ofType": null },
+                "type": {
+                  "kind": "ENUM",
+                  "name": "IsDeleted",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Resource", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Resource",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -273,24 +405,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "withUsage",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "WithUsage", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "WithUsage",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "ProfileConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProfileConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -304,12 +452,20 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -323,12 +479,20 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "LineItem", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "LineItem",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -370,7 +534,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -382,7 +550,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -394,7 +566,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -406,7 +582,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -418,7 +598,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -430,7 +614,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -445,30 +633,52 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "ProductOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "ProductConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProductConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -484,7 +694,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -494,17 +708,61 @@
         "interfaces": null,
         "enumValues": null,
         "possibleTypes": [
-          { "kind": "OBJECT", "name": "Provider", "ofType": null },
-          { "kind": "OBJECT", "name": "Product", "ofType": null },
-          { "kind": "OBJECT", "name": "Plan", "ofType": null },
-          { "kind": "OBJECT", "name": "PlanFixedFeature", "ofType": null },
-          { "kind": "OBJECT", "name": "PlanMeteredFeature", "ofType": null },
-          { "kind": "OBJECT", "name": "PlanConfigurableFeature", "ofType": null },
-          { "kind": "OBJECT", "name": "Region", "ofType": null },
-          { "kind": "OBJECT", "name": "Category", "ofType": null },
-          { "kind": "OBJECT", "name": "Invoice", "ofType": null },
-          { "kind": "OBJECT", "name": "LineItem", "ofType": null },
-          { "kind": "OBJECT", "name": "Resource", "ofType": null }
+          {
+            "kind": "OBJECT",
+            "name": "Provider",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Product",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Plan",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PlanFixedFeature",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PlanMeteredFeature",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "PlanConfigurableFeature",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Region",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Category",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Invoice",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "LineItem",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "Resource",
+            "ofType": null
+          }
         ]
       },
       {
@@ -529,7 +787,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ProductOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProductOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -539,7 +801,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -573,8 +839,18 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "ASC", "description": "", "isDeprecated": false, "deprecationReason": null },
-          { "name": "DESC", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "ASC",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DESC",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -596,7 +872,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "ProductEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ProductEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -610,7 +890,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -633,7 +917,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Product", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Product",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -645,7 +933,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -668,7 +960,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -680,7 +976,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -692,7 +992,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -704,7 +1008,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -713,7 +1021,11 @@
             "name": "provider",
             "description": "Provider is the provider associated with this product. It can be null if the provider cannot be retrieved.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Provider", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Provider",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -724,7 +1036,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ProductState", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProductState",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -736,7 +1052,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -748,7 +1068,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -760,7 +1084,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -772,7 +1100,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -787,7 +1119,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "ProductScreenshot", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "ProductScreenshot",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": true,
@@ -803,7 +1139,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -822,7 +1162,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "ValueProp", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ValueProp",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -836,7 +1180,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -848,7 +1196,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -860,13 +1212,21 @@
               {
                 "name": "label",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "free",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
@@ -875,24 +1235,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "PlanOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "PlanOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "PlanConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlanConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -909,7 +1285,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "Category", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Category",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -929,7 +1309,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -946,24 +1330,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "CategoryOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "CategoryConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "CategoryConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -974,14 +1374,24 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "ProductSettings", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ProductSettings",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -999,14 +1409,24 @@
             "isDeprecated": false,
             "deprecationReason": null
           },
-          { "name": "HIDDEN", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "HIDDEN",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "GRANDFATHERED",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
           },
-          { "name": "NEW", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "NEW",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "UPCOMING",
             "description": "",
@@ -1028,7 +1448,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1040,7 +1464,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1063,7 +1491,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1075,7 +1507,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1108,7 +1544,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "PlanOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PlanOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -1118,7 +1558,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -1135,14 +1579,24 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "LABEL", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "LABEL",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "DISPLAY_NAME",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
           },
-          { "name": "COST", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "COST",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -1164,7 +1618,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "PlanEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlanEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -1178,7 +1636,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1201,7 +1663,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Plan", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Plan",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1213,7 +1679,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1236,7 +1706,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1248,7 +1722,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1260,7 +1738,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1269,7 +1751,11 @@
             "name": "product",
             "description": "The product associated with this plan.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Product", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Product",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1280,7 +1766,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "PlanState", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PlanState",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1295,24 +1785,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "FixedFeaturesOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "FixedFeaturesOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "PlanFixedFeatureConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlanFixedFeatureConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1326,14 +1832,22 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
@@ -1347,7 +1861,11 @@
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "PlanMeteredFeatureConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlanMeteredFeatureConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1361,14 +1879,22 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
@@ -1397,7 +1923,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1409,7 +1939,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1424,24 +1958,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "RegionsOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "RegionsOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "RegionConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "RegionConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1455,24 +2005,42 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "PlanConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "PlanConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1484,7 +2052,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "HIDDEN", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "HIDDEN",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "AVAILABLE",
             "description": "",
@@ -1518,7 +2091,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "FixedFeaturesOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "FixedFeaturesOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -1528,7 +2105,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -1566,7 +2147,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1584,7 +2169,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "PlanFixedFeatureEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlanFixedFeatureEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -1606,7 +2195,11 @@
             "name": "startCursor",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1614,7 +2207,11 @@
             "name": "endCursor",
             "description": "",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -1625,7 +2222,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1637,7 +2238,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1660,7 +2265,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1672,7 +2281,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PlanFixedFeature", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PlanFixedFeature",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1695,7 +2308,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1707,7 +2324,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1719,7 +2340,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1731,14 +2356,24 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1754,7 +2389,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "MeteredFeaturesOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "MeteredFeaturesOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -1764,7 +2403,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -1781,7 +2424,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "LABEL", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "LABEL",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "DISPLAY_NAME",
             "description": "",
@@ -1803,7 +2451,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1821,7 +2473,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "PlanMeteredFeatureEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "PlanMeteredFeatureEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -1846,7 +2502,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1858,7 +2518,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PlanMeteredFeature", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PlanMeteredFeature",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1881,7 +2545,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1893,7 +2561,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1905,7 +2577,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1928,7 +2604,13 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1944,7 +2626,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1959,7 +2645,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "PlanFeatureCostTier", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PlanFeatureCostTier",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -1983,7 +2673,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1995,7 +2689,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2032,7 +2730,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -2049,7 +2751,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "LABEL", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "LABEL",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "DISPLAY_NAME",
             "description": "",
@@ -2071,7 +2778,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2118,7 +2829,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2130,7 +2845,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PlanConfigurableFeature", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PlanConfigurableFeature",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2153,7 +2872,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2165,7 +2888,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2177,7 +2904,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2189,7 +2920,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "PlanFeatureType", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "PlanFeatureType",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2204,7 +2939,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "PlanFixedFeature", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PlanFixedFeature",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -2224,7 +2963,13 @@
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -2242,8 +2987,18 @@
             "isDeprecated": false,
             "deprecationReason": null
           },
-          { "name": "STRING", "description": "", "isDeprecated": false, "deprecationReason": null },
-          { "name": "NUMBER", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "STRING",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NUMBER",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -2259,7 +3014,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2271,7 +3030,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2283,7 +3046,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2295,7 +3062,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2310,7 +3081,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "PlanFeatureCostTier", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PlanFeatureCostTier",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -2334,7 +3109,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "RegionsOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "RegionsOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -2344,7 +3123,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -2400,7 +3183,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "RegionEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "RegionEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -2414,7 +3201,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2437,7 +3228,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Region", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Region",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2449,7 +3244,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2472,7 +3271,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2484,7 +3287,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2496,7 +3303,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2508,14 +3319,24 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -2531,7 +3352,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2543,7 +3368,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2555,7 +3384,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2564,7 +3397,11 @@
             "name": "icon",
             "description": "The optional icon for that category. Icon namess are found in the manifold official icon repository",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -2578,34 +3415,56 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "ProductOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "ProductConnection", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ProductConnection",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -2621,7 +3480,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "CategoryOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CategoryOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -2631,7 +3494,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -2675,7 +3542,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "CategoryEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "CategoryEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -2689,7 +3560,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2712,7 +3587,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Category", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Category",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2724,7 +3603,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2747,7 +3630,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2759,7 +3646,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ProductCredentialsSupportType", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProductCredentialsSupportType",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2778,8 +3669,18 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "NONE", "description": "", "isDeprecated": false, "deprecationReason": null },
-          { "name": "SINGLE", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "NONE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SINGLE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "MULTIPLE",
             "description": "",
@@ -2811,7 +3712,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2823,7 +3728,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2835,7 +3744,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Platform", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Platform",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2844,7 +3757,11 @@
             "name": "invoicePreview",
             "description": "InvoicePreview provides a preview of the customer’s invoice\nfor the current billing cycle as of midnight UTC.\n\nAn invoice preview consists of the amount due and related details at\na specific moment in time. It does not represent an estimation of the\namount that will be due at the end of the billing cycle.\n\n*This is only an invoice preview. It should not be used to charge users.*\n\nNote: This is currently only supported with a Platform API token.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -2858,24 +3775,40 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               },
               {
                 "name": "orderBy",
                 "description": "",
-                "type": { "kind": "INPUT_OBJECT", "name": "InvoiceOrderBy", "ofType": null },
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "InvoiceOrderBy",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "InvoiceConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "InvoiceConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -2886,7 +3819,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ProfileState", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProfileState",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2898,7 +3835,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ProfileStateModifier", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProfileStateModifier",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2921,7 +3862,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2933,7 +3878,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2956,7 +3905,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2968,7 +3921,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2980,7 +3937,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "Currency", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Currency",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -2992,7 +3953,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Time",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3004,7 +3969,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Time",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3016,7 +3985,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "InvoiceStatus", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "InvoiceStatus",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3028,7 +4001,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "RevenueShare", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "RevenueShare",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3043,24 +4020,42 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "LineItemConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "LineItemConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3072,7 +4067,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "USD", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "USD",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -3106,7 +4106,12 @@
             "isDeprecated": false,
             "deprecationReason": null
           },
-          { "name": "PAID", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "PAID",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -3122,7 +4127,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3134,7 +4143,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3146,7 +4159,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3158,7 +4175,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3181,7 +4202,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3199,7 +4224,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "LineItemEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "LineItemEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -3224,7 +4253,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3233,7 +4266,11 @@
             "name": "node",
             "description": "",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "LineItem", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "LineItem",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -3255,7 +4292,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3267,7 +4308,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3279,7 +4324,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "Currency", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Currency",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3291,7 +4340,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "Duration", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Duration",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3303,7 +4356,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "RenewalPoint", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "RenewalPoint",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3315,7 +4372,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ChargeTime", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ChargeTime",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3324,7 +4385,11 @@
             "name": "resource",
             "description": "Resource is the resource associated with this line item.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Resource", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Resource",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3332,7 +4397,11 @@
             "name": "product",
             "description": "Product is the product associated with this line item.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Product", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Product",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3346,24 +4415,42 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "SubLineItemConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "SubLineItemConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3375,7 +4462,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "MONTHLY", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "MONTHLY",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -3425,7 +4517,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3437,7 +4533,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3449,7 +4549,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3461,7 +4565,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": true,
             "deprecationReason": "Deprecated in favor of plan.product.settings.ssoSupported"
@@ -3473,7 +4581,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3485,7 +4597,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "ResourceStatus", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ResourceStatus",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3494,7 +4610,11 @@
             "name": "plan",
             "description": "The plan for which this resource is provisioned. The plan can be null if the\nresource is a custom resource, or if a transient failure occurred.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Plan", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Plan",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3502,7 +4622,11 @@
             "name": "region",
             "description": "The region for which this resource is provisioned. The region can be null if the\nresource is a custom resource, or if a transient failure occurred.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Region", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Region",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3510,7 +4634,11 @@
             "name": "owner",
             "description": "The profile which owns the resource.\n\nNote: If the resource is not owned by a Platform Profile, the value is null.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Profile", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Profile",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3518,7 +4646,11 @@
             "name": "createdAt",
             "description": "The time the resource was created at.",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "Time", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "Time",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3532,24 +4664,42 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               },
               {
                 "name": "after",
                 "description": "",
-                "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "CredentialConnection", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "CredentialConnection",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [{ "kind": "INTERFACE", "name": "Node", "ofType": null }],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -3565,7 +4715,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ResourceStatusLabel", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ResourceStatusLabel",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3577,7 +4731,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3589,7 +4747,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3671,7 +4833,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3689,7 +4855,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "CredentialEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "CredentialEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -3714,7 +4884,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3723,7 +4897,11 @@
             "name": "node",
             "description": "",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Credential", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Credential",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -3745,7 +4923,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3757,7 +4939,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3780,7 +4966,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3798,7 +4988,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "SubLineItemEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "SubLineItemEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -3823,7 +5017,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3832,7 +5030,11 @@
             "name": "node",
             "description": "",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "SubLineItem", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "SubLineItem",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -3854,7 +5056,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Int", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3866,7 +5072,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "Currency", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "Currency",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3875,7 +5085,11 @@
             "name": "plan",
             "description": "Plan is the plan associated with the SubLineItem.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Plan", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Plan",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -3886,7 +5100,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3898,7 +5116,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3910,7 +5132,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "CalculationType", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CalculationType",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3922,7 +5148,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Time",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3934,7 +5164,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Time", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Time",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -3980,7 +5214,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "InvoiceOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "InvoiceOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -3990,7 +5228,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -4007,7 +5249,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "END", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "END",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -4023,7 +5270,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4041,7 +5292,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "InvoiceEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "InvoiceEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -4066,7 +5321,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4075,7 +5334,11 @@
             "name": "node",
             "description": "",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4093,14 +5356,24 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "ACTIVE", "description": "", "isDeprecated": false, "deprecationReason": null },
+          {
+            "name": "ACTIVE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "SUSPENDED",
             "description": "",
             "isDeprecated": false,
             "deprecationReason": null
           },
-          { "name": "DELETED", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "DELETED",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -4139,7 +5412,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4157,7 +5434,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "ResourceEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ResourceEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -4182,7 +5463,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4191,7 +5476,11 @@
             "name": "node",
             "description": "",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "Resource", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Resource",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4209,9 +5498,24 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
-          { "name": "FALSE", "description": "", "isDeprecated": false, "deprecationReason": null },
-          { "name": "TRUE", "description": "", "isDeprecated": false, "deprecationReason": null },
-          { "name": "MAYBE", "description": "", "isDeprecated": false, "deprecationReason": null }
+          {
+            "name": "FALSE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TRUE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MAYBE",
+            "description": "",
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
         ],
         "possibleTypes": null
       },
@@ -4224,13 +5528,21 @@
           {
             "name": "start",
             "description": "Start allows fetching profiles used after this date.",
-            "type": { "kind": "SCALAR", "name": "Time", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "Time",
+              "ofType": null
+            },
             "defaultValue": null
           },
           {
             "name": "end",
             "description": "End allows fetching profiles used before this date.",
-            "type": { "kind": "SCALAR", "name": "Time", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "Time",
+              "ofType": null
+            },
             "defaultValue": null
           }
         ],
@@ -4250,7 +5562,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "PageInfo", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "PageInfo",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4268,7 +5584,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "ProfileEdge", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "ProfileEdge",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -4293,7 +5613,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4305,7 +5629,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Profile",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4343,7 +5671,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "CreateResourcePayload", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CreateResourcePayload",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4370,7 +5702,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "UpdateResourcePayload", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UpdateResourcePayload",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4397,7 +5733,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "UpdateResourcePlanPayload", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UpdateResourcePlanPayload",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4424,7 +5764,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "DeleteResourcePayload", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "DeleteResourcePayload",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4439,12 +5783,20 @@
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "INPUT_OBJECT", "name": "InvoiceStatusInput", "ofType": null }
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "InvoiceStatusInput",
+                    "ofType": null
+                  }
                 },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Invoice", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "Invoice",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -4501,7 +5853,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "UpdateProfileSubjectPayload", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UpdateProfileSubjectPayload",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4528,7 +5884,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "UpdateProfileStatePayload", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UpdateProfileStatePayload",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4551,26 +5911,42 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
           {
             "name": "displayName",
             "description": "A human readble display name for this Resource.",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "defaultValue": null
           },
           {
             "name": "ownerId",
             "description": "The manifold id of the owner for this resource. Omit to use the current user ID.",
-            "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
             "defaultValue": null
           },
           {
             "name": "owner",
             "description": "The manifold id or plaform id of the owner for this resource. Omit to use the current user ID.",
-            "type": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "ProfileIdentity",
+              "ofType": null
+            },
             "defaultValue": null
           },
           {
@@ -4579,7 +5955,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -4589,7 +5969,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -4599,7 +5983,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -4620,7 +6008,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Resource", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Resource",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4643,20 +6035,32 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
           {
             "name": "newLabel",
             "description": "The new label to give to this resource",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "defaultValue": null
           },
           {
             "name": "newDisplayName",
             "description": "The new display name to give to this resource",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "defaultValue": null
           }
         ],
@@ -4676,7 +6080,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Resource", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Resource",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4699,7 +6107,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -4709,14 +6121,22 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
           {
             "name": "ownerId",
             "description": "The id of the owner for this resource. Omit to use the current user ID.\n\nDeprecated: Not used.",
-            "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
             "defaultValue": null
           }
         ],
@@ -4736,7 +6156,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Resource", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Resource",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4759,14 +6183,22 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
           {
             "name": "ownerId",
             "description": "The id of the owner for this resource. Omit to use the current user ID.\n\nDeprecated: Not used.",
-            "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
             "defaultValue": null
           }
         ],
@@ -4786,7 +6218,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Resource", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Resource",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4809,7 +6245,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -4819,14 +6259,22 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "InvoiceAction", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "InvoiceAction",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
           {
             "name": "reason",
             "description": "",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "defaultValue": null
           }
         ],
@@ -4869,7 +6317,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ProfileIdentity",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -4887,7 +6339,11 @@
             "name": "data",
             "description": "",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "ProfileAuthToken", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "ProfileAuthToken",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -4909,7 +6365,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4932,7 +6392,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -4942,7 +6406,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "ProfileIdentity", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ProfileIdentity",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -4963,7 +6431,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Profile",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4986,7 +6458,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -4996,7 +6472,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "ProfileState", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "ProfileState",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -5017,7 +6497,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Profile", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Profile",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5046,7 +6530,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "__Type", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__Type",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -5060,7 +6548,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "__Type", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "__Type",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5069,7 +6561,11 @@
             "name": "mutationType",
             "description": "If this server supports mutation, the type that mutation operations will be rooted at.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "__Type", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "__Type",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5077,7 +6573,11 @@
             "name": "subscriptionType",
             "description": "If this server support subscription, the type that subscription operations will be rooted at.",
             "args": [],
-            "type": { "kind": "OBJECT", "name": "__Type", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "__Type",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5094,7 +6594,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "__Directive", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__Directive",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -5119,7 +6623,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "__TypeKind", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "__TypeKind",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5128,7 +6636,11 @@
             "name": "name",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5136,7 +6648,11 @@
             "name": "description",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5147,7 +6663,11 @@
               {
                 "name": "includeDeprecated",
                 "description": null,
-                "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
                 "defaultValue": "false"
               }
             ],
@@ -5157,7 +6677,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "__Field", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Field",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -5173,7 +6697,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "__Type", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -5189,7 +6717,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "__Type", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__Type",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -5202,7 +6734,11 @@
               {
                 "name": "includeDeprecated",
                 "description": null,
-                "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
                 "defaultValue": "false"
               }
             ],
@@ -5212,7 +6748,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "__EnumValue", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__EnumValue",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -5228,7 +6768,11 @@
               "ofType": {
                 "kind": "NON_NULL",
                 "name": null,
-                "ofType": { "kind": "OBJECT", "name": "__InputValue", "ofType": null }
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "__InputValue",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
@@ -5238,7 +6782,11 @@
             "name": "ofType",
             "description": null,
             "args": [],
-            "type": { "kind": "OBJECT", "name": "__Type", "ofType": null },
+            "type": {
+              "kind": "OBJECT",
+              "name": "__Type",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -5319,7 +6867,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5328,7 +6880,11 @@
             "name": "description",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5345,7 +6901,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "__InputValue", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__InputValue",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -5359,7 +6919,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "__Type", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "__Type",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5371,7 +6935,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5380,7 +6948,11 @@
             "name": "deprecationReason",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -5402,7 +6974,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5411,7 +6987,11 @@
             "name": "description",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5422,7 +7002,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "OBJECT", "name": "__Type", "ofType": null }
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "__Type",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5431,7 +7015,11 @@
             "name": "defaultValue",
             "description": "A GraphQL-formatted string representing the default value for this input value.",
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -5453,7 +7041,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5462,7 +7054,11 @@
             "name": "description",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5473,7 +7069,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5482,7 +7082,11 @@
             "name": "deprecationReason",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -5504,7 +7108,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "String", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -5513,7 +7121,11 @@
             "name": "description",
             "description": null,
             "args": [],
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -5530,7 +7142,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "ENUM", "name": "__DirectiveLocation", "ofType": null }
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "__DirectiveLocation",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -5550,7 +7166,11 @@
                 "ofType": {
                   "kind": "NON_NULL",
                   "name": null,
-                  "ofType": { "kind": "OBJECT", "name": "__InputValue", "ofType": null }
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "__InputValue",
+                    "ofType": null
+                  }
                 }
               }
             },
@@ -5700,7 +7320,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "InvoicePreviewOrderByField", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "InvoicePreviewOrderByField",
+                "ofType": null
+              }
             },
             "defaultValue": null
           },
@@ -5710,7 +7334,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "ENUM", "name": "OrderByDirection", "ofType": null }
+              "ofType": {
+                "kind": "ENUM",
+                "name": "OrderByDirection",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -5741,7 +7369,11 @@
       {
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -5749,7 +7381,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -5758,7 +7394,11 @@
       {
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -5766,7 +7406,11 @@
             "type": {
               "kind": "NON_NULL",
               "name": null,
-              "ofType": { "kind": "SCALAR", "name": "Boolean", "ofType": null }
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
             },
             "defaultValue": null
           }
@@ -5775,12 +7419,19 @@
       {
         "name": "deprecated",
         "description": "Marks an element of a GraphQL schema as no longer supported.",
-        "locations": ["FIELD_DEFINITION", "ENUM_VALUE"],
+        "locations": [
+          "FIELD_DEFINITION",
+          "ENUM_VALUE"
+        ],
         "args": [
           {
             "name": "reason",
             "description": "Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https://commonmark.org/).",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
             "defaultValue": "\"No longer supported\""
           }
         ]
