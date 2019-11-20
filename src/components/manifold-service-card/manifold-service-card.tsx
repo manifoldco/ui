@@ -8,7 +8,7 @@ import loadMark from '../../utils/loadMark';
 
 import productCardQuery from './product-card.graphql';
 
-type PartialProduct = Omit<ProductCardQuery, 'product'>;
+type PartialProduct = Pick<ProductCardQuery, 'product'>;
 
 // Product has at least one free plan.
 const isFree = (product: PartialProduct) =>
