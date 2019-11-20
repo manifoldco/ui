@@ -1,17 +1,16 @@
 query ProductCard($productLabel: String!) {
-    product(label: $productLabel) {
-      id
-      displayName
-      tagline
-      label
-      logoUrl
-      # must get all plans until 'free' filter works
-      plans(first: 500, orderBy: { field: COST, direction: ASC }) {
-        edges {
-          node {
-            free
-          }
+  product(label: $productLabel) {
+    id
+    displayName
+    tagline
+    label
+    logoUrl
+    plans(first: 1, free: true) {
+      edges {
+        node {
+          free
         }
       }
     }
   }
+}
