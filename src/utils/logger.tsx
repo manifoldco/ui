@@ -42,9 +42,10 @@ export default function logger<T>() {
       try {
         const rendered = originalMethod.apply(this); // attempt to call render()
         if (
+          this.el &&
+          this.el.tagName.toLowerCase().startsWith('manifold-') &&
           this.performanceLoadMark &&
           !this.performanceRenderedMark &&
-          target.constructor.name.startsWith('Manifold') &&
           !hasSkeletonElements(rendered)
         ) {
           this.performanceRenderedMark = performance.now();
@@ -63,7 +64,7 @@ export default function logger<T>() {
               /* eslint-disable no-console */
               console.log(
                 el.tagName.toLowerCase(),
-                performance.now() - nodeMapEntry.loadTime,
+                this.performanceRenderedMark - nodeMapEntry.loadMark,
                 evt.detail.duration
               );
               /* eslint-enable no-console */

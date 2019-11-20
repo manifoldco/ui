@@ -11,7 +11,7 @@ const INITIALIZED = 'manifold-connection-initialize';
 
 interface NodeMapEntry {
   el: HTMLElement;
-  loadTime: number;
+  loadMark: number;
 }
 
 export interface NodeMap {
@@ -52,7 +52,7 @@ export class ConnectionState {
     this.nodeMap = {};
     this.initialized = true;
     if (connectionEl) {
-      this.observer.observe(connectionEl, { childList: true });
+      this.observer.observe(connectionEl, { childList: true, subtree: true });
     }
     const event = new CustomEvent(INITIALIZED);
     document.dispatchEvent(event);
@@ -121,15 +121,14 @@ export class ConnectionState {
             if (tagName && tagName.startsWith('manifold-')) {
               const entry = {
                 el: node,
-                loadTime: performance.now(),
+                loadMark: performance.now(),
               };
               if (!this.nodeMap[tagName]) {
                 this.nodeMap[tagName] = [];
               }
               this.nodeMap[tagName].push(entry);
-              this.observer.observe(node, { childList: true });
               if (node.shadowRoot) {
-                this.observer.observe(node.shadowRoot, { childList: true });
+                this.observer.observe(node.shadowRoot, { childList: true, subtree: true });
               }
             }
           });
