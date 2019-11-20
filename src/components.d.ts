@@ -570,7 +570,7 @@ export namespace Components {
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
-    'product'?: Product;
+    'product'?: PartialProduct;
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }
@@ -1599,7 +1599,7 @@ declare namespace LocalJSX {
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
-    'product'?: Product;
+    'product'?: PartialProduct;
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }

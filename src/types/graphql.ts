@@ -2215,3 +2215,26 @@ export type ResourcesQuery = (
     ) }
   )> }
 );
+
+export type ProductCardQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type ProductCardQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'displayName' | 'tagline' | 'label' | 'logoUrl'>
+    & { plans: Maybe<(
+      { __typename?: 'PlanConnection' }
+      & { edges: Array<(
+        { __typename?: 'PlanEdge' }
+        & { node: (
+          { __typename?: 'Plan' }
+          & Pick<Plan, 'free'>
+        ) }
+      )> }
+    )> }
+  )> }
+);
