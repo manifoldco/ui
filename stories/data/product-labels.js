@@ -11,6 +11,7 @@ export default [
   'cloudcube',
   'custom-recognition',
   'dumper',
+  'db33-mysql',
   'elegant-cms',
   'generic-tagging',
   'hostedmetrics-influxdb',
