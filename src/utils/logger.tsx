@@ -43,7 +43,7 @@ export default function logger<T>() {
         const rendered = originalMethod.apply(this); // attempt to call render()
         if (
           this.el &&
-          this.el.tagName.toLowerCase().startsWith('manifold-') &&
+          this.el.tagName.startsWith('MANIFOLD-') &&
           this.performanceLoadMark &&
           !this.performanceRenderedMark &&
           !hasSkeletonElements(rendered)
@@ -58,13 +58,16 @@ export default function logger<T>() {
           });
           if (this.el) {
             const el = this.el as HTMLElement;
-            const nodeMapList = connection.nodeMap[el.tagName.toLowerCase()];
-            const nodeMapEntry = nodeMapList && nodeMapList.find(entry => entry.el === el);
-            if (nodeMapEntry) {
+            const startMarkName = `${el.tagName}-load-start`;
+            const endMarkName = `${el.tagName}-load-end`;
+            const startMarks = performance.getEntriesByName(startMarkName, 'mark');
+            const endMarks = performance.getEntriesByName(endMarkName, 'mark');
+            if (startMarks.length && !endMarks.length) {
+              performance.mark(endMarkName);
               /* eslint-disable no-console */
               console.log(
-                el.tagName.toLowerCase(),
-                this.performanceRenderedMark - nodeMapEntry.loadMark,
+                el.tagName,
+                this.performanceRenderedMark - startMarks[0].startTime,
                 evt.detail.duration
               );
               /* eslint-enable no-console */
