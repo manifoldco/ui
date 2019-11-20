@@ -61,6 +61,7 @@ export const config: Config = {
     }),
   ],
   testing: {
+    setupFiles: ['./jest-setup'],
     testPathIgnorePatterns: [
       '<rootDir>/dist/',
       '<rootDir>/docs/',
