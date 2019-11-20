@@ -10,7 +10,7 @@ import { Unpack } from '../../types/unpack';
 
 import productCardQuery from './product-card.graphql';
 
-type PartialProduct = Unpack<ProductCardQuery, 'product'>;
+export type PartialProduct = Unpack<ProductCardQuery, 'product'>;
 
 // Product has at least one free plan.
 const isFree = (product: PartialProduct) =>

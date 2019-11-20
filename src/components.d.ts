@@ -41,6 +41,9 @@ import {
 import {
   Option,
 } from './types/Select';
+import {
+  PartialProduct,
+} from './components/manifold-service-card/manifold-service-card';
 
 export namespace Components {
   interface ManifoldActivePlan {
