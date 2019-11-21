@@ -17,16 +17,12 @@ export type EventTypes =
   | {
       name: 'load';
       properties: {
-        initialRender: number;
-        renderWithData: number;
-        rttGraphql: number;
         duration: number;
       };
     }
   | {
-      name: 'render_with_data';
+      name: 'first_render';
       properties: {
-        rttGraphql: number;
         duration: number;
       };
     }
@@ -40,6 +36,14 @@ export type EventTypes =
       name: 'token_received';
       properties: {
         duration: number;
+      };
+    }
+  | {
+      name: 'first_render_with_data';
+      properties: {
+        duration: number;
+        rttGraphql: number;
+        load: number;
       };
     };
 

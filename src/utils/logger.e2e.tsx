@@ -1,5 +1,5 @@
 import { h } from '@stencil/core';
-import logger, { hasSkeletonElements } from './logger';
+import logger from './logger';
 
 /* eslint max-classes-per-file: ["error", 3] */
 
@@ -41,40 +41,5 @@ describe('@logger', () => {
       message: 'oops', // event should contain original error message
       uiVersion: '<@NPM_PACKAGE_VERSION@>',
     });
-  });
-});
-
-describe('hasSkeletonElements', () => {
-  it('returns true if rendered result has any <skeleton-*> descendents', () => {
-    class ComponentWithSkeletons {
-      @logger()
-      public render() {
-        return (
-          <div>
-            <section>
-              <manifold-skeleton-text>☠️</manifold-skeleton-text>
-            </section>
-          </div>
-        );
-      }
-    }
-    const render = new ComponentWithSkeletons().render();
-    expect(hasSkeletonElements(render)).toEqual(true);
-  });
-  it('returns false if rendered result contains no <skeleton-*> descendents', () => {
-    class ComponentWithoutSkeletons {
-      @logger()
-      public render() {
-        return (
-          <div>
-            <section>
-              <p>💁‍</p>
-            </section>
-          </div>
-        );
-      }
-    }
-    const render = new ComponentWithoutSkeletons().render();
-    expect(hasSkeletonElements(render)).toEqual(false);
   });
 });

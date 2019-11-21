@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+import { mark } from '../packages/analytics';
 
 export default function loadMark<T>() {
   return function loadMarkDecorator(
@@ -9,7 +10,10 @@ export default function loadMark<T>() {
     const originalMethod = descriptor.value;
 
     descriptor.value = function componentWillLoad() {
-      this.performanceLoadMark = performance.now();
+      if (this.el) {
+        mark(this.el, 'first_render');
+        mark(this.el, 'first_render_with_data');
+      }
       return originalMethod.apply(this); // call original method
     };
 
