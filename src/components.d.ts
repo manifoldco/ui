@@ -15,6 +15,7 @@ import {
   Product,
   ProductCardQuery,
   ProductEdge,
+  ProductQuery,
   Region,
   Resource,
   ResourceCredentialsQuery,
@@ -457,10 +458,10 @@ export namespace Components {
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: Product;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldProductPage {
-    'product'?: Product;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldResourceCard {
     /**
@@ -1476,17 +1477,17 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    'onManifold-product-load'?: (event: CustomEvent<Product | undefined | null>) => void;
+    'onManifold-product-load'?: (event: CustomEvent<ProductQuery['product'] | undefined | null>) => void;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: Product;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldProductPage {
-    'product'?: Product;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldResourceCard {
     /**

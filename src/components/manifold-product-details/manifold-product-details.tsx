@@ -1,6 +1,6 @@
 import { h, Component, Prop } from '@stencil/core';
 
-import { Product } from '../../types/graphql';
+import { ProductQuery } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
@@ -11,7 +11,7 @@ import loadMark from '../../utils/loadMark';
   shadow: true,
 })
 export class ManifoldProductDetails {
-  @Prop() product?: Product;
+  @Prop() product?: ProductQuery['product'];
 
   @loadMark()
   componentWillLoad() {}

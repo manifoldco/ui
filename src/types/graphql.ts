@@ -2045,6 +2045,29 @@ export type PlanQuery = (
   )> }
 );
 
+export type ProductQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type ProductQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'documentationUrl' | 'supportEmail' | 'displayName' | 'images' | 'label' | 'logoUrl' | 'termsUrl' | 'tagline'>
+    & { categories: Array<(
+      { __typename?: 'Category' }
+      & Pick<Category, 'label'>
+    )>, valueProps: Array<(
+      { __typename?: 'ValueProp' }
+      & Pick<ValueProp, 'header' | 'body'>
+    )>, provider: Maybe<(
+      { __typename?: 'Provider' }
+      & Pick<Provider, 'displayName'>
+    )> }
+  )> }
+);
+
 export type GetResourceQueryVariables = {
   resourceLabel: Scalars['String']
 };
