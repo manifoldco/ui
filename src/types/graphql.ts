@@ -2054,7 +2054,7 @@ export type ProductQuery = (
   { __typename?: 'Query' }
   & { product: Maybe<(
     { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'documentationUrl' | 'supportEmail' | 'displayName' | 'images' | 'label' | 'logoUrl' | 'termsUrl' | 'tagline'>
+    & Pick<Product, 'documentationUrl' | 'supportEmail' | 'displayName' | 'images' | 'label' | 'logoUrl' | 'termsUrl' | 'tagline'>
     & { categories: Array<(
       { __typename?: 'Category' }
       & Pick<Category, 'label'>

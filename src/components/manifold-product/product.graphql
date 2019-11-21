@@ -1,6 +1,5 @@
 query Product($productLabel: String!) {
   product(label: $productLabel) {
-    id
     documentationUrl
     supportEmail
     displayName
