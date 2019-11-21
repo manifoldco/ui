@@ -1,0 +1,16 @@
+query ProductCard($productLabel: String!) {
+  product(label: $productLabel) {
+    id
+    displayName
+    tagline
+    label
+    logoUrl
+    plans(first: 1, free: true) {
+      edges {
+        node {
+          free
+        }
+      }
+    }
+  }
+}

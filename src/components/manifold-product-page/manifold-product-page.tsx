@@ -5,9 +5,6 @@ import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Unpack } from '../../types/unpack';
-
-export type PartialProduct = Unpack<ProductQuery, 'product'>;
 
 @Component({
   tag: 'manifold-product-page',
@@ -15,7 +12,7 @@ export type PartialProduct = Unpack<ProductQuery, 'product'>;
   shadow: true,
 })
 export class ManifoldProductPage {
-  @Prop() product?: PartialProduct;
+  @Prop() product?: ProductQuery['product'];
 
   get providerName() {
     if (!this.product) {

@@ -4,9 +4,6 @@ import { ProductQuery } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Unpack } from '../../types/unpack';
-
-export type PartialProduct = Unpack<ProductQuery, 'product'>;
 
 @Component({
   tag: 'manifold-product-details',
@@ -14,7 +11,7 @@ export type PartialProduct = Unpack<ProductQuery, 'product'>;
   shadow: true,
 })
 export class ManifoldProductDetails {
-  @Prop() product?: PartialProduct;
+  @Prop() product?: ProductQuery['product'];
 
   @loadMark()
   componentWillLoad() {}

@@ -7,9 +7,6 @@ import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 import productQuery from './product.graphql';
-import { Unpack } from '../../types/unpack';
-
-export type PartialProduct = Unpack<ProductQuery, 'product'>;
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
@@ -18,9 +15,9 @@ export class ManifoldProduct {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
-  @State() product?: PartialProduct;
+  @State() product?: ProductQuery['product'];
   @Event({ eventName: 'manifold-product-load' }) loaded: EventEmitter<
-    PartialProduct | undefined | null
+    ProductQuery['product'] | undefined | null
   >;
 
   @Watch('productLabel') productChange(newLabel: string) {

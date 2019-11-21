@@ -13,6 +13,7 @@ import {
   PlanEdge,
   PlanMeteredFeatureEdge,
   Product,
+  ProductCardQuery,
   ProductEdge,
   Region,
   Resource,
@@ -579,7 +580,7 @@ export namespace Components {
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
-    'product'?: Product;
+    'product'?: ProductCardQuery['product'];
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }
@@ -1608,7 +1609,7 @@ declare namespace LocalJSX {
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
-    'product'?: Product;
+    'product'?: ProductCardQuery['product'];
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }
