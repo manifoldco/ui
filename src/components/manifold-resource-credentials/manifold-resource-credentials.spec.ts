@@ -1,4 +1,4 @@
-import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import { GetResourceQuery } from '../../types/graphql';
@@ -8,49 +8,52 @@ import { ManifoldCredentials } from '../manifold-credentials/manifold-credential
 import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-credentials-view';
 
 global.setTimeout = jest.fn();
-fetchMock.mock('begin:https://analytics.manifold.co', 200);
+
+interface Props {
+  gqlData?: GetResourceQuery['resource'];
+  loading?: boolean;
+}
+
+async function setup(props: Props) {
+  const page = await newSpecPage({
+    components: [ManifoldResourceCredentials, ManifoldCredentials, ManifoldCredentialsView],
+    html: '<div></div>',
+  });
+
+  const component = page.doc.createElement('manifold-resource-credentials');
+  component.gqlData = props.gqlData;
+  component.loading = props.loading;
+
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
 
 describe('<manifold-resource-credentials>', () => {
-  let page: SpecPage;
-  let element: HTMLManifoldResourceCredentialsElement;
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [ManifoldResourceCredentials, ManifoldCredentials, ManifoldCredentialsView],
-      html: `<div></div>`,
+  beforeEach(() => {
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
+    fetchMock.mock('begin:https://api.manifold.co', 200);
+  });
+
+  afterEach(fetchMock.restore);
+
+  describe('v0 props', () => {
+    it('[loading]: renders spinner', async () => {
+      const { page } = await setup({ loading: true });
+      const credentials = page.root && page.root.querySelector('manifold-credentials-view');
+      const spinner =
+        credentials &&
+        credentials.shadowRoot &&
+        credentials.shadowRoot.querySelector('[data-testid="spinner"]');
+      expect(spinner).not.toBeNull();
     });
-    element = page.doc.createElement('manifold-resource-credentials');
-  });
 
-  it('Renders a skeleton if loading', async () => {
-    element.loading = true;
-    const root = page.root as HTMLElement;
-    root.appendChild(element);
-
-    await page.waitForChanges();
-
-    const view = element.querySelector('manifold-credentials-view');
-    expect(view).toBeDefined();
-
-    if (view && view.shadowRoot) {
-      expect(view.shadowRoot.querySelector('span[class="spin"]')).toBeDefined();
-    }
-  });
-
-  it('Renders a product card if not loading', async () => {
-    element.loading = false;
-    element.gqlData = resource as GetResourceQuery['resource'];
-    const root = page.root as HTMLElement;
-    root.appendChild(element);
-
-    await page.waitForChanges();
-
-    const view = element.querySelector('manifold-credentials-view');
-    expect(view).toBeDefined();
-
-    if (view && view.shadowRoot) {
-      expect(view.shadowRoot.querySelector('manifold-button[color="black"]')).toEqualText(
-        'Show credentials'
-      );
-    }
+    it('[gqlData]: button not disabled if present', async () => {
+      const { page } = await setup({ gqlData: resource as GetResourceQuery['resource'] });
+      const button = page.root && page.root.querySelector('button');
+      expect(button && button.getAttribute('disabled')).toBeNull();
+    });
   });
 });

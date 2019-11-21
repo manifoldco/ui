@@ -1,63 +1,80 @@
-import { newSpecPage, SpecPage } from '@stencil/core/testing';
+import { newSpecPage } from '@stencil/core/testing';
+import fetchMock from 'fetch-mock';
 
-import { Resource } from '../../types/graphql';
+import resource from '../../spec/mock/elegant-cms/resource';
+import { GetResourceQuery } from '../../types/graphql';
 import { ManifoldResourceProduct } from './manifold-resource-product';
+import { ManifoldServiceCardView } from '../manifold-service-card-view/manifold-service-card-view';
 
-const GraphqlResource = {
-  id: '1234',
-  plan: {
-    id: '1234',
-    product: {
-      id: '1234',
-      displayName: 'Product',
-      tagline: 'Amazing product',
-      label: 'product',
-      logoUrl: 'https://fillmurray.com/200/200',
-    },
-  },
-};
+interface Props {
+  gqlData?: GetResourceQuery['resource'];
+  loading?: boolean;
+}
+
+async function setup(props: Props) {
+  const page = await newSpecPage({
+    components: [ManifoldResourceProduct, ManifoldServiceCardView],
+    html: '<div></div>',
+  });
+
+  const component = page.doc.createElement('manifold-resource-product');
+  component.gqlData = props.gqlData;
+  component.loading = props.loading;
+
+  const root = page.root as HTMLDivElement;
+  root.appendChild(component);
+  await page.waitForChanges();
+
+  return { page, component };
+}
 
 describe('<manifold-resource-product>', () => {
-  let page: SpecPage;
-  let element: HTMLManifoldResourceProductElement;
-  beforeEach(async () => {
-    page = await newSpecPage({
-      components: [ManifoldResourceProduct],
-      html: `<div></div>`,
+  beforeEach(() => {
+    fetchMock.mock('begin:https://analytics.manifold.co', 200);
+    fetchMock.mock('begin:https://api.manifold.co', 200);
+  });
+
+  afterEach(fetchMock.restore);
+
+  it('[gqlData]: renders a skeleton if missing', async () => {
+    const { page } = await setup({});
+
+    const serviceCard = page.root && page.root.querySelector('manifold-service-card-view');
+    const skeleton =
+      serviceCard &&
+      serviceCard.shadowRoot &&
+      serviceCard.shadowRoot.querySelector('manifold-skeleton-text');
+
+    expect(skeleton).not.toBeNull();
+  });
+
+  it('[gqlData]: renders a product', async () => {
+    const { page } = await setup({
+      loading: false,
+      gqlData: resource as GetResourceQuery['resource'],
     });
-    element = page.doc.createElement('manifold-resource-product');
+
+    const serviceCard = page.root && page.root.querySelector('manifold-service-card-view');
+    const productName =
+      serviceCard &&
+      serviceCard.shadowRoot &&
+      serviceCard.shadowRoot.querySelector('[itemprop="name"]');
+
+    expect(productName).not.toBeNull();
   });
 
-  it('Renders a skeleton if loading', async () => {
-    element.loading = true;
-    const root = page.root as HTMLElement;
-    root.appendChild(element);
+  it('[loading]: renders a skeleton', async () => {
+    const { page } = await setup({
+      loading: true,
+      gqlData: resource as GetResourceQuery['resource'],
+    });
 
-    await page.waitForChanges();
+    const serviceCard = page.root && page.root.querySelector('manifold-service-card-view');
+    const skeleton =
+      serviceCard &&
+      serviceCard.shadowRoot &&
+      serviceCard.shadowRoot.querySelector('manifold-skeleton-text');
 
-    expect(element).toEqualHtml(`
-      <manifold-resource-product>
-        <manifold-service-card-view description="This is a loading product..." logo="loading.jpg" name="loading..." skeleton="">
-          <manifold-forward-slot slot="cta"></manifold-forward-slot>
-        </manifold-service-card-view>
-      </manifold-resource-product>
-    `);
-  });
-
-  it('Renders a product card if not loading', async () => {
-    element.loading = false;
-    element.gqlData = GraphqlResource as Resource;
-    const root = page.root as HTMLElement;
-    root.appendChild(element);
-
-    await page.waitForChanges();
-
-    expect(element).toEqualHtml(`
-      <manifold-resource-product>
-        <manifold-service-card-view description="Amazing product" logo="https://fillmurray.com/200/200" name="Product" productid="1234" productlabel="product">
-            <manifold-forward-slot slot="cta"></manifold-forward-slot>
-        </manifold-service-card-view>
-      </manifold-resource-product>
-    `);
+    expect(skeleton).not.toBeNull();
   });
 });

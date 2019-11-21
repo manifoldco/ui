@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- `disabled` props on more button components
+
 ### Fixed
 
 - Screenshots now display full images (uncropped). (#751)

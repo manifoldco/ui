@@ -36,6 +36,7 @@ export class ManifoldDataSsoButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() disabled?: boolean;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The id of the resource to rename, will be fetched if not set */
@@ -101,7 +102,7 @@ export class ManifoldDataSsoButton {
       <button
         type="submit"
         onClick={this.sso}
-        disabled={this.loading}
+        disabled={this.disabled || this.loading}
         data-resource-id={this.resourceId}
       >
         <slot />

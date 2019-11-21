@@ -1,4 +1,5 @@
 import resource from '../../spec/mock/elegant-cms/resource';
+import { GetResourceQuery } from '../../types/graphql';
 
 export const skeleton = () => {
   const resourceProduct = document.createElement('manifold-resource-product');
@@ -11,7 +12,7 @@ export const loadedResource = async () => {
   document.body.appendChild(resourceProduct);
   await resourceProduct.componentOnReady();
 
-  resourceProduct.gqlData = resource;
+  resourceProduct.gqlData = resource as GetResourceQuery['resource'];
   resourceProduct.loading = false;
 
   return resourceProduct.componentOnReady();

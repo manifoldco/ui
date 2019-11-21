@@ -7,6 +7,7 @@ import { GetResourceQuery } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-sso' })
 export class ManifoldResourceSso {
+  @Prop() disabled?: boolean;
   @Prop() gqlData?: GetResourceQuery['resource'];
   @Prop() loading?: boolean = true;
 
@@ -17,6 +18,7 @@ export class ManifoldResourceSso {
   render() {
     return (
       <manifold-data-sso-button
+        disabled={this.disabled || !this.gqlData}
         resourceId={this.gqlData && this.gqlData.id}
         resourceLabel={this.gqlData && this.gqlData.label}
         loading={this.loading}
