@@ -1,34 +1,16 @@
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import { Product } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
-const query = gql`
-  query PRODUCT_CARD($productLabel: String!) {
-    product(label: $productLabel) {
-      id
-      displayName
-      tagline
-      label
-      logoUrl
-      # must get all plans until 'free' filter works
-      plans(first: 500, orderBy: { field: COST, direction: ASC }) {
-        edges {
-          node {
-            free
-          }
-        }
-      }
-    }
-  }
-`;
+import { ProductCardQuery, ProductCardQueryVariables } from '../../types/graphql';
+
+import productCardQuery from './product-card.graphql';
 
 // Product has at least one free plan.
-const isFree = (product: Product) =>
+const isFree = (product: ProductCardQuery['product']) =>
   !!(product.plans && product.plans.edges.find(({ node }) => node.free));
 
 @Component({ tag: 'manifold-service-card' })
@@ -38,14 +20,14 @@ export class ManifoldServiceCard {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() hideUntilReady?: boolean = false;
   @Prop({ reflect: true }) isFeatured?: boolean;
-  @Prop({ mutable: true }) product?: Product;
+  @Prop({ mutable: true }) product?: ProductCardQuery['product'];
   @Prop() productLabel?: string;
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @State() free: boolean = false;
   @State() errors?: GraphqlError[];
 
-  @Watch('product') productChange(newProduct: Product) {
+  @Watch('product') productChange(newProduct: ProductCardQuery['product']) {
     if (newProduct) {
       this.free = isFree(newProduct);
     }
@@ -83,9 +65,10 @@ export class ManifoldServiceCard {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({
-      query,
-      variables: { productLabel },
+    const variables: ProductCardQueryVariables = { productLabel };
+    const { data, errors } = await this.graphqlFetch<ProductCardQuery>({
+      query: productCardQuery,
+      variables,
       element: this.el,
     });
     if (data && data.product) {
