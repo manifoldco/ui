@@ -1,0 +1,15 @@
+query ResourceCard($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    id
+    label
+    plan {
+      product {
+        displayName
+        logoUrl
+      }
+    }
+    status {
+      label
+    }
+  }
+}

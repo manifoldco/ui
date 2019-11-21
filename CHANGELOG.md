@@ -11,6 +11,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Screenshots now display full images (uncropped). (#751)
 
+### Changed
+
+- Refactor GraphQL query for `manifold-product`. (#753)
+- Refactor GraphQL query for `manifold-service-card`. (#752)
+- Refactor GraphQL query for `manifold-resource-card`.
+
 ## [0.7.2] - 2019-11-19
 
 ### Added
