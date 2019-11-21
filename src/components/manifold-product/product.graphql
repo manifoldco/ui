@@ -1,0 +1,23 @@
+query Product($productLabel: String!) {
+  product(label: $productLabel) {
+    id
+    documentationUrl
+    supportEmail
+    displayName
+    images
+    label
+    logoUrl
+    categories {
+      label
+    }
+    termsUrl
+    valueProps {
+      header
+      body
+    }
+    tagline
+    provider {
+      displayName
+    }
+  }
+}

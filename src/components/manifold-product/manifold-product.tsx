@@ -1,36 +1,15 @@
 import { h, Component, Prop, State, Element, Watch, Event, EventEmitter } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
-import { Product } from '../../types/graphql';
+import { ProductQuery, ProductQueryVariables } from '../../types/graphql';
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
-const query = gql`
-  query PRODUCT($productLabel: String!) {
-    product(label: $productLabel) {
-      documentationUrl
-      supportEmail
-      displayName
-      images
-      label
-      logoUrl
-      categories {
-        label
-      }
-      termsUrl
-      valueProps {
-        header
-        body
-      }
-      tagline
-      provider {
-        displayName
-      }
-    }
-  }
-`;
+import productQuery from './product.graphql';
+import { Unpack } from '../../types/unpack';
+
+export type PartialProduct = Unpack<ProductQuery, 'product'>;
 
 @Component({ tag: 'manifold-product' })
 export class ManifoldProduct {
@@ -39,8 +18,10 @@ export class ManifoldProduct {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** _(optional)_ Hide the CTA on the left? */
   @Prop() productLabel?: string;
-  @State() product?: Product;
-  @Event({ eventName: 'manifold-product-load' }) loaded: EventEmitter<Product | undefined | null>;
+  @State() product?: PartialProduct;
+  @Event({ eventName: 'manifold-product-load' }) loaded: EventEmitter<
+    PartialProduct | undefined | null
+  >;
 
   @Watch('productLabel') productChange(newLabel: string) {
     this.fetchProduct(newLabel);
@@ -58,8 +39,12 @@ export class ManifoldProduct {
       return;
     }
 
-    const variables = { productLabel };
-    const { data } = await this.graphqlFetch({ query, variables, element: this.el });
+    const variables: ProductQueryVariables = { productLabel };
+    const { data } = await this.graphqlFetch<ProductQuery>({
+      query: productQuery,
+      variables,
+      element: this.el,
+    });
 
     this.product = (data && data.product) || undefined;
     this.loaded.emit(data && data.product);

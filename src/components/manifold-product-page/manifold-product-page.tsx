@@ -1,10 +1,13 @@
 import { h, Component, Prop } from '@stencil/core';
 import { arrow_up_right, book, life_buoy, file_text } from '@manifoldco/icons';
-import { Product } from '../../types/graphql';
+import { ProductQuery } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+import { Unpack } from '../../types/unpack';
+
+export type PartialProduct = Unpack<ProductQuery, 'product'>;
 
 @Component({
   tag: 'manifold-product-page',
@@ -12,7 +15,7 @@ import loadMark from '../../utils/loadMark';
   shadow: true,
 })
 export class ManifoldProductPage {
-  @Prop() product?: Product;
+  @Prop() product?: PartialProduct;
 
   get providerName() {
     if (!this.product) {

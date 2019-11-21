@@ -39,6 +39,15 @@ import {
   Gateway,
 } from './types/gateway';
 import {
+  PartialProduct,
+} from './components/manifold-product/manifold-product';
+import {
+  PartialProduct as PartialProduct1,
+} from './components/manifold-product-details/manifold-product-details';
+import {
+  PartialProduct as PartialProduct2,
+} from './components/manifold-product-page/manifold-product-page';
+import {
   Option,
 } from './types/Select';
 
@@ -456,10 +465,10 @@ export namespace Components {
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: Product;
+    'product'?: PartialProduct;
   }
   interface ManifoldProductPage {
-    'product'?: Product;
+    'product'?: PartialProduct;
   }
   interface ManifoldResourceCard {
     /**
@@ -1475,17 +1484,17 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    'onManifold-product-load'?: (event: CustomEvent<Product | undefined | null>) => void;
+    'onManifold-product-load'?: (event: CustomEvent<PartialProduct | undefined | null>) => void;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: Product;
+    'product'?: PartialProduct;
   }
   interface ManifoldProductPage {
-    'product'?: Product;
+    'product'?: PartialProduct;
   }
   interface ManifoldResourceCard {
     /**
