@@ -1,4 +1,3 @@
-import { h } from '@stencil/core';
 import logger from './logger';
 
 /* eslint max-classes-per-file: ["error", 3] */
