@@ -13,6 +13,7 @@ import {
   PlanEdge,
   PlanMeteredFeatureEdge,
   Product,
+  ProductCardQuery,
   ProductEdge,
   Region,
   Resource,
@@ -41,9 +42,6 @@ import {
 import {
   Option,
 } from './types/Select';
-import {
-  PartialProduct,
-} from './components/manifold-service-card/manifold-service-card';
 
 export namespace Components {
   interface ManifoldActivePlan {
@@ -573,7 +571,7 @@ export namespace Components {
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
-    'product'?: PartialProduct;
+    'product'?: ProductCardQuery['product'];
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }
@@ -1602,7 +1600,7 @@ declare namespace LocalJSX {
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
-    'product'?: PartialProduct;
+    'product'?: ProductCardQuery['product'];
     'productLabel'?: string;
     'productLinkFormat'?: string;
   }

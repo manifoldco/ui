@@ -6,14 +6,11 @@ import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
 import { ProductCardQuery, ProductCardQueryVariables } from '../../types/graphql';
-import { Unpack } from '../../types/unpack';
 
 import productCardQuery from './product-card.graphql';
 
-export type PartialProduct = Unpack<ProductCardQuery, 'product'>;
-
 // Product has at least one free plan.
-const isFree = (product: PartialProduct) =>
+const isFree = (product: ProductCardQuery['product']) =>
   !!(product.plans && product.plans.edges.find(({ node }) => node.free));
 
 @Component({ tag: 'manifold-service-card' })
@@ -23,14 +20,14 @@ export class ManifoldServiceCard {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() hideUntilReady?: boolean = false;
   @Prop({ reflect: true }) isFeatured?: boolean;
-  @Prop({ mutable: true }) product?: PartialProduct;
+  @Prop({ mutable: true }) product?: ProductCardQuery['product'];
   @Prop() productLabel?: string;
   @Prop() productLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
   @State() free: boolean = false;
   @State() errors?: GraphqlError[];
 
-  @Watch('product') productChange(newProduct: PartialProduct) {
+  @Watch('product') productChange(newProduct: ProductCardQuery['product']) {
     if (newProduct) {
       this.free = isFree(newProduct);
     }
