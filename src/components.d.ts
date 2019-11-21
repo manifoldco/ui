@@ -15,6 +15,7 @@ import {
   Product,
   ProductCardQuery,
   ProductEdge,
+  ProductQuery,
   Region,
   Resource,
   ResourceCredentialsQuery,
@@ -39,15 +40,6 @@ import {
 import {
   Gateway,
 } from './types/gateway';
-import {
-  PartialProduct,
-} from './components/manifold-product/manifold-product';
-import {
-  PartialProduct as PartialProduct1,
-} from './components/manifold-product-details/manifold-product-details';
-import {
-  PartialProduct as PartialProduct2,
-} from './components/manifold-product-page/manifold-product-page';
 import {
   Option,
 } from './types/Select';
@@ -466,10 +458,10 @@ export namespace Components {
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: PartialProduct;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldProductPage {
-    'product'?: PartialProduct;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldResourceCard {
     /**
@@ -1485,17 +1477,17 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
-    'onManifold-product-load'?: (event: CustomEvent<PartialProduct | undefined | null>) => void;
+    'onManifold-product-load'?: (event: CustomEvent<ProductQuery['product'] | undefined | null>) => void;
     /**
     * _(optional)_ Hide the CTA on the left?
     */
     'productLabel'?: string;
   }
   interface ManifoldProductDetails {
-    'product'?: PartialProduct;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldProductPage {
-    'product'?: PartialProduct;
+    'product'?: ProductQuery['product'];
   }
   interface ManifoldResourceCard {
     /**
