@@ -78,7 +78,6 @@
     }
   ],
   "dependencies": {
-    "@manifoldco/gql-zero": "^0.2.0",
     "@stencil/state-tunnel": "^1.0.1",
     "clipboard-polyfill": "^2.8.6"
   },

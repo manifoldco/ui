@@ -2379,3 +2379,39 @@ export type ResourceIdQuery = (
     & Pick<Resource, 'id'>
   )> }
 );
+
+export type AllCategoriesQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String']
+};
+
+
+export type AllCategoriesQuery = (
+  { __typename?: 'Query' }
+  & { categories: (
+    { __typename?: 'CategoryConnection' }
+    & { edges: Array<(
+      { __typename?: 'CategoryEdge' }
+      & { node: (
+        { __typename?: 'Category' }
+        & Pick<Category, 'label'>
+        & { products: (
+          { __typename?: 'ProductConnection' }
+          & { edges: Array<(
+            { __typename?: 'ProductEdge' }
+            & { node: (
+              { __typename?: 'Product' }
+              & Pick<Product, 'label'>
+            ) }
+          )>, pageInfo: (
+            { __typename?: 'PageInfo' }
+            & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+          ) }
+        ) }
+      ) }
+    )>, pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
+    ) }
+  ) }
+);

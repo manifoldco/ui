@@ -1,0 +1,25 @@
+# used in `fetchAllPages.spec.ts`
+query AllCategories($first: Int!, $after: String!) {
+  categories(first: $first, after: $after) {
+    edges {
+      node {
+        label
+        products(first: 10) {
+          edges {
+            node {
+              label
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
