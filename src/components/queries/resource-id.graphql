@@ -1,0 +1,5 @@
+query ResourceId($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    id
+  }
+}

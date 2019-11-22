@@ -2319,3 +2319,16 @@ export type ProductCardQuery = (
     )> }
   )> }
 );
+
+export type ResourceIdQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceIdQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & Pick<Resource, 'id'>
+  )> }
+);
