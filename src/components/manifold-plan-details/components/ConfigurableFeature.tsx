@@ -1,10 +1,12 @@
 import { h, FunctionalComponent } from '@stencil/core';
 
-import { PlanConfigurableFeatureEdge, PlanFeatureType } from '../../../types/graphql';
+import { PlanFeatureType, PlanListQuery } from '../../../types/graphql';
 import { Option } from '../../../types/Select';
 
+type ConfigurableFeatureEdge = PlanListQuery['product']['plans']['edges'][0]['node']['meteredFeatures']['edges'][0];
+
 interface ConfigurableFeatureProps {
-  configurableFeature?: PlanConfigurableFeatureEdge;
+  configurableFeature?: ConfigurableFeatureEdge;
   onChange: (e: CustomEvent) => void;
   value?: string | number | boolean;
 }

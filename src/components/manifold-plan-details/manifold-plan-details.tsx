@@ -3,7 +3,7 @@ import { check } from '@manifoldco/icons';
 
 import { Option } from '../../types/Select';
 import { Gateway } from '../../types/gateway';
-import { Product, Plan, Region, RegionEdge } from '../../types/graphql';
+import { Region, PlanListQuery, GetResourceQuery } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { configurableFeatureDefaults } from '../../utils/plan';
@@ -21,6 +21,8 @@ interface EventDetail {
   freePlan: boolean;
 }
 
+export type Plan = PlanListQuery['product']['plans']['edges'][0]['node'];
+
 @Component({
   tag: 'manifold-plan-details',
   styleUrl: 'manifold-plan-details.css',
@@ -30,8 +32,10 @@ export class ManifoldPlanDetails {
   @Element() el: HTMLElement;
   @Prop() isExistingResource?: boolean = false;
   @Prop() scrollLocked?: boolean = false;
-  @Prop() plan?: Plan;
-  @Prop() product?: Product;
+  @Prop() plan?:
+    | PlanListQuery['product']['plans']['edges'][0]['node']
+    | GetResourceQuery['resource']['plan'];
+  @Prop() product?: PlanListQuery['product'];
   @Prop() region?: Region;
   @Prop() regions?: string[];
   @Prop() resourceRegion?: string;
@@ -133,7 +137,10 @@ export class ManifoldPlanDetails {
     }
   };
 
-  filterRegions(regions: RegionEdge[], allowedRegions: string[] | undefined = this.regions) {
+  filterRegions(
+    regions: Plan['regions']['edges'],
+    allowedRegions: string[] | undefined = this.regions
+  ) {
     if (Array.isArray(allowedRegions) && allowedRegions.length) {
       return regions
         .filter(({ node: { id } }) => allowedRegions.includes(id))
@@ -161,7 +168,11 @@ export class ManifoldPlanDetails {
     return displayValue;
   }
 
-  getDefaultRegion(plan: Plan, regionId?: string, allowedRegions?: string[]) {
+  getDefaultRegion(
+    plan: Plan | GetResourceQuery['resource']['plan'],
+    regionId?: string,
+    allowedRegions?: string[]
+  ) {
     if (!plan.regions) {
       return undefined;
     }
@@ -204,7 +215,7 @@ export class ManifoldPlanDetails {
     return options;
   }
 
-  resetFeatures(plan: Plan) {
+  resetFeatures(plan: Plan | GetResourceQuery['resource']['plan']) {
     if (plan.configurableFeatures) {
       this.features = configurableFeatureDefaults(plan.configurableFeatures.edges);
     } else {

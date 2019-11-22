@@ -6,14 +6,14 @@ import { planCost, configurableFeatureDefaults } from '../../utils/plan';
 import { RestFetch } from '../../utils/restFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Plan } from '../../types/graphql';
+import { PlanListQuery } from '../../types/graphql';
 
 @Component({ tag: 'manifold-plan-cost' })
 export class ManifoldPlanCost {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() restFetch?: RestFetch = connection.restFetch;
-  @Prop() plan?: Plan;
+  @Prop() plan?: PlanListQuery['product']['plans']['edges'][0]['node'];
   /** Compact mode (for plan selector sidebar) */
   @Prop() compact?: boolean = false;
   /** User-selected plan features (needed only for customizable) */

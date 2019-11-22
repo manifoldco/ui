@@ -9,10 +9,8 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   GetResourceQuery,
-  Plan,
   PlanEdge,
-  PlanMeteredFeatureEdge,
-  Product,
+  PlanListQuery,
   ProductCardQuery,
   ProductEdge,
   ProductQuery,
@@ -47,8 +45,8 @@ import {
 export namespace Components {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: PlanEdge[];
-    'product'?: Product;
+    'plans'?: PlanListQuery['product']['plans']['edges'];
+    'product'?: PlanListQuery['product'];
     'regions'?: string[];
     'selectedResource'?: Resource;
   }
@@ -102,7 +100,7 @@ export namespace Components {
     'baseCost'?: number;
     'compact'?: boolean;
     'configurable'?: boolean;
-    'meteredFeatures': PlanMeteredFeatureEdge[];
+    'meteredFeatures': MeteredFeatures;
   }
   interface ManifoldCredentials {
     /**
@@ -402,7 +400,7 @@ export namespace Components {
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    'plan'?: Plan;
+    'plan'?: PlanListQuery['product']['plans']['edges'][0]['node'];
     /**
     * _(hidden)_
     */
@@ -414,8 +412,8 @@ export namespace Components {
   }
   interface ManifoldPlanDetails {
     'isExistingResource'?: boolean;
-    'plan'?: Plan;
-    'product'?: Product;
+    'plan'?: PlanListQuery['product']['plans']['edges'][0]['node'];
+    'product'?: PlanListQuery['product'];
     'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;
@@ -1047,8 +1045,8 @@ declare global {
 declare namespace LocalJSX {
   interface ManifoldActivePlan {
     'isExistingResource'?: boolean;
-    'plans'?: PlanEdge[];
-    'product'?: Product;
+    'plans'?: PlanListQuery['product']['plans']['edges'];
+    'product'?: PlanListQuery['product'];
     'regions'?: string[];
     'selectedResource'?: Resource;
   }
@@ -1107,7 +1105,7 @@ declare namespace LocalJSX {
     'baseCost'?: number;
     'compact'?: boolean;
     'configurable'?: boolean;
-    'meteredFeatures'?: PlanMeteredFeatureEdge[];
+    'meteredFeatures'?: MeteredFeatures;
   }
   interface ManifoldCredentials {
     /**
@@ -1429,7 +1427,7 @@ declare namespace LocalJSX {
     * Compact mode (for plan selector sidebar)
     */
     'compact'?: boolean;
-    'plan'?: Plan;
+    'plan'?: PlanListQuery['product']['plans']['edges'][0]['node'];
     /**
     * _(hidden)_
     */
@@ -1443,8 +1441,8 @@ declare namespace LocalJSX {
     'isExistingResource'?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
-    'plan'?: Plan;
-    'product'?: Product;
+    'plan'?: PlanListQuery['product']['plans']['edges'][0]['node'];
+    'product'?: PlanListQuery['product'];
     'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;

@@ -1,7 +1,8 @@
 import { h, Component, State, Prop, Watch } from '@stencil/core';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Product, PlanEdge, Resource } from '../../types/graphql';
+import { Resource, PlanListQuery } from '../../types/graphql';
+
 @Component({
   tag: 'manifold-active-plan',
   styleUrl: 'manifold-active-plan.css',
@@ -9,12 +10,12 @@ import { Product, PlanEdge, Resource } from '../../types/graphql';
 })
 export class ManifoldActivePlan {
   @Prop() isExistingResource?: boolean;
-  @Prop() plans?: PlanEdge[];
-  @Prop() product?: Product;
+  @Prop() plans?: PlanListQuery['product']['plans']['edges'];
+  @Prop() product?: PlanListQuery['product'];
   @Prop() regions?: string[];
   @Prop() selectedResource?: Resource;
   @State() selectedPlanId: string;
-  @Watch('plans') plansChange(newPlans: PlanEdge[]) {
+  @Watch('plans') plansChange(newPlans: PlanListQuery['product']['plans']['edges']) {
     if (this.selectedResource && this.selectedResource.plan && this.selectedResource.plan.id) {
       this.selectPlan(this.selectedResource.plan.id);
     } else if (newPlans && newPlans.length > 0) {

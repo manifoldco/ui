@@ -3,8 +3,10 @@ import { h, Component, Element, Prop, FunctionalComponent } from '@stencil/core'
 import { $ } from '../../utils/currency';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { PlanMeteredFeatureEdge } from '../../types/graphql';
+import { PlanListQuery } from '../../types/graphql';
 import { meteredFeatureDisplayValue } from '../../utils/plan';
+
+type MeteredFeatures = PlanListQuery['product']['plans']['edges'][0]['node']['meteredFeatures']['edges'];
 
 /**
  * Base Cost
@@ -38,7 +40,7 @@ const BaseCost: FunctionalComponent<BaseCostProps> = props => {
  * Metered Cost
  */
 interface MeteredCostProps {
-  meteredFeatures: PlanMeteredFeatureEdge[];
+  meteredFeatures: MeteredFeatures;
 }
 const MeteredCost: FunctionalComponent<MeteredCostProps> = ({ meteredFeatures }) => {
   if (meteredFeatures.length === 0) {
@@ -62,7 +64,8 @@ export class ManifoldCostDisplay {
   @Element() el: HTMLElement;
   @Prop() baseCost?: number;
   @Prop() compact?: boolean = false;
-  @Prop() meteredFeatures: PlanMeteredFeatureEdge[] = [];
+  @Prop()
+  meteredFeatures: PlanListQuery['product']['plans']['edges'][0]['node']['meteredFeatures']['edges'] = [];
   @Prop() configurable?: boolean = false;
 
   get isFreeMonthly() {

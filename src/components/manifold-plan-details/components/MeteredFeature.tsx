@@ -1,9 +1,11 @@
 import { h, FunctionalComponent } from '@stencil/core';
 
-import { PlanMeteredFeatureEdge, PlanMeteredFeatureNumericDetails } from '../../../types/graphql';
+import { PlanMeteredFeatureNumericDetails, PlanListQuery } from '../../../types/graphql';
 import { $ } from '../../../utils/currency';
 import { pluralize } from '../../../utils/string';
 import { featureCost, meteredFeatureDisplayValue, pricingTiers } from '../../../utils/plan';
+
+type MeteredFeatureEdge = PlanListQuery['product']['plans']['edges'][0]['node']['meteredFeatures']['edges'][0];
 
 function meteredFeatureCost(numericDetails: PlanMeteredFeatureNumericDetails) {
   const tiers = pricingTiers(numericDetails);
@@ -36,7 +38,7 @@ function meteredFeatureCost(numericDetails: PlanMeteredFeatureNumericDetails) {
   return [displayValue.cost, displayValue.per ? <small>&nbsp;{displayValue.per}</small> : ''];
 }
 
-const MeteredFeature: FunctionalComponent<{ meteredFeature?: PlanMeteredFeatureEdge }> = ({
+const MeteredFeature: FunctionalComponent<{ meteredFeature?: MeteredFeatureEdge }> = ({
   meteredFeature,
 }) => {
   if (!meteredFeature) {

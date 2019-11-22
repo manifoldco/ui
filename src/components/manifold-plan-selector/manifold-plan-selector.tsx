@@ -4,7 +4,7 @@ import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { Product, Resource, PlanEdge } from '../../types/graphql';
+import { Resource, PlanListQuery } from '../../types/graphql';
 
 import plansQuery from './plan-list.graphql';
 import resourceQuery from './resource.graphql';
@@ -23,8 +23,8 @@ export class ManifoldPlanSelector {
   /** Is this tied to an existing resource? */
   @Prop() resourceLabel?: string;
   @Prop() hideUntilReady?: boolean = false;
-  @State() product?: Product;
-  @State() plans?: PlanEdge[];
+  @State() product?: PlanListQuery['product'];
+  @State() plans?: PlanListQuery['product']['plans']['edges'];
   @State() resource?: Resource;
   @State() parsedRegions: string[];
   @Watch('productLabel') productChange(newProduct: string) {
@@ -58,7 +58,7 @@ export class ManifoldPlanSelector {
 
     this.product = undefined;
 
-    const { data } = await this.graphqlFetch({
+    const { data } = await this.graphqlFetch<PlanListQuery>({
       query: plansQuery,
       variables: {
         productLabel,
@@ -104,12 +104,12 @@ export class ManifoldPlanSelector {
     }
   }
 
-  filterFreeOnly(plans: PlanEdge[]) {
+  filterFreeOnly(plans: PlanListQuery['product']['plans']['edges']) {
     return plans.filter(({ node: { free } }) => free);
   }
 
   // TODO: remove this once configurable plans are supported
-  filterOutConfigurable(plans: PlanEdge[]) {
+  filterOutConfigurable(plans: PlanListQuery['product']['plans']['edges']) {
     return plans.filter(
       ({ node: { configurableFeatures } }) =>
         !configurableFeatures || configurableFeatures.edges.length === 0
