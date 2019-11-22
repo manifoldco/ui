@@ -1,31 +1,12 @@
 import { h } from '@stencil/core';
 import { report } from './errorReport';
 import connection from '../state/connection';
+import analytics, { measure } from '../packages/analytics';
 
 interface StencilComponent {
   constructor: {
     name: string;
   };
-}
-
-interface RenderResult {
-  $children$: [RenderResult];
-  $tag$: string;
-}
-
-export function hasSkeletonElements(rendered: RenderResult): boolean {
-  if (
-    rendered &&
-    rendered.$tag$ &&
-    rendered.$tag$.startsWith &&
-    rendered.$tag$.startsWith('manifold-skeleton-')
-  ) {
-    return true;
-  }
-  if (rendered && rendered.$children$) {
-    return rendered.$children$.map(c => hasSkeletonElements(c)).includes(true);
-  }
-  return false;
 }
 
 /* eslint-disable no-param-reassign */
@@ -41,22 +22,69 @@ export default function logger<T>() {
     descriptor.value = function render() {
       try {
         const rendered = originalMethod.apply(this); // attempt to call render()
-        if (
-          this.performanceLoadMark &&
-          !this.performanceRenderedMark &&
-          target.constructor.name.startsWith('Manifold') &&
-          !hasSkeletonElements(rendered)
-        ) {
-          this.performanceRenderedMark = performance.now();
-          const evt = new CustomEvent('manifold-time-to-render', {
-            bubbles: true,
-            detail: {
-              component: target.constructor.name,
-              duration: this.performanceRenderedMark - this.performanceLoadMark,
-            },
-          });
-          document.dispatchEvent(evt);
+        if (this.el && this.el.tagName.startsWith('MANIFOLD-')) {
+          const el = this.el as HTMLElement;
+
+          const loadMeasure = measure(el, 'load');
+          const firstRenderMeasure = measure(el, 'first_render');
+          if (performance.getEntriesByName(`${el.tagName}-rtt_graphql-end`).length) {
+            // This element has loaded data via graphql, we can report first_render_with_data
+            const rttGraphqlMeasure = measure(el, 'rtt_graphql');
+            const firstRenderWithDataMeasure = measure(el, 'first_render_with_data');
+            if (
+              firstRenderWithDataMeasure &&
+              firstRenderWithDataMeasure.firstReport &&
+              rttGraphqlMeasure &&
+              loadMeasure
+            ) {
+              analytics(
+                {
+                  name: 'first_render_with_data',
+                  type: 'metric',
+                  properties: {
+                    componentName: el.tagName,
+                    uiVersion: '<@NPM_PACKAGE_VERSION@>',
+                    duration: firstRenderWithDataMeasure.duration,
+                    rttGraphql: rttGraphqlMeasure.duration,
+                    load: loadMeasure.duration,
+                  },
+                },
+                { env: connection.env }
+              );
+            }
+          }
+
+          if (loadMeasure && loadMeasure.firstReport) {
+            analytics(
+              {
+                name: 'load',
+                type: 'metric',
+                properties: {
+                  componentName: el.tagName,
+                  uiVersion: '<@NPM_PACKAGE_VERSION@>',
+                  duration: loadMeasure.duration,
+                },
+              },
+              { env: connection.env }
+            );
+          }
+
+          if (firstRenderMeasure && firstRenderMeasure.firstReport) {
+            analytics(
+              {
+                name: 'first_render',
+                type: 'metric',
+                properties: {
+                  componentName: el.tagName,
+                  uiVersion: '<@NPM_PACKAGE_VERSION@>',
+                  duration: firstRenderMeasure.duration,
+                },
+              },
+              { env: connection.env }
+            );
+          }
         }
+
         return rendered;
       } catch (e) {
         report(

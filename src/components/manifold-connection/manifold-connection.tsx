@@ -13,7 +13,11 @@ export class ManifoldConnection {
 
   @loadMark()
   componentWillLoad() {
-    connection.initialize({ env: this.env, metrics: this.metrics, waitTime: this.waitTime });
+    connection.initialize({
+      env: this.env,
+      metrics: this.metrics,
+      waitTime: this.waitTime,
+    });
   }
 
   @logger()

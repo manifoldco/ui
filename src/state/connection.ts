@@ -9,11 +9,21 @@ export type Subscriber = (newToken?: string) => void;
 
 const INITIALIZED = 'manifold-connection-initialize';
 
+interface NodeMapEntry {
+  el: HTMLElement;
+  loadMark: number;
+}
+
+export interface NodeMap {
+  [tagName: string]: NodeMapEntry[];
+}
+
 interface Initialization {
   authToken?: string;
   env?: 'local' | 'stage' | 'prod';
   metrics?: boolean;
   waitTime?: number | string;
+  connectionEl?: HTMLElement;
 }
 
 export class ConnectionState {
@@ -21,6 +31,7 @@ export class ConnectionState {
   env: 'local' | 'stage' | 'prod' = 'prod';
   metrics: boolean = METRICS_ENABLED;
   waitTime: number = baseWait;
+  nodeMap: NodeMap = {};
 
   private subscribers: Subscriber[] = [];
 
@@ -34,6 +45,7 @@ export class ConnectionState {
     this.env = env;
     this.metrics = metrics;
     this.waitTime = typeof waitTime === 'number' ? waitTime : parseInt(waitTime, 10);
+    this.nodeMap = {};
     this.initialized = true;
     const event = new CustomEvent(INITIALIZED);
     document.dispatchEvent(event);

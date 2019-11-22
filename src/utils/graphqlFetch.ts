@@ -1,7 +1,7 @@
 import { Query } from '../types/graphql';
 import { report } from './errorReport';
 import { METRICS_ENABLED } from '../global/settings';
-import analytics from '../packages/analytics';
+import analytics, { mark, measure } from '../packages/analytics';
 import { waitForAuthToken } from './auth';
 import awaitPageVisibility from './awaitPageVisibility';
 
@@ -78,6 +78,7 @@ export function createGraphqlFetch({
       token && token !== 'undefined' ? { authorization: `Bearer ${token}` } : {};
 
     const rttStart = performance.now(); // start RTT timer
+    mark(element, 'rtt_graphql'); // Not using this for reporting, only to help track first_render_with_data
     const response = await fetch(endpoint(), {
       method: 'POST',
       headers: {
@@ -94,6 +95,7 @@ export function createGraphqlFetch({
       return Promise.reject(e);
     });
     const rttEnd = performance.now(); // end RTT timer
+    measure(element, 'rtt_graphql'); // Not using this for reporting, only to help track first_render_with_data
 
     const body: GraphqlResponseBody<T> = await response.json();
 
