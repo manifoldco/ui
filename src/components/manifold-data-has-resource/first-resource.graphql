@@ -1,0 +1,9 @@
+query FirstResource {
+  resources(first: 1) {
+    edges {
+      node {
+        label
+      }
+    }
+  }
+}

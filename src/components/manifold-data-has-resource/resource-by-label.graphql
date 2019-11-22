@@ -1,0 +1,5 @@
+query ResourceByLabel($resourceLabel: String!) {
+  resource(label: $resourceLabel) {
+    label
+  }
+}

@@ -21,6 +21,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Refactor GraphQL query for `manifold-service-card`. (#752)
 - Refactor GraphQL query for `manifold-product`. (#753)
 - Refactor GraphQL query for `manifold-resource-card`. (#755)
+- Refactor GraphQL query for `manifold-data-has-resource`. (#757)
 - Refactor GraphQL for `manifold-data-provision-button`. (#756)
 - Refactor GraphQL for `manifold-data-deprovision-button`. (#756)
 - Refactor GraphQL for `manifold-data-resize-button`. (#756)

@@ -1,30 +1,18 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
-const allResources = gql`
-  query LIST_RESOURCES {
-    resources(first: 1) {
-      edges {
-        node {
-          label
-        }
-      }
-    }
-  }
-`;
-
-const singleResource = gql`
-  query GET_RESOURCE($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      label
-    }
-  }
-`;
+import firstResourceQuery from './first-resource.graphql';
+import resourceByLabelQuery from './resource-by-label.graphql';
+import {
+  ResourceByLabelQuery,
+  FirstResourceQuery,
+  ResourceByLabelQueryVariables,
+  FirstResourceQueryVariables,
+} from '../../types/graphql';
 
 interface EventDetail {
   hasAnyResources: boolean;
@@ -74,9 +62,12 @@ export class ManifoldDataHasResource {
       return;
     }
 
-    const { data } = await this.graphqlFetch({
-      query: label ? singleResource : allResources,
-      variables: { resourceLabel: label },
+    const variables: ResourceByLabelQueryVariables | FirstResourceQueryVariables = {
+      resourceLabel: label,
+    };
+    const { data } = await this.graphqlFetch<ResourceByLabelQuery & FirstResourceQuery>({
+      query: label ? resourceByLabelQuery : firstResourceQuery,
+      variables,
       element: this.el,
     });
 

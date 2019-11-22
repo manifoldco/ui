@@ -1592,6 +1592,36 @@ export type DeleteResourceMutation = (
   ) }
 );
 
+export type FirstResourceQueryVariables = {};
+
+
+export type FirstResourceQuery = (
+  { __typename?: 'Query' }
+  & { resources: Maybe<(
+    { __typename?: 'ResourceConnection' }
+    & { edges: Array<(
+      { __typename?: 'ResourceEdge' }
+      & { node: Maybe<(
+        { __typename?: 'Resource' }
+        & Pick<Resource, 'label'>
+      )> }
+    )> }
+  )> }
+);
+
+export type ResourceByLabelQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceByLabelQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & Pick<Resource, 'label'>
+  )> }
+);
+
 export type ProductLogoQueryVariables = {
   productLabel: Scalars['String']
 };
