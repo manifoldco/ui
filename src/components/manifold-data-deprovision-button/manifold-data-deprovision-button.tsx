@@ -1,12 +1,18 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+
+import {
+  DeleteResourceMutation,
+  ResourceIdQuery,
+  ResourceIdQueryVariables,
+} from '../../types/graphql';
+
+import resourceIdQuery from '../queries/resource-id.graphql';
 import deleteMutation from './delete.graphql';
-import { DeleteResourceMutation } from '../../types/graphql';
 
 interface SuccessMessage {
   message: string;
@@ -19,14 +25,6 @@ interface ErrorMessage {
   resourceLabel: string;
   resourceId?: string;
 }
-
-const resourceIdQuery = gql`
-  query RESOURCE_ID($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      id
-    }
-  }
-`;
 
 @Component({ tag: 'manifold-data-deprovision-button' })
 export class ManifoldDataDeprovisionButton {
@@ -106,11 +104,10 @@ export class ManifoldDataDeprovisionButton {
       return;
     }
 
-    const { data } = await this.graphqlFetch({
+    const variables: ResourceIdQueryVariables = { resourceLabel };
+    const { data } = await this.graphqlFetch<ResourceIdQuery>({
       query: resourceIdQuery,
-      variables: {
-        resourceLabel,
-      },
+      variables,
       element: this.el,
     });
 

@@ -1,0 +1,9 @@
+mutation RenameResource($resourceId: ID!, $newLabel: String!) {
+  updateResource(
+    input: { resourceId: $resourceId, newLabel: $newLabel, newDisplayName: $newLabel }
+  ) {
+    data {
+      label
+    }
+  }
+}

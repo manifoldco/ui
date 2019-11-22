@@ -1,13 +1,22 @@
 import { h, Component, Prop, Element, State, Watch, Event, EventEmitter } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+
+import {
+  CreateResourceMutation,
+  PlanRegionsQuery,
+  PlanRegionsQueryVariables,
+  ProductIdQuery,
+  ProductIdQueryVariables,
+} from '../../types/graphql';
+
 import createResource from './create.graphql';
 import createResourceWithOwner from './create-with-owner.graphql';
-import { CreateResourceMutation } from '../../types/graphql';
+import planRegionsQuery from './plan-regions.graphql';
+import productIdQuery from './product-id.graphql';
 
 interface ClickMessage {
   planId: string;
@@ -36,29 +45,6 @@ interface ErrorMessage {
   productLabel: string;
   resourceLabel: string;
 }
-
-// we only care if there are 2 or more regions
-const planRegionsQuery = gql`
-  query PLAN_REGIONS($planId: ID!) {
-    plan(id: $planId) {
-      regions(first: 2) {
-        edges {
-          node {
-            id
-          }
-        }
-      }
-    }
-  }
-`;
-
-const productIdQuery = gql`
-  query GET_PRODUCT_ID($productLabel: String!) {
-    product(label: $productLabel) {
-      id
-    }
-  }
-`;
 
 @Component({ tag: 'manifold-data-provision-button' })
 export class ManifoldDataProvisionButton {
@@ -178,12 +164,10 @@ export class ManifoldDataProvisionButton {
     if (!productLabel || !this.graphqlFetch) {
       return;
     }
-
-    const { data } = await this.graphqlFetch({
+    const variables: ProductIdQueryVariables = { productLabel };
+    const { data } = await this.graphqlFetch<ProductIdQuery>({
       query: productIdQuery,
-      variables: {
-        productLabel,
-      },
+      variables,
       element: this.el,
     });
 
@@ -196,12 +180,10 @@ export class ManifoldDataProvisionButton {
     if (!this.graphqlFetch) {
       return;
     }
-
-    const { data } = await this.graphqlFetch({
+    const variables: PlanRegionsQueryVariables = { planId };
+    const { data } = await this.graphqlFetch<PlanRegionsQuery>({
       query: planRegionsQuery,
-      variables: {
-        planId,
-      },
+      variables,
       element: this.el,
     });
 

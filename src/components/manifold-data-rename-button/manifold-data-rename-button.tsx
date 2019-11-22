@@ -1,10 +1,18 @@
 import { h, Component, Prop, Element, Watch, Event, EventEmitter } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+
+import resourceIdQuery from '../queries/resource-id.graphql';
+import renameResourceMutation from './rename-resource.graphql';
+import {
+  ResourceIdQuery,
+  ResourceIdQueryVariables,
+  RenameResourceMutation,
+  RenameResourceMutationVariables,
+} from '../../types/graphql';
 
 interface ClickMessage {
   newLabel?: string;
@@ -32,26 +40,6 @@ interface ErrorMessage {
   resourceLabel: string;
   resourceId?: string;
 }
-
-const queryResourceId = gql`
-  query GET_RESOURCE_ID($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      id
-    }
-  }
-`;
-
-const queryResourceRename = gql`
-  mutation RENAME_RESOURCE($resourceId: ID!, $newLabel: String!) {
-    updateResource(
-      input: { resourceId: $resourceId, newLabel: $newLabel, newDisplayName: $newLabel }
-    ) {
-      data {
-        label
-      }
-    }
-  }
-`;
 
 @Component({ tag: 'manifold-data-rename-button' })
 export class ManifoldDataRenameButton {
@@ -121,12 +109,13 @@ export class ManifoldDataRenameButton {
     this.click.emit(clickMessage);
 
     // attempt rename
-    const { data, errors } = await this.graphqlFetch({
-      query: queryResourceRename,
-      variables: {
-        resourceId: this.resourceId,
-        newLabel,
-      },
+    const variables: RenameResourceMutationVariables = {
+      resourceId: this.resourceId,
+      newLabel,
+    };
+    const { data, errors } = await this.graphqlFetch<RenameResourceMutation>({
+      query: renameResourceMutation,
+      variables,
       element: this.el,
     });
 
@@ -135,15 +124,15 @@ export class ManifoldDataRenameButton {
       this.reportErrors(errors);
     }
 
-    if (data && data.resource) {
-      this.newLabel = data.resource.label;
-      resourceDetails.newLabel = newLabel;
+    if (data && data.updateResource) {
+      this.newLabel = data.updateResource.data.label;
+      resourceDetails.newLabel = this.newLabel;
     }
 
     // success event
     const successMessage: SuccessMessage = {
       ...resourceDetails,
-      message: `${this.resourceLabel} renamed to ${newLabel}`,
+      message: `${this.resourceLabel} renamed to ${this.newLabel}`,
     };
 
     this.success.emit(successMessage);
@@ -154,9 +143,10 @@ export class ManifoldDataRenameButton {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch({
-      query: queryResourceId,
-      variables: { resourceLabel },
+    const variables: ResourceIdQueryVariables = { resourceLabel };
+    const { data, errors } = await this.graphqlFetch<ResourceIdQuery>({
+      query: resourceIdQuery,
+      variables,
       element: this.el,
     });
 

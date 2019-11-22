@@ -1,12 +1,17 @@
 import { h, Component, Prop, Element, Event, EventEmitter, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
+
 import updatePlan from './updatePlan.graphql';
-import { ResourceChangePlanMutation } from '../../types/graphql';
+import resourceIdQuery from '../queries/resource-id.graphql';
+import {
+  ResourceChangePlanMutation,
+  ResourceIdQuery,
+  ResourceIdQueryVariables,
+} from '../../types/graphql';
 
 interface ClickMessage {
   planId?: string;
@@ -27,14 +32,6 @@ interface ErrorMessage {
   resourceLabel?: string;
   planId?: string;
 }
-
-const resourceIdQuery = gql`
-  query RESOURCE_ID($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      id
-    }
-  }
-`;
 
 @Component({ tag: 'manifold-data-resize-button' })
 export class ManifoldDataResizeButton {
@@ -63,11 +60,10 @@ export class ManifoldDataResizeButton {
       return;
     }
 
-    const { data } = await this.graphqlFetch({
+    const variables: ResourceIdQueryVariables = { resourceLabel };
+    const { data } = await this.graphqlFetch<ResourceIdQuery>({
       query: resourceIdQuery,
-      variables: {
-        resourceLabel,
-      },
+      variables,
       element: this.el,
     });
 

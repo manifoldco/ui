@@ -14,12 +14,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Screenshots now display full images (uncropped). (#751)
+- `manifold-data-rename-button` success message now contains the returned updated label value as opposed to the submitted label value. (#756)
 
 ### Changed
 
 - Refactor GraphQL query for `manifold-service-card`. (#752)
 - Refactor GraphQL query for `manifold-product`. (#753)
 - Refactor GraphQL query for `manifold-resource-card`. (#755)
+- Refactor GraphQL for `manifold-data-provision-button`. (#756)
+- Refactor GraphQL for `manifold-data-deprovision-button`. (#756)
+- Refactor GraphQL for `manifold-data-resize-button`. (#756)
+- Refactor GraphQL for `manifold-data-rename-button`. (#756)
 
 ## [0.7.2] - 2019-11-19
 
