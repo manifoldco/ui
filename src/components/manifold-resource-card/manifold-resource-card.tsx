@@ -1,30 +1,13 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
-import { gql } from '@manifoldco/gql-zero';
 
 import connection from '../../state/connection';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
-import { Resource } from '../../types/graphql';
+import { ResourceCardQuery, ResourceCardQueryVariables } from '../../types/graphql';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { Error } from '../Error';
 
-const query = gql`
-  query RESOURCE($resourceLabel: String!) {
-    resource(label: $resourceLabel) {
-      id
-      label
-      plan {
-        product {
-          displayName
-          logoUrl
-        }
-      }
-      status {
-        label
-      }
-    }
-  }
-`;
+import resourceCardQuery from './resource-card.graphql';
 
 @Component({ tag: 'manifold-resource-card' })
 export class ManifoldResourceCard {
@@ -34,7 +17,7 @@ export class ManifoldResourceCard {
   @Prop() label?: string;
   @Prop() resourceLinkFormat?: string;
   @Prop() preserveEvent?: boolean = false;
-  @State() resource?: Resource;
+  @State() resource?: ResourceCardQuery['resource'];
   @State() errors?: GraphqlError[];
 
   @Watch('label') resourceLabelChange(newLabel: string) {
@@ -50,10 +33,10 @@ export class ManifoldResourceCard {
     if (!this.graphqlFetch || !resourceLabel) {
       return;
     }
-
-    const { data, errors } = await this.graphqlFetch({
-      query,
-      variables: { resourceLabel },
+    const variables: ResourceCardQueryVariables = { resourceLabel };
+    const { data, errors } = await this.graphqlFetch<ResourceCardQuery>({
+      query: resourceCardQuery,
+      variables,
       element: this.el,
     });
 
