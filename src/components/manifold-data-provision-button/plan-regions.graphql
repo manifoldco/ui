@@ -1,0 +1,12 @@
+query PlanRegions($planId: ID!) {
+  plan(id: $planId) {
+    # we only care if there are 2 or more regions
+    regions(first: 2) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+}
