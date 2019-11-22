@@ -1,35 +1,9 @@
-import { gql } from '@manifoldco/gql-zero';
 import fetchMock from 'fetch-mock';
 import { Query } from '../types/graphql';
 import fetchAllPages, { MissingPageInfo } from './fetchAllPages';
 import { createGraphqlFetch } from './graphqlFetch';
 
-const query = gql`
-  query CATEGORIES($first: Int!, $after: String!) {
-    categories(first: $first, after: $after) {
-      edges {
-        node {
-          label
-          products(first: 10) {
-            edges {
-              node {
-                label
-              }
-            }
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-          }
-        }
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`;
+import allCategoriesQuery from './all-categories.graphql';
 
 const firstPage = {
   categories: {
@@ -248,7 +222,7 @@ describe('Fetching all pages of a GraphQL connection', () => {
       expect.assertions(1);
 
       return fetchAllPages({
-        query,
+        query: allCategoriesQuery,
         nextPage: { first: 3, after: '' },
         getConnection: (q: Query) => q.categories,
         graphqlFetch: createGraphqlFetch({}),
@@ -275,7 +249,7 @@ describe('Fetching all pages of a GraphQL connection', () => {
       );
 
     const entries = await fetchAllPages({
-      query,
+      query: allCategoriesQuery,
       nextPage: { first: 3, after: '' },
       getConnection: (q: Query) => q.categories,
       graphqlFetch: createGraphqlFetch({}),
