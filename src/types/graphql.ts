@@ -1706,6 +1706,58 @@ export type CreateResourceMutation = (
   ) }
 );
 
+export type PlanRegionsQueryVariables = {
+  planId: Scalars['ID']
+};
+
+
+export type PlanRegionsQuery = (
+  { __typename?: 'Query' }
+  & { plan: Maybe<(
+    { __typename?: 'Plan' }
+    & { regions: Maybe<(
+      { __typename?: 'RegionConnection' }
+      & { edges: Array<(
+        { __typename?: 'RegionEdge' }
+        & { node: (
+          { __typename?: 'Region' }
+          & Pick<Region, 'id'>
+        ) }
+      )> }
+    )> }
+  )> }
+);
+
+export type ProductIdQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type ProductIdQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id'>
+  )> }
+);
+
+export type RenameResourceMutationVariables = {
+  resourceId: Scalars['ID'],
+  newLabel: Scalars['String']
+};
+
+
+export type RenameResourceMutation = (
+  { __typename?: 'Mutation' }
+  & { updateResource: (
+    { __typename?: 'UpdateResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'label'>
+    ) }
+  ) }
+);
+
 export type ResourceChangePlanMutationVariables = {
   resourceId: Scalars['ID'],
   planId: Scalars['ID']
@@ -2312,5 +2364,18 @@ export type ProductCardQuery = (
         ) }
       )> }
     )> }
+  )> }
+);
+
+export type ResourceIdQueryVariables = {
+  resourceLabel: Scalars['String']
+};
+
+
+export type ResourceIdQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & Pick<Resource, 'id'>
   )> }
 );
