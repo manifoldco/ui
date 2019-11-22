@@ -1711,6 +1711,23 @@ export type ProductIdQuery = (
   )> }
 );
 
+export type RenameResourceMutationVariables = {
+  resourceId: Scalars['ID'],
+  newLabel: Scalars['String']
+};
+
+
+export type RenameResourceMutation = (
+  { __typename?: 'Mutation' }
+  & { updateResource: (
+    { __typename?: 'UpdateResourcePayload' }
+    & { data: (
+      { __typename?: 'Resource' }
+      & Pick<Resource, 'label'>
+    ) }
+  ) }
+);
+
 export type ResourceChangePlanMutationVariables = {
   resourceId: Scalars['ID'],
   planId: Scalars['ID']
