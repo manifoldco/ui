@@ -21,7 +21,7 @@ isn’t required). Components which never need auth are:
 - [Product Logo](/data/product-logo/)
 - [Product Name](/data/product-name/)
 - [Product](/components/product/)
-- [Service Card](/components/manifold-service-card/)
+- [Product Card](/components/manifold-product-card/)
 - [Toast](/components/toast/)
 
 Everything else, though, requires auth. This guide covers setting up authentication for your app.
@@ -70,7 +70,7 @@ it was called from with the first part of the [OAuth2][oauth2] flow:
 This is the response you’ll **receive**:
 
 | Param           | Description                                                     |
-| :-------------- | :-------------------------------------------------------------- |
+|-----------------|-----------------------------------------------------------------|
 | `state`         | A temporary user token for this session                         |
 | `client_id`     | A code identifying that the request comes from Manifold         |
 | `redirect_uri`  | The redirect URL on Manifold’s side that receives your response |
@@ -84,7 +84,7 @@ This is what you should **send** back to the `redirect_uri`:
 ```
 
 | Param   | Description                                                                                                           |
-| :------ | :-------------------------------------------------------------------------------------------------------------------- |
+|---------|-----------------------------------------------------------------------------------------------------------------------|
 | `code`  | A temporary user session token on your end. Subsequent Manifold requests will send this `code` back to your endpoints |
 | `state` | The same `state` sent to you in the previous step                                                                     |
 
@@ -152,7 +152,7 @@ document.addEventListener('manifold-token-receive', ({ detail }) => {
 ```
 
 | Event Name               | Description                              | Data                                   |
-| :----------------------- | :--------------------------------------- | :------------------------------------- |
+|--------------------------|------------------------------------------|----------------------------------------|
 | `manifold-token-receive` | Emitted whenever a new token is received | `token`, `expiry`, `error`, `duration` |
 
 ## Troubleshooting

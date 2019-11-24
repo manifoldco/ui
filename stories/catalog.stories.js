@@ -53,11 +53,11 @@ storiesOf('Catalog', module)
     const planID = select('product-label', labels, labels[Object.keys(labels)[0]]);
     return `<manifold-plan plan-id="${planID}"></manifold-plan>`;
   })
-  .add('service card', () => {
+  .add('product card', () => {
     const env = localStorage.getItem('manifold_auth_env');
     const labels = getProductLabels(env);
     const productLabel = select('product-label', labels, labels[0]);
-    return `<manifold-service-card product-label="${productLabel}"></manifold-service-card>`;
+    return `<manifold-product-card product-label="${productLabel}"></manifold-product-card>`;
   })
   .add('name', () => {
     const env = localStorage.getItem('manifold_auth_env');

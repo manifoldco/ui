@@ -8,13 +8,13 @@ import { newE2EPage } from '@stencil/core/testing';
  * - free badge: Happo
  * - featured badge: Happo
  * - link formatting: manifold-marketplace-grid.e2e.tsx
- * - click events: manifold-service-card-view.spec.ts
+ * - click events: manifold-product-card-view.spec.ts
  */
 
-describe('<manifold-service-card-view>', () => {
+describe('<manifold-product-card-view>', () => {
   it('passes through CTA slots', async () => {
     const page = await newE2EPage({
-      html: `<manifold-service-card-view><button slot="cta" data-testid="my-button">My Button</button></manifold-service-card-view>`,
+      html: `<manifold-product-card-view><button slot="cta" data-testid="my-button">My Button</button></manifold-product-card-view>`,
     });
     await page.waitForChanges();
     const button = await page.find('[data-testid="my-button"]');

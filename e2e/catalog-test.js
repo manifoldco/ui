@@ -11,7 +11,7 @@ test('filtering', async t => {
   const title = Selector(() =>
     document
       .querySelector('manifold-marketplace-grid')
-      .shadowRoot.querySelector('manifold-service-card-view')
+      .shadowRoot.querySelector('manifold-product-card-view')
       .shadowRoot.querySelector('h3.name')
   );
 

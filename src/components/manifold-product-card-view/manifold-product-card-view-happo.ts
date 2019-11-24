@@ -1,7 +1,7 @@
 import product from '../../spec/mock/jawsdb/product';
 
 export const skeleton = async () => {
-  const card = document.createElement('manifold-service-card-view');
+  const card = document.createElement('manifold-product-card-view');
   card.description = product.tagline;
   card.logo = product.logoUrl;
   card.productId = product.id;
@@ -15,7 +15,7 @@ export const skeleton = async () => {
 };
 
 export const jawsDB = async () => {
-  const card = document.createElement('manifold-service-card-view');
+  const card = document.createElement('manifold-product-card-view');
   card.description = product.tagline;
   card.logo = product.logoUrl;
   card.productId = product.id;
@@ -28,7 +28,7 @@ export const jawsDB = async () => {
 };
 
 export const free = async () => {
-  const card = document.createElement('manifold-service-card-view');
+  const card = document.createElement('manifold-product-card-view');
   card.description = product.tagline;
   card.logo = product.logoUrl;
   card.productId = product.id;
@@ -42,7 +42,7 @@ export const free = async () => {
 };
 
 export const featured = async () => {
-  const card = document.createElement('manifold-service-card-view');
+  const card = document.createElement('manifold-product-card-view');
   card.description = product.tagline;
   card.logo = product.logoUrl;
   card.productId = product.id;
@@ -56,7 +56,7 @@ export const featured = async () => {
 };
 
 export const cta = async () => {
-  const card = document.createElement('manifold-service-card-view');
+  const card = document.createElement('manifold-product-card-view');
   card.description = product.tagline;
   card.logo = product.logoUrl;
   card.productId = product.id;
@@ -70,7 +70,7 @@ export const cta = async () => {
 };
 
 export const skeletonWithCTA = async () => {
-  const card = document.createElement('manifold-service-card-view');
+  const card = document.createElement('manifold-product-card-view');
   card.description = product.tagline;
   card.logo = product.logoUrl;
   card.productId = product.id;

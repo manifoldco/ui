@@ -18,7 +18,7 @@ export class ManifoldResourceProduct {
     if (this.loading || !this.gqlData) {
       return (
         // ☠
-        <manifold-service-card-view
+        <manifold-product-card-view
           skeleton={true}
           description="This is a loading product..."
           logo="loading.jpg"
@@ -27,14 +27,14 @@ export class ManifoldResourceProduct {
           <manifold-forward-slot slot="cta">
             <slot name="cta" />
           </manifold-forward-slot>
-        </manifold-service-card-view>
+        </manifold-product-card-view>
       );
     }
 
     const { product } = this.gqlData.plan;
 
     return (
-      <manifold-service-card-view
+      <manifold-product-card-view
         description={product.tagline}
         logo={product.logoUrl}
         name={product.displayName}
@@ -44,7 +44,7 @@ export class ManifoldResourceProduct {
         <manifold-forward-slot slot="cta">
           <slot name="cta" />
         </manifold-forward-slot>
-      </manifold-service-card-view>
+      </manifold-product-card-view>
     );
   }
 }

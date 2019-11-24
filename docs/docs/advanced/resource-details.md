@@ -68,13 +68,13 @@ All of the children of `<manifold-resource-container>` are special versions of e
 **These versions of components don’t require any attributes.** They do emit all events, and accept
 all children of their aliases:
 
-| Original component                                  | Resource context version          |       Events?       |
-| :-------------------------------------------------- | :-------------------------------- | :-----------------: |
+| Original component                                  | Resource context version          | Events?             |
+|-----------------------------------------------------|-----------------------------------|---------------------|
 | [`<manifold-credentials>`][credentials]             | `<manifold-resource-credentials>` |                     |
 | [`<manifold-data-deprovision-button>`][deprovision] | `<manifold-resource-deprovision>` | [Yes][deprovision]  |
-| [`<manifold-data-rename-button>`][rename]           | `<manifold-resource-rename>`      |    [Yes][rename]    |
-| [`<manifold-data-sso-button>`][sso]                 | `<manifold-resource-sso>`         |     [Yes][sso]      |
-| [`<manifold-service-card>`][service-card]           | `<manifold-resource-product>`     | [Yes][service-card] |
+| [`<manifold-data-rename-button>`][rename]           | `<manifold-resource-rename>`      | [Yes][rename]       |
+| [`<manifold-data-sso-button>`][sso]                 | `<manifold-resource-sso>`         | [Yes][sso]          |
+| [`<manifold-product-card>`][product-card]           | `<manifold-resource-product>`     | [Yes][product-card] |
 | [`<manifold-plan>`][plan]                           | `<manifold-resource-plan>`        |                     |
 | [`<manifold-resource-status>`][status]              | `<manifold-resource-status>`      |                     |
 
@@ -101,6 +101,6 @@ provisioning for example.
 [rename]: /data/rename-button
 [resource-plan]: /components/manifold-resource-plan
 [resource-product]: /components/manifold-resource-product
-[service-card]: /components/manifold-service-card
+[product-card]: /components/manifold-product-card
 [sso]: /data/sso-button
 [status]: /components/resource-status/

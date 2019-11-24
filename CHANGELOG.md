@@ -26,6 +26,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Refactor GraphQL for `manifold-data-deprovision-button`. (#756)
 - Refactor GraphQL for `manifold-data-resize-button`. (#756)
 - Refactor GraphQL for `manifold-data-rename-button`. (#756)
+- Deprecated `manifold-service-card` in favor of `manifold-product-card`.
 
 ## [0.7.2] - 2019-11-19
 
