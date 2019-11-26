@@ -12,7 +12,7 @@ export const skeleton = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productJawsDB.label;
 
   const mockGqlFetch = (async (...args) => {
@@ -30,7 +30,7 @@ export const blitline = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productBlitline.label;
   selector.hideUntilReady = true;
 
@@ -43,7 +43,7 @@ export const genericTagging = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productGenericTagging.label;
   selector.hideUntilReady = true;
 
@@ -56,7 +56,7 @@ export const jawsDB = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productJawsDB.label;
   selector.hideUntilReady = true;
 
@@ -69,7 +69,7 @@ export const logdna = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productLogdna.label;
   selector.hideUntilReady = true;
 
@@ -82,7 +82,7 @@ export const prefab = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productPrefab.label;
   selector.hideUntilReady = true;
 
@@ -95,7 +95,7 @@ export const mailgun = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productMailgun.label;
   selector.hideUntilReady = true;
 
@@ -108,7 +108,7 @@ export const ziggeo = async () => {
   const conn = document.createElement('manifold-connection');
   document.body.appendChild(conn);
 
-  const selector = document.createElement('manifold-service-card');
+  const selector = document.createElement('manifold-product-card');
   selector.productLabel = productZiggeo.label;
   selector.hideUntilReady = true;
 

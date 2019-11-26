@@ -9,11 +9,11 @@ interface EventDetail {
 }
 
 @Component({
-  tag: 'manifold-service-card-view',
-  styleUrl: 'manifold-service-card-view.css',
+  tag: 'manifold-product-card-view',
+  styleUrl: 'manifold-product-card-view.css',
   shadow: true,
 })
-export class ManifoldServiceCardView {
+export class ManifoldProductCardView {
   @Element() el?: HTMLElement;
   @Prop() description?: string;
   @Prop() isFree?: boolean = false;

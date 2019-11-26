@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import { ManifoldServiceCard } from './manifold-service-card';
-import { ManifoldServiceCardView } from '../manifold-service-card-view/manifold-service-card-view';
+import { ManifoldProductCard } from './manifold-product-card';
+import { ManifoldProductCardView } from '../manifold-product-card-view/manifold-product-card-view';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 import product from '../../spec/mock/logdna/product';
 
@@ -16,11 +16,11 @@ interface Props {
 
 async function setup(props: Props) {
   const page = await newSpecPage({
-    components: [ManifoldServiceCard, ManifoldServiceCardView],
+    components: [ManifoldProductCard, ManifoldProductCardView],
     html: '<div></div>',
   });
 
-  const component = page.doc.createElement('manifold-service-card');
+  const component = page.doc.createElement('manifold-product-card');
   component.graphqlFetch = createGraphqlFetch({
     endpoint: () => graphqlEndpoint,
   });
@@ -35,7 +35,7 @@ async function setup(props: Props) {
   return { page, component };
 }
 
-describe('<manifold-service-card>', () => {
+describe('<manifold-product-card>', () => {
   beforeEach(async () => fetchMock.mock(graphqlEndpoint, { data: { product } }));
   afterEach(fetchMock.restore);
 
@@ -51,7 +51,7 @@ describe('<manifold-service-card>', () => {
         productLinkFormat: '/product/:product',
       });
 
-      const view = page.root && page.root.querySelector('manifold-service-card-view');
+      const view = page.root && page.root.querySelector('manifold-product-card-view');
       const link = view && view.shadowRoot && view.shadowRoot.querySelector('a');
       const href = link && link.getAttribute('href');
       expect(href).toBe(`/product/${product.label}`);
@@ -63,7 +63,7 @@ describe('<manifold-service-card>', () => {
         productLinkFormat: '/product/:product',
         preserveEvent: true,
       });
-      const view = page.root && page.root.querySelector('manifold-service-card-view');
+      const view = page.root && page.root.querySelector('manifold-product-card-view');
       expect(view && view.preserveEvent).toBe(true);
     });
   });

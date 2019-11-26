@@ -1,17 +1,17 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ManifoldServiceCardView } from './manifold-service-card-view';
+import { ManifoldProductCardView } from './manifold-product-card-view';
 
-describe('<manifold-service-card-view-view>', () => {
+describe('<manifold-product-card-view-view>', () => {
   it('emits events on click', async () => {
     const mockClick = jest.fn();
     const page = await newSpecPage({
-      components: [ManifoldServiceCardView],
+      components: [ManifoldProductCardView],
       html: `
-        <manifold-service-card-view
+        <manifold-product-card-view
           name="product-name"
           product-id="product-id"
           product-label="product-label"
-        ></manifold-service-card-view>`,
+        ></manifold-product-card-view>`,
     });
     const { doc, root } = page;
     doc.addEventListener('manifold-marketplace-click', mockClick);
@@ -34,14 +34,14 @@ describe('<manifold-service-card-view-view>', () => {
   it('doesn’t emit events on click if given product-link-format', async () => {
     const mockClick = jest.fn();
     const page = await newSpecPage({
-      components: [ManifoldServiceCardView],
+      components: [ManifoldProductCardView],
       html: `
-        <manifold-service-card-view
+        <manifold-product-card-view
           name="product-name"
           product-id="product-id"
           product-label="product-label"
           product-link-format="/product/:product"
-        ></manifold-service-card-view>`,
+        ></manifold-product-card-view>`,
     });
     const { doc, root } = page;
     doc.addEventListener('manifold-marketplace-click', mockClick);
@@ -56,15 +56,15 @@ describe('<manifold-service-card-view-view>', () => {
   it('does emit events on click with product-link-format, if preserve-event is also passed', async () => {
     const mockClick = jest.fn();
     const page = await newSpecPage({
-      components: [ManifoldServiceCardView],
+      components: [ManifoldProductCardView],
       html: `
-        <manifold-service-card-view
+        <manifold-product-card-view
           name="product-name"
           preserve-event
           product-id="product-id"
           product-label="product-label"
           product-link-format="/product/:product"
-        ></manifold-service-card-view>`,
+        ></manifold-product-card-view>`,
     });
     const { doc, root } = page;
     doc.addEventListener('manifold-marketplace-click', mockClick);

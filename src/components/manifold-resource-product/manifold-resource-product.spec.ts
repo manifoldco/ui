@@ -4,7 +4,7 @@ import fetchMock from 'fetch-mock';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { GetResourceQuery } from '../../types/graphql';
 import { ManifoldResourceProduct } from './manifold-resource-product';
-import { ManifoldServiceCardView } from '../manifold-service-card-view/manifold-service-card-view';
+import { ManifoldProductCardView } from '../manifold-product-card-view/manifold-product-card-view';
 
 interface Props {
   gqlData?: GetResourceQuery['resource'];
@@ -13,7 +13,7 @@ interface Props {
 
 async function setup(props: Props) {
   const page = await newSpecPage({
-    components: [ManifoldResourceProduct, ManifoldServiceCardView],
+    components: [ManifoldResourceProduct, ManifoldProductCardView],
     html: '<div></div>',
   });
 
@@ -39,7 +39,7 @@ describe('<manifold-resource-product>', () => {
   it('[gqlData]: renders a skeleton if missing', async () => {
     const { page } = await setup({});
 
-    const serviceCard = page.root && page.root.querySelector('manifold-service-card-view');
+    const serviceCard = page.root && page.root.querySelector('manifold-product-card-view');
     const skeleton =
       serviceCard &&
       serviceCard.shadowRoot &&
@@ -54,7 +54,7 @@ describe('<manifold-resource-product>', () => {
       gqlData: resource as GetResourceQuery['resource'],
     });
 
-    const serviceCard = page.root && page.root.querySelector('manifold-service-card-view');
+    const serviceCard = page.root && page.root.querySelector('manifold-product-card-view');
     const productName =
       serviceCard &&
       serviceCard.shadowRoot &&
@@ -69,7 +69,7 @@ describe('<manifold-resource-product>', () => {
       gqlData: resource as GetResourceQuery['resource'],
     });
 
-    const serviceCard = page.root && page.root.querySelector('manifold-service-card-view');
+    const serviceCard = page.root && page.root.querySelector('manifold-product-card-view');
     const skeleton =
       serviceCard &&
       serviceCard.shadowRoot &&

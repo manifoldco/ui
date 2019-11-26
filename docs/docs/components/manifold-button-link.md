@@ -1,6 +1,6 @@
 ---
 title: Button Link
-path: '/internal/manifold-service-card'
+path: '/internal/manifold-button-link'
 example: |
   <manifold-button-link color="black" href="https://docs.manifold.co">Visit docs</manifold-button-link>
 ---

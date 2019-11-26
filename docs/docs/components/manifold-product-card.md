@@ -1,19 +1,17 @@
 ---
-title: Service Card (Deprecated)
-path: '/components/manifold-service-card'
+title: Product Card
+path: '/components/manifold-product-card'
 example: |
-  <manifold-service-card product-label="jawsdb-mysql">
-  </manifold-service-card>
+  <manifold-product-card product-label="jawsdb-mysql">
+  </manifold-product-card>
 ---
 
-# Service Card (Deprecated)
-
-_**DEPRECATED: Use instead [`manifold-product-card`](/components/manifold-product-card).**_
+# Product Card
 
 Compact view of a Manifold Product. Available as a self-fetching component or a view component.
 
 ```html
-<manifold-service-card product-label="jawsdb-mysql"></manifold-service-card>
+<manifold-product-card product-label="jawsdb-mysql"></manifold-product-card>
 ```
 
 ## CTA
@@ -22,29 +20,29 @@ You can pass in your own CTA content in the right of the component by passing in
 `slot="cta"` as an attribute. [Read more about slots][slot].
 
 ```jsx
-<manifold-service-card product-label="jawsdb-mysql">
+<manifold-product-card product-label="jawsdb-mysql">
   <div slot="cta">BUY ME!</div>
-</manifold-service-card>
+</manifold-product-card>
 ```
 
 ## Fetching using the label
 
-The `manifold-service-card` component can be used to fetch a product's data with a label.
+The `manifold-product-card` component can be used to fetch a product's data with a label.
 
 ```html
-<manifold-service-card product-label="logdna"></manifold-product-card>
+<manifold-product-card product-label="logdna"></manifold-product-card>
 ```
 
 ## Navigation
 
-By default, service cards will only emit the `manifold-marketplace-click` event (above). But it can
+By default, product cards will only emit the `manifold-marketplace-click` event (above). But it can
 also be turned into an `<a>` tag by specifying `product-link-format`:
 
 ```html
-<manifold-service-card
+<manifold-product-card
   product-label="jawsdb-mysql"
   product-link-format="/product/:product"
-></manifold-service-card>
+></manifold-product-card>
 <!-- <a href="/product/jawsdb-mysql"> -->
 ```
 

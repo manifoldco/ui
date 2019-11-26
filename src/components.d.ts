@@ -459,6 +459,30 @@ export namespace Components {
     */
     'productLabel'?: string;
   }
+  interface ManifoldProductCard {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
+    'isFeatured'?: boolean;
+    'preserveEvent'?: boolean;
+    'product'?: ProductCardQuery['product'];
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+  }
+  interface ManifoldProductCardView {
+    'description'?: string;
+    'isFeatured'?: boolean;
+    'isFree'?: boolean;
+    'logo'?: string;
+    'name'?: string;
+    'preserveEvent'?: boolean;
+    'productId'?: string;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+    'skeleton'?: boolean;
+  }
   interface ManifoldProductDetails {
     'product'?: ProductQuery['product'];
   }
@@ -569,28 +593,12 @@ export namespace Components {
     'required'?: boolean;
   }
   interface ManifoldServiceCard {
-    /**
-    * _(hidden)_
-    */
-    'graphqlFetch'?: GraphqlFetch;
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
     'product'?: ProductCardQuery['product'];
     'productLabel'?: string;
     'productLinkFormat'?: string;
-  }
-  interface ManifoldServiceCardView {
-    'description'?: string;
-    'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'preserveEvent'?: boolean;
-    'productId'?: string;
-    'productLabel'?: string;
-    'productLinkFormat'?: string;
-    'skeleton'?: boolean;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
@@ -844,6 +852,18 @@ declare global {
     new (): HTMLManifoldProductElement;
   };
 
+  interface HTMLManifoldProductCardElement extends Components.ManifoldProductCard, HTMLStencilElement {}
+  var HTMLManifoldProductCardElement: {
+    prototype: HTMLManifoldProductCardElement;
+    new (): HTMLManifoldProductCardElement;
+  };
+
+  interface HTMLManifoldProductCardViewElement extends Components.ManifoldProductCardView, HTMLStencilElement {}
+  var HTMLManifoldProductCardViewElement: {
+    prototype: HTMLManifoldProductCardViewElement;
+    new (): HTMLManifoldProductCardViewElement;
+  };
+
   interface HTMLManifoldProductDetailsElement extends Components.ManifoldProductDetails, HTMLStencilElement {}
   var HTMLManifoldProductDetailsElement: {
     prototype: HTMLManifoldProductDetailsElement;
@@ -940,12 +960,6 @@ declare global {
     new (): HTMLManifoldServiceCardElement;
   };
 
-  interface HTMLManifoldServiceCardViewElement extends Components.ManifoldServiceCardView, HTMLStencilElement {}
-  var HTMLManifoldServiceCardViewElement: {
-    prototype: HTMLManifoldServiceCardViewElement;
-    new (): HTMLManifoldServiceCardViewElement;
-  };
-
   interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
   var HTMLManifoldSkeletonImgElement: {
     prototype: HTMLManifoldSkeletonImgElement;
@@ -1018,6 +1032,8 @@ declare global {
     'manifold-plan-menu': HTMLManifoldPlanMenuElement;
     'manifold-plan-selector': HTMLManifoldPlanSelectorElement;
     'manifold-product': HTMLManifoldProductElement;
+    'manifold-product-card': HTMLManifoldProductCardElement;
+    'manifold-product-card-view': HTMLManifoldProductCardViewElement;
     'manifold-product-details': HTMLManifoldProductDetailsElement;
     'manifold-product-page': HTMLManifoldProductPageElement;
     'manifold-resource-card': HTMLManifoldResourceCardElement;
@@ -1034,7 +1050,6 @@ declare global {
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
     'manifold-service-card': HTMLManifoldServiceCardElement;
-    'manifold-service-card-view': HTMLManifoldServiceCardViewElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
@@ -1489,6 +1504,31 @@ declare namespace LocalJSX {
     */
     'productLabel'?: string;
   }
+  interface ManifoldProductCard {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
+    'isFeatured'?: boolean;
+    'preserveEvent'?: boolean;
+    'product'?: ProductCardQuery['product'];
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+  }
+  interface ManifoldProductCardView {
+    'description'?: string;
+    'isFeatured'?: boolean;
+    'isFree'?: boolean;
+    'logo'?: string;
+    'name'?: string;
+    'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
+    'preserveEvent'?: boolean;
+    'productId'?: string;
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+    'skeleton'?: boolean;
+  }
   interface ManifoldProductDetails {
     'product'?: ProductQuery['product'];
   }
@@ -1602,29 +1642,12 @@ declare namespace LocalJSX {
     'required'?: boolean;
   }
   interface ManifoldServiceCard {
-    /**
-    * _(hidden)_
-    */
-    'graphqlFetch'?: GraphqlFetch;
     'hideUntilReady'?: boolean;
     'isFeatured'?: boolean;
     'preserveEvent'?: boolean;
     'product'?: ProductCardQuery['product'];
     'productLabel'?: string;
     'productLinkFormat'?: string;
-  }
-  interface ManifoldServiceCardView {
-    'description'?: string;
-    'isFeatured'?: boolean;
-    'isFree'?: boolean;
-    'logo'?: string;
-    'name'?: string;
-    'onManifold-marketplace-click'?: (event: CustomEvent<any>) => void;
-    'preserveEvent'?: boolean;
-    'productId'?: string;
-    'productLabel'?: string;
-    'productLinkFormat'?: string;
-    'skeleton'?: boolean;
   }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
@@ -1697,6 +1720,8 @@ declare namespace LocalJSX {
     'manifold-plan-menu': ManifoldPlanMenu;
     'manifold-plan-selector': ManifoldPlanSelector;
     'manifold-product': ManifoldProduct;
+    'manifold-product-card': ManifoldProductCard;
+    'manifold-product-card-view': ManifoldProductCardView;
     'manifold-product-details': ManifoldProductDetails;
     'manifold-product-page': ManifoldProductPage;
     'manifold-resource-card': ManifoldResourceCard;
@@ -1713,7 +1738,6 @@ declare namespace LocalJSX {
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
     'manifold-service-card': ManifoldServiceCard;
-    'manifold-service-card-view': ManifoldServiceCardView;
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
     'manifold-template-card': ManifoldTemplateCard;
@@ -1765,6 +1789,8 @@ declare module "@stencil/core" {
       'manifold-plan-menu': LocalJSX.ManifoldPlanMenu & JSXBase.HTMLAttributes<HTMLManifoldPlanMenuElement>;
       'manifold-plan-selector': LocalJSX.ManifoldPlanSelector & JSXBase.HTMLAttributes<HTMLManifoldPlanSelectorElement>;
       'manifold-product': LocalJSX.ManifoldProduct & JSXBase.HTMLAttributes<HTMLManifoldProductElement>;
+      'manifold-product-card': LocalJSX.ManifoldProductCard & JSXBase.HTMLAttributes<HTMLManifoldProductCardElement>;
+      'manifold-product-card-view': LocalJSX.ManifoldProductCardView & JSXBase.HTMLAttributes<HTMLManifoldProductCardViewElement>;
       'manifold-product-details': LocalJSX.ManifoldProductDetails & JSXBase.HTMLAttributes<HTMLManifoldProductDetailsElement>;
       'manifold-product-page': LocalJSX.ManifoldProductPage & JSXBase.HTMLAttributes<HTMLManifoldProductPageElement>;
       'manifold-resource-card': LocalJSX.ManifoldResourceCard & JSXBase.HTMLAttributes<HTMLManifoldResourceCardElement>;
@@ -1781,7 +1807,6 @@ declare module "@stencil/core" {
       'manifold-resource-status-view': LocalJSX.ManifoldResourceStatusView & JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement>;
       'manifold-select': LocalJSX.ManifoldSelect & JSXBase.HTMLAttributes<HTMLManifoldSelectElement>;
       'manifold-service-card': LocalJSX.ManifoldServiceCard & JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement>;
-      'manifold-service-card-view': LocalJSX.ManifoldServiceCardView & JSXBase.HTMLAttributes<HTMLManifoldServiceCardViewElement>;
       'manifold-skeleton-img': LocalJSX.ManifoldSkeletonImg & JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement>;
       'manifold-skeleton-text': LocalJSX.ManifoldSkeletonText & JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement>;
       'manifold-template-card': LocalJSX.ManifoldTemplateCard & JSXBase.HTMLAttributes<HTMLManifoldTemplateCardElement>;

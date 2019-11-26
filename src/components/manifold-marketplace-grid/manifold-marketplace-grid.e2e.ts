@@ -44,7 +44,7 @@ describe('<manifold-marketplace-grid>', () => {
     );
     await page.waitForChanges();
     const serviceCards = await page.findAll(
-      'manifold-marketplace-grid >>> manifold-service-card-view'
+      'manifold-marketplace-grid >>> manifold-product-card-view'
     );
 
     const labels = await Promise.all(serviceCards.map(c => c.getProperty('productLabel')));
@@ -65,7 +65,7 @@ describe('<manifold-marketplace-grid>', () => {
 
     await page.waitForChanges();
 
-    const cards = await page.findAll('manifold-marketplace-grid >>> manifold-service-card-view');
+    const cards = await page.findAll('manifold-marketplace-grid >>> manifold-product-card-view');
     const freeProducts = services.filter(s => s.node.plans && s.node.plans.edges.length);
 
     await freeProducts.forEach(async p => {
@@ -95,7 +95,7 @@ describe('<manifold-marketplace-grid>', () => {
       );
       await page.waitForChanges();
 
-      const cards = await page.findAll('manifold-marketplace-grid >>> manifold-service-card-view');
+      const cards = await page.findAll('manifold-marketplace-grid >>> manifold-product-card-view');
       const isFeatured = await Promise.all(
         cards.map(async card => {
           if (await card.getProperty('isFeatured')) {
@@ -232,7 +232,7 @@ describe('<manifold-marketplace-grid>', () => {
       );
       await page.waitForChanges();
 
-      const card = await page.find('manifold-marketplace-grid >>> manifold-service-card-view');
+      const card = await page.find('manifold-marketplace-grid >>> manifold-product-card-view');
       const preserveEvent = await card.getProperty('preserveEvent');
       expect(preserveEvent).toBe(true);
     });
@@ -254,7 +254,7 @@ describe('<manifold-marketplace-grid>', () => {
       await page.waitForChanges();
 
       const serviceCards = await page.findAll(
-        'manifold-marketplace-grid >>> manifold-service-card-view'
+        'manifold-marketplace-grid >>> manifold-product-card-view'
       );
       const productLabels = await Promise.all(
         serviceCards.map(card => card.getProperty('productLabel'))
@@ -277,7 +277,7 @@ describe('<manifold-marketplace-grid>', () => {
       );
       await page.waitForChanges();
 
-      const card = await page.find('manifold-marketplace-grid >>> manifold-service-card-view');
+      const card = await page.find('manifold-marketplace-grid >>> manifold-product-card-view');
       const link = card.shadowRoot.querySelector('a');
       expect(link && link.getAttribute('href')).toBe(`/product/${services[0].node.label}`);
     });
@@ -325,7 +325,7 @@ describe('<manifold-marketplace-grid>', () => {
       await input.press('KeyG');
 
       const serviceCards = await page.findAll(
-        'manifold-marketplace-grid >>> manifold-service-card-view'
+        'manifold-marketplace-grid >>> manifold-product-card-view'
       );
       expect(serviceCards.length).toBeLessThan(services.length);
 

@@ -2127,6 +2127,29 @@ export type PlanQuery = (
   )> }
 );
 
+export type ProductCardQueryVariables = {
+  productLabel: Scalars['String']
+};
+
+
+export type ProductCardQuery = (
+  { __typename?: 'Query' }
+  & { product: Maybe<(
+    { __typename?: 'Product' }
+    & Pick<Product, 'id' | 'displayName' | 'tagline' | 'label' | 'logoUrl'>
+    & { plans: Maybe<(
+      { __typename?: 'PlanConnection' }
+      & { edges: Array<(
+        { __typename?: 'PlanEdge' }
+        & { node: (
+          { __typename?: 'Plan' }
+          & Pick<Plan, 'free'>
+        ) }
+      )> }
+    )> }
+  )> }
+);
+
 export type ProductQueryVariables = {
   productLabel: Scalars['String']
 };
@@ -2341,29 +2364,6 @@ export type ResourcesQuery = (
       { __typename?: 'PageInfo' }
       & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
     ) }
-  )> }
-);
-
-export type ProductCardQueryVariables = {
-  productLabel: Scalars['String']
-};
-
-
-export type ProductCardQuery = (
-  { __typename?: 'Query' }
-  & { product: Maybe<(
-    { __typename?: 'Product' }
-    & Pick<Product, 'id' | 'displayName' | 'tagline' | 'label' | 'logoUrl'>
-    & { plans: Maybe<(
-      { __typename?: 'PlanConnection' }
-      & { edges: Array<(
-        { __typename?: 'PlanEdge' }
-        & { node: (
-          { __typename?: 'Plan' }
-          & Pick<Plan, 'free'>
-        ) }
-      )> }
-    )> }
   )> }
 );
 

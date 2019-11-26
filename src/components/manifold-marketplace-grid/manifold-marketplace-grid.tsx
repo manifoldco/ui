@@ -224,7 +224,7 @@ export class ManifoldMarketplaceGrid {
     } = product.node;
 
     return (
-      <manifold-service-card-view
+      <manifold-product-card-view
         description={productNode.tagline}
         isFeatured={this.featured && this.featured.includes(productNode.label)}
         isFree={Array.isArray(this.freeProducts) && this.freeProducts.includes(productNode.label)}
