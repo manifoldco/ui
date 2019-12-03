@@ -21,7 +21,7 @@ export const connections: Connections = {
     provisioning: 'http://api.provisioning.arigato.tools/v1',
     connector: 'http://api.connector.arigato.tools/v1',
     graphql: 'http://graphql.arigato.tools/graphql',
-    oauth: 'http://login.arigato.tools/signin/oauth/web',
+    oauth: 'http://signin.arigato.tools/signin/oauth/web',
   },
   stage: {
     billing: 'https://api.billing.stage.manifold.co/v1',
