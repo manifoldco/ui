@@ -1,9 +1,9 @@
 name: release
 
-on: [push] # testing
-  #push:
-  #  branches:
-  #    - master
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   release:
