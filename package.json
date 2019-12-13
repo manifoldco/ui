@@ -45,7 +45,7 @@
     "testcafe:dev": "DEPLOY_URL=http://localhost:6006 npx testcafe chrome e2e/",
     "happo-ci-circleci": "npm run build && npm run generate:gql && happo-ci-circleci",
     "heroku-postbuild": "npm run build:docs",
-    "lint": "npm run lint:js & npm run lint:css & cd docs && npm i && npm run lint",
+    "lint": "npm run lint:js && npm run lint:css && cd docs && npm i && npm run lint",
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",

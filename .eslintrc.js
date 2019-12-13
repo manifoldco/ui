@@ -52,6 +52,7 @@ module.exports = {
     'func-names': 'off',
     'function-paren-newline': 'off', // let Prettier decide
     'implicit-arrow-linebreak': 'off', // let Prettier decide
+    'import/extensions': 'off', // TypeScript handles this
     'import/no-named-as-default': 'off',
     'import/no-extraneous-dependencies': 'off', // We need zero deps for npm
     'import/prefer-default-export': 'off', // named exports are perfectly fine
