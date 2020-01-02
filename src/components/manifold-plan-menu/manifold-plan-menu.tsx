@@ -5,6 +5,18 @@ import { PlanEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 
+const sortPlans = (plans: PlanEdge[]): PlanEdge[] => {
+  const nonconfigurablePlans = plans.filter(
+    plan => plan.node.configurableFeatures && plan.node.configurableFeatures.edges.length === 0
+  );
+
+  const configurablePlans = plans.filter(
+    plan => plan.node.configurableFeatures && plan.node.configurableFeatures.edges.length > 0
+  );
+
+  return [...nonconfigurablePlans, ...configurablePlans];
+};
+
 @Component({
   tag: 'manifold-plan-menu',
   styleUrl: 'manifold-plan-menu.css',
@@ -21,9 +33,10 @@ export class ManifoldPlanMenu {
   @logger()
   render() {
     if (this.plans) {
+      const sortedPlans = sortPlans(this.plans);
       return (
         <ul class="plan-list">
-          {this.plans.map(({ node: plan }, i) => {
+          {sortedPlans.map(({ node: plan }, i) => {
             const isSelected = this.selectedPlanId ? plan.id === this.selectedPlanId : i === 0;
             const isConfigurable =
               plan.configurableFeatures && plan.configurableFeatures.edges.length > 0;

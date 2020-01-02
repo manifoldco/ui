@@ -71,8 +71,8 @@ export class ManifoldPlanSelector {
 
       if (data.product.plans) {
         const plans = this.freePlans
-          ? this.filterFreeOnly(this.filterOutConfigurable(data.product.plans.edges))
-          : this.filterOutConfigurable(data.product.plans.edges);
+          ? this.filterFreeOnly(data.product.plans.edges)
+          : data.product.plans.edges;
 
         // TODO: Make GraphQL sort by free AND cost
         this.plans = [...plans].sort(a => (a.node.free ? -1 : 0));
@@ -106,14 +106,6 @@ export class ManifoldPlanSelector {
 
   filterFreeOnly(plans: PlanEdge[]) {
     return plans.filter(({ node: { free } }) => free);
-  }
-
-  // TODO: remove this once configurable plans are supported
-  filterOutConfigurable(plans: PlanEdge[]) {
-    return plans.filter(
-      ({ node: { configurableFeatures } }) =>
-        !configurableFeatures || configurableFeatures.edges.length === 0
-    );
   }
 
   @logger()
