@@ -27,6 +27,8 @@ export default [
   'logdna',
   'mailgun',
   'memcachier-cache',
+  'nodechef-app-container',
+  'nodechef-mongodb',
   'oauth-io',
   'pdfshift',
   'piio',
