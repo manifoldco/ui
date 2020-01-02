@@ -108,14 +108,6 @@ export class ManifoldPlanSelector {
     return plans.filter(({ node: { free } }) => free);
   }
 
-  // TODO: remove this once configurable plans are supported
-  // filterOutConfigurable(plans: PlanEdge[]) {
-  //   return plans.filter(
-  //     ({ node: { configurableFeatures } }) =>
-  //       !configurableFeatures || configurableFeatures.edges.length === 0
-  //   );
-  // }
-
   @logger()
   render() {
     const regions =
