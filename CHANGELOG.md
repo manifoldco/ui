@@ -10,11 +10,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Support for configurable features in plan selector.
+- Added safety check for MutationObserver when initializing UI.
 
 ## [0.9.0]
 
 ### Removed
-- `resourceLabel` prop on `<manifold-data-product-logo>` component (previously deprecated in favor of `<manifold-data-resource-logo>`).
+
+- `resourceLabel` prop on `<manifold-data-product-logo>` component (previously deprecated in favor
+  of `<manifold-data-resource-logo>`).
 - `manifold-service-card` component (previously deprecated in favor of `manifold-product-card`).
 
 ## [0.8.0]
@@ -26,7 +29,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Screenshots now display full images (uncropped). (#751)
-- `manifold-data-rename-button` success message now contains the returned updated label value as opposed to the submitted label value. (#756)
+- `manifold-data-rename-button` success message now contains the returned updated label value as
+  opposed to the submitted label value. (#756)
 
 ### Changed
 
