@@ -18,7 +18,7 @@ function mutationCallback(mutationsList: MutationRecord[]) {
   mutationsList
     .filter(mutation => mutation.type === 'childList')
     .forEach(mutation => {
-      if (mutation.addedNodes) {
+      if (mutation.addedNodes && mutation.addedNodes.length > 1) {
         mutation.addedNodes.forEach((node: HTMLElement) => {
           if (node.tagName && node.tagName.startsWith('MANIFOLD-')) {
             mark(node, 'load');
