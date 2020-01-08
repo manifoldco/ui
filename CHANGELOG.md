@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### [0.9.1]
+
 ### Added
 
 - Support for configurable features in plan selector.
