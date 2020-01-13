@@ -5,20 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.9.2] - 2019-01-13
 
-### Fixed
+### Changed
 
-- Update engine version of node
+- Allow Node versions 10.x and above
 
-### [0.9.1]
+## [0.9.1] - 2019-01-12
 
 ### Added
 
 - Support for configurable features in plan selector.
 - Added safety check for MutationObserver when initializing UI.
-
-## [0.9.0]
 
 ### Removed
 
@@ -26,17 +24,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   of `<manifold-data-resource-logo>`).
 - `manifold-service-card` component (previously deprecated in favor of `manifold-product-card`).
 
-## [0.8.0]
+## [0.8.0] - 2019-11-27
 
 ### Added
 
 - `disabled` props on more button components.
-
-### Fixed
-
-- Screenshots now display full images (uncropped). (#751)
-- `manifold-data-rename-button` success message now contains the returned updated label value as
-  opposed to the submitted label value. (#756)
 
 ### Changed
 
@@ -49,6 +41,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Refactor GraphQL for `manifold-data-resize-button`. (#756)
 - Refactor GraphQL for `manifold-data-rename-button`. (#756)
 - Deprecated `manifold-service-card` in favor of `manifold-product-card`. (#760)
+
+### Fixed
+
+- Screenshots now display full images (uncropped). (#751)
+- `manifold-data-rename-button` success message now contains the returned updated label value as
+  opposed to the submitted label value. (#756)
 
 ## [0.7.2] - 2019-11-19
 
@@ -486,6 +484,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed the `manifold-resource-credentials` component to use the standalone `manifold-credentials`
   component.
 
+[0.9.2]: https://github.com/manifoldco/ui/compare/v0.9.1...v0.9.2
+[0.9.1]: https://github.com/manifoldco/ui/compare/v0.8.0...v0.9.1
+[0.8.0]: https://github.com/manifoldco/ui/compare/v0.7.2...v0.8.0
 [0.7.2]: https://github.com/manifoldco/ui/compare/v0.7.1...v0.7.2
 [0.7.1]: https://github.com/manifoldco/ui/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/manifoldco/ui/compare/v0.6.5...v0.7.0
