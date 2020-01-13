@@ -1,7 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
-  "version": "1.0.0-rc.0",
+  "version": "0.9.1",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -127,6 +127,6 @@
     "webpack": "^4.41.2"
   },
   "engines": {
-    "node": "12.13.x"
+    "node": "^10.0.0"
   }
 }

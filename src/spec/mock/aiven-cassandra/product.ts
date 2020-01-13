@@ -26,6 +26,7 @@ const product: Product = {
   id: '234qqazjcy9xm55tf0xner1nrb2tj',
   images: [],
   label: 'aiven-cassandra',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl: 'https://cdn.manifold.co/providers/aiven/logos/73be9a5e-dbd4-465e-a16c-4a24d0a86293.png',
   plans: {
     pageInfo: {

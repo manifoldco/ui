@@ -32,6 +32,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/ziggeo/screenshots/6-video-recorder-themes.png',
   ],
   label: 'ziggeo',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl: 'https://cdn.manifold.co/providers/ziggeo/logos/ziggeo.png',
   plans: {
     pageInfo: { hasNextPage: false, hasPreviousPage: false },

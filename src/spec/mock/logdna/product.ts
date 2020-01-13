@@ -36,6 +36,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/logdna/logdna/images/nawd3ffc9nwpkw6347b8y8whgw.png',
   ],
   label: 'logdna',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl: 'https://cdn.manifold.co/providers/logdna/logos/ftzzxwdr0c8wx6gh0ntf83fq4w.png',
   plans: {
     pageInfo: {

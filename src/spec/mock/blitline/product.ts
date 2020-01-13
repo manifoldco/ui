@@ -31,6 +31,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/blitline/screenshots/4.png',
   ],
   label: 'blitline',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl: 'https://cdn.manifold.co/providers/blitline/logos/blitline.png',
   plans: {
     pageInfo: { hasNextPage: false, hasPreviousPage: false },

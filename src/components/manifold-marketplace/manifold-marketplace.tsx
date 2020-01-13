@@ -23,6 +23,7 @@ function transformSkeleton(skel: Catalog.Product): ProductEdge {
       displayName: skel.body.name,
       documentationUrl: skel.body.documentation_url,
       label: skel.body.label,
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: skel.body.logo_url,
       tagline: skel.body.tagline,
       settings: {

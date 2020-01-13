@@ -40,6 +40,7 @@ const products: ProductEdge[] = [
       id: '234qqazjcy9xm55tf0xner1nrb2tj',
       images: [],
       label: 'aiven-cassandra',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/aiven/logos/73be9a5e-dbd4-465e-a16c-4a24d0a86293.png',
       plans: paidPlans,
@@ -106,6 +107,7 @@ const products: ProductEdge[] = [
       id: '234j2mtuym05gh8far9000mjnt2yw',
       images: [],
       label: 'aiven-elasticsearch',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/aiven/logos/c1aaf5d6-63f6-47e4-a0f0-79b5e5d4388d.png',
       plans: paidPlans,
@@ -166,6 +168,7 @@ const products: ProductEdge[] = [
       id: '234vbqa39t933a05x3ce2ge2pe9nm',
       images: [],
       label: 'aiven-grafana',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/aiven/logos/b78667bf-1f5d-4729-b797-3c9bcf8bb94c.png',
       plans: paidPlans,
@@ -222,6 +225,7 @@ const products: ProductEdge[] = [
       id: '234j1veb58h231cf99mqjmambj37c',
       images: [],
       label: 'aiven-kafka',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/aiven/logos/6164a03f-545c-4e77-b467-174a8764ec4a.png',
       plans: paidPlans,
@@ -282,6 +286,7 @@ const products: ProductEdge[] = [
       id: '234tmxeupmrt5rx93qx70yar4de1m',
       images: [],
       label: 'aiven-pg',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/aiven/logos/a999d517-5fce-4d41-b77c-eaf80fe17680.png',
       plans: paidPlans,
@@ -348,6 +353,7 @@ const products: ProductEdge[] = [
       id: '234x63nf03qxfrvkexxfk79hrczmp',
       images: [],
       label: 'aiven-redis',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/aiven/logos/2d4f9f98-3520-4238-9320-bb4570adc2c0.png',
       plans: paidPlans,
@@ -402,6 +408,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/blitline/screenshots/4.png',
       ],
       label: 'blitline',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/blitline/logos/blitline.png',
       plans: freePlans,
       provider: {
@@ -478,6 +485,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/onemorecloud/bonsai-elasticsearch/images/9ccatjykfvbwevwn3cgpc33khw.png',
       ],
       label: 'bonsai-elasticsearch',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/onemorecloud/logos/rt5nvd4yxuy0467bak0jqxz41m.png',
       plans: freePlans,
@@ -563,6 +571,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/84codes/cloudamqp/images/mdnkd18vk3hbwpf7ymt3uqq828.jpg',
       ],
       label: 'cloudamqp',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/84codes/logos/ctg5nbw5zp51u5begurzxry2tm.png',
       plans: freePlans,
       provider: {
@@ -639,6 +648,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/cloudforged/screenshots/bcd5ce08-6c5a-4f0a-ba9f-2bad268886ec.png',
       ],
       label: 'cloudcube',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/cloudforged/logos/b2d4d01c-dee4-4a87-95da-45f72fdc3202.png',
       plans: freePlans,
@@ -710,6 +720,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/ximilar/screenshots/30aa29b2-8a55-4277-b755-53fe375bbf51.png',
       ],
       label: 'custom-recognition',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/ximilar/logos/c469ba54-687c-4412-9672-75fdc91d35ab.png',
       plans: freePlans,
@@ -787,6 +798,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/dumper/screenshots/6.png',
       ],
       label: 'dumper',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/dumper/logos/512x512_2.png',
       plans: paidPlans,
       provider: {
@@ -866,6 +878,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/elegant-cms/screenshots/ss5.png',
       ],
       label: 'elegant-cms',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/elegant-cms/logos/280x280.png',
       plans: freePlans,
       provider: {
@@ -942,6 +955,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/ximilar/screenshots/39d5a682-8532-405d-952b-c9b58f787fa2.png',
       ],
       label: 'generic-tagging',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/ximilar/logos/9ef978f9-309e-4e0b-a9d8-ee99b78a4ac3.png',
       plans: freePlans,
@@ -1002,6 +1016,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/hypdf/screenshots/5bf869c4-d181-4350-9a1f-684180e0af3f.png',
       ],
       label: 'hypdf',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/hypdf/logos/15cbd713-15e1-41fc-9894-b73049dce40d.png',
       plans: freePlans,
@@ -1084,6 +1099,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/hostedmetrics/screenshots/bea5bf15-3546-4d40-a900-217750bedd03.png',
       ],
       label: 'hostedmetrics-influxdb',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/hosted-metrics/logos/cf170c9c-6dc1-4fcf-9c91-9ab1b3515d71.png',
       plans: paidPlans,
@@ -1156,6 +1172,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/informant/screenshots/3fb94460-5e54-4105-8542-2de47a0d284f.png',
       ],
       label: 'informant',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/informant/logos/84ee44e2-fded-419e-85f4-dffdfafc8996.png',
       plans: freePlans,
@@ -1224,6 +1241,7 @@ const products: ProductEdge[] = [
       id: '234pder46cj32zuj6eh5uhyc8tjxe',
       images: ['https://cdn.manifold.co/providers/iron-io/screenshots/cache-lowres.png'],
       label: 'iron_cache',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/iron-io/logos/cache-200x200.png',
       plans: paidPlans,
       provider: {
@@ -1293,6 +1311,7 @@ const products: ProductEdge[] = [
       id: '234tv2aj7n5vf7zc7hbqzvxeft91e',
       images: ['https://cdn.manifold.co/providers/iron-io/screenshots/mq-lowres.png'],
       label: 'iron_mq',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/iron-io/logos/mq-200x200.png',
       plans: paidPlans,
       provider: {
@@ -1356,6 +1375,7 @@ const products: ProductEdge[] = [
       id: '234we3e052j7aywctt4ut62yxkddj',
       images: ['https://cdn.manifold.co/providers/iron-io/screenshots/worker-lowres.png'],
       label: 'iron_worker',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/iron-io/logos/worker-200x200.png',
       plans: paidPlans,
       provider: {
@@ -1429,6 +1449,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/jawsdb/screenshots/ss4.PNG',
       ],
       label: 'jawsdb-maria',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/vd83rdtn50m0zb0yk9qzdqgz7m.png',
       plans: paidPlans,
       provider: {
@@ -1507,6 +1528,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/jawsdb/screenshots/ss4.PNG',
       ],
       label: 'jawsdb-mysql',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
       plans: paidPlans,
       provider: {
@@ -1585,6 +1607,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/jawsdb/screenshots/ss4.PNG',
       ],
       label: 'jawsdb-postgres',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/rm2ru508t4b2wtzy33y21xm870.png',
       plans: paidPlans,
       provider: {
@@ -1659,6 +1682,7 @@ const products: ProductEdge[] = [
         },
       ],
       displayName: 'LogDNA',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       documentationUrl: 'https://docs.logdna.com/docs/',
       id: '234qkjvrptpy3thna4qttwt7m2nf6',
       images: [
@@ -1745,6 +1769,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/mailgun/mailgun/images/5bf55h4dxkvqge5ujyj5mj9260.png',
       ],
       label: 'mailgun',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/mailgun/logos/q922nwncyuw263chbg86e0rw1m.png',
       plans: freePlans,
       provider: {
@@ -1821,6 +1846,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/memcachier/cache/images/aw8dngvbj1dteaurt9en0ccrj8.png',
       ],
       label: 'memcachier-cache',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/memcachier/logos/8gugjy54514r5hev172up4ecug.png',
       plans: freePlans,
       provider: {
@@ -1900,6 +1926,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/oauth-io/screenshots/7-oauth-server.png',
       ],
       label: 'oauth-io',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/oauth-io/60x60.png',
       plans: paidPlans,
       provider: {
@@ -1945,6 +1972,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/pdfshift/screenshots/b99effba-284d-4928-b9b9-2953b27e7bf5.png',
       ],
       label: 'pdfshift',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/pdfshift/logos/2cfcefe3-ba37-4530-881a-0e1257a3c91f.png',
       plans: freePlans,
@@ -2015,6 +2043,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/piio/screenshots/3.png',
       ],
       label: 'piio',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/piio/logos/512x512.png',
       plans: freePlans,
       provider: {
@@ -2107,6 +2136,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/posthook/screenshots/e94f9e64-c4d8-4104-81f1-a60847f47881.png',
       ],
       label: 'posthook',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/posthook/logos/0479c2e7-5bae-42b3-b8ca-5f2b2640386e.png',
       plans: freePlans,
@@ -2184,6 +2214,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/prefab/screenshots/f31a0889-e1dc-4eca-a1a5-08e23abc2d86.png',
       ],
       label: 'prefab',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/prefab/logos/b0f0b014-4063-4588-bc65-1da31f3fc187.png',
       plans: freePlans,
@@ -2258,6 +2289,7 @@ const products: ProductEdge[] = [
       id: '234pbjjvexny04ft9fn78hf2r9pnj',
       images: [],
       label: 'hostedmetrics-prometheus',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/hostedmetrics/logos/f64dc325-e826-4b06-ba0f-6e1c4550a8d8.png',
       plans: paidPlans,
@@ -2330,6 +2362,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/23498wxg3tc421xbepp34xyfg555y/screenshots/89d637fb-94d6-48ab-aab8-919b30f9b3dc.png',
       ],
       label: 'scaledrone',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/23498wxg3tc421xbepp34xyfg555y/logos/2c36aa72-a7a6-4bdc-9581-5b68a9b1981d.png',
       plans: freePlans,
@@ -2392,6 +2425,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/scout/scout/images/phdafv8qgybpyewqtmckar310c.png',
       ],
       label: 'scoutapp',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/scout/logos/h3z4mxt33k3ufm7rzmth0xa4r8.png',
       plans: freePlans,
       provider: {
@@ -2465,6 +2499,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/statushub/screenshots/7c16dac4-941e-4b18-bfc2-4bb02e373120.png',
       ],
       label: 'statushub',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/statushub/logos/6bf2cdc1-dab2-44f2-84ec-0ae577e15484.png',
       plans: paidPlans,
@@ -2532,6 +2567,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/till/screenshots/image1.png',
       ],
       label: 'till',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/till-mobile/logos/5854b4df-8e3d-42ad-bbc7-1b2f89877ce5.png',
       plans: freePlans,
@@ -2604,6 +2640,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/timber/screenshots/4.png',
       ],
       label: 'timber-logging',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/timber/logos/timber.png',
       plans: freePlans,
       provider: {
@@ -2675,6 +2712,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/23411qpzbkv6ajn17860rvzpzcmr4/screenshots/2ac4cf0b-27d2-4de4-8578-575d4e5fa50d.png',
       ],
       label: 'valence',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/23411qpzbkv6ajn17860rvzpzcmr4/logos/a0442c01-e629-4693-9197-fcf9aa3b29f3.png',
       plans: freePlans,
@@ -2737,6 +2775,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/onemorecloud/websolr/images/zz7qugpmm4jcea4em0vjpe8kwr.png',
       ],
       label: 'websolr',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/onemorecloud/logos/3mep371t3tgax3e8x5h5112wv4.png',
       plans: freePlans,
@@ -2818,6 +2857,7 @@ const products: ProductEdge[] = [
       id: '234nbp17j5zrvb2ym49647kgtyv2a',
       images: [],
       label: 'zerosix',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl:
         'https://cdn.manifold.co/providers/zerosix/logos/4b9a4431-7ced-497d-b575-7ea741113bf3.png',
       plans: paidPlans,
@@ -2894,6 +2934,7 @@ const products: ProductEdge[] = [
         'https://cdn.manifold.co/providers/ziggeo/screenshots/6-video-recorder-themes.png',
       ],
       label: 'ziggeo',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/ziggeo/logos/ziggeo.png',
       plans: paidPlans,
       provider: {
