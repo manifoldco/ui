@@ -155,14 +155,6 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - bundlesize
-      - vrt:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
-          requires:
-            - bundlesize
       - npm-publish: # no approval needed for prerelease
           filters:
             branches:
@@ -172,7 +164,6 @@ workflows:
           requires:
             - lint
             - test
-            - vrt
       - cdn-publish:
           latest: false
           context: gcp-cdn-auth
@@ -212,15 +203,6 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
             - bundlesize
-      - vrt:
-          filters:
-            branches:
-              ignore:
-                - /.*/
-            tags:
-              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
-          requires:
-            - bundlesize
       - confirm:
           type: approval # manual approval step mandatory for final release
           filters:
@@ -232,7 +214,6 @@ workflows:
           requires:
             - lint
             - test
-            - vrt
       - npm-publish:
           filters:
             branches:
