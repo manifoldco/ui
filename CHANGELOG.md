@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.9.3] - 2019-01-13
 
+### Added
+
+- Added `<manifold-service-card>` back until 1.0 release
+
 ### Changed
 
 - Allow Node 12.x and 13.x
