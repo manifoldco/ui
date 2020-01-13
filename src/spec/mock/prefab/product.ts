@@ -30,6 +30,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/prefab/screenshots/f31a0889-e1dc-4eca-a1a5-08e23abc2d86.png',
   ],
   label: 'prefab',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl:
     'https://cdn.manifold.co/providers/prefab/logos/b0f0b014-4063-4588-bc65-1da31f3fc187.png',
   plans: {

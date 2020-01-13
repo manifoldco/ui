@@ -11,11 +11,11 @@
       {
         "kind": "OBJECT",
         "name": "Query",
-        "description": "Queries for the Manifold GraphQL API.\n\nMore details and usage available in our\n[documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).",
+        "description": "",
         "fields": [
           {
             "name": "provider",
-            "description": "Look up a Provider by its `id` or `label`. Exactly one of `id` or `label` is\nrequired, and `id` has precedence over `label`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -48,7 +48,7 @@
           },
           {
             "name": "plan",
-            "description": "Look up a Plan by its `id`. `id` is required.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -75,7 +75,7 @@
           },
           {
             "name": "product",
-            "description": "Look up a Product by its `id` or label. Exactly one of `id` or `label` is required, and `id` has precedence over `label`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -108,7 +108,7 @@
           },
           {
             "name": "categories",
-            "description": "List all available categories in the system.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -159,7 +159,7 @@
           },
           {
             "name": "category",
-            "description": "Look up a category by its `id` or `label`. Exactly one of `id` or `label` is\nrequired, and `id` has precedence over `label`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -192,7 +192,7 @@
           },
           {
             "name": "products",
-            "description": "List all available products.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -239,7 +239,7 @@
           },
           {
             "name": "profile",
-            "description": "Look up a profile based on the currently authenticated profile.\n\nNote: Only Platform API token are permitted to specify the id parameter to\nquery for specific profiles by `id` or `subject`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -266,7 +266,7 @@
           },
           {
             "name": "node",
-            "description": "Look up a node by its `id`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -297,7 +297,7 @@
           },
           {
             "name": "resources",
-            "description": "Return a paginated list of resources. The return value can either contain\nall available resources linked to the token, or can be filtered down to\nfetch data for the specified profile. The owner can either be a ProfileID or\na Subject ID which represents the ProfileID, or a SubjectID within a specific Platform.\n\nNote: Subject owner is currently only supported with use of a Platform API token.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -344,7 +344,7 @@
           },
           {
             "name": "resource",
-            "description": "Fetch a resource for the specified `label` or `id`. When authenticated as a\nprofile user, fetches the resource associated with the profile. When\nauthenticated as a platform user and a label is specified, an owner must be provided.\nWhen `deleted` is not specified, it defaults to FALSE.\n\nNote: Subject owner is currently only supported with use of a Platform API token.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -397,7 +397,7 @@
           },
           {
             "name": "profiles",
-            "description": "Return a paginated list of profiles for a platform, optionally\nquerying for only profiles with subscription usage over a specified time.\n\nNote: This query is currently only supported with use of a Platform API token.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -444,7 +444,7 @@
           },
           {
             "name": "invoice",
-            "description": "Look up an invoice by its `id`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -471,7 +471,7 @@
           },
           {
             "name": "lineItem",
-            "description": "Look up a line item by it's `id`.",
+            "description": "",
             "args": [
               {
                 "name": "id",
@@ -525,7 +525,7 @@
       {
         "kind": "OBJECT",
         "name": "Provider",
-        "description": "A Provider in Manifold's catalog. Providers own products.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -545,7 +545,7 @@
           },
           {
             "name": "label",
-            "description": "A URL-friendly label for this provider. Globally unique.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -561,7 +561,7 @@
           },
           {
             "name": "displayName",
-            "description": "A human-readable display name for this provider.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -577,7 +577,7 @@
           },
           {
             "name": "logoUrl",
-            "description": "The URL of the logo for this provider.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -593,7 +593,7 @@
           },
           {
             "name": "url",
-            "description": "The URL of this provider's primary website.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -609,7 +609,7 @@
           },
           {
             "name": "supportEmail",
-            "description": "The email address for contacting this provider with support requests.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -625,7 +625,7 @@
           },
           {
             "name": "products",
-            "description": "The list of products associated with this provider.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -778,7 +778,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "ProductOrderBy",
-        "description": "ProductOrderBy defines how a product connection is to be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -817,7 +817,7 @@
       {
         "kind": "ENUM",
         "name": "ProductOrderByField",
-        "description": "ProductOrderByField is the field by which the product list will be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -834,7 +834,7 @@
       {
         "kind": "ENUM",
         "name": "OrderByDirection",
-        "description": "The direction used to order results.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -857,7 +857,7 @@
       {
         "kind": "OBJECT",
         "name": "ProductConnection",
-        "description": "A ProductConnection is the connection containing Product edges.",
+        "description": "",
         "fields": [
           {
             "name": "edges",
@@ -908,7 +908,7 @@
       {
         "kind": "OBJECT",
         "name": "ProductEdge",
-        "description": "A ProductEdge is an edge of a ProductConnection.",
+        "description": "",
         "fields": [
           {
             "name": "node",
@@ -951,7 +951,7 @@
       {
         "kind": "OBJECT",
         "name": "Product",
-        "description": "Product represents a provider's product.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -1019,7 +1019,7 @@
           },
           {
             "name": "provider",
-            "description": "Provider is the provider associated with this product. It can be null if the provider cannot be retrieved.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -1031,7 +1031,7 @@
           },
           {
             "name": "state",
-            "description": "State is the current state of a product.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1111,7 +1111,7 @@
           },
           {
             "name": "screenshots",
-            "description": "Screenshots provide a list of all images in a product listing's details.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -1131,7 +1131,7 @@
           },
           {
             "name": "images",
-            "description": "Images provide a list of all images in a product listing's details.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -1151,7 +1151,7 @@
           },
           {
             "name": "valueProps",
-            "description": "ValueProps is a list of value propositions with a header and a body. It is non-nullable, but it can be empty.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1175,7 +1175,7 @@
           },
           {
             "name": "valuePropsHtml",
-            "description": "ValuePropsHtml is the HTML representation of the value propositions. It is non-nullable, but it can be empty.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1191,7 +1191,7 @@
           },
           {
             "name": "setupStepsHtml",
-            "description": "SetupStepsHtml is the HTML representation of the setup steps required to\nconfigure a new product. It is non-nullable, but it can be empty.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1207,7 +1207,7 @@
           },
           {
             "name": "plans",
-            "description": "List Plans associated with the product",
+            "description": "",
             "args": [
               {
                 "name": "label",
@@ -1274,7 +1274,7 @@
           },
           {
             "name": "categories",
-            "description": "Categories are the tags for a product. They were previously used as an alias for the freeformed tags.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1298,7 +1298,7 @@
           },
           {
             "name": "tags",
-            "description": "Tags are the free-formed tags associated with the product.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1322,7 +1322,7 @@
           },
           {
             "name": "linkedCategories",
-            "description": "Linked categories are the categories that this product is a part of. Do not confuse with the categories field,\nwhich will only return the product's tags",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -1369,7 +1369,7 @@
           },
           {
             "name": "settings",
-            "description": "Settings describes how the product integrates with the marketplace.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1377,6 +1377,22 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "ProductSettings",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "listing",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "ProductListing",
                 "ofType": null
               }
             },
@@ -1398,7 +1414,7 @@
       {
         "kind": "ENUM",
         "name": "ProductState",
-        "description": "ProductState is an enum of possible product states.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1439,7 +1455,7 @@
       {
         "kind": "OBJECT",
         "name": "ProductScreenshot",
-        "description": "ProductScreenshot includes the information to find and order a screenshot.",
+        "description": "",
         "fields": [
           {
             "name": "url",
@@ -1482,7 +1498,7 @@
       {
         "kind": "OBJECT",
         "name": "ValueProp",
-        "description": "ValueProp is a value proposition.",
+        "description": "",
         "fields": [
           {
             "name": "header",
@@ -1535,7 +1551,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "PlanOrderBy",
-        "description": "PlanOrderBy defines how a plan connection is to be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -1574,7 +1590,7 @@
       {
         "kind": "ENUM",
         "name": "PlanOrderByField",
-        "description": "PlanOrderByField is the field by which a plan list will be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -1603,7 +1619,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanConnection",
-        "description": "A PlanConnection is the connection between a plan and its containing product.",
+        "description": "",
         "fields": [
           {
             "name": "edges",
@@ -1654,7 +1670,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanEdge",
-        "description": "A PlanEdge is an edge of a PlanConnection.",
+        "description": "",
         "fields": [
           {
             "name": "node",
@@ -1697,7 +1713,7 @@
       {
         "kind": "OBJECT",
         "name": "Plan",
-        "description": "Plan is the product plan.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -1717,7 +1733,7 @@
           },
           {
             "name": "displayName",
-            "description": "A human-readable display name for this plan.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1733,7 +1749,7 @@
           },
           {
             "name": "label",
-            "description": "A URL-friendly label for this Region, combining its platform and dataCenter\nwith a hyphen. Globally unique.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1749,7 +1765,7 @@
           },
           {
             "name": "product",
-            "description": "The product associated with this plan.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -1761,7 +1777,7 @@
           },
           {
             "name": "state",
-            "description": "The current state of the plan.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1777,7 +1793,7 @@
           },
           {
             "name": "fixedFeatures",
-            "description": "A list of fixed features associated with the plan.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -1824,7 +1840,7 @@
           },
           {
             "name": "meteredFeatures",
-            "description": "A list of metered features associated with the plan.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -1871,7 +1887,7 @@
           },
           {
             "name": "configurableFeatures",
-            "description": "A list of configurable features associated with the plan.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -1918,7 +1934,7 @@
           },
           {
             "name": "cost",
-            "description": "The plan's base cost without the addition of metered features costs",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1934,7 +1950,7 @@
           },
           {
             "name": "free",
-            "description": "If the plan is free, including if there are metered features changing the cost of a plan with base cost 0.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1950,7 +1966,7 @@
           },
           {
             "name": "regions",
-            "description": "The data centers associated with this plan.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -1997,7 +2013,7 @@
           },
           {
             "name": "resizableTo",
-            "description": "A list of plans that this plan is resizable to.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -2019,6 +2035,16 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null
+              },
+              {
+                "name": "orderBy",
+                "description": "",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "PlanOrderBy",
                   "ofType": null
                 },
                 "defaultValue": null
@@ -2047,7 +2073,7 @@
       {
         "kind": "ENUM",
         "name": "PlanState",
-        "description": "PlanState is an enumeration of possible plan states.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2082,7 +2108,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "FixedFeaturesOrderBy",
-        "description": "Order by which to sort fixed features.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -2121,7 +2147,7 @@
       {
         "kind": "ENUM",
         "name": "FixedFeaturesOrderByField",
-        "description": "Fields by which to sort fixed features.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2138,7 +2164,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanFixedFeatureConnection",
-        "description": "PlanFixedFeaturesConnection is the connection between a plan and its value propositions.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -2189,7 +2215,7 @@
       {
         "kind": "OBJECT",
         "name": "PageInfo",
-        "description": "PageInfo provides support for\n[Relay](https://facebook.github.io/relay/graphql/connections.htm) cursor-connections style pagination.",
+        "description": "",
         "fields": [
           {
             "name": "startCursor",
@@ -2256,7 +2282,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanFixedFeatureEdge",
-        "description": "PlanFixedFeatureEdge is an edge of a PlanFixedFeatureConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -2299,7 +2325,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanFixedFeature",
-        "description": "PlanFixedFeature is a value proposition of a plan.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -2380,7 +2406,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "MeteredFeaturesOrderBy",
-        "description": "Order by which to sort metered features.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -2419,7 +2445,7 @@
       {
         "kind": "ENUM",
         "name": "MeteredFeaturesOrderByField",
-        "description": "Fields by which to sort metered features.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2442,7 +2468,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanMeteredFeatureConnection",
-        "description": "PlanMeteredFeatureConnection is the connection between a plan and its metered properties.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -2493,7 +2519,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanMeteredFeatureEdge",
-        "description": "PlanMeteredFeatureEdge is an edge of a PlanMeteredFeatureConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -2536,7 +2562,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanMeteredFeature",
-        "description": "PlanMeteredFeature is a metered feature of a plan.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -2617,7 +2643,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanMeteredFeatureNumericDetails",
-        "description": "PlanMeteredFeatureNumericDetails contains the numeric details of a metered plan feature.",
+        "description": "",
         "fields": [
           {
             "name": "unit",
@@ -2664,7 +2690,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanFeatureCostTier",
-        "description": "PlanFeatureCostTier represents a cost tier in a plan.",
+        "description": "",
         "fields": [
           {
             "name": "limit",
@@ -2707,7 +2733,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "ConfigurableFeaturesOrderBy",
-        "description": "Order by which to sort configurable features.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -2746,7 +2772,7 @@
       {
         "kind": "ENUM",
         "name": "ConfigurableFeaturesOrderByField",
-        "description": "Fields by which to sort configurable features.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2769,7 +2795,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanConfigurableFeatureConnection",
-        "description": "PlanConfigurableFeatureConnection is the connection between a plan and its configurable properties.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -2820,7 +2846,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanConfigurableFeatureEdge",
-        "description": "PlanConfigurableFeatureEdge is an edge of a PlanConfigurableFeatureConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -2863,7 +2889,7 @@
       {
         "kind": "OBJECT",
         "name": "PlanConfigurableFeature",
-        "description": "PlanConfigurableFeature is a configurable feature of a plan.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -2914,6 +2940,38 @@
             "deprecationReason": null
           },
           {
+            "name": "upgradable",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "downgradable",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "type",
             "description": "",
             "args": [],
@@ -2942,6 +3000,26 @@
                 "ofType": {
                   "kind": "OBJECT",
                   "name": "PlanFixedFeature",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": "Deprecated in favor of plan.configurableFeatures.featureOptions"
+          },
+          {
+            "name": "featureOptions",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "PlanConfigurableFeatureOption",
                   "ofType": null
                 }
               }
@@ -2976,7 +3054,7 @@
       {
         "kind": "ENUM",
         "name": "PlanFeatureType",
-        "description": "PlanFeatureType is an enumeration of different types of plans.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3004,8 +3082,67 @@
       },
       {
         "kind": "OBJECT",
+        "name": "PlanConfigurableFeatureOption",
+        "description": "",
+        "fields": [
+          {
+            "name": "displayName",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "value",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "cost",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "PlanConfigurableFeatureNumericDetails",
-        "description": "PlanConfigurableFeatureNumericDetails contains the numeric details of a configurable plan feature.",
+        "description": "",
         "fields": [
           {
             "name": "increment",
@@ -3100,7 +3237,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "RegionsOrderBy",
-        "description": "RegionsOrderBy is an input defining how to order regions.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -3139,7 +3276,7 @@
       {
         "kind": "ENUM",
         "name": "RegionsOrderByField",
-        "description": "RegionsOrderByField is an enum of fields by which regions will be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3262,7 +3399,7 @@
       {
         "kind": "OBJECT",
         "name": "Region",
-        "description": "A Region is a data center within a cloud provider's platform.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -3282,7 +3419,7 @@
           },
           {
             "name": "displayName",
-            "description": "A human-readable display name for this region.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3298,7 +3435,7 @@
           },
           {
             "name": "platform",
-            "description": "The commercial cloud provider that hosts the region.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3314,7 +3451,7 @@
           },
           {
             "name": "dataCenter",
-            "description": "A platform-specific data center identifier.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3343,7 +3480,7 @@
       {
         "kind": "OBJECT",
         "name": "Category",
-        "description": "Category represents the category an entity is in.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -3363,7 +3500,7 @@
           },
           {
             "name": "label",
-            "description": "The URL friendly label for that category",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3379,7 +3516,7 @@
           },
           {
             "name": "displayName",
-            "description": "The user readable name for that category",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3395,7 +3532,7 @@
           },
           {
             "name": "icon",
-            "description": "The optional icon for that category. Icon namess are found in the manifold official icon repository",
+            "description": "",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -3407,7 +3544,7 @@
           },
           {
             "name": "products",
-            "description": "The products found in this category",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -3471,7 +3608,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "CategoryOrderBy",
-        "description": "CategoryOrderBy defines how a category connection is to be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -3510,7 +3647,7 @@
       {
         "kind": "ENUM",
         "name": "CategoryOrderByField",
-        "description": "CategoryOrderByField is the field by which the category list will be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3527,7 +3664,7 @@
       {
         "kind": "OBJECT",
         "name": "CategoryConnection",
-        "description": "CategoryConnection is a connection between an entity and its categories.",
+        "description": "",
         "fields": [
           {
             "name": "edges",
@@ -3578,7 +3715,7 @@
       {
         "kind": "OBJECT",
         "name": "CategoryEdge",
-        "description": "CategoryEdge is an edge of a CategoryConnection.",
+        "description": "",
         "fields": [
           {
             "name": "node",
@@ -3621,11 +3758,11 @@
       {
         "kind": "OBJECT",
         "name": "ProductSettings",
-        "description": "ProductSettings describes how the product integrates with the marketplace.",
+        "description": "",
         "fields": [
           {
             "name": "ssoSupported",
-            "description": "Whether or not the product supports SSO allowing users to visit its dashboard.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3641,7 +3778,7 @@
           },
           {
             "name": "credentialsSupport",
-            "description": "Describes product credentials support.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3664,7 +3801,7 @@
       {
         "kind": "ENUM",
         "name": "ProductCredentialsSupportType",
-        "description": "ProductCredentialsSupportType describes product credentials support.\n\n* `NONE`: means that no credentials are necessary to access the product.\n    This can happen for products that are only usable through their dashboard.\n* `SINGLE`: means that the product only supports one credential set at a single time.\n* `MULTIPLE`: means that the product supports multiple credential sets at a single time.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3691,6 +3828,81 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "ProductListing",
+        "description": "",
+        "fields": [
+          {
+            "name": "beta",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "new",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "featured",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "comingSoon",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "SCALAR",
         "name": "ProfileIdentity",
         "description": "ProfileIdentity can be a profile's `id` (Manifold's internal id) or\nby a profile's `subject` (platforms own id).",
@@ -3703,11 +3915,11 @@
       {
         "kind": "OBJECT",
         "name": "Profile",
-        "description": "Profile represents a consumer in the Manifold system.",
+        "description": "",
         "fields": [
           {
             "name": "id",
-            "description": "The ID of the profile which is internally used.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3723,7 +3935,7 @@
           },
           {
             "name": "subject",
-            "description": "Subject represents the identifier of the profile on the platform's side.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3739,7 +3951,7 @@
           },
           {
             "name": "platform",
-            "description": "Platform represents the platform this profile belongs to.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3755,7 +3967,7 @@
           },
           {
             "name": "invoicePreview",
-            "description": "InvoicePreview provides a preview of the customer’s invoice\nfor the current billing cycle as of midnight UTC.\n\nAn invoice preview consists of the amount due and related details at\na specific moment in time. It does not represent an estimation of the\namount that will be due at the end of the billing cycle.\n\n*This is only an invoice preview. It should not be used to charge users.*\n\nNote: This is currently only supported with a Platform API token.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -3767,7 +3979,7 @@
           },
           {
             "name": "invoices",
-            "description": "Invoices returns a paginated list of invoices.\n\nNote: This is currently only supported with a Platform API token.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -3814,7 +4026,7 @@
           },
           {
             "name": "state",
-            "description": "State represents the current state for the profile. Based on this state, the\nprofile can either take certain actions or it can not.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3830,7 +4042,7 @@
           },
           {
             "name": "stateModifiedBy",
-            "description": "stateModifiedBy represents who modified the state for this profile latest.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3853,11 +4065,11 @@
       {
         "kind": "OBJECT",
         "name": "Platform",
-        "description": "Platform represents a platform where a Manifold marketplace has been published.",
+        "description": "",
         "fields": [
           {
             "name": "id",
-            "description": "The ID of the platform, for internal usage.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3873,7 +4085,7 @@
           },
           {
             "name": "domain",
-            "description": "The domain associated with the platform.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3896,7 +4108,7 @@
       {
         "kind": "OBJECT",
         "name": "Invoice",
-        "description": "Invoice represents the total amount due in a specific billing period.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -3916,7 +4128,7 @@
           },
           {
             "name": "cost",
-            "description": "Cost is the amount due for the invoice.\n\nThe cost is provided in the currency’s smallest unit.\n\nExample: `1000` is `1000 cents` which is `$10 USD`.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3932,7 +4144,7 @@
           },
           {
             "name": "currency",
-            "description": "Currency is the currency of the `cost` field.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3948,7 +4160,7 @@
           },
           {
             "name": "start",
-            "description": "Start indicates when the invoice's period starts.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3964,7 +4176,7 @@
           },
           {
             "name": "end",
-            "description": "End indicates when the invoice's period ends.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3980,7 +4192,7 @@
           },
           {
             "name": "status",
-            "description": "Status represents the current status of the invoice",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3996,7 +4208,7 @@
           },
           {
             "name": "revenueShare",
-            "description": "RevenueShare represents revenue split between corresponding parties for\nthis invoice. Note that revenue share is only calculated for invoices in\nPENDING or PAID state.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4012,7 +4224,7 @@
           },
           {
             "name": "lineItems",
-            "description": "List LineItems composing the invoice.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -4062,7 +4274,7 @@
       {
         "kind": "ENUM",
         "name": "Currency",
-        "description": "Currency is the supported currency, represented as an ISO currency code.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4089,7 +4301,7 @@
       {
         "kind": "ENUM",
         "name": "InvoiceStatus",
-        "description": "InvoiceStatus represents the current status of an Invoice",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4118,11 +4330,11 @@
       {
         "kind": "OBJECT",
         "name": "RevenueShare",
-        "description": "RevenueShare represents revenue split between corresponding parties",
+        "description": "",
         "fields": [
           {
             "name": "providers",
-            "description": "providers represents how much money in cents providers are expected to\nreceive from this invoice.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4138,7 +4350,7 @@
           },
           {
             "name": "platform",
-            "description": "platform represents how much money in cents the platform is expected to\nreceive from this invoice.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4154,7 +4366,7 @@
           },
           {
             "name": "manifold",
-            "description": "manifold represents how much money in cents Manifold is expected to receive\nfrom this invoice.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4170,7 +4382,7 @@
           },
           {
             "name": "fees",
-            "description": "fees represents amount of money in cents subtracted from the total cost\nbefore revenue.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4193,7 +4405,7 @@
       {
         "kind": "OBJECT",
         "name": "LineItemConnection",
-        "description": "LineItemConnection is the connection between an invoice and its lineItems.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -4244,7 +4456,7 @@
       {
         "kind": "OBJECT",
         "name": "LineItemEdge",
-        "description": "LineItemEdge is an edge of LineItemConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -4283,7 +4495,7 @@
       {
         "kind": "OBJECT",
         "name": "LineItem",
-        "description": "LineItem represents the amount due for a resource.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -4303,7 +4515,7 @@
           },
           {
             "name": "cost",
-            "description": "Cost is the amount due for the associated resource.\n\nThe cost is provided in the currency’s smallest unit.\n\nExample: `1000` is `1000 cents` which is `$10 USD`.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4319,7 +4531,7 @@
           },
           {
             "name": "currency",
-            "description": "Currency is the currency of the `cost` field.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4335,7 +4547,7 @@
           },
           {
             "name": "duration",
-            "description": "Duration is the time horizon for the associated resource’s billing (monthly, yearly).",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4351,7 +4563,7 @@
           },
           {
             "name": "renewalPoint",
-            "description": "RenewalPoint describes the renewal behavior (calendar, anniversary).",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4367,7 +4579,7 @@
           },
           {
             "name": "chargeTime",
-            "description": "ChargeTime describes the charge behavior (post-paid, pre-paid).",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4383,7 +4595,7 @@
           },
           {
             "name": "resource",
-            "description": "Resource is the resource associated with this line item.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -4395,7 +4607,7 @@
           },
           {
             "name": "product",
-            "description": "Product is the product associated with this line item.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -4407,7 +4619,7 @@
           },
           {
             "name": "subLineItems",
-            "description": "List SubLineItems composing the line item.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -4457,7 +4669,7 @@
       {
         "kind": "ENUM",
         "name": "Duration",
-        "description": "Duration is a representation of the length a cycle.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4474,7 +4686,7 @@
       {
         "kind": "ENUM",
         "name": "RenewalPoint",
-        "description": "RenewalPoint is a representation of when the cycle renewal occurs.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4491,7 +4703,7 @@
       {
         "kind": "ENUM",
         "name": "ChargeTime",
-        "description": "ChargeTime is representation of when the charge for a cycle occurs.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4508,7 +4720,7 @@
       {
         "kind": "OBJECT",
         "name": "Resource",
-        "description": "A resource represents the provisioned version of a selected product. It is\nlinked to a plan and has credentials associated with it.",
+        "description": "",
         "fields": [
           {
             "name": "id",
@@ -4528,7 +4740,7 @@
           },
           {
             "name": "displayName",
-            "description": "A human-readable display name for this resource. ",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4544,7 +4756,7 @@
           },
           {
             "name": "label",
-            "description": "A machine-readable label for this resource, unique per owner. ",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4560,7 +4772,7 @@
           },
           {
             "name": "ssoSupported",
-            "description": "Whether or not a user can SSO into this resource's product dashboard.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4576,23 +4788,19 @@
           },
           {
             "name": "ssoUrl",
-            "description": "The URL used to redirect the user to this resource's product dashboard. When requested, this field will\nreturn a unique and short-lived URL that can be used to redirect the user towards the product dashboard. If\nnot used, the URL will expire after around 5 minutes and another one will need to be requested.",
+            "description": "",
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
             "name": "status",
-            "description": "Indicates the availability status of the resource ",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4608,7 +4816,7 @@
           },
           {
             "name": "plan",
-            "description": "The plan for which this resource is provisioned. The plan can be null if the\nresource is a custom resource, or if a transient failure occurred.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -4620,7 +4828,7 @@
           },
           {
             "name": "region",
-            "description": "The region for which this resource is provisioned. The region can be null if the\nresource is a custom resource, or if a transient failure occurred.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -4632,7 +4840,7 @@
           },
           {
             "name": "owner",
-            "description": "The profile which owns the resource.\n\nNote: If the resource is not owned by a Platform Profile, the value is null.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -4644,7 +4852,7 @@
           },
           {
             "name": "createdAt",
-            "description": "The time the resource was created at.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4656,7 +4864,7 @@
           },
           {
             "name": "credentials",
-            "description": "A list of credentials which can be used to access the Resource.",
+            "description": "",
             "args": [
               {
                 "name": "first",
@@ -4706,7 +4914,7 @@
       {
         "kind": "OBJECT",
         "name": "ResourceStatus",
-        "description": "ResourceStatus represents the current availability status of a Resource",
+        "description": "",
         "fields": [
           {
             "name": "label",
@@ -4765,7 +4973,7 @@
       {
         "kind": "ENUM",
         "name": "ResourceStatusLabel",
-        "description": "ResourceStatusLabel is an enum representing the possible status a resource can have.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4824,7 +5032,7 @@
       {
         "kind": "OBJECT",
         "name": "CredentialConnection",
-        "description": "CredentialsConnection allows a type to set up a connection to list associated\ncredentials.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -4875,7 +5083,7 @@
       {
         "kind": "OBJECT",
         "name": "CredentialEdge",
-        "description": "CredentialsEdge represents a single item on a CredentialsConnection page which\nhas a cursor that can be used for pagination and holds the actual credential\ninformation.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -4914,11 +5122,11 @@
       {
         "kind": "OBJECT",
         "name": "Credential",
-        "description": "Credential represents a plain-text value for a credential which can be used to\nconfigure a resource.",
+        "description": "",
         "fields": [
           {
             "name": "key",
-            "description": "The key for referencing the credential. ",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4934,7 +5142,7 @@
           },
           {
             "name": "value",
-            "description": "The plain-text value of the credential. This value is the value that can be\nused in the actual configuration for the resource.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4957,7 +5165,7 @@
       {
         "kind": "OBJECT",
         "name": "SubLineItemConnection",
-        "description": "SubLineItemConnection is the connection between a lineItem and its subLineItems.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -5008,7 +5216,7 @@
       {
         "kind": "OBJECT",
         "name": "SubLineItemEdge",
-        "description": "SubLineItemEdge is an edge of SubLineItemConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -5047,11 +5255,11 @@
       {
         "kind": "OBJECT",
         "name": "SubLineItem",
-        "description": "SubLineItem represents the breakdown by base cost, features, and metered usage\nof the amount due by resource.",
+        "description": "",
         "fields": [
           {
             "name": "cost",
-            "description": "Cost is the amount due for the feature.\n\nThe cost is provided in the currency’s smallest unit.\n\nExample: `1000` is `1000 cents` which is `$10 USD`.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5067,7 +5275,7 @@
           },
           {
             "name": "currency",
-            "description": "Currency is the currency of the `cost` field.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5083,7 +5291,7 @@
           },
           {
             "name": "plan",
-            "description": "Plan is the plan associated with the SubLineItem.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -5095,7 +5303,7 @@
           },
           {
             "name": "item",
-            "description": "Item is the feature name (either base-cost, or a customized name).",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5111,7 +5319,7 @@
           },
           {
             "name": "description",
-            "description": "Description is the value for the feature, or a metering bucket.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5127,7 +5335,7 @@
           },
           {
             "name": "calculationType",
-            "description": "CalculationType defines the feature’s billing behavior (prorated, usage).",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5143,7 +5351,7 @@
           },
           {
             "name": "start",
-            "description": "Start indicates when the feature started to take effect.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5159,7 +5367,7 @@
           },
           {
             "name": "end",
-            "description": "End indicates when the feature stopped taking effect.",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5182,7 +5390,7 @@
       {
         "kind": "ENUM",
         "name": "CalculationType",
-        "description": "CalculationType represents the known calculation types possible for SubLineItems.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5205,7 +5413,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "InvoiceOrderBy",
-        "description": "InvoiceOrderBy defines how an invoice connection is to be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -5244,7 +5452,7 @@
       {
         "kind": "ENUM",
         "name": "InvoiceOrderByField",
-        "description": "InvoiceOrderByField is the field by which an Invoice list will be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5261,7 +5469,7 @@
       {
         "kind": "OBJECT",
         "name": "InvoiceConnection",
-        "description": "InvoiceConnection is the connection between an entity and its invoices.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -5312,7 +5520,7 @@
       {
         "kind": "OBJECT",
         "name": "InvoiceEdge",
-        "description": "InvoiceEdge is an edge of InvoiceConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -5351,7 +5559,7 @@
       {
         "kind": "ENUM",
         "name": "ProfileState",
-        "description": "ProfileState is the current state the profile is in. Based on this state,\nManifold determines if a profile can take certain actions or not.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5380,7 +5588,7 @@
       {
         "kind": "ENUM",
         "name": "ProfileStateModifier",
-        "description": "ProfileStateModifier represents the possible modifiers of the Profile's state.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5403,7 +5611,7 @@
       {
         "kind": "OBJECT",
         "name": "ResourceConnection",
-        "description": "ResourceConnection allows a type to set up a connection to list associated\nresources.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -5454,7 +5662,7 @@
       {
         "kind": "OBJECT",
         "name": "ResourceEdge",
-        "description": "ResourceEdge represents a single item on a Resources Connection page which has\na cursor that can be used for pagination and holds the actual resource\ninformation.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -5493,7 +5701,7 @@
       {
         "kind": "ENUM",
         "name": "IsDeleted",
-        "description": "IsDeleted is an enum indicating whether a query should search for deleted records.\nWhen value is MAYBE, query searches both deleted and non-deleted records",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -5522,12 +5730,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "WithUsage",
-        "description": "WithUsage allows fetching profiles that have been used after the start date,\nbefore the end date, or between the start and end date.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
             "name": "start",
-            "description": "Start allows fetching profiles used after this date.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "Time",
@@ -5537,7 +5745,7 @@
           },
           {
             "name": "end",
-            "description": "End allows fetching profiles used before this date.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "Time",
@@ -5553,7 +5761,7 @@
       {
         "kind": "OBJECT",
         "name": "ProfileConnection",
-        "description": "ProfileConnection is the connection containing Profile edges.",
+        "description": "",
         "fields": [
           {
             "name": "pageInfo",
@@ -5604,7 +5812,7 @@
       {
         "kind": "OBJECT",
         "name": "ProfileEdge",
-        "description": "ProfileEdge is the edge of a ProfileConnection.",
+        "description": "",
         "fields": [
           {
             "name": "cursor",
@@ -5647,11 +5855,11 @@
       {
         "kind": "OBJECT",
         "name": "Mutation",
-        "description": "Mutations for the Manifold GraphQL API\n\nMore details and usage available in our\n[documentation](https://docs.manifold.co/docs/graphql-apis-AWRk3LPzpjcI5ynoCtuZs).",
+        "description": "",
         "fields": [
           {
             "name": "createResource",
-            "description": "Create an asynchronous request to create a resource with Manifold. If the owner ID is omitted in the input,\nthe system will try to find that owner using the given authentication token.\n\nNote: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated\nthoughout the operation lifecycle. This endpoint returns the  preview of the resource before it is created.",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5682,7 +5890,7 @@
           },
           {
             "name": "updateResource",
-            "description": "Updates a resource synchronously using the provided input.",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5713,7 +5921,7 @@
           },
           {
             "name": "updateResourcePlan",
-            "description": "Create an asynchronous request to update a resource's plan with Manifold using the provided resource ID. If the owner\nID is omitted in the input, the system will try to find that owner using the given authentication token. The owner\nmust have access to the resource for it to be updatable.\n\nNote: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated\nthoughout the operation lifecycle. This endpoint returns the resource before it is updated.",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5744,7 +5952,7 @@
           },
           {
             "name": "deleteResource",
-            "description": "Create an asynchronous request to delete a resource with Manifold using the provided resource ID. If the owner\nID is omitted in the input, the system will try to find that owner using the given authentication token. The owner\nmust have access to the resource for it to be deprovisionable.\n\nNote: The operations on resources in Manifold are asynchronous. The resource returned by this endpoint will get updated\nthoughout the operation lifecycle. This endpoint returns the resource before it is deleted.",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5775,7 +5983,7 @@
           },
           {
             "name": "updateInvoiceStatus",
-            "description": "Update the status of an Invoice to mark it as paid.\n\nPossible actions are:\n- ATTEMPT: A payment was tried, but was unable to be collected (also requires a reason)\n- COLLECTED: A payment was tried, and was successfully collected (does not require a reason)",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5802,7 +6010,7 @@
           },
           {
             "name": "createProfileAuthToken",
-            "description": "Create a Manifold Auth Token for a Profile.\n\nNote: You must authenticate with a platform api token.",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5833,7 +6041,7 @@
           },
           {
             "name": "updateProfileSubject",
-            "description": "Update a profile subject.\n\nChanging the subject will change the subject linked to a platform profile.\nThis results in changing the owner for the platform profile.\nThe subject is the platform's external id that is linked to a platform profile.\n\nThe consequences are:\n* the new owner will be charged for this complete billing cycle\n* the new owner will have access to all the historical data (invoices) of the Profile\n\n\nNote: Transferring resource ownership between two profiles is also possible\nand allows to split the charge of the billing cycle by usage and to keep\nhistorical data ownership separated.\nOnly Platform API tokens are able to change subjects.",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5864,7 +6072,7 @@
           },
           {
             "name": "updateProfileState",
-            "description": "Update a profile state.\n\nChanging the state will change the state of a platform profile.\nThe state of the profile can be ACTIVE, SUSPENDED, or DELETED.\nThe default state of a profile is ACTIVE.\nChanging this results in a change to the abilities of a platform profile.\n\nThe consequences are:\n* the profile will become SUSPENDED, DELETED, or ACTIVE\n* the abilities of the profile will reflect the new state",
+            "description": "",
             "args": [
               {
                 "name": "input",
@@ -5902,12 +6110,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "CreateResourceInput",
-        "description": "A request input type for creating a new resource.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
             "name": "label",
-            "description": "A URL friendly label for this Resource. Globally unique.",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5921,7 +6129,7 @@
           },
           {
             "name": "displayName",
-            "description": "A human readble display name for this Resource.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -5931,7 +6139,7 @@
           },
           {
             "name": "ownerId",
-            "description": "The manifold id of the owner for this resource. Omit to use the current user ID.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "ID",
@@ -5941,7 +6149,7 @@
           },
           {
             "name": "owner",
-            "description": "The manifold id or plaform id of the owner for this resource. Omit to use the current user ID.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "ProfileIdentity",
@@ -5951,7 +6159,7 @@
           },
           {
             "name": "productId",
-            "description": "The product to provision for this resource.",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5965,7 +6173,7 @@
           },
           {
             "name": "planId",
-            "description": "The plan to provision for this resource on the given product.",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5979,7 +6187,7 @@
           },
           {
             "name": "regionId",
-            "description": "The region to provision this resource to, must be supported by the plan.",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -5999,11 +6207,11 @@
       {
         "kind": "OBJECT",
         "name": "CreateResourcePayload",
-        "description": "The payload for a provisioned resource.",
+        "description": "",
         "fields": [
           {
             "name": "data",
-            "description": "The provisioned resource body",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -6026,12 +6234,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "UpdateResourceInput",
-        "description": "A request input type for updating an existing resource",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
             "name": "resourceId",
-            "description": "The ID of the resource to update",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -6045,7 +6253,7 @@
           },
           {
             "name": "newLabel",
-            "description": "The new label to give to this resource",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -6055,7 +6263,7 @@
           },
           {
             "name": "newDisplayName",
-            "description": "The new display name to give to this resource",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -6071,11 +6279,11 @@
       {
         "kind": "OBJECT",
         "name": "UpdateResourcePayload",
-        "description": "The payload for an updated resource.",
+        "description": "",
         "fields": [
           {
             "name": "data",
-            "description": "The updated resource body",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -6098,12 +6306,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "UpdateResourcePlanInput",
-        "description": "A request input type for updating an existing resource's plan.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
             "name": "resourceId",
-            "description": "The ID of the resource to resize",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -6117,7 +6325,7 @@
           },
           {
             "name": "newPlanID",
-            "description": "The id of the new plan to assign for this resource.",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -6131,7 +6339,7 @@
           },
           {
             "name": "ownerId",
-            "description": "The id of the owner for this resource. Omit to use the current user ID.\n\nDeprecated: Not used.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "ID",
@@ -6147,11 +6355,11 @@
       {
         "kind": "OBJECT",
         "name": "UpdateResourcePlanPayload",
-        "description": "The payload for a resource whose plan changed.",
+        "description": "",
         "fields": [
           {
             "name": "data",
-            "description": "The updated resource body",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -6174,12 +6382,12 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "DeleteResourceInput",
-        "description": "A request input type for deprovisoning an existing resource.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
             "name": "resourceId",
-            "description": "The ID of the resource to deprovision",
+            "description": "",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -6193,7 +6401,7 @@
           },
           {
             "name": "ownerId",
-            "description": "The id of the owner for this resource. Omit to use the current user ID.\n\nDeprecated: Not used.",
+            "description": "",
             "type": {
               "kind": "SCALAR",
               "name": "ID",
@@ -6209,11 +6417,11 @@
       {
         "kind": "OBJECT",
         "name": "DeleteResourcePayload",
-        "description": "The payload for a deprovisioned resource.",
+        "description": "",
         "fields": [
           {
             "name": "data",
-            "description": "The deprovisioned resource body",
+            "description": "",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -6236,7 +6444,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "InvoiceStatusInput",
-        "description": "PayInvoiceMutation is the mutation input for updating an Invoice to paid",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -6285,7 +6493,7 @@
       {
         "kind": "ENUM",
         "name": "InvoiceAction",
-        "description": "InvoiceAction is the mutation action to be taken on an Invoice",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -6308,7 +6516,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "CreateProfileAuthTokenInput",
-        "description": "CreateProfileAuthTokenInput requires a profileId in order to create a scoped auth token.\nThe profileId must be the same profileId the platform uses to expose identity and authorization\nTo manifold.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -6333,7 +6541,7 @@
       {
         "kind": "OBJECT",
         "name": "CreateProfileAuthTokenPayload",
-        "description": "The payload for creating an auth token returns a profile-scoped auth token\navailable for use with manifold.",
+        "description": "",
         "fields": [
           {
             "name": "data",
@@ -6356,7 +6564,7 @@
       {
         "kind": "OBJECT",
         "name": "ProfileAuthToken",
-        "description": "The profile-scoped auth token that is available for use to authenticate with manifold.",
+        "description": "",
         "fields": [
           {
             "name": "token",
@@ -6383,7 +6591,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "UpdateProfileSubjectInput",
-        "description": "UpdateProfileSubjectInput accepts a profile subject for a given profileId.\nThe subject is the new subject to update to.\nThe id is the profile identity, it can either be a subject (the platform's id) or a manifold internal profileId.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -6422,7 +6630,7 @@
       {
         "kind": "OBJECT",
         "name": "UpdateProfileSubjectPayload",
-        "description": "The payload from updating the profile subject is the updated profile.",
+        "description": "",
         "fields": [
           {
             "name": "data",
@@ -6449,7 +6657,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "UpdateProfileStateInput",
-        "description": "UpdateProfileStateInput accepts a new profile state for a given profile subject.\nThe state is the new profile state.\nThe subject is the profile subject.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -6488,7 +6696,7 @@
       {
         "kind": "OBJECT",
         "name": "UpdateProfileStatePayload",
-        "description": "The payload from updating the profile state is the updated profile.",
+        "description": "",
         "fields": [
           {
             "name": "data",
@@ -7311,7 +7519,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "InvoicePreviewOrderBy",
-        "description": "InvoicePreviewOrderBy defines how an invoice preview connection is to be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": [
           {
@@ -7350,7 +7558,7 @@
       {
         "kind": "ENUM",
         "name": "InvoicePreviewOrderByField",
-        "description": "InvoicePreviewOrderByField is the field by which an Invoice preview list will be ordered.",
+        "description": "",
         "fields": null,
         "inputFields": null,
         "interfaces": null,

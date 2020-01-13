@@ -32,6 +32,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/jawsdb/screenshots/ss4.PNG',
   ],
   label: 'jawsdb-mysql',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl: 'https://cdn.manifold.co/providers/jawsdb/logos/80ca8b9113cf76fd.png',
   plans: {
     pageInfo: {
@@ -413,6 +414,7 @@ const product: Product = {
                   'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1p6ht64cv4chuq2c3qe8h2r8kfe9j6awh279xquz8',
                 node: {
                   displayName: 'Backups',
+                  downgradable: true,
                   id: 'cduq6x3fdnfp4rb3dduq0wr000000',
                   label: 'backups',
                   numericDetails: {
@@ -436,6 +438,7 @@ const product: Product = {
                     },
                   ],
                   type: PlanFeatureType.Number,
+                  upgradable: true,
                 },
               },
               {
@@ -443,6 +446,7 @@ const product: Product = {
                   'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1pd9v6puv5d1kq0xvjerup4y38e1t74rkbcnhj4b12dxt68tbj48x7pzbx',
                 node: {
                   displayName: 'RAM',
+                  downgradable: true,
                   id: 'cduq6x3fdnfpjvkkehgpwrv5bxhpr',
                   label: 'instance_class',
                   options: [
@@ -508,6 +512,7 @@ const product: Product = {
                     },
                   ],
                   type: PlanFeatureType.String,
+                  upgradable: true,
                 },
               },
               {
@@ -515,6 +520,7 @@ const product: Product = {
                   'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1q6hu64d35dtrkce3jc9jp6t3qcwh2r8kfe9j6awh279xquz8',
                 node: {
                   displayName: 'High Availability',
+                  downgradable: true,
                   id: 'cduq6x3fdnfq4tb4enq68rbecdwg0',
                   label: 'redundancy',
                   options: [
@@ -532,6 +538,7 @@ const product: Product = {
                     },
                   ],
                   type: PlanFeatureType.Boolean,
+                  upgradable: true,
                 },
               },
               {
@@ -539,6 +546,7 @@ const product: Product = {
                   'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1q6tw36tk575kq0tbm70h2r8kfe9j6awh279xquz8',
                 node: {
                   displayName: 'Storage',
+                  downgradable: true,
                   id: 'cduq6x3fdnfq6x3fe9gpet8000000',
                   label: 'storage',
                   numericDetails: {
@@ -562,6 +570,7 @@ const product: Product = {
                     },
                   ],
                   type: PlanFeatureType.Number,
+                  upgradable: true,
                 },
               },
             ],

@@ -30,6 +30,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/mailgun/mailgun/images/5bf55h4dxkvqge5ujyj5mj9260.png',
   ],
   label: 'mailgun',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl: 'https://cdn.manifold.co/providers/mailgun/logos/q922nwncyuw263chbg86e0rw1m.png',
   plans: {
     pageInfo: {

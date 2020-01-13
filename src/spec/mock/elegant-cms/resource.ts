@@ -135,6 +135,7 @@ const resource: Resource = {
         'https://cdn.manifold.co/providers/elegant-cms/screenshots/ss5.png',
       ],
       label: 'elegant-cms',
+      listing: { beta: false, featured: false, new: false, comingSoon: false },
       logoUrl: 'https://cdn.manifold.co/providers/elegant-cms/logos/280x280.png',
       state: ProductState.Available,
       settings: {

@@ -28,6 +28,7 @@ const product: Product = {
     'https://cdn.manifold.co/providers/ximilar/screenshots/39d5a682-8532-405d-952b-c9b58f787fa2.png',
   ],
   label: 'generic-tagging',
+  listing: { beta: false, featured: false, new: false, comingSoon: false },
   logoUrl:
     'https://cdn.manifold.co/providers/ximilar/logos/9ef978f9-309e-4e0b-a9d8-ee99b78a4ac3.png',
   plans: {
