@@ -22,7 +22,7 @@ interface SuccessMessage {
   message: string;
   resourceLabel?: string;
   resourceId?: string;
-  redirectUrl: string;
+  redirectUrl?: string;
 }
 
 interface ErrorMessage {
