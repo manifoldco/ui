@@ -1,7 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -60,6 +60,8 @@
     "test:spec": "stencil test --spec",
     "test:coverage": "stencil test --spec --e2e --coverage --maxWorkers=2",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
+    "test:npm-install": "rm -rf test-install && npm run prepare:package && cd pkg && npm link && cd .. && mkdir -p test-install && node scripts/test-install && cd test-install && npm install --save @manifoldco/ui && npm unlink @manifoldco/ui",
+    "test:yarn-install": "rm -rf test-install && npm run prepare:package && cd pkg && yarn link && cd .. && mkdir -p test-install && node scripts/test-install && cd test-install && yarn add @manifoldco/ui && yarn unlink @manifoldco/ui",
     "test:watch": "stencil test --spec --e2e --watchAll",
     "update-version": "node scripts/version-from-git"
   },

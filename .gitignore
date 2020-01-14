@@ -43,3 +43,5 @@ storybook-static
 .cache
 docs/public
 docs/docs/changelog.md
+
+/test-install
