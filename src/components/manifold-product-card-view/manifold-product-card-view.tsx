@@ -1,3 +1,4 @@
+// Newer version of <manifold-service-card-view>. Keep this in 1.0.
 import { h, Component, Prop, Event, EventEmitter, Element } from '@stencil/core';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';

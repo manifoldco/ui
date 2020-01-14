@@ -588,6 +588,18 @@ export namespace Components {
     'options': Option[];
     'required'?: boolean;
   }
+  interface ManifoldServiceCard {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
+    'isFeatured'?: boolean;
+    'preserveEvent'?: boolean;
+    'product'?: ProductCardQuery['product'];
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+  }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
   interface ManifoldTemplateCard {
@@ -942,6 +954,12 @@ declare global {
     new (): HTMLManifoldSelectElement;
   };
 
+  interface HTMLManifoldServiceCardElement extends Components.ManifoldServiceCard, HTMLStencilElement {}
+  var HTMLManifoldServiceCardElement: {
+    prototype: HTMLManifoldServiceCardElement;
+    new (): HTMLManifoldServiceCardElement;
+  };
+
   interface HTMLManifoldSkeletonImgElement extends Components.ManifoldSkeletonImg, HTMLStencilElement {}
   var HTMLManifoldSkeletonImgElement: {
     prototype: HTMLManifoldSkeletonImgElement;
@@ -1031,6 +1049,7 @@ declare global {
     'manifold-resource-status': HTMLManifoldResourceStatusElement;
     'manifold-resource-status-view': HTMLManifoldResourceStatusViewElement;
     'manifold-select': HTMLManifoldSelectElement;
+    'manifold-service-card': HTMLManifoldServiceCardElement;
     'manifold-skeleton-img': HTMLManifoldSkeletonImgElement;
     'manifold-skeleton-text': HTMLManifoldSkeletonTextElement;
     'manifold-template-card': HTMLManifoldTemplateCardElement;
@@ -1618,6 +1637,18 @@ declare namespace LocalJSX {
     'options'?: Option[];
     'required'?: boolean;
   }
+  interface ManifoldServiceCard {
+    /**
+    * _(hidden)_
+    */
+    'graphqlFetch'?: GraphqlFetch;
+    'hideUntilReady'?: boolean;
+    'isFeatured'?: boolean;
+    'preserveEvent'?: boolean;
+    'product'?: ProductCardQuery['product'];
+    'productLabel'?: string;
+    'productLinkFormat'?: string;
+  }
   interface ManifoldSkeletonImg {}
   interface ManifoldSkeletonText {}
   interface ManifoldTemplateCard {
@@ -1706,6 +1737,7 @@ declare namespace LocalJSX {
     'manifold-resource-status': ManifoldResourceStatus;
     'manifold-resource-status-view': ManifoldResourceStatusView;
     'manifold-select': ManifoldSelect;
+    'manifold-service-card': ManifoldServiceCard;
     'manifold-skeleton-img': ManifoldSkeletonImg;
     'manifold-skeleton-text': ManifoldSkeletonText;
     'manifold-template-card': ManifoldTemplateCard;
@@ -1774,6 +1806,7 @@ declare module "@stencil/core" {
       'manifold-resource-status': LocalJSX.ManifoldResourceStatus & JSXBase.HTMLAttributes<HTMLManifoldResourceStatusElement>;
       'manifold-resource-status-view': LocalJSX.ManifoldResourceStatusView & JSXBase.HTMLAttributes<HTMLManifoldResourceStatusViewElement>;
       'manifold-select': LocalJSX.ManifoldSelect & JSXBase.HTMLAttributes<HTMLManifoldSelectElement>;
+      'manifold-service-card': LocalJSX.ManifoldServiceCard & JSXBase.HTMLAttributes<HTMLManifoldServiceCardElement>;
       'manifold-skeleton-img': LocalJSX.ManifoldSkeletonImg & JSXBase.HTMLAttributes<HTMLManifoldSkeletonImgElement>;
       'manifold-skeleton-text': LocalJSX.ManifoldSkeletonText & JSXBase.HTMLAttributes<HTMLManifoldSkeletonTextElement>;
       'manifold-template-card': LocalJSX.ManifoldTemplateCard & JSXBase.HTMLAttributes<HTMLManifoldTemplateCardElement>;

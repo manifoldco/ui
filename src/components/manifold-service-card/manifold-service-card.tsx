@@ -1,4 +1,4 @@
-// Newer version of <manifold-service-card>. Keep this in 1.0.
+// Replaced by <manifold-product-card> (delete this in 1.0)
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 
 import connection from '../../state/connection';
@@ -8,14 +8,14 @@ import loadMark from '../../utils/loadMark';
 
 import { ProductCardQuery, ProductCardQueryVariables } from '../../types/graphql';
 
-import productCardQuery from './product-card.graphql';
+import productCardQuery from '../manifold-product-card/product-card.graphql';
 
 // Product has at least one free plan.
 const isFree = (product: ProductCardQuery['product']) =>
   !!(product.plans && product.plans.edges.find(({ node }) => node.free));
 
-@Component({ tag: 'manifold-product-card' })
-export class ManifoldProductCard {
+@Component({ tag: 'manifold-service-card' })
+export class ManifoldServiceCard {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
@@ -42,6 +42,10 @@ export class ManifoldProductCard {
 
   @loadMark()
   componentWillLoad() {
+    console.warn(
+      `<manifold-service-card> will be deprecated in version 1.0. Please use <manifold-product-card> instead.`
+    );
+
     let call;
 
     if (this.productLabel) {
