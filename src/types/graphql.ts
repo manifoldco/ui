@@ -1376,10 +1376,10 @@ export type PlanFragment = (
       { __typename?: 'PlanConfigurableFeatureEdge' }
       & { node: (
         { __typename?: 'PlanConfigurableFeature' }
-        & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+        & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'upgradable' | 'downgradable' | 'type'>
         & { options: Maybe<Array<(
-          { __typename?: 'PlanFixedFeature' }
-          & Pick<PlanFixedFeature, 'displayName' | 'displayValue' | 'label'>
+          { __typename?: 'PlanConfigurableFeatureOption' }
+          & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
         )>>, numericDetails: Maybe<(
           { __typename?: 'PlanConfigurableFeatureNumericDetails' }
           & Pick<PlanConfigurableFeatureNumericDetails, 'increment' | 'min' | 'max' | 'unit'>

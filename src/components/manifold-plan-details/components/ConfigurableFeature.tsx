@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from '@stencil/core';
-
+import { $ } from '../../../utils/currency';
 import { PlanConfigurableFeatureEdge, PlanFeatureType } from '../../../types/graphql';
 import { Option } from '../../../types/Select';
 
@@ -36,9 +36,9 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
     // string
     case PlanFeatureType.String: {
       const selectOptions: Option[] = options
-        ? options.map(option => ({
-            label: option.displayName,
-            value: option.label,
+        ? options.map(({ displayName, cost, value }) => ({
+            label: `${displayName} (${$(cost)})`,
+            value,
           }))
         : [];
       const defaultOption = value

@@ -4,7 +4,7 @@ fragment plan on Plan {
   label
   free
   cost
-  fixedFeatures(first: 25) {
+  fixedFeatures(first: 500) {
     edges {
       node {
         displayName
@@ -13,7 +13,7 @@ fragment plan on Plan {
       }
     }
   }
-  meteredFeatures(first: 25) {
+  meteredFeatures(first: 500) {
     edges {
       node {
         label
@@ -28,16 +28,18 @@ fragment plan on Plan {
       }
     }
   }
-  configurableFeatures(first: 25) {
+  configurableFeatures(first: 500) {
     edges {
       node {
         label
         displayName
+        upgradable
+        downgradable
         type
-        options {
+        options: featureOptions {
           displayName
-          displayValue
-          label
+          value
+          cost
         }
         numericDetails {
           increment
