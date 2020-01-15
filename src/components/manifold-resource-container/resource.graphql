@@ -95,11 +95,10 @@ query getResource($resourceLabel: String!) {
             label
             displayName
             type
-            options {
-              id
-              label
+            featureOptions {
               displayName
-              displayValue
+              value
+              cost
             }
             numericDetails {
               unit

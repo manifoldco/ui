@@ -34,7 +34,7 @@ fragment plan on Plan {
         label
         displayName
         type
-        options: featureOptions {
+        featureOptions {
           displayName
           value
           cost

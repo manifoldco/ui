@@ -19,7 +19,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   }
 
   const {
-    node: { type, displayName, label, options, numericDetails },
+    node: { type, displayName, label, featureOptions, numericDetails },
   } = configurableFeature;
 
   /**
@@ -35,8 +35,8 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   switch (type) {
     // string
     case PlanFeatureType.String: {
-      const selectOptions: Option[] = options
-        ? options.map(o => ({
+      const selectOptions: Option[] = featureOptions
+        ? featureOptions.map(o => ({
             label: `${o.displayName} (${$(o.cost)})`,
             value: o.value,
           }))
