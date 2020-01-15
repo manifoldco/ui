@@ -3,6 +3,7 @@ import {
   ProductConnection,
   ProductCredentialsSupportType,
   ProductState,
+  GetResourceQuery,
   Resource,
   ResourceStatusLabel,
 } from '../../../types/graphql';
@@ -13,7 +14,7 @@ const emptyProducts: ProductConnection = {
 };
 
 // https://graphqlbin.com/v2/6BMYsM
-const resource: Resource = {
+const resource: GetResourceQuery['resource'] | Resource = {
   createdAt: '2019-08-23T14:22:50Z',
   credentials: {
     pageInfo: {
