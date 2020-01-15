@@ -34,10 +34,10 @@ fragment planDetails on Plan {
         label
         displayName
         type
-        options {
+        featureOptions {
           displayName
-          displayValue
-          label
+          value
+          cost
         }
         numericDetails {
           increment

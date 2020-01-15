@@ -5,11 +5,11 @@ import { ManifoldResourceList } from './manifold-resource-list';
 import { connections } from '../../utils/connections';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
-import { ResourceEdge } from '../../types/graphql';
+import { ResourceEdge, Resource } from '../../types/graphql';
 
 const resources: ResourceEdge[] = [
-  { node: resource, cursor: '1' },
-  { node: resource, cursor: '2' },
+  { node: resource as Resource, cursor: '1' },
+  { node: resource as Resource, cursor: '2' },
 ];
 
 const data = {

@@ -1,5 +1,5 @@
 import { h, FunctionalComponent } from '@stencil/core';
-
+import { $ } from '../../../utils/currency';
 import { PlanConfigurableFeatureEdge, PlanFeatureType } from '../../../types/graphql';
 import { Option } from '../../../types/Select';
 
@@ -19,7 +19,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   }
 
   const {
-    node: { type, displayName, label, options, numericDetails },
+    node: { type, displayName, label, featureOptions, numericDetails },
   } = configurableFeature;
 
   /**
@@ -35,10 +35,10 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   switch (type) {
     // string
     case PlanFeatureType.String: {
-      const selectOptions: Option[] = options
-        ? options.map(option => ({
-            label: option.displayName,
-            value: option.label,
+      const selectOptions: Option[] = featureOptions
+        ? featureOptions.map(o => ({
+            label: `${o.displayName} (${$(o.cost)})`,
+            value: o.value,
           }))
         : [];
       const defaultOption = value
