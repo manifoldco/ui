@@ -36,9 +36,9 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
     // string
     case PlanFeatureType.String: {
       const selectOptions: Option[] = options
-        ? options.map(({ displayName, cost, value }) => ({
-            label: `${displayName} (${$(cost)})`,
-            value,
+        ? options.map(o => ({
+            label: `${o.displayName} (${$(o.cost)})`,
+            value: o.value,
           }))
         : [];
       const defaultOption = value
