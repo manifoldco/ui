@@ -34,6 +34,7 @@ export class ManifoldResourcePlan {
         product={this.gqlData.plan.product as Product}
         region={this.gqlData.region as Region}
         isExistingResource
+        readOnly
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

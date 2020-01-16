@@ -13,6 +13,7 @@ export class ManifoldSelect {
   @Prop() name: string;
   @Prop() options: Option[] = [];
   @Prop() required?: boolean;
+  @Prop() disabled?: boolean;
   @Event() updateValue: EventEmitter;
   @Watch('defaultValue') watchHandler(newVal: string) {
     this.updateValue.emit({ name: this.name, value: newVal });
@@ -32,7 +33,12 @@ export class ManifoldSelect {
   @logger()
   render() {
     return (
-      <select name={this.name} required={this.required} onChange={this.onChangeHandler}>
+      <select
+        name={this.name}
+        required={this.required}
+        onChange={this.onChangeHandler}
+        disabled={this.disabled}
+      >
         {this.options.map(({ label, value }) => (
           <option value={value} selected={value === this.defaultValue}>
             {label}

@@ -28,6 +28,7 @@ interface EventDetail {
 })
 export class ManifoldPlanDetails {
   @Element() el: HTMLElement;
+  @Prop() readOnly?: boolean = false;
   @Prop() isExistingResource?: boolean = false;
   @Prop() scrollLocked?: boolean = false;
   @Prop() plan?: Plan;
@@ -252,6 +253,7 @@ export class ManifoldPlanDetails {
                     onChange={this.handleChangeValue}
                     configurableFeature={configurableFeature}
                     value={this.features[configurableFeature.node.label]}
+                    readOnly={this.readOnly}
                   />
                 ))}
             </dl>
