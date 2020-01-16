@@ -27,6 +27,13 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm install
       - run: npm run format:changelog
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run test:schema
   test:
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +50,7 @@ jobs:
       - run: npm install
       - run: npm run lint
   vrt:
-    needs: [build, lint, test, bundlesize]
+    needs: [build, lint, test, schema, bundlesize]
     env:
       PREVIOUS_SHA: ${{ github.event.pull_request.base.sha }}
       CURRENT_SHA: ${{ github.event.pull_request.head.sha }}
