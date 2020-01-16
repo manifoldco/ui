@@ -4,7 +4,7 @@ version: 2.1
 
 defaults: &defaults
   docker:
-    - image: circleci/node:12
+    - image: circleci/node:13
   environment:
     - NODE_ENV: development # CircleCI needs devDeps
 
@@ -83,6 +83,13 @@ jobs:
       - run: npm run publish
       - save-pkg-build
 
+  # Update & check schema
+  schema:
+    <<: *defaults
+    steps:
+      - setup
+      - run: npm run test:schema
+
   # Test
   test:
     <<: *defaults
@@ -92,14 +99,6 @@ jobs:
       - run: npm run test:coverage
       - save-build
       - run: npx codecov
-
-  # Run visual regression tests
-  vrt:
-    <<: *defaults
-    steps:
-      - setup
-      - happo/run_happo
-      - save-build
 
   # Publish packages to js.cdn.manifold.co
   # this is always run after npm-publish so the ./pkg file will be available.
@@ -155,6 +154,14 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - bundlesize
+      - schema:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
+          requires:
+            - bundlesize
       - npm-publish: # no approval needed for prerelease
           filters:
             branches:
@@ -163,6 +170,7 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+-.*$/
           requires:
             - lint
+            - schema
             - test
       - cdn-publish:
           latest: false
@@ -194,6 +202,15 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
             - bundlesize
+      - schema:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
+          requires:
+            - bundlesize
       - test:
           filters:
             branches:
@@ -213,6 +230,7 @@ workflows:
               only: /^v[0-9]+\.[0-9]+\.[0-9]+$/
           requires:
             - lint
+            - schema
             - test
       - npm-publish:
           filters:

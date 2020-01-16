@@ -60,6 +60,7 @@
     "test:spec": "stencil test --spec",
     "test:coverage": "stencil test --spec --e2e --coverage --maxWorkers=2",
     "test:debug": "node --inspect-brk node_modules/.bin/stencil test --spec --e2e --runInBand",
+    "test:schema": "npm run generate:gql && tsc --noEmit",
     "test:watch": "stencil test --spec --e2e --watchAll",
     "update-version": "node scripts/version-from-git"
   },

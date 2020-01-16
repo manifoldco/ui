@@ -1377,7 +1377,7 @@ export type PlanFragment = (
       & { node: (
         { __typename?: 'PlanConfigurableFeature' }
         & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
-        & { options: Maybe<Array<(
+        & { featureOptions: Maybe<Array<(
           { __typename?: 'PlanConfigurableFeatureOption' }
           & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
         )>>, numericDetails: Maybe<(
@@ -1484,7 +1484,7 @@ export type PlanDetailsFragment = (
       & { node: (
         { __typename?: 'PlanConfigurableFeature' }
         & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
-        & { options: Maybe<Array<(
+        & { featureOptions: Maybe<Array<(
           { __typename?: 'PlanConfigurableFeatureOption' }
           & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
         )>>, numericDetails: Maybe<(
@@ -1675,7 +1675,7 @@ export type GetResourceQuery = (
           & { node: (
             { __typename?: 'PlanConfigurableFeature' }
             & Pick<PlanConfigurableFeature, 'id' | 'label' | 'displayName' | 'type'>
-            & { options: Maybe<Array<(
+            & { featureOptions: Maybe<Array<(
               { __typename?: 'PlanConfigurableFeatureOption' }
               & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
             )>>, numericDetails: Maybe<(
