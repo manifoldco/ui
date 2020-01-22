@@ -26,7 +26,7 @@ export class ManifoldResourcePlan {
         </manifold-plan-details>
       );
     }
-    console.log('RESOURCE', formatGatewayFeatures(this.gqlData?.configuredFeatures?.edges));
+
     return (
       <manifold-plan-details
         scrollLocked={false}

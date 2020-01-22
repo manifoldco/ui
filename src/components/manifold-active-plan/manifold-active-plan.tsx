@@ -51,7 +51,7 @@ export class ManifoldActivePlan {
     const resourceRegion =
       (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
       undefined;
-    console.log('PLAN', formatGatewayFeatures(this.selectedResource?.configuredFeatures?.edges));
+
     return [
       <manifold-plan-menu
         plans={this.plans}
