@@ -50,6 +50,7 @@ describe('<manifold-plan-details>', () => {
             regionId: region && region.id,
             regionName: region && region.displayName,
             freePlan: paidPlan.free,
+            configuredFeatures: {},
           },
         })
       );
@@ -79,6 +80,7 @@ describe('<manifold-plan-details>', () => {
             regionId: region && region.id,
             regionName: region && region.displayName,
             freePlan: freePlan.free,
+            configuredFeatures: {},
           },
         })
       );
