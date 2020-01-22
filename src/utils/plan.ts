@@ -158,7 +158,6 @@ export function configurableFeatureDefaults(configurableFeatures: PlanConfigurab
   const defaultFeatures: Gateway.FeatureMap = {};
 
   configurableFeatures.forEach(({ node: { label, numericDetails, featureOptions, type } }) => {
-    // console.log(label, type, numericDetails, featureOptions);
     switch (type) {
       case PlanFeatureType.Boolean: {
         defaultFeatures[label] = featureOptions?.[0].value === 'true';

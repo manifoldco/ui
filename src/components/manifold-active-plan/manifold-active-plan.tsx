@@ -60,13 +60,13 @@ export class ManifoldActivePlan {
       />,
       <manifold-plan-details
         isExistingResource={this.isExistingResource}
+        configuredFeatures={formatGatewayFeatures(this.selectedResource?.configuredFeatures?.edges)}
         plan={this.selectedPlan}
         product={this.product}
         regions={this.regions}
         resourceRegion={resourceRegion}
         scrollLocked={true}
         region={this.selectedResource && this.selectedResource.region}
-        configuredFeatures={formatGatewayFeatures(this.selectedResource?.configuredFeatures?.edges)}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

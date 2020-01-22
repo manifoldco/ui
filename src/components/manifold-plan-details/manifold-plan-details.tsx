@@ -71,12 +71,6 @@ export class ManifoldPlanDetails {
     this.regionId = newRegion;
   }
 
-  @Watch('configuredFeatures') configuredFeaturesChange(configuredFeatures: Gateway.FeatureMap) {
-    if (this.plan) {
-      this.resetFeatures(this.plan, configuredFeatures);
-    }
-  }
-
   @loadMark()
   componentWillLoad() {
     if (this.resourceRegion) {
@@ -102,11 +96,6 @@ export class ManifoldPlanDetails {
       // reset features
       this.resetFeatures(this.plan, this.configuredFeatures);
     }
-
-    console.log('componentWillLoad', {
-      configuredFeatures: this.configuredFeatures,
-      readOnly: this.readOnly,
-    });
   }
 
   handleChangeValue = ({ detail: { name, value } }: CustomEvent) => {
@@ -203,15 +192,13 @@ export class ManifoldPlanDetails {
     return options;
   }
 
-  resetFeatures = (plan: Plan, configuredFeatures?: Gateway.FeatureMap) => {
-    if (plan.configurableFeatures && configuredFeatures) {
-      console.log('reset', {
-        configuredFeatures: this.configuredFeatures,
-        readOnly: this.readOnly,
-      });
-      this.features = this.readOnly
-        ? configuredFeatures
-        : configurableFeatureDefaults(plan.configurableFeatures.edges);
+  resetFeatures = (plan: Plan, configuredFeatures: Gateway.FeatureMap = {}) => {
+    if (plan.configurableFeatures) {
+      if (this.readOnly && this.isExistingResource) {
+        this.features = configuredFeatures;
+      } else {
+        this.features = configurableFeatureDefaults(plan.configurableFeatures.edges);
+      }
     } else {
       this.features = {};
     }
@@ -219,10 +206,6 @@ export class ManifoldPlanDetails {
 
   @logger()
   render() {
-    console.log('render', {
-      configuredFeatures: this.configuredFeatures,
-      readOnly: this.readOnly,
-    });
     if (this.plan && this.product) {
       return (
         <section
