@@ -410,6 +410,7 @@ export namespace Components {
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
+    'configuredFeatures'?: Gateway.FeatureMap;
     'isExistingResource'?: boolean;
     'plan'?: Plan;
     'product'?: Product;
@@ -1455,6 +1456,7 @@ declare namespace LocalJSX {
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
+    'configuredFeatures'?: Gateway.FeatureMap;
     'isExistingResource'?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;

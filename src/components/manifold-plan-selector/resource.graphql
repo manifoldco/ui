@@ -1,5 +1,22 @@
 query Resource($resourceLabel: String!) {
   resource(label: $resourceLabel) {
+    configuredFeatures(first: 500) {
+      edges {
+        node {
+          label
+
+          ... on BooleanConfiguredFeature {
+            booleanValue: value
+          }
+          ... on NumberConfiguredFeature {
+            numberValue: value
+          }
+          ... on StringConfiguredFeature {
+            stringValue: value
+          }
+        }
+      }
+    }
     region {
       id
       displayName

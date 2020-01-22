@@ -10,6 +10,23 @@ query getResource($resourceLabel: String!) {
       label
       message
     }
+    configuredFeatures(first: 500) {
+      edges {
+        node {
+          label
+
+          ... on BooleanConfiguredFeature {
+            booleanValue: value
+          }
+          ... on NumberConfiguredFeature {
+            numberValue: value
+          }
+          ... on StringConfiguredFeature {
+            stringValue: value
+          }
+        }
+      }
+    }
     plan {
       id
       label
@@ -101,6 +118,8 @@ query getResource($resourceLabel: String!) {
               cost
             }
             numericDetails {
+              min
+              max
               unit
               costTiers {
                 limit

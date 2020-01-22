@@ -2,6 +2,7 @@ import { h, FunctionalComponent } from '@stencil/core';
 import { $ } from '../../../utils/currency';
 import { PlanConfigurableFeatureEdge, PlanFeatureType } from '../../../types/graphql';
 import { Option } from '../../../types/Select';
+import { fixedDisplayValue } from './FixedFeature';
 
 interface ConfigurableFeatureProps {
   configurableFeature?: PlanConfigurableFeatureEdge;
@@ -34,6 +35,31 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
    * </manifold-tooltip>
    */
 
+  if (readOnly) {
+    let displayValue;
+
+    switch (typeof value) {
+      case 'boolean':
+        displayValue = fixedDisplayValue(
+          featureOptions?.find(o => o.value === `${value ? 'true' : 'false'}`)?.displayName
+        );
+        break;
+      case 'string':
+        displayValue = fixedDisplayValue(featureOptions?.find(o => o.value === value)?.displayName);
+        break;
+      case 'number':
+        displayValue = `${value} ${numericDetails && numericDetails.unit}`;
+        break;
+      default:
+        displayValue = <em>No value selected.</em>;
+    }
+
+    return [
+      <dt class="feature-name">{displayName}</dt>,
+      <dd class="feature-value">{displayValue}</dd>,
+    ];
+  }
+
   switch (type) {
     // string
     case PlanFeatureType.String: {
@@ -56,7 +82,6 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
             options={selectOptions}
             onUpdateValue={onChange}
             defaultValue={(defaultOption && `${defaultOption.value}`) || undefined}
-            disabled={readOnly}
           />
         </dd>,
       ];

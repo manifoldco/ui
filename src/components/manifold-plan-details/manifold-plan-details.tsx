@@ -1,14 +1,14 @@
 import { h, Component, Prop, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
-import { check } from '@manifoldco/icons';
 
 import { Option } from '../../types/Select';
-import { Gateway } from '../../types/gateway';
 import { Product, Plan, Region, RegionEdge } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { configurableFeatureDefaults } from '../../utils/plan';
+import FixedFeature from './components/FixedFeature';
 import MeteredFeature from './components/MeteredFeature';
 import ConfigurableFeature from './components/ConfigurableFeature';
+import { Gateway } from '../../types/gateway';
 
 interface EventDetail {
   planId: string;
@@ -19,6 +19,7 @@ interface EventDetail {
   regionId?: string;
   regionName?: string;
   freePlan: boolean;
+  configuredfeatures?: Gateway.FeatureMap;
 }
 
 @Component({
@@ -36,6 +37,7 @@ export class ManifoldPlanDetails {
   @Prop() region?: Region;
   @Prop() regions?: string[];
   @Prop() resourceRegion?: string;
+  @Prop() configuredFeatures?: Gateway.FeatureMap;
   @State() features: Gateway.FeatureMap = {};
   @State() regionId?: string;
   @Event({ eventName: 'manifold-planSelector-change', bubbles: true }) planUpdate: EventEmitter;
@@ -51,6 +53,7 @@ export class ManifoldPlanDetails {
       regionId: defaultRegion && defaultRegion.id,
       regionName: defaultRegion && defaultRegion.displayName,
       freePlan: newPlan.free,
+      // configuredFeatures: this.features,
     };
 
     if (!oldPlan) {
@@ -62,15 +65,21 @@ export class ManifoldPlanDetails {
     }
 
     // update features
-    this.resetFeatures(newPlan);
+    this.resetFeatures(newPlan, this.configuredFeatures);
   }
   @Watch('resourceRegion') resourceRegionChange(newRegion: string) {
     this.regionId = newRegion;
   }
 
+  @Watch('configuredFeatures') configuredFeaturesChange(configuredFeatures: Gateway.FeatureMap) {
+    if (this.plan) {
+      this.resetFeatures(this.plan, configuredFeatures);
+    }
+  }
+
   @loadMark()
   @loadMark()
-  componentWillLoad() {
+  componentDidLoad() {
     if (this.resourceRegion) {
       this.regionId = this.resourceRegion;
     }
@@ -87,6 +96,7 @@ export class ManifoldPlanDetails {
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
+        // configuredFeatures: this.features,
       };
       this.planLoad.emit(detail);
       // reset features
@@ -108,6 +118,7 @@ export class ManifoldPlanDetails {
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
+        // configuredFeatures: features,
       };
       this.planUpdate.emit(detail);
     }
@@ -129,6 +140,7 @@ export class ManifoldPlanDetails {
         regionId: e.detail.value,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
+        // configuredFeatures: this.features,
       };
       this.planUpdate.emit(detail);
     }
@@ -141,25 +153,6 @@ export class ManifoldPlanDetails {
         .map(({ node }) => node);
     }
     return regions.map(({ node }) => node);
-  }
-
-  fixedDisplayValue(displayValue: string) {
-    // normalize true/false features
-    if (['true', 'yes'].includes(displayValue.toLowerCase())) {
-      return (
-        <span class="value" data-value="true">
-          <manifold-icon class="icon" icon={check} marginRight /> YES
-        </span>
-      );
-    }
-    if (['false', 'no', 'none'].includes(displayValue.toLowerCase())) {
-      return (
-        <span class="value" data-value="false">
-          NO
-        </span>
-      );
-    }
-    return displayValue;
   }
 
   getDefaultRegion(plan: Plan, regionId?: string, allowedRegions?: string[]) {
@@ -205,13 +198,14 @@ export class ManifoldPlanDetails {
     return options;
   }
 
-  resetFeatures(plan: Plan) {
+  resetFeatures = (plan: Plan, configuredFeatures?: Gateway.FeatureMap) => {
     if (plan.configurableFeatures) {
-      this.features = configurableFeatureDefaults(plan.configurableFeatures.edges);
+      this.features =
+        configuredFeatures || configurableFeatureDefaults(plan.configurableFeatures.edges);
     } else {
       this.features = {};
     }
-  }
+  };
 
   @logger()
   render() {
@@ -239,10 +233,9 @@ export class ManifoldPlanDetails {
             </header>
             <dl class="features">
               {this.plan.fixedFeatures &&
-                this.plan.fixedFeatures.edges.map(({ node: { displayName, displayValue } }) => [
-                  <dt class="feature-name">{displayName}</dt>,
-                  <dd class="feature-value">{this.fixedDisplayValue(displayValue)}</dd>,
-                ])}
+                this.plan.fixedFeatures.edges.map(fixedFeature => (
+                  <FixedFeature fixedFeature={fixedFeature} />
+                ))}
               {this.plan.meteredFeatures &&
                 this.plan.meteredFeatures.edges.map(meteredFeature => (
                   <MeteredFeature meteredFeature={meteredFeature} />

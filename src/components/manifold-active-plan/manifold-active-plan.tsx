@@ -2,6 +2,8 @@ import { h, Component, State, Prop, Watch } from '@stencil/core';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { Product, PlanEdge, Resource } from '../../types/graphql';
+import { formatGatewayFeatures } from '../../utils/configuredFeatures';
+
 @Component({
   tag: 'manifold-active-plan',
   styleUrl: 'manifold-active-plan.css',
@@ -49,7 +51,7 @@ export class ManifoldActivePlan {
     const resourceRegion =
       (this.selectedResource && this.selectedResource.region && this.selectedResource.region.id) ||
       undefined;
-
+    console.log('PLAN', formatGatewayFeatures(this.selectedResource?.configuredFeatures?.edges));
     return [
       <manifold-plan-menu
         plans={this.plans}
@@ -64,6 +66,7 @@ export class ManifoldActivePlan {
         resourceRegion={resourceRegion}
         scrollLocked={true}
         region={this.selectedResource && this.selectedResource.region}
+        configuredFeatures={formatGatewayFeatures(this.selectedResource?.configuredFeatures?.edges)}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

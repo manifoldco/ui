@@ -4,6 +4,7 @@ import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GetResourceQuery, Product, Region } from '../../types/graphql';
+import { formatGatewayFeatures } from '../../utils/configuredFeatures';
 
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
@@ -25,8 +26,7 @@ export class ManifoldResourcePlan {
         </manifold-plan-details>
       );
     }
-
-    // TODO: remove `as` and update types
+    console.log('RESOURCE', formatGatewayFeatures(this.gqlData?.configuredFeatures?.edges));
     return (
       <manifold-plan-details
         scrollLocked={false}
@@ -34,6 +34,7 @@ export class ManifoldResourcePlan {
         product={this.gqlData.plan.product as Product}
         region={this.gqlData.region as Region}
         isExistingResource
+        configuredFeatures={formatGatewayFeatures(this.gqlData?.configuredFeatures?.edges)}
         readOnly
       >
         <manifold-forward-slot slot="cta">
