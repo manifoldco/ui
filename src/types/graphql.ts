@@ -10,6 +10,12 @@ export type Scalars = {
   Time: any,
 };
 
+export type BooleanConfiguredFeature = ConfiguredFeature & {
+   __typename?: 'BooleanConfiguredFeature',
+  label: Scalars['String'],
+  value: Scalars['Boolean'],
+};
+
 export enum CalculationType {
   Prorate = 'PRORATE',
   UsageTier = 'USAGE_TIER'
@@ -65,6 +71,22 @@ export enum ConfigurableFeaturesOrderByField {
   Label = 'LABEL',
   DisplayName = 'DISPLAY_NAME'
 }
+
+export type ConfiguredFeature = {
+  label: Scalars['String'],
+};
+
+export type ConfiguredFeatureConnection = {
+   __typename?: 'ConfiguredFeatureConnection',
+  pageInfo: PageInfo,
+  edges: Array<ConfiguredFeatureEdge>,
+};
+
+export type ConfiguredFeatureEdge = {
+   __typename?: 'ConfiguredFeatureEdge',
+  cursor: Scalars['String'],
+  node: ConfiguredFeature,
+};
 
 export type CreateProfileAuthTokenInput = {
   profileId: Scalars['ProfileIdentity'],
@@ -301,6 +323,12 @@ export type MutationUpdateProfileStateArgs = {
 
 export type Node = {
   id: Scalars['ID'],
+};
+
+export type NumberConfiguredFeature = ConfiguredFeature & {
+   __typename?: 'NumberConfiguredFeature',
+  label: Scalars['String'],
+  value: Scalars['Int'],
 };
 
 export enum OrderByDirection {
@@ -678,6 +706,8 @@ export type Query = {
   profiles?: Maybe<ProfileConnection>,
   invoice?: Maybe<Invoice>,
   lineItem?: Maybe<LineItem>,
+  region?: Maybe<Region>,
+  regions?: Maybe<RegionConnection>,
 };
 
 
@@ -759,6 +789,18 @@ export type QueryLineItemArgs = {
   id: Scalars['ID']
 };
 
+
+export type QueryRegionArgs = {
+  id: Scalars['ID']
+};
+
+
+export type QueryRegionsArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>,
+  orderBy?: Maybe<RegionsOrderBy>
+};
+
 export type Region = Node & {
    __typename?: 'Region',
   id: Scalars['ID'],
@@ -806,7 +848,14 @@ export type Resource = Node & {
   region?: Maybe<Region>,
   owner?: Maybe<Profile>,
   createdAt?: Maybe<Scalars['Time']>,
+  configuredFeatures?: Maybe<ConfiguredFeatureConnection>,
   credentials?: Maybe<CredentialConnection>,
+};
+
+
+export type ResourceConfiguredFeaturesArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>
 };
 
 
@@ -851,6 +900,12 @@ export type RevenueShare = {
   platform: Scalars['Int'],
   manifold: Scalars['Int'],
   fees: Scalars['Int'],
+};
+
+export type StringConfiguredFeature = ConfiguredFeature & {
+   __typename?: 'StringConfiguredFeature',
+  label: Scalars['String'],
+  value: Scalars['String'],
 };
 
 export type SubLineItem = {
@@ -1434,7 +1489,25 @@ export type ResourceQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }
-    & { region: Maybe<(
+    & { configuredFeatures: Maybe<(
+      { __typename?: 'ConfiguredFeatureConnection' }
+      & { edges: Array<(
+        { __typename?: 'ConfiguredFeatureEdge' }
+        & { node: (
+          { __typename?: 'BooleanConfiguredFeature' }
+          & Pick<BooleanConfiguredFeature, 'label'>
+          & { booleanValue: BooleanConfiguredFeature['value'] }
+        ) | (
+          { __typename?: 'NumberConfiguredFeature' }
+          & Pick<NumberConfiguredFeature, 'label'>
+          & { numberValue: NumberConfiguredFeature['value'] }
+        ) | (
+          { __typename?: 'StringConfiguredFeature' }
+          & Pick<StringConfiguredFeature, 'label'>
+          & { stringValue: StringConfiguredFeature['value'] }
+        ) }
+      )> }
+    )>, region: Maybe<(
       { __typename?: 'Region' }
       & Pick<Region, 'id' | 'displayName'>
     )>, plan: Maybe<(
@@ -1611,7 +1684,25 @@ export type GetResourceQuery = (
     )>, status: (
       { __typename?: 'ResourceStatus' }
       & Pick<ResourceStatus, 'label' | 'message'>
-    ), plan: Maybe<(
+    ), configuredFeatures: Maybe<(
+      { __typename?: 'ConfiguredFeatureConnection' }
+      & { edges: Array<(
+        { __typename?: 'ConfiguredFeatureEdge' }
+        & { node: (
+          { __typename?: 'BooleanConfiguredFeature' }
+          & Pick<BooleanConfiguredFeature, 'label'>
+          & { booleanValue: BooleanConfiguredFeature['value'] }
+        ) | (
+          { __typename?: 'NumberConfiguredFeature' }
+          & Pick<NumberConfiguredFeature, 'label'>
+          & { numberValue: NumberConfiguredFeature['value'] }
+        ) | (
+          { __typename?: 'StringConfiguredFeature' }
+          & Pick<StringConfiguredFeature, 'label'>
+          & { stringValue: StringConfiguredFeature['value'] }
+        ) }
+      )> }
+    )>, plan: Maybe<(
       { __typename?: 'Plan' }
       & Pick<Plan, 'id' | 'label' | 'displayName' | 'state' | 'cost' | 'free'>
       & { regions: Maybe<(
@@ -1680,7 +1771,7 @@ export type GetResourceQuery = (
               & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
             )>>, numericDetails: Maybe<(
               { __typename?: 'PlanConfigurableFeatureNumericDetails' }
-              & Pick<PlanConfigurableFeatureNumericDetails, 'unit'>
+              & Pick<PlanConfigurableFeatureNumericDetails, 'min' | 'max' | 'unit'>
               & { costTiers: Maybe<Array<(
                 { __typename?: 'PlanFeatureCostTier' }
                 & Pick<PlanFeatureCostTier, 'limit' | 'cost'>

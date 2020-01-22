@@ -19,7 +19,7 @@ interface EventDetail {
   regionId?: string;
   regionName?: string;
   freePlan: boolean;
-  configuredfeatures?: Gateway.FeatureMap;
+  configuredFeatures?: Gateway.FeatureMap;
 }
 
 @Component({
@@ -53,7 +53,7 @@ export class ManifoldPlanDetails {
       regionId: defaultRegion && defaultRegion.id,
       regionName: defaultRegion && defaultRegion.displayName,
       freePlan: newPlan.free,
-      // configuredFeatures: this.features,
+      configuredFeatures: this.features,
     };
 
     if (!oldPlan) {
@@ -78,8 +78,7 @@ export class ManifoldPlanDetails {
   }
 
   @loadMark()
-  @loadMark()
-  componentDidLoad() {
+  componentWillLoad() {
     if (this.resourceRegion) {
       this.regionId = this.resourceRegion;
     }
@@ -96,12 +95,18 @@ export class ManifoldPlanDetails {
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
-        // configuredFeatures: this.features,
+        configuredFeatures: this.features,
       };
       this.planLoad.emit(detail);
+
       // reset features
-      this.resetFeatures(this.plan);
+      this.resetFeatures(this.plan, this.configuredFeatures);
     }
+
+    console.log('componentWillLoad', {
+      configuredFeatures: this.configuredFeatures,
+      readOnly: this.readOnly,
+    });
   }
 
   handleChangeValue = ({ detail: { name, value } }: CustomEvent) => {
@@ -118,7 +123,7 @@ export class ManifoldPlanDetails {
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
-        // configuredFeatures: features,
+        configuredFeatures: features,
       };
       this.planUpdate.emit(detail);
     }
@@ -140,7 +145,7 @@ export class ManifoldPlanDetails {
         regionId: e.detail.value,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
-        // configuredFeatures: this.features,
+        configuredFeatures: this.features,
       };
       this.planUpdate.emit(detail);
     }
@@ -199,9 +204,14 @@ export class ManifoldPlanDetails {
   }
 
   resetFeatures = (plan: Plan, configuredFeatures?: Gateway.FeatureMap) => {
-    if (plan.configurableFeatures) {
-      this.features =
-        configuredFeatures || configurableFeatureDefaults(plan.configurableFeatures.edges);
+    if (plan.configurableFeatures && configuredFeatures) {
+      console.log('reset', {
+        configuredFeatures: this.configuredFeatures,
+        readOnly: this.readOnly,
+      });
+      this.features = this.readOnly
+        ? configuredFeatures
+        : configurableFeatureDefaults(plan.configurableFeatures.edges);
     } else {
       this.features = {};
     }
@@ -209,6 +219,10 @@ export class ManifoldPlanDetails {
 
   @logger()
   render() {
+    console.log('render', {
+      configuredFeatures: this.configuredFeatures,
+      readOnly: this.readOnly,
+    });
     if (this.plan && this.product) {
       return (
         <section

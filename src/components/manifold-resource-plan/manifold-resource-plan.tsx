@@ -27,6 +27,7 @@ export class ManifoldResourcePlan {
       );
     }
 
+    // TODO: remove `as` and update types
     return (
       <manifold-plan-details
         scrollLocked={false}
@@ -35,7 +36,7 @@ export class ManifoldResourcePlan {
         region={this.gqlData.region as Region}
         isExistingResource
         configuredFeatures={formatGatewayFeatures(this.gqlData?.configuredFeatures?.edges)}
-        readOnly
+        readOnly={true}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

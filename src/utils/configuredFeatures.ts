@@ -28,9 +28,9 @@ export const formatConfiguredFeatures = (
 
 export const formatGatewayFeatures = (
   configuredFeatures?: ConfiguredFeatureGraphQL[]
-): Gateway.FeatureMap | undefined => {
+): Gateway.FeatureMap => {
   if (!configuredFeatures || configuredFeatures?.length === 0) {
-    return undefined;
+    return {};
   }
   return Array.isArray(configuredFeatures)
     ? configuredFeatures.reduce(
@@ -42,5 +42,5 @@ export const formatGatewayFeatures = (
         }),
         {}
       )
-    : undefined;
+    : {};
 };

@@ -4,7 +4,6 @@ query Resource($resourceLabel: String!) {
       edges {
         node {
           label
-
           ... on BooleanConfiguredFeature {
             booleanValue: value
           }
