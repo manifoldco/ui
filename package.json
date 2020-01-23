@@ -77,7 +77,7 @@
     },
     {
       "path": "./dist/esm/manifold-number-input*.js",
-      "maxSize": "36 kB",
+      "maxSize": "40 kB",
       "compression": "none"
     }
   ],
