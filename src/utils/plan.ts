@@ -160,7 +160,7 @@ export function configurableFeatureDefaults(configurableFeatures: PlanConfigurab
   configurableFeatures.forEach(({ node: { label, numericDetails, featureOptions, type } }) => {
     switch (type) {
       case PlanFeatureType.Boolean: {
-        defaultFeatures[label] = featureOptions?.[0].value === 'true';
+        defaultFeatures[label] = false;
         break;
       }
       case PlanFeatureType.Number:
