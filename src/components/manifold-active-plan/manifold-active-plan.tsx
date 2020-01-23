@@ -2,6 +2,8 @@ import { h, Component, State, Prop, Watch } from '@stencil/core';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { Product, PlanEdge, Resource } from '../../types/graphql';
+import { formatGatewayFeatures } from '../../utils/configuredFeatures';
+
 @Component({
   tag: 'manifold-active-plan',
   styleUrl: 'manifold-active-plan.css',
@@ -58,6 +60,7 @@ export class ManifoldActivePlan {
       />,
       <manifold-plan-details
         isExistingResource={this.isExistingResource}
+        configuredFeatures={formatGatewayFeatures(this.selectedResource?.configuredFeatures?.edges)}
         plan={this.selectedPlan}
         product={this.product}
         regions={this.regions}

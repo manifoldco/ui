@@ -4,6 +4,7 @@ import ResourceTunnel from '../../data/resource';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { GetResourceQuery, Product, Region } from '../../types/graphql';
+import { formatGatewayFeatures } from '../../utils/configuredFeatures';
 
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
@@ -30,10 +31,12 @@ export class ManifoldResourcePlan {
     return (
       <manifold-plan-details
         scrollLocked={false}
+        configuredFeatures={formatGatewayFeatures(this.gqlData?.configuredFeatures?.edges)}
+        isExistingResource
+        readOnly
         plan={this.gqlData.plan}
         product={this.gqlData.plan.product as Product}
         region={this.gqlData.region as Region}
-        isExistingResource
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />

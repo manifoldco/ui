@@ -157,17 +157,21 @@ export function planCost(restFetch: RestFetch, { planID, features, init }: PlanC
 export function configurableFeatureDefaults(configurableFeatures: PlanConfigurableFeatureEdge[]) {
   const defaultFeatures: Gateway.FeatureMap = {};
 
-  configurableFeatures.forEach(({ node: { label, numericDetails, options, type } }) => {
-    // if number feature
-    if (numericDetails) {
-      defaultFeatures[label] = numericDetails.min;
-    } else if (options && options[0]) {
-      const { label: value } = options[0];
-      if (type === PlanFeatureType.Boolean) {
-        defaultFeatures[label] = value === 'true';
-      } else {
-        defaultFeatures[label] = value;
+  configurableFeatures.forEach(({ node: { label, numericDetails, featureOptions, type } }) => {
+    switch (type) {
+      case PlanFeatureType.Boolean: {
+        defaultFeatures[label] = false;
+        break;
       }
+      case PlanFeatureType.Number:
+        defaultFeatures[label] = numericDetails?.min;
+        break;
+      case PlanFeatureType.String:
+        defaultFeatures[label] = featureOptions?.[0].value;
+        break;
+      default:
+        defaultFeatures[label] = undefined;
+        break;
     }
   });
 

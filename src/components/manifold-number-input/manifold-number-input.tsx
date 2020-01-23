@@ -10,6 +10,7 @@ import loadMark from '../../utils/loadMark';
 })
 export class ManifoldNumberInput {
   @Prop() error?: string;
+  @Prop() disabled?: boolean;
   @Prop() decrementDisabledLabel?: string;
   @Prop() incrementDisabledLabel?: string;
   @Prop() increment: number = 1;
@@ -82,7 +83,7 @@ export class ManifoldNumberInput {
             tabindex="-1"
             class="decrement"
             onClick={() => this.setValue(this.value - this.increment)}
-            disabled={this.lowerBoundReached}
+            disabled={this.lowerBoundReached || this.disabled}
           >
             <manifold-icon icon={minus} />
           </button>
@@ -97,6 +98,7 @@ export class ManifoldNumberInput {
           required
           step={this.increment}
           value={this.value}
+          disabled={this.disabled}
         />
         <manifold-tooltip
           labelText={
@@ -109,7 +111,7 @@ export class ManifoldNumberInput {
             tabindex="-1"
             class="increment"
             onClick={() => this.setValue(this.value + this.increment)}
-            disabled={this.upperBoundReached}
+            disabled={this.upperBoundReached || this.disabled}
           >
             <manifold-icon icon={plus} />
           </button>

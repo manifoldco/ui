@@ -2,17 +2,20 @@ import { h, FunctionalComponent } from '@stencil/core';
 import { $ } from '../../../utils/currency';
 import { PlanConfigurableFeatureEdge, PlanFeatureType } from '../../../types/graphql';
 import { Option } from '../../../types/Select';
+import { fixedDisplayValue } from './FixedFeature';
 
 interface ConfigurableFeatureProps {
   configurableFeature?: PlanConfigurableFeatureEdge;
   onChange: (e: CustomEvent) => void;
   value?: string | number | boolean;
+  readOnly?: boolean;
 }
 
 const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   configurableFeature,
   onChange,
   value,
+  readOnly,
 }) => {
   if (!configurableFeature) {
     return [];
@@ -31,6 +34,31 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
    *   </span>
    * </manifold-tooltip>
    */
+
+  if (readOnly) {
+    let displayValue;
+
+    switch (typeof value) {
+      case 'boolean':
+        displayValue = fixedDisplayValue(
+          featureOptions?.find(o => o.value === `${value ? 'true' : 'false'}`)?.displayName
+        );
+        break;
+      case 'string':
+        displayValue = fixedDisplayValue(featureOptions?.find(o => o.value === value)?.displayName);
+        break;
+      case 'number':
+        displayValue = `${value} ${numericDetails && numericDetails.unit}`;
+        break;
+      default:
+        displayValue = <em>No value selected.</em>;
+    }
+
+    return [
+      <dt class="feature-name">{displayName}</dt>,
+      <dd class="feature-value">{displayValue}</dd>,
+    ];
+  }
 
   switch (type) {
     // string
@@ -79,6 +107,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
             onUpdateValue={onChange}
             unit={numericDetails.unit}
             value={typeof value === 'number' ? value : undefined}
+            disabled={readOnly}
           />
         </dd>,
       ];
@@ -93,6 +122,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
             defaultValue={!!value}
             name={label}
             onUpdateValue={(e: CustomEvent) => onChange && onChange(e)}
+            disabled={readOnly}
           />
         </dd>,
       ];

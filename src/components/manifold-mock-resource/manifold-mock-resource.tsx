@@ -95,6 +95,9 @@ const GraphQLResource: GetResourceQuery['resource'] = {
   },
   region: { id: '235n4f9pxf8eyraj3y159x89z6jer', displayName: 'All Regions' },
   status: { label: ResourceStatusLabel.Available, message: 'Available' },
+  configuredFeatures: {
+    edges: [],
+  },
 };
 
 @Component({ tag: 'manifold-mock-resource' })

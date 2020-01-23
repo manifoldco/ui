@@ -373,6 +373,7 @@ export namespace Components {
   }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
+    'disabled'?: boolean;
     'error'?: string;
     'increment': number;
     'incrementDisabledLabel'?: string;
@@ -409,9 +410,11 @@ export namespace Components {
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
+    'configuredFeatures'?: Gateway.FeatureMap;
     'isExistingResource'?: boolean;
     'plan'?: Plan;
     'product'?: Product;
+    'readOnly'?: boolean;
     'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;
@@ -584,6 +587,7 @@ export namespace Components {
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
+    'disabled'?: boolean;
     'name': string;
     'options': Option[];
     'required'?: boolean;
@@ -1413,6 +1417,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldNumberInput {
     'decrementDisabledLabel'?: string;
+    'disabled'?: boolean;
     'error'?: string;
     'increment'?: number;
     'incrementDisabledLabel'?: string;
@@ -1451,11 +1456,13 @@ declare namespace LocalJSX {
     'selectedFeatures'?: Gateway.FeatureMap;
   }
   interface ManifoldPlanDetails {
+    'configuredFeatures'?: Gateway.FeatureMap;
     'isExistingResource'?: boolean;
     'onManifold-planSelector-change'?: (event: CustomEvent<any>) => void;
     'onManifold-planSelector-load'?: (event: CustomEvent<any>) => void;
     'plan'?: Plan;
     'product'?: Product;
+    'readOnly'?: boolean;
     'region'?: Region;
     'regions'?: string[];
     'resourceRegion'?: string;
@@ -1632,6 +1639,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldSelect {
     'defaultValue'?: string;
+    'disabled'?: boolean;
     'name'?: string;
     'onUpdateValue'?: (event: CustomEvent<any>) => void;
     'options'?: Option[];
