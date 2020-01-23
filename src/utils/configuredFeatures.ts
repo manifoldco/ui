@@ -9,22 +9,7 @@ export interface ConfiguredFeatureGraphQL {
   };
 }
 
-export interface ConfiguredFeature {
-  label: string;
-  value?: string;
-}
-
 const isDefined = (x: unknown) => typeof x !== 'undefined';
-
-export const formatConfiguredFeatures = (
-  configuredFeatures: ConfiguredFeatureGraphQL[]
-): ConfiguredFeature[] =>
-  configuredFeatures.map(({ node: { label, ...f } }) => ({
-    label,
-    ...(isDefined(f.booleanValue) ? { value: `${f.booleanValue}` } : {}),
-    ...(isDefined(f.numberValue) ? { value: `${f.numberValue}` } : {}),
-    ...(isDefined(f.stringValue) ? { value: f.stringValue } : {}),
-  }));
 
 export const formatGatewayFeatures = (
   configuredFeatures?: ConfiguredFeatureGraphQL[]
