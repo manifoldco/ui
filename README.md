@@ -119,8 +119,6 @@ declare global {
 
 This will expose the types from Stencil to JSX, and you’ll be able to get typechecking as you write.
 
-_Note: Every element will have to be declared manually, at least until [this PR][ts-fix] is merged
-in TypeScript core._
 
 ### Ember, Angular, Vue, and others
 
