@@ -244,6 +244,7 @@ export class ManifoldPlanDetails {
                     configurableFeature={configurableFeature}
                     value={this.features[configurableFeature.node.label]}
                     readOnly={this.readOnly}
+                    isExistingResource={this.isExistingResource}
                   />
                 ))}
             </dl>

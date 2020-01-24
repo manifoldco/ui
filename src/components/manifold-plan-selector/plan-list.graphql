@@ -34,6 +34,8 @@ fragment plan on Plan {
         label
         displayName
         type
+        upgradable
+        downgradable
         featureOptions {
           displayName
           value
