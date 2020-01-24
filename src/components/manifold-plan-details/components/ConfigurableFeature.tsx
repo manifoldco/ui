@@ -113,7 +113,8 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
       ];
 
     // boolean
-    case PlanFeatureType.Boolean:
+    case PlanFeatureType.Boolean: {
+      const { cost } = featureOptions?.find(o => o.value === `${value ? 'true' : 'false'}`) || {};
       return [
         <dt class="feature-name">{displayName}</dt>,
         <dd class="feature-value">
@@ -124,8 +125,10 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
             onUpdateValue={(e: CustomEvent) => onChange && onChange(e)}
             disabled={readOnly}
           />
+          {cost && $(cost)}
         </dd>,
       ];
+    }
 
     default:
       return [];
