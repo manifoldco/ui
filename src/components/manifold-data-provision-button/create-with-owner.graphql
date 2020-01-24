@@ -3,7 +3,7 @@ mutation CreateResourceWithOwner(
   $productId: ID!
   $regionId: ID!
   $resourceLabel: String!
-  $configuredFeatures: [FeatureInput!]
+  $configuredFeatures: [ConfiguredFeatureInput!]
   $owner: ProfileIdentity!
 ) {
   createResource(
@@ -13,7 +13,7 @@ mutation CreateResourceWithOwner(
       planId: $planId
       productId: $productId
       regionId: $regionId
-      features: $configuredFeatures
+      configuredFeatures: $configuredFeatures
       owner: $owner
     }
   ) {

@@ -6448,7 +6448,7 @@
             "defaultValue": null
           },
           {
-            "name": "features",
+            "name": "configuredFeatures",
             "description": "",
             "type": {
               "kind": "LIST",
@@ -6458,7 +6458,7 @@
                 "name": null,
                 "ofType": {
                   "kind": "INPUT_OBJECT",
-                  "name": "FeatureInput",
+                  "name": "ConfiguredFeatureInput",
                   "ofType": null
                 }
               }
@@ -6472,7 +6472,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "FeatureInput",
+        "name": "ConfiguredFeatureInput",
         "description": "",
         "fields": null,
         "inputFields": [
@@ -6649,6 +6649,24 @@
               "kind": "SCALAR",
               "name": "ID",
               "ofType": null
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "configuredFeatures",
+            "description": "",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ConfiguredFeatureInput",
+                  "ofType": null
+                }
+              }
             },
             "defaultValue": null
           }

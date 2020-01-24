@@ -11,7 +11,7 @@ import {
   PlanRegionsQueryVariables,
   ProductIdQuery,
   ProductIdQueryVariables,
-  FeatureInput,
+  ConfiguredFeatureInput,
   CreateResourceMutationVariables,
   CreateResourceWithOwnerMutationVariables,
 } from '../../types/graphql';
@@ -65,7 +65,7 @@ export class ManifoldDataProvisionButton {
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
   /** Values for configurable features */
-  @Prop() configuredFeatures?: FeatureInput[];
+  @Prop() configuredFeatures?: ConfiguredFeatureInput[];
   /** Region to provision (ID) */
   @Prop({ mutable: true }) regionId?: string;
   @State() provisioning: boolean = false;

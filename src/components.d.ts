@@ -8,7 +8,7 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  FeatureInput,
+  ConfiguredFeatureInput,
   GetResourceQuery,
   Plan,
   PlanEdge,
@@ -177,7 +177,7 @@ export namespace Components {
     /**
     * Values for configurable features
     */
-    'configuredFeatures'?: FeatureInput[];
+    'configuredFeatures'?: ConfiguredFeatureInput[];
     /**
     * _(hidden)_
     */
@@ -1209,7 +1209,7 @@ declare namespace LocalJSX {
     /**
     * Values for configurable features
     */
-    'configuredFeatures'?: FeatureInput[];
+    'configuredFeatures'?: ConfiguredFeatureInput[];
     /**
     * _(hidden)_
     */

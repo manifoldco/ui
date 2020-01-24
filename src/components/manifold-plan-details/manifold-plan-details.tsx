@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
 
 import { Option } from '../../types/Select';
-import { Product, Plan, Region, RegionEdge, FeatureInput } from '../../types/graphql';
+import { Product, Plan, Region, RegionEdge, ConfiguredFeatureInput } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { configurableFeatureDefaults } from '../../utils/plan';
@@ -20,7 +20,7 @@ interface EventDetail {
   regionId?: string;
   regionName?: string;
   freePlan: boolean;
-  configuredFeatures?: FeatureInput[];
+  configuredFeatures?: ConfiguredFeatureInput[];
 }
 
 @Component({
