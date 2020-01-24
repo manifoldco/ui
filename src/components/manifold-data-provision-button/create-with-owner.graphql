@@ -1,4 +1,11 @@
-mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!, $owner: ProfileIdentity!) {
+mutation CreateResourceWithOwner(
+  $planId: ID!
+  $productId: ID!
+  $regionId: ID!
+  $resourceLabel: String!
+  $configuredFeatures: [FeatureInput!]
+  $owner: ProfileIdentity!
+) {
   createResource(
     input: {
       displayName: $resourceLabel
@@ -6,6 +13,7 @@ mutation CreateResourceWithOwner($planId: ID!, $productId: ID!, $regionId: ID!, 
       planId: $planId
       productId: $productId
       regionId: $regionId
+      features: $configuredFeatures
       owner: $owner
     }
   ) {

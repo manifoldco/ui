@@ -11,6 +11,9 @@ import {
   PlanRegionsQueryVariables,
   ProductIdQuery,
   ProductIdQueryVariables,
+  FeatureInput,
+  CreateResourceMutationVariables,
+  CreateResourceWithOwnerMutationVariables,
 } from '../../types/graphql';
 
 import createResource from './create.graphql';
@@ -61,6 +64,8 @@ export class ManifoldDataProvisionButton {
   @Prop() planId?: string;
   /** The label of the resource to provision */
   @Prop() resourceLabel?: string;
+  /** Values for configurable features */
+  @Prop() configuredFeatures?: FeatureInput[];
   /** Region to provision (ID) */
   @Prop({ mutable: true }) regionId?: string;
   @State() provisioning: boolean = false;
@@ -127,15 +132,19 @@ export class ManifoldDataProvisionButton {
 
     // disable button & attempt provision
     this.provisioning = true;
+
+    const variables: CreateResourceMutationVariables | CreateResourceWithOwnerMutationVariables = {
+      planId: this.planId || '',
+      productId: this.productId || '',
+      regionId: this.regionId || '',
+      resourceLabel: this.resourceLabel || '',
+      configuredFeatures: this.configuredFeatures,
+      owner: this.ownerId,
+    };
+
     const { data, errors } = await this.graphqlFetch<CreateResourceMutation>({
       query: this.ownerId ? createResourceWithOwner : createResource,
-      variables: {
-        planId: this.planId,
-        productId: this.productId,
-        regionId: this.regionId,
-        resourceLabel: this.resourceLabel,
-        owner: this.ownerId,
-      },
+      variables,
       element: this.el,
     });
     this.provisioning = false;

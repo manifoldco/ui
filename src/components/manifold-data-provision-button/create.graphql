@@ -1,4 +1,10 @@
-mutation CreateResource($planId: ID!, $productId: ID!, $regionId: ID!, $resourceLabel: String!) {
+mutation CreateResource(
+  $planId: ID!
+  $productId: ID!
+  $regionId: ID!
+  $resourceLabel: String!
+  $configuredFeatures: [FeatureInput!]
+) {
   createResource(
     input: {
       displayName: $resourceLabel
@@ -6,6 +12,7 @@ mutation CreateResource($planId: ID!, $productId: ID!, $regionId: ID!, $resource
       planId: $planId
       productId: $productId
       regionId: $regionId
+      features: $configuredFeatures
     }
   ) {
     data {

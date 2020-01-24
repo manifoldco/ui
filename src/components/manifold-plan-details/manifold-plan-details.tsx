@@ -1,7 +1,7 @@
 import { h, Component, Prop, State, Event, EventEmitter, Watch, Element } from '@stencil/core';
 
 import { Option } from '../../types/Select';
-import { Product, Plan, Region, RegionEdge } from '../../types/graphql';
+import { Product, Plan, Region, RegionEdge, FeatureInput } from '../../types/graphql';
 import logger from '../../utils/logger';
 import loadMark from '../../utils/loadMark';
 import { configurableFeatureDefaults } from '../../utils/plan';
@@ -9,6 +9,7 @@ import FixedFeature from './components/FixedFeature';
 import MeteredFeature from './components/MeteredFeature';
 import ConfigurableFeature from './components/ConfigurableFeature';
 import { Gateway } from '../../types/gateway';
+import { formatConfiguredFeatures } from '../../utils/configuredFeatures';
 
 interface EventDetail {
   planId: string;
@@ -19,7 +20,7 @@ interface EventDetail {
   regionId?: string;
   regionName?: string;
   freePlan: boolean;
-  configuredFeatures?: Gateway.FeatureMap;
+  configuredFeatures?: FeatureInput[];
 }
 
 @Component({
@@ -53,7 +54,7 @@ export class ManifoldPlanDetails {
       regionId: defaultRegion && defaultRegion.id,
       regionName: defaultRegion && defaultRegion.displayName,
       freePlan: newPlan.free,
-      configuredFeatures: this.features,
+      configuredFeatures: formatConfiguredFeatures(this.features),
     };
 
     if (!oldPlan) {
@@ -89,7 +90,7 @@ export class ManifoldPlanDetails {
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
-        configuredFeatures: this.features,
+        configuredFeatures: formatConfiguredFeatures(this.features),
       };
       this.planLoad.emit(detail);
 
@@ -112,7 +113,7 @@ export class ManifoldPlanDetails {
         regionId: defaultRegion && defaultRegion.id,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
-        configuredFeatures: features,
+        configuredFeatures: formatConfiguredFeatures(features),
       };
       this.planUpdate.emit(detail);
     }
@@ -134,7 +135,7 @@ export class ManifoldPlanDetails {
         regionId: e.detail.value,
         regionName: defaultRegion && defaultRegion.displayName,
         freePlan: this.plan.free,
-        configuredFeatures: this.features,
+        configuredFeatures: formatConfiguredFeatures(this.features),
       };
       this.planUpdate.emit(detail);
     }

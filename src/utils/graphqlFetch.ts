@@ -19,11 +19,11 @@ interface CreateGraphqlFetch {
 type GraphqlRequest =
   | {
       mutation: string;
-      variables?: { [key: string]: string | number | undefined };
+      variables?: { [key: string]: unknown };
     }
   | {
       query: string;
-      variables?: { [key: string]: string | number | undefined };
+      variables?: { [key: string]: unknown };
     }; // require query or mutation, but not both
 
 type GraphqlArgs = GraphqlRequest & { element: HTMLElement };

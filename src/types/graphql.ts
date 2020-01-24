@@ -105,6 +105,7 @@ export type CreateResourceInput = {
   productId: Scalars['ID'],
   planId: Scalars['ID'],
   regionId: Scalars['ID'],
+  features?: Maybe<Array<FeatureInput>>,
 };
 
 export type CreateResourcePayload = {
@@ -147,6 +148,11 @@ export type DeleteResourcePayload = {
 export enum Duration {
   Monthly = 'MONTHLY'
 }
+
+export type FeatureInput = {
+  value: Scalars['String'],
+  label: Scalars['String'],
+};
 
 export type FixedFeaturesOrderBy = {
   field: FixedFeaturesOrderByField,
@@ -1126,6 +1132,7 @@ export type CreateResourceWithOwnerMutationVariables = {
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
   resourceLabel: Scalars['String'],
+  configuredFeatures?: Maybe<Array<FeatureInput>>,
   owner: Scalars['ProfileIdentity']
 };
 
@@ -1145,7 +1152,8 @@ export type CreateResourceMutationVariables = {
   planId: Scalars['ID'],
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  configuredFeatures?: Maybe<Array<FeatureInput>>
 };
 
 

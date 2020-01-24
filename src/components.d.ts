@@ -8,6 +8,7 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
+  FeatureInput,
   GetResourceQuery,
   Plan,
   PlanEdge,
@@ -173,6 +174,10 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldDataProvisionButton {
+    /**
+    * Values for configurable features
+    */
+    'configuredFeatures'?: FeatureInput[];
     /**
     * _(hidden)_
     */
@@ -1201,6 +1206,10 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldDataProvisionButton {
+    /**
+    * Values for configurable features
+    */
+    'configuredFeatures'?: FeatureInput[];
     /**
     * _(hidden)_
     */
