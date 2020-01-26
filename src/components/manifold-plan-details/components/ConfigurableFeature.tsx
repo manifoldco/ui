@@ -52,6 +52,13 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
     node: { type, displayName, label, featureOptions, numericDetails, upgradable, downgradable },
   } = configurableFeature;
 
+  if (readOnly) {
+    return [
+      <dt class="feature-name">{displayName}</dt>,
+      <dd class="feature-value">{getDisplayValue(value, configurableFeature.node)}</dd>,
+    ];
+  }
+
   if (isExistingResource && !upgradable && !downgradable) {
     return [
       <dt class="feature-name">{displayName}</dt>,
@@ -63,13 +70,6 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
           </span>
         </manifold-tooltip>
       </dd>,
-    ];
-  }
-
-  if (readOnly) {
-    return [
-      <dt class="feature-name">{displayName}</dt>,
-      <dd class="feature-value">{getDisplayValue(value, configurableFeature.node)}</dd>,
     ];
   }
 
