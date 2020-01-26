@@ -56,7 +56,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
     return [
       <dt class="feature-name">{displayName}</dt>,
       <dd class="feature-value">
-        <manifold-tooltip labelText="Feature cannot be changed from current plan">
+        <manifold-tooltip labelText="Feature cannot be resized on an existing resource.">
           <span class="value" data-value={value} data-locked>
             <manifold-icon class="icon" icon={lock} marginRight />
             {getDisplayValue(value, configurableFeature.node)}
@@ -76,15 +76,10 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   switch (type) {
     // string
     case PlanFeatureType.String: {
-      const selectedValueIndex = featureOptions?.findIndex(o => o.value === value) || -1;
       const selectOptions: Option[] = featureOptions
-        ? featureOptions.map((o, i) => ({
+        ? featureOptions.map(o => ({
             label: `${o.displayName} (${$(o.cost)})`,
             value: o.value,
-            disabled:
-              selectedValueIndex !== -1 &&
-              isExistingResource &&
-              ((downgradable && selectedValueIndex > i) || (upgradable && selectedValueIndex < i)),
           }))
         : [];
       const defaultOption = value

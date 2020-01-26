@@ -191,6 +191,10 @@
 
   &[data-locked] {
     color: var(--locked-color);
+
+    & .icon {
+      display: inline-block;
+    }
   }
 }
 
