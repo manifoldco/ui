@@ -1,4 +1,5 @@
 import { Gateway } from 'types/gateway';
+import { ConfiguredFeatureInput } from '../types/graphql';
 
 export interface ConfiguredFeatureGraphQL {
   node: {
@@ -28,4 +29,14 @@ export const formatGatewayFeatures = (
         {}
       )
     : {};
+};
+
+export const formatConfiguredFeatures = (
+  configuredFeatures: Gateway.FeatureMap
+): ConfiguredFeatureInput[] | undefined => {
+  const features = Object.entries(configuredFeatures).map(([label, value]) => ({
+    label,
+    value: `${value}`,
+  }));
+  return features.length ? features : undefined;
 };
