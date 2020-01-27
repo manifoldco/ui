@@ -196,7 +196,10 @@ export class ManifoldPlanDetails {
   resetFeatures = (plan: Plan, configuredFeatures: Gateway.FeatureMap = {}) => {
     if (plan.configurableFeatures) {
       if (this.readOnly || this.isExistingResource) {
-        this.features = configuredFeatures;
+        this.features = {
+          ...configurableFeatureDefaults(plan.configurableFeatures.edges),
+          ...configuredFeatures,
+        };
       } else {
         this.features = configurableFeatureDefaults(plan.configurableFeatures.edges);
       }
