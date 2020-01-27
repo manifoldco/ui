@@ -10,7 +10,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Added
 
 - Added costs for configurable string feature options in `manifold-plan-selector`.
-- Added `read-only` option for `manifold-resource-plan`
+- Added `read-only` attribute to `manifold-plan-details` to optionally disable inputs for configurable features.
 - Added the ability to create and resize plans with configurable features.
 
 ## [0.9.3] - 2019-01-13
