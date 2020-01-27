@@ -115,11 +115,11 @@ export class ManifoldPlanSelector {
 
     return (
       <manifold-active-plan
+        selectedResource={this.resource}
+        isExistingResource={!!this.resourceLabel}
         plans={this.plans}
         product={this.product}
         regions={regions}
-        selectedResource={this.resource}
-        isExistingResource={!!this.resource}
       >
         <manifold-forward-slot slot="cta">
           <slot name="cta" />
