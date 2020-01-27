@@ -1,5 +1,11 @@
-mutation ResourceChangePlan($resourceId: ID!, $planId: ID!) {
-  updateResourcePlan(input: { resourceId: $resourceId, newPlanID: $planId }) {
+mutation ResourceChangePlan(
+  $resourceId: ID!
+  $planId: ID!
+  $configuredFeatures: [ConfiguredFeatureInput!]
+) {
+  updateResourcePlan(
+    input: { resourceId: $resourceId, newPlanID: $planId, configuredFeatures: $configuredFeatures }
+  ) {
     data {
       id
       label

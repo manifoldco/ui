@@ -228,6 +228,7 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldDataResizeButton {
+    'configuredFeatures'?: ConfiguredFeatureInput[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */
@@ -1268,6 +1269,7 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldDataResizeButton {
+    'configuredFeatures'?: ConfiguredFeatureInput[];
     /**
     * _(hidden)_ Passed by `<manifold-connection>`
     */

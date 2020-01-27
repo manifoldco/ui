@@ -11,12 +11,15 @@ import {
   ResourceChangePlanMutation,
   ResourceIdQuery,
   ResourceIdQueryVariables,
+  ConfiguredFeatureInput,
+  ResourceChangePlanMutationVariables,
 } from '../../types/graphql';
 
 interface ClickMessage {
   planId?: string;
   resourceId: string;
   resourceLabel: string;
+  configuredFeatures?: ConfiguredFeatureInput[];
 }
 
 interface SuccessMessage {
@@ -31,6 +34,7 @@ interface ErrorMessage {
   resourceId?: string;
   resourceLabel?: string;
   planId?: string;
+  configuredFeatures?: ConfiguredFeatureInput[];
 }
 
 @Component({ tag: 'manifold-data-resize-button' })
@@ -40,6 +44,7 @@ export class ManifoldDataResizeButton {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() planId?: string;
   @Prop() resourceLabel?: string;
+  @Prop() configuredFeatures?: ConfiguredFeatureInput[];
   @Prop({ mutable: true }) resourceId?: string;
   @Event({ eventName: 'manifold-resizeButton-click', bubbles: true }) click: EventEmitter;
   @Event({ eventName: 'manifold-resizeButton-error', bubbles: true }) error: EventEmitter;
@@ -82,15 +87,19 @@ export class ManifoldDataResizeButton {
       planId: this.planId,
       resourceLabel: this.resourceLabel,
       resourceId: this.resourceId,
+      configuredFeatures: this.configuredFeatures,
     };
     this.click.emit(clickDetail);
 
+    const variables: ResourceChangePlanMutationVariables = {
+      resourceId: this.resourceId,
+      planId: this.planId,
+      configuredFeatures: this.configuredFeatures,
+    };
+
     const { data, errors } = await this.graphqlFetch<ResourceChangePlanMutation>({
       query: updatePlan,
-      variables: {
-        resourceId: this.resourceId,
-        planId: this.planId,
-      },
+      variables,
       element: this.el,
     });
 
@@ -113,6 +122,7 @@ export class ManifoldDataResizeButton {
           planId: this.planId,
           resourceId: this.resourceId,
           resourceLabel: this.resourceLabel,
+          configuredFeatures: this.configuredFeatures,
         };
         this.error.emit(error);
       });
