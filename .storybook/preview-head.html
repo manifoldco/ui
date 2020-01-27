@@ -29,7 +29,8 @@
             button.planId = detail.planId;
             button.productLabel = detail.productLabel;
             button.regionId = detail.regionId;
-            button.features = detail.features;
+            button.configuredFeatures = detail.configuredFeatures;
+
             button.addEventListener('manifold-manageButton-error', ({ detail }) =>
               console.error(detail)
             );

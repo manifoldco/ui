@@ -1133,6 +1133,7 @@ export type CreateResourceWithOwnerMutationVariables = {
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
   resourceLabel: Scalars['String'],
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
   owner: Scalars['ProfileIdentity']
 };
 
@@ -1152,7 +1153,8 @@ export type CreateResourceMutationVariables = {
   planId: Scalars['ID'],
   productId: Scalars['ID'],
   regionId: Scalars['ID'],
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>
 };
 
 
