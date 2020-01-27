@@ -88,6 +88,11 @@ export type ConfiguredFeatureEdge = {
   node: ConfiguredFeature,
 };
 
+export type ConfiguredFeatureInput = {
+  value: Scalars['String'],
+  label: Scalars['String'],
+};
+
 export type CreateProfileAuthTokenInput = {
   profileId: Scalars['ProfileIdentity'],
 };
@@ -105,6 +110,7 @@ export type CreateResourceInput = {
   productId: Scalars['ID'],
   planId: Scalars['ID'],
   regionId: Scalars['ID'],
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
 };
 
 export type CreateResourcePayload = {
@@ -968,6 +974,7 @@ export type UpdateResourcePlanInput = {
   resourceId: Scalars['ID'],
   newPlanID: Scalars['ID'],
   ownerId?: Maybe<Scalars['ID']>,
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
 };
 
 export type UpdateResourcePlanPayload = {
@@ -1431,7 +1438,7 @@ export type PlanFragment = (
       { __typename?: 'PlanConfigurableFeatureEdge' }
       & { node: (
         { __typename?: 'PlanConfigurableFeature' }
-        & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type'>
+        & Pick<PlanConfigurableFeature, 'label' | 'displayName' | 'type' | 'upgradable' | 'downgradable'>
         & { featureOptions: Maybe<Array<(
           { __typename?: 'PlanConfigurableFeatureOption' }
           & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>

@@ -1,6 +1,11 @@
 import { h, FunctionalComponent } from '@stencil/core';
+import { lock } from '@manifoldco/icons';
 import { $ } from '../../../utils/currency';
-import { PlanConfigurableFeatureEdge, PlanFeatureType } from '../../../types/graphql';
+import {
+  PlanConfigurableFeatureEdge,
+  PlanFeatureType,
+  PlanConfigurableFeature,
+} from '../../../types/graphql';
 import { Option } from '../../../types/Select';
 import { fixedDisplayValue } from './FixedFeature';
 
@@ -9,54 +14,62 @@ interface ConfigurableFeatureProps {
   onChange: (e: CustomEvent) => void;
   value?: string | number | boolean;
   readOnly?: boolean;
+  isExistingResource?: boolean;
 }
+
+const getDisplayValue = (
+  value: unknown,
+  { featureOptions, numericDetails }: PlanConfigurableFeature
+) => {
+  switch (typeof value) {
+    case 'boolean':
+      return fixedDisplayValue(
+        featureOptions?.find(o => o.value === `${value ? 'true' : 'false'}`)?.displayName
+      );
+    case 'string':
+      return fixedDisplayValue(featureOptions?.find(o => o.value === value)?.displayName);
+
+    case 'number':
+      return `${value} ${numericDetails?.unit || ''}`;
+
+    default:
+      return <em>No value selected.</em>;
+  }
+};
 
 const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
   configurableFeature,
   onChange,
   value,
   readOnly,
+  isExistingResource,
 }) => {
   if (!configurableFeature) {
     return [];
   }
 
   const {
-    node: { type, displayName, label, featureOptions, numericDetails },
+    node: { type, displayName, label, featureOptions, numericDetails, upgradable, downgradable },
   } = configurableFeature;
 
-  /**
-   * TODO: reimplement this tooltip when upgradable/downgradable is reintroduced to GraphQL
-   * <manifold-tooltip labelText="Feature cannot be changed from current plan">
-   *   <span class="value" data-value={children} data-locked>
-   *     <manifold-icon class="icon" icon={lock} marginRight />
-   *     {children}
-   *   </span>
-   * </manifold-tooltip>
-   */
-
   if (readOnly) {
-    let displayValue;
-
-    switch (typeof value) {
-      case 'boolean':
-        displayValue = fixedDisplayValue(
-          featureOptions?.find(o => o.value === `${value ? 'true' : 'false'}`)?.displayName
-        );
-        break;
-      case 'string':
-        displayValue = fixedDisplayValue(featureOptions?.find(o => o.value === value)?.displayName);
-        break;
-      case 'number':
-        displayValue = `${value} ${numericDetails && numericDetails.unit}`;
-        break;
-      default:
-        displayValue = <em>No value selected.</em>;
-    }
-
     return [
       <dt class="feature-name">{displayName}</dt>,
-      <dd class="feature-value">{displayValue}</dd>,
+      <dd class="feature-value">{getDisplayValue(value, configurableFeature.node)}</dd>,
+    ];
+  }
+
+  if (isExistingResource && !upgradable && !downgradable) {
+    return [
+      <dt class="feature-name">{displayName}</dt>,
+      <dd class="feature-value">
+        <manifold-tooltip labelText="Feature cannot be resized on an existing resource.">
+          <span class="value" data-value={value} data-locked>
+            <manifold-icon class="icon" icon={lock} marginRight />
+            {getDisplayValue(value, configurableFeature.node)}
+          </span>
+        </manifold-tooltip>
+      </dd>,
     ];
   }
 
@@ -88,7 +101,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
     }
 
     // number
-    case PlanFeatureType.Number:
+    case PlanFeatureType.Number: {
       if (!numericDetails) {
         return [];
       }
@@ -101,8 +114,8 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
             decrement-disabled-label="This feature is not downgradable"
             increment-disabled-label="This feature is not upgradable"
             increment={numericDetails.increment}
-            max={numericDetails.max}
-            min={numericDetails.min}
+            max={isExistingResource && upgradable ? (value as number) : numericDetails.max}
+            min={isExistingResource && downgradable ? (value as number) : numericDetails.min}
             name={label}
             onUpdateValue={onChange}
             unit={numericDetails.unit}
@@ -111,6 +124,7 @@ const ConfigurableFeature: FunctionalComponent<ConfigurableFeatureProps> = ({
           />
         </dd>,
       ];
+    }
 
     // boolean
     case PlanFeatureType.Boolean:
