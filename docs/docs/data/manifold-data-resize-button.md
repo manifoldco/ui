@@ -39,8 +39,8 @@ document.addEventListener('manifold-resizeButton-error', ({ detail }) => console
 // }
 ```
 
-| Name                            |                      Returns                       | Description                                                                                                                 |
-| :------------------------------ | :------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
-| `manifold-resizeButton-click`   |      `planId`, `resourceId`, `resourceLabel`       | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
-| `manifold-resizeButton-success` | `message`, `planId`, `resourceId`, `resourceLabel` | Successful resize with confirmation on values returned from our backend.                                                    |
-| `manifold-resizeButton-error`   | `message`, `planId`, `resourceId`, `resourceLabel` | Erred resize, along with information on what went wrong.                                                                    |
+| Name                            |                                 Returns                                  | Description                                                                                                                 |
+| :------------------------------ | :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------- |
+| `manifold-resizeButton-click`   |      `planId`, `resourceId`, `resourceLabel`, `configuredFeatures`       | Fires immediately when button is clicked. May be used to trigger a loading state, until `-success` or `-error` is received. |
+| `manifold-resizeButton-success` |            `message`, `planId`, `resourceId`, `resourceLabel`            | Successful resize with confirmation on values returned from our backend.                                                    |
+| `manifold-resizeButton-error`   | `message`, `planId`, `resourceId`, `resourceLabel`, `configuredFeatures` | Erred resize, along with information on what went wrong.                                                                    |
