@@ -20,6 +20,7 @@ export class ManifoldPlanCost {
   @Prop() selectedFeatures?: Gateway.FeatureMap;
   @State() calculatedCost?: number;
   @State() controller?: AbortController;
+  @State() error?: string;
   @Watch('plan') planChange() {
     this.fetchCustomCost();
   }
@@ -45,6 +46,7 @@ export class ManifoldPlanCost {
 
     // Hide display while calculating
     this.calculatedCost = undefined;
+    this.error = undefined;
     if (this.controller) {
       this.controller.abort();
     } // If a request is in flight, cancel it
@@ -58,27 +60,42 @@ export class ManifoldPlanCost {
       planID: this.plan.id,
       features,
       init: { signal: this.controller.signal },
-    }).then(({ cost }: Gateway.Price) => {
-      this.calculatedCost = cost || 0;
-      this.controller = undefined; // Request finished, so signal no longer needed
-    });
+    })
+      .then(({ cost }: Gateway.Price) => {
+        this.calculatedCost = cost || 0;
+        this.controller = undefined; // Request finished, so signal no longer needed
+      })
+      .catch(e => {
+        if (e.name !== 'AbortError') {
+          this.error = 'Error getting plan cost.';
+        }
+      });
   }
 
   @logger()
   render() {
+    if (this.error) {
+      return <manifold-toast alertType="error">{this.error}</manifold-toast>;
+    }
+
+    if (this.calculatedCost === undefined) {
+      return <em>Calculating cost...</em>;
+    }
+
+    const meteredFeatures =
+      (this.plan && this.plan.meteredFeatures && this.plan.meteredFeatures.edges) || undefined;
+    const isConfigurable =
+      (this.plan &&
+        this.plan.configurableFeatures &&
+        this.plan.configurableFeatures.edges.length > 0) ||
+      false;
+
     return (
       <manifold-cost-display
         baseCost={this.calculatedCost}
         compact={this.compact}
-        meteredFeatures={
-          (this.plan && this.plan.meteredFeatures && this.plan.meteredFeatures.edges) || undefined
-        }
-        configurable={
-          (this.plan &&
-            this.plan.configurableFeatures &&
-            this.plan.configurableFeatures.edges.length > 0) ||
-          false
-        }
+        meteredFeatures={meteredFeatures}
+        configurable={isConfigurable}
       />
     );
   }

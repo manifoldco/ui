@@ -1,7 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
-  "version": "0.9.3",
+  "version": "0.9.4-rc.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
