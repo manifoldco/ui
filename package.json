@@ -91,7 +91,7 @@
     "@graphql-codegen/typescript": "^1.8.2",
     "@graphql-codegen/typescript-operations": "^1.8.2",
     "@manifoldco/eslint-plugin-stencil": "^0.4.1",
-    "@manifoldco/icons": "0.0.5",
+    "@manifoldco/icons": "0.0.6",
     "@reach/observe-rect": "^1.0.3",
     "@stencil/core": "^1.7.5",
     "@stencil/postcss": "^1.0.1",
