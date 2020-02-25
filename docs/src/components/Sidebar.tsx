@@ -10,6 +10,7 @@ import sapphireTheme from '../lib/theme-sapphire';
 import rubyTheme from '../lib/theme-ruby';
 import diamondTheme from '../lib/theme-diamond';
 import moonTheme from '../lib/theme-moon';
+import emeraldTheme from '../lib/theme-emerald';
 
 interface SidebarProps {
   pages: ([string, string])[];
@@ -23,6 +24,7 @@ const SAPPHIRE = 'sapphire';
 const RUBY = 'ruby';
 const DIAMOND = 'diamond';
 const MOON = 'moon';
+const EMERALD = 'emerald';
 
 const themes = [
   [DEFAULT, 'Default'],
@@ -31,6 +33,7 @@ const themes = [
   [RUBY, 'Ruby'],
   [DIAMOND, 'Diamond'],
   [MOON, 'Moon'],
+  [EMERALD, 'Emerald'],
 ];
 
 // Handle link styling (needed because this doesn’t work with search params)
@@ -163,6 +166,7 @@ ${switchProp('userTheme', {
   [RUBY]: rubyTheme,
   [DIAMOND]: diamondTheme,
   [MOON]: moonTheme,
+  [EMERALD]: emeraldTheme,
 })}
 `;
 
