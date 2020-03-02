@@ -1855,13 +1855,13 @@ export type ResourceCardQuery = (
   )> }
 );
 
-export type Resource_With_OwnerQueryVariables = {
+export type ResourceWithOwnerQueryVariables = {
   resourceLabel: Scalars['String'],
   owner: Scalars['ProfileIdentity']
 };
 
 
-export type Resource_With_OwnerQuery = (
+export type ResourceWithOwnerQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }

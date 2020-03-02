@@ -1,4 +1,4 @@
-query RESOURCE_WITH_OWNER($resourceLabel: String!, $owner: ProfileIdentity!) {
+query ResourceWithOwner($resourceLabel: String!, $owner: ProfileIdentity!) {
   resource(label: $resourceLabel, owner: $owner) {
     id
     label
