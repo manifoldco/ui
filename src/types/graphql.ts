@@ -559,6 +559,9 @@ export type Product = Node & {
   linkedCategories?: Maybe<CategoryConnection>,
   settings: ProductSettings,
   listing: ProductListing,
+  fixedFeatures?: Maybe<ProductFixedFeatureConnection>,
+  meteredFeatures?: Maybe<ProductMeteredFeatureConnection>,
+  configurableFeatures?: Maybe<ProductConfigurableFeatureConnection>,
 };
 
 
@@ -576,6 +579,83 @@ export type ProductLinkedCategoriesArgs = {
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<CategoryOrderBy>
 };
+
+
+export type ProductFixedFeaturesArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>,
+  orderBy?: Maybe<ProductFixedFeaturesOrderBy>
+};
+
+
+export type ProductMeteredFeaturesArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>,
+  orderBy?: Maybe<ProductMeteredFeaturesOrderBy>
+};
+
+
+export type ProductConfigurableFeaturesArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>,
+  orderBy?: Maybe<ProductConfigurableFeaturesOrderBy>
+};
+
+export type ProductBooleanConfigurableFeature = ProductConfigurableFeature & {
+   __typename?: 'ProductBooleanConfigurableFeature',
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  featureOptions?: Maybe<Array<ProductConfigurableFeatureOption>>,
+};
+
+export type ProductConfigurableFeature = {
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+};
+
+export type ProductConfigurableFeatureConnection = {
+   __typename?: 'ProductConfigurableFeatureConnection',
+  pageInfo: PageInfo,
+  edges: Array<ProductConfigurableFeatureEdge>,
+};
+
+export type ProductConfigurableFeatureEdge = {
+   __typename?: 'ProductConfigurableFeatureEdge',
+  cursor: Scalars['String'],
+  node: ProductConfigurableFeature,
+};
+
+export type ProductConfigurableFeatureNumericDetails = {
+   __typename?: 'ProductConfigurableFeatureNumericDetails',
+  increment: Scalars['Int'],
+  min: Scalars['Int'],
+  max: Scalars['Int'],
+  unit: Scalars['String'],
+  costTiers: Array<ProductFeatureCostTier>,
+};
+
+export type ProductConfigurableFeatureNumericOptions = {
+   __typename?: 'ProductConfigurableFeatureNumericOptions',
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  numericDetails: ProductConfigurableFeatureNumericDetails,
+};
+
+export type ProductConfigurableFeatureOption = {
+   __typename?: 'ProductConfigurableFeatureOption',
+  value: Scalars['String'],
+  displayName: Scalars['String'],
+  cost: Scalars['Int'],
+};
+
+export type ProductConfigurableFeaturesOrderBy = {
+  field: ProductConfigurableFeaturesOrderByField,
+  direction: OrderByDirection,
+};
+
+export enum ProductConfigurableFeaturesOrderByField {
+  Label = 'LABEL'
+}
 
 export type ProductConnection = {
    __typename?: 'ProductConnection',
@@ -595,12 +675,102 @@ export type ProductEdge = {
   cursor: Scalars['String'],
 };
 
+export type ProductFeatureCostTier = {
+   __typename?: 'ProductFeatureCostTier',
+  limit: Scalars['Int'],
+  cost: Scalars['Int'],
+};
+
+export type ProductFixedFeature = Node & {
+   __typename?: 'ProductFixedFeature',
+  id: Scalars['ID'],
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  featureOptions?: Maybe<Array<ProductFixedFeatureOption>>,
+};
+
+export type ProductFixedFeatureConnection = {
+   __typename?: 'ProductFixedFeatureConnection',
+  pageInfo: PageInfo,
+  edges: Array<ProductFixedFeatureEdge>,
+};
+
+export type ProductFixedFeatureEdge = {
+   __typename?: 'ProductFixedFeatureEdge',
+  cursor: Scalars['String'],
+  node: ProductFixedFeature,
+};
+
+export type ProductFixedFeatureOption = {
+   __typename?: 'ProductFixedFeatureOption',
+  value: Scalars['String'],
+  displayName: Scalars['String'],
+};
+
+export type ProductFixedFeaturesOrderBy = {
+  field: ProductFixedFeaturesOrderByField,
+  direction: OrderByDirection,
+};
+
+export enum ProductFixedFeaturesOrderByField {
+  Label = 'LABEL'
+}
+
 export type ProductListing = {
    __typename?: 'ProductListing',
   beta: Scalars['Boolean'],
   new: Scalars['Boolean'],
   featured: Scalars['Boolean'],
   comingSoon: Scalars['Boolean'],
+};
+
+export type ProductMeteredFeature = Node & {
+   __typename?: 'ProductMeteredFeature',
+  id: Scalars['ID'],
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  numericOptions?: Maybe<Array<ProductMeteredFeatureNumericOptions>>,
+};
+
+export type ProductMeteredFeatureConnection = {
+   __typename?: 'ProductMeteredFeatureConnection',
+  pageInfo: PageInfo,
+  edges: Array<ProductMeteredFeatureEdge>,
+};
+
+export type ProductMeteredFeatureEdge = {
+   __typename?: 'ProductMeteredFeatureEdge',
+  cursor: Scalars['String'],
+  node: ProductMeteredFeature,
+};
+
+export type ProductMeteredFeatureNumericDetails = {
+   __typename?: 'ProductMeteredFeatureNumericDetails',
+  unit: Scalars['String'],
+  costTiers: Array<ProductFeatureCostTier>,
+};
+
+export type ProductMeteredFeatureNumericOptions = {
+   __typename?: 'ProductMeteredFeatureNumericOptions',
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  numericDetails: ProductMeteredFeatureNumericDetails,
+};
+
+export type ProductMeteredFeaturesOrderBy = {
+  field: ProductMeteredFeaturesOrderByField,
+  direction: OrderByDirection,
+};
+
+export enum ProductMeteredFeaturesOrderByField {
+  Label = 'LABEL'
+}
+
+export type ProductNumberConfigurableFeature = ProductConfigurableFeature & {
+   __typename?: 'ProductNumberConfigurableFeature',
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  numericOptions?: Maybe<Array<ProductConfigurableFeatureNumericOptions>>,
 };
 
 export type ProductOrderBy = {
@@ -631,6 +801,13 @@ export enum ProductState {
   New = 'NEW',
   Upcoming = 'UPCOMING'
 }
+
+export type ProductStringConfigurableFeature = ProductConfigurableFeature & {
+   __typename?: 'ProductStringConfigurableFeature',
+  label: Scalars['String'],
+  displayName: Scalars['String'],
+  featureOptions?: Maybe<Array<ProductConfigurableFeatureOption>>,
+};
 
 export type Profile = {
    __typename?: 'Profile',
@@ -1675,6 +1852,48 @@ export type ResourceCardQuery = (
       { __typename?: 'ResourceStatus' }
       & Pick<ResourceStatus, 'label'>
     ) }
+  )> }
+);
+
+export type Resource_With_OwnerQueryVariables = {
+  resourceLabel: Scalars['String'],
+  owner: Scalars['ProfileIdentity']
+};
+
+
+export type Resource_With_OwnerQuery = (
+  { __typename?: 'Query' }
+  & { resource: Maybe<(
+    { __typename?: 'Resource' }
+    & { configuredFeatures: Maybe<(
+      { __typename?: 'ConfiguredFeatureConnection' }
+      & { edges: Array<(
+        { __typename?: 'ConfiguredFeatureEdge' }
+        & { node: (
+          { __typename?: 'BooleanConfiguredFeature' }
+          & Pick<BooleanConfiguredFeature, 'label'>
+          & { booleanValue: BooleanConfiguredFeature['value'] }
+        ) | (
+          { __typename?: 'NumberConfiguredFeature' }
+          & Pick<NumberConfiguredFeature, 'label'>
+          & { numberValue: NumberConfiguredFeature['value'] }
+        ) | (
+          { __typename?: 'StringConfiguredFeature' }
+          & Pick<StringConfiguredFeature, 'label'>
+          & { stringValue: StringConfiguredFeature['value'] }
+        ) }
+      )> }
+    )>, region: Maybe<(
+      { __typename?: 'Region' }
+      & Pick<Region, 'id' | 'displayName'>
+    )>, plan: Maybe<(
+      { __typename?: 'Plan' }
+      & Pick<Plan, 'id'>
+      & { product: Maybe<(
+        { __typename?: 'Product' }
+        & Pick<Product, 'label'>
+      )> }
+    )> }
   )> }
 );
 

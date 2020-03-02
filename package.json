@@ -1,7 +1,7 @@
 {
   "name": "@manifoldco/ui",
   "description": "Manifold UI",
-  "version": "0.9.4-rc.0",
+  "version": "0.9.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manifoldco/ui.git"
@@ -100,7 +100,7 @@
     "@storybook/html": "^5.2.5",
     "@types/fetch-mock": "^7.3.1",
     "@types/jest": "24.0.23",
-    "@types/puppeteer": "2.0.1",
+    "@types/puppeteer": "1.20.4",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "babel-loader": "^8.0.6",
@@ -125,8 +125,8 @@
     "stylelint-config-prettier": "^7.0.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^19.0.0",
-    "ts-loader": "^6.2.1",
     "testcafe": "^1.5.0",
+    "ts-loader": "^6.2.1",
     "wait-on": "^4.0.0",
     "webpack": "^4.41.2"
   }

@@ -7,6 +7,7 @@ import loadMark from '../../utils/loadMark';
 import { ResourceStatusLabel, GetResourceQuery } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import query from './resource.graphql';
+import queryWithOwner from './resource-with-owner.graphql';
 
 @Component({ tag: 'manifold-resource-container' })
 export class ManifoldResourceContainer {
@@ -17,6 +18,8 @@ export class ManifoldResourceContainer {
   @Prop() resourceLabel?: string;
   /** Set whether or not to refetch the resource from the api until it is in an available and valid state */
   @Prop() refetchUntilValid?: boolean = false;
+  /** OwnerId to filter resources by */
+  @Prop() ownerId?: string;
   @State() gqlData?: GetResourceQuery['resource'];
   @State() loading: boolean = true;
   @State() timeout?: number;
@@ -51,8 +54,8 @@ export class ManifoldResourceContainer {
     }
 
     const { data, errors } = await this.graphqlFetch<GetResourceQuery>({
-      query,
-      variables: { resourceLabel },
+      query: this.ownerId ? queryWithOwner : query,
+      variables: { resourceLabel, owner: this.ownerId },
       element: this.el,
     });
 
@@ -63,7 +66,7 @@ export class ManifoldResourceContainer {
       this.resourceLoad.emit();
     }
 
-    const resourceNotAvailable = data?.resource?.status.label !== ResourceStatusLabel.Available;
+    const resourceNotAvailable = data?.resource?.status?.label !== ResourceStatusLabel.Available;
 
     if (this.refetchUntilValid && (errors || resourceNotAvailable)) {
       this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
