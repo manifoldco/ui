@@ -63,13 +63,9 @@ export class ManifoldResourceContainer {
       this.resourceLoad.emit();
     }
 
-    if (
-      this.refetchUntilValid &&
-      (errors ||
-        !data ||
-        !data.resource ||
-        data.resource.status.label !== ResourceStatusLabel.Available)
-    ) {
+    const resourceNotAvailable = data?.resource?.status.label !== ResourceStatusLabel.Available;
+
+    if (this.refetchUntilValid && (errors || resourceNotAvailable)) {
       this.timeout = window.setTimeout(() => this.fetchResource(this.resourceLabel), 3000);
     }
   };
