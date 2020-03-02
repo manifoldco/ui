@@ -1865,7 +1865,14 @@ export type Resource_With_OwnerQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }
-    & { configuredFeatures: Maybe<(
+    & Pick<Resource, 'id' | 'label'>
+    & { region: Maybe<(
+      { __typename?: 'Region' }
+      & Pick<Region, 'id' | 'displayName'>
+    )>, status: (
+      { __typename?: 'ResourceStatus' }
+      & Pick<ResourceStatus, 'label' | 'message'>
+    ), configuredFeatures: Maybe<(
       { __typename?: 'ConfiguredFeatureConnection' }
       & { edges: Array<(
         { __typename?: 'ConfiguredFeatureEdge' }
@@ -1883,15 +1890,83 @@ export type Resource_With_OwnerQuery = (
           & { stringValue: StringConfiguredFeature['value'] }
         ) }
       )> }
-    )>, region: Maybe<(
-      { __typename?: 'Region' }
-      & Pick<Region, 'id' | 'displayName'>
     )>, plan: Maybe<(
       { __typename?: 'Plan' }
-      & Pick<Plan, 'id'>
-      & { product: Maybe<(
+      & Pick<Plan, 'id' | 'label' | 'displayName' | 'state' | 'cost' | 'free'>
+      & { regions: Maybe<(
+        { __typename?: 'RegionConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'RegionEdge' }
+          & Pick<RegionEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'Region' }
+            & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
+          ) }
+        )> }
+      )>, product: Maybe<(
         { __typename?: 'Product' }
-        & Pick<Product, 'label'>
+        & Pick<Product, 'id' | 'displayName' | 'tagline' | 'label' | 'logoUrl'>
+      )>, fixedFeatures: Maybe<(
+        { __typename?: 'PlanFixedFeatureConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'PlanFixedFeatureEdge' }
+          & Pick<PlanFixedFeatureEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'PlanFixedFeature' }
+            & Pick<PlanFixedFeature, 'id' | 'label' | 'displayName' | 'displayValue'>
+          ) }
+        )> }
+      )>, meteredFeatures: Maybe<(
+        { __typename?: 'PlanMeteredFeatureConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'PlanMeteredFeatureEdge' }
+          & Pick<PlanMeteredFeatureEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'PlanMeteredFeature' }
+            & Pick<PlanMeteredFeature, 'id' | 'label' | 'displayName'>
+            & { numericDetails: (
+              { __typename?: 'PlanMeteredFeatureNumericDetails' }
+              & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
+              & { costTiers: Maybe<Array<(
+                { __typename?: 'PlanFeatureCostTier' }
+                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+              )>> }
+            ) }
+          ) }
+        )> }
+      )>, configurableFeatures: Maybe<(
+        { __typename?: 'PlanConfigurableFeatureConnection' }
+        & { pageInfo: (
+          { __typename?: 'PageInfo' }
+          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
+        ), edges: Array<(
+          { __typename?: 'PlanConfigurableFeatureEdge' }
+          & Pick<PlanConfigurableFeatureEdge, 'cursor'>
+          & { node: (
+            { __typename?: 'PlanConfigurableFeature' }
+            & Pick<PlanConfigurableFeature, 'id' | 'label' | 'displayName' | 'type'>
+            & { featureOptions: Maybe<Array<(
+              { __typename?: 'PlanConfigurableFeatureOption' }
+              & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
+            )>>, numericDetails: Maybe<(
+              { __typename?: 'PlanConfigurableFeatureNumericDetails' }
+              & Pick<PlanConfigurableFeatureNumericDetails, 'min' | 'max' | 'unit'>
+              & { costTiers: Maybe<Array<(
+                { __typename?: 'PlanFeatureCostTier' }
+                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
+              )>> }
+            )> }
+          ) }
+        )> }
       )> }
     )> }
   )> }

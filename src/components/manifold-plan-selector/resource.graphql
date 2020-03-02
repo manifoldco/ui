@@ -16,9 +16,6 @@ query Resource($resourceLabel: String!) {
         }
       }
     }
-    status {
-      label
-    }
     region {
       id
       displayName
