@@ -519,6 +519,10 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     /**
+    * OwnerId to filter resources by
+    */
+    'ownerId'?: string;
+    /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
     'refetchUntilValid'?: boolean;
@@ -1575,6 +1579,10 @@ declare namespace LocalJSX {
     */
     'graphqlFetch'?: GraphqlFetch;
     'onManifold-resource-load'?: (event: CustomEvent<any>) => void;
+    /**
+    * OwnerId to filter resources by
+    */
+    'ownerId'?: string;
     /**
     * Set whether or not to refetch the resource from the api until it is in an available and valid state
     */
