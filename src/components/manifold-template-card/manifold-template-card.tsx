@@ -1,8 +1,7 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
 import { categoryIcon } from '../../utils/marketplace';
 import serviceTemplates from '../../data/templates';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 interface EventDetail {
   category: string;

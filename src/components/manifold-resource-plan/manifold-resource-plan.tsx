@@ -1,8 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 import { GetResourceQuery, Product, Region } from '../../types/graphql';
 import { formatGatewayFeatures } from '../../utils/configuredFeatures';
 

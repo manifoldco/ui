@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldAuthToken } from './manifold-auth-token';
-import { ConnectionState, Subscriber } from '../../state/connection';
+import { ConnectionState, Subscriber } from '../../global/app';
 
 interface Props {
   token?: string;

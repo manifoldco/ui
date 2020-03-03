@@ -25,7 +25,7 @@ import {
 } from './types/graphql';
 import {
   Subscriber,
-} from './state/connection';
+} from './global/app';
 import {
   AuthType,
 } from './components/manifold-auth-token/manifold-auth-token';

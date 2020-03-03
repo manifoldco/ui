@@ -1,8 +1,7 @@
 import { h, Component, Element, Prop, State, Host } from '@stencil/core';
 import { alert_triangle, check_circle, bell, slash, x } from '@manifoldco/icons';
 import observeRect, { Observer } from '@reach/observe-rect';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 const READY = 'READY';
 const DISMISSED = 'DISMISSED';

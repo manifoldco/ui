@@ -3,8 +3,7 @@ import { arrow_up_right, book, life_buoy, file_text } from '@manifoldco/icons';
 import { ProductQuery } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
 import { categoryIcon } from '../../utils/marketplace';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 @Component({
   tag: 'manifold-product-page',

@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { ManifoldOauth } from './manifold-oauth';
-import connection from '../../state/connection';
+import { connection } from '../../global/app';
 
 describe('<manifold-oauth>', () => {
   describe('v0 props', () => {

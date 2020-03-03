@@ -1,4 +1,4 @@
-import connection from './state/connection';
+import { connection } from './global/app';
 import { waitForAuthToken } from './utils/auth';
 
 export * from './components';

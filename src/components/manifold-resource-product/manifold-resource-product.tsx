@@ -2,8 +2,7 @@ import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import { GetResourceQuery } from '../../types/graphql';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 @Component({ tag: 'manifold-resource-product' })
 export class ManifoldResourceProduct {

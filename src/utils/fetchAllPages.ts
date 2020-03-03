@@ -1,4 +1,4 @@
-import connection from '../state/connection';
+import { connection } from '../global/app';
 import { PageInfo, Query } from '../types/graphql';
 import { GraphqlFetch } from './graphqlFetch';
 

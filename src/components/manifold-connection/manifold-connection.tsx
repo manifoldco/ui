@@ -1,9 +1,8 @@
 import { h, Component, Prop } from '@stencil/core';
 import '../../utils/fetchAllPages';
 
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
-import connection from '../../state/connection';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 
 @Component({ tag: 'manifold-connection' })
 export class ManifoldConnection {

@@ -1,8 +1,7 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { PlanState, ResourceStatusLabel, GetResourceQuery } from '../../types/graphql';
 import ResourceTunnel from '../../data/resource';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 const GraphQLResource: GetResourceQuery['resource'] = {
   id: '268a3d5z80rq7dau0yv25nyf00jfe',

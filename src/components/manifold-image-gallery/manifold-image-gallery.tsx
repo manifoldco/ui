@@ -1,6 +1,5 @@
 import { h, Component, Element, Prop, State, FunctionalComponent } from '@stencil/core';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 interface ThumbnailProps {
   src: string;

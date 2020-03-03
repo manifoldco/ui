@@ -1,10 +1,9 @@
 import { h, Component, Element, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 
 import { AuthToken } from '../../types/auth';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection, Subscriber } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import { report } from '../../utils/errorReport';
-import connection, { Subscriber } from '../../state/connection';
 
 export type AuthType = 'oauth' | 'manual';
 

@@ -1,6 +1,6 @@
 import planPaid from '../../spec/mock/aiven-cassandra/plan-paid';
 import planFree from '../../spec/mock/prefab/plan-free';
-import connection from '../../state/connection';
+import { connection } from '../../global/app';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 export const skeleton = async () => {

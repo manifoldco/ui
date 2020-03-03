@@ -1,8 +1,7 @@
 import { h, Component, Prop } from '@stencil/core';
 import { refresh_cw } from '@manifoldco/icons';
 
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 import { ResourceStatusLabel } from '../../types/graphql';
 
 @Component({

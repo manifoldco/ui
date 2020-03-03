@@ -1,9 +1,8 @@
 import { h, Element, Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
 
-import connection from '../../state/connection';
 import ResourceTunnel from '../../data/resource';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import { ResourceStatusLabel, GetResourceQuery } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import query from './resource.graphql';

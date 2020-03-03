@@ -1,10 +1,9 @@
 import { h, Component, State, Prop, Element, Watch } from '@stencil/core';
 
-import connection from '../../state/connection';
 import { Plan } from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 
 import planQuery from './plan.graphql';
 
@@ -40,7 +39,7 @@ export class ManifoldPlan {
       return;
     }
 
-    const { data } = await this.graphqlFetch({
+    const { data } = await this.graphqlFetch<{ plan?: Plan }>({
       query: planQuery,
       variables: {
         planId,

@@ -2,8 +2,7 @@ import { h, Prop, Component } from '@stencil/core';
 import { check, sliders } from '@manifoldco/icons';
 
 import { PlanEdge } from '../../types/graphql';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 const sortPlans = (plans: PlanEdge[]): PlanEdge[] => {
   const nonconfigurablePlans = plans.filter(

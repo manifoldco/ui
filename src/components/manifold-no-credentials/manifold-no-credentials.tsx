@@ -1,9 +1,8 @@
 import { h, Component, Prop, Element, State } from '@stencil/core';
 
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import resourceNoCredentialsQuery from './resourceNoCredentials.graphql';
-import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { ResourceNoCredentialsQuery } from '../../types/graphql';
 

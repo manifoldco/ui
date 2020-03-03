@@ -1,8 +1,7 @@
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 
-import connection from '../../state/connection';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product, Resource, PlanEdge } from '../../types/graphql';
 
@@ -58,7 +57,7 @@ export class ManifoldPlanSelector {
 
     this.product = undefined;
 
-    const { data } = await this.graphqlFetch({
+    const { data } = await this.graphqlFetch<{ product?: Product }>({
       query: plansQuery,
       variables: {
         productLabel,
@@ -87,7 +86,7 @@ export class ManifoldPlanSelector {
 
     this.resource = undefined;
 
-    const { data } = await this.graphqlFetch({
+    const { data } = await this.graphqlFetch<{ resource?: Resource }>({
       query: resourceQuery,
       variables: {
         resourceLabel,

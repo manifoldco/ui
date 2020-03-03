@@ -1,8 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop } from '@stencil/core';
 import { resource } from '@manifoldco/icons';
 
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 import { ResourceStatusLabel } from '../../types/graphql';
 
 interface EventDetail {

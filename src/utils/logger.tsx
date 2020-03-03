@@ -1,11 +1,32 @@
 import { h } from '@stencil/core';
 import { report } from './errorReport';
-import connection from '../state/connection';
-import analytics, { measure } from '../packages/analytics';
+import { connection } from '../global/app';
+import analytics, { mark, measure } from '../packages/analytics';
 
 interface StencilComponent {
   constructor: {
     name: string;
+  };
+}
+
+export function loadMark<T>() {
+  return function loadMarkDecorator(
+    _target: T,
+    _propertyKey: string,
+    descriptor: PropertyDescriptor
+  ) {
+    const originalMethod = descriptor.value;
+
+    // eslint-disable-next-line no-param-reassign
+    descriptor.value = function componentWillLoad() {
+      if (this.el) {
+        mark(this.el, 'first_render');
+        mark(this.el, 'first_render_with_data');
+      }
+      return originalMethod.apply(this); // call original method
+    };
+
+    return descriptor;
   };
 }
 
