@@ -1,5 +1,6 @@
 import connection from '../../state/connection';
-import { GraphqlFetch } from '../../utils/graphqlFetch';
+import { GraphqlFetch, GraphqlResponseBody } from '../../utils/graphqlFetch';
+import { ProductsQuery } from '../../types/graphql';
 
 export const skeleton = () => {
   const conn = document.createElement('manifold-connection');
@@ -26,6 +27,46 @@ export const allProducts = () => {
 
   const grid = document.createElement('manifold-marketplace');
   grid.hideUntilReady = true;
+
+  document.body.appendChild(grid);
+
+  return grid.componentOnReady();
+};
+
+export const mockedProducts = () => {
+  const conn = document.createElement('manifold-connection');
+  document.body.appendChild(conn);
+
+  const grid = document.createElement('manifold-marketplace');
+  grid.hideUntilReady = true;
+  grid.graphqlFetch = (async (): Promise<GraphqlResponseBody<ProductsQuery>> => ({
+    data: {
+      products: {
+        edges: [
+          {
+            node: {
+              id: '1234',
+              label: 'test',
+              displayName: 'Test',
+              logoUrl: 'https://www.placecage.com/c/200/300',
+              tagline: 'Testing',
+              categories: [
+                {
+                  label: 'cms',
+                },
+              ],
+              plans: {
+                edges: [],
+              },
+            },
+          },
+        ],
+        pageInfo: {
+          hasNextPage: false,
+        },
+      },
+    },
+  })) as GraphqlFetch;
 
   document.body.appendChild(grid);
 
