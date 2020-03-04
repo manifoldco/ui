@@ -1,10 +1,9 @@
 // Newer version of <manifold-service-card>. Keep this in 1.0.
 import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 
-import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 
 import { ProductCardQuery, ProductCardQueryVariables } from '../../types/graphql';
 

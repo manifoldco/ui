@@ -2,8 +2,7 @@ import { h, Component, Prop, Event, EventEmitter, Element, State } from '@stenci
 import { eye, lock, loader } from '@manifoldco/icons';
 
 import { ResourceCredentialsQuery } from '../../types/graphql';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 @Component({
   tag: 'manifold-credentials-view',

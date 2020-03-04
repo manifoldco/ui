@@ -2,8 +2,7 @@ import { h, Component, Prop, State, Event, EventEmitter, Watch, Element } from '
 
 import { Option } from '../../types/Select';
 import { Product, Plan, Region, RegionEdge, ConfiguredFeatureInput } from '../../types/graphql';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 import { configurableFeatureDefaults } from '../../utils/plan';
 import FixedFeature from './components/FixedFeature';
 import MeteredFeature from './components/MeteredFeature';

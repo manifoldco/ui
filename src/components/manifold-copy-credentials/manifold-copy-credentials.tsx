@@ -11,10 +11,9 @@ import {
 } from '@stencil/core';
 import * as clipboard from 'clipboard-polyfill';
 
-import connection from '../../state/connection';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import query from './credentials.graphql';
 import { ResourceWithCredentialsQuery } from '../../types/graphql';
 

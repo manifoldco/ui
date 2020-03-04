@@ -1,6 +1,5 @@
 import { h, Component } from '@stencil/core';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 @Component({
   tag: 'manifold-skeleton-text',

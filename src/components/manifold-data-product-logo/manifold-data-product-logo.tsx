@@ -2,9 +2,8 @@ import { h, Component, Element, Prop, State, Watch } from '@stencil/core';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { Product, ProductLogoQuery, ProductLogoQueryVariables } from '../../types/graphql';
-import connection from '../../state/connection';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 
 import productLogoQuery from './product-logo.graphql';
 

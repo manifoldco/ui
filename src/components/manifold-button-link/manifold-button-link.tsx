@@ -1,6 +1,5 @@
 import { h, Component, Prop, Event, EventEmitter } from '@stencil/core';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 interface EventDetail {
   href?: string;

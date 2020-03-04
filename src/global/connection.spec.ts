@@ -1,4 +1,4 @@
-import { ConnectionState } from './connection';
+import { ConnectionState } from './app';
 
 describe('connection state', () => {
   it('notifies subscribers of auth token changes', () => {

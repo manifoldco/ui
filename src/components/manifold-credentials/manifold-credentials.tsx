@@ -1,10 +1,9 @@
 import { h, Element, Component, Method, Prop, State } from '@stencil/core';
 
 import { ResourceCredentialsQuery } from '../../types/graphql';
-import connection from '../../state/connection';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import resourceCredentialsQuery from './resourceCredentials.graphql';
 
 @Component({ tag: 'manifold-credentials' })

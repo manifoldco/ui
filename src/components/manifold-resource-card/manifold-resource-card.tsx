@@ -1,8 +1,7 @@
 import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 
-import connection from '../../state/connection';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import { ResourceCardQuery, ResourceCardQueryVariables } from '../../types/graphql';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { Error } from '../Error';

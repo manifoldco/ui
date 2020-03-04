@@ -5,7 +5,7 @@ import productLogdna from '../../spec/mock/logdna/product';
 import productPrefab from '../../spec/mock/prefab/product';
 import productMailgun from '../../spec/mock/mailgun/product';
 import productZiggeo from '../../spec/mock/ziggeo/product';
-import connection from '../../state/connection';
+import { connection } from '../../global/app';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 
 export const skeleton = async () => {

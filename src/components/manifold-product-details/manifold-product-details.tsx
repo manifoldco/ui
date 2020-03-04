@@ -2,8 +2,7 @@ import { h, Component, Prop } from '@stencil/core';
 
 import { ProductQuery } from '../../types/graphql';
 import skeletonProduct from '../../data/product';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import logger, { loadMark } from '../../utils/logger';
 
 @Component({
   tag: 'manifold-product-details',

@@ -1,8 +1,7 @@
 import { h, Component, Element, Prop, Event, EventEmitter } from '@stencil/core';
 
-import connection from '../../state/connection';
-import logger from '../../utils/logger';
-import loadMark from '../../utils/loadMark';
+import { connection } from '../../global/app';
+import logger, { loadMark } from '../../utils/logger';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import ssoByLabel from './sso-label.graphql';
 import ssoByID from './sso-id.graphql';

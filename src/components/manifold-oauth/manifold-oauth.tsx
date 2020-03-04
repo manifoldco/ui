@@ -1,8 +1,8 @@
 import { h, Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { AuthToken, PumaAuthToken } from '../../types/auth';
 import { METRICS_ENABLED } from '../../global/settings';
+import { connection } from '../../global/app';
 import logger from '../../utils/logger';
-import connection from '../../state/connection';
 import { connections } from '../../utils/connections';
 import report from '../../packages/analytics';
 

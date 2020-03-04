@@ -1,4 +1,4 @@
-import connection from '../../state/connection';
+import { connection } from '../../global/app';
 import { GraphqlFetch, GraphqlResponseBody } from '../../utils/graphqlFetch';
 import { ProductsQuery } from '../../types/graphql';
 
