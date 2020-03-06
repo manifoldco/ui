@@ -30,6 +30,7 @@ const credentialsHTML = credentials
 
 interface Props {
   resourceLabel?: string;
+  ownerId?: string;
 }
 
 async function setup(props: Props) {
@@ -46,6 +47,7 @@ async function setup(props: Props) {
     setAuthToken: jest.fn(),
   });
   component.resourceLabel = props.resourceLabel;
+  component.ownerId = props.ownerId;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -103,6 +105,23 @@ describe('<manifold-credentials>', () => {
       const toast = page.root && page.root.querySelector('manifold-toast');
       expect(toast).not.toBeNull();
       expect(toast && toast.innerText).toBe('resource not found');
+    });
+
+    it('[owner-id]: uses if passed', async () => {
+      const { page, component } = await setup({
+        resourceLabel: 'my-resource',
+        ownerId: 'my-owner-id',
+      });
+
+      // simulate button click to fetch credentials, and wait for page to update
+      await component.showCredentials();
+      await page.waitForChanges();
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
     });
   });
 });

@@ -1,5 +1,5 @@
-query ResourceByLabel($resourceLabel: String!) {
-  resource(label: $resourceLabel) {
+query ResourceByLabel($resourceLabel: String!, $owner: ProfileIdentity) {
+  resource(label: $resourceLabel, owner: $owner) {
     label
   }
 }

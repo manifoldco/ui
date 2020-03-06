@@ -12,7 +12,7 @@ const products = {
 const graphqlEndpoint = 'http://test.com/graphql';
 
 describe('<manifold-data-product-name>', () => {
-  describe('v0 API', () => {
+  describe('v0 props', () => {
     let page: SpecPage;
     let element: HTMLManifoldDataProductNameElement;
 
@@ -109,6 +109,20 @@ describe('<manifold-data-product-name>', () => {
 
       const name = root.querySelector('manifold-data-product-name') as HTMLElement;
       expect(name.innerHTML).toBe('Product name not found');
+    });
+
+    it('[owner-id]: uses if passed', async () => {
+      element.resourceLabel = 'mailgun';
+      element.ownerId = 'my-owner-id';
+      const root = page.root as HTMLElement;
+      root.appendChild(element);
+      await page.waitForChanges();
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
     });
   });
 });

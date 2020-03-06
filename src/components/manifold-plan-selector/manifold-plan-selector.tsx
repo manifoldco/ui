@@ -3,7 +3,12 @@ import { h, Component, Element, State, Prop, Watch } from '@stencil/core';
 import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { Product, Resource, PlanEdge } from '../../types/graphql';
+import {
+  Product,
+  Resource,
+  PlanEdge,
+  PlanSelectorResourceQueryVariables,
+} from '../../types/graphql';
 
 import plansQuery from './plan-list.graphql';
 import resourceQuery from './resource.graphql';
@@ -15,6 +20,7 @@ export class ManifoldPlanSelector {
   @Prop() freePlans?: boolean;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() ownerId?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Specify regions visible */
@@ -86,11 +92,10 @@ export class ManifoldPlanSelector {
 
     this.resource = undefined;
 
+    const variables: PlanSelectorResourceQueryVariables = { resourceLabel, owner: this.ownerId };
     const { data } = await this.graphqlFetch<{ resource?: Resource }>({
       query: resourceQuery,
-      variables: {
-        resourceLabel,
-      },
+      variables,
       element: this.el,
     });
 

@@ -18,6 +18,7 @@ export class ManifoldDataProductName {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() ownerId?: string;
   /** URL-friendly slug (e.g. `"jawsdb-mysql"`) */
   @Prop() productLabel?: string;
   /** Look up product name from resource */
@@ -69,7 +70,7 @@ export class ManifoldDataProductName {
 
     this.productName = undefined;
 
-    const variables: ResourceProductNameQueryVariables = { resourceLabel };
+    const variables: ResourceProductNameQueryVariables = { resourceLabel, owner: this.ownerId };
     const { data, errors } = await this.graphqlFetch<ResourceProductNameQuery>({
       query: resourceProductNameQuery,
       variables,

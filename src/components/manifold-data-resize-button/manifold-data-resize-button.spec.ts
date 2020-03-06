@@ -5,9 +5,10 @@ import { createGraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import resource from '../../spec/mock/elegant-cms/resource';
 
 interface Props {
+  ownerId?: string;
   planId?: string;
-  resourceLabel?: string;
   resourceId?: string;
+  resourceLabel?: string;
 }
 
 const graphqlEndpoint = 'http://test.com/graphql';
@@ -20,9 +21,10 @@ async function setup(props: Props) {
 
   const component = page.doc.createElement('manifold-data-resize-button');
   component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
+  component.ownerId = props.ownerId;
   component.planId = props.planId;
-  component.resourceLabel = props.resourceLabel;
   component.resourceId = props.resourceId;
+  component.resourceLabel = props.resourceLabel;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -62,6 +64,16 @@ describe('<manifold-data-resize-button>', () => {
       await setup({ resourceLabel: 'my-resource' });
       expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
     });
+
+    it('[owner-id]: uses if passed', async () => {
+      await setup({ resourceLabel: 'my-resource', ownerId: 'my-owner-id' });
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
+    });
   });
 
   describe('v0 events', () => {
@@ -69,8 +81,9 @@ describe('<manifold-data-resize-button>', () => {
       const planId = 'plan-id';
       const resourceLabel = 'click-resource-label';
       const resourceId = 'click-resource-id';
+      const ownerId = 'click-owner-id';
 
-      const { page } = await setup({ planId, resourceId, resourceLabel });
+      const { page } = await setup({ planId, resourceId, resourceLabel, ownerId });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -88,6 +101,7 @@ describe('<manifold-data-resize-button>', () => {
             planId,
             resourceLabel,
             resourceId,
+            ownerId,
           },
         })
       );
@@ -97,8 +111,9 @@ describe('<manifold-data-resize-button>', () => {
       const planId = 'plan-id';
       const resourceLabel = 'error-resource-label';
       const resourceId = 'error-resource-id';
+      const ownerId = 'error-owner-id';
 
-      const { page } = await setup({ planId, resourceId, resourceLabel });
+      const { page } = await setup({ planId, resourceId, resourceLabel, ownerId });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -117,6 +132,7 @@ describe('<manifold-data-resize-button>', () => {
             planId,
             resourceId,
             resourceLabel,
+            ownerId,
           },
         })
       );
@@ -126,8 +142,9 @@ describe('<manifold-data-resize-button>', () => {
       const planId = 'plan-id';
       const resourceLabel = 'success-resource-label';
       const resourceId = 'success-resource-id';
+      const ownerId = 'success-owner-id';
 
-      const { page } = await setup({ planId, resourceId, resourceLabel });
+      const { page } = await setup({ planId, resourceId, resourceLabel, ownerId });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -143,6 +160,7 @@ describe('<manifold-data-resize-button>', () => {
         expect.objectContaining({
           detail: {
             message: `${resource.label} successfully updated to ${planId}`,
+            ownerId,
             planId,
             resourceId,
             resourceLabel: resource.label, // we’re mocking the response here so it’ll be different

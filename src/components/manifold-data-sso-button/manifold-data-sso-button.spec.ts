@@ -9,8 +9,9 @@ const graphqlEndpoint = 'http://test.com/graphql';
 const resourceSSOUrl = 'https://test.com/sso';
 
 interface Props {
-  loading?: boolean;
   disabled?: boolean;
+  loading?: boolean;
+  ownerId?: string;
   resourceId?: string;
   resourceLabel?: string;
 }
@@ -22,10 +23,11 @@ async function setup(props: Props) {
   });
 
   const component = page.doc.createElement('manifold-data-sso-button');
-  component.loading = props.loading;
   component.disabled = props.disabled;
-  component.resourceLabel = props.resourceLabel;
+  component.loading = props.loading;
+  component.ownerId = props.ownerId;
   component.resourceId = props.resourceId;
+  component.resourceLabel = props.resourceLabel;
   component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
 
   const root = page.root as HTMLDivElement;
@@ -72,6 +74,27 @@ describe('<manifold-data-sso-button>', () => {
       const { page } = await setup({ resourceLabel, resourceId });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
+    });
+
+    it('[owner-id]: uses if passed', async () => {
+      const { page } = await setup({
+        resourceLabel: 'my-resource',
+        resourceId: 'my-resource-id',
+        ownerId: 'my-owner-id',
+      });
+
+      // simulate button click
+      const button = page.root && page.root.querySelector('button');
+      if (button) {
+        button.click();
+      }
+      await page.waitForChanges();
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
     });
   });
 

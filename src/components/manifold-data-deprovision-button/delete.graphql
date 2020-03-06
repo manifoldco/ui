@@ -1,5 +1,5 @@
-mutation DeleteResource($resourceId: ID!) {
-  deleteResource(input: { resourceId: $resourceId }) {
+mutation DeleteResource($resourceId: ID!, $owner: ID) {
+  deleteResource(input: { resourceId: $resourceId, ownerId: $owner }) {
     data {
       id
       label

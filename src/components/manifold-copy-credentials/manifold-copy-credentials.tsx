@@ -15,7 +15,10 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
 import query from './credentials.graphql';
-import { ResourceWithCredentialsQuery } from '../../types/graphql';
+import {
+  ResourceWithCredentialsQuery,
+  ResourceWithCredentialsQueryVariables,
+} from '../../types/graphql';
 
 interface ErrorDetail {
   message: string;
@@ -33,6 +36,7 @@ export class ManifoldCopyCredentials {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** The label of the resource to fetch credentials for */
   @Prop() resourceLabel?: string;
+  @Prop() ownerId?: string;
   @State() credentials?: string;
   @Event({ eventName: 'manifold-copyCredentials-error', bubbles: true }) error: EventEmitter;
   @Event({ eventName: 'manifold-copyCredentials-success', bubbles: true }) success: EventEmitter;
@@ -58,16 +62,20 @@ export class ManifoldCopyCredentials {
 
   @Method()
   async refresh() {
-    if (!this.graphqlFetch) {
+    if (!this.graphqlFetch || !this.resourceLabel) {
       return;
     }
 
     // disable button while loading
     this.credentials = undefined;
 
+    const variables: ResourceWithCredentialsQueryVariables = {
+      resourceLabel: this.resourceLabel,
+      owner: this.ownerId,
+    };
     const { data, errors } = await this.graphqlFetch<ResourceWithCredentialsQuery>({
       query,
-      variables: { resourceLabel: this.resourceLabel },
+      variables,
       element: this.el,
     });
 

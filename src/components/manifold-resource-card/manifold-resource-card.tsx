@@ -14,8 +14,9 @@ export class ManifoldResourceCard {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() label?: string;
-  @Prop() resourceLinkFormat?: string;
+  @Prop() ownerId?: string;
   @Prop() preserveEvent?: boolean = false;
+  @Prop() resourceLinkFormat?: string;
   @State() resource?: ResourceCardQuery['resource'];
   @State() errors?: GraphqlError[];
 
@@ -32,7 +33,7 @@ export class ManifoldResourceCard {
     if (!this.graphqlFetch || !resourceLabel) {
       return;
     }
-    const variables: ResourceCardQueryVariables = { resourceLabel };
+    const variables: ResourceCardQueryVariables = { resourceLabel, owner: this.ownerId };
     const { data, errors } = await this.graphqlFetch<ResourceCardQuery>({
       query: resourceCardQuery,
       variables,

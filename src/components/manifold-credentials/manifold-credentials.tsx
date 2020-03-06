@@ -1,6 +1,6 @@
 import { h, Element, Component, Method, Prop, State } from '@stencil/core';
 
-import { ResourceCredentialsQuery } from '../../types/graphql';
+import { ResourceCredentialsQuery, ResourceCredentialsQueryVariables } from '../../types/graphql';
 import { GraphqlFetch, GraphqlError } from '../../utils/graphqlFetch';
 import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
@@ -11,8 +11,9 @@ export class ManifoldCredentials {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-  @Prop() resourceLabel?: string = '';
   @Prop() noCredentials?: boolean = false;
+  @Prop() ownerId?: string;
+  @Prop() resourceLabel?: string = '';
   @State() credentials?: ResourceCredentialsQuery['resource']['credentials']['edges'];
   @State() errors?: GraphqlError[];
   @State() loading?: boolean = false;
@@ -35,9 +36,13 @@ export class ManifoldCredentials {
     this.loading = true;
     this.credentials = undefined;
 
+    const variables: ResourceCredentialsQueryVariables = {
+      resourceLabel: this.resourceLabel,
+      owner: this.ownerId,
+    };
     const { data, errors } = await this.graphqlFetch<ResourceCredentialsQuery>({
       query: resourceCredentialsQuery,
-      variables: { resourceLabel: this.resourceLabel },
+      variables,
       element: this.el,
     });
 
@@ -61,7 +66,7 @@ export class ManifoldCredentials {
   render() {
     if (this.noCredentials || (this.credentials && this.credentials.length === 0)) {
       return (
-        <manifold-no-credentials resourceLabel={this.resourceLabel}>
+        <manifold-no-credentials resourceLabel={this.resourceLabel} ownerId={this.ownerId}>
           <manifold-forward-slot slot="show-button">
             <slot name="show-button" />
           </manifold-forward-slot>

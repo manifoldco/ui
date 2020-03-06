@@ -1,5 +1,5 @@
-query ResourceCard($resourceLabel: String!) {
-  resource(label: $resourceLabel) {
+query ResourceCard($resourceLabel: String!, $owner: ProfileIdentity) {
+  resource(label: $resourceLabel, owner: $owner) {
     id
     label
     plan {

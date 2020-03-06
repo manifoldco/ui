@@ -36,6 +36,7 @@ export class ManifoldDataSsoButton {
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() disabled?: boolean;
+  @Prop() ownerId?: string;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The id of the resource to rename, will be fetched if not set */
@@ -61,8 +62,8 @@ export class ManifoldDataSsoButton {
 
     const variables: ResourceSsoByIdQueryVariables | ResourceSsoByLabelQueryVariables = this
       .resourceId
-      ? { resourceId: this.resourceId }
-      : { resourceLabel: this.resourceLabel || '' };
+      ? { resourceId: this.resourceId, owner: this.ownerId }
+      : { resourceLabel: this.resourceLabel || '', owner: this.ownerId };
     const { data, errors } = await this.graphqlFetch<
       ResourceSsoByIdQuery | ResourceSsoByLabelQuery
     >({

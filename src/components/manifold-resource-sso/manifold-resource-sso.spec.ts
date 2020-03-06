@@ -10,6 +10,7 @@ interface Props {
   disabled?: boolean;
   gqlData?: GetResourceQuery['resource'];
   loading?: boolean;
+  ownerId?: string;
 }
 
 async function setup(props: Props) {
@@ -20,6 +21,7 @@ async function setup(props: Props) {
 
   const component = page.doc.createElement('manifold-resource-sso');
   component.disabled = props.disabled;
+  component.ownerId = props.ownerId;
   component.gqlData = props.gqlData;
   component.loading = props.loading;
 
@@ -58,6 +60,12 @@ describe('<manifold-resource-sso>', () => {
       });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
+    });
+
+    it('[owner-id]: passes to child', async () => {
+      const { page } = await setup({ ownerId: 'my-owner-id' });
+      const button = page.root && page.root.querySelector('manifold-data-sso-button');
+      expect(button && button.ownerId).toBe('my-owner-id');
     });
   });
 });

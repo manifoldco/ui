@@ -10,6 +10,7 @@ interface Props {
   disabled?: boolean;
   gqlData?: GetResourceQuery['resource'];
   loading?: boolean;
+  ownerId?: string;
 }
 
 async function setup(props: Props) {
@@ -22,6 +23,7 @@ async function setup(props: Props) {
   component.disabled = props.disabled;
   component.gqlData = props.gqlData;
   component.loading = props.loading;
+  component.ownerId = props.ownerId;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -61,6 +63,12 @@ describe('<manifold-resource-deprovision>', () => {
       const { page } = await setup({ gqlData: resource as GetResourceQuery['resource'] });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
+    });
+
+    it('[owner-id]: passes to child', async () => {
+      const { page } = await setup({ ownerId: 'my-owner-id' });
+      const button = page.root && page.root.querySelector('manifold-data-deprovision-button');
+      expect(button && button.ownerId).toBe('my-owner-id');
     });
   });
 });

@@ -103,6 +103,30 @@ describe('<manifold-copy-credentials>', () => {
       // expect button is disabled from error
       expect(button.getAttribute('disabled')).not.toBeNull();
     });
+
+    it('[owner-id]: uses if passed', async () => {
+      element.resourceLabel = 'my-resource';
+      element.ownerId = 'my-owner-id';
+      const { root } = page;
+      if (!root) {
+        throw new Error('<manifold-copy-credentials> not found in document');
+      }
+      root.appendChild(element);
+      // wait for creds to fetch
+      await page.waitForChanges();
+
+      // simulate button click
+      const button = root.querySelector('button');
+      if (button) {
+        button.click();
+      }
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
+    });
   });
 
   describe('v0 events', () => {

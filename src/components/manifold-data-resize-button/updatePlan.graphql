@@ -2,9 +2,15 @@ mutation ResourceChangePlan(
   $resourceId: ID!
   $planId: ID!
   $configuredFeatures: [ConfiguredFeatureInput!]
+  $owner: ID
 ) {
   updateResourcePlan(
-    input: { resourceId: $resourceId, newPlanID: $planId, configuredFeatures: $configuredFeatures }
+    input: {
+      resourceId: $resourceId
+      newPlanID: $planId
+      configuredFeatures: $configuredFeatures
+      ownerId: $owner
+    }
   ) {
     data {
       id

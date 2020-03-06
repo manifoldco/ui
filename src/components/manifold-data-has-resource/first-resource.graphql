@@ -1,5 +1,5 @@
-query FirstResource {
-  resources(first: 1) {
+query FirstResource($owner: ProfileIdentity) {
+  resources(first: 1, owner: $owner) {
     edges {
       node {
         label

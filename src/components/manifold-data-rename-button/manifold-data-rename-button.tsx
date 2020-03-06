@@ -17,6 +17,7 @@ interface ClickMessage {
   newLabel?: string;
   resourceLabel: string;
   resourceId: string;
+  ownerId?: string;
 }
 
 interface InvalidMessage {
@@ -24,6 +25,7 @@ interface InvalidMessage {
   newLabel?: string;
   resourceLabel: string;
   resourceId: string;
+  ownerId?: string;
 }
 
 interface SuccessMessage {
@@ -31,6 +33,7 @@ interface SuccessMessage {
   newLabel?: string;
   resourceLabel: string;
   resourceId: string;
+  ownerId?: string;
 }
 
 interface ErrorMessage {
@@ -38,6 +41,7 @@ interface ErrorMessage {
   newLabel?: string;
   resourceLabel: string;
   resourceId?: string;
+  ownerId?: string;
 }
 
 @Component({ tag: 'manifold-data-rename-button' })
@@ -45,6 +49,7 @@ export class ManifoldDataRenameButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() ownerId?: string;
   /** The label of the resource to rename */
   @Prop() resourceLabel?: string;
   /** The new label to give to the resource */
@@ -83,6 +88,7 @@ export class ManifoldDataRenameButton {
       resourceLabel: this.resourceLabel || '',
       newLabel,
       resourceId: this.resourceId,
+      ownerId: this.ownerId,
     };
 
     // invalid event
@@ -142,7 +148,7 @@ export class ManifoldDataRenameButton {
       return;
     }
 
-    const variables: ResourceIdQueryVariables = { resourceLabel };
+    const variables: ResourceIdQueryVariables = { resourceLabel, owner: this.ownerId };
     const { data, errors } = await this.graphqlFetch<ResourceIdQuery>({
       query: resourceIdQuery,
       variables,
@@ -169,6 +175,7 @@ export class ManifoldDataRenameButton {
         newLabel: this.newLabel,
         resourceId: this.resourceId,
         resourceLabel: this.resourceLabel || '',
+        ownerId: this.ownerId,
       };
       console.error(detail.message);
       this.error.emit(detail);

@@ -1,5 +1,5 @@
-query ResourceProductName($resourceLabel: String!) {
-  resource(label: $resourceLabel) {
+query ResourceProductName($resourceLabel: String!, $owner: ProfileIdentity) {
+  resource(label: $resourceLabel, owner: $owner) {
     plan {
       product {
         displayName
