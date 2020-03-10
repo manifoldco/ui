@@ -53,7 +53,6 @@
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",
     "prepare:package": "npm run build && node scripts/prepublish",
-    "publish": "npm run prepare:package && node scripts/publish",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",

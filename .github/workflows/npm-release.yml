@@ -1,0 +1,47 @@
+name: npm-release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  publish:
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      # Make sure version passes schema check
+      - run: npm run test:schema
+      - run: npm run prepare:package
+      - run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
+      - run: 'npm publish ./pkg --tag latest'
+  cdn:
+    env:
+      BUCKET: manifold-js
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      PACKAGE: '@manifoldco/ui' # package name
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          export_default_credentials: true
+      - run: npm install
+      # Make sure version passes schema check
+      - run: npm run test:schema
+      - run: npm run prepare:package
+      # Copy pkg/ for versioned release (/package@version/)
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/pkg gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      # Copy pkg/ for latest stable release (/package/)
+      - run: gsutil -m rm -rf gs://${BUCKET}/${PACKAGE} # remove latest package
+      - run: gsutil -m cp ${GITHUB_WORKSPACE}/pkg gs://${BUCKET}/${PACKAGE} # replace with new build

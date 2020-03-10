@@ -1,0 +1,40 @@
+name: npm-prerelease
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+-*'
+
+jobs:
+  publish:
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run prepare:package
+      - run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
+      - run: 'npm publish ./pkg --tag next'
+  cdn:
+    env:
+      BUCKET: manifold-js
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      PACKAGE: '@manifoldco/ui' # package name
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          export_default_credentials: true
+      - run: npm install
+      - run: npm run prepare:package
+      - run:
+          gsutil -m cp ${GITHUB_WORKSPACE}/pkg gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      # Note: DON’T publish a prerelease to the main folder like we would with a release!
