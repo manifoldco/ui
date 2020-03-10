@@ -6,17 +6,20 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
-  publish:
+  npm:
     env:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [13.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - run: npm install
       # Make sure version passes schema check
       - run: npm run test:schema
-      - run: npm run prepare:package
+      - run: make package
       - run: 'echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc'
       - run: 'npm publish ./pkg --tag latest'
   cdn:
@@ -25,9 +28,6 @@ jobs:
       GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       PACKAGE: '@manifoldco/ui' # package name
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [13.x]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -38,10 +38,11 @@ jobs:
       - run: npm install
       # Make sure version passes schema check
       - run: npm run test:schema
-      - run: npm run prepare:package
+      - run: make package
       # Copy pkg/ for versioned release (/package@version/)
       - run:
-          gsutil -m cp ${GITHUB_WORKSPACE}/pkg gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
-      # Copy pkg/ for latest stable release (/package/)
-      - run: gsutil -m rm -rf gs://${BUCKET}/${PACKAGE} # remove latest package
-      - run: gsutil -m cp ${GITHUB_WORKSPACE}/pkg gs://${BUCKET}/${PACKAGE} # replace with new build
+          gsutil -m cp -r ${GITHUB_WORKSPACE}/pkg
+          gs://${BUCKET}/${PACKAGE}@${GITHUB_REF#refs/tags/v}
+      # Copy pkg/ for latest stable release at end, after versioned release worked (/package/)
+      - run: gsutil -m rm gs://${BUCKET}/${PACKAGE}/** # remove latest package
+      - run: gsutil -m cp -r ${GITHUB_WORKSPACE}/pkg gs://${BUCKET}/${PACKAGE} # replace with new build

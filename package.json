@@ -52,7 +52,7 @@
     "lint:css": "stylelint 'src/**/*.css'",
     "lint:js": "eslint --ext .js,.ts,.tsx src",
     "now-build": "npm run build:storybook",
-    "prepare:package": "npm run build && node scripts/prepublish",
+    "postinstall": "npm run update-version",
     "storybook": "start-storybook -p 6006",
     "test": "stencil test --spec --e2e",
     "test:e2e": "stencil test --e2e",

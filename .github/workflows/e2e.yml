@@ -15,7 +15,7 @@ jobs:
     name: Run e2e tests with TestCafe
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Pull the Docker image
         run: docker pull testcafe/testcafe
       - name: Tests to Run
