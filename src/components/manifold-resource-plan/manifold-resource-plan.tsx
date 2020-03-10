@@ -2,12 +2,12 @@ import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import logger, { loadMark } from '../../utils/logger';
-import { GetResourceQuery, Product, Region } from '../../types/graphql';
+import { ResourceWithOwnerQuery, Product, Region } from '../../types/graphql';
 import { formatGatewayFeatures } from '../../utils/configuredFeatures';
 
 @Component({ tag: 'manifold-resource-plan' })
 export class ManifoldResourcePlan {
-  @Prop() gqlData?: GetResourceQuery['resource'];
+  @Prop() gqlData?: ResourceWithOwnerQuery['resource'];
   @Prop() loading?: boolean = true;
 
   @loadMark()

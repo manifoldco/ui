@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import { GetResourceQuery } from '../../types/graphql';
+import { ResourceWithOwnerQuery } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourceCredentials } from './manifold-resource-credentials';
 import { ManifoldCredentials } from '../manifold-credentials/manifold-credentials';
@@ -10,7 +10,7 @@ import { ManifoldCredentialsView } from '../manifold-credentials-view/manifold-c
 global.setTimeout = jest.fn();
 
 interface Props {
-  gqlData?: GetResourceQuery['resource'];
+  gqlData?: ResourceWithOwnerQuery['resource'];
   loading?: boolean;
   ownerId?: string;
 }
@@ -53,14 +53,14 @@ describe('<manifold-resource-credentials>', () => {
     });
 
     it('[gqlData]: button not disabled if present', async () => {
-      const { page } = await setup({ gqlData: resource as GetResourceQuery['resource'] });
+      const { page } = await setup({ gqlData: resource as ResourceWithOwnerQuery['resource'] });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
     });
 
     it('[owner-id]: passes to child', async () => {
       const { page } = await setup({
-        gqlData: resource as GetResourceQuery['resource'],
+        gqlData: resource as ResourceWithOwnerQuery['resource'],
         loading: false,
         ownerId: 'my-owner-id',
       });

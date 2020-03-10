@@ -1,14 +1,14 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
-import { GetResourceQuery } from '../../types/graphql';
+import { ResourceWithOwnerQuery } from '../../types/graphql';
 import resource from '../../spec/mock/elegant-cms/resource';
 import { ManifoldResourceDeprovision } from './manifold-resource-deprovision';
 import { ManifoldDataDeprovisionButton } from '../manifold-data-deprovision-button/manifold-data-deprovision-button';
 
 interface Props {
   disabled?: boolean;
-  gqlData?: GetResourceQuery['resource'];
+  gqlData?: ResourceWithOwnerQuery['resource'];
   loading?: boolean;
   ownerId?: string;
 }
@@ -60,7 +60,7 @@ describe('<manifold-resource-deprovision>', () => {
     });
 
     it('[gqlData]: button not disabled if present', async () => {
-      const { page } = await setup({ gqlData: resource as GetResourceQuery['resource'] });
+      const { page } = await setup({ gqlData: resource as ResourceWithOwnerQuery['resource'] });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
     });

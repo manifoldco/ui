@@ -9,7 +9,6 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   ConfiguredFeatureInput,
-  GetResourceQuery,
   Plan,
   PlanEdge,
   PlanMeteredFeatureEdge,
@@ -24,6 +23,7 @@ import {
   ResourceStatusLabel,
   ResourceWithCredentialsQuery,
   ResourceWithCredentialsQueryVariables,
+  ResourceWithOwnerQuery,
 } from './types/graphql';
 import {
   Subscriber,
@@ -382,7 +382,7 @@ export namespace Components {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
-    'gqlMock': GetResourceQuery['resource'];
+    'gqlMock': ResourceWithOwnerQuery['resource'];
   }
   interface ManifoldNoCredentials {
     'graphqlFetch'?: GraphqlFetch;
@@ -546,14 +546,14 @@ export namespace Components {
     'resourceLabel'?: string;
   }
   interface ManifoldResourceCredentials {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'noCredentials'?: boolean;
     'ownerId'?: string;
   }
   interface ManifoldResourceDeprovision {
     'disabled'?: boolean;
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'ownerId'?: string;
   }
@@ -580,16 +580,16 @@ export namespace Components {
     'resourceLinkFormat'?: string;
   }
   interface ManifoldResourcePlan {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceRename {
     'disabled'?: boolean;
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -599,12 +599,12 @@ export namespace Components {
   }
   interface ManifoldResourceSso {
     'disabled'?: boolean;
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'ownerId'?: string;
   }
   interface ManifoldResourceStatus {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }
@@ -1451,7 +1451,7 @@ declare namespace LocalJSX {
     'templateLinkFormat'?: string;
   }
   interface ManifoldMockResource {
-    'gqlMock'?: GetResourceQuery['resource'];
+    'gqlMock'?: ResourceWithOwnerQuery['resource'];
   }
   interface ManifoldNoCredentials {
     'graphqlFetch'?: GraphqlFetch;
@@ -1623,14 +1623,14 @@ declare namespace LocalJSX {
     'resourceLabel'?: string;
   }
   interface ManifoldResourceCredentials {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'noCredentials'?: boolean;
     'ownerId'?: string;
   }
   interface ManifoldResourceDeprovision {
     'disabled'?: boolean;
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'ownerId'?: string;
   }
@@ -1657,16 +1657,16 @@ declare namespace LocalJSX {
     'resourceLinkFormat'?: string;
   }
   interface ManifoldResourcePlan {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceProduct {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
   }
   interface ManifoldResourceRename {
     'disabled'?: boolean;
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     /**
     * The new label to give to the resource
@@ -1676,12 +1676,12 @@ declare namespace LocalJSX {
   }
   interface ManifoldResourceSso {
     'disabled'?: boolean;
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'ownerId'?: string;
   }
   interface ManifoldResourceStatus {
-    'gqlData'?: GetResourceQuery['resource'];
+    'gqlData'?: ResourceWithOwnerQuery['resource'];
     'loading'?: boolean;
     'size'?: 'xsmall' | 'small' | 'medium';
   }

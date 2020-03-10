@@ -1,10 +1,13 @@
-query ResourceWithOwner($resourceLabel: String!, $owner: ProfileIdentity!) {
+query ResourceWithOwner($resourceLabel: String!, $owner: ProfileIdentity) {
   resource(label: $resourceLabel, owner: $owner) {
     id
     label
     region {
       id
       displayName
+    }
+    owner {
+      id
     }
     status {
       label
