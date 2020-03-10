@@ -1,9 +1,9 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { PlanState, ResourceStatusLabel, GetResourceQuery } from '../../types/graphql';
+import { PlanState, ResourceStatusLabel, ResourceWithOwnerQuery } from '../../types/graphql';
 import ResourceTunnel from '../../data/resource';
 import logger, { loadMark } from '../../utils/logger';
 
-const GraphQLResource: GetResourceQuery['resource'] = {
+const GraphQLResource: ResourceWithOwnerQuery['resource'] = {
   id: '268a3d5z80rq7dau0yv25nyf00jfe',
   label: 'logdna-elaborate-old-moss-green-deltoid',
   owner: {
@@ -104,8 +104,8 @@ const GraphQLResource: GetResourceQuery['resource'] = {
 
 @Component({ tag: 'manifold-mock-resource' })
 export class ManifoldMockResource {
-  @Prop() gqlMock: GetResourceQuery['resource'] = GraphQLResource;
-  @State() resource?: GetResourceQuery['resource'];
+  @Prop() gqlMock: ResourceWithOwnerQuery['resource'] = GraphQLResource;
+  @State() resource?: ResourceWithOwnerQuery['resource'];
   @State() loading: boolean = true;
 
   @loadMark()

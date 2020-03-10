@@ -2,12 +2,12 @@ import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
 import resource from '../../spec/mock/elegant-cms/resource';
-import { GetResourceQuery } from '../../types/graphql';
+import { ResourceWithOwnerQuery } from '../../types/graphql';
 import { ManifoldResourceProduct } from './manifold-resource-product';
 import { ManifoldProductCardView } from '../manifold-product-card-view/manifold-product-card-view';
 
 interface Props {
-  gqlData?: GetResourceQuery['resource'];
+  gqlData?: ResourceWithOwnerQuery['resource'];
   loading?: boolean;
 }
 
@@ -51,7 +51,7 @@ describe('<manifold-resource-product>', () => {
   it('[gqlData]: renders a product', async () => {
     const { page } = await setup({
       loading: false,
-      gqlData: resource as GetResourceQuery['resource'],
+      gqlData: resource as ResourceWithOwnerQuery['resource'],
     });
 
     const serviceCard = page.root && page.root.querySelector('manifold-product-card-view');
@@ -66,7 +66,7 @@ describe('<manifold-resource-product>', () => {
   it('[loading]: renders a skeleton', async () => {
     const { page } = await setup({
       loading: true,
-      gqlData: resource as GetResourceQuery['resource'],
+      gqlData: resource as ResourceWithOwnerQuery['resource'],
     });
 
     const serviceCard = page.root && page.root.querySelector('manifold-product-card-view');

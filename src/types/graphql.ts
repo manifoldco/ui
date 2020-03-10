@@ -1328,31 +1328,11 @@ export type CreateResourceWithOwnerMutationVariables = {
   regionId: Scalars['ID'],
   resourceLabel: Scalars['String'],
   configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
-  owner: Scalars['ProfileIdentity']
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
 export type CreateResourceWithOwnerMutation = (
-  { __typename?: 'Mutation' }
-  & { createResource: (
-    { __typename?: 'CreateResourcePayload' }
-    & { data: (
-      { __typename?: 'Resource' }
-      & Pick<Resource, 'id' | 'label'>
-    ) }
-  ) }
-);
-
-export type CreateResourceMutationVariables = {
-  planId: Scalars['ID'],
-  productId: Scalars['ID'],
-  regionId: Scalars['ID'],
-  resourceLabel: Scalars['String'],
-  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>
-};
-
-
-export type CreateResourceMutation = (
   { __typename?: 'Mutation' }
   & { createResource: (
     { __typename?: 'CreateResourcePayload' }
@@ -1437,41 +1417,11 @@ export type ResourceChangePlanMutation = (
 export type Data_Resources_With_OwnerQueryVariables = {
   first: Scalars['Int'],
   after: Scalars['String'],
-  owner: Scalars['ProfileIdentity']
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
 export type Data_Resources_With_OwnerQuery = (
-  { __typename?: 'Query' }
-  & { resources: Maybe<(
-    { __typename?: 'ResourceConnection' }
-    & { edges: Array<(
-      { __typename?: 'ResourceEdge' }
-      & { node: Maybe<(
-        { __typename?: 'Resource' }
-        & Pick<Resource, 'id' | 'displayName' | 'label'>
-        & { owner: Maybe<(
-          { __typename?: 'Profile' }
-          & Pick<Profile, 'id'>
-        )>, status: (
-          { __typename?: 'ResourceStatus' }
-          & Pick<ResourceStatus, 'label'>
-        ) }
-      )> }
-    )>, pageInfo: (
-      { __typename?: 'PageInfo' }
-      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
-    ) }
-  )> }
-);
-
-export type Data_ResourcesQueryVariables = {
-  first: Scalars['Int'],
-  after: Scalars['String']
-};
-
-
-export type Data_ResourcesQuery = (
   { __typename?: 'Query' }
   & { resources: Maybe<(
     { __typename?: 'ResourceConnection' }
@@ -1881,7 +1831,7 @@ export type ResourceCardQuery = (
 
 export type ResourceWithOwnerQueryVariables = {
   resourceLabel: Scalars['String'],
-  owner: Scalars['ProfileIdentity']
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1893,6 +1843,9 @@ export type ResourceWithOwnerQuery = (
     & { region: Maybe<(
       { __typename?: 'Region' }
       & Pick<Region, 'id' | 'displayName'>
+    )>, owner: Maybe<(
+      { __typename?: 'Profile' }
+      & Pick<Profile, 'id'>
     )>, status: (
       { __typename?: 'ResourceStatus' }
       & Pick<ResourceStatus, 'label' | 'message'>
@@ -1996,170 +1949,14 @@ export type ResourceWithOwnerQuery = (
   )> }
 );
 
-export type GetResourceQueryVariables = {
-  resourceLabel: Scalars['String'],
+export type Resources_With_OwnerQueryVariables = {
+  first: Scalars['Int'],
+  after: Scalars['String'],
   owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
-export type GetResourceQuery = (
-  { __typename?: 'Query' }
-  & { resource: Maybe<(
-    { __typename?: 'Resource' }
-    & Pick<Resource, 'id' | 'label'>
-    & { region: Maybe<(
-      { __typename?: 'Region' }
-      & Pick<Region, 'id' | 'displayName'>
-    )>, status: (
-      { __typename?: 'ResourceStatus' }
-      & Pick<ResourceStatus, 'label' | 'message'>
-    ), owner: Maybe<(
-      { __typename?: 'Profile' }
-      & Pick<Profile, 'id'>
-    )>, configuredFeatures: Maybe<(
-      { __typename?: 'ConfiguredFeatureConnection' }
-      & { edges: Array<(
-        { __typename?: 'ConfiguredFeatureEdge' }
-        & { node: (
-          { __typename?: 'BooleanConfiguredFeature' }
-          & Pick<BooleanConfiguredFeature, 'label'>
-          & { booleanValue: BooleanConfiguredFeature['value'] }
-        ) | (
-          { __typename?: 'NumberConfiguredFeature' }
-          & Pick<NumberConfiguredFeature, 'label'>
-          & { numberValue: NumberConfiguredFeature['value'] }
-        ) | (
-          { __typename?: 'StringConfiguredFeature' }
-          & Pick<StringConfiguredFeature, 'label'>
-          & { stringValue: StringConfiguredFeature['value'] }
-        ) }
-      )> }
-    )>, plan: Maybe<(
-      { __typename?: 'Plan' }
-      & Pick<Plan, 'id' | 'label' | 'displayName' | 'state' | 'cost' | 'free'>
-      & { regions: Maybe<(
-        { __typename?: 'RegionConnection' }
-        & { pageInfo: (
-          { __typename?: 'PageInfo' }
-          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
-        ), edges: Array<(
-          { __typename?: 'RegionEdge' }
-          & Pick<RegionEdge, 'cursor'>
-          & { node: (
-            { __typename?: 'Region' }
-            & Pick<Region, 'id' | 'displayName' | 'platform' | 'dataCenter'>
-          ) }
-        )> }
-      )>, product: Maybe<(
-        { __typename?: 'Product' }
-        & Pick<Product, 'id' | 'displayName' | 'tagline' | 'label' | 'logoUrl'>
-      )>, fixedFeatures: Maybe<(
-        { __typename?: 'PlanFixedFeatureConnection' }
-        & { pageInfo: (
-          { __typename?: 'PageInfo' }
-          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
-        ), edges: Array<(
-          { __typename?: 'PlanFixedFeatureEdge' }
-          & Pick<PlanFixedFeatureEdge, 'cursor'>
-          & { node: (
-            { __typename?: 'PlanFixedFeature' }
-            & Pick<PlanFixedFeature, 'id' | 'label' | 'displayName' | 'displayValue'>
-          ) }
-        )> }
-      )>, meteredFeatures: Maybe<(
-        { __typename?: 'PlanMeteredFeatureConnection' }
-        & { pageInfo: (
-          { __typename?: 'PageInfo' }
-          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
-        ), edges: Array<(
-          { __typename?: 'PlanMeteredFeatureEdge' }
-          & Pick<PlanMeteredFeatureEdge, 'cursor'>
-          & { node: (
-            { __typename?: 'PlanMeteredFeature' }
-            & Pick<PlanMeteredFeature, 'id' | 'label' | 'displayName'>
-            & { numericDetails: (
-              { __typename?: 'PlanMeteredFeatureNumericDetails' }
-              & Pick<PlanMeteredFeatureNumericDetails, 'unit'>
-              & { costTiers: Maybe<Array<(
-                { __typename?: 'PlanFeatureCostTier' }
-                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
-              )>> }
-            ) }
-          ) }
-        )> }
-      )>, configurableFeatures: Maybe<(
-        { __typename?: 'PlanConfigurableFeatureConnection' }
-        & { pageInfo: (
-          { __typename?: 'PageInfo' }
-          & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'>
-        ), edges: Array<(
-          { __typename?: 'PlanConfigurableFeatureEdge' }
-          & Pick<PlanConfigurableFeatureEdge, 'cursor'>
-          & { node: (
-            { __typename?: 'PlanConfigurableFeature' }
-            & Pick<PlanConfigurableFeature, 'id' | 'label' | 'displayName' | 'type'>
-            & { featureOptions: Maybe<Array<(
-              { __typename?: 'PlanConfigurableFeatureOption' }
-              & Pick<PlanConfigurableFeatureOption, 'displayName' | 'value' | 'cost'>
-            )>>, numericDetails: Maybe<(
-              { __typename?: 'PlanConfigurableFeatureNumericDetails' }
-              & Pick<PlanConfigurableFeatureNumericDetails, 'min' | 'max' | 'unit'>
-              & { costTiers: Maybe<Array<(
-                { __typename?: 'PlanFeatureCostTier' }
-                & Pick<PlanFeatureCostTier, 'limit' | 'cost'>
-              )>> }
-            )> }
-          ) }
-        )> }
-      )> }
-    )> }
-  )> }
-);
-
-export type Resources_With_OwnerQueryVariables = {
-  first: Scalars['Int'],
-  after: Scalars['String'],
-  owner: Scalars['ProfileIdentity']
-};
-
-
 export type Resources_With_OwnerQuery = (
-  { __typename?: 'Query' }
-  & { resources: Maybe<(
-    { __typename?: 'ResourceConnection' }
-    & { edges: Array<(
-      { __typename?: 'ResourceEdge' }
-      & { node: Maybe<(
-        { __typename?: 'Resource' }
-        & Pick<Resource, 'id' | 'displayName' | 'label'>
-        & { owner: Maybe<(
-          { __typename?: 'Profile' }
-          & Pick<Profile, 'id'>
-        )>, status: (
-          { __typename?: 'ResourceStatus' }
-          & Pick<ResourceStatus, 'label'>
-        ), plan: Maybe<(
-          { __typename?: 'Plan' }
-          & { product: Maybe<(
-            { __typename?: 'Product' }
-            & Pick<Product, 'id' | 'label' | 'logoUrl'>
-          )> }
-        )> }
-      )> }
-    )>, pageInfo: (
-      { __typename?: 'PageInfo' }
-      & Pick<PageInfo, 'hasNextPage' | 'endCursor'>
-    ) }
-  )> }
-);
-
-export type ResourcesQueryVariables = {
-  first: Scalars['Int'],
-  after: Scalars['String']
-};
-
-
-export type ResourcesQuery = (
   { __typename?: 'Query' }
   & { resources: Maybe<(
     { __typename?: 'ResourceConnection' }

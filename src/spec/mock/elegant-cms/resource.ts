@@ -3,11 +3,11 @@ import {
   ProductConnection,
   ProductCredentialsSupportType,
   ProductState,
-  GetResourceQuery,
   ProfileState,
   ProfileStateModifier,
   Resource,
   ResourceStatusLabel,
+  ResourceWithOwnerQuery,
 } from '../../../types/graphql';
 
 const emptyProducts: ProductConnection = {
@@ -18,7 +18,7 @@ const emptyProducts: ProductConnection = {
 type ResourceWithOwner = Resource & { owner: any };
 
 // https://graphqlbin.com/v2/6BMYsM
-const resource: GetResourceQuery['resource'] | ResourceWithOwner = {
+const resource: ResourceWithOwnerQuery['resource'] | ResourceWithOwner = {
   createdAt: '2019-08-23T14:22:50Z',
   credentials: {
     pageInfo: {

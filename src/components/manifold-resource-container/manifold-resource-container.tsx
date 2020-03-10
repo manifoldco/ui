@@ -3,9 +3,12 @@ import { h, Element, Component, Prop, State, Watch, Event, EventEmitter } from '
 import ResourceTunnel from '../../data/resource';
 import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
-import { ResourceStatusLabel, GetResourceQuery } from '../../types/graphql';
+import {
+  ResourceStatusLabel,
+  ResourceWithOwnerQuery,
+  ResourceWithOwnerQueryVariables,
+} from '../../types/graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import query from './resource.graphql';
 import queryWithOwner from './resource-with-owner.graphql';
 
 @Component({ tag: 'manifold-resource-container' })
@@ -19,7 +22,7 @@ export class ManifoldResourceContainer {
   @Prop() refetchUntilValid?: boolean = false;
   /** OwnerId to filter resources by */
   @Prop() ownerId?: string;
-  @State() gqlData?: GetResourceQuery['resource'];
+  @State() gqlData?: ResourceWithOwnerQuery['resource'];
   @State() loading: boolean = true;
   @State() timeout?: number;
   @Event({ eventName: 'manifold-resource-load' }) resourceLoad: EventEmitter;
@@ -48,13 +51,14 @@ export class ManifoldResourceContainer {
   }
 
   fetchResource = async (resourceLabel?: string) => {
-    if (!this.graphqlFetch || !this.resourceLabel) {
+    if (!this.graphqlFetch || !resourceLabel) {
       return;
     }
 
-    const { data, errors } = await this.graphqlFetch<GetResourceQuery>({
-      query: this.ownerId ? queryWithOwner : query,
-      variables: { resourceLabel, owner: this.ownerId },
+    const variables: ResourceWithOwnerQueryVariables = { resourceLabel, owner: this.ownerId };
+    const { data, errors } = await this.graphqlFetch<ResourceWithOwnerQuery>({
+      query: queryWithOwner,
+      variables,
       element: this.el,
     });
 

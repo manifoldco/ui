@@ -2,11 +2,11 @@ import { h, Component, Prop } from '@stencil/core';
 
 import ResourceTunnel from '../../data/resource';
 import logger, { loadMark } from '../../utils/logger';
-import { GetResourceQuery } from '../../types/graphql';
+import { ResourceWithOwnerQuery } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
-  @Prop() gqlData?: GetResourceQuery['resource'];
+  @Prop() gqlData?: ResourceWithOwnerQuery['resource'];
   @Prop() ownerId?: string;
   @Prop() loading?: boolean = true;
   @Prop() disabled?: boolean;

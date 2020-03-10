@@ -4,7 +4,7 @@ mutation CreateResourceWithOwner(
   $regionId: ID!
   $resourceLabel: String!
   $configuredFeatures: [ConfiguredFeatureInput!]
-  $owner: ProfileIdentity!
+  $owner: ProfileIdentity
 ) {
   createResource(
     input: {

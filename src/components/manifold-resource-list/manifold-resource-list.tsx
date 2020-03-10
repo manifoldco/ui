@@ -3,9 +3,8 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
-import query from './resources.graphql';
 import queryWithOwner from './resources-with-owner.graphql';
-import { Query, ResourceEdge } from '../../types/graphql';
+import { Query, ResourceEdge, Resources_With_OwnerQueryVariables } from '../../types/graphql';
 import fetchAllPages from '../../utils/fetchAllPages';
 
 @Component({
@@ -55,10 +54,15 @@ export class ManifoldResourceList {
       return;
     }
 
+    const variables: Resources_With_OwnerQueryVariables = {
+      first: 50,
+      after: '',
+      owner: this.ownerId,
+    };
     this.resources = await fetchAllPages<ResourceEdge>({
-      query: this.ownerId ? queryWithOwner : query,
+      query: queryWithOwner,
       nextPage: { first: 50, after: '' },
-      variables: this.ownerId ? { owner: this.ownerId } : {},
+      variables,
       getConnection: (q: Query) => q.resources,
       graphqlFetch: this.graphqlFetch,
       element: this.el,

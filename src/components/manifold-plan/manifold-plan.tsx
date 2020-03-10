@@ -41,9 +41,7 @@ export class ManifoldPlan {
 
     const { data } = await this.graphqlFetch<{ plan?: Plan }>({
       query: planQuery,
-      variables: {
-        planId,
-      },
+      variables: { planId },
       element: this.el,
     });
 

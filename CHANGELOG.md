@@ -7,6 +7,11 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Consolidated owner and owner-less versions of the same GraphQL queries for better stability and
+  easier maintenance.
+
 ### Fixed
 
 - Fixed `owner-id` not being used in all resource components.

@@ -4,8 +4,13 @@ import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
 import fetchAllPages from '../../utils/fetchAllPages';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { ResourceConnection, Resource, ResourceEdge, Query } from '../../types/graphql';
-import query from './resources.graphql';
+import {
+  ResourceConnection,
+  Resource,
+  ResourceEdge,
+  Query,
+  Data_Resources_With_OwnerQueryVariables,
+} from '../../types/graphql';
 import queryWithOwner from './resources-with-owner.graphql';
 
 interface EventDetail {
@@ -51,10 +56,15 @@ export class ManifoldDataResourceList {
       return;
     }
 
+    const variables: Data_Resources_With_OwnerQueryVariables = {
+      first: 50,
+      after: '',
+      owner: this.ownerId,
+    };
     this.resources = await fetchAllPages<ResourceEdge>({
-      query: this.ownerId ? queryWithOwner : query,
+      query: queryWithOwner,
       nextPage: { first: 50, after: '' },
-      variables: this.ownerId ? { owner: this.ownerId } : {},
+      variables,
       getConnection: (q: Query) => q.resources,
       graphqlFetch: this.graphqlFetch,
       element: this.el,

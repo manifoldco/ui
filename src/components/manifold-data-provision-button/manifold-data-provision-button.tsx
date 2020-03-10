@@ -5,17 +5,15 @@ import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
 
 import {
-  CreateResourceMutation,
+  ConfiguredFeatureInput,
+  CreateResourceWithOwnerMutation,
+  CreateResourceWithOwnerMutationVariables,
   PlanRegionsQuery,
   PlanRegionsQueryVariables,
   ProductIdQuery,
   ProductIdQueryVariables,
-  ConfiguredFeatureInput,
-  CreateResourceMutationVariables,
-  CreateResourceWithOwnerMutationVariables,
 } from '../../types/graphql';
 
-import createResource from './create.graphql';
 import createResourceWithOwner from './create-with-owner.graphql';
 import planRegionsQuery from './plan-regions.graphql';
 import productIdQuery from './product-id.graphql';
@@ -132,7 +130,7 @@ export class ManifoldDataProvisionButton {
     // disable button & attempt provision
     this.provisioning = true;
 
-    const variables: CreateResourceMutationVariables | CreateResourceWithOwnerMutationVariables = {
+    const variables: CreateResourceWithOwnerMutationVariables = {
       planId: this.planId || '',
       productId: this.productId || '',
       regionId: this.regionId || '',
@@ -141,8 +139,8 @@ export class ManifoldDataProvisionButton {
       owner: this.ownerId,
     };
 
-    const { data, errors } = await this.graphqlFetch<CreateResourceMutation>({
-      query: this.ownerId ? createResourceWithOwner : createResource,
+    const { data, errors } = await this.graphqlFetch<CreateResourceWithOwnerMutation>({
+      query: createResourceWithOwner,
       variables,
       element: this.el,
     });

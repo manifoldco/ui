@@ -1,10 +1,10 @@
 import { h } from '@stencil/core';
 import { createProviderConsumer } from '@stencil/state-tunnel';
-import { GetResourceQuery } from '../types/graphql';
+import { ResourceWithOwnerQuery } from '../types/graphql';
 
 export interface ResourceState {
   loading: boolean;
-  gqlData?: GetResourceQuery['resource'];
+  gqlData?: ResourceWithOwnerQuery['resource'];
 }
 
 export default createProviderConsumer<ResourceState>(

@@ -4,7 +4,10 @@ import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
 import resourceNoCredentialsQuery from './resourceNoCredentials.graphql';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
-import { ResourceNoCredentialsQuery } from '../../types/graphql';
+import {
+  ResourceNoCredentialsQuery,
+  ResourceNoCredentialsQueryVariables,
+} from '../../types/graphql';
 
 const PLATFORM_DISPLAY_NAMES: { [key: string]: string } = {
   'manifold.co': 'Manifold',
@@ -35,9 +38,13 @@ export class ManifoldNoCredentials {
       return;
     }
 
+    const variables: ResourceNoCredentialsQueryVariables = {
+      resourceLabel: this.resourceLabel,
+      owner: this.ownerId,
+    };
     const { data } = await this.graphqlFetch<ResourceNoCredentialsQuery>({
       query: resourceNoCredentialsQuery,
-      variables: { resourceLabel: this.resourceLabel, owner: this.ownerId },
+      variables,
       element: this.el,
     });
     const platformName = data && PLATFORM_DISPLAY_NAMES[data.resource.owner.platform.domain];
