@@ -12,7 +12,6 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,

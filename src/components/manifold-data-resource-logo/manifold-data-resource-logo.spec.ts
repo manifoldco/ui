@@ -6,7 +6,12 @@ import resource from '../../spec/mock/elegant-cms/resource';
 
 const graphqlEndpoint = 'http://test.com/graphql';
 
-async function setup(resourceLabel: string) {
+interface SetupProps {
+  resourceLabel: string;
+  ownerId?: string;
+}
+
+async function setup(props: SetupProps) {
   const page = await newSpecPage({
     components: [ManifoldDataResourceLogo],
     html: '<div></div>',
@@ -18,7 +23,8 @@ async function setup(resourceLabel: string) {
     wait: () => 10,
     setAuthToken: jest.fn(),
   });
-  component.resourceLabel = resourceLabel;
+  component.resourceLabel = props.resourceLabel;
+  component.ownerId = props.ownerId;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -47,15 +53,27 @@ describe('<manifold-data-resource-logo>', () => {
 
   afterEach(fetchMock.restore);
 
+  describe('v0 props', () => {
+    it('[owner-id]: uses if passed', async () => {
+      await setup({ resourceLabel: 'my-resource', ownerId: 'my-owner-id' });
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
+    });
+  });
+
   it('fetches resource on load', async () => {
     const resourceLabel = 'my-resource';
-    await setup(resourceLabel);
+    await setup({ resourceLabel });
     expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(true);
   });
 
   it('fetches resource on change', async () => {
     const resourceLabel = 'my-resource';
-    const { page, component } = await setup(resourceLabel);
+    const { page, component } = await setup({ resourceLabel });
 
     const newResourceLabel = 'new-resource';
 

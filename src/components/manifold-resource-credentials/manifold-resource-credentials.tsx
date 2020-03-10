@@ -6,6 +6,7 @@ import { GetResourceQuery } from '../../types/graphql';
 
 @Component({ tag: 'manifold-resource-credentials' })
 export class ManifoldResourceCredentials {
+  @Prop() ownerId?: string;
   @Prop() gqlData?: GetResourceQuery['resource'];
   @Prop() loading?: boolean = true;
   @Prop() noCredentials?: boolean = false;
@@ -20,7 +21,11 @@ export class ManifoldResourceCredentials {
     }
 
     return (
-      <manifold-credentials resourceLabel={this.gqlData.label} noCredentials={this.noCredentials}>
+      <manifold-credentials
+        ownerId={this.ownerId || this.gqlData.owner.id}
+        resourceLabel={this.gqlData.label}
+        noCredentials={this.noCredentials}
+      >
         <manifold-forward-slot slot="show-button">
           <slot name="show-button" />
         </manifold-forward-slot>

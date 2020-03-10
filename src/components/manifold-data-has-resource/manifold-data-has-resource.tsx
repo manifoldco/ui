@@ -25,6 +25,7 @@ export class ManifoldDataHasResource {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Disable auto-updates? */
   @Prop() label?: string;
+  @Prop() ownerId?: string;
   @Prop() paused?: boolean = false;
   @State() interval?: number;
   @State() hasResource?: boolean;
@@ -63,6 +64,7 @@ export class ManifoldDataHasResource {
 
     const variables: ResourceByLabelQueryVariables | FirstResourceQueryVariables = {
       resourceLabel: label,
+      owner: this.ownerId,
     };
     const { data } = await this.graphqlFetch<ResourceByLabelQuery & FirstResourceQuery>({
       query: label ? resourceByLabelQuery : firstResourceQuery,

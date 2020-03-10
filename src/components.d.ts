@@ -20,8 +20,10 @@ import {
   Region,
   Resource,
   ResourceCredentialsQuery,
+  ResourceCredentialsQueryVariables,
   ResourceStatusLabel,
   ResourceWithCredentialsQuery,
+  ResourceWithCredentialsQueryVariables,
 } from './types/graphql';
 import {
   Subscriber,
@@ -93,6 +95,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     'refresh': () => Promise<void>;
     /**
     * The label of the resource to fetch credentials for
@@ -111,6 +114,7 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     'noCredentials'?: boolean;
+    'ownerId'?: string;
     'resourceLabel'?: string;
     'showCredentials': () => Promise<void>;
   }
@@ -125,6 +129,7 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
+    'ownerId'?: string;
     /**
     * resource ID
     */
@@ -143,6 +148,7 @@ export namespace Components {
     * Disable auto-updates?
     */
     'label'?: string;
+    'ownerId'?: string;
     'paused'?: boolean;
   }
   interface ManifoldDataProductLogo {
@@ -164,6 +170,7 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -218,6 +225,7 @@ export namespace Components {
     * The new label to give to the resource
     */
     'newLabel'?: string;
+    'ownerId'?: string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -233,6 +241,7 @@ export namespace Components {
     * _(hidden)_ Passed by `<manifold-connection>`
     */
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     'planId'?: string;
     'resourceId'?: string;
     'resourceLabel'?: string;
@@ -268,6 +277,7 @@ export namespace Components {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     /**
     * Look up product logo from resource
     */
@@ -280,6 +290,7 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     'loading'?: boolean;
+    'ownerId'?: string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -375,6 +386,7 @@ export namespace Components {
   }
   interface ManifoldNoCredentials {
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     'resourceLabel'?: string;
   }
   interface ManifoldNumberInput {
@@ -441,6 +453,7 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     'hideUntilReady'?: boolean;
+    'ownerId'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -500,6 +513,7 @@ export namespace Components {
     */
     'graphqlFetch'?: GraphqlFetch;
     'label'?: string;
+    'ownerId'?: string;
     'preserveEvent'?: boolean;
     'resourceLinkFormat'?: string;
   }
@@ -535,11 +549,13 @@ export namespace Components {
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     'noCredentials'?: boolean;
+    'ownerId'?: string;
   }
   interface ManifoldResourceDeprovision {
     'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
+    'ownerId'?: string;
   }
   interface ManifoldResourceList {
     /**
@@ -579,11 +595,13 @@ export namespace Components {
     * The new label to give to the resource
     */
     'newLabel'?: string;
+    'ownerId'?: string;
   }
   interface ManifoldResourceSso {
     'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
+    'ownerId'?: string;
   }
   interface ManifoldResourceStatus {
     'gqlData'?: GetResourceQuery['resource'];
@@ -1127,6 +1145,7 @@ declare namespace LocalJSX {
     'graphqlFetch'?: GraphqlFetch;
     'onManifold-copyCredentials-error'?: (event: CustomEvent<any>) => void;
     'onManifold-copyCredentials-success'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
     /**
     * The label of the resource to fetch credentials for
     */
@@ -1144,6 +1163,7 @@ declare namespace LocalJSX {
     */
     'graphqlFetch'?: GraphqlFetch;
     'noCredentials'?: boolean;
+    'ownerId'?: string;
     'resourceLabel'?: string;
   }
   interface ManifoldCredentialsView {
@@ -1161,6 +1181,7 @@ declare namespace LocalJSX {
     'onManifold-deprovisionButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-deprovisionButton-success'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
     /**
     * resource ID
     */
@@ -1180,6 +1201,7 @@ declare namespace LocalJSX {
     */
     'label'?: string;
     'onManifold-hasResource-load'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
     'paused'?: boolean;
   }
   interface ManifoldDataProductLogo {
@@ -1201,6 +1223,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1263,6 +1286,7 @@ declare namespace LocalJSX {
     'onManifold-renameButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-invalid'?: (event: CustomEvent<any>) => void;
     'onManifold-renameButton-success'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -1281,6 +1305,7 @@ declare namespace LocalJSX {
     'onManifold-resizeButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-resizeButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-resizeButton-success'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
     'planId'?: string;
     'resourceId'?: string;
     'resourceLabel'?: string;
@@ -1317,6 +1342,7 @@ declare namespace LocalJSX {
     * _(hidden)_
     */
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     /**
     * Look up product logo from resource
     */
@@ -1332,6 +1358,7 @@ declare namespace LocalJSX {
     'onManifold-ssoButton-click'?: (event: CustomEvent<any>) => void;
     'onManifold-ssoButton-error'?: (event: CustomEvent<any>) => void;
     'onManifold-ssoButton-success'?: (event: CustomEvent<any>) => void;
+    'ownerId'?: string;
     /**
     * The id of the resource to rename, will be fetched if not set
     */
@@ -1428,6 +1455,7 @@ declare namespace LocalJSX {
   }
   interface ManifoldNoCredentials {
     'graphqlFetch'?: GraphqlFetch;
+    'ownerId'?: string;
     'resourceLabel'?: string;
   }
   interface ManifoldNumberInput {
@@ -1498,6 +1526,7 @@ declare namespace LocalJSX {
     */
     'graphqlFetch'?: GraphqlFetch;
     'hideUntilReady'?: boolean;
+    'ownerId'?: string;
     /**
     * URL-friendly slug (e.g. `"jawsdb-mysql"`)
     */
@@ -1559,6 +1588,7 @@ declare namespace LocalJSX {
     */
     'graphqlFetch'?: GraphqlFetch;
     'label'?: string;
+    'ownerId'?: string;
     'preserveEvent'?: boolean;
     'resourceLinkFormat'?: string;
   }
@@ -1596,11 +1626,13 @@ declare namespace LocalJSX {
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
     'noCredentials'?: boolean;
+    'ownerId'?: string;
   }
   interface ManifoldResourceDeprovision {
     'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
+    'ownerId'?: string;
   }
   interface ManifoldResourceList {
     /**
@@ -1640,11 +1672,13 @@ declare namespace LocalJSX {
     * The new label to give to the resource
     */
     'newLabel'?: string;
+    'ownerId'?: string;
   }
   interface ManifoldResourceSso {
     'disabled'?: boolean;
     'gqlData'?: GetResourceQuery['resource'];
     'loading'?: boolean;
+    'ownerId'?: string;
   }
   interface ManifoldResourceStatus {
     'gqlData'?: GetResourceQuery['resource'];

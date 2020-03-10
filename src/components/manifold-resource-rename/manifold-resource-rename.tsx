@@ -7,6 +7,7 @@ import { GetResourceQuery } from '../../types/graphql';
 @Component({ tag: 'manifold-resource-rename' })
 export class ManifoldResourceRename {
   @Prop() gqlData?: GetResourceQuery['resource'];
+  @Prop() ownerId?: string;
   @Prop() loading?: boolean = true;
   @Prop() disabled?: boolean;
   /** The new label to give to the resource */
@@ -19,11 +20,12 @@ export class ManifoldResourceRename {
   render() {
     return (
       <manifold-data-rename-button
+        disabled={this.disabled}
+        loading={this.loading}
+        newLabel={this.newLabel}
+        ownerId={this.ownerId || (this.gqlData && this.gqlData.owner.id)}
         resourceId={this.gqlData && this.gqlData.id}
         resourceLabel={this.gqlData && this.gqlData.label}
-        loading={this.loading}
-        disabled={this.disabled}
-        newLabel={this.newLabel}
       >
         <slot />
       </manifold-data-rename-button>

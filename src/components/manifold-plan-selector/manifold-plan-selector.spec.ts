@@ -10,7 +10,9 @@ import product from '../../spec/mock/aiven-cassandra/product';
 const graphqlEndpoint = 'http://test.com/graphql';
 
 interface Props {
+  ownerId?: string;
   regions?: string;
+  resourceLabel?: string;
 }
 
 async function setup(props: Props) {
@@ -22,6 +24,8 @@ async function setup(props: Props) {
   const component = page.doc.createElement('manifold-plan-selector');
   component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
   component.productLabel = 'test-product';
+  component.ownerId = props.ownerId;
+  component.resourceLabel = props.resourceLabel;
   component.regions = props.regions;
 
   const root = page.root as HTMLDivElement;
@@ -71,6 +75,16 @@ describe(`<manifold-plan-selector>`, () => {
       expect(optionValues).toContain(one);
       expect(optionValues).toContain(two);
       expect(optionValues).toContain(three);
+    });
+
+    it('[owner-id]: uses if passed', async () => {
+      await setup({ resourceLabel: 'my-resource', ownerId: 'my-owner-id' });
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
     });
   });
 });

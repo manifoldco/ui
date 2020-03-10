@@ -8,6 +8,7 @@ import { GetResourceQuery } from '../../types/graphql';
 export class ManifoldResourceSso {
   @Prop() disabled?: boolean;
   @Prop() gqlData?: GetResourceQuery['resource'];
+  @Prop() ownerId?: string;
   @Prop() loading?: boolean = true;
 
   @loadMark()
@@ -20,6 +21,7 @@ export class ManifoldResourceSso {
         disabled={this.disabled || !this.gqlData}
         resourceId={this.gqlData && this.gqlData.id}
         resourceLabel={this.gqlData && this.gqlData.label}
+        ownerId={this.ownerId || (this.gqlData && this.gqlData.owner.id)}
         loading={this.loading}
       >
         <slot />

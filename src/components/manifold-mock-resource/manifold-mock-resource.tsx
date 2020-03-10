@@ -6,6 +6,9 @@ import logger, { loadMark } from '../../utils/logger';
 const GraphQLResource: GetResourceQuery['resource'] = {
   id: '268a3d5z80rq7dau0yv25nyf00jfe',
   label: 'logdna-elaborate-old-moss-green-deltoid',
+  owner: {
+    id: 'tea-bounq0r4tttipoufa4ug',
+  },
   plan: {
     id: '23558gd5kaw5z462e3mvaknj5veuj',
     label: 'quaco',

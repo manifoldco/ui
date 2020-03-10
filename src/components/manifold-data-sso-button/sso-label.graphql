@@ -1,5 +1,5 @@
-query ResourceSSOByLabel($resourceLabel: String!) {
-  resource(label: $resourceLabel) {
+query ResourceSSOByLabel($resourceLabel: String!, $owner: ProfileIdentity) {
+  resource(label: $resourceLabel, owner: $owner) {
     id
     label
     ssoUrl

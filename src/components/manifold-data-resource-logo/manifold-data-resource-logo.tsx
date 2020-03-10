@@ -4,7 +4,7 @@ import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { connection } from '../../global/app';
 import logger, { loadMark } from '../../utils/logger';
 import resourceQuery from './resource.graphql';
-import { ResourceLogoQuery } from '../../types/graphql';
+import { ResourceLogoQuery, ResourceLogoQueryVariables } from '../../types/graphql';
 
 interface ProductState {
   logoUrl: string;
@@ -18,6 +18,7 @@ export class ManifoldDataResourceLogo {
   @Prop() alt?: string;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() ownerId?: string;
   /** Look up product logo from resource */
   @Prop() resourceLabel?: string;
   @State() product?: ProductState;
@@ -32,15 +33,17 @@ export class ManifoldDataResourceLogo {
   }
 
   fetchResource = async (resourceLabel?: string) => {
-    if (!this.graphqlFetch || !this.resourceLabel) {
+    if (!this.graphqlFetch || !resourceLabel) {
       return;
     }
 
     this.product = undefined;
 
+    const variables: ResourceLogoQueryVariables = { resourceLabel, owner: this.ownerId };
+
     const { data } = await this.graphqlFetch<ResourceLogoQuery>({
       query: resourceQuery,
-      variables: { resourceLabel },
+      variables,
       element: this.el,
     });
 

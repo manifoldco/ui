@@ -8,6 +8,7 @@ import {
   DeleteResourceMutation,
   ResourceIdQuery,
   ResourceIdQueryVariables,
+  DeleteResourceMutationVariables,
 } from '../../types/graphql';
 
 import resourceIdQuery from '../queries/resource-id.graphql';
@@ -31,6 +32,7 @@ export class ManifoldDataDeprovisionButton {
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   @Prop() disabled?: boolean;
+  @Prop() ownerId?: string;
   /** resource ID */
   @Prop({ mutable: true }) resourceId?: string = '';
   /** The label of the resource to deprovision */
@@ -68,11 +70,13 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
+    const variables: DeleteResourceMutationVariables = {
+      resourceId: this.resourceId,
+      owner: this.ownerId,
+    };
     const { data, errors } = await this.graphqlFetch<DeleteResourceMutation>({
       query: deleteMutation,
-      variables: {
-        resourceId: this.resourceId,
-      },
+      variables,
       element: this.el,
     });
 
@@ -103,7 +107,7 @@ export class ManifoldDataDeprovisionButton {
       return;
     }
 
-    const variables: ResourceIdQueryVariables = { resourceLabel };
+    const variables: ResourceIdQueryVariables = { resourceLabel, owner: this.ownerId };
     const { data } = await this.graphqlFetch<ResourceIdQuery>({
       query: resourceIdQuery,
       variables,

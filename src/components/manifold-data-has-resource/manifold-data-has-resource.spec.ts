@@ -17,11 +17,12 @@ const multiResources = {
 };
 
 interface Setup {
+  ownerId?: string;
   onLoad?: (e: Event) => void;
   label?: string;
 }
 
-async function setup({ onLoad, label }: Setup) {
+async function setup({ onLoad, label, ownerId }: Setup) {
   const page = await newSpecPage({
     components: [ManifoldDataHasResource],
     html: '<div></div>',
@@ -37,6 +38,7 @@ async function setup({ onLoad, label }: Setup) {
   component.graphqlFetch = createGraphqlFetch({ endpoint: () => graphqlEndpoint });
   component.paused = true;
   component.label = label;
+  component.ownerId = ownerId;
 
   if (onLoad) {
     page.doc.addEventListener('manifold-hasResource-load', onLoad);
@@ -90,6 +92,16 @@ describe('<manifold-data-has-resource>', () => {
       const { component } = await setup({ label: 'my-resource' });
 
       expect(component.shadowRoot).toEqualHtml(`<slot name="has-resource"></slot>`);
+    });
+
+    it('[owner-id]: uses if passed', async () => {
+      await setup({ label: 'my-resource', ownerId: 'my-owner-id' });
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
     });
   });
 

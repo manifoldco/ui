@@ -9,6 +9,7 @@ interface Props {
   disabled?: boolean;
   loading?: boolean;
   newLabel: string;
+  ownerId?: string;
   resourceId?: string;
   resourceLabel: string;
 }
@@ -27,6 +28,7 @@ async function setup(props: Props) {
   });
   component.disabled = props.disabled;
   component.loading = props.loading;
+  component.ownerId = props.ownerId;
   component.newLabel = props.newLabel;
   component.resourceId = props.resourceId;
   component.resourceLabel = props.resourceLabel;
@@ -92,6 +94,16 @@ describe('<manifold-data-rename-button>', () => {
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).not.toBeNull();
     });
+
+    it('[owner-id]: uses if passed', async () => {
+      await setup({ resourceLabel: 'my-resource', newLabel: 'new-label', ownerId: 'my-owner-id' });
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
+    });
   });
 
   describe('v0 events', () => {
@@ -99,8 +111,9 @@ describe('<manifold-data-rename-button>', () => {
       const newLabel = 'success-next';
       const resourceId = 'success-id';
       const resourceLabel = 'success-label';
+      const ownerId = 'success-owner';
 
-      const { page } = await setup({ newLabel, resourceId, resourceLabel });
+      const { page } = await setup({ newLabel, resourceId, resourceLabel, ownerId });
 
       const mockClick = jest.fn();
 
@@ -114,7 +127,7 @@ describe('<manifold-data-rename-button>', () => {
       button.click();
 
       expect(mockClick).toBeCalledWith(
-        expect.objectContaining({ detail: { newLabel, resourceLabel, resourceId } })
+        expect.objectContaining({ detail: { newLabel, resourceLabel, resourceId, ownerId } })
       );
     });
 
@@ -122,7 +135,8 @@ describe('<manifold-data-rename-button>', () => {
       const newLabel = 'x';
       const resourceId = 'invalid-id';
       const resourceLabel = 'invalid-label';
-      const { page } = await setup({ newLabel, resourceId, resourceLabel });
+      const ownerId = 'invalid-owner';
+      const { page } = await setup({ newLabel, resourceId, resourceLabel, ownerId });
 
       const button = page.root && page.root.querySelector('button');
       if (!button) {
@@ -141,6 +155,7 @@ describe('<manifold-data-rename-button>', () => {
             newLabel,
             resourceLabel,
             resourceId,
+            ownerId,
           },
         })
       );
@@ -150,7 +165,8 @@ describe('<manifold-data-rename-button>', () => {
       const newLabel = '🦞🦞🦞';
       const resourceId = 'invalid-id';
       const resourceLabel = 'invalid-label';
-      const { page } = await setup({ newLabel, resourceId, resourceLabel });
+      const ownerId = 'invalid-owner';
+      const { page } = await setup({ newLabel, resourceId, resourceLabel, ownerId });
 
       const button = page.root && page.root.querySelector('button');
       if (!button) {
@@ -170,6 +186,7 @@ describe('<manifold-data-rename-button>', () => {
             newLabel,
             resourceLabel,
             resourceId,
+            ownerId,
           },
         })
       );
@@ -179,7 +196,8 @@ describe('<manifold-data-rename-button>', () => {
       const newLabel = 'error-next';
       const resourceId = 'error-id';
       const resourceLabel = 'error-label';
-      const { page } = await setup({ newLabel, resourceId, resourceLabel });
+      const ownerId = 'error-owner';
+      const { page } = await setup({ newLabel, resourceId, resourceLabel, ownerId });
 
       const button = page.root && page.root.querySelector('button');
       if (!button) {
@@ -197,7 +215,7 @@ describe('<manifold-data-rename-button>', () => {
       expect(fetchMock.called('begin:https://api.manifold.co/graphql')).toBe(true);
       expect(mockClick).toHaveBeenCalledWith(
         expect.objectContaining({
-          detail: { message: 'resource not found', newLabel, resourceLabel, resourceId },
+          detail: { message: 'resource not found', newLabel, resourceLabel, resourceId, ownerId },
         })
       );
     });
@@ -206,7 +224,8 @@ describe('<manifold-data-rename-button>', () => {
       const newLabel = 'logdna'; // Test relies on logdna here because fetchMock returns the logdna mock resource
       const resourceId = 'success-id';
       const resourceLabel = 'success-label';
-      const { page } = await setup({ newLabel, resourceId, resourceLabel });
+      const ownerId = 'success-owner';
+      const { page } = await setup({ newLabel, resourceId, resourceLabel, ownerId });
 
       const button = page.root && page.root.querySelector('button');
       if (!button) {
@@ -229,6 +248,7 @@ describe('<manifold-data-rename-button>', () => {
             newLabel,
             resourceLabel,
             resourceId,
+            ownerId,
           },
         })
       );

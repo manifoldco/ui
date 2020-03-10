@@ -12,6 +12,7 @@ global.setTimeout = jest.fn();
 interface Props {
   gqlData?: GetResourceQuery['resource'];
   loading?: boolean;
+  ownerId?: string;
 }
 
 async function setup(props: Props) {
@@ -23,6 +24,7 @@ async function setup(props: Props) {
   const component = page.doc.createElement('manifold-resource-credentials');
   component.gqlData = props.gqlData;
   component.loading = props.loading;
+  component.ownerId = props.ownerId;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -54,6 +56,16 @@ describe('<manifold-resource-credentials>', () => {
       const { page } = await setup({ gqlData: resource as GetResourceQuery['resource'] });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
+    });
+
+    it('[owner-id]: passes to child', async () => {
+      const { page } = await setup({
+        gqlData: resource as GetResourceQuery['resource'],
+        loading: false,
+        ownerId: 'my-owner-id',
+      });
+      const credentials = page.root && page.root.querySelector('manifold-credentials');
+      expect(credentials && credentials.ownerId).toBe('my-owner-id');
     });
   });
 });

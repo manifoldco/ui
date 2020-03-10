@@ -4,6 +4,8 @@ import {
   ProductCredentialsSupportType,
   ProductState,
   GetResourceQuery,
+  ProfileState,
+  ProfileStateModifier,
   Resource,
   ResourceStatusLabel,
 } from '../../../types/graphql';
@@ -13,8 +15,10 @@ const emptyProducts: ProductConnection = {
   pageInfo: { hasNextPage: false, hasPreviousPage: false },
 };
 
+type ResourceWithOwner = Resource & { owner: any };
+
 // https://graphqlbin.com/v2/6BMYsM
-const resource: GetResourceQuery['resource'] | Resource = {
+const resource: GetResourceQuery['resource'] | ResourceWithOwner = {
   createdAt: '2019-08-23T14:22:50Z',
   credentials: {
     pageInfo: {
@@ -35,6 +39,13 @@ const resource: GetResourceQuery['resource'] | Resource = {
   },
   id: '268ehtybtbaaz9gffw46d36bm0g1a',
   label: 'cms-stage',
+  owner: {
+    id: 'tea-bounq0r4tttipoufa4ug',
+    platform: { id: '', domain: '' },
+    state: ProfileState.Active,
+    stateModifiedBy: ProfileStateModifier.Manifold,
+    subject: '',
+  },
   displayName: 'cms-stage',
   plan: {
     configurableFeatures: { pageInfo: { hasNextPage: false, hasPreviousPage: false }, edges: [] },

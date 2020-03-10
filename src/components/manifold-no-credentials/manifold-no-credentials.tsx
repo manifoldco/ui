@@ -20,6 +20,7 @@ const PLATFORM_DISPLAY_NAMES: { [key: string]: string } = {
 export class ManifoldNoCredentials {
   @Element() el: HTMLElement;
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() ownerId?: string;
   @Prop() resourceLabel?: string = '';
   @State()
   message?: string =
@@ -36,7 +37,7 @@ export class ManifoldNoCredentials {
 
     const { data } = await this.graphqlFetch<ResourceNoCredentialsQuery>({
       query: resourceNoCredentialsQuery,
-      variables: { resourceLabel: this.resourceLabel },
+      variables: { resourceLabel: this.resourceLabel, owner: this.ownerId },
       element: this.el,
     });
     const platformName = data && PLATFORM_DISPLAY_NAMES[data.resource.owner.platform.domain];

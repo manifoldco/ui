@@ -1,5 +1,5 @@
-query getResource($resourceLabel: String!) {
-  resource(label: $resourceLabel) {
+query getResource($resourceLabel: String!, $owner: ProfileIdentity) {
+  resource(label: $resourceLabel, owner: $owner) {
     id
     label
     region {
@@ -9,6 +9,9 @@ query getResource($resourceLabel: String!) {
     status {
       label
       message
+    }
+    owner {
+      id
     }
     configuredFeatures(first: 500) {
       edges {

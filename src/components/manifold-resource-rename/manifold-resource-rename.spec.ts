@@ -11,6 +11,7 @@ interface Props {
   gqlData?: GetResourceQuery['resource'];
   loading?: boolean;
   newLabel?: string;
+  ownerId?: string;
 }
 
 async function setup(props: Props) {
@@ -24,6 +25,7 @@ async function setup(props: Props) {
   component.gqlData = props.gqlData;
   component.loading = props.loading;
   component.newLabel = props.newLabel;
+  component.ownerId = props.ownerId;
 
   const root = page.root as HTMLDivElement;
   root.appendChild(component);
@@ -66,6 +68,12 @@ describe('<manifold-resource-rename>', () => {
       });
       const button = page.root && page.root.querySelector('button');
       expect(button && button.getAttribute('disabled')).toBeNull();
+    });
+
+    it('[owner-id]: passes to child', async () => {
+      const { page } = await setup({ ownerId: 'my-owner-id' });
+      const button = page.root && page.root.querySelector('manifold-data-rename-button');
+      expect(button && button.ownerId).toBe('my-owner-id');
     });
   });
 });

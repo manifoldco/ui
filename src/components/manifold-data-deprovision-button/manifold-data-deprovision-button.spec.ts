@@ -8,6 +8,7 @@ import resource from '../../spec/mock/elegant-cms/resource';
 interface Props {
   resourceId?: string;
   resourceLabel?: string;
+  ownerId?: string;
 }
 
 const graphqlEndpoint = 'http://test.com/graphql';
@@ -24,6 +25,7 @@ async function setup(props: Props) {
     wait: () => 10,
     setAuthToken: jest.fn(),
   });
+  component.ownerId = props.ownerId;
   component.resourceId = props.resourceId;
   component.resourceLabel = props.resourceLabel;
 
@@ -69,6 +71,23 @@ describe('<manifold-data-deprovision-button>', () => {
     it('[resource-id]: doesn’t fetch ID if set', async () => {
       await setup({ resourceId: 'resource-id', resourceLabel: 'resource-label' });
       expect(fetchMock.called(`begin:${graphqlEndpoint}`)).toBe(false);
+    });
+
+    it('[owner-id]: uses if passed', async () => {
+      const { page } = await setup({ resourceId: 'resource-id', ownerId: 'my-owner-id' });
+
+      // simulate button click
+      const button = page.root && page.root.querySelector('button');
+      if (button) {
+        button.click();
+      }
+      await page.waitForChanges();
+
+      const [[_, firstRequest]] = fetchMock.calls();
+      const body = JSON.parse(`${firstRequest && firstRequest.body}`);
+      const { variables } = body;
+
+      expect(variables.owner).toBe('my-owner-id');
     });
   });
 

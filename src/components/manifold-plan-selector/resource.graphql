@@ -1,5 +1,5 @@
-query Resource($resourceLabel: String!) {
-  resource(label: $resourceLabel) {
+query PlanSelectorResource($resourceLabel: String!, $owner: ProfileIdentity) {
+  resource(label: $resourceLabel, owner: $owner) {
     configuredFeatures(first: 500) {
       edges {
         node {

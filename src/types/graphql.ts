@@ -605,12 +605,14 @@ export type ProductBooleanConfigurableFeature = ProductConfigurableFeature & {
    __typename?: 'ProductBooleanConfigurableFeature',
   label: Scalars['String'],
   displayName: Scalars['String'],
+  type: ProductFeatureType,
   featureOptions?: Maybe<Array<ProductConfigurableFeatureOption>>,
 };
 
 export type ProductConfigurableFeature = {
   label: Scalars['String'],
   displayName: Scalars['String'],
+  type: ProductFeatureType,
 };
 
 export type ProductConfigurableFeatureConnection = {
@@ -680,6 +682,12 @@ export type ProductFeatureCostTier = {
   limit: Scalars['Int'],
   cost: Scalars['Int'],
 };
+
+export enum ProductFeatureType {
+  Boolean = 'BOOLEAN',
+  String = 'STRING',
+  Number = 'NUMBER'
+}
 
 export type ProductFixedFeature = Node & {
    __typename?: 'ProductFixedFeature',
@@ -770,6 +778,7 @@ export type ProductNumberConfigurableFeature = ProductConfigurableFeature & {
    __typename?: 'ProductNumberConfigurableFeature',
   label: Scalars['String'],
   displayName: Scalars['String'],
+  type: ProductFeatureType,
   numericOptions?: Maybe<Array<ProductConfigurableFeatureNumericOptions>>,
 };
 
@@ -806,6 +815,7 @@ export type ProductStringConfigurableFeature = ProductConfigurableFeature & {
    __typename?: 'ProductStringConfigurableFeature',
   label: Scalars['String'],
   displayName: Scalars['String'],
+  type: ProductFeatureType,
   featureOptions?: Maybe<Array<ProductConfigurableFeatureOption>>,
 };
 
@@ -1171,7 +1181,8 @@ export type WithUsage = {
 };
 
 export type ResourceWithCredentialsQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1193,7 +1204,8 @@ export type ResourceWithCredentialsQuery = (
 );
 
 export type ResourceCredentialsQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1215,7 +1227,8 @@ export type ResourceCredentialsQuery = (
 );
 
 export type DeleteResourceMutationVariables = {
-  resourceId: Scalars['ID']
+  resourceId: Scalars['ID'],
+  owner?: Maybe<Scalars['ID']>
 };
 
 
@@ -1230,7 +1243,9 @@ export type DeleteResourceMutation = (
   ) }
 );
 
-export type FirstResourceQueryVariables = {};
+export type FirstResourceQueryVariables = {
+  owner?: Maybe<Scalars['ProfileIdentity']>
+};
 
 
 export type FirstResourceQuery = (
@@ -1248,7 +1263,8 @@ export type FirstResourceQuery = (
 );
 
 export type ResourceByLabelQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1287,7 +1303,8 @@ export type ProductNameQuery = (
 );
 
 export type ResourceProductNameQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1401,7 +1418,8 @@ export type RenameResourceMutation = (
 export type ResourceChangePlanMutationVariables = {
   resourceId: Scalars['ID'],
   planId: Scalars['ID'],
-  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
+  owner?: Maybe<Scalars['ID']>
 };
 
 
@@ -1478,7 +1496,8 @@ export type Data_ResourcesQuery = (
 );
 
 export type ResourceLogoQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1497,7 +1516,8 @@ export type ResourceLogoQuery = (
 );
 
 export type ResourceSsoByIdQueryVariables = {
-  resourceId: Scalars['ID']
+  resourceId: Scalars['ID'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1510,7 +1530,8 @@ export type ResourceSsoByIdQuery = (
 );
 
 export type ResourceSsoByLabelQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1559,7 +1580,8 @@ export type ProductsQuery = (
 );
 
 export type ResourceNoCredentialsQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1667,12 +1689,13 @@ export type PlanListQuery = (
   )> }
 );
 
-export type ResourceQueryVariables = {
-  resourceLabel: Scalars['String']
+export type PlanSelectorResourceQueryVariables = {
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
-export type ResourceQuery = (
+export type PlanSelectorResourceQuery = (
   { __typename?: 'Query' }
   & { resource: Maybe<(
     { __typename?: 'Resource' }
@@ -1833,7 +1856,8 @@ export type ProductQuery = (
 );
 
 export type ResourceCardQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1973,7 +1997,8 @@ export type ResourceWithOwnerQuery = (
 );
 
 export type GetResourceQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
@@ -1988,7 +2013,10 @@ export type GetResourceQuery = (
     )>, status: (
       { __typename?: 'ResourceStatus' }
       & Pick<ResourceStatus, 'label' | 'message'>
-    ), configuredFeatures: Maybe<(
+    ), owner: Maybe<(
+      { __typename?: 'Profile' }
+      & Pick<Profile, 'id'>
+    )>, configuredFeatures: Maybe<(
       { __typename?: 'ConfiguredFeatureConnection' }
       & { edges: Array<(
         { __typename?: 'ConfiguredFeatureEdge' }
@@ -2162,7 +2190,8 @@ export type ResourcesQuery = (
 );
 
 export type ResourceIdQueryVariables = {
-  resourceLabel: Scalars['String']
+  resourceLabel: Scalars['String'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 
