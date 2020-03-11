@@ -22,6 +22,18 @@ docker:
 		--label "org.vcs-branch"="$(VCS_BRANCH)" \
 		.
 
+package:
+	@echo 🧹 Creating clean workspace…
+	rm -rf pkg
+	mkdir pkg
+
+	@echo 📦 Building package…
+	npm run build
+	cp -r dist pkg/.
+	cp LICENSE pkg/.
+	cp README.md pkg/.
+	cp package.json pkg/.
+
 release-pr: docker
 	docker tag arigato/$(NAME) arigato/$(NAME):$(RELEASE_VERSION)
 	docker push arigato/$(NAME):$(RELEASE_VERSION)
