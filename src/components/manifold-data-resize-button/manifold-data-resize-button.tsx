@@ -15,6 +15,7 @@ import {
 } from '../../types/graphql';
 
 interface ClickMessage {
+  ownerId?: string;
   planId?: string;
   resourceId: string;
   resourceLabel: string;
@@ -22,6 +23,7 @@ interface ClickMessage {
 }
 
 interface SuccessMessage {
+  ownerId?: string;
   message: string;
   planId?: string;
   resourceId?: string;
@@ -29,6 +31,7 @@ interface SuccessMessage {
 }
 
 interface ErrorMessage {
+  ownerId?: string;
   message: string;
   resourceId?: string;
   resourceLabel?: string;
@@ -41,6 +44,7 @@ export class ManifoldDataResizeButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  @Prop() ownerId?: string;
   @Prop() planId?: string;
   @Prop() resourceLabel?: string;
   @Prop() configuredFeatures?: ConfiguredFeatureInput[];
@@ -83,6 +87,7 @@ export class ManifoldDataResizeButton {
 
     // click event
     const clickDetail: ClickMessage = {
+      ownerId: this.ownerId,
       planId: this.planId,
       resourceLabel: this.resourceLabel,
       resourceId: this.resourceId,
@@ -106,6 +111,7 @@ export class ManifoldDataResizeButton {
       // success event
       const success: SuccessMessage = {
         message: `${data.updateResourcePlan.data.label} successfully updated to ${this.planId}`,
+        ownerId: this.ownerId,
         planId: this.planId,
         resourceId: this.resourceId,
         resourceLabel: data.updateResourcePlan.data.label,
@@ -118,6 +124,7 @@ export class ManifoldDataResizeButton {
       errors.forEach(({ message }) => {
         const error: ErrorMessage = {
           message,
+          ownerId: this.ownerId,
           planId: this.planId,
           resourceId: this.resourceId,
           resourceLabel: this.resourceLabel,

@@ -98,10 +98,10 @@ describe('<manifold-data-resize-button>', () => {
       expect(mockClick).toBeCalledWith(
         expect.objectContaining({
           detail: {
-            planId,
-            resourceLabel,
-            resourceId,
             ownerId,
+            planId,
+            resourceId,
+            resourceLabel,
           },
         })
       );
@@ -129,10 +129,10 @@ describe('<manifold-data-resize-button>', () => {
         expect.objectContaining({
           detail: {
             message: 'something went wrong',
+            ownerId,
             planId,
             resourceId,
             resourceLabel,
-            ownerId,
           },
         })
       );
