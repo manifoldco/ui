@@ -19,7 +19,6 @@ interface ClickMessage {
   resourceId: string;
   resourceLabel: string;
   configuredFeatures?: ConfiguredFeatureInput[];
-  ownerId?: string;
 }
 
 interface SuccessMessage {
@@ -27,7 +26,6 @@ interface SuccessMessage {
   planId?: string;
   resourceId?: string;
   resourceLabel?: string;
-  ownerId?: string;
 }
 
 interface ErrorMessage {
@@ -36,7 +34,6 @@ interface ErrorMessage {
   resourceLabel?: string;
   planId?: string;
   configuredFeatures?: ConfiguredFeatureInput[];
-  ownerId?: string;
 }
 
 @Component({ tag: 'manifold-data-resize-button' })
@@ -44,7 +41,6 @@ export class ManifoldDataResizeButton {
   @Element() el: HTMLElement;
   /** _(hidden)_ Passed by `<manifold-connection>` */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
-  @Prop() ownerId?: string;
   @Prop() planId?: string;
   @Prop() resourceLabel?: string;
   @Prop() configuredFeatures?: ConfiguredFeatureInput[];
@@ -91,17 +87,15 @@ export class ManifoldDataResizeButton {
       resourceLabel: this.resourceLabel,
       resourceId: this.resourceId,
       configuredFeatures: this.configuredFeatures,
-      ownerId: this.ownerId,
     };
     this.click.emit(clickDetail);
 
+    // Note(drew): because we submit resourceId here, we DO NOT need owner
     const variables: ResourceChangePlanMutationVariables = {
       resourceId: this.resourceId,
       planId: this.planId,
       configuredFeatures: this.configuredFeatures,
-      owner: this.ownerId,
     };
-
     const { data, errors } = await this.graphqlFetch<ResourceChangePlanMutation>({
       query: updatePlan,
       variables,
@@ -115,7 +109,6 @@ export class ManifoldDataResizeButton {
         planId: this.planId,
         resourceId: this.resourceId,
         resourceLabel: data.updateResourcePlan.data.label,
-        ownerId: this.ownerId,
       };
       this.success.emit(success);
     }
@@ -129,7 +122,6 @@ export class ManifoldDataResizeButton {
           resourceId: this.resourceId,
           resourceLabel: this.resourceLabel,
           configuredFeatures: this.configuredFeatures,
-          ownerId: this.ownerId,
         };
         this.error.emit(error);
       });
