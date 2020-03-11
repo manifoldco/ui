@@ -18,12 +18,14 @@ interface SuccessMessage {
   message: string;
   resourceLabel: string;
   resourceId: string;
+  ownerId?: string;
 }
 
 interface ErrorMessage {
   message: string;
-  resourceLabel: string;
+  ownerId?: string;
   resourceId?: string;
+  resourceLabel: string;
 }
 
 @Component({ tag: 'manifold-data-deprovision-button' })
@@ -68,6 +70,7 @@ export class ManifoldDataDeprovisionButton {
     this.click.emit({
       resourceId: this.resourceId,
       resourceLabel: this.resourceLabel || '',
+      ownerId: this.ownerId,
     });
 
     // Note(drew): because we send resourceId here, we DO NOT need owner
@@ -82,8 +85,9 @@ export class ManifoldDataDeprovisionButton {
       // success
       const success: SuccessMessage = {
         message: `${data.deleteResource.data.label} successfully deleted`,
-        resourceLabel: data.deleteResource.data.label,
+        ownerId: this.ownerId,
         resourceId: data.deleteResource.data.id,
+        resourceLabel: data.deleteResource.data.label,
       };
       this.success.emit(success);
     }
@@ -92,6 +96,7 @@ export class ManifoldDataDeprovisionButton {
       errors.forEach(({ message }) => {
         const error: ErrorMessage = {
           message,
+          ownerId: this.ownerId,
           resourceLabel: this.resourceLabel || '',
           resourceId: this.resourceId,
         };
