@@ -70,10 +70,8 @@ export class ManifoldDataDeprovisionButton {
       resourceLabel: this.resourceLabel || '',
     });
 
-    const variables: DeleteResourceMutationVariables = {
-      resourceId: this.resourceId,
-      owner: this.ownerId,
-    };
+    // Note(drew): because we send resourceId here, we DO NOT need owner
+    const variables: DeleteResourceMutationVariables = { resourceId: this.resourceId };
     const { data, errors } = await this.graphqlFetch<DeleteResourceMutation>({
       query: deleteMutation,
       variables,
