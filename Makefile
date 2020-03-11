@@ -33,6 +33,7 @@ package:
 	cp LICENSE pkg/.
 	cp README.md pkg/.
 	cp package.json pkg/.
+	npm run clean-package-json
 
 release-pr: docker
 	docker tag arigato/$(NAME) arigato/$(NAME):$(RELEASE_VERSION)

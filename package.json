@@ -10,14 +10,8 @@
   "bugs": {
     "url": "https://github.com/manifoldco/ui/issues"
   },
-  "engines": {
-    "node": ">=10 <=13"
-  },
   "author": "manifoldco",
   "license": "BSD-3-Clause",
-  "files": [
-    "dist/"
-  ],
   "main": "dist/index.js",
   "esnext": "dist/esm",
   "module": "dist/index.mjs",
@@ -32,6 +26,7 @@
     "build:storybook": "npm run build && build-storybook && npm run copy-changelog",
     "build:watch": "npm run update-version && stencil build --watch",
     "bundlesize": "npm run build && npx bundlesize",
+    "clean-package-json": "node scripts/clean-package-json",
     "copy-changelog": "node scripts/copy-changelog",
     "dev": "npm run build:watch & rm -rf dist && wait-on dist/loader/index.cjs.js && npm run storybook",
     "docs": "npm run prepare:docs && cd docs && npm start",
