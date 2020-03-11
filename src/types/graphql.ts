@@ -1227,8 +1227,7 @@ export type ResourceCredentialsQuery = (
 );
 
 export type DeleteResourceMutationVariables = {
-  resourceId: Scalars['ID'],
-  owner?: Maybe<Scalars['ID']>
+  resourceId: Scalars['ID']
 };
 
 
@@ -1398,8 +1397,7 @@ export type RenameResourceMutation = (
 export type ResourceChangePlanMutationVariables = {
   resourceId: Scalars['ID'],
   planId: Scalars['ID'],
-  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
-  owner?: Maybe<Scalars['ID']>
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>
 };
 
 

@@ -15,28 +15,28 @@ import {
 } from '../../types/graphql';
 
 interface ClickMessage {
+  ownerId?: string;
   planId?: string;
   resourceId: string;
   resourceLabel: string;
   configuredFeatures?: ConfiguredFeatureInput[];
-  ownerId?: string;
 }
 
 interface SuccessMessage {
+  ownerId?: string;
   message: string;
   planId?: string;
   resourceId?: string;
   resourceLabel?: string;
-  ownerId?: string;
 }
 
 interface ErrorMessage {
+  ownerId?: string;
   message: string;
   resourceId?: string;
   resourceLabel?: string;
   planId?: string;
   configuredFeatures?: ConfiguredFeatureInput[];
-  ownerId?: string;
 }
 
 @Component({ tag: 'manifold-data-resize-button' })
@@ -87,21 +87,20 @@ export class ManifoldDataResizeButton {
 
     // click event
     const clickDetail: ClickMessage = {
+      ownerId: this.ownerId,
       planId: this.planId,
       resourceLabel: this.resourceLabel,
       resourceId: this.resourceId,
       configuredFeatures: this.configuredFeatures,
-      ownerId: this.ownerId,
     };
     this.click.emit(clickDetail);
 
+    // Note(drew): because we submit resourceId here, we DO NOT need owner
     const variables: ResourceChangePlanMutationVariables = {
       resourceId: this.resourceId,
       planId: this.planId,
       configuredFeatures: this.configuredFeatures,
-      owner: this.ownerId,
     };
-
     const { data, errors } = await this.graphqlFetch<ResourceChangePlanMutation>({
       query: updatePlan,
       variables,
@@ -112,10 +111,10 @@ export class ManifoldDataResizeButton {
       // success event
       const success: SuccessMessage = {
         message: `${data.updateResourcePlan.data.label} successfully updated to ${this.planId}`,
+        ownerId: this.ownerId,
         planId: this.planId,
         resourceId: this.resourceId,
         resourceLabel: data.updateResourcePlan.data.label,
-        ownerId: this.ownerId,
       };
       this.success.emit(success);
     }
@@ -125,11 +124,11 @@ export class ManifoldDataResizeButton {
       errors.forEach(({ message }) => {
         const error: ErrorMessage = {
           message,
+          ownerId: this.ownerId,
           planId: this.planId,
           resourceId: this.resourceId,
           resourceLabel: this.resourceLabel,
           configuredFeatures: this.configuredFeatures,
-          ownerId: this.ownerId,
         };
         this.error.emit(error);
       });

@@ -74,15 +74,7 @@ describe('<manifold-data-deprovision-button>', () => {
     });
 
     it('[owner-id]: uses if passed', async () => {
-      const { page } = await setup({ resourceId: 'resource-id', ownerId: 'my-owner-id' });
-
-      // simulate button click
-      const button = page.root && page.root.querySelector('button');
-      if (button) {
-        button.click();
-      }
-      await page.waitForChanges();
-
+      await setup({ resourceLabel: 'resource-label', ownerId: 'my-owner-id' });
       const [[_, firstRequest]] = fetchMock.calls();
       const body = JSON.parse(`${firstRequest && firstRequest.body}`);
       const { variables } = body;
@@ -94,8 +86,9 @@ describe('<manifold-data-deprovision-button>', () => {
   describe('v0 events', () => {
     it('click', async () => {
       const resourceLabel = 'click-label';
+      const ownerId = 'click-owner';
 
-      const { page } = await setup({ resourceId: resource.id, resourceLabel });
+      const { page } = await setup({ resourceId: resource.id, resourceLabel, ownerId });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -113,6 +106,7 @@ describe('<manifold-data-deprovision-button>', () => {
           detail: {
             resourceLabel,
             resourceId: resource.id,
+            ownerId,
           },
         })
       );
@@ -121,8 +115,9 @@ describe('<manifold-data-deprovision-button>', () => {
     it('error', async () => {
       const resourceId = 'error-id';
       const resourceLabel = 'error-label';
+      const ownerId = 'error-owner';
 
-      const { page } = await setup({ resourceId, resourceLabel });
+      const { page } = await setup({ resourceId, resourceLabel, ownerId });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -143,6 +138,7 @@ describe('<manifold-data-deprovision-button>', () => {
             message: 'something went wrong',
             resourceLabel,
             resourceId,
+            ownerId,
           },
         })
       );
@@ -150,7 +146,8 @@ describe('<manifold-data-deprovision-button>', () => {
 
     it('success', async () => {
       const resourceId = 'success-id';
-      const { page } = await setup({ resourceId, resourceLabel: 'success-label' });
+      const ownerId = 'success-owner';
+      const { page } = await setup({ resourceId, resourceLabel: 'success-label', ownerId });
       const button = page.root && page.root.querySelector('button');
       if (!button) {
         throw new Error('button not found in document');
@@ -171,6 +168,7 @@ describe('<manifold-data-deprovision-button>', () => {
             message: `${resource.label} successfully deleted`,
             resourceLabel: resource.label,
             resourceId,
+            ownerId,
           },
         })
       );

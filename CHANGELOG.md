@@ -15,6 +15,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed `owner-id` not being used in all resource components.
+- Fixed issue where `owner` conflicted with resource IDs
 
 ## [0.9.5] - 2020-03-02
 
