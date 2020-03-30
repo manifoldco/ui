@@ -2,6 +2,7 @@ import { h, Element, Component, Prop, State, Watch, Event, EventEmitter } from '
 
 import ResourceTunnel from '../../data/resource';
 import { connection } from '../../global/app';
+import { waitForAuthToken } from '../../utils/auth';
 import logger, { loadMark } from '../../utils/logger';
 import {
   ResourceStatusLabel,
@@ -42,7 +43,17 @@ export class ManifoldResourceContainer {
   }
 
   @loadMark()
-  componentWillLoad() {
+  async componentWillLoad() {
+    // if auth token missing, wait
+    if (!connection.getAuthToken()) {
+      await waitForAuthToken(
+        () => connection.authToken,
+        connection.waitTime,
+        () => Promise.resolve()
+      );
+    }
+
+    // fetch initial resource
     this.fetchResource(this.resourceLabel);
   }
 
@@ -52,11 +63,6 @@ export class ManifoldResourceContainer {
 
   fetchResource = async (resourceLabel?: string) => {
     if (!this.graphqlFetch || !resourceLabel) {
-      return;
-    }
-
-    // for this component, wait for auth before fetching
-    if (!connection.getAuthToken()) {
       return;
     }
 

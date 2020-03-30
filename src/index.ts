@@ -8,7 +8,11 @@ export async function ensureAuthToken() {
     return connection.authToken;
   }
 
-  await waitForAuthToken(() => connection.authToken, connection.waitTime, Promise.resolve);
+  await waitForAuthToken(
+    () => connection.authToken,
+    connection.waitTime,
+    () => Promise.resolve()
+  );
 
   return connection.authToken;
 }
