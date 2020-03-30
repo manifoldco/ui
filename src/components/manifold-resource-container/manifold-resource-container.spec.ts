@@ -1,6 +1,12 @@
 import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
+// mock connection before import
+jest.mock('../../global/app', () => ({
+  connection: { getAuthToken: () => '1234' },
+}));
+
+/* eslint-disable import/first */
 import { ManifoldResourceContainer } from './manifold-resource-container';
 import { createGraphqlFetch } from '../../utils/graphqlFetch';
 import { ResourceStatusLabel } from '../../types/graphql';

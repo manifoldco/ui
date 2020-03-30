@@ -54,6 +54,11 @@ export class ManifoldResourceList {
       return;
     }
 
+    // for this component, wait for auth before fetching
+    if (!connection.getAuthToken()) {
+      return;
+    }
+
     const variables: Resources_With_OwnerQueryVariables = {
       first: 50,
       after: '',

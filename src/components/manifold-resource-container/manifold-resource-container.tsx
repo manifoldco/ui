@@ -55,6 +55,11 @@ export class ManifoldResourceContainer {
       return;
     }
 
+    // for this component, wait for auth before fetching
+    if (!connection.getAuthToken()) {
+      return;
+    }
+
     const variables: ResourceWithOwnerQueryVariables = { resourceLabel, owner: this.ownerId };
     const { data, errors } = await this.graphqlFetch<ResourceWithOwnerQuery>({
       query: queryWithOwner,

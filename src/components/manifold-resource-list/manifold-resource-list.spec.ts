@@ -1,6 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
 import fetchMock from 'fetch-mock';
 
+// mock connection before import
+jest.mock('../../global/app', () => ({
+  connection: { getAuthToken: () => '1234' },
+}));
+
+/* eslint-disable import/first */
 import { ManifoldResourceList } from './manifold-resource-list';
 import { connections } from '../../utils/connections';
 import resource from '../../spec/mock/elegant-cms/resource';
@@ -43,6 +49,11 @@ describe('<manifold-resource-list>', () => {
   window.setInterval = jest.fn();
 
   afterEach(fetchMock.restore);
+
+  // unmock connection
+  afterAll(() => {
+    jest.unmock('../../global/app');
+  });
 
   it('The resources list are rendered if given.', async () => {
     fetchMock.mock(connections.prod.graphql, { data });
