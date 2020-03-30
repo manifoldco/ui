@@ -2,6 +2,7 @@ import { h, Component, Prop, State, Element, Watch } from '@stencil/core';
 
 import { GraphqlFetch } from '../../utils/graphqlFetch';
 import { connection } from '../../global/app';
+import { waitForAuthToken } from '../../utils/auth';
 import logger, { loadMark } from '../../utils/logger';
 import queryWithOwner from './resources-with-owner.graphql';
 import { Query, ResourceEdge, Resources_With_OwnerQueryVariables } from '../../types/graphql';
@@ -36,7 +37,17 @@ export class ManifoldResourceList {
   }
 
   @loadMark()
-  componentWillLoad() {
+  async componentWillLoad() {
+    // if auth token missing, wait
+    if (!connection.getAuthToken()) {
+      await waitForAuthToken(
+        () => connection.authToken,
+        connection.waitTime,
+        () => Promise.resolve()
+      );
+    }
+
+    // start polling
     this.fetchResources();
     if (!this.paused) {
       this.interval = window.setInterval(() => this.fetchResources(), 3000);
@@ -51,11 +62,6 @@ export class ManifoldResourceList {
 
   fetchResources = async () => {
     if (!this.graphqlFetch || document.hidden) {
-      return;
-    }
-
-    // for this component, wait for auth before fetching
-    if (!connection.getAuthToken()) {
       return;
     }
 

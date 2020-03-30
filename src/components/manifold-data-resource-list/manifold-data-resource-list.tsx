@@ -1,6 +1,7 @@
 import { h, Component, Prop, State, Event, EventEmitter, Element } from '@stencil/core';
 
 import { connection } from '../../global/app';
+import { waitForAuthToken } from '../../utils/auth';
 import logger, { loadMark } from '../../utils/logger';
 import fetchAllPages from '../../utils/fetchAllPages';
 import { GraphqlFetch } from '../../utils/graphqlFetch';
@@ -38,7 +39,17 @@ export class ManifoldDataResourceList {
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
   @loadMark()
-  componentWillLoad() {
+  async componentWillLoad() {
+    // if auth token missing, wait
+    if (!connection.getAuthToken()) {
+      await waitForAuthToken(
+        () => connection.authToken,
+        connection.waitTime,
+        () => Promise.resolve()
+      );
+    }
+
+    // start polling
     this.fetchResources();
     if (!this.paused) {
       this.interval = window.setInterval(() => this.fetchResources(), 3000);
