@@ -118,6 +118,21 @@ export type CreateResourcePayload = {
   data: Resource,
 };
 
+export type CreateSubscriptionAgreementInput = {
+  label: Scalars['String'],
+  displayName?: Maybe<Scalars['String']>,
+  owner?: Maybe<Scalars['ProfileIdentity']>,
+  productId: Scalars['ID'],
+  planId: Scalars['ID'],
+  regionId: Scalars['ID'],
+  configuredFeatures?: Maybe<Array<ConfiguredFeatureInput>>,
+};
+
+export type CreateSubscriptionAgreementPayload = {
+   __typename?: 'CreateSubscriptionAgreementPayload',
+  data: SubscriptionAgreement,
+};
+
 export type Credential = {
    __typename?: 'Credential',
   key: Scalars['String'],
@@ -285,6 +300,7 @@ export type Mutation = {
   createProfileAuthToken: CreateProfileAuthTokenPayload,
   updateProfileSubject: UpdateProfileSubjectPayload,
   updateProfileState: UpdateProfileStatePayload,
+  createSubscription: CreateSubscriptionAgreementPayload,
 };
 
 
@@ -325,6 +341,11 @@ export type MutationUpdateProfileSubjectArgs = {
 
 export type MutationUpdateProfileStateArgs = {
   input: UpdateProfileStateInput
+};
+
+
+export type MutationCreateSubscriptionArgs = {
+  input: CreateSubscriptionAgreementInput
 };
 
 export type Node = {
@@ -823,6 +844,8 @@ export type Profile = {
    __typename?: 'Profile',
   id: Scalars['ID'],
   subject: Scalars['String'],
+  stripeAccountID?: Maybe<Scalars['String']>,
+  stripeSetupIntentSecret?: Maybe<Scalars['String']>,
   platform: Platform,
   invoicePreview?: Maybe<Invoice>,
   invoices?: Maybe<InvoiceConnection>,
@@ -901,6 +924,8 @@ export type Query = {
   lineItem?: Maybe<LineItem>,
   region?: Maybe<Region>,
   regions?: Maybe<RegionConnection>,
+  subscription?: Maybe<SubscriptionAgreement>,
+  subscriptions?: Maybe<SubscriptionAgreementConnection>,
 };
 
 
@@ -992,6 +1017,19 @@ export type QueryRegionsArgs = {
   first: Scalars['Int'],
   after?: Maybe<Scalars['String']>,
   orderBy?: Maybe<RegionsOrderBy>
+};
+
+
+export type QuerySubscriptionArgs = {
+  id: Scalars['ID'],
+  owner?: Maybe<Scalars['ProfileIdentity']>
+};
+
+
+export type QuerySubscriptionsArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>,
+  owner?: Maybe<Scalars['ProfileIdentity']>
 };
 
 export type Region = Node & {
@@ -1124,6 +1162,58 @@ export type SubLineItemEdge = {
   cursor: Scalars['String'],
   node?: Maybe<SubLineItem>,
 };
+
+export type SubscriptionAgreement = Node & {
+   __typename?: 'SubscriptionAgreement',
+  id: Scalars['ID'],
+  plan?: Maybe<Plan>,
+  resource?: Maybe<SubscriptionAgreementResource>,
+  status: SubscriptionAgreementStatus,
+};
+
+export type SubscriptionAgreementConnection = {
+   __typename?: 'SubscriptionAgreementConnection',
+  pageInfo: PageInfo,
+  edges: Array<SubscriptionAgreementEdge>,
+};
+
+export type SubscriptionAgreementEdge = {
+   __typename?: 'SubscriptionAgreementEdge',
+  cursor: Scalars['String'],
+  node?: Maybe<SubscriptionAgreement>,
+};
+
+export type SubscriptionAgreementResource = Node & {
+   __typename?: 'SubscriptionAgreementResource',
+  id: Scalars['ID'],
+  displayName: Scalars['String'],
+  label: Scalars['String'],
+  credentials?: Maybe<CredentialConnection>,
+};
+
+
+export type SubscriptionAgreementResourceCredentialsArgs = {
+  first: Scalars['Int'],
+  after?: Maybe<Scalars['String']>
+};
+
+export type SubscriptionAgreementStatus = {
+   __typename?: 'SubscriptionAgreementStatus',
+  label: SubscriptionAgreementStatusLabel,
+  percentDone: Scalars['Int'],
+  message: Scalars['String'],
+};
+
+export enum SubscriptionAgreementStatusLabel {
+  Available = 'AVAILABLE',
+  Creating = 'CREATING',
+  Updating = 'UPDATING',
+  Deleting = 'DELETING',
+  Deleted = 'DELETED',
+  ErrorCreating = 'ERROR_CREATING',
+  ErrorUpdating = 'ERROR_UPDATING',
+  ErrorDeleting = 'ERROR_DELETING'
+}
 
 
 export type UpdateProfileStateInput = {
