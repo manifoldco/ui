@@ -219,7 +219,6 @@ export const query = graphql`
             body {
               cost
               customizable
-              defaultCost
               free
               label
               name
