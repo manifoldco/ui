@@ -37,6 +37,15 @@ resources provisioned other than the one specfied).
 </manifold-data-has-resource>
 ```
 
+## Polling interval
+
+This will change the polling interval from `3000 ms` (3 seconds, default) to `10000 ms` (10
+seconds):
+
+```html
+<manifold-data-has-resource poll-interval="10000"></manifold-data-has-resource>
+```
+
 ## Pausing updates
 
 By default, this component will subscribe to updates from the server and make periodic requests. To

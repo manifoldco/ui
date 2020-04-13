@@ -25,15 +25,17 @@ export class ManifoldDataHasResource {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Disable auto-updates? */
   @Prop() label?: string;
+  /** Adjust poll frequency */
+  @Prop() pollInterval?: number = 3000;
   @Prop() ownerId?: string;
   @Prop() paused?: boolean = false;
-  @State() interval?: number;
+  @State() poll?: number;
   @State() hasResource?: boolean;
   @Event({ eventName: 'manifold-hasResource-load', bubbles: true }) loadEvent: EventEmitter;
 
   @Watch('paused') pausedChange(newPaused: boolean) {
     if (newPaused) {
-      window.clearInterval(this.interval);
+      window.clearInterval(this.poll);
     } else {
       this.makeInterval();
     }
@@ -48,13 +50,13 @@ export class ManifoldDataHasResource {
   }
 
   componentDidUnload() {
-    if (this.interval) {
-      window.clearInterval(this.interval);
+    if (this.poll) {
+      window.clearInterval(this.poll);
     }
   }
 
   makeInterval() {
-    this.interval = window.setInterval(() => this.fetchResources(), 3000);
+    this.poll = window.setInterval(() => this.fetchResources(), this.pollInterval);
   }
 
   async fetchResources(label = this.label) {

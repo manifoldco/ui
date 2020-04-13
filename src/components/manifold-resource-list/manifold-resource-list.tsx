@@ -17,6 +17,8 @@ export class ManifoldResourceList {
   @Element() el: HTMLElement;
   /** _(hidden)_ */
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
+  /** Interval at which this component polls */
+  @Prop() pollInterval?: number = 3000;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
   /** Link format structure, with `:resource` placeholder */
@@ -25,14 +27,14 @@ export class ManifoldResourceList {
   @Prop() preserveEvent?: boolean = false;
   /** Filter resource list by ownerId */
   @Prop() ownerId?: string;
-  @State() interval?: number;
+  @State() poll?: number;
   @State() resources?: ResourceEdge[];
 
   @Watch('paused') pausedChange(newPaused: boolean) {
     if (newPaused) {
-      window.clearInterval(this.interval);
+      window.clearInterval(this.poll);
     } else {
-      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+      this.poll = window.setInterval(() => this.fetchResources(), this.pollInterval);
     }
   }
 
@@ -50,13 +52,13 @@ export class ManifoldResourceList {
     // start polling
     this.fetchResources();
     if (!this.paused) {
-      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+      this.poll = window.setInterval(() => this.fetchResources(), this.pollInterval);
     }
   }
 
   componentDidUnload() {
-    if (this.interval) {
-      window.clearInterval(this.interval);
+    if (this.poll) {
+      window.clearInterval(this.poll);
     }
   }
 
