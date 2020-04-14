@@ -28,13 +28,15 @@ export class ManifoldDataResourceList {
   @Prop() graphqlFetch?: GraphqlFetch = connection.graphqlFetch;
   /** Disable auto-updates? */
   @Prop() paused?: boolean = false;
+  /** Interval at which this component polls */
+  @Prop() pollInterval?: number = 3000;
   /** Link format structure, with `:resource` placeholder */
   @Prop() resourceLinkFormat?: string;
   /** Should the JS event still fire, even if product-link-format is passed?  */
   @Prop() preserveEvent?: boolean = false;
   /** OwnerId to filter resources by */
   @Prop() ownerId?: string;
-  @State() interval?: number;
+  @State() poll?: number;
   @State() resources?: ResourceEdge[];
   @Event({ eventName: 'manifold-resourceList-click', bubbles: true }) clickEvent: EventEmitter;
 
@@ -52,13 +54,13 @@ export class ManifoldDataResourceList {
     // start polling
     this.fetchResources();
     if (!this.paused) {
-      this.interval = window.setInterval(() => this.fetchResources(), 3000);
+      this.poll = window.setInterval(() => this.fetchResources(), this.pollInterval);
     }
   }
 
   componentDidUnload() {
-    if (this.interval) {
-      window.clearInterval(this.interval);
+    if (this.poll) {
+      window.clearInterval(this.poll);
     }
   }
 

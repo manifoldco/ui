@@ -150,6 +150,10 @@ export namespace Components {
     'label'?: string;
     'ownerId'?: string;
     'paused'?: boolean;
+    /**
+    * Adjust poll frequency
+    */
+    'pollInterval'?: number;
   }
   interface ManifoldDataProductLogo {
     /**
@@ -259,6 +263,10 @@ export namespace Components {
     * Disable auto-updates?
     */
     'paused'?: boolean;
+    /**
+    * Interval at which this component polls
+    */
+    'pollInterval'?: number;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */
@@ -570,6 +578,10 @@ export namespace Components {
     * Disable auto-updates?
     */
     'paused'?: boolean;
+    /**
+    * Interval at which this component polls
+    */
+    'pollInterval'?: number;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */
@@ -1203,6 +1215,10 @@ declare namespace LocalJSX {
     'onManifold-hasResource-load'?: (event: CustomEvent<any>) => void;
     'ownerId'?: string;
     'paused'?: boolean;
+    /**
+    * Adjust poll frequency
+    */
+    'pollInterval'?: number;
   }
   interface ManifoldDataProductLogo {
     /**
@@ -1324,6 +1340,10 @@ declare namespace LocalJSX {
     * Disable auto-updates?
     */
     'paused'?: boolean;
+    /**
+    * Interval at which this component polls
+    */
+    'pollInterval'?: number;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */
@@ -1647,6 +1667,10 @@ declare namespace LocalJSX {
     * Disable auto-updates?
     */
     'paused'?: boolean;
+    /**
+    * Interval at which this component polls
+    */
+    'pollInterval'?: number;
     /**
     * Should the JS event still fire, even if product-link-format is passed?
     */

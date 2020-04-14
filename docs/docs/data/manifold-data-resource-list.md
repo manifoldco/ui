@@ -55,6 +55,15 @@ To navigate using a traditional `<a>` tag (which would cause a full-page refresh
 Note that specifying this attribute will disable the custom event unless `preserve-event` is passed
 as well.
 
+## Polling interval
+
+This will change the polling interval from `3000 ms` (3 seconds, default) to `10000 ms` (10
+seconds):
+
+```html
+<manifold-data-resource-list poll-interval="10000"></manifold-data-resource-list>
+```
+
 ## Pausing updates
 
 By default, this component will subscribe to updates from the server (in case users add a new
@@ -67,7 +76,7 @@ attribute:
 
 ## Context (team, org, etc.)
 
-To filter the resource list by an owner-id that provides a different context than just the user 
+To filter the resource list by an owner-id that provides a different context than just the user
 context (e.g. team resources), you can provide the owner-id to filter by:
 
 ```html

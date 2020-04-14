@@ -18,12 +18,19 @@ To navigate using a traditional `<a>` tag, specify a `resource-link-format` attr
 `:resource` as a placeholder:
 
 ```html
-<manifold-data-resource-list
-  resource-link-format="/resource/:resource"
-></manifold-data-resource-list>
+<manifold-resource-list resource-link-format="/resource/:resource"></manifold-resource-list>
 ```
 
 Note that this will disable the custom event unless `preserve-event` is passed as well.
+
+## Polling interval
+
+This will change the polling interval from `3000 ms` (3 seconds, default) to `10000 ms` (10
+seconds):
+
+```html
+<manifold-resource-list poll-interval="10000"></manifold-resource-list>
+```
 
 ## Pausing updates
 
@@ -31,7 +38,7 @@ By default, this component will subscribe to updates from the server. To disable
 `paused` attribute:
 
 ```html
-<manifold-data-resource-list paused></manifold-data-resource-list>
+<manifold-resource-list paused></manifold-resource-list>
 ```
 
 ## Loading state
@@ -59,7 +66,7 @@ You can pass in your own "no resources" state for the componenent by passing in 
 
 ## Context (team, org, etc.)
 
-To filter the resource list by an owner-id that provides a different context than just the user 
+To filter the resource list by an owner-id that provides a different context than just the user
 context (e.g. team resources), you can provide the owner-id to filter by:
 
 ```html

@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Added `poll-interval` prop to `<manifold-resource-list>`, `<manifold-data-resource-list>`, and
+  `<manifold-data-has-resource>`.
+
 ## [0.9.8] - 2020-03-30
 
 ### Fixed
@@ -543,6 +550,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Changed the `manifold-resource-credentials` component to use the standalone `manifold-credentials`
   component.
 
+[unreleased]: https://github.com/manifoldco/ui/compare/v0.9.8...HEAD
 [0.9.8]: https://github.com/manifoldco/ui/compare/v0.9.7...v0.9.8
 [0.9.7]: https://github.com/manifoldco/ui/compare/v0.9.6...v0.9.7
 [0.9.6]: https://github.com/manifoldco/ui/compare/v0.9.5...v0.9.6

@@ -29,7 +29,7 @@
     "clean-package-json": "node scripts/clean-package-json",
     "copy-changelog": "node scripts/copy-changelog",
     "dev": "npm run build:watch & rm -rf dist && wait-on dist/loader/index.cjs.js && npm run storybook",
-    "docs": "npm run prepare:docs && cd docs && npm start",
+    "docs": "make package && npm run copy-changelog && cd docs && npm start",
     "docker": "docker build -t manifoldco/ui . && docker run -p 8080:80 manifoldco/ui",
     "format:changelog": "npx keep-a-changelog && prettier CHANGELOG.md --write",
     "generate:gql": "graphql-codegen --config codegen.yml",
