@@ -20,6 +20,7 @@
   --manifold-g-db33-mysql: linear-gradient(to right top, #00143e, #00306b);
   --manifold-g-dumper: linear-gradient(to right top, rgb(155, 0, 0), rgb(210, 32, 47));
   --manifold-g-elegant-cms: linear-gradient(to right top, rgb(14, 81, 126), rgb(33, 138, 181));
+  --manifold-g-formspree-serverless-forms: linear-gradient(to right top, #0b1d25, #0d232d);
   --manifold-g-generic-tagging: linear-gradient(to right top, #556919, #899f3c);
   --manifold-g-hostedmetrics-influxdb: linear-gradient(to right top, #0e517e, #6b42b3);
   --manifold-g-hostedmetrics-prometheus: linear-gradient(to right top, #0e517e, #6b42b3);
@@ -40,6 +41,8 @@
   --manifold-g-posthook: linear-gradient(to right top, #0e517e, #218ab5);
   --manifold-g-prefab: linear-gradient(to right top, #1255cf, #5186e4);
   --manifold-g-provider-dashboard: linear-gradient(to right top, #222, #444);
+  --manifold-g-quotaguard-shield-ips: linear-gradient(to right top, #5cb800, #304457);
+  --manifold-g-quotaguard-static-ips: linear-gradient(to right top, #5ec625, #38606e);
   --manifold-g-scoutapp: linear-gradient(to right top, #f0592b, #8c214f);
   --manifold-g-statushub: linear-gradient(to right top, #26ad8f, #1090b8);
   --manifold-g-till: linear-gradient(to right top, #4b3f03, #218ab5);
