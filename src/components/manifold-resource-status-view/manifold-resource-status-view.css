@@ -1,5 +1,7 @@
 :host {
   color: var(--manifold-text-color);
+  font-weight: var(--manifold-status-font-weight);
+  font-size: var(--manifold-status-font-size);
   font-family: var(--manifold-font-family);
 }
 
@@ -26,7 +28,7 @@
   display: block;
   width: 0.625rem;
   height: 0.625rem;
-  background: var(--status-color);
+  background: var(--status-icon-color);
   border-radius: 50%;
   content: '';
 }
@@ -35,45 +37,70 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  height: 2.75rem;
-  padding-right: 1.5rem;
-  padding-left: 1rem;
-  color: var(--manifold-grayscale-60);
+  padding: var(--manifold-status-padding);
+  color: var(--status-text-color);
   text-transform: lowercase;
 
+  & > * {
+    z-index: 1;
+  }
+
+  --status-text-color: var(--manifold-status-text-color);
+  --status-icon-color: var(--manifold-status-icon-color);
+  --status-background: var(--manifold-status-background);
+  --status-background-opacity: var(--manifold-status-background-opacity);
+
   &[data-status='AVAILABLE'] {
-    --status-color: var(--manifold-color-success);
+    --status-text-color: var(--manifold-status-text-color-available);
+    --status-icon-color: var(--manifold-status-icon-color-available);
+    --status-background: var(--manifold-status-background-available);
+    --status-background-opacity: var(--manifold-status-background-opacity-available);
   }
 
   &[data-status='CREATING'],
   &[data-status='UPDATING'],
   &[data-status='DELETING'] {
-    --status-color: var(--manifold-color-info);
+    --status-text-color: var(--manifold-status-text-color-processing);
+    --status-icon-color: var(--manifold-status-icon-color-processing);
+    --status-background: var(--manifold-status-background-processing);
+    --status-background-opacity: var(--manifold-status-background-opacity-processing);
   }
 
   &[data-status='ERROR_CREATING'],
   &[data-status='ERROR_UPDATING'],
   &[data-status='ERROR_DELETING'] {
-    --status-color: var(--manifold-color-warn);
+    --status-text-color: var(--manifold-status-text-color-error);
+    --status-icon-color: var(--manifold-status-icon-color-error);
+    --status-background: var(--manifold-status-background-error);
+    --status-background-opacity: var(--manifold-status-background-opacity-error);
   }
 
   &[data-status='loading'] {
-    --status-color: var(--manifold-grayscale-20);
+    --status-text-color: var(--manifold-status-text-color-loading);
+    --status-icon-color: var(--manifold-status-icon-color-loading);
+    --status-background: var(--manifold-status-background-loading);
+    --status-background-opacity: var(--manifold-status-background-opacity-loading);
   }
 
   &[data-status='DELETED'] {
-    --status-color: var(--manifold-color-error);
+    --status-text-color: var(--manifold-status-text-color-deleted);
+    --status-icon-color: var(--manifold-status-icon-color-deleted);
+    --status-background: var(--manifold-status-background-deleted);
+    --status-background-opacity: var(--manifold-status-background-opacity-deleted);
   }
 
   &::before {
+    --status-background: var(--manifold-status-background-available);
+
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background: var(--status-color);
-    border-radius: var(--manifold-tag-radius, var(--manifold-radius));
-    opacity: 0.1;
+    background-color: var(--status-background);
+    border: var(--manifold-status-border);
+    border-radius: var(--manifold-status-radius);
+    opacity: 1; /* var(--manifold-status-background-opacity); */
     content: '';
   }
 
@@ -84,39 +111,20 @@
   & .icon,
   & .icon-status,
   & manifold-icon {
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.5em;
+    height: 0.5em;
   }
 
   &[data-size='small'] {
-    height: 1.5rem;
-    padding-right: 0.75rem;
-    padding-left: 0.5rem;
     font-size: var(--manifold-font-d1);
-
-    & .icon,
-    & .icon-status,
-    & manifold-icon {
-      width: 0.5rem;
-      height: 0.5rem;
-    }
   }
 
   &[data-size='xsmall'] {
-    height: 1.5rem;
-    padding-right: 0;
-    padding-left: 0;
+    padding: 0;
     font-size: var(--manifold-font-d1);
 
     &::before {
       display: none;
-    }
-
-    & .icon,
-    & .icon-status,
-    & manifold-icon {
-      width: 0.5rem;
-      height: 0.5rem;
     }
   }
 }

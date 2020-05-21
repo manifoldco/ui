@@ -5,7 +5,7 @@ export default css`
 
   :root {
     /* UI Colors */
-    --manifold-color-primary: #2c7be5;
+    --manifold-color-primary: #4f65f1;
     --manifold-color-success: #00d97e;
     --manifold-color-info: #39afd1;
     --manifold-color-warn: #f6c343;
@@ -36,6 +36,16 @@ export default css`
 
     /* tags */
     --manifold-tag-radius: 0.375rem;
+
+    /* Status */
+    --manifold-status-border: 1px solid #f1f2fa;
+    --manifold-status-padding: 0.25em 1em;
+    --manifold-status-text-color: #495e8a;
+    --manifold-status-background-opacity: 1;
+    --manifold-status-background-available: #f8fafb;
+    --manifold-status-background-loading: #f8fafb;
+    --manifold-status-background-error: #f8fafb;
+    --manifold-status-background-deleted: #f8fafb;
 
     .example-inner {
       background: #f9fbfd !important;
