@@ -224,4 +224,49 @@
   --manifold-input-border-disabled: var(--manifold-border);
   --manifold-input-radius: var(--manifold-radius);
   --manifold-input-shadow: none;
+
+  /* Status */
+  --manifold-status-radius: var(--manifold-tag-radius, var(--manifold-radius));
+  --manifold-status-border: none;
+  --manifold-status-padding: 0.5em 1em;
+
+  /* base */
+  --manifold-status-color: var(--manifold-grayscale-60);
+  --manifold-status-color-available: var(--manifold-color-success, var(--manifold-status-color));
+  --manifold-status-color-loading: var(--manifold-grayscale-20, var(--manifold-status-color));
+  --manifold-status-color-processing: var(--manifold-color-info, var(--manifold-status-color));
+  --manifold-status-color-error: var(--manifold-color-warn, var(--manifold-status-color));
+  --manifold-status-color-deleted: var(--manifold-color-error, var(--manifold-status-color));
+
+  /* opacity */
+  --manifold-status-background-opacity: 0.1;
+  --manifold-status-background-opacity-available: var(--manifold-status-background-opacity);
+  --manifold-status-background-opacity-loading: var(--manifold-status-background-opacity);
+  --manifold-status-background-opacity-processing: var(--manifold-status-background-opacity);
+  --manifold-status-background-opacity-error: var(--manifold-status-background-opacity);
+  --manifold-status-background-opacity-deleted: var(--manifold-status-background-opacity);
+
+  /* background */
+  --manifold-status-background: var(--manifold-status-color);
+  --manifold-status-background-available: var(--manifold-status-color-available);
+  --manifold-status-background-loading: var(--manifold-status-color-loading);
+  --manifold-status-background-processing: var(--manifold-status-color-processing);
+  --manifold-status-background-error: var(--manifold-status-color-error);
+  --manifold-status-background-deleted: var(--manifold-status-color-deleted);
+
+  /* icon */
+  --manifold-status-icon-color: var(--manifold-status-color);
+  --manifold-status-icon-color-available: var(--manifold-status-color-available);
+  --manifold-status-icon-color-loading: var(--manifold-status-color-loading);
+  --manifold-status-icon-color-processing: var(--manifold-status-color-processing);
+  --manifold-status-icon-color-error: var(--manifold-status-color-error);
+  --manifold-status-icon-color-deleted: var(--manifold-status-color-deleted);
+
+  /* text */
+  --manifold-status-text-color: var(--manifold-status-color);
+  --manifold-status-text-color-available: var(--manifold-status-text-color);
+  --manifold-status-text-color-loading: var(--manifold-status-text-color);
+  --manifold-status-text-color-processing: var(--manifold-status-text-color);
+  --manifold-status-text-color-error: var(--manifold-status-text-color);
+  --manifold-status-text-color-deleted: var(--manifold-status-text-color);
 }
