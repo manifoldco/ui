@@ -30,7 +30,7 @@ Everything else, though, requires auth. This guide covers setting up authenticat
 
 <manifold-toast>
   <div>
-    View the complete authentication guide at <a href="https://docs.manifold.co/docs/platforms-auth-AzsO1HvPT1Hnojsrsb10L">docs.manifold.co</a>
+    View the complete authentication guide at <a href="https://docs.manifold.co/enterprise/launch-a-marketplace/authentication">docs.manifold.co</a>
   </div>
 </manifold-toast>
 
@@ -242,6 +242,6 @@ The wait time defaults to 15 seconds, but is configurable through [the
 manifold-connection][connection] component. You should only use this function if the call you're
 making requires authentication, since public calls to our catalog don't require an auth token.
 
-[authentication]: https://docs.manifold.co/docs/platforms-auth-AzsO1HvPT1Hnojsrsb10L
+[authentication]: https://docs.manifold.co/enterprise/launch-a-marketplace/authentication
 [connection]: /connection
 [oauth2]: https://www.oauth.com/oauth2-servers/access-tokens/authorization-code-request
