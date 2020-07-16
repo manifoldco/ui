@@ -1,6 +1,5 @@
 import {
   activity,
-  ai,
   cpu,
   credit_card,
   database,
@@ -29,15 +28,12 @@ export function formatCategoryLabel(tag: string): string {
   switch (tag) {
     case 'cms':
       return 'CMS';
-    case 'ai-ml':
-      return 'AI/ML';
     default:
       return tag.replace(/-/g, ' ');
   }
 }
 
 export const categoryIcon: { [key: string]: string } = {
-  'ai-ml': ai,
   api: plug,
   authentication: shield,
   cms: file,
