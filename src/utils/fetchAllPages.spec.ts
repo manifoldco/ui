@@ -10,25 +10,6 @@ const firstPage = {
     edges: [
       {
         node: {
-          label: 'ai-ml',
-          products: {
-            edges: [
-              {
-                node: {
-                  label: 'zerosix',
-                },
-              },
-            ],
-            pageInfo: {
-              hasNextPage: false,
-              endCursor:
-                'fch78ybgcmh3m8h25gh66xbjedqq48hu48r30c1k6hhq8vb4ehm3ec3375rp8e3ne5pqeuvgccw78dvaerwpudtmertkgt3pc9hqgx9qd9w6guk36gh2r8kfe9j6awh279xquz8',
-            },
-          },
-        },
-      },
-      {
-        node: {
           label: 'authentication',
           products: {
             edges: [

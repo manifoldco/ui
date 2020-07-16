@@ -2845,12 +2845,6 @@ const products: ProductEdge[] = [
           label: 'worker',
           products: emptyProducts,
         },
-        {
-          displayName: 'AI / ML',
-          id: '00000000000000000000000000000',
-          label: 'ai-ml',
-          products: emptyProducts,
-        },
       ],
       displayName: 'ZeroSix Cloud Compute Platform',
       documentationUrl: 'https://zerosix.ai/frequently-asked-questions/',
@@ -2879,7 +2873,7 @@ const products: ProductEdge[] = [
       supportEmail: 'support@zerosix.ai',
       tagline:
         'ZeroSix Marketplace provides access to compute power specifically for Machine Learning and Artificial Intelligence.',
-      tags: ['ai-ml', 'worker'],
+      tags: ['worker'],
       termsUrl: 'https://zerosix.ai/privacy-policy/',
       valueProps: [
         {

@@ -35,7 +35,6 @@ const skeletonProducts: Catalog.Product[] = [
       name: 'David Leger',
       tagline: 'David Leger: lover of cats, conqueror of front-ends',
       tags: [
-        'ai-ml',
         'database',
         'logging',
         'memory-store',
