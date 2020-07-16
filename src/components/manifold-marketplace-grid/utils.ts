@@ -6,11 +6,12 @@ export function filteredServices(filter: string, services?: ProductEdge[]): Prod
   }
 
   const searchTerm = filter.toLocaleLowerCase();
+  const categorySearchTerm = searchTerm.replace(' ', '-').replace(' ', '/');
   return services.filter(s => {
     const searchTargets = [s.node.label, s.node.displayName.toLocaleLowerCase()].concat(
       s.node.categories.map(c => c.label)
     );
-    return searchTargets.some(t => t.includes(searchTerm));
+    return searchTargets.some(t => t.includes(searchTerm) || t.includes(categorySearchTerm));
   });
 }
 
