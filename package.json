@@ -121,6 +121,6 @@
     "testcafe": "^1.5.0",
     "ts-loader": "^7.0.1",
     "wait-on": "^4.0.0",
-    "webpack": "^4.41.2"
+    "webpack": "^5.28.0"
   }
 }
